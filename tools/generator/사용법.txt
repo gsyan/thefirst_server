@@ -1,0 +1,10 @@
+generate_common_define.bat
+generate_server_error_enum.bat
+
+안될경우
+1) 파이썬이 설치되어 있어야함 ( 윈도우 스토어에서 설치하니 환경 변수도 세팅 되는듯 )
+2) 시스템 환경변수에 python.exe 위치 등록
+	파이선 위치 확인 ( python 실행해서 알아내기 )
+	1) import sys
+	2) sys.executable
+	경로 나옴

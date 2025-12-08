@@ -1,0 +1,10 @@
+{
+  "version": "1.0.0",
+  "maxLives": 3,
+  "maxShipsPerFleet": 10,
+  "shipAddMoneyCost": 1000,
+  "shipAddMineralCost": 500,
+  "enemyFleetSpawnInterval": 5.0,
+  "explorationInterval": 15.0,
+  "enemySpawnRate": 2.0
+}

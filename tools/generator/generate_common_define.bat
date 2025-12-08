@@ -1,0 +1,1 @@
+python generate_common_define.py
