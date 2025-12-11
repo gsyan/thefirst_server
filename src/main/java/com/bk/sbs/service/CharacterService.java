@@ -97,7 +97,7 @@ public class CharacterService {
     public Long updateMineral(Long characterId, Long mineral) {
         Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
         //Character character = characterRepository.findById(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));        
-        character.setMoney(mineral);            
+        character.setMineral(mineral);
         character = characterRepository.save(character);       
         return mineral;
     }
