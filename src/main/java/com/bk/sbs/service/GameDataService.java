@@ -2,6 +2,7 @@ package com.bk.sbs.service;
 
 import com.bk.sbs.config.GameSettings;
 import com.bk.sbs.config.ModuleDataTable;
+import com.bk.sbs.dto.CostStruct;
 import com.bk.sbs.dto.ModuleBodyDataDto;
 import com.bk.sbs.dto.ModuleWeaponDataDto;
 import com.bk.sbs.dto.ModuleEngineDataDto;
@@ -78,12 +79,19 @@ public class GameDataService {
         return getGameSettings().getMaxShipsPerFleet();
     }
 
-    public int getShipAddMoneyCost() {
-        return getGameSettings().getShipAddMoneyCost();
-    }
+    public CostStruct getShipAddCost(int currentShipCount) {
+        List<CostStruct> costs = getGameSettings().getAddShipCosts();
+        if (costs == null || costs.isEmpty()) {
+            return new CostStruct(0, 0L, 0L, 0L, 0L);
+        }
 
-    public int getShipAddMineralCost() {
-        return getGameSettings().getShipAddMineralCost();
+        // 현재 함선 수에 해당하는 비용 반환 (인덱스는 0부터 시작)
+        if (currentShipCount >= 0 && currentShipCount < costs.size()) {
+            return costs.get(currentShipCount);
+        }
+
+        // 범위를 벗어나면 마지막 비용 반환
+        return costs.get(costs.size() - 1);
     }
 
     public List<ModuleBodyDataDto> getBodyModules() {

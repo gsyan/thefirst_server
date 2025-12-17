@@ -7,7 +7,9 @@ import lombok.Setter;
 @Setter
 public class CharacterStatusResponse {
     private String characterName;
-    private Long money;
+    private Integer techLevel;
     private Long mineral;
-    private Integer technologyLevel;
+    private Long mineralRare;
+    private Long mineralExotic;
+    private Long mineralDark;
 }

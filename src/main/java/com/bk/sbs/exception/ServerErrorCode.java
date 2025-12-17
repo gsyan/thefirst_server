@@ -21,6 +21,10 @@ public enum ServerErrorCode {
     INSUFFICIENT_MINERAL(4009, "Insufficient mineral for upgrade"),
     ACTIVE_FLEET_NOT_FOUND(4010, "Active fleet not found"),
     FLEET_MAX_SHIPS_REACHED(4011, "Maximum ships per fleet reached"),
+    INSUFFICIENT_TECH_LEVEL(4012, "Insufficient tech level for upgrade"),
+    INSUFFICIENT_MINERAL_RARE(4013, "Insufficient rare mineral for upgrade"),
+    INSUFFICIENT_MINERAL_EXOTIC(4014, "Insufficient exotic mineral for upgrade"),
+    INSUFFICIENT_MINERAL_DARK(4015, "Insufficient dark mineral for upgrade"),
     INVALID_DATA_TABLE(5001, "Invalid data table provided"),
     UNKNOWN_ERROR(Integer.MAX_VALUE, "Unknown error");
 

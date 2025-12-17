@@ -7,6 +7,7 @@ import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.repository.*;
 import com.bk.sbs.util.ModuleTypeConverter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class FleetService {
 
     private final FleetRepository fleetRepository;
@@ -510,25 +512,39 @@ public class FleetService {
 
         // 함선 추가 제한 검사 (GameSettings에서 가져오기)
         int maxShipsPerFleet = gameDataService.getMaxShipsPerFleet();
-        int shipAddMoneyCost = gameDataService.getShipAddMoneyCost();
-        int shipAddMineralCost = gameDataService.getShipAddMineralCost();
 
         List<Ship> currentShips = shipRepository.findByFleetIdAndDeletedFalseOrderByPositionIndex(targetFleet.getId());
         if (currentShips.size() >= maxShipsPerFleet) {
             throw new BusinessException(ServerErrorCode.FLEET_MAX_SHIPS_REACHED);
         }
 
-        // 자원 검사
-        if (character.getMoney() < shipAddMoneyCost) {
-            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MONEY);
+        // 현재 함선 수에 따른 추가 비용 가져오기
+        CostStruct shipAddCost = gameDataService.getShipAddCost(currentShips.size());
+
+        // TechLevel 검증
+        if (character.getTechLevel() < shipAddCost.getTechLevel()) {
+            throw new BusinessException(ServerErrorCode.INSUFFICIENT_TECH_LEVEL);
         }
-        if (character.getMineral() < shipAddMineralCost) {
+
+        // 자원 부족 검사
+        if (character.getMineral() < shipAddCost.getMineral()) {
             throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL);
+        }
+        if (character.getMineralRare() < shipAddCost.getMineralRare()) {
+            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_RARE);
+        }
+        if (character.getMineralExotic() < shipAddCost.getMineralExotic()) {
+            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_EXOTIC);
+        }
+        if (character.getMineralDark() < shipAddCost.getMineralDark()) {
+            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_DARK);
         }
 
         // 자원 차감
-        character.setMoney(character.getMoney() - shipAddMoneyCost);
-        character.setMineral(character.getMineral() - shipAddMineralCost);
+        character.setMineral(character.getMineral() - shipAddCost.getMineral());
+        character.setMineralRare(character.getMineralRare() - shipAddCost.getMineralRare());
+        character.setMineralExotic(character.getMineralExotic() - shipAddCost.getMineralExotic());
+        character.setMineralDark(character.getMineralDark() - shipAddCost.getMineralDark());
         characterRepository.save(character);
 
         // 새 함선 생성
@@ -548,16 +564,22 @@ public class FleetService {
         AddShipResponse response = new AddShipResponse(true, "함선이 성공적으로 추가되었습니다.");
         response.setNewShipInfo(convertShipToDto(savedShip));
 
-        CostInfo totalCost = new CostInfo();
-        totalCost.setMoneyCost(shipAddMoneyCost);
-        totalCost.setMineralCost(shipAddMineralCost);
-        totalCost.setRemainMoney(character.getMoney().intValue());
-        totalCost.setRemainMineral(character.getMineral().intValue());
-        response.setTotalCost(totalCost);
-
-        response.setRemainMoney(character.getMoney());
-        response.setRemainMineral(character.getMineral());
+        // 비용 정보 (모든 미네랄 타입 포함)
+        CostRemainInfo costRemainInfo = new CostRemainInfo(
+                shipAddCost.getMineral(),
+                shipAddCost.getMineralRare(),
+                shipAddCost.getMineralExotic(),
+                shipAddCost.getMineralDark(),
+                character.getMineral(),
+                character.getMineralRare(),
+                character.getMineralExotic(),
+                character.getMineralDark()
+        );
+        response.setCostRemainInfo(costRemainInfo);
         response.setUpdatedFleetInfo(convertToDetailDto(targetFleet));
+
+        log.info("AddShip Response - success: {}, message: {}, costRemainInfo: {}",
+                response.isSuccess(), response.getMessage(), response.getCostRemainInfo());
 
         return response;
     }
@@ -633,8 +655,8 @@ public class FleetService {
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
 
         // 업그레이드 비용 계산 (현재 레벨부터 목표 레벨까지)
-        int totalMoneyCost = 0;
-        int totalMaterialCost = 0;
+        CostStruct totalCost = new CostStruct(0, 0L, 0L, 0L, 0L);
+        int maxTechLevel = 0;
 
         if (module.getModuleType() == EModuleType.Body) {
             List<ModuleBodyDataDto> moduleDataList = gameDataService.getBodyModules();
@@ -645,8 +667,14 @@ public class FleetService {
                         .findFirst()
                         .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_DATA_NOT_FOUND));
 
-                totalMoneyCost += levelData.getUpgradeMoneyCost();
-                totalMaterialCost += levelData.getUpgradeMineralCost();
+                CostStruct cost = levelData.getUpgradeCost();
+                if (cost != null) {
+                    maxTechLevel = Math.max(maxTechLevel, cost.getTechLevel());
+                    totalCost.setMineral(totalCost.getMineral() + cost.getMineral());
+                    totalCost.setMineralRare(totalCost.getMineralRare() + cost.getMineralRare());
+                    totalCost.setMineralExotic(totalCost.getMineralExotic() + cost.getMineralExotic());
+                    totalCost.setMineralDark(totalCost.getMineralDark() + cost.getMineralDark());
+                }
             }
         } else if (module.getModuleType() == EModuleType.Weapon) {
             List<ModuleWeaponDataDto> moduleDataList = gameDataService.getWeaponModules();
@@ -657,8 +685,14 @@ public class FleetService {
                         .findFirst()
                         .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_DATA_NOT_FOUND));
 
-                totalMoneyCost += levelData.getUpgradeMoneyCost();
-                totalMaterialCost += levelData.getUpgradeMineralCost();
+                CostStruct cost = levelData.getUpgradeCost();
+                if (cost != null) {
+                    maxTechLevel = Math.max(maxTechLevel, cost.getTechLevel());
+                    totalCost.setMineral(totalCost.getMineral() + cost.getMineral());
+                    totalCost.setMineralRare(totalCost.getMineralRare() + cost.getMineralRare());
+                    totalCost.setMineralExotic(totalCost.getMineralExotic() + cost.getMineralExotic());
+                    totalCost.setMineralDark(totalCost.getMineralDark() + cost.getMineralDark());
+                }
             }
         } else if (module.getModuleType() == EModuleType.Engine) {
             List<ModuleEngineDataDto> moduleDataList = gameDataService.getEngineModules();
@@ -669,8 +703,14 @@ public class FleetService {
                         .findFirst()
                         .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_DATA_NOT_FOUND));
 
-                totalMoneyCost += levelData.getUpgradeMoneyCost();
-                totalMaterialCost += levelData.getUpgradeMineralCost();
+                CostStruct cost = levelData.getUpgradeCost();
+                if (cost != null) {
+                    maxTechLevel = Math.max(maxTechLevel, cost.getTechLevel());
+                    totalCost.setMineral(totalCost.getMineral() + cost.getMineral());
+                    totalCost.setMineralRare(totalCost.getMineralRare() + cost.getMineralRare());
+                    totalCost.setMineralExotic(totalCost.getMineralExotic() + cost.getMineralExotic());
+                    totalCost.setMineralDark(totalCost.getMineralDark() + cost.getMineralDark());
+                }
             }
         } else if (module.getModuleType() == EModuleType.Hanger) {
             List<ModuleHangerDataDto> moduleDataList = gameDataService.getHangerModules();
@@ -681,25 +721,41 @@ public class FleetService {
                         .findFirst()
                         .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_DATA_NOT_FOUND));
 
-                totalMoneyCost += levelData.getUpgradeMoneyCost();
-                totalMaterialCost += levelData.getUpgradeMineralCost();
+                CostStruct cost = levelData.getUpgradeCost();
+                if (cost != null) {
+                    maxTechLevel = Math.max(maxTechLevel, cost.getTechLevel());
+                    totalCost.setMineral(totalCost.getMineral() + cost.getMineral());
+                    totalCost.setMineralRare(totalCost.getMineralRare() + cost.getMineralRare());
+                    totalCost.setMineralExotic(totalCost.getMineralExotic() + cost.getMineralExotic());
+                    totalCost.setMineralDark(totalCost.getMineralDark() + cost.getMineralDark());
+                }
             }
         }
 
-        // 자원 부족 검사 (업그레이드 진행 전에 먼저 체크)
-        long currentMoney = character.getMoney();
-        long currentMineral = character.getMineral();
-
-        if (currentMoney < totalMoneyCost) {
-            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MONEY);
+        // TechLevel 검증
+        if (character.getTechLevel() < maxTechLevel) {
+            throw new BusinessException(ServerErrorCode.INSUFFICIENT_TECH_LEVEL);
         }
-        if (currentMineral < totalMaterialCost) {
+
+        // 자원 부족 검사 (업그레이드 진행 전에 먼저 체크)
+        if (character.getMineral() < totalCost.getMineral()) {
             throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL);
+        }
+        if (character.getMineralRare() < totalCost.getMineralRare()) {
+            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_RARE);
+        }
+        if (character.getMineralExotic() < totalCost.getMineralExotic()) {
+            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_EXOTIC);
+        }
+        if (character.getMineralDark() < totalCost.getMineralDark()) {
+            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_DARK);
         }
 
         // 자원 차감 (업그레이드 진행 전에 먼저 차감)
-        character.setMoney(currentMoney - totalMoneyCost);
-        character.setMineral(currentMineral - totalMaterialCost);
+        character.setMineral(character.getMineral() - totalCost.getMineral());
+        character.setMineralRare(character.getMineralRare() - totalCost.getMineralRare());
+        character.setMineralExotic(character.getMineralExotic() - totalCost.getMineralExotic());
+        character.setMineralDark(character.getMineralDark() - totalCost.getMineralDark());
         characterRepository.save(character);
 
         // 모듈 레벨 업데이트 (능력치는 클라이언트가 DataTable에서 조회)
@@ -714,13 +770,18 @@ public class FleetService {
         response.setNewLevel(module.getModuleLevel());
         response.setMessage("Module upgrade completed successfully.");
 
-        // 비용 정보
-        CostInfo costInfo = new CostInfo();
-        costInfo.setMoneyCost(totalMoneyCost);
-        costInfo.setMineralCost(totalMaterialCost);
-        costInfo.setRemainMoney(character.getMoney().intValue()); // 업그레이드 후 남은 돈
-        costInfo.setRemainMineral(character.getMineral().intValue()); // 업그레이드 후 남은 미네랄
-        response.setTotalCost(costInfo);
+        // 비용 정보 (모든 미네랄 타입 포함)
+        CostRemainInfo costRemainInfo = new CostRemainInfo(
+                totalCost.getMineral(),
+                totalCost.getMineralRare(),
+                totalCost.getMineralExotic(),
+                totalCost.getMineralDark(),
+                character.getMineral(),
+                character.getMineralRare(),
+                character.getMineralExotic(),
+                character.getMineralDark()
+        );
+        response.setCostRemainInfo(costRemainInfo);
 
         return response;
     }

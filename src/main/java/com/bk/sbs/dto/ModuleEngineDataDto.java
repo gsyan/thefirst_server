@@ -31,11 +31,8 @@ public class ModuleEngineDataDto {
     @JsonAlias("m_rotationSpeed")
     private float rotationSpeed;
 
-    @JsonAlias("m_upgradeMoneyCost")
-    private int upgradeMoneyCost;
-
-    @JsonAlias("m_upgradeMineralCost")
-    private int upgradeMineralCost;
+    @JsonAlias("m_upgradeCost")
+    private CostStruct upgradeCost;
 
     @JsonAlias("m_description")
     private String description;

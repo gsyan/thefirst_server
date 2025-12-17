@@ -68,37 +68,20 @@ public class CharacterService {
 
         CharacterStatusResponse response = new CharacterStatusResponse();
         response.setCharacterName(character.getCharacterName());
-        response.setMoney(character.getMoney());
+        response.setTechLevel(character.getTechLevel());
         response.setMineral(character.getMineral());
-        response.setTechnologyLevel(character.getTechLevel());
-
+        response.setMineralRare(character.getMineralRare());
+        response.setMineralExotic(character.getMineralExotic());
+        response.setMineralDark(character.getMineralDark());
+        
         return response;
-    }
-
-    @Transactional
-    public Long updateMoney(Long characterId, Long money) {
-        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
-        //Character character = characterRepository.findById(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));        
-        character.setMoney(money);
-        character = characterRepository.save(character);        
-        return money;
-    }
-
-    @Transactional
-    public Long addMoney(Long characterId, Long amount) {
-        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
-        Long beforeMoney = character.getMoney();
-        character.setMoney(beforeMoney + amount);
-        character = characterRepository.save(character);
-        return character.getMoney();
     }
 
     @Transactional
     public Long updateMineral(Long characterId, Long mineral) {
         Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
-        //Character character = characterRepository.findById(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));        
         character.setMineral(mineral);
-        character = characterRepository.save(character);       
+        character = characterRepository.save(character);
         return mineral;
     }
 
@@ -112,11 +95,61 @@ public class CharacterService {
     }
 
     @Transactional
+    public Long updateMineralRare(Long characterId, Long mineralRare) {
+        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
+        character.setMineralRare(mineralRare);
+        character = characterRepository.save(character);
+        return mineralRare;
+    }
+
+    @Transactional
+    public Long addMineralRare(Long characterId, Long amount) {
+        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
+        Long before = character.getMineralRare();
+        character.setMineralRare(before + amount);
+        character = characterRepository.save(character);
+        return character.getMineralRare();
+    }
+
+    @Transactional
+    public Long updateMineralExotic(Long characterId, Long mineralExotic) {
+        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
+        character.setMineralExotic(mineralExotic);
+        character = characterRepository.save(character);
+        return mineralExotic;
+    }
+
+    @Transactional
+    public Long addMineralExotic(Long characterId, Long amount) {
+        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
+        Long before = character.getMineralExotic();
+        character.setMineralExotic(before + amount);
+        character = characterRepository.save(character);
+        return character.getMineralExotic();
+    }
+
+    @Transactional
+    public Long updateMineralDark(Long characterId, Long mineralDark) {
+        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
+        character.setMineralDark(mineralDark);
+        character = characterRepository.save(character);
+        return mineralDark;
+    }
+
+    @Transactional
+    public Long addMineralDark(Long characterId, Long amount) {
+        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
+        Long before = character.getMineralDark();
+        character.setMineralDark(before + amount);
+        character = characterRepository.save(character);
+        return character.getMineralDark();
+    }
+
+    @Transactional
     public Integer updateTechLevel(Long characterId, Integer techLevel) {
-        //Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
-        Character character = characterRepository.findById(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));        
+        Character character = characterRepository.findById(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
         character.setTechLevel(techLevel);
-        character = characterRepository.save(character);       
+        character = characterRepository.save(character);
         return techLevel;
     }
 

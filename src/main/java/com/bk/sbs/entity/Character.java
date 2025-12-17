@@ -26,13 +26,19 @@ public class Character {
     private Long lastLocation;
 
     @Column(nullable = false)
-    private Long money = 0L;
+    private Integer techLevel = 1;
 
     @Column(nullable = false)
     private Long mineral = 0L;
 
     @Column(nullable = false)
-    private Integer techLevel = 1;
+    private Long mineralRare = 0L;
+
+    @Column(nullable = false)
+    private Long mineralExotic = 0L;
+    
+    @Column(nullable = false)
+    private Long mineralDark = 0L;
 
     @Column(nullable = false)
     private boolean deleted = false;

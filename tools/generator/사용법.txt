@@ -1,5 +1,7 @@
 generate_common_define.bat
+
 generate_server_error_enum.bat
+- 서버코드를 변경하고, 클라 코드는 생성된 것을 사용
 
 안될경우
 1) 파이썬이 설치되어 있어야함 ( 윈도우 스토어에서 설치하니 환경 변수도 세팅 되는듯 )
@@ -8,3 +10,4 @@ generate_server_error_enum.bat
 	1) import sys
 	2) sys.executable
 	경로 나옴
+

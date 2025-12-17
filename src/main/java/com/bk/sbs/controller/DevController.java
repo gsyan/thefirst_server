@@ -2,9 +2,11 @@ package com.bk.sbs.controller;
 
 import com.bk.sbs.dto.ApiResponse;
 import com.bk.sbs.dto.CharacterStatusResponse;
+import com.bk.sbs.dto.CostStruct;
 import com.bk.sbs.dto.DevCommandRequest;
 import com.bk.sbs.dto.AddShipRequest;
 import com.bk.sbs.dto.AddShipResponse;
+import com.bk.sbs.dto.FleetDto;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.security.JwtUtil;
@@ -54,26 +56,6 @@ public class DevController {
 
     private ApiResponse<String> executeDevCommand(String command, String[] params, Long characterId) {
         switch (command.toLowerCase()) {
-            case "setmoney":
-                if (params == null || params.length == 0) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
-                try {
-                    Long money = Long.parseLong(params[0]);
-                    characterService.updateMoney(characterId, money);
-                    return ApiResponse.success("Money set to: " + money + "|money:" + money);
-                } catch (NumberFormatException e) {
-                    return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
-                }
-
-            case "addmoney":
-                if (params == null || params.length == 0) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
-                try {
-                    Long additionalMoney = Long.parseLong(params[0]);
-                    long newMoney = characterService.addMoney(characterId, additionalMoney);
-                    return ApiResponse.success("Money added: " + additionalMoney + " (total: " + newMoney + ")|money:" + newMoney);
-                } catch (NumberFormatException e) {
-                    return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
-                }
-
             case "setmineral":
                 if (params == null || params.length == 0) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
                 try {
@@ -94,6 +76,66 @@ public class DevController {
                     return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
                 }
 
+            case "setmineralrare":
+                if (params == null || params.length == 0) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
+                try {
+                    Long mineralRare = Long.parseLong(params[0]);
+                    characterService.updateMineralRare(characterId, mineralRare);
+                    return ApiResponse.success("Mineral Rare set to: " + mineralRare + "|mineralRare:" + mineralRare);
+                } catch (NumberFormatException e) {
+                    return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
+                }
+
+            case "addmineralrare":
+                if (params == null || params.length == 0) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
+                try {
+                    Long additionalMineralRare = Long.parseLong(params[0]);
+                    Long newMineralRare = characterService.addMineralRare(characterId, additionalMineralRare);
+                    return ApiResponse.success("Mineral Rare added: " + additionalMineralRare + " (total: " + newMineralRare + ")|mineralRare:" + newMineralRare);
+                } catch (NumberFormatException e) {
+                    return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
+                }
+
+            case "setmineralexotic":
+                if (params == null || params.length == 0) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
+                try {
+                    Long mineralExotic = Long.parseLong(params[0]);
+                    characterService.updateMineralExotic(characterId, mineralExotic);
+                    return ApiResponse.success("Mineral Exotic set to: " + mineralExotic + "|mineralExotic:" + mineralExotic);
+                } catch (NumberFormatException e) {
+                    return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
+                }
+
+            case "addmineralexotic":
+                if (params == null || params.length == 0) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
+                try {
+                    Long additionalMineralExotic = Long.parseLong(params[0]);
+                    Long newMineralExotic = characterService.addMineralExotic(characterId, additionalMineralExotic);
+                    return ApiResponse.success("Mineral Exotic added: " + additionalMineralExotic + " (total: " + newMineralExotic + ")|mineralExotic:" + newMineralExotic);
+                } catch (NumberFormatException e) {
+                    return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
+                }
+
+            case "setmineraldark":
+                if (params == null || params.length == 0) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
+                try {
+                    Long mineralDark = Long.parseLong(params[0]);
+                    characterService.updateMineralDark(characterId, mineralDark);
+                    return ApiResponse.success("Mineral Dark set to: " + mineralDark + "|mineralDark:" + mineralDark);
+                } catch (NumberFormatException e) {
+                    return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
+                }
+
+            case "addmineraldark":
+                if (params == null || params.length == 0) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
+                try {
+                    Long additionalMineralDark = Long.parseLong(params[0]);
+                    Long newMineralDark = characterService.addMineralDark(characterId, additionalMineralDark);
+                    return ApiResponse.success("Mineral Dark added: " + additionalMineralDark + " (total: " + newMineralDark + ")|mineralDark:" + newMineralDark);
+                } catch (NumberFormatException e) {
+                    return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
+                }
+
             case "addtech":
                 if (params == null || params.length == 0) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
                 try {
@@ -108,9 +150,11 @@ public class DevController {
                 CharacterStatusResponse status = characterService.getCharacterStatus(characterId);
                 StringBuilder result = new StringBuilder();
                 result.append("=== Character Status ===\n");
-                result.append("Money: ").append(status.getMoney()).append("\n");
+                result.append("Tech Level: ").append(status.getTechLevel());
                 result.append("Mineral: ").append(status.getMineral()).append("\n");
-                result.append("Technology Level: ").append(status.getTechnologyLevel());
+                result.append("Mineral Rare: ").append(status.getMineralRare()).append("\n");
+                result.append("Mineral Exotic: ").append(status.getMineralExotic()).append("\n");
+                result.append("Mineral Dark: ").append(status.getMineralDark()).append("\n");                
                 return ApiResponse.success(result.toString());
 
             case "addship":
@@ -118,22 +162,29 @@ public class DevController {
                     // 개발자 명령어: 자원이 부족할 경우 자동으로 충원
                     CharacterStatusResponse currentStatus = characterService.getCharacterStatus(characterId);
 
+                    // 현재 함선 수 확인
+                    FleetDto activeFleet = fleetService.getActiveFleet(characterId);
+                    int currentShipCount = activeFleet.getShips() != null ? activeFleet.getShips().size() : 0;
+
                     // 함선 추가에 필요한 자원 비용 확인 (GameDataService에서 가져오기)
-                    int shipAddMoneyCost = gameDataService.getShipAddMoneyCost();
-                    int shipAddMineralCost = gameDataService.getShipAddMineralCost();
+                    CostStruct shipAddCost = gameDataService.getShipAddCost(currentShipCount);
 
-                    // 자원 부족 시 자동 충원
-                    Long currentMoney = currentStatus.getMoney();
-                    Long currentMineral = currentStatus.getMineral();
-
-                    if (currentMoney < shipAddMoneyCost) {
-                        Long newMoney = currentMoney + shipAddMoneyCost + 10000; // 여유분 추가
-                        characterService.updateMoney(characterId, newMoney);
-                    }
-
-                    if (currentMineral < shipAddMineralCost) {
-                        Long newMineral = currentMineral + shipAddMineralCost + 5000; // 여유분 추가
+                    // 자원 부족 시 자동 충원 (모든 미네랄 타입)
+                    if (currentStatus.getMineral() < shipAddCost.getMineral()) {
+                        Long newMineral = currentStatus.getMineral() + shipAddCost.getMineral() + 5000;
                         characterService.updateMineral(characterId, newMineral);
+                    }
+                    if (currentStatus.getMineralRare() < shipAddCost.getMineralRare()) {
+                        Long newMineralRare = currentStatus.getMineralRare() + shipAddCost.getMineralRare() + 1000;
+                        characterService.updateMineralRare(characterId, newMineralRare);
+                    }
+                    if (currentStatus.getMineralExotic() < shipAddCost.getMineralExotic()) {
+                        Long newMineralExotic = currentStatus.getMineralExotic() + shipAddCost.getMineralExotic() + 1000;
+                        characterService.updateMineralExotic(characterId, newMineralExotic);
+                    }
+                    if (currentStatus.getMineralDark() < shipAddCost.getMineralDark()) {
+                        Long newMineralDark = currentStatus.getMineralDark() + shipAddCost.getMineralDark() + 1000;
+                        characterService.updateMineralDark(characterId, newMineralDark);
                     }
 
                     AddShipRequest addShipRequest = new AddShipRequest();

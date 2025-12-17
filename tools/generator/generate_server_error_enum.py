@@ -61,5 +61,5 @@ def generate_csharp_enum(java_file_path, output_file_path):
 
 if __name__ == "__main__":
     java_file_path = "../../src/main/java/com/bk/sbs/exception/ServerErrorCode.java"
-    output_file_path = "../../../thefirst_client_unity/Assets/Scripts/System/ServerErrorCode.cs"
+    output_file_path = "../../../thefirst_client_unity/Assets/Scripts/System/Util/ServerErrorCode.cs"
     generate_csharp_enum(java_file_path, output_file_path)

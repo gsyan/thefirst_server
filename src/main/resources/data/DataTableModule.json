@@ -9,8 +9,13 @@
         "m_level": 1,
         "m_health": 150.0,
         "m_cargoCapacity": 75.0,
-        "m_upgradeMoneyCost": 100,
-        "m_upgradeMineralCost": 50,
+        "m_upgradeCost": {
+          "techLevel": 1,
+          "mineral": 50,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Battle-class hull module level 1"
       },
       {
@@ -21,8 +26,13 @@
         "m_level": 2,
         "m_health": 200.0,
         "m_cargoCapacity": 100.0,
-        "m_upgradeMoneyCost": 200,
-        "m_upgradeMineralCost": 100,
+        "m_upgradeCost": {
+          "techLevel": 2,
+          "mineral": 100,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Battle-class hull module level 2"
       },
       {
@@ -33,8 +43,13 @@
         "m_level": 3,
         "m_health": 250.0,
         "m_cargoCapacity": 125.0,
-        "m_upgradeMoneyCost": 300,
-        "m_upgradeMineralCost": 150,
+        "m_upgradeCost": {
+          "techLevel": 3,
+          "mineral": 150,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Battle-class hull module level 3"
       },
       {
@@ -45,8 +60,13 @@
         "m_level": 4,
         "m_health": 300.0,
         "m_cargoCapacity": 150.0,
-        "m_upgradeMoneyCost": 400,
-        "m_upgradeMineralCost": 200,
+        "m_upgradeCost": {
+          "techLevel": 4,
+          "mineral": 200,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Battle-class hull module level 4"
       },
       {
@@ -57,8 +77,13 @@
         "m_level": 5,
         "m_health": 350.0,
         "m_cargoCapacity": 175.0,
-        "m_upgradeMoneyCost": 500,
-        "m_upgradeMineralCost": 250,
+        "m_upgradeCost": {
+          "techLevel": 5,
+          "mineral": 250,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Battle-class hull module level 5"
       },
       {
@@ -69,8 +94,13 @@
         "m_level": 6,
         "m_health": 400.0,
         "m_cargoCapacity": 200.0,
-        "m_upgradeMoneyCost": 600,
-        "m_upgradeMineralCost": 300,
+        "m_upgradeCost": {
+          "techLevel": 6,
+          "mineral": 300,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Battle-class hull module level 6"
       },
       {
@@ -81,8 +111,13 @@
         "m_level": 7,
         "m_health": 450.0,
         "m_cargoCapacity": 225.0,
-        "m_upgradeMoneyCost": 700,
-        "m_upgradeMineralCost": 350,
+        "m_upgradeCost": {
+          "techLevel": 7,
+          "mineral": 350,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Battle-class hull module level 7"
       },
       {
@@ -93,8 +128,13 @@
         "m_level": 8,
         "m_health": 500.0,
         "m_cargoCapacity": 250.0,
-        "m_upgradeMoneyCost": 800,
-        "m_upgradeMineralCost": 400,
+        "m_upgradeCost": {
+          "techLevel": 8,
+          "mineral": 400,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Battle-class hull module level 8"
       },
       {
@@ -105,8 +145,13 @@
         "m_level": 9,
         "m_health": 550.0,
         "m_cargoCapacity": 275.0,
-        "m_upgradeMoneyCost": 900,
-        "m_upgradeMineralCost": 450,
+        "m_upgradeCost": {
+          "techLevel": 9,
+          "mineral": 450,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Battle-class hull module level 9"
       },
       {
@@ -117,8 +162,13 @@
         "m_level": 10,
         "m_health": 600.0,
         "m_cargoCapacity": 300.0,
-        "m_upgradeMoneyCost": 1000,
-        "m_upgradeMineralCost": 500,
+        "m_upgradeCost": {
+          "techLevel": 10,
+          "mineral": 500,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Battle-class hull module level 10"
       },
       {
@@ -129,8 +179,13 @@
         "m_level": 1,
         "m_health": 150.0,
         "m_cargoCapacity": 75.0,
-        "m_upgradeMoneyCost": 100,
-        "m_upgradeMineralCost": 50,
+        "m_upgradeCost": {
+          "techLevel": 1,
+          "mineral": 50,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Aircraft-class hull module level 1"
       },
       {
@@ -141,8 +196,13 @@
         "m_level": 2,
         "m_health": 200.0,
         "m_cargoCapacity": 100.0,
-        "m_upgradeMoneyCost": 200,
-        "m_upgradeMineralCost": 100,
+        "m_upgradeCost": {
+          "techLevel": 2,
+          "mineral": 100,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Aircraft-class hull module level 2"
       },
       {
@@ -153,8 +213,13 @@
         "m_level": 3,
         "m_health": 250.0,
         "m_cargoCapacity": 125.0,
-        "m_upgradeMoneyCost": 300,
-        "m_upgradeMineralCost": 150,
+        "m_upgradeCost": {
+          "techLevel": 3,
+          "mineral": 150,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Aircraft-class hull module level 3"
       },
       {
@@ -165,8 +230,13 @@
         "m_level": 4,
         "m_health": 300.0,
         "m_cargoCapacity": 150.0,
-        "m_upgradeMoneyCost": 400,
-        "m_upgradeMineralCost": 200,
+        "m_upgradeCost": {
+          "techLevel": 4,
+          "mineral": 200,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Aircraft-class hull module level 4"
       },
       {
@@ -177,8 +247,13 @@
         "m_level": 5,
         "m_health": 350.0,
         "m_cargoCapacity": 175.0,
-        "m_upgradeMoneyCost": 500,
-        "m_upgradeMineralCost": 250,
+        "m_upgradeCost": {
+          "techLevel": 5,
+          "mineral": 250,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Aircraft-class hull module level 5"
       },
       {
@@ -189,8 +264,13 @@
         "m_level": 6,
         "m_health": 400.0,
         "m_cargoCapacity": 200.0,
-        "m_upgradeMoneyCost": 600,
-        "m_upgradeMineralCost": 300,
+        "m_upgradeCost": {
+          "techLevel": 6,
+          "mineral": 300,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Aircraft-class hull module level 6"
       },
       {
@@ -201,8 +281,13 @@
         "m_level": 7,
         "m_health": 450.0,
         "m_cargoCapacity": 225.0,
-        "m_upgradeMoneyCost": 700,
-        "m_upgradeMineralCost": 350,
+        "m_upgradeCost": {
+          "techLevel": 7,
+          "mineral": 350,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Aircraft-class hull module level 7"
       },
       {
@@ -213,8 +298,13 @@
         "m_level": 8,
         "m_health": 500.0,
         "m_cargoCapacity": 250.0,
-        "m_upgradeMoneyCost": 800,
-        "m_upgradeMineralCost": 400,
+        "m_upgradeCost": {
+          "techLevel": 8,
+          "mineral": 400,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Aircraft-class hull module level 8"
       },
       {
@@ -225,8 +315,13 @@
         "m_level": 9,
         "m_health": 550.0,
         "m_cargoCapacity": 275.0,
-        "m_upgradeMoneyCost": 900,
-        "m_upgradeMineralCost": 450,
+        "m_upgradeCost": {
+          "techLevel": 9,
+          "mineral": 450,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Aircraft-class hull module level 9"
       },
       {
@@ -237,8 +332,13 @@
         "m_level": 10,
         "m_health": 600.0,
         "m_cargoCapacity": 300.0,
-        "m_upgradeMoneyCost": 1000,
-        "m_upgradeMineralCost": 500,
+        "m_upgradeCost": {
+          "techLevel": 10,
+          "mineral": 500,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Aircraft-class hull module level 10"
       },
       {
@@ -249,8 +349,13 @@
         "m_level": 1,
         "m_health": 150.0,
         "m_cargoCapacity": 75.0,
-        "m_upgradeMoneyCost": 100,
-        "m_upgradeMineralCost": 50,
+        "m_upgradeCost": {
+          "techLevel": 1,
+          "mineral": 50,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Scout-class hull module level 1"
       },
       {
@@ -261,8 +366,13 @@
         "m_level": 2,
         "m_health": 200.0,
         "m_cargoCapacity": 100.0,
-        "m_upgradeMoneyCost": 200,
-        "m_upgradeMineralCost": 100,
+        "m_upgradeCost": {
+          "techLevel": 2,
+          "mineral": 100,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Scout-class hull module level 2"
       },
       {
@@ -273,8 +383,13 @@
         "m_level": 3,
         "m_health": 250.0,
         "m_cargoCapacity": 125.0,
-        "m_upgradeMoneyCost": 300,
-        "m_upgradeMineralCost": 150,
+        "m_upgradeCost": {
+          "techLevel": 3,
+          "mineral": 150,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Scout-class hull module level 3"
       },
       {
@@ -285,8 +400,13 @@
         "m_level": 4,
         "m_health": 300.0,
         "m_cargoCapacity": 150.0,
-        "m_upgradeMoneyCost": 400,
-        "m_upgradeMineralCost": 200,
+        "m_upgradeCost": {
+          "techLevel": 4,
+          "mineral": 200,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Scout-class hull module level 4"
       },
       {
@@ -297,8 +417,13 @@
         "m_level": 5,
         "m_health": 350.0,
         "m_cargoCapacity": 175.0,
-        "m_upgradeMoneyCost": 500,
-        "m_upgradeMineralCost": 250,
+        "m_upgradeCost": {
+          "techLevel": 5,
+          "mineral": 250,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Scout-class hull module level 5"
       },
       {
@@ -309,8 +434,13 @@
         "m_level": 6,
         "m_health": 400.0,
         "m_cargoCapacity": 200.0,
-        "m_upgradeMoneyCost": 600,
-        "m_upgradeMineralCost": 300,
+        "m_upgradeCost": {
+          "techLevel": 6,
+          "mineral": 300,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Scout-class hull module level 6"
       },
       {
@@ -321,8 +451,13 @@
         "m_level": 7,
         "m_health": 450.0,
         "m_cargoCapacity": 225.0,
-        "m_upgradeMoneyCost": 700,
-        "m_upgradeMineralCost": 350,
+        "m_upgradeCost": {
+          "techLevel": 7,
+          "mineral": 350,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Scout-class hull module level 7"
       },
       {
@@ -333,8 +468,13 @@
         "m_level": 8,
         "m_health": 500.0,
         "m_cargoCapacity": 250.0,
-        "m_upgradeMoneyCost": 800,
-        "m_upgradeMineralCost": 400,
+        "m_upgradeCost": {
+          "techLevel": 8,
+          "mineral": 400,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Scout-class hull module level 8"
       },
       {
@@ -345,8 +485,13 @@
         "m_level": 9,
         "m_health": 550.0,
         "m_cargoCapacity": 275.0,
-        "m_upgradeMoneyCost": 900,
-        "m_upgradeMineralCost": 450,
+        "m_upgradeCost": {
+          "techLevel": 9,
+          "mineral": 450,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Scout-class hull module level 9"
       },
       {
@@ -357,8 +502,13 @@
         "m_level": 10,
         "m_health": 600.0,
         "m_cargoCapacity": 300.0,
-        "m_upgradeMoneyCost": 1000,
-        "m_upgradeMineralCost": 500,
+        "m_upgradeCost": {
+          "techLevel": 10,
+          "mineral": 500,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Scout-class hull module level 10"
       },
       {
@@ -369,8 +519,13 @@
         "m_level": 1,
         "m_health": 150.0,
         "m_cargoCapacity": 75.0,
-        "m_upgradeMoneyCost": 100,
-        "m_upgradeMineralCost": 50,
+        "m_upgradeCost": {
+          "techLevel": 1,
+          "mineral": 50,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Repair-class hull module level 1"
       },
       {
@@ -381,8 +536,13 @@
         "m_level": 2,
         "m_health": 200.0,
         "m_cargoCapacity": 100.0,
-        "m_upgradeMoneyCost": 200,
-        "m_upgradeMineralCost": 100,
+        "m_upgradeCost": {
+          "techLevel": 2,
+          "mineral": 100,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Repair-class hull module level 2"
       },
       {
@@ -393,8 +553,13 @@
         "m_level": 3,
         "m_health": 250.0,
         "m_cargoCapacity": 125.0,
-        "m_upgradeMoneyCost": 300,
-        "m_upgradeMineralCost": 150,
+        "m_upgradeCost": {
+          "techLevel": 3,
+          "mineral": 150,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Repair-class hull module level 3"
       },
       {
@@ -405,8 +570,13 @@
         "m_level": 4,
         "m_health": 300.0,
         "m_cargoCapacity": 150.0,
-        "m_upgradeMoneyCost": 400,
-        "m_upgradeMineralCost": 200,
+        "m_upgradeCost": {
+          "techLevel": 4,
+          "mineral": 200,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Repair-class hull module level 4"
       },
       {
@@ -417,8 +587,13 @@
         "m_level": 5,
         "m_health": 350.0,
         "m_cargoCapacity": 175.0,
-        "m_upgradeMoneyCost": 500,
-        "m_upgradeMineralCost": 250,
+        "m_upgradeCost": {
+          "techLevel": 5,
+          "mineral": 250,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Repair-class hull module level 5"
       },
       {
@@ -429,8 +604,13 @@
         "m_level": 6,
         "m_health": 400.0,
         "m_cargoCapacity": 200.0,
-        "m_upgradeMoneyCost": 600,
-        "m_upgradeMineralCost": 300,
+        "m_upgradeCost": {
+          "techLevel": 6,
+          "mineral": 300,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Repair-class hull module level 6"
       },
       {
@@ -441,8 +621,13 @@
         "m_level": 7,
         "m_health": 450.0,
         "m_cargoCapacity": 225.0,
-        "m_upgradeMoneyCost": 700,
-        "m_upgradeMineralCost": 350,
+        "m_upgradeCost": {
+          "techLevel": 7,
+          "mineral": 350,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Repair-class hull module level 7"
       },
       {
@@ -453,8 +638,13 @@
         "m_level": 8,
         "m_health": 500.0,
         "m_cargoCapacity": 250.0,
-        "m_upgradeMoneyCost": 800,
-        "m_upgradeMineralCost": 400,
+        "m_upgradeCost": {
+          "techLevel": 8,
+          "mineral": 400,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Repair-class hull module level 8"
       },
       {
@@ -465,8 +655,13 @@
         "m_level": 9,
         "m_health": 550.0,
         "m_cargoCapacity": 275.0,
-        "m_upgradeMoneyCost": 900,
-        "m_upgradeMineralCost": 450,
+        "m_upgradeCost": {
+          "techLevel": 9,
+          "mineral": 450,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Repair-class hull module level 9"
       },
       {
@@ -477,8 +672,13 @@
         "m_level": 10,
         "m_health": 600.0,
         "m_cargoCapacity": 300.0,
-        "m_upgradeMoneyCost": 1000,
-        "m_upgradeMineralCost": 500,
+        "m_upgradeCost": {
+          "techLevel": 10,
+          "mineral": 500,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Repair-class hull module level 10"
       }
     ],
@@ -492,8 +692,13 @@
         "m_health": 40.0,
         "m_movementSpeed": 3.5,
         "m_rotationSpeed": 2.3,
-        "m_upgradeMoneyCost": 90,
-        "m_upgradeMineralCost": 45,
+        "m_upgradeCost": {
+          "techLevel": 1,
+          "mineral": 50,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Standard propulsion system level 1"
       },
       {
@@ -505,8 +710,13 @@
         "m_health": 50.0,
         "m_movementSpeed": 4.0,
         "m_rotationSpeed": 2.6,
-        "m_upgradeMoneyCost": 180,
-        "m_upgradeMineralCost": 90,
+        "m_upgradeCost": {
+          "techLevel": 2,
+          "mineral": 100,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Standard propulsion system level 2"
       },
       {
@@ -518,8 +728,13 @@
         "m_health": 60.0,
         "m_movementSpeed": 4.5,
         "m_rotationSpeed": 2.9,
-        "m_upgradeMoneyCost": 270,
-        "m_upgradeMineralCost": 135,
+        "m_upgradeCost": {
+          "techLevel": 3,
+          "mineral": 150,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Standard propulsion system level 3"
       },
       {
@@ -531,8 +746,13 @@
         "m_health": 70.0,
         "m_movementSpeed": 5.0,
         "m_rotationSpeed": 3.2,
-        "m_upgradeMoneyCost": 360,
-        "m_upgradeMineralCost": 180,
+        "m_upgradeCost": {
+          "techLevel": 4,
+          "mineral": 200,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Standard propulsion system level 4"
       },
       {
@@ -544,8 +764,13 @@
         "m_health": 80.0,
         "m_movementSpeed": 5.5,
         "m_rotationSpeed": 3.5,
-        "m_upgradeMoneyCost": 450,
-        "m_upgradeMineralCost": 225,
+        "m_upgradeCost": {
+          "techLevel": 5,
+          "mineral": 250,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Standard propulsion system level 5"
       },
       {
@@ -557,8 +782,13 @@
         "m_health": 90.0,
         "m_movementSpeed": 6.0,
         "m_rotationSpeed": 3.80000019,
-        "m_upgradeMoneyCost": 540,
-        "m_upgradeMineralCost": 270,
+        "m_upgradeCost": {
+          "techLevel": 6,
+          "mineral": 300,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Standard propulsion system level 6"
       },
       {
@@ -570,8 +800,13 @@
         "m_health": 100.0,
         "m_movementSpeed": 6.5,
         "m_rotationSpeed": 4.1,
-        "m_upgradeMoneyCost": 630,
-        "m_upgradeMineralCost": 315,
+        "m_upgradeCost": {
+          "techLevel": 7,
+          "mineral": 350,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Standard propulsion system level 7"
       },
       {
@@ -583,8 +818,13 @@
         "m_health": 110.0,
         "m_movementSpeed": 7.0,
         "m_rotationSpeed": 4.4,
-        "m_upgradeMoneyCost": 720,
-        "m_upgradeMineralCost": 360,
+        "m_upgradeCost": {
+          "techLevel": 8,
+          "mineral": 400,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Standard propulsion system level 8"
       },
       {
@@ -596,8 +836,13 @@
         "m_health": 120.0,
         "m_movementSpeed": 7.5,
         "m_rotationSpeed": 4.70000029,
-        "m_upgradeMoneyCost": 810,
-        "m_upgradeMineralCost": 405,
+        "m_upgradeCost": {
+          "techLevel": 9,
+          "mineral": 450,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Standard propulsion system level 9"
       },
       {
@@ -609,8 +854,13 @@
         "m_health": 130.0,
         "m_movementSpeed": 8.0,
         "m_rotationSpeed": 5.0,
-        "m_upgradeMoneyCost": 900,
-        "m_upgradeMineralCost": 450,
+        "m_upgradeCost": {
+          "techLevel": 10,
+          "mineral": 500,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Standard propulsion system level 10"
       },
       {
@@ -622,8 +872,13 @@
         "m_health": 40.0,
         "m_movementSpeed": 3.5,
         "m_rotationSpeed": 2.3,
-        "m_upgradeMoneyCost": 90,
-        "m_upgradeMineralCost": 45,
+        "m_upgradeCost": {
+          "techLevel": 1,
+          "mineral": 50,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Booster propulsion system level 1"
       },
       {
@@ -635,8 +890,13 @@
         "m_health": 50.0,
         "m_movementSpeed": 4.0,
         "m_rotationSpeed": 2.6,
-        "m_upgradeMoneyCost": 180,
-        "m_upgradeMineralCost": 90,
+        "m_upgradeCost": {
+          "techLevel": 2,
+          "mineral": 100,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Booster propulsion system level 2"
       },
       {
@@ -648,8 +908,13 @@
         "m_health": 60.0,
         "m_movementSpeed": 4.5,
         "m_rotationSpeed": 2.9,
-        "m_upgradeMoneyCost": 270,
-        "m_upgradeMineralCost": 135,
+        "m_upgradeCost": {
+          "techLevel": 3,
+          "mineral": 150,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Booster propulsion system level 3"
       },
       {
@@ -661,8 +926,13 @@
         "m_health": 70.0,
         "m_movementSpeed": 5.0,
         "m_rotationSpeed": 3.2,
-        "m_upgradeMoneyCost": 360,
-        "m_upgradeMineralCost": 180,
+        "m_upgradeCost": {
+          "techLevel": 4,
+          "mineral": 200,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Booster propulsion system level 4"
       },
       {
@@ -674,8 +944,13 @@
         "m_health": 80.0,
         "m_movementSpeed": 5.5,
         "m_rotationSpeed": 3.5,
-        "m_upgradeMoneyCost": 450,
-        "m_upgradeMineralCost": 225,
+        "m_upgradeCost": {
+          "techLevel": 5,
+          "mineral": 250,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Booster propulsion system level 5"
       },
       {
@@ -687,8 +962,13 @@
         "m_health": 90.0,
         "m_movementSpeed": 6.0,
         "m_rotationSpeed": 3.80000019,
-        "m_upgradeMoneyCost": 540,
-        "m_upgradeMineralCost": 270,
+        "m_upgradeCost": {
+          "techLevel": 6,
+          "mineral": 300,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Booster propulsion system level 6"
       },
       {
@@ -700,8 +980,13 @@
         "m_health": 100.0,
         "m_movementSpeed": 6.5,
         "m_rotationSpeed": 4.1,
-        "m_upgradeMoneyCost": 630,
-        "m_upgradeMineralCost": 315,
+        "m_upgradeCost": {
+          "techLevel": 7,
+          "mineral": 350,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Booster propulsion system level 7"
       },
       {
@@ -713,8 +998,13 @@
         "m_health": 110.0,
         "m_movementSpeed": 7.0,
         "m_rotationSpeed": 4.4,
-        "m_upgradeMoneyCost": 720,
-        "m_upgradeMineralCost": 360,
+        "m_upgradeCost": {
+          "techLevel": 8,
+          "mineral": 400,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Booster propulsion system level 8"
       },
       {
@@ -726,8 +1016,13 @@
         "m_health": 120.0,
         "m_movementSpeed": 7.5,
         "m_rotationSpeed": 4.70000029,
-        "m_upgradeMoneyCost": 810,
-        "m_upgradeMineralCost": 405,
+        "m_upgradeCost": {
+          "techLevel": 9,
+          "mineral": 450,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Booster propulsion system level 9"
       },
       {
@@ -739,8 +1034,13 @@
         "m_health": 130.0,
         "m_movementSpeed": 8.0,
         "m_rotationSpeed": 5.0,
-        "m_upgradeMoneyCost": 900,
-        "m_upgradeMineralCost": 450,
+        "m_upgradeCost": {
+          "techLevel": 10,
+          "mineral": 500,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Booster propulsion system level 10"
       },
       {
@@ -752,8 +1052,13 @@
         "m_health": 40.0,
         "m_movementSpeed": 3.5,
         "m_rotationSpeed": 2.3,
-        "m_upgradeMoneyCost": 90,
-        "m_upgradeMineralCost": 45,
+        "m_upgradeCost": {
+          "techLevel": 1,
+          "mineral": 50,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Warp propulsion system level 1"
       },
       {
@@ -765,8 +1070,13 @@
         "m_health": 50.0,
         "m_movementSpeed": 4.0,
         "m_rotationSpeed": 2.6,
-        "m_upgradeMoneyCost": 180,
-        "m_upgradeMineralCost": 90,
+        "m_upgradeCost": {
+          "techLevel": 2,
+          "mineral": 100,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Warp propulsion system level 2"
       },
       {
@@ -778,8 +1088,13 @@
         "m_health": 60.0,
         "m_movementSpeed": 4.5,
         "m_rotationSpeed": 2.9,
-        "m_upgradeMoneyCost": 270,
-        "m_upgradeMineralCost": 135,
+        "m_upgradeCost": {
+          "techLevel": 3,
+          "mineral": 150,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Warp propulsion system level 3"
       },
       {
@@ -791,8 +1106,13 @@
         "m_health": 70.0,
         "m_movementSpeed": 5.0,
         "m_rotationSpeed": 3.2,
-        "m_upgradeMoneyCost": 360,
-        "m_upgradeMineralCost": 180,
+        "m_upgradeCost": {
+          "techLevel": 4,
+          "mineral": 200,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Warp propulsion system level 4"
       },
       {
@@ -804,8 +1124,13 @@
         "m_health": 80.0,
         "m_movementSpeed": 5.5,
         "m_rotationSpeed": 3.5,
-        "m_upgradeMoneyCost": 450,
-        "m_upgradeMineralCost": 225,
+        "m_upgradeCost": {
+          "techLevel": 5,
+          "mineral": 250,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Warp propulsion system level 5"
       },
       {
@@ -817,8 +1142,13 @@
         "m_health": 90.0,
         "m_movementSpeed": 6.0,
         "m_rotationSpeed": 3.80000019,
-        "m_upgradeMoneyCost": 540,
-        "m_upgradeMineralCost": 270,
+        "m_upgradeCost": {
+          "techLevel": 6,
+          "mineral": 300,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Warp propulsion system level 6"
       },
       {
@@ -830,8 +1160,13 @@
         "m_health": 100.0,
         "m_movementSpeed": 6.5,
         "m_rotationSpeed": 4.1,
-        "m_upgradeMoneyCost": 630,
-        "m_upgradeMineralCost": 315,
+        "m_upgradeCost": {
+          "techLevel": 7,
+          "mineral": 350,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Warp propulsion system level 7"
       },
       {
@@ -843,8 +1178,13 @@
         "m_health": 110.0,
         "m_movementSpeed": 7.0,
         "m_rotationSpeed": 4.4,
-        "m_upgradeMoneyCost": 720,
-        "m_upgradeMineralCost": 360,
+        "m_upgradeCost": {
+          "techLevel": 8,
+          "mineral": 400,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Warp propulsion system level 8"
       },
       {
@@ -856,8 +1196,13 @@
         "m_health": 120.0,
         "m_movementSpeed": 7.5,
         "m_rotationSpeed": 4.70000029,
-        "m_upgradeMoneyCost": 810,
-        "m_upgradeMineralCost": 405,
+        "m_upgradeCost": {
+          "techLevel": 9,
+          "mineral": 450,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Warp propulsion system level 9"
       },
       {
@@ -869,8 +1214,13 @@
         "m_health": 130.0,
         "m_movementSpeed": 8.0,
         "m_rotationSpeed": 5.0,
-        "m_upgradeMoneyCost": 900,
-        "m_upgradeMineralCost": 450,
+        "m_upgradeCost": {
+          "techLevel": 10,
+          "mineral": 500,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Warp propulsion system level 10"
       }
     ],
@@ -888,8 +1238,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 80,
-        "m_upgradeMineralCost": 40,
+        "m_upgradeCost": {
+          "techLevel": 1,
+          "mineral": 50,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Beam weapon system level 1"
       },
       {
@@ -905,8 +1260,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 160,
-        "m_upgradeMineralCost": 80,
+        "m_upgradeCost": {
+          "techLevel": 2,
+          "mineral": 100,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Beam weapon system level 2"
       },
       {
@@ -922,8 +1282,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 240,
-        "m_upgradeMineralCost": 120,
+        "m_upgradeCost": {
+          "techLevel": 3,
+          "mineral": 150,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Beam weapon system level 3"
       },
       {
@@ -939,8 +1304,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 320,
-        "m_upgradeMineralCost": 160,
+        "m_upgradeCost": {
+          "techLevel": 4,
+          "mineral": 200,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Beam weapon system level 4"
       },
       {
@@ -956,8 +1326,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 400,
-        "m_upgradeMineralCost": 200,
+        "m_upgradeCost": {
+          "techLevel": 5,
+          "mineral": 250,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Beam weapon system level 5"
       },
       {
@@ -973,8 +1348,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 480,
-        "m_upgradeMineralCost": 240,
+        "m_upgradeCost": {
+          "techLevel": 6,
+          "mineral": 300,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Beam weapon system level 6"
       },
       {
@@ -990,8 +1370,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 560,
-        "m_upgradeMineralCost": 280,
+        "m_upgradeCost": {
+          "techLevel": 7,
+          "mineral": 350,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Beam weapon system level 7"
       },
       {
@@ -1007,8 +1392,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 640,
-        "m_upgradeMineralCost": 320,
+        "m_upgradeCost": {
+          "techLevel": 8,
+          "mineral": 400,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Beam weapon system level 8"
       },
       {
@@ -1024,8 +1414,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 720,
-        "m_upgradeMineralCost": 360,
+        "m_upgradeCost": {
+          "techLevel": 9,
+          "mineral": 450,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Beam weapon system level 9"
       },
       {
@@ -1041,8 +1436,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 800,
-        "m_upgradeMineralCost": 400,
+        "m_upgradeCost": {
+          "techLevel": 10,
+          "mineral": 500,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Beam weapon system level 10"
       },
       {
@@ -1058,8 +1458,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 80,
-        "m_upgradeMineralCost": 40,
+        "m_upgradeCost": {
+          "techLevel": 1,
+          "mineral": 50,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Missile weapon system level 1"
       },
       {
@@ -1075,8 +1480,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 160,
-        "m_upgradeMineralCost": 80,
+        "m_upgradeCost": {
+          "techLevel": 2,
+          "mineral": 100,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Missile weapon system level 2"
       },
       {
@@ -1092,8 +1502,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 240,
-        "m_upgradeMineralCost": 120,
+        "m_upgradeCost": {
+          "techLevel": 3,
+          "mineral": 150,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Missile weapon system level 3"
       },
       {
@@ -1109,8 +1524,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 320,
-        "m_upgradeMineralCost": 160,
+        "m_upgradeCost": {
+          "techLevel": 4,
+          "mineral": 200,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Missile weapon system level 4"
       },
       {
@@ -1126,8 +1546,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 400,
-        "m_upgradeMineralCost": 200,
+        "m_upgradeCost": {
+          "techLevel": 5,
+          "mineral": 250,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Missile weapon system level 5"
       },
       {
@@ -1143,8 +1568,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 480,
-        "m_upgradeMineralCost": 240,
+        "m_upgradeCost": {
+          "techLevel": 6,
+          "mineral": 300,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Missile weapon system level 6"
       },
       {
@@ -1160,8 +1590,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 560,
-        "m_upgradeMineralCost": 280,
+        "m_upgradeCost": {
+          "techLevel": 7,
+          "mineral": 350,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Missile weapon system level 7"
       },
       {
@@ -1177,8 +1612,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 640,
-        "m_upgradeMineralCost": 320,
+        "m_upgradeCost": {
+          "techLevel": 8,
+          "mineral": 400,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Missile weapon system level 8"
       },
       {
@@ -1194,8 +1634,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 720,
-        "m_upgradeMineralCost": 360,
+        "m_upgradeCost": {
+          "techLevel": 9,
+          "mineral": 450,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Missile weapon system level 9"
       },
       {
@@ -1211,8 +1656,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 800,
-        "m_upgradeMineralCost": 400,
+        "m_upgradeCost": {
+          "techLevel": 10,
+          "mineral": 500,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Missile weapon system level 10"
       },
       {
@@ -1228,8 +1678,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 80,
-        "m_upgradeMineralCost": 40,
+        "m_upgradeCost": {
+          "techLevel": 1,
+          "mineral": 50,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Cannon weapon system level 1"
       },
       {
@@ -1245,8 +1700,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 160,
-        "m_upgradeMineralCost": 80,
+        "m_upgradeCost": {
+          "techLevel": 2,
+          "mineral": 100,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Cannon weapon system level 2"
       },
       {
@@ -1262,8 +1722,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 240,
-        "m_upgradeMineralCost": 120,
+        "m_upgradeCost": {
+          "techLevel": 3,
+          "mineral": 150,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Cannon weapon system level 3"
       },
       {
@@ -1279,8 +1744,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 320,
-        "m_upgradeMineralCost": 160,
+        "m_upgradeCost": {
+          "techLevel": 4,
+          "mineral": 200,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Cannon weapon system level 4"
       },
       {
@@ -1296,8 +1766,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 400,
-        "m_upgradeMineralCost": 200,
+        "m_upgradeCost": {
+          "techLevel": 5,
+          "mineral": 250,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Cannon weapon system level 5"
       },
       {
@@ -1313,8 +1788,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 480,
-        "m_upgradeMineralCost": 240,
+        "m_upgradeCost": {
+          "techLevel": 6,
+          "mineral": 300,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Cannon weapon system level 6"
       },
       {
@@ -1330,8 +1810,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 560,
-        "m_upgradeMineralCost": 280,
+        "m_upgradeCost": {
+          "techLevel": 7,
+          "mineral": 350,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Cannon weapon system level 7"
       },
       {
@@ -1347,8 +1832,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 640,
-        "m_upgradeMineralCost": 320,
+        "m_upgradeCost": {
+          "techLevel": 8,
+          "mineral": 400,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Cannon weapon system level 8"
       },
       {
@@ -1364,8 +1854,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 720,
-        "m_upgradeMineralCost": 360,
+        "m_upgradeCost": {
+          "techLevel": 9,
+          "mineral": 450,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Cannon weapon system level 9"
       },
       {
@@ -1381,8 +1876,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 800,
-        "m_upgradeMineralCost": 400,
+        "m_upgradeCost": {
+          "techLevel": 10,
+          "mineral": 500,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Cannon weapon system level 10"
       },
       {
@@ -1398,8 +1898,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 80,
-        "m_upgradeMineralCost": 40,
+        "m_upgradeCost": {
+          "techLevel": 1,
+          "mineral": 50,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Torpedo weapon system level 1"
       },
       {
@@ -1415,8 +1920,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 160,
-        "m_upgradeMineralCost": 80,
+        "m_upgradeCost": {
+          "techLevel": 2,
+          "mineral": 100,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Torpedo weapon system level 2"
       },
       {
@@ -1432,8 +1942,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 240,
-        "m_upgradeMineralCost": 120,
+        "m_upgradeCost": {
+          "techLevel": 3,
+          "mineral": 150,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Torpedo weapon system level 3"
       },
       {
@@ -1449,8 +1964,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 320,
-        "m_upgradeMineralCost": 160,
+        "m_upgradeCost": {
+          "techLevel": 4,
+          "mineral": 200,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Torpedo weapon system level 4"
       },
       {
@@ -1466,8 +1986,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 400,
-        "m_upgradeMineralCost": 200,
+        "m_upgradeCost": {
+          "techLevel": 5,
+          "mineral": 250,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Torpedo weapon system level 5"
       },
       {
@@ -1483,8 +2008,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 480,
-        "m_upgradeMineralCost": 240,
+        "m_upgradeCost": {
+          "techLevel": 6,
+          "mineral": 300,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Torpedo weapon system level 6"
       },
       {
@@ -1500,8 +2030,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 560,
-        "m_upgradeMineralCost": 280,
+        "m_upgradeCost": {
+          "techLevel": 7,
+          "mineral": 350,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Torpedo weapon system level 7"
       },
       {
@@ -1517,8 +2052,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 640,
-        "m_upgradeMineralCost": 320,
+        "m_upgradeCost": {
+          "techLevel": 8,
+          "mineral": 400,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Torpedo weapon system level 8"
       },
       {
@@ -1534,8 +2074,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 720,
-        "m_upgradeMineralCost": 360,
+        "m_upgradeCost": {
+          "techLevel": 9,
+          "mineral": 450,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Torpedo weapon system level 9"
       },
       {
@@ -1551,8 +2096,13 @@
         "m_projectileLength": 5.0,
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
-        "m_upgradeMoneyCost": 800,
-        "m_upgradeMineralCost": 400,
+        "m_upgradeCost": {
+          "techLevel": 10,
+          "mineral": 500,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Torpedo weapon system level 10"
       }
     ],
@@ -1571,8 +2121,14 @@
         "m_maintenanceTime": 14.5,
         "m_aircraftHealth": 40.0,
         "m_aircraftAttackPower": 8.0,
-        "m_upgradeMoneyCost": 100,
-        "m_upgradeMineralCost": 50,
+        "m_aircraftAmmo": 12,
+        "m_upgradeCost": {
+          "techLevel": 1,
+          "mineral": 50,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Standard hanger bay level 1"
       },
       {
@@ -1589,8 +2145,14 @@
         "m_maintenanceTime": 14.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 11.0,
-        "m_upgradeMoneyCost": 200,
-        "m_upgradeMineralCost": 100,
+        "m_aircraftAmmo": 14,
+        "m_upgradeCost": {
+          "techLevel": 2,
+          "mineral": 100,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Standard hanger bay level 2"
       },
       {
@@ -1607,8 +2169,14 @@
         "m_maintenanceTime": 13.5,
         "m_aircraftHealth": 60.0,
         "m_aircraftAttackPower": 14.0,
-        "m_upgradeMoneyCost": 300,
-        "m_upgradeMineralCost": 150,
+        "m_aircraftAmmo": 16,
+        "m_upgradeCost": {
+          "techLevel": 3,
+          "mineral": 150,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Standard hanger bay level 3"
       },
       {
@@ -1625,8 +2193,14 @@
         "m_maintenanceTime": 13.0,
         "m_aircraftHealth": 70.0,
         "m_aircraftAttackPower": 17.0,
-        "m_upgradeMoneyCost": 400,
-        "m_upgradeMineralCost": 200,
+        "m_aircraftAmmo": 18,
+        "m_upgradeCost": {
+          "techLevel": 4,
+          "mineral": 200,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Standard hanger bay level 4"
       },
       {
@@ -1643,8 +2217,14 @@
         "m_maintenanceTime": 12.5,
         "m_aircraftHealth": 80.0,
         "m_aircraftAttackPower": 20.0,
-        "m_upgradeMoneyCost": 500,
-        "m_upgradeMineralCost": 250,
+        "m_aircraftAmmo": 20,
+        "m_upgradeCost": {
+          "techLevel": 5,
+          "mineral": 250,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Standard hanger bay level 5"
       },
       {
@@ -1661,8 +2241,14 @@
         "m_maintenanceTime": 12.0,
         "m_aircraftHealth": 90.0,
         "m_aircraftAttackPower": 23.0,
-        "m_upgradeMoneyCost": 600,
-        "m_upgradeMineralCost": 300,
+        "m_aircraftAmmo": 22,
+        "m_upgradeCost": {
+          "techLevel": 6,
+          "mineral": 300,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Standard hanger bay level 6"
       },
       {
@@ -1679,8 +2265,14 @@
         "m_maintenanceTime": 11.5,
         "m_aircraftHealth": 100.0,
         "m_aircraftAttackPower": 26.0,
-        "m_upgradeMoneyCost": 700,
-        "m_upgradeMineralCost": 350,
+        "m_aircraftAmmo": 24,
+        "m_upgradeCost": {
+          "techLevel": 7,
+          "mineral": 350,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Standard hanger bay level 7"
       },
       {
@@ -1697,8 +2289,14 @@
         "m_maintenanceTime": 11.0,
         "m_aircraftHealth": 110.0,
         "m_aircraftAttackPower": 29.0,
-        "m_upgradeMoneyCost": 800,
-        "m_upgradeMineralCost": 400,
+        "m_aircraftAmmo": 26,
+        "m_upgradeCost": {
+          "techLevel": 8,
+          "mineral": 400,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Standard hanger bay level 8"
       },
       {
@@ -1715,8 +2313,14 @@
         "m_maintenanceTime": 10.5,
         "m_aircraftHealth": 120.0,
         "m_aircraftAttackPower": 32.0,
-        "m_upgradeMoneyCost": 900,
-        "m_upgradeMineralCost": 450,
+        "m_aircraftAmmo": 28,
+        "m_upgradeCost": {
+          "techLevel": 9,
+          "mineral": 450,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Standard hanger bay level 9"
       },
       {
@@ -1733,8 +2337,14 @@
         "m_maintenanceTime": 10.0,
         "m_aircraftHealth": 130.0,
         "m_aircraftAttackPower": 35.0,
-        "m_upgradeMoneyCost": 1000,
-        "m_upgradeMineralCost": 500,
+        "m_aircraftAmmo": 30,
+        "m_upgradeCost": {
+          "techLevel": 10,
+          "mineral": 500,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Standard hanger bay level 10"
       },
       {
@@ -1751,8 +2361,14 @@
         "m_maintenanceTime": 14.5,
         "m_aircraftHealth": 40.0,
         "m_aircraftAttackPower": 8.0,
-        "m_upgradeMoneyCost": 100,
-        "m_upgradeMineralCost": 50,
+        "m_aircraftAmmo": 12,
+        "m_upgradeCost": {
+          "techLevel": 1,
+          "mineral": 50,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Advanced hanger bay level 1"
       },
       {
@@ -1769,8 +2385,14 @@
         "m_maintenanceTime": 14.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 11.0,
-        "m_upgradeMoneyCost": 200,
-        "m_upgradeMineralCost": 100,
+        "m_aircraftAmmo": 14,
+        "m_upgradeCost": {
+          "techLevel": 2,
+          "mineral": 100,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Advanced hanger bay level 2"
       },
       {
@@ -1787,8 +2409,14 @@
         "m_maintenanceTime": 13.5,
         "m_aircraftHealth": 60.0,
         "m_aircraftAttackPower": 14.0,
-        "m_upgradeMoneyCost": 300,
-        "m_upgradeMineralCost": 150,
+        "m_aircraftAmmo": 16,
+        "m_upgradeCost": {
+          "techLevel": 3,
+          "mineral": 150,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Advanced hanger bay level 3"
       },
       {
@@ -1805,8 +2433,14 @@
         "m_maintenanceTime": 13.0,
         "m_aircraftHealth": 70.0,
         "m_aircraftAttackPower": 17.0,
-        "m_upgradeMoneyCost": 400,
-        "m_upgradeMineralCost": 200,
+        "m_aircraftAmmo": 18,
+        "m_upgradeCost": {
+          "techLevel": 4,
+          "mineral": 200,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Advanced hanger bay level 4"
       },
       {
@@ -1823,8 +2457,14 @@
         "m_maintenanceTime": 12.5,
         "m_aircraftHealth": 80.0,
         "m_aircraftAttackPower": 20.0,
-        "m_upgradeMoneyCost": 500,
-        "m_upgradeMineralCost": 250,
+        "m_aircraftAmmo": 20,
+        "m_upgradeCost": {
+          "techLevel": 5,
+          "mineral": 250,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Advanced hanger bay level 5"
       },
       {
@@ -1841,8 +2481,14 @@
         "m_maintenanceTime": 12.0,
         "m_aircraftHealth": 90.0,
         "m_aircraftAttackPower": 23.0,
-        "m_upgradeMoneyCost": 600,
-        "m_upgradeMineralCost": 300,
+        "m_aircraftAmmo": 22,
+        "m_upgradeCost": {
+          "techLevel": 6,
+          "mineral": 300,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Advanced hanger bay level 6"
       },
       {
@@ -1859,8 +2505,14 @@
         "m_maintenanceTime": 11.5,
         "m_aircraftHealth": 100.0,
         "m_aircraftAttackPower": 26.0,
-        "m_upgradeMoneyCost": 700,
-        "m_upgradeMineralCost": 350,
+        "m_aircraftAmmo": 24,
+        "m_upgradeCost": {
+          "techLevel": 7,
+          "mineral": 350,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Advanced hanger bay level 7"
       },
       {
@@ -1877,8 +2529,14 @@
         "m_maintenanceTime": 11.0,
         "m_aircraftHealth": 110.0,
         "m_aircraftAttackPower": 29.0,
-        "m_upgradeMoneyCost": 800,
-        "m_upgradeMineralCost": 400,
+        "m_aircraftAmmo": 26,
+        "m_upgradeCost": {
+          "techLevel": 8,
+          "mineral": 400,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Advanced hanger bay level 8"
       },
       {
@@ -1895,8 +2553,14 @@
         "m_maintenanceTime": 10.5,
         "m_aircraftHealth": 120.0,
         "m_aircraftAttackPower": 32.0,
-        "m_upgradeMoneyCost": 900,
-        "m_upgradeMineralCost": 450,
+        "m_aircraftAmmo": 28,
+        "m_upgradeCost": {
+          "techLevel": 9,
+          "mineral": 450,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Advanced hanger bay level 9"
       },
       {
@@ -1913,8 +2577,14 @@
         "m_maintenanceTime": 10.0,
         "m_aircraftHealth": 130.0,
         "m_aircraftAttackPower": 35.0,
-        "m_upgradeMoneyCost": 1000,
-        "m_upgradeMineralCost": 500,
+        "m_aircraftAmmo": 30,
+        "m_upgradeCost": {
+          "techLevel": 10,
+          "mineral": 500,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Advanced hanger bay level 10"
       },
       {
@@ -1931,8 +2601,14 @@
         "m_maintenanceTime": 14.5,
         "m_aircraftHealth": 40.0,
         "m_aircraftAttackPower": 8.0,
-        "m_upgradeMoneyCost": 100,
-        "m_upgradeMineralCost": 50,
+        "m_aircraftAmmo": 12,
+        "m_upgradeCost": {
+          "techLevel": 1,
+          "mineral": 50,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Military hanger bay level 1"
       },
       {
@@ -1949,8 +2625,14 @@
         "m_maintenanceTime": 14.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 11.0,
-        "m_upgradeMoneyCost": 200,
-        "m_upgradeMineralCost": 100,
+        "m_aircraftAmmo": 14,
+        "m_upgradeCost": {
+          "techLevel": 2,
+          "mineral": 100,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Military hanger bay level 2"
       },
       {
@@ -1967,8 +2649,14 @@
         "m_maintenanceTime": 13.5,
         "m_aircraftHealth": 60.0,
         "m_aircraftAttackPower": 14.0,
-        "m_upgradeMoneyCost": 300,
-        "m_upgradeMineralCost": 150,
+        "m_aircraftAmmo": 16,
+        "m_upgradeCost": {
+          "techLevel": 3,
+          "mineral": 150,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Military hanger bay level 3"
       },
       {
@@ -1985,8 +2673,14 @@
         "m_maintenanceTime": 13.0,
         "m_aircraftHealth": 70.0,
         "m_aircraftAttackPower": 17.0,
-        "m_upgradeMoneyCost": 400,
-        "m_upgradeMineralCost": 200,
+        "m_aircraftAmmo": 18,
+        "m_upgradeCost": {
+          "techLevel": 4,
+          "mineral": 200,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Military hanger bay level 4"
       },
       {
@@ -2003,8 +2697,14 @@
         "m_maintenanceTime": 12.5,
         "m_aircraftHealth": 80.0,
         "m_aircraftAttackPower": 20.0,
-        "m_upgradeMoneyCost": 500,
-        "m_upgradeMineralCost": 250,
+        "m_aircraftAmmo": 20,
+        "m_upgradeCost": {
+          "techLevel": 5,
+          "mineral": 250,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Military hanger bay level 5"
       },
       {
@@ -2021,8 +2721,14 @@
         "m_maintenanceTime": 12.0,
         "m_aircraftHealth": 90.0,
         "m_aircraftAttackPower": 23.0,
-        "m_upgradeMoneyCost": 600,
-        "m_upgradeMineralCost": 300,
+        "m_aircraftAmmo": 22,
+        "m_upgradeCost": {
+          "techLevel": 6,
+          "mineral": 300,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Military hanger bay level 6"
       },
       {
@@ -2039,8 +2745,14 @@
         "m_maintenanceTime": 11.5,
         "m_aircraftHealth": 100.0,
         "m_aircraftAttackPower": 26.0,
-        "m_upgradeMoneyCost": 700,
-        "m_upgradeMineralCost": 350,
+        "m_aircraftAmmo": 24,
+        "m_upgradeCost": {
+          "techLevel": 7,
+          "mineral": 350,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Military hanger bay level 7"
       },
       {
@@ -2057,8 +2769,14 @@
         "m_maintenanceTime": 11.0,
         "m_aircraftHealth": 110.0,
         "m_aircraftAttackPower": 29.0,
-        "m_upgradeMoneyCost": 800,
-        "m_upgradeMineralCost": 400,
+        "m_aircraftAmmo": 26,
+        "m_upgradeCost": {
+          "techLevel": 8,
+          "mineral": 400,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Military hanger bay level 8"
       },
       {
@@ -2075,8 +2793,14 @@
         "m_maintenanceTime": 10.5,
         "m_aircraftHealth": 120.0,
         "m_aircraftAttackPower": 32.0,
-        "m_upgradeMoneyCost": 900,
-        "m_upgradeMineralCost": 450,
+        "m_aircraftAmmo": 28,
+        "m_upgradeCost": {
+          "techLevel": 9,
+          "mineral": 450,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Military hanger bay level 9"
       },
       {
@@ -2093,8 +2817,14 @@
         "m_maintenanceTime": 10.0,
         "m_aircraftHealth": 130.0,
         "m_aircraftAttackPower": 35.0,
-        "m_upgradeMoneyCost": 1000,
-        "m_upgradeMineralCost": 500,
+        "m_aircraftAmmo": 30,
+        "m_upgradeCost": {
+          "techLevel": 10,
+          "mineral": 500,
+          "mineralRare": 0,
+          "mineralExotic": 0,
+          "mineralDark": 0
+        },
         "m_description": "Military hanger bay level 10"
       }
     ]

@@ -49,11 +49,8 @@ public class ModuleHangerDataDto {
     @JsonProperty("m_aircraftAmmo")
     private int aircraftAmmo;
 
-    @JsonProperty("m_upgradeMoneyCost")
-    private int upgradeMoneyCost;
-
-    @JsonProperty("m_upgradeMineralCost")
-    private int upgradeMineralCost;
+    @JsonProperty("m_upgradeCost")
+    private CostStruct upgradeCost;
 
     @JsonProperty("m_description")
     private String description;

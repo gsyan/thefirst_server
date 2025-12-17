@@ -1,10 +1,92 @@
 {
-  "version": "1.0.0",
+  "version": "0.0.1",
   "maxLives": 3,
-  "maxShipsPerFleet": 10,
-  "shipAddMoneyCost": 1000,
-  "shipAddMineralCost": 500,
+  "maxShipsPerFleet": 8,
+  "addShipCosts": [
+    {
+      "techLevel": 0,
+      "mineral": 0,
+      "mineralRare": 0,
+      "mineralExotic": 0,
+      "mineralDark": 0
+    },
+    {
+      "techLevel": 1,
+      "mineral": 100,
+      "mineralRare": 0,
+      "mineralExotic": 0,
+      "mineralDark": 0
+    },
+    {
+      "techLevel": 1,
+      "mineral": 200,
+      "mineralRare": 0,
+      "mineralExotic": 0,
+      "mineralDark": 0
+    },
+    {
+      "techLevel": 1,
+      "mineral": 400,
+      "mineralRare": 0,
+      "mineralExotic": 0,
+      "mineralDark": 0
+    },
+    {
+      "techLevel": 1,
+      "mineral": 800,
+      "mineralRare": 0,
+      "mineralExotic": 0,
+      "mineralDark": 0
+    },
+    {
+      "techLevel": 1,
+      "mineral": 1600,
+      "mineralRare": 0,
+      "mineralExotic": 0,
+      "mineralDark": 0
+    },
+    {
+      "techLevel": 1,
+      "mineral": 3200,
+      "mineralRare": 0,
+      "mineralExotic": 0,
+      "mineralDark": 0
+    },
+    {
+      "techLevel": 1,
+      "mineral": 6400,
+      "mineralRare": 0,
+      "mineralExotic": 0,
+      "mineralDark": 0
+    },
+    {
+      "techLevel": 1,
+      "mineral": 12800,
+      "mineralRare": 0,
+      "mineralExotic": 0,
+      "mineralDark": 0
+    },
+    {
+      "techLevel": 1,
+      "mineral": 25600,
+      "mineralRare": 0,
+      "mineralExotic": 0,
+      "mineralDark": 0
+    },
+    {
+      "techLevel": 1,
+      "mineral": 51200,
+      "mineralRare": 0,
+      "mineralExotic": 0,
+      "mineralDark": 0
+    }
+  ],
   "enemyFleetSpawnInterval": 5.0,
   "explorationInterval": 15.0,
-  "enemySpawnRate": 2.0
+  "enemySpawnRate": 2.0,
+  "linearFormationSpacing": 3.0,
+  "gridFormationSpacing": 5.0,
+  "circleFormationSpacing": 8.0,
+  "diamondFormationSpacing": 6.0,
+  "wedgeFormationSpacing": 3.0
 }
