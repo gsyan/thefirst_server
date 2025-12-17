@@ -1,0 +1,16 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "gradleBuild",
+            "type": "shell",
+            "command": "./gradlew",
+            "args": [
+                "build",
+                "--no-daemon"
+            ],
+            "group": "build",
+            "problemMatcher": []
+        }
+    ]
+}

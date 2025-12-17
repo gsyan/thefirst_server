@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot App (Dev)",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.bk.sbs.SbsApplication",
+            "projectName": "thefirst_server",
+            "args": "--spring.profiles.active=dev",
+            "preLaunchTask": "gradleBuild"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot App (Prod)",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.bk.sbs.SbsApplication",
+            "projectName": "thefirst_server",
+            "args": "--spring.profiles.active=prod",
+            "preLaunchTask": "gradleBuild"
+        }
+    ]
+}
