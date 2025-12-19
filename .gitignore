@@ -39,3 +39,10 @@ out/
 ### Firebase ###
 **/firebase-service-account.json
 **/serviceAccountKey.json
+
+### Google ###
+tools/google_relate
+
+### ETC ###
+tools/memo
+tools/sqlQuery
