@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,15 +24,17 @@ public class FleetService {
     private final ShipRepository shipRepository;
     private final ShipModuleRepository shipModuleRepository;
     private final CharacterRepository characterRepository;
+    private final ModuleResearchRepository moduleResearchRepository;
     private final GameDataService gameDataService;
 
     public FleetService(FleetRepository fleetRepository, ShipRepository shipRepository,
                        ShipModuleRepository shipModuleRepository, CharacterRepository characterRepository,
-                       GameDataService gameDataService) {
+                       ModuleResearchRepository moduleResearchRepository, GameDataService gameDataService) {
         this.fleetRepository = fleetRepository;
         this.shipRepository = shipRepository;
         this.shipModuleRepository = shipModuleRepository;
         this.characterRepository = characterRepository;
+        this.moduleResearchRepository = moduleResearchRepository;
         this.gameDataService = gameDataService;
     }
 
@@ -97,7 +100,7 @@ public class FleetService {
         ModuleEngineDataDto engineData = gameDataService.getFirstEngineModule();
         ModuleHangerDataDto hangerData = gameDataService.getFirstHangerModule();
 
-        // 1. Body 모듈 (타입 1)
+        // 1. Body 모듈 (type 1)
         ShipModule bodyModule = new ShipModule();
         bodyModule.setShip(defaultShip);
         bodyModule.setModuleType(EModuleType.Body);
@@ -109,7 +112,7 @@ public class FleetService {
         bodyModule.setSlotIndex(0);
         shipModuleRepository.save(bodyModule);
 
-        // 2. Engine 모듈 (타입 2)
+        // 2. Engine 모듈 (type 2)
         ShipModule engineModule = new ShipModule();
         engineModule.setShip(defaultShip);
         engineModule.setModuleType(EModuleType.Engine);
@@ -120,7 +123,7 @@ public class FleetService {
         engineModule.setSlotIndex(0);
         shipModuleRepository.save(engineModule);
 
-        // 3. Weapon 모듈 (타입 3)
+        // 3. Weapon 모듈 (type 3)
         ShipModule weaponModule = new ShipModule();
         weaponModule.setShip(defaultShip);
         weaponModule.setModuleType(EModuleType.Weapon);
@@ -132,7 +135,7 @@ public class FleetService {
         weaponModule.setSlotIndex(0);
         shipModuleRepository.save(weaponModule);
 
-        // 4. Hanger 모듈 (타입 4)
+        // 4. Hanger 모듈 (type 4)
         ShipModule hangerModule = new ShipModule();
         hangerModule.setShip(defaultShip);
         hangerModule.setModuleType(EModuleType.Hanger);
@@ -410,7 +413,7 @@ public class FleetService {
                 .filter(m -> m.getModuleType() == EModuleType.Body)
                 .map(bodyModule -> {
                     BodyModuleDto bodyDto = new BodyModuleDto();
-                    bodyDto.setModuleType(ModuleTypeConverter.packBody(
+                    bodyDto.setModuleTypePacked(ModuleTypeConverter.packBody(
                         bodyModule.getModuleBodySubType(),
                         bodyModule.getModuleStyle()
                     ));
@@ -424,7 +427,7 @@ public class FleetService {
                             .filter(m -> m.getModuleType() == EModuleType.Engine && m.getBodyIndex() == bodyIndex)
                             .map(engineModule -> {
                                 EngineModuleDto engineDto = new EngineModuleDto();
-                                engineDto.setModuleType(ModuleTypeConverter.packEngine(
+                                engineDto.setModuleTypePacked(ModuleTypeConverter.packEngine(
                                         engineModule.getModuleEngineSubType(),
                                         engineModule.getModuleStyle()
                                 ));
@@ -440,7 +443,7 @@ public class FleetService {
                             .filter(m -> m.getModuleType() == EModuleType.Weapon && m.getBodyIndex() == bodyIndex)
                             .map(weaponModule -> {
                                 WeaponModuleDto weaponDto = new WeaponModuleDto();
-                                weaponDto.setModuleType(ModuleTypeConverter.packWeapon(
+                                weaponDto.setModuleTypePacked(ModuleTypeConverter.packWeapon(
                                     weaponModule.getModuleWeaponSubType(),
                                     weaponModule.getModuleStyle()
                                 ));
@@ -456,7 +459,7 @@ public class FleetService {
                             .filter(m -> m.getModuleType() == EModuleType.Hanger && m.getBodyIndex() == bodyIndex)
                             .map(hangerModule -> {
                                 HangerModuleDto hangerDto = new HangerModuleDto();
-                                hangerDto.setModuleType(ModuleTypeConverter.packHanger(
+                                hangerDto.setModuleTypePacked(ModuleTypeConverter.packHanger(
                                     hangerModule.getModuleHangerSubType(),
                                     hangerModule.getModuleStyle()
                                 ));
@@ -813,5 +816,215 @@ public class FleetService {
         // 업데이트된 함대 정보 반환
         FleetDto updatedFleet = convertToDetailDto(fleet);
         return ChangeFormationResponse.success(updatedFleet);
+    }
+
+    @Transactional
+    public ModuleChangeResponse changeModule(Long characterId, ModuleChangeRequest request) {
+        // 함선 소유권 확인
+        Ship ship = shipRepository.findById(request.getShipId())
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.SHIP_NOT_FOUND));
+
+        if (!ship.getFleet().getCharacterId().equals(characterId)) {
+            throw new BusinessException(ServerErrorCode.FLEET_ACCESS_DENIED);
+        }
+
+        // 현재 장착된 모듈 찾기
+        ShipModule currentModule = shipModuleRepository.findByShipIdAndBodyIndexAndSlotIndexAndDeletedFalse(
+                request.getShipId(),
+                request.getBodyIndex(),
+                request.getSlotIndex()
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_NOT_FOUND));
+
+        // 현재 모듈 타입 검증
+        if (!currentModule.getModuleType().name().equals(request.getCurrentModuleType())) {
+            //throw new BusinessException(ServerErrorCode.MODULE_TYPE_MISMATCH);
+            throw new BusinessException(ServerErrorCode.UNKNOWN_ERROR);
+        }
+
+        // 새 모듈 타입 파싱
+        EModuleType newModuleType;
+        try {
+            newModuleType = EModuleType.valueOf(request.getNewModuleType());
+        } catch (IllegalArgumentException e) {
+            //throw new BusinessException(ServerErrorCode.INVALID_MODULE_TYPE);
+            throw new BusinessException(ServerErrorCode.UNKNOWN_ERROR);
+        }
+
+        // 모듈 타입이 같은지 확인 (Weapon->Weapon, Engine->Engine 만 가능)
+        if (currentModule.getModuleType() != newModuleType) {
+            //throw new BusinessException(ServerErrorCode.MODULE_TYPE_CHANGE_NOT_ALLOWED);
+            throw new BusinessException(ServerErrorCode.UNKNOWN_ERROR);
+        }
+
+        // 캐릭터 자원 조회
+        com.bk.sbs.entity.Character character = characterRepository.findById(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
+
+        // 모듈 교체 비용 계산 (간단한 예시: 레벨 차이에 따른 비용)
+        // TODO: 실제 게임 데이터에 따른 비용 계산 로직 구현 필요
+        long mineralCost = request.getNewModuleLevel() * 100L;
+        long mineralRareCost = request.getNewModuleLevel() * 50L;
+        long mineralExoticCost = request.getNewModuleLevel() * 25L;
+        long mineralDarkCost = request.getNewModuleLevel() * 10L;
+
+        // 자원 부족 검사
+        if (character.getMineral() < mineralCost) {
+            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL);
+        }
+        if (character.getMineralRare() < mineralRareCost) {
+            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_RARE);
+        }
+        if (character.getMineralExotic() < mineralExoticCost) {
+            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_EXOTIC);
+        }
+        if (character.getMineralDark() < mineralDarkCost) {
+            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_DARK);
+        }
+
+        // 자원 차감
+        character.setMineral(character.getMineral() - mineralCost);
+        character.setMineralRare(character.getMineralRare() - mineralRareCost);
+        character.setMineralExotic(character.getMineralExotic() - mineralExoticCost);
+        character.setMineralDark(character.getMineralDark() - mineralDarkCost);
+        characterRepository.save(character);
+
+        // 모듈 정보 업데이트 (레벨만 변경, 타입은 동일)
+        currentModule.setModuleLevel(request.getNewModuleLevel());
+        currentModule.setModified(LocalDateTime.now());
+        shipModuleRepository.save(currentModule);
+
+        // 업데이트된 함선 정보 조회
+        ShipDto updatedShipDto = convertShipToDto(ship);
+
+        // 비용 정보
+        CostRemainInfo costRemainInfo = new CostRemainInfo(
+                mineralCost,
+                mineralRareCost,
+                mineralExoticCost,
+                mineralDarkCost,
+                character.getMineral(),
+                character.getMineralRare(),
+                character.getMineralExotic(),
+                character.getMineralDark()
+        );
+
+        // 응답 생성
+        return new ModuleChangeResponse(
+                true,
+                updatedShipDto,
+                costRemainInfo,
+                "Module changed successfully."
+        );
+    }
+
+    @Transactional
+    public ModuleResearchResponse researchModule(Long characterId, ModuleResearchRequest request) {
+        // 모듈 타입 파싱
+        EModuleType moduleType;
+        try {
+            moduleType = EModuleType.valueOf(request.getModuleType());
+        } catch (IllegalArgumentException e) {
+            throw new BusinessException(ServerErrorCode.INVALID_MODULE_TYPE);
+        }
+
+        // 이미 개발되었는지 확인
+        Optional<ModuleResearch> existing = moduleResearchRepository.findByCharacterIdAndModuleTypeAndModuleSubTypeValue(
+                characterId,
+                moduleType,
+                request.getModuleSubTypeValue()
+        );
+
+        if (existing.isPresent() && existing.get().isResearched()) {
+            throw new BusinessException(ServerErrorCode.MODULE_ALREADY_RESEARCHED);
+        }
+
+        // 캐릭터 자원 조회
+        com.bk.sbs.entity.Character character = characterRepository.findById(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
+
+        // 모듈 개발 비용 계산 (TODO: 실제 게임 데이터 기반 비용 계산 필요)
+        long mineralCost = 1000L;
+        long mineralRareCost = 500L;
+        long mineralExoticCost = 250L;
+        long mineralDarkCost = 100L;
+
+        // 자원 부족 검사
+        if (character.getMineral() < mineralCost) {
+            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL);
+        }
+        if (character.getMineralRare() < mineralRareCost) {
+            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_RARE);
+        }
+        if (character.getMineralExotic() < mineralExoticCost) {
+            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_EXOTIC);
+        }
+        if (character.getMineralDark() < mineralDarkCost) {
+            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_DARK);
+        }
+
+        // 자원 차감
+        character.setMineral(character.getMineral() - mineralCost);
+        character.setMineralRare(character.getMineralRare() - mineralRareCost);
+        character.setMineralExotic(character.getMineralExotic() - mineralExoticCost);
+        character.setMineralDark(character.getMineralDark() - mineralDarkCost);
+        characterRepository.save(character);
+
+        // 모듈 개발 정보 저장 또는 업데이트
+        ModuleResearch moduleResearch;
+        if (existing.isPresent()) {
+            moduleResearch = existing.get();
+            moduleResearch.setResearched(true);
+            moduleResearch.setModified(LocalDateTime.now());
+        } else {
+            moduleResearch = new ModuleResearch();
+            moduleResearch.setCharacterId(characterId);
+            moduleResearch.setModuleType(moduleType);
+            moduleResearch.setModuleSubTypeValue(request.getModuleSubTypeValue());
+            moduleResearch.setResearched(true);
+        }
+        moduleResearchRepository.save(moduleResearch);
+
+        // 개발된 모든 모듈 목록 조회
+        List<ModuleResearch> researchedList = moduleResearchRepository.findByCharacterIdAndResearchedTrue(characterId);
+        List<ModuleResearchResponse.ResearchedModuleInfo> researchedModules = researchedList.stream()
+                .map(r -> new ModuleResearchResponse.ResearchedModuleInfo(
+                        r.getModuleType().name(),
+                        r.getModuleSubTypeValue()
+                ))
+                .collect(Collectors.toList());
+
+        // 비용 정보
+        CostRemainInfo costRemainInfo = new CostRemainInfo(
+                mineralCost,
+                mineralRareCost,
+                mineralExoticCost,
+                mineralDarkCost,
+                character.getMineral(),
+                character.getMineralRare(),
+                character.getMineralExotic(),
+                character.getMineralDark()
+        );
+
+        // 응답 생성
+        return new ModuleResearchResponse(
+                true,
+                moduleType.name(),
+                request.getModuleSubTypeValue(),
+                costRemainInfo,
+                researchedModules,
+                "Module researched successfully."
+        );
+    }
+
+    
+    //캐릭터가 개발한 모든 모듈 목록 조회    
+    public List<ModuleResearchResponse.ResearchedModuleInfo> getResearchedModules(Long characterId) {
+        List<ModuleResearch> researchedList = moduleResearchRepository.findByCharacterIdAndResearchedTrue(characterId);
+        return researchedList.stream()
+                .map(r -> new ModuleResearchResponse.ResearchedModuleInfo(
+                        r.getModuleType().name(),
+                        r.getModuleSubTypeValue()
+                ))
+                .collect(Collectors.toList());
     }
 }

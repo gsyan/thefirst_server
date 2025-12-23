@@ -7,8 +7,8 @@ import lombok.Data;
 
 @Data
 public class ModuleWeaponDataDto {
-    @JsonAlias("m_moduleType")
-    private Integer moduleType;
+    @JsonAlias("m_moduleTypePacked")
+    private Integer moduleTypePacked;
 
     @JsonAlias("m_name")
     private String name;

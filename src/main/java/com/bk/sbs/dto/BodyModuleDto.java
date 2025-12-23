@@ -6,7 +6,7 @@ import java.util.List;
 
 @Data
 public class BodyModuleDto {
-    private int moduleType;
+    private int moduleTypePacked;
     private int moduleLevel;
     private int bodyIndex;
     private LocalDateTime created;

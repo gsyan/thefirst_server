@@ -25,6 +25,10 @@ public enum ServerErrorCode {
     INSUFFICIENT_MINERAL_RARE(4013, "Insufficient rare mineral for upgrade"),
     INSUFFICIENT_MINERAL_EXOTIC(4014, "Insufficient exotic mineral for upgrade"),
     INSUFFICIENT_MINERAL_DARK(4015, "Insufficient dark mineral for upgrade"),
+    MODULE_TYPE_MISMATCH(4016, "Module type mismatch"),
+    MODULE_TYPE_CHANGE_NOT_ALLOWED(4017, "Module type change not allowed"),
+    INVALID_MODULE_TYPE(4018, "Invalid module type"),
+    MODULE_ALREADY_RESEARCHED(4019, "Module already researched"),
     INVALID_DATA_TABLE(5001, "Invalid data table provided"),
     UNKNOWN_ERROR(Integer.MAX_VALUE, "Unknown error");
 

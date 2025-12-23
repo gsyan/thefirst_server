@@ -1,0 +1,46 @@
+package com.bk.sbs.entity;
+
+import com.bk.sbs.enums.EModuleType;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
+
+/**
+ * 캐릭터별 모듈 개발(연구) 상태를 저장하는 엔티티
+ */
+@Entity
+@Getter
+@Setter
+public class ModuleResearch {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private Long characterId; // 캐릭터 ID
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(nullable = false)
+    private EModuleType moduleType; // 모듈 타입 (Body, Weapon, Engine, Hanger)
+
+    @Column(nullable = false)
+    private int moduleSubTypeValue; // 서브타입 값 (예: EModuleBodySubType의 값)
+
+    @Column(nullable = false)
+    private int moduleStyleValue; // 모듈 스타일 값 (예: EModuleStyle의 값)
+
+    @Column(nullable = false)
+    private boolean researched = false; // 개발 완료 여부
+
+    @Column(nullable = false)
+    private LocalDateTime created = LocalDateTime.now();
+
+    @Column(nullable = false)
+    private LocalDateTime modified = LocalDateTime.now();
+
+    // 복합 인덱스: characterId + moduleType + moduleSubTypeValue + moduleStyleValue 조합으로 유니크
+    // (한 캐릭터가 같은 모듈을 중복으로 개발할 수 없음)
+}

@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class HangerModuleDto {
-    private int moduleType;
+    private int moduleTypePacked;
     private int moduleLevel;
     private int bodyIndex;
     private int slotIndex;

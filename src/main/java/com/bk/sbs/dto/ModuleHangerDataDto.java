@@ -7,8 +7,8 @@ import lombok.Data;
 
 @Data
 public class ModuleHangerDataDto {
-    @JsonProperty("m_moduleType")
-    private int moduleType;
+    @JsonProperty("m_moduleTypePacked")
+    private int moduleTypePacked;
 
     @JsonProperty("m_name")
     private String name;

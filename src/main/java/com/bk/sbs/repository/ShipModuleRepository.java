@@ -27,4 +27,6 @@ public interface ShipModuleRepository extends JpaRepository<ShipModule, Long> {
     Optional<ShipModule> findByShipIdAndSlotIndexAndDeletedFalse(Long shipId, int slotIndex);
 
     Optional<ShipModule> findByShipIdAndBodyIndexAndModuleTypeAndDeletedFalse(Long shipId, int bodyIndex, EModuleType moduleType);
+
+    Optional<ShipModule> findByShipIdAndBodyIndexAndSlotIndexAndDeletedFalse(Long shipId, int bodyIndex, int slotIndex);
 }

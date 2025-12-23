@@ -2,7 +2,7 @@
   "modules": {
     "1": [
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Battle Hull Lv.1",
         "m_subType": 1,
         "m_style": 1,
@@ -19,7 +19,7 @@
         "m_description": "Battle-class hull module level 1"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Battle Hull Lv.2",
         "m_subType": 1,
         "m_style": 1,
@@ -36,7 +36,7 @@
         "m_description": "Battle-class hull module level 2"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Battle Hull Lv.3",
         "m_subType": 1,
         "m_style": 1,
@@ -53,7 +53,7 @@
         "m_description": "Battle-class hull module level 3"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Battle Hull Lv.4",
         "m_subType": 1,
         "m_style": 1,
@@ -70,7 +70,7 @@
         "m_description": "Battle-class hull module level 4"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Battle Hull Lv.5",
         "m_subType": 1,
         "m_style": 1,
@@ -87,7 +87,7 @@
         "m_description": "Battle-class hull module level 5"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Battle Hull Lv.6",
         "m_subType": 1,
         "m_style": 1,
@@ -104,7 +104,7 @@
         "m_description": "Battle-class hull module level 6"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Battle Hull Lv.7",
         "m_subType": 1,
         "m_style": 1,
@@ -121,7 +121,7 @@
         "m_description": "Battle-class hull module level 7"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Battle Hull Lv.8",
         "m_subType": 1,
         "m_style": 1,
@@ -138,7 +138,7 @@
         "m_description": "Battle-class hull module level 8"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Battle Hull Lv.9",
         "m_subType": 1,
         "m_style": 1,
@@ -155,7 +155,7 @@
         "m_description": "Battle-class hull module level 9"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Battle Hull Lv.10",
         "m_subType": 1,
         "m_style": 1,
@@ -172,7 +172,7 @@
         "m_description": "Battle-class hull module level 10"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Aircraft Hull Lv.1",
         "m_subType": 2,
         "m_style": 1,
@@ -189,7 +189,7 @@
         "m_description": "Aircraft-class hull module level 1"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Aircraft Hull Lv.2",
         "m_subType": 2,
         "m_style": 1,
@@ -206,7 +206,7 @@
         "m_description": "Aircraft-class hull module level 2"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Aircraft Hull Lv.3",
         "m_subType": 2,
         "m_style": 1,
@@ -223,7 +223,7 @@
         "m_description": "Aircraft-class hull module level 3"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Aircraft Hull Lv.4",
         "m_subType": 2,
         "m_style": 1,
@@ -240,7 +240,7 @@
         "m_description": "Aircraft-class hull module level 4"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Aircraft Hull Lv.5",
         "m_subType": 2,
         "m_style": 1,
@@ -257,7 +257,7 @@
         "m_description": "Aircraft-class hull module level 5"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Aircraft Hull Lv.6",
         "m_subType": 2,
         "m_style": 1,
@@ -274,7 +274,7 @@
         "m_description": "Aircraft-class hull module level 6"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Aircraft Hull Lv.7",
         "m_subType": 2,
         "m_style": 1,
@@ -291,7 +291,7 @@
         "m_description": "Aircraft-class hull module level 7"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Aircraft Hull Lv.8",
         "m_subType": 2,
         "m_style": 1,
@@ -308,7 +308,7 @@
         "m_description": "Aircraft-class hull module level 8"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Aircraft Hull Lv.9",
         "m_subType": 2,
         "m_style": 1,
@@ -325,7 +325,7 @@
         "m_description": "Aircraft-class hull module level 9"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Aircraft Hull Lv.10",
         "m_subType": 2,
         "m_style": 1,
@@ -342,7 +342,7 @@
         "m_description": "Aircraft-class hull module level 10"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Scout Hull Lv.1",
         "m_subType": 3,
         "m_style": 1,
@@ -359,7 +359,7 @@
         "m_description": "Scout-class hull module level 1"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Scout Hull Lv.2",
         "m_subType": 3,
         "m_style": 1,
@@ -376,7 +376,7 @@
         "m_description": "Scout-class hull module level 2"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Scout Hull Lv.3",
         "m_subType": 3,
         "m_style": 1,
@@ -393,7 +393,7 @@
         "m_description": "Scout-class hull module level 3"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Scout Hull Lv.4",
         "m_subType": 3,
         "m_style": 1,
@@ -410,7 +410,7 @@
         "m_description": "Scout-class hull module level 4"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Scout Hull Lv.5",
         "m_subType": 3,
         "m_style": 1,
@@ -427,7 +427,7 @@
         "m_description": "Scout-class hull module level 5"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Scout Hull Lv.6",
         "m_subType": 3,
         "m_style": 1,
@@ -444,7 +444,7 @@
         "m_description": "Scout-class hull module level 6"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Scout Hull Lv.7",
         "m_subType": 3,
         "m_style": 1,
@@ -461,7 +461,7 @@
         "m_description": "Scout-class hull module level 7"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Scout Hull Lv.8",
         "m_subType": 3,
         "m_style": 1,
@@ -478,7 +478,7 @@
         "m_description": "Scout-class hull module level 8"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Scout Hull Lv.9",
         "m_subType": 3,
         "m_style": 1,
@@ -495,7 +495,7 @@
         "m_description": "Scout-class hull module level 9"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Scout Hull Lv.10",
         "m_subType": 3,
         "m_style": 1,
@@ -512,7 +512,7 @@
         "m_description": "Scout-class hull module level 10"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Repair Hull Lv.1",
         "m_subType": 4,
         "m_style": 1,
@@ -529,7 +529,7 @@
         "m_description": "Repair-class hull module level 1"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Repair Hull Lv.2",
         "m_subType": 4,
         "m_style": 1,
@@ -546,7 +546,7 @@
         "m_description": "Repair-class hull module level 2"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Repair Hull Lv.3",
         "m_subType": 4,
         "m_style": 1,
@@ -563,7 +563,7 @@
         "m_description": "Repair-class hull module level 3"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Repair Hull Lv.4",
         "m_subType": 4,
         "m_style": 1,
@@ -580,7 +580,7 @@
         "m_description": "Repair-class hull module level 4"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Repair Hull Lv.5",
         "m_subType": 4,
         "m_style": 1,
@@ -597,7 +597,7 @@
         "m_description": "Repair-class hull module level 5"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Repair Hull Lv.6",
         "m_subType": 4,
         "m_style": 1,
@@ -614,7 +614,7 @@
         "m_description": "Repair-class hull module level 6"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Repair Hull Lv.7",
         "m_subType": 4,
         "m_style": 1,
@@ -631,7 +631,7 @@
         "m_description": "Repair-class hull module level 7"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Repair Hull Lv.8",
         "m_subType": 4,
         "m_style": 1,
@@ -648,7 +648,7 @@
         "m_description": "Repair-class hull module level 8"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Repair Hull Lv.9",
         "m_subType": 4,
         "m_style": 1,
@@ -665,7 +665,7 @@
         "m_description": "Repair-class hull module level 9"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Repair Hull Lv.10",
         "m_subType": 4,
         "m_style": 1,
@@ -684,7 +684,7 @@
     ],
     "2": [
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Standard Engine Lv.1",
         "m_subType": 1,
         "m_style": 1,
@@ -702,7 +702,7 @@
         "m_description": "Standard propulsion system level 1"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Standard Engine Lv.2",
         "m_subType": 1,
         "m_style": 1,
@@ -720,7 +720,7 @@
         "m_description": "Standard propulsion system level 2"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Standard Engine Lv.3",
         "m_subType": 1,
         "m_style": 1,
@@ -738,7 +738,7 @@
         "m_description": "Standard propulsion system level 3"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Standard Engine Lv.4",
         "m_subType": 1,
         "m_style": 1,
@@ -756,7 +756,7 @@
         "m_description": "Standard propulsion system level 4"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Standard Engine Lv.5",
         "m_subType": 1,
         "m_style": 1,
@@ -774,7 +774,7 @@
         "m_description": "Standard propulsion system level 5"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Standard Engine Lv.6",
         "m_subType": 1,
         "m_style": 1,
@@ -792,7 +792,7 @@
         "m_description": "Standard propulsion system level 6"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Standard Engine Lv.7",
         "m_subType": 1,
         "m_style": 1,
@@ -810,7 +810,7 @@
         "m_description": "Standard propulsion system level 7"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Standard Engine Lv.8",
         "m_subType": 1,
         "m_style": 1,
@@ -828,7 +828,7 @@
         "m_description": "Standard propulsion system level 8"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Standard Engine Lv.9",
         "m_subType": 1,
         "m_style": 1,
@@ -846,7 +846,7 @@
         "m_description": "Standard propulsion system level 9"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Standard Engine Lv.10",
         "m_subType": 1,
         "m_style": 1,
@@ -864,7 +864,7 @@
         "m_description": "Standard propulsion system level 10"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Booster Engine Lv.1",
         "m_subType": 2,
         "m_style": 1,
@@ -882,7 +882,7 @@
         "m_description": "Booster propulsion system level 1"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Booster Engine Lv.2",
         "m_subType": 2,
         "m_style": 1,
@@ -900,7 +900,7 @@
         "m_description": "Booster propulsion system level 2"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Booster Engine Lv.3",
         "m_subType": 2,
         "m_style": 1,
@@ -918,7 +918,7 @@
         "m_description": "Booster propulsion system level 3"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Booster Engine Lv.4",
         "m_subType": 2,
         "m_style": 1,
@@ -936,7 +936,7 @@
         "m_description": "Booster propulsion system level 4"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Booster Engine Lv.5",
         "m_subType": 2,
         "m_style": 1,
@@ -954,7 +954,7 @@
         "m_description": "Booster propulsion system level 5"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Booster Engine Lv.6",
         "m_subType": 2,
         "m_style": 1,
@@ -972,7 +972,7 @@
         "m_description": "Booster propulsion system level 6"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Booster Engine Lv.7",
         "m_subType": 2,
         "m_style": 1,
@@ -990,7 +990,7 @@
         "m_description": "Booster propulsion system level 7"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Booster Engine Lv.8",
         "m_subType": 2,
         "m_style": 1,
@@ -1008,7 +1008,7 @@
         "m_description": "Booster propulsion system level 8"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Booster Engine Lv.9",
         "m_subType": 2,
         "m_style": 1,
@@ -1026,7 +1026,7 @@
         "m_description": "Booster propulsion system level 9"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Booster Engine Lv.10",
         "m_subType": 2,
         "m_style": 1,
@@ -1044,7 +1044,7 @@
         "m_description": "Booster propulsion system level 10"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Warp Engine Lv.1",
         "m_subType": 3,
         "m_style": 1,
@@ -1062,7 +1062,7 @@
         "m_description": "Warp propulsion system level 1"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Warp Engine Lv.2",
         "m_subType": 3,
         "m_style": 1,
@@ -1080,7 +1080,7 @@
         "m_description": "Warp propulsion system level 2"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Warp Engine Lv.3",
         "m_subType": 3,
         "m_style": 1,
@@ -1098,7 +1098,7 @@
         "m_description": "Warp propulsion system level 3"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Warp Engine Lv.4",
         "m_subType": 3,
         "m_style": 1,
@@ -1116,7 +1116,7 @@
         "m_description": "Warp propulsion system level 4"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Warp Engine Lv.5",
         "m_subType": 3,
         "m_style": 1,
@@ -1134,7 +1134,7 @@
         "m_description": "Warp propulsion system level 5"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Warp Engine Lv.6",
         "m_subType": 3,
         "m_style": 1,
@@ -1152,7 +1152,7 @@
         "m_description": "Warp propulsion system level 6"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Warp Engine Lv.7",
         "m_subType": 3,
         "m_style": 1,
@@ -1170,7 +1170,7 @@
         "m_description": "Warp propulsion system level 7"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Warp Engine Lv.8",
         "m_subType": 3,
         "m_style": 1,
@@ -1188,7 +1188,7 @@
         "m_description": "Warp propulsion system level 8"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Warp Engine Lv.9",
         "m_subType": 3,
         "m_style": 1,
@@ -1206,7 +1206,7 @@
         "m_description": "Warp propulsion system level 9"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Warp Engine Lv.10",
         "m_subType": 3,
         "m_style": 1,
@@ -1226,7 +1226,7 @@
     ],
     "3": [
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Beam Weapon Lv.1",
         "m_subType": 1,
         "m_style": 1,
@@ -1248,7 +1248,7 @@
         "m_description": "Beam weapon system level 1"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Beam Weapon Lv.2",
         "m_subType": 1,
         "m_style": 1,
@@ -1261,7 +1261,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 2,
+          "techLevel": 1,
           "mineral": 100,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1270,7 +1270,7 @@
         "m_description": "Beam weapon system level 2"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Beam Weapon Lv.3",
         "m_subType": 1,
         "m_style": 1,
@@ -1283,7 +1283,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 3,
+          "techLevel": 1,
           "mineral": 150,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1292,7 +1292,7 @@
         "m_description": "Beam weapon system level 3"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Beam Weapon Lv.4",
         "m_subType": 1,
         "m_style": 1,
@@ -1305,7 +1305,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 4,
+          "techLevel": 1,
           "mineral": 200,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1314,7 +1314,7 @@
         "m_description": "Beam weapon system level 4"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Beam Weapon Lv.5",
         "m_subType": 1,
         "m_style": 1,
@@ -1327,7 +1327,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 5,
+          "techLevel": 1,
           "mineral": 250,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1336,7 +1336,7 @@
         "m_description": "Beam weapon system level 5"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Beam Weapon Lv.6",
         "m_subType": 1,
         "m_style": 1,
@@ -1349,7 +1349,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 6,
+          "techLevel": 1,
           "mineral": 300,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1358,7 +1358,7 @@
         "m_description": "Beam weapon system level 6"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Beam Weapon Lv.7",
         "m_subType": 1,
         "m_style": 1,
@@ -1371,7 +1371,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 7,
+          "techLevel": 1,
           "mineral": 350,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1380,7 +1380,7 @@
         "m_description": "Beam weapon system level 7"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Beam Weapon Lv.8",
         "m_subType": 1,
         "m_style": 1,
@@ -1393,7 +1393,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 8,
+          "techLevel": 1,
           "mineral": 400,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1402,7 +1402,7 @@
         "m_description": "Beam weapon system level 8"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Beam Weapon Lv.9",
         "m_subType": 1,
         "m_style": 1,
@@ -1415,7 +1415,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 9,
+          "techLevel": 1,
           "mineral": 450,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1424,7 +1424,7 @@
         "m_description": "Beam weapon system level 9"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Beam Weapon Lv.10",
         "m_subType": 1,
         "m_style": 1,
@@ -1437,7 +1437,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 10,
+          "techLevel": 1,
           "mineral": 500,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1446,7 +1446,7 @@
         "m_description": "Beam weapon system level 10"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Missile Weapon Lv.1",
         "m_subType": 2,
         "m_style": 1,
@@ -1468,7 +1468,7 @@
         "m_description": "Missile weapon system level 1"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Missile Weapon Lv.2",
         "m_subType": 2,
         "m_style": 1,
@@ -1481,7 +1481,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 2,
+          "techLevel": 1,
           "mineral": 100,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1490,7 +1490,7 @@
         "m_description": "Missile weapon system level 2"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Missile Weapon Lv.3",
         "m_subType": 2,
         "m_style": 1,
@@ -1503,7 +1503,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 3,
+          "techLevel": 1,
           "mineral": 150,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1512,7 +1512,7 @@
         "m_description": "Missile weapon system level 3"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Missile Weapon Lv.4",
         "m_subType": 2,
         "m_style": 1,
@@ -1525,7 +1525,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 4,
+          "techLevel": 1,
           "mineral": 200,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1534,7 +1534,7 @@
         "m_description": "Missile weapon system level 4"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Missile Weapon Lv.5",
         "m_subType": 2,
         "m_style": 1,
@@ -1547,7 +1547,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 5,
+          "techLevel": 1,
           "mineral": 250,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1556,7 +1556,7 @@
         "m_description": "Missile weapon system level 5"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Missile Weapon Lv.6",
         "m_subType": 2,
         "m_style": 1,
@@ -1569,7 +1569,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 6,
+          "techLevel": 1,
           "mineral": 300,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1578,7 +1578,7 @@
         "m_description": "Missile weapon system level 6"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Missile Weapon Lv.7",
         "m_subType": 2,
         "m_style": 1,
@@ -1591,7 +1591,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 7,
+          "techLevel": 1,
           "mineral": 350,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1600,7 +1600,7 @@
         "m_description": "Missile weapon system level 7"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Missile Weapon Lv.8",
         "m_subType": 2,
         "m_style": 1,
@@ -1613,7 +1613,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 8,
+          "techLevel": 1,
           "mineral": 400,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1622,7 +1622,7 @@
         "m_description": "Missile weapon system level 8"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Missile Weapon Lv.9",
         "m_subType": 2,
         "m_style": 1,
@@ -1635,7 +1635,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 9,
+          "techLevel": 1,
           "mineral": 450,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1644,7 +1644,7 @@
         "m_description": "Missile weapon system level 9"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Missile Weapon Lv.10",
         "m_subType": 2,
         "m_style": 1,
@@ -1657,7 +1657,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 10,
+          "techLevel": 1,
           "mineral": 500,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1666,7 +1666,7 @@
         "m_description": "Missile weapon system level 10"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Cannon Weapon Lv.1",
         "m_subType": 3,
         "m_style": 1,
@@ -1688,7 +1688,7 @@
         "m_description": "Cannon weapon system level 1"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Cannon Weapon Lv.2",
         "m_subType": 3,
         "m_style": 1,
@@ -1701,7 +1701,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 2,
+          "techLevel": 1,
           "mineral": 100,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1710,7 +1710,7 @@
         "m_description": "Cannon weapon system level 2"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Cannon Weapon Lv.3",
         "m_subType": 3,
         "m_style": 1,
@@ -1723,7 +1723,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 3,
+          "techLevel": 1,
           "mineral": 150,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1732,7 +1732,7 @@
         "m_description": "Cannon weapon system level 3"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Cannon Weapon Lv.4",
         "m_subType": 3,
         "m_style": 1,
@@ -1745,7 +1745,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 4,
+          "techLevel": 1,
           "mineral": 200,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1754,7 +1754,7 @@
         "m_description": "Cannon weapon system level 4"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Cannon Weapon Lv.5",
         "m_subType": 3,
         "m_style": 1,
@@ -1767,7 +1767,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 5,
+          "techLevel": 1,
           "mineral": 250,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1776,7 +1776,7 @@
         "m_description": "Cannon weapon system level 5"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Cannon Weapon Lv.6",
         "m_subType": 3,
         "m_style": 1,
@@ -1789,7 +1789,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 6,
+          "techLevel": 1,
           "mineral": 300,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1798,7 +1798,7 @@
         "m_description": "Cannon weapon system level 6"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Cannon Weapon Lv.7",
         "m_subType": 3,
         "m_style": 1,
@@ -1811,7 +1811,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 7,
+          "techLevel": 1,
           "mineral": 350,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1820,7 +1820,7 @@
         "m_description": "Cannon weapon system level 7"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Cannon Weapon Lv.8",
         "m_subType": 3,
         "m_style": 1,
@@ -1833,7 +1833,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 8,
+          "techLevel": 1,
           "mineral": 400,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1842,7 +1842,7 @@
         "m_description": "Cannon weapon system level 8"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Cannon Weapon Lv.9",
         "m_subType": 3,
         "m_style": 1,
@@ -1855,7 +1855,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 9,
+          "techLevel": 1,
           "mineral": 450,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1864,7 +1864,7 @@
         "m_description": "Cannon weapon system level 9"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Cannon Weapon Lv.10",
         "m_subType": 3,
         "m_style": 1,
@@ -1877,7 +1877,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 10,
+          "techLevel": 1,
           "mineral": 500,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1886,7 +1886,7 @@
         "m_description": "Cannon weapon system level 10"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Torpedo Weapon Lv.1",
         "m_subType": 4,
         "m_style": 1,
@@ -1908,7 +1908,7 @@
         "m_description": "Torpedo weapon system level 1"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Torpedo Weapon Lv.2",
         "m_subType": 4,
         "m_style": 1,
@@ -1921,7 +1921,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 2,
+          "techLevel": 1,
           "mineral": 100,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1930,7 +1930,7 @@
         "m_description": "Torpedo weapon system level 2"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Torpedo Weapon Lv.3",
         "m_subType": 4,
         "m_style": 1,
@@ -1943,7 +1943,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 3,
+          "techLevel": 1,
           "mineral": 150,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1952,7 +1952,7 @@
         "m_description": "Torpedo weapon system level 3"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Torpedo Weapon Lv.4",
         "m_subType": 4,
         "m_style": 1,
@@ -1965,7 +1965,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 4,
+          "techLevel": 1,
           "mineral": 200,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1974,7 +1974,7 @@
         "m_description": "Torpedo weapon system level 4"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Torpedo Weapon Lv.5",
         "m_subType": 4,
         "m_style": 1,
@@ -1987,7 +1987,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 5,
+          "techLevel": 1,
           "mineral": 250,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -1996,7 +1996,7 @@
         "m_description": "Torpedo weapon system level 5"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Torpedo Weapon Lv.6",
         "m_subType": 4,
         "m_style": 1,
@@ -2009,7 +2009,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 6,
+          "techLevel": 1,
           "mineral": 300,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -2018,7 +2018,7 @@
         "m_description": "Torpedo weapon system level 6"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Torpedo Weapon Lv.7",
         "m_subType": 4,
         "m_style": 1,
@@ -2031,7 +2031,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 7,
+          "techLevel": 1,
           "mineral": 350,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -2040,7 +2040,7 @@
         "m_description": "Torpedo weapon system level 7"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Torpedo Weapon Lv.8",
         "m_subType": 4,
         "m_style": 1,
@@ -2053,7 +2053,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 8,
+          "techLevel": 1,
           "mineral": 400,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -2062,7 +2062,7 @@
         "m_description": "Torpedo weapon system level 8"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Torpedo Weapon Lv.9",
         "m_subType": 4,
         "m_style": 1,
@@ -2075,7 +2075,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 9,
+          "techLevel": 1,
           "mineral": 450,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -2084,7 +2084,7 @@
         "m_description": "Torpedo weapon system level 9"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Torpedo Weapon Lv.10",
         "m_subType": 4,
         "m_style": 1,
@@ -2097,7 +2097,7 @@
         "m_projectileWidth": 0.1,
         "m_projectileSpeed": 20.0,
         "m_upgradeCost": {
-          "techLevel": 10,
+          "techLevel": 1,
           "mineral": 500,
           "mineralRare": 0,
           "mineralExotic": 0,
@@ -2108,7 +2108,7 @@
     ],
     "4": [
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Standard Hanger Lv.1",
         "m_subType": 1,
         "m_style": 1,
@@ -2132,7 +2132,7 @@
         "m_description": "Standard hanger bay level 1"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Standard Hanger Lv.2",
         "m_subType": 1,
         "m_style": 1,
@@ -2156,7 +2156,7 @@
         "m_description": "Standard hanger bay level 2"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Standard Hanger Lv.3",
         "m_subType": 1,
         "m_style": 1,
@@ -2180,7 +2180,7 @@
         "m_description": "Standard hanger bay level 3"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Standard Hanger Lv.4",
         "m_subType": 1,
         "m_style": 1,
@@ -2204,7 +2204,7 @@
         "m_description": "Standard hanger bay level 4"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Standard Hanger Lv.5",
         "m_subType": 1,
         "m_style": 1,
@@ -2228,7 +2228,7 @@
         "m_description": "Standard hanger bay level 5"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Standard Hanger Lv.6",
         "m_subType": 1,
         "m_style": 1,
@@ -2252,7 +2252,7 @@
         "m_description": "Standard hanger bay level 6"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Standard Hanger Lv.7",
         "m_subType": 1,
         "m_style": 1,
@@ -2276,7 +2276,7 @@
         "m_description": "Standard hanger bay level 7"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Standard Hanger Lv.8",
         "m_subType": 1,
         "m_style": 1,
@@ -2300,7 +2300,7 @@
         "m_description": "Standard hanger bay level 8"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Standard Hanger Lv.9",
         "m_subType": 1,
         "m_style": 1,
@@ -2324,7 +2324,7 @@
         "m_description": "Standard hanger bay level 9"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Standard Hanger Lv.10",
         "m_subType": 1,
         "m_style": 1,
@@ -2348,7 +2348,7 @@
         "m_description": "Standard hanger bay level 10"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Advanced Hanger Lv.1",
         "m_subType": 2,
         "m_style": 1,
@@ -2372,7 +2372,7 @@
         "m_description": "Advanced hanger bay level 1"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Advanced Hanger Lv.2",
         "m_subType": 2,
         "m_style": 1,
@@ -2396,7 +2396,7 @@
         "m_description": "Advanced hanger bay level 2"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Advanced Hanger Lv.3",
         "m_subType": 2,
         "m_style": 1,
@@ -2420,7 +2420,7 @@
         "m_description": "Advanced hanger bay level 3"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Advanced Hanger Lv.4",
         "m_subType": 2,
         "m_style": 1,
@@ -2444,7 +2444,7 @@
         "m_description": "Advanced hanger bay level 4"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Advanced Hanger Lv.5",
         "m_subType": 2,
         "m_style": 1,
@@ -2468,7 +2468,7 @@
         "m_description": "Advanced hanger bay level 5"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Advanced Hanger Lv.6",
         "m_subType": 2,
         "m_style": 1,
@@ -2492,7 +2492,7 @@
         "m_description": "Advanced hanger bay level 6"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Advanced Hanger Lv.7",
         "m_subType": 2,
         "m_style": 1,
@@ -2516,7 +2516,7 @@
         "m_description": "Advanced hanger bay level 7"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Advanced Hanger Lv.8",
         "m_subType": 2,
         "m_style": 1,
@@ -2540,7 +2540,7 @@
         "m_description": "Advanced hanger bay level 8"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Advanced Hanger Lv.9",
         "m_subType": 2,
         "m_style": 1,
@@ -2564,7 +2564,7 @@
         "m_description": "Advanced hanger bay level 9"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Advanced Hanger Lv.10",
         "m_subType": 2,
         "m_style": 1,
@@ -2588,7 +2588,7 @@
         "m_description": "Advanced hanger bay level 10"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Military Hanger Lv.1",
         "m_subType": 3,
         "m_style": 1,
@@ -2612,7 +2612,7 @@
         "m_description": "Military hanger bay level 1"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Military Hanger Lv.2",
         "m_subType": 3,
         "m_style": 1,
@@ -2636,7 +2636,7 @@
         "m_description": "Military hanger bay level 2"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Military Hanger Lv.3",
         "m_subType": 3,
         "m_style": 1,
@@ -2660,7 +2660,7 @@
         "m_description": "Military hanger bay level 3"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Military Hanger Lv.4",
         "m_subType": 3,
         "m_style": 1,
@@ -2684,7 +2684,7 @@
         "m_description": "Military hanger bay level 4"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Military Hanger Lv.5",
         "m_subType": 3,
         "m_style": 1,
@@ -2708,7 +2708,7 @@
         "m_description": "Military hanger bay level 5"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Military Hanger Lv.6",
         "m_subType": 3,
         "m_style": 1,
@@ -2732,7 +2732,7 @@
         "m_description": "Military hanger bay level 6"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Military Hanger Lv.7",
         "m_subType": 3,
         "m_style": 1,
@@ -2756,7 +2756,7 @@
         "m_description": "Military hanger bay level 7"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Military Hanger Lv.8",
         "m_subType": 3,
         "m_style": 1,
@@ -2780,7 +2780,7 @@
         "m_description": "Military hanger bay level 8"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Military Hanger Lv.9",
         "m_subType": 3,
         "m_style": 1,
@@ -2804,7 +2804,7 @@
         "m_description": "Military hanger bay level 9"
       },
       {
-        "m_moduleType": 0,
+        "m_moduleTypePacked": 0,
         "m_name": "Military Hanger Lv.10",
         "m_subType": 3,
         "m_style": 1,
