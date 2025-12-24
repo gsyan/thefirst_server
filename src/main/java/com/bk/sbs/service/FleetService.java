@@ -919,19 +919,18 @@ public class FleetService {
 
     @Transactional
     public ModuleResearchResponse researchModule(Long characterId, ModuleResearchRequest request) {
-        // 모듈 타입 파싱
-        EModuleType moduleType;
-        try {
-            moduleType = EModuleType.valueOf(request.getModuleType());
-        } catch (IllegalArgumentException e) {
-            throw new BusinessException(ServerErrorCode.INVALID_MODULE_TYPE);
-        }
+        // 압축된 모듈 타입에서 정보 추출
+        int moduleTypePacked = request.getModuleTypePacked();
+        EModuleType moduleType = ModuleTypeConverter.getType(moduleTypePacked);
+        int moduleSubTypeValue = ModuleTypeConverter.getSubTypeValue(moduleTypePacked);
+        EModuleStyle moduleStyle = ModuleTypeConverter.getStyle(moduleTypePacked);
 
         // 이미 개발되었는지 확인
-        Optional<ModuleResearch> existing = moduleResearchRepository.findByCharacterIdAndModuleTypeAndModuleSubTypeValue(
+        Optional<ModuleResearch> existing = moduleResearchRepository.findByCharacterIdAndModuleTypeAndModuleSubTypeValueAndModuleStyleValue(
                 characterId,
                 moduleType,
-                request.getModuleSubTypeValue()
+                moduleSubTypeValue,
+                moduleStyle.ordinal()
         );
 
         if (existing.isPresent() && existing.get().isResearched()) {
@@ -979,17 +978,19 @@ public class FleetService {
             moduleResearch = new ModuleResearch();
             moduleResearch.setCharacterId(characterId);
             moduleResearch.setModuleType(moduleType);
-            moduleResearch.setModuleSubTypeValue(request.getModuleSubTypeValue());
+            moduleResearch.setModuleSubTypeValue(moduleSubTypeValue);
+            moduleResearch.setModuleStyleValue(moduleStyle.ordinal());
             moduleResearch.setResearched(true);
         }
         moduleResearchRepository.save(moduleResearch);
 
         // 개발된 모든 모듈 목록 조회
         List<ModuleResearch> researchedList = moduleResearchRepository.findByCharacterIdAndResearchedTrue(characterId);
-        List<ModuleResearchResponse.ResearchedModuleInfo> researchedModules = researchedList.stream()
-                .map(r -> new ModuleResearchResponse.ResearchedModuleInfo(
-                        r.getModuleType().name(),
-                        r.getModuleSubTypeValue()
+        List<Integer> researchedModules = researchedList.stream()
+                .map(r -> ModuleTypeConverter.pack(
+                        r.getModuleType(),
+                        r.getModuleSubTypeValue(),
+                        EModuleStyle.values()[r.getModuleStyleValue()]
                 ))
                 .collect(Collectors.toList());
 
@@ -1008,8 +1009,7 @@ public class FleetService {
         // 응답 생성
         return new ModuleResearchResponse(
                 true,
-                moduleType.name(),
-                request.getModuleSubTypeValue(),
+                moduleTypePacked,
                 costRemainInfo,
                 researchedModules,
                 "Module researched successfully."
@@ -1017,13 +1017,14 @@ public class FleetService {
     }
 
     
-    //캐릭터가 개발한 모든 모듈 목록 조회    
-    public List<ModuleResearchResponse.ResearchedModuleInfo> getResearchedModules(Long characterId) {
+    //캐릭터가 개발한 모든 모듈 목록 조회
+    public List<Integer> getResearchedModules(Long characterId) {
         List<ModuleResearch> researchedList = moduleResearchRepository.findByCharacterIdAndResearchedTrue(characterId);
         return researchedList.stream()
-                .map(r -> new ModuleResearchResponse.ResearchedModuleInfo(
-                        r.getModuleType().name(),
-                        r.getModuleSubTypeValue()
+                .map(r -> ModuleTypeConverter.pack(
+                        r.getModuleType(),
+                        r.getModuleSubTypeValue(),
+                        EModuleStyle.values()[r.getModuleStyleValue()]
                 ))
                 .collect(Collectors.toList());
     }

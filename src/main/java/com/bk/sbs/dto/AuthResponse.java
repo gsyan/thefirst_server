@@ -13,5 +13,5 @@ public class AuthResponse {
     private String refreshToken;
     private FleetDto activeFleetInfo;
     private CharacterStatusResponse characterInfo;
-    private List<ModuleResearchResponse.ResearchedModuleInfo> researchedModules; // 개발된 모듈 목록
+    private List<Integer> researchedModules; // 개발된 모듈 목록
 }

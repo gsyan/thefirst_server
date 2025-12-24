@@ -21,6 +21,14 @@ public interface ModuleResearchRepository extends JpaRepository<ModuleResearch, 
             int moduleSubTypeValue
     );
 
+    // 특정 모듈이 개발되었는지 확인 (스타일 포함)
+    Optional<ModuleResearch> findByCharacterIdAndModuleTypeAndModuleSubTypeValueAndModuleStyleValue(
+            Long characterId,
+            EModuleType moduleType,
+            int moduleSubTypeValue,
+            int moduleStyleValue
+    );
+
     // 특정 모듈이 개발되었는지 여부만 확인
     boolean existsByCharacterIdAndModuleTypeAndModuleSubTypeValueAndResearchedTrue(
             Long characterId,

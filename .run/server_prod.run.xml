@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="server_prod" type="Application" factoryName="Application">
+    <option name="ALTERNATIVE_JRE_PATH" value="C:/Program Files/Amazon Corretto/jdk21.0.8_9" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <option name="MAIN_CLASS_NAME" value="com.bk.sbs.SbsApplication" />
+    <module name="sbs.main" />
+    <option name="PROGRAM_PARAMETERS" value="--spring.profiles.active=prod" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
