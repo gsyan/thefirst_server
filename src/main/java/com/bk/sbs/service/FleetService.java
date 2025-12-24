@@ -106,7 +106,7 @@ public class FleetService {
         bodyModule.setModuleType(EModuleType.Body);
         bodyModule.setModuleSubType(EModuleBodySubType.Battle);
         //bodyModule.setModuleSubType(EModuleBodySubType.Aircraft);
-        bodyModule.setModuleStyle(EModuleStyle.StyleA);
+        bodyModule.setModuleStyle(EModuleStyle.None);
         bodyModule.setModuleLevel(bodyData.getLevel());
         bodyModule.setBodyIndex(0);
         bodyModule.setSlotIndex(0);
@@ -117,7 +117,7 @@ public class FleetService {
         engineModule.setShip(defaultShip);
         engineModule.setModuleType(EModuleType.Engine);
         engineModule.setModuleSubType(EModuleEngineSubType.Standard);
-        engineModule.setModuleStyle(EModuleStyle.StyleA);
+        engineModule.setModuleStyle(EModuleStyle.None);
         engineModule.setModuleLevel(engineData.getLevel());
         engineModule.setBodyIndex(0);
         engineModule.setSlotIndex(0);
@@ -129,7 +129,7 @@ public class FleetService {
         weaponModule.setModuleType(EModuleType.Weapon);
         //weaponModule.setModuleSubType(EModuleWeaponSubType.Beam);
         weaponModule.setModuleSubType(EModuleWeaponSubType.Missile);
-        weaponModule.setModuleStyle(EModuleStyle.StyleA);
+        weaponModule.setModuleStyle(EModuleStyle.None);
         weaponModule.setModuleLevel(weaponData.getLevel());
         weaponModule.setBodyIndex(0);
         weaponModule.setSlotIndex(0);
@@ -140,7 +140,7 @@ public class FleetService {
         hangerModule.setShip(defaultShip);
         hangerModule.setModuleType(EModuleType.Hanger);
         hangerModule.setModuleSubType(EModuleHangerSubType.Standard);
-        hangerModule.setModuleStyle(EModuleStyle.StyleA);
+        hangerModule.setModuleStyle(EModuleStyle.None);
         hangerModule.setModuleLevel(hangerData.getLevel());
         hangerModule.setBodyIndex(0);
         hangerModule.setSlotIndex(0);
@@ -593,7 +593,7 @@ public class FleetService {
         bodyModule.setShip(ship);
         bodyModule.setModuleType(EModuleType.Body);
         bodyModule.setModuleSubType(EModuleBodySubType.Battle);
-        bodyModule.setModuleStyle(EModuleStyle.StyleA);
+        bodyModule.setModuleStyle(EModuleStyle.None);
         bodyModule.setModuleLevel(1);
         bodyModule.setBodyIndex(0);
         bodyModule.setSlotIndex(0);
@@ -607,7 +607,7 @@ public class FleetService {
         weaponModule.setShip(ship);
         weaponModule.setModuleType(EModuleType.Weapon);
         weaponModule.setModuleSubType(EModuleWeaponSubType.Beam);
-        weaponModule.setModuleStyle(EModuleStyle.StyleA);
+        weaponModule.setModuleStyle(EModuleStyle.None);
         weaponModule.setModuleLevel(1);
         weaponModule.setBodyIndex(0);
         weaponModule.setSlotIndex(0);
@@ -621,7 +621,7 @@ public class FleetService {
         engineModule.setShip(ship);
         engineModule.setModuleType(EModuleType.Engine);
         engineModule.setModuleSubType(EModuleEngineSubType.Standard);
-        engineModule.setModuleStyle(EModuleStyle.StyleA);
+        engineModule.setModuleStyle(EModuleStyle.None);
         engineModule.setModuleLevel(1);
         engineModule.setBodyIndex(0);
         engineModule.setSlotIndex(0);
@@ -986,7 +986,7 @@ public class FleetService {
 
         // 개발된 모든 모듈 목록 조회
         List<ModuleResearch> researchedList = moduleResearchRepository.findByCharacterIdAndResearchedTrue(characterId);
-        List<Integer> researchedModules = researchedList.stream()
+        List<Integer> researchedModuleTypePackeds = researchedList.stream()
                 .map(r -> ModuleTypeConverter.pack(
                         r.getModuleType(),
                         r.getModuleSubTypeValue(),
@@ -1011,14 +1011,14 @@ public class FleetService {
                 true,
                 moduleTypePacked,
                 costRemainInfo,
-                researchedModules,
+                researchedModuleTypePackeds,
                 "Module researched successfully."
         );
     }
 
     
     //캐릭터가 개발한 모든 모듈 목록 조회
-    public List<Integer> getResearchedModules(Long characterId) {
+    public List<Integer> getResearchedModuleTypePackeds(Long characterId) {
         List<ModuleResearch> researchedList = moduleResearchRepository.findByCharacterIdAndResearchedTrue(characterId);
         return researchedList.stream()
                 .map(r -> ModuleTypeConverter.pack(

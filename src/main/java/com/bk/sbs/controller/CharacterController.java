@@ -93,14 +93,14 @@ public class CharacterController {
             CharacterStatusResponse characterStatus = characterService.getCharacterStatus(actualCharacterId);
 
             // 개발된 모듈 목록 조회
-            var researchedModules = fleetService.getResearchedModules(actualCharacterId);
+            var researchedModuleTypePackeds = fleetService.getResearchedModuleTypePackeds(actualCharacterId);
 
             AuthResponse response = new AuthResponse();
             response.setAccessToken(newAccessToken);
             response.setRefreshToken(newRefreshToken);
             response.setActiveFleetInfo(activeFleet);
             response.setCharacterInfo(characterStatus);
-            response.setResearchedModules(researchedModules);
+            response.setResearchedModuleTypePackeds(researchedModuleTypePackeds);
 
             return ApiResponse.success(response);
         } catch (BusinessException e) {
