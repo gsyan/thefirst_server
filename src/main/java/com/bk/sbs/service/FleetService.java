@@ -819,6 +819,104 @@ public class FleetService {
     }
 
     @Transactional
+    public ModuleUnlockResponse unlockModule(Long characterId, ModuleUnlockRequest request) {
+        // 함선 소유권 확인
+        Ship ship = shipRepository.findById(request.getShipId())
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.SHIP_NOT_FOUND));
+
+        if (!ship.getFleet().getCharacterId().equals(characterId)) {
+            throw new BusinessException(ServerErrorCode.FLEET_ACCESS_DENIED);
+        }
+
+        // 요청에서 모듈 타입 정보 추출
+        EModuleType moduleType = EModuleType.values()[request.getModuleType()];
+        int moduleSubTypeValue = request.getModuleSubTypeValue();
+
+        // 현재 슬롯 확인 (완전한 유니크 키로 조회)
+        var existingModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndModuleSubTypeValueAndSlotIndexAndDeletedFalse(
+                request.getShipId(),
+                request.getBodyIndex(),
+                moduleType,
+                moduleSubTypeValue,
+                request.getSlotIndex()
+        );
+
+        // 이미 모듈이 존재하면 Placeholder가 아님
+        if (existingModule.isPresent()) {
+            throw new BusinessException(ServerErrorCode.UNKNOWN_ERROR); // 이미 해금된 모듈
+        }
+
+        // 캐릭터 자원 조회
+        com.bk.sbs.entity.Character character = characterRepository.findById(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
+
+        // 모듈 해금 비용 (설정에서 가져오기 - 여기서는 하드코딩)
+        long mineralCost = 1000L; // DataTableConfig.gameSettings.moduleReleasePrice 값과 동일하게
+
+        // 자원 부족 검사
+        if (character.getMineral() < mineralCost) {
+            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL);
+        }
+
+        // 자원 차감
+        character.setMineral(character.getMineral() - mineralCost);
+        characterRepository.save(character);
+
+        // 새로운 모듈 레코드 생성
+        ShipModule newModule = new ShipModule();
+        newModule.setShip(ship);
+        newModule.setBodyIndex(request.getBodyIndex());
+        newModule.setSlotIndex(request.getSlotIndex());
+        newModule.setModuleType(moduleType);
+
+        // moduleSubTypeValue를 적절한 enum으로 변환하여 설정
+        switch (moduleType) {
+            case Body:
+                newModule.setModuleSubType(EModuleBodySubType.values()[moduleSubTypeValue]);
+                break;
+            case Weapon:
+                newModule.setModuleSubType(EModuleWeaponSubType.values()[moduleSubTypeValue]);
+                break;
+            case Engine:
+                newModule.setModuleSubType(EModuleEngineSubType.values()[moduleSubTypeValue]);
+                break;
+            case Hanger:
+                newModule.setModuleSubType(EModuleHangerSubType.values()[moduleSubTypeValue]);
+                break;
+        }
+
+        newModule.setModuleStyle(EModuleStyle.None);
+        newModule.setModuleLevel(1);
+        newModule.setDeleted(false);
+        newModule.setCreated(LocalDateTime.now());
+        newModule.setModified(LocalDateTime.now());
+        shipModuleRepository.save(newModule);
+
+        // 업데이트된 함선 정보 조회
+        ShipDto updatedShipDto = convertShipToDto(ship);
+
+        // 비용 정보
+        CostRemainInfo costRemainInfo = new CostRemainInfo(
+                mineralCost,
+                0L,
+                0L,
+                0L,
+                character.getMineral(),
+                character.getMineralRare(),
+                character.getMineralExotic(),
+                character.getMineralDark()
+        );
+
+        // 응답 생성
+        return new ModuleUnlockResponse(
+                true,
+                updatedShipDto,
+                costRemainInfo,
+                "Module unlocked successfully."
+        );
+    }
+
+    @Transactional
     public ModuleChangeResponse changeModule(Long characterId, ModuleChangeRequest request) {
         // 함선 소유권 확인
         Ship ship = shipRepository.findById(request.getShipId())

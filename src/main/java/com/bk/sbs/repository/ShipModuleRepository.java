@@ -29,4 +29,8 @@ public interface ShipModuleRepository extends JpaRepository<ShipModule, Long> {
     Optional<ShipModule> findByShipIdAndBodyIndexAndModuleTypeAndDeletedFalse(Long shipId, int bodyIndex, EModuleType moduleType);
 
     Optional<ShipModule> findByShipIdAndBodyIndexAndSlotIndexAndDeletedFalse(Long shipId, int bodyIndex, int slotIndex);
+
+    // 완전한 유니크 키로 조회 (ship_id, body_index, module_type, module_sub_type_value, slot_index)
+    Optional<ShipModule> findByShipIdAndBodyIndexAndModuleTypeAndModuleSubTypeValueAndSlotIndexAndDeletedFalse(
+            Long shipId, int bodyIndex, EModuleType moduleType, int moduleSubTypeValue, int slotIndex);
 }

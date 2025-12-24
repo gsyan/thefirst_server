@@ -206,6 +206,23 @@ public class FleetController {
         }
     }
 
+    // 모듈 해금
+    @PostMapping("/unlock-module")
+    public ResponseEntity<ApiResponse<ModuleUnlockResponse>> unlockModule(
+            @RequestBody ModuleUnlockRequest request,
+            HttpServletRequest httpRequest) {
+        try {
+            Long characterId = getCharacterIdFromToken(httpRequest);
+            Long actualCharacterId = characterId & 0x00FFFFFFFFFFFFFFL;
+            ModuleUnlockResponse response = fleetService.unlockModule(actualCharacterId, request);
+            return ResponseEntity.ok(ApiResponse.success(response));
+        } catch (BusinessException e) {
+            return ResponseEntity.badRequest().body(ApiResponse.error(e.getErrorCode()));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
+        }
+    }
+
     // 모듈 개발(연구)
     @PostMapping("/research-module")
     public ResponseEntity<ApiResponse<ModuleResearchResponse>> researchModule(
