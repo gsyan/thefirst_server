@@ -52,22 +52,16 @@ def map_csharp_type_to_java(csharp_type):
     if csharp_type.startswith('E'):
         return csharp_type
 
-    # Vector3는 커스텀 타입으로 유지
-    if csharp_type == 'Vector3':
-        return 'Vector3'
-
     # 기본 타입 매핑
     mapped_type = type_mapping.get(csharp_type, csharp_type)
 
     # 커스텀 타입 (DTO 클래스)에는 Dto 접미사 추가
     # 기본 타입(Integer, String 등)이 아닌 경우
     if mapped_type == csharp_type and csharp_type not in type_mapping:
-        # Vector3 같은 특수 타입 제외
-        if csharp_type != 'Vector3':
-            # Request/Response는 Dto 불필요
-            if csharp_type.endswith('Request') or csharp_type.endswith('Response'):
-                return csharp_type
-            return f"{csharp_type}Dto"
+        # Request/Response는 Dto 불필요
+        if csharp_type.endswith('Request') or csharp_type.endswith('Response'):
+            return csharp_type
+        return f"{csharp_type}Dto"
 
     return mapped_type
 
@@ -83,10 +77,22 @@ def extract_all_classes(csharp_content):
         class_body = match.group(3)
 
         # 주석 처리된 클래스는 건너뛰기
+        # [System.Serializable] 바로 앞 줄만 확인 (다른 주석과 혼동 방지)
         start_pos = match.start()
-        # 클래스 선언 직전에 주석이 있는지 확인
-        before_class = csharp_content[:start_pos].split('\n')[-5:]  # 최근 5줄 확인
-        is_commented = any(line.strip().startswith('//') for line in before_class if '[System.Serializable]' not in line)
+        before_lines = csharp_content[:start_pos].split('\n')
+
+        # [System.Serializable] 어트리뷰트 라인 찾기
+        attribute_line_idx = -1
+        for i in range(len(before_lines) - 1, max(len(before_lines) - 10, -1), -1):
+            if '[System.Serializable]' in before_lines[i]:
+                attribute_line_idx = i
+                break
+
+        # 어트리뷰트 바로 앞 줄이 주석인지 확인
+        is_commented = False
+        if attribute_line_idx > 0:
+            prev_line = before_lines[attribute_line_idx - 1].strip()
+            is_commented = prev_line.startswith('//')
 
         if is_commented:
             continue
@@ -248,7 +254,7 @@ def generate_all_dtos(csharp_file_path, output_dir, package_name):
         java_code = generate_java_dto(class_info, package_name)
 
         if not java_code:
-            print(f"Skipped {class_name} (no fields)")
+            print(f"Skipped {class_name} (no fields or generation failed)")
             continue
 
         # 출력 파일 경로 (Request/Response 제외하고 Dto 접미사 추가)
