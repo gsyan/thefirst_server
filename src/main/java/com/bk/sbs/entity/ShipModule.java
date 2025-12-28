@@ -20,58 +20,17 @@ public class ShipModule {
     @JoinColumn(name = "ship_id", nullable = false)
     private Ship ship;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EModuleType moduleType;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private int moduleSubTypeValue;
+    private EModuleSubType moduleSubType;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EModuleStyle moduleStyle;
-
-    public void setModuleSubType(EModuleBodySubType subType) {
-        this.moduleSubTypeValue = subType != null ? subType.getValue() : 0;
-    }
-
-    public void setModuleSubType(EModuleEngineSubType subType) {
-        this.moduleSubTypeValue = subType != null ? subType.getValue() : 0;
-    }
-
-    public void setModuleSubType(EModuleWeaponSubType subType) {
-        this.moduleSubTypeValue = subType != null ? subType.getValue() : 0;
-    }
-
-    public void setModuleSubType(EModuleHangerSubType subType) {
-        this.moduleSubTypeValue = subType != null ? subType.getValue() : 0;
-    }
-
-
-    public EModuleBodySubType getModuleBodySubType() {
-        for (EModuleBodySubType type : EModuleBodySubType.values())
-            if (type.getValue() == moduleSubTypeValue) return type;
-        return EModuleBodySubType.None;
-    }
-
-    public EModuleEngineSubType getModuleEngineSubType() {
-        for (EModuleEngineSubType type : EModuleEngineSubType.values())
-            if (type.getValue() == moduleSubTypeValue) return type;
-        return EModuleEngineSubType.None;
-    }
-
-    public EModuleWeaponSubType getModuleWeaponSubType() {
-        for (EModuleWeaponSubType type : EModuleWeaponSubType.values())
-            if (type.getValue() == moduleSubTypeValue) return type;
-        return EModuleWeaponSubType.None;
-    }
-
-    public EModuleHangerSubType getModuleHangerSubType() {
-        for (EModuleHangerSubType type : EModuleHangerSubType.values())
-            if (type.getValue() == moduleSubTypeValue) return type;
-        return EModuleHangerSubType.None;
-    }
-
 
     @Column(nullable = false)
     private int moduleLevel;

@@ -2,11 +2,8 @@ package com.bk.sbs.service;
 
 import com.bk.sbs.config.GameSettings;
 import com.bk.sbs.config.ModuleDataTable;
-import com.bk.sbs.dto.CostStruct;
-import com.bk.sbs.dto.ModuleBodyDataDto;
-import com.bk.sbs.dto.ModuleWeaponDataDto;
-import com.bk.sbs.dto.ModuleEngineDataDto;
-import com.bk.sbs.dto.ModuleHangerDataDto;
+import com.bk.sbs.dto.CostStructDto;
+import com.bk.sbs.dto.ModuleData;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -79,10 +76,10 @@ public class GameDataService {
         return getGameSettings().getMaxShipsPerFleet();
     }
 
-    public CostStruct getShipAddCost(int currentShipCount) {
-        List<CostStruct> costs = getGameSettings().getAddShipCosts();
+    public CostStructDto getShipAddCost(int currentShipCount) {
+        List<CostStructDto> costs = getGameSettings().getAddShipCosts();
         if (costs == null || costs.isEmpty()) {
-            return new CostStruct(0, 0L, 0L, 0L, 0L);
+            return new CostStructDto(0, 0L, 0L, 0L, 0L);
         }
 
         // 현재 함선 수에 해당하는 비용 반환 (인덱스는 0부터 시작)
@@ -91,42 +88,42 @@ public class GameDataService {
         }
 
         // 범위를 벗어나면 마지막 비용 반환
-        return costs.get(costs.size() - 1);
+        return costs.getLast();
     }
 
-    public List<ModuleBodyDataDto> getBodyModules() {
+    public List<ModuleData> getBodyModules() {
         return moduleDataTable.getBodyModules();
     }
 
-    public List<ModuleWeaponDataDto> getWeaponModules() {
+    public List<ModuleData> getWeaponModules() {
         return moduleDataTable.getWeaponModules();
     }
 
-    public List<ModuleEngineDataDto> getEngineModules() {
+    public List<ModuleData> getEngineModules() {
         return moduleDataTable.getEngineModules();
     }
 
-    public List<ModuleHangerDataDto> getHangerModules() {
+    public List<ModuleData> getHangerModules() {
         return moduleDataTable.getHangerModules();
     }
 
-    public ModuleBodyDataDto getFirstBodyModule() {
-        List<ModuleBodyDataDto> modules = getBodyModules();
-        return modules.isEmpty() ? new ModuleBodyDataDto() : modules.get(0);
+    public ModuleData getFirstBodyModule() {
+        List<ModuleData> modules = getBodyModules();
+        return modules.isEmpty() ? new ModuleData() : modules.get(0);
     }
 
-    public ModuleWeaponDataDto getFirstWeaponModule() {
-        List<ModuleWeaponDataDto> modules = getWeaponModules();
-        return modules.isEmpty() ? new ModuleWeaponDataDto() : modules.get(0);
+    public ModuleData getFirstWeaponModule() {
+        List<ModuleData> modules = getWeaponModules();
+        return modules.isEmpty() ? new ModuleData() : modules.get(0);
     }
 
-    public ModuleEngineDataDto getFirstEngineModule() {
-        List<ModuleEngineDataDto> modules = getEngineModules();
-        return modules.isEmpty() ? new ModuleEngineDataDto() : modules.get(0);
+    public ModuleData getFirstEngineModule() {
+        List<ModuleData> modules = getEngineModules();
+        return modules.isEmpty() ? new ModuleData() : modules.get(0);
     }
 
-    public ModuleHangerDataDto getFirstHangerModule() {
-        List<ModuleHangerDataDto> modules = getHangerModules();
-        return modules.isEmpty() ? new ModuleHangerDataDto() : modules.get(0);
+    public ModuleData getFirstHangerModule() {
+        List<ModuleData> modules = getHangerModules();
+        return modules.isEmpty() ? new ModuleData() : modules.get(0);
     }
 }

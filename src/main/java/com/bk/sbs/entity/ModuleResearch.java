@@ -1,5 +1,7 @@
 package com.bk.sbs.entity;
 
+import com.bk.sbs.enums.EModuleStyle;
+import com.bk.sbs.enums.EModuleSubType;
 import com.bk.sbs.enums.EModuleType;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -22,15 +24,17 @@ public class ModuleResearch {
     @Column(nullable = false)
     private Long characterId; // 캐릭터 ID
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EModuleType moduleType; // 모듈 타입 (Body, Weapon, Engine, Hanger)
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private int moduleSubTypeValue; // 서브타입 값 (예: EModuleBodySubType의 값)
+    private EModuleSubType moduleSubType; // 서브타입 (Body_Battle, Engine_Standard 등)
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private int moduleStyleValue; // 모듈 스타일 값 (예: EModuleStyle의 값)
+    private EModuleStyle moduleStyle; // 모듈 스타일 (None, StyleA, StyleB 등)
 
     @Column(nullable = false)
     private boolean researched = false; // 개발 완료 여부

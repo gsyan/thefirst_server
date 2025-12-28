@@ -39,15 +39,15 @@ public class FleetService {
     }
 
     // 캐릭터의 모든 함대 조회
-    public List<FleetDto> getUserFleets(Long characterId) {
+    public List<FleetInfoDto> getUserFleets(Long characterId) {
         List<Fleet> fleets = fleetRepository.findByCharacterIdOrderByActiveAndModified(characterId);
         return fleets.stream()
-                .map(this::convertToDto)
+                .map(this::convertFleetToFleetInfoDto)
                 .collect(Collectors.toList());
     }
 
     // 특정 함대 상세 조회
-    public FleetDto getFleetDetail(Long characterId, Long fleetId) {
+    public FleetInfoDto getFleetDetail(Long characterId, Long fleetId) {
         Fleet fleet = fleetRepository.findByIdAndCharacterIdAndDeletedFalse(fleetId, characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.FLEET_NOT_FOUND));
         
@@ -55,7 +55,7 @@ public class FleetService {
     }
 
     // 활성 함대 조회
-    public FleetDto getActiveFleet(Long characterId) {
+    public FleetInfoDto getActiveFleet(Long characterId) {
         Fleet fleet = fleetRepository.findByCharacterIdAndIsActiveTrueAndDeletedFalse(characterId)
                 .orElse(null);
         
@@ -64,7 +64,7 @@ public class FleetService {
 
     // 함대 생성 (기본 함선과 모듈 포함)
     @Transactional
-    public FleetDto createFleet(Long characterId, String fleetName, String description) {
+    public FleetInfoDto createFleet(Long characterId, String fleetName, String description) {
         if (fleetRepository.existsByCharacterIdAndFleetNameAndDeletedFalse(characterId, fleetName)) {
             throw new BusinessException(ServerErrorCode.FLEET_DUPLICATE_NAME);
         }
@@ -95,30 +95,30 @@ public class FleetService {
         defaultShip = shipRepository.save(defaultShip);
 
         // GameDataService에서 레벨 1 모듈 데이터 가져오기
-        ModuleBodyDataDto bodyData = gameDataService.getFirstBodyModule();
-        ModuleWeaponDataDto weaponData = gameDataService.getFirstWeaponModule();
-        ModuleEngineDataDto engineData = gameDataService.getFirstEngineModule();
-        ModuleHangerDataDto hangerData = gameDataService.getFirstHangerModule();
+        ModuleData bodyData = gameDataService.getFirstBodyModule();
+        ModuleData weaponData = gameDataService.getFirstWeaponModule();
+        ModuleData engineData = gameDataService.getFirstEngineModule();
+        ModuleData hangerData = gameDataService.getFirstHangerModule();
 
-        // 1. Body 모듈 (type 1)
+        // 1. Body
         ShipModule bodyModule = new ShipModule();
         bodyModule.setShip(defaultShip);
         bodyModule.setModuleType(EModuleType.Body);
-        bodyModule.setModuleSubType(EModuleBodySubType.Battle);
-        //bodyModule.setModuleSubType(EModuleBodySubType.Aircraft);
+        bodyModule.setModuleSubType(EModuleSubType.Body_Battle);
+        //bodyModule.setModuleSubType(EModuleSubType.Body_Aircraft);
         bodyModule.setModuleStyle(EModuleStyle.None);
-        bodyModule.setModuleLevel(bodyData.getLevel());
+        bodyModule.setModuleLevel(bodyData.getModuleLevel());
         bodyModule.setBodyIndex(0);
         bodyModule.setSlotIndex(0);
         shipModuleRepository.save(bodyModule);
 
-        // 2. Engine 모듈 (type 2)
+        // 2. Engine
         ShipModule engineModule = new ShipModule();
         engineModule.setShip(defaultShip);
         engineModule.setModuleType(EModuleType.Engine);
-        engineModule.setModuleSubType(EModuleEngineSubType.Standard);
+        engineModule.setModuleSubType(EModuleSubType.Engine_Standard);
         engineModule.setModuleStyle(EModuleStyle.None);
-        engineModule.setModuleLevel(engineData.getLevel());
+        engineModule.setModuleLevel(engineData.getModuleLevel());
         engineModule.setBodyIndex(0);
         engineModule.setSlotIndex(0);
         shipModuleRepository.save(engineModule);
@@ -127,10 +127,10 @@ public class FleetService {
         ShipModule weaponModule = new ShipModule();
         weaponModule.setShip(defaultShip);
         weaponModule.setModuleType(EModuleType.Weapon);
-        //weaponModule.setModuleSubType(EModuleWeaponSubType.Beam);
-        weaponModule.setModuleSubType(EModuleWeaponSubType.Missile);
+        //weaponModule.setModuleSubType(EModuleSubType.Weapon_Beam);
+        weaponModule.setModuleSubType(EModuleSubType.Weapon_Missile);
         weaponModule.setModuleStyle(EModuleStyle.None);
-        weaponModule.setModuleLevel(weaponData.getLevel());
+        weaponModule.setModuleLevel(weaponData.getModuleLevel());
         weaponModule.setBodyIndex(0);
         weaponModule.setSlotIndex(0);
         shipModuleRepository.save(weaponModule);
@@ -139,9 +139,9 @@ public class FleetService {
         ShipModule hangerModule = new ShipModule();
         hangerModule.setShip(defaultShip);
         hangerModule.setModuleType(EModuleType.Hanger);
-        hangerModule.setModuleSubType(EModuleHangerSubType.Standard);
+        hangerModule.setModuleSubType(EModuleSubType.Hanger_Standard);
         hangerModule.setModuleStyle(EModuleStyle.None);
-        hangerModule.setModuleLevel(hangerData.getLevel());
+        hangerModule.setModuleLevel(hangerData.getModuleLevel());
         hangerModule.setBodyIndex(0);
         hangerModule.setSlotIndex(0);
         shipModuleRepository.save(hangerModule);
@@ -182,162 +182,162 @@ public class FleetService {
         }
     }
 
-    // 클라이언트 데이터 가져오기 (Export)
-    @Transactional(readOnly = true)
-    public FleetExportResponse exportFleet(Long characterId, Long fleetId) {
-        Fleet fleet = fleetRepository.findByIdAndCharacterIdAndDeletedFalse(fleetId, characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.FLEET_NOT_FOUND));
+//    // 클라이언트 데이터 가져오기 (Export)
+//    @Transactional(readOnly = true)
+//    public FleetExportResponse exportFleet(Long characterId, Long fleetId) {
+//        Fleet fleet = fleetRepository.findByIdAndCharacterIdAndDeletedFalse(fleetId, characterId)
+//                .orElseThrow(() -> new BusinessException(ServerErrorCode.FLEET_NOT_FOUND));
+//
+//        FleetExportResponse response = new FleetExportResponse();
+//        response.setFleetName(fleet.getFleetName());
+//        response.setDescription(fleet.getDescription());
+//        response.setActive(fleet.isActive());
+//
+//        List<Ship> ships = shipRepository.findByFleetIdAndDeletedFalseOrderByPositionIndex(fleetId);
+//        List<FleetExportResponse.ShipExportData> shipData = ships.stream()
+//                .map(ship -> {
+//                    FleetExportResponse.ShipExportData shipExport = new FleetExportResponse.ShipExportData();
+//                    shipExport.setShipName(ship.getShipName());
+//                    shipExport.setPositionIndex(ship.getPositionIndex());
+//                    shipExport.setDescription(ship.getDescription());
+//
+//                    List<ShipModule> modules = shipModuleRepository.findByShipIdAndDeletedFalseOrderBySlotIndex(ship.getId());
+//                    List<FleetExportResponse.ShipModuleExportData> moduleData = modules.stream()
+//                            .map(module -> {
+//                                FleetExportResponse.ShipModuleExportData moduleExport = new FleetExportResponse.ShipModuleExportData();
+//                                moduleExport.setModuleType(module.getModuleType());
+//                                moduleExport.setModuleLevel(module.getModuleLevel());
+//                                moduleExport.setSlotIndex(module.getSlotIndex());
+//                                return moduleExport;
+//                            })
+//                            .collect(Collectors.toList());
+//                    shipExport.setModules(moduleData);
+//                    return shipExport;
+//                })
+//                .collect(Collectors.toList());
+//        response.setShips(shipData);
+//
+//        return response;
+//    }
 
-        FleetExportResponse response = new FleetExportResponse();
-        response.setFleetName(fleet.getFleetName());
-        response.setDescription(fleet.getDescription());
-        response.setActive(fleet.isActive());
+//    // 클라이언트 데이터 저장 (Import)
+//    @Transactional
+//    public FleetInfoDto importFleet(Long characterId, FleetImportRequest request) {
+//        // 기존 함대명 중복 체크
+//        if (fleetRepository.existsByCharacterIdAndFleetNameAndDeletedFalse(characterId, request.getFleetName())) {
+//            throw new BusinessException(ServerErrorCode.FLEET_DUPLICATE_NAME);
+//        }
+//
+//        // 함대 생성
+//        Fleet fleet = new Fleet();
+//        fleet.setCharacterId(characterId);
+//        fleet.setFleetName(request.getFleetName());
+//        fleet.setDescription(request.getDescription());
+//        fleet.setActive(request.isActive());
+//
+//        // 활성 함대가 이미 있다면 비활성화
+//        if (request.isActive()) {
+//            fleetRepository.findByCharacterIdAndIsActiveTrueAndDeletedFalse(characterId)
+//                    .ifPresent(activeFleet -> {
+//                        activeFleet.setActive(false);
+//                        activeFleet.setModified(LocalDateTime.now());
+//                        fleetRepository.save(activeFleet);
+//                    });
+//        }
+//
+//        fleet = fleetRepository.save(fleet);
+//
+//        // 함선들 생성
+//        if (request.getShips() != null) {
+//            for (FleetImportRequest.ShipImportData shipData : request.getShips()) {
+//                Ship ship = new Ship();
+//                ship.setFleet(fleet);
+//                ship.setShipName(shipData.getShipName());
+//                ship.setPositionIndex(shipData.getPositionIndex());
+//                ship.setDescription(shipData.getDescription());
+//                ship = shipRepository.save(ship);
+//
+//                // 모듈들 생성
+//                if (shipData.getModules() != null) {
+//                    for (FleetImportRequest.ShipModuleImportData moduleData : shipData.getModules()) {
+//                        ShipModule module = new ShipModule();
+//                        module.setShip(ship);
+//                        module.setModuleType(moduleData.getModuleType());
+//                        module.setModuleLevel(moduleData.getModuleLevel());
+//                        module.setSlotIndex(moduleData.getSlotIndex());
+//                        shipModuleRepository.save(module);
+//                    }
+//                }
+//            }
+//        }
+//
+//        return convertToDetailDto(fleet);
+//    }
 
-        List<Ship> ships = shipRepository.findByFleetIdAndDeletedFalseOrderByPositionIndex(fleetId);
-        List<FleetExportResponse.ShipExportData> shipData = ships.stream()
-                .map(ship -> {
-                    FleetExportResponse.ShipExportData shipExport = new FleetExportResponse.ShipExportData();
-                    shipExport.setShipName(ship.getShipName());
-                    shipExport.setPositionIndex(ship.getPositionIndex());
-                    shipExport.setDescription(ship.getDescription());
-
-                    List<ShipModule> modules = shipModuleRepository.findByShipIdAndDeletedFalseOrderBySlotIndex(ship.getId());
-                    List<FleetExportResponse.ShipModuleExportData> moduleData = modules.stream()
-                            .map(module -> {
-                                FleetExportResponse.ShipModuleExportData moduleExport = new FleetExportResponse.ShipModuleExportData();
-                                moduleExport.setModuleType(module.getModuleType());
-                                moduleExport.setModuleLevel(module.getModuleLevel());
-                                moduleExport.setSlotIndex(module.getSlotIndex());
-                                return moduleExport;
-                            })
-                            .collect(Collectors.toList());
-                    shipExport.setModules(moduleData);
-                    return shipExport;
-                })
-                .collect(Collectors.toList());
-        response.setShips(shipData);
-
-        return response;
-    }
-
-    // 클라이언트 데이터 저장 (Import)
-    @Transactional
-    public FleetDto importFleet(Long characterId, FleetImportRequest request) {
-        // 기존 함대명 중복 체크
-        if (fleetRepository.existsByCharacterIdAndFleetNameAndDeletedFalse(characterId, request.getFleetName())) {
-            throw new BusinessException(ServerErrorCode.FLEET_DUPLICATE_NAME);
-        }
-
-        // 함대 생성
-        Fleet fleet = new Fleet();
-        fleet.setCharacterId(characterId);
-        fleet.setFleetName(request.getFleetName());
-        fleet.setDescription(request.getDescription());
-        fleet.setActive(request.isActive());
-        
-        // 활성 함대가 이미 있다면 비활성화
-        if (request.isActive()) {
-            fleetRepository.findByCharacterIdAndIsActiveTrueAndDeletedFalse(characterId)
-                    .ifPresent(activeFleet -> {
-                        activeFleet.setActive(false);
-                        activeFleet.setModified(LocalDateTime.now());
-                        fleetRepository.save(activeFleet);
-                    });
-        }
-        
-        fleet = fleetRepository.save(fleet);
-
-        // 함선들 생성
-        if (request.getShips() != null) {
-            for (FleetImportRequest.ShipImportData shipData : request.getShips()) {
-                Ship ship = new Ship();
-                ship.setFleet(fleet);
-                ship.setShipName(shipData.getShipName());
-                ship.setPositionIndex(shipData.getPositionIndex());
-                ship.setDescription(shipData.getDescription());
-                ship = shipRepository.save(ship);
-
-                // 모듈들 생성
-                if (shipData.getModules() != null) {
-                    for (FleetImportRequest.ShipModuleImportData moduleData : shipData.getModules()) {
-                        ShipModule module = new ShipModule();
-                        module.setShip(ship);
-                        module.setModuleType(moduleData.getModuleType());
-                        module.setModuleLevel(moduleData.getModuleLevel());
-                        module.setSlotIndex(moduleData.getSlotIndex());
-                        shipModuleRepository.save(module);
-                    }
-                }
-            }
-        }
-
-        return convertToDetailDto(fleet);
-    }
-
-    // 함대 업데이트
-    @Transactional
-    public FleetDto updateFleet(Long characterId, Long fleetId, FleetImportRequest request) {
-        Fleet fleet = fleetRepository.findByIdAndCharacterIdAndDeletedFalse(fleetId, characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.FLEET_NOT_FOUND));
-
-        // 함대명 변경 시 중복 체크
-        if (!fleet.getFleetName().equals(request.getFleetName()) && 
-            fleetRepository.existsByCharacterIdAndFleetNameAndDeletedFalse(characterId, request.getFleetName())) {
-            throw new BusinessException(ServerErrorCode.FLEET_DUPLICATE_NAME);
-        }
-
-        // 함대 정보 업데이트
-        fleet.setFleetName(request.getFleetName());
-        fleet.setDescription(request.getDescription());
-        fleet.setModified(LocalDateTime.now());
-
-        // 활성 상태 변경
-        if (request.isActive() && !fleet.isActive()) {
-            activateFleet(characterId, fleetId);
-        } else if (!request.isActive() && fleet.isActive()) {
-            fleet.setActive(false);
-        }
-
-        // 기존 함선과 모듈들 삭제 (soft delete)
-        List<Ship> existingShips = shipRepository.findByFleetIdAndDeletedFalseOrderByPositionIndex(fleetId);
-        for (Ship ship : existingShips) {
-            List<ShipModule> modules = shipModuleRepository.findByShipIdAndDeletedFalseOrderBySlotIndex(ship.getId());
-            for (ShipModule module : modules) {
-                module.setDeleted(true);
-                module.setModified(LocalDateTime.now());
-                shipModuleRepository.save(module);
-            }
-            ship.setDeleted(true);
-            ship.setModified(LocalDateTime.now());
-            shipRepository.save(ship);
-        }
-
-        // 새로운 함선과 모듈들 생성
-        if (request.getShips() != null) {
-            for (FleetImportRequest.ShipImportData shipData : request.getShips()) {
-                Ship ship = new Ship();
-                ship.setFleet(fleet);
-                ship.setShipName(shipData.getShipName());
-                ship.setPositionIndex(shipData.getPositionIndex());
-                ship.setDescription(shipData.getDescription());
-                ship = shipRepository.save(ship);
-
-                if (shipData.getModules() != null) {
-                    for (FleetImportRequest.ShipModuleImportData moduleData : shipData.getModules()) {
-                        ShipModule module = new ShipModule();
-                        module.setShip(ship);
-                        module.setModuleType(moduleData.getModuleType());
-                        module.setModuleLevel(moduleData.getModuleLevel());
-                        module.setSlotIndex(moduleData.getSlotIndex());
-                        shipModuleRepository.save(module);
-                    }
-                }
-            }
-        }
-
-        fleet = fleetRepository.save(fleet);
-        return convertToDetailDto(fleet);
-    }
+//    // 함대 업데이트
+//    @Transactional
+//    public FleetInfoDto updateFleet(Long characterId, Long fleetId, FleetImportRequest request) {
+//        Fleet fleet = fleetRepository.findByIdAndCharacterIdAndDeletedFalse(fleetId, characterId)
+//                .orElseThrow(() -> new BusinessException(ServerErrorCode.FLEET_NOT_FOUND));
+//
+//        // 함대명 변경 시 중복 체크
+//        if (!fleet.getFleetName().equals(request.getFleetName()) &&
+//            fleetRepository.existsByCharacterIdAndFleetNameAndDeletedFalse(characterId, request.getFleetName())) {
+//            throw new BusinessException(ServerErrorCode.FLEET_DUPLICATE_NAME);
+//        }
+//
+//        // 함대 정보 업데이트
+//        fleet.setFleetName(request.getFleetName());
+//        fleet.setDescription(request.getDescription());
+//        fleet.setModified(LocalDateTime.now());
+//
+//        // 활성 상태 변경
+//        if (request.isActive() && !fleet.isActive()) {
+//            activateFleet(characterId, fleetId);
+//        } else if (!request.isActive() && fleet.isActive()) {
+//            fleet.setActive(false);
+//        }
+//
+//        // 기존 함선과 모듈들 삭제 (soft delete)
+//        List<Ship> existingShips = shipRepository.findByFleetIdAndDeletedFalseOrderByPositionIndex(fleetId);
+//        for (Ship ship : existingShips) {
+//            List<ShipModule> modules = shipModuleRepository.findByShipIdAndDeletedFalseOrderBySlotIndex(ship.getId());
+//            for (ShipModule module : modules) {
+//                module.setDeleted(true);
+//                module.setModified(LocalDateTime.now());
+//                shipModuleRepository.save(module);
+//            }
+//            ship.setDeleted(true);
+//            ship.setModified(LocalDateTime.now());
+//            shipRepository.save(ship);
+//        }
+//
+//        // 새로운 함선과 모듈들 생성
+//        if (request.getShips() != null) {
+//            for (FleetImportRequest.ShipImportData shipData : request.getShips()) {
+//                Ship ship = new Ship();
+//                ship.setFleet(fleet);
+//                ship.setShipName(shipData.getShipName());
+//                ship.setPositionIndex(shipData.getPositionIndex());
+//                ship.setDescription(shipData.getDescription());
+//                ship = shipRepository.save(ship);
+//
+//                if (shipData.getModules() != null) {
+//                    for (FleetImportRequest.ShipModuleImportData moduleData : shipData.getModules()) {
+//                        ShipModule module = new ShipModule();
+//                        module.setShip(ship);
+//                        module.setModuleType(moduleData.getModuleType());
+//                        module.setModuleLevel(moduleData.getModuleLevel());
+//                        module.setSlotIndex(moduleData.getSlotIndex());
+//                        shipModuleRepository.save(module);
+//                    }
+//                }
+//            }
+//        }
+//
+//        fleet = fleetRepository.save(fleet);
+//        return convertToDetailDto(fleet);
+//    }
 
     // 함대 삭제 (soft delete)
     @Transactional
@@ -365,108 +365,76 @@ public class FleetService {
     }
 
     // Entity -> DTO 변환 (기본 정보만)
-    private FleetDto convertToDto(Fleet fleet) {
-        FleetDto dto = new FleetDto();
-        dto.setId(fleet.getId());
-        dto.setCharacterId(fleet.getCharacterId());
-        dto.setFleetName(fleet.getFleetName());
-        dto.setDescription(fleet.getDescription());
-        dto.setActive(fleet.isActive());
-        dto.setFormation(fleet.getFormation());
-        dto.setCreated(fleet.getCreated());
-        dto.setModified(fleet.getModified());
-        return dto;
+    private FleetInfoDto convertFleetToFleetInfoDto(Fleet fleet) {
+        return FleetInfoDto.builder()
+                .id(fleet.getId())
+                .characterId(fleet.getCharacterId())
+                .fleetName(fleet.getFleetName())
+                .description(fleet.getDescription())
+                .isActive(fleet.isActive())
+                .formation(fleet.getFormation())
+                .build();
     }
 
     // Entity -> DTO 변환 (상세 정보 포함)
-    private FleetDto convertToDetailDto(Fleet fleet) {
-        FleetDto dto = convertToDto(fleet);
+    private FleetInfoDto convertToDetailDto(Fleet fleet) {
+        FleetInfoDto dto = convertFleetToFleetInfoDto(fleet);
         
         List<Ship> ships = shipRepository.findByFleetIdAndDeletedFalseOrderByPositionIndex(fleet.getId());
-        List<ShipDto> shipDtos = ships.stream()
-                .map(this::convertToShipDto)
+        List<ShipInfoDto> shipDtos = ships.stream()
+                .map(this::convertShipToShipInfoDto)
                 .collect(Collectors.toList());
         dto.setShips(shipDtos);
         
         return dto;
     }
 
-    private ShipDto convertToShipDto(Ship ship) {
-        ShipDto dto = new ShipDto();
-        dto.setId(ship.getId());
-        dto.setFleetId(ship.getFleet().getId());
-        dto.setShipName(ship.getShipName());
-        dto.setPositionIndex(ship.getPositionIndex());
-        dto.setDescription(ship.getDescription());
-        dto.setCreated(ship.getCreated());
-        dto.setModified(ship.getModified());
-
-        List<ShipModule> modules = shipModuleRepository.findByShipIdAndDeletedFalseOrderBySlotIndex(ship.getId());
-        List<BodyModuleDto> bodyDtos = convertToBodyModules(modules);
-        dto.setBodies(bodyDtos);
-
-        return dto;
-    }
-
-    private List<BodyModuleDto> convertToBodyModules(List<ShipModule> modules) {
+    private List<ModuleBodyInfoDto> convertToBodyModules(List<ShipModule> modules) {
         return modules.stream()
                 .filter(m -> m.getModuleType() == EModuleType.Body)
                 .map(bodyModule -> {
-                    BodyModuleDto bodyDto = new BodyModuleDto();
-                    bodyDto.setModuleTypePacked(ModuleTypeConverter.packBody(
-                        bodyModule.getModuleBodySubType(),
-                        bodyModule.getModuleStyle()
-                    ));
-                    bodyDto.setModuleLevel(bodyModule.getModuleLevel());
-                    bodyDto.setBodyIndex(bodyModule.getBodyIndex());
-                    bodyDto.setCreated(bodyModule.getCreated());
+                    ModuleBodyInfoDto bodyDto = ModuleBodyInfoDto.builder()
+                            .moduleTypePacked(ModuleTypeConverter.pack(bodyModule.getModuleType(), bodyModule.getModuleSubType(), bodyModule.getModuleStyle()))
+                            .moduleLevel(bodyModule.getModuleLevel())
+                            .bodyIndex(bodyModule.getBodyIndex())
+                            .build();
 
                     int bodyIndex = bodyModule.getBodyIndex();
-
-                    List<EngineModuleDto> engines = modules.stream()
+                    List<ModuleInfoDto> engines = modules.stream()
                             .filter(m -> m.getModuleType() == EModuleType.Engine && m.getBodyIndex() == bodyIndex)
                             .map(engineModule -> {
-                                EngineModuleDto engineDto = new EngineModuleDto();
-                                engineDto.setModuleTypePacked(ModuleTypeConverter.packEngine(
-                                        engineModule.getModuleEngineSubType(),
-                                        engineModule.getModuleStyle()
-                                ));
-                                engineDto.setModuleLevel(engineModule.getModuleLevel());
-                                engineDto.setBodyIndex(engineModule.getBodyIndex());
-                                engineDto.setSlotIndex(engineModule.getSlotIndex());
-                                engineDto.setCreated(engineModule.getCreated());
+                                ModuleInfoDto engineDto = ModuleInfoDto.builder()
+                                        .moduleTypePacked(ModuleTypeConverter.pack(engineModule.getModuleType(), engineModule.getModuleSubType(), engineModule.getModuleStyle()))
+                                        .moduleLevel(engineModule.getModuleLevel())
+                                        .bodyIndex(engineModule.getBodyIndex())
+                                        .slotIndex(engineModule.getSlotIndex())
+                                        .build();
                                 return engineDto;
                             })
                             .collect(Collectors.toList());
 
-                    List<WeaponModuleDto> weapons = modules.stream()
+                    List<ModuleInfoDto> weapons = modules.stream()
                             .filter(m -> m.getModuleType() == EModuleType.Weapon && m.getBodyIndex() == bodyIndex)
                             .map(weaponModule -> {
-                                WeaponModuleDto weaponDto = new WeaponModuleDto();
-                                weaponDto.setModuleTypePacked(ModuleTypeConverter.packWeapon(
-                                    weaponModule.getModuleWeaponSubType(),
-                                    weaponModule.getModuleStyle()
-                                ));
-                                weaponDto.setModuleLevel(weaponModule.getModuleLevel());
-                                weaponDto.setBodyIndex(weaponModule.getBodyIndex());
-                                weaponDto.setSlotIndex(weaponModule.getSlotIndex());
-                                weaponDto.setCreated(weaponModule.getCreated());
+                                ModuleInfoDto weaponDto = ModuleInfoDto.builder()
+                                        .moduleTypePacked(ModuleTypeConverter.pack(weaponModule.getModuleType(), weaponModule.getModuleSubType(), weaponModule.getModuleStyle()))
+                                        .moduleLevel(weaponModule.getModuleLevel())
+                                        .bodyIndex(weaponModule.getBodyIndex())
+                                        .slotIndex(weaponModule.getSlotIndex())
+                                        .build();
                                 return weaponDto;
                             })
                             .collect(Collectors.toList());
 
-                    List<HangerModuleDto> hangers = modules.stream()
+                    List<ModuleInfoDto> hangers = modules.stream()
                             .filter(m -> m.getModuleType() == EModuleType.Hanger && m.getBodyIndex() == bodyIndex)
                             .map(hangerModule -> {
-                                HangerModuleDto hangerDto = new HangerModuleDto();
-                                hangerDto.setModuleTypePacked(ModuleTypeConverter.packHanger(
-                                    hangerModule.getModuleHangerSubType(),
-                                    hangerModule.getModuleStyle()
-                                ));
-                                hangerDto.setModuleLevel(hangerModule.getModuleLevel());
-                                hangerDto.setBodyIndex(hangerModule.getBodyIndex());
-                                hangerDto.setSlotIndex(hangerModule.getSlotIndex());
-                                hangerDto.setCreated(hangerModule.getCreated());
+                                ModuleInfoDto hangerDto = ModuleInfoDto.builder()
+                                        .moduleTypePacked(ModuleTypeConverter.pack(hangerModule.getModuleType(), hangerModule.getModuleSubType(), hangerModule.getModuleStyle()))
+                                        .moduleLevel(hangerModule.getModuleLevel())
+                                        .bodyIndex(hangerModule.getBodyIndex())
+                                        .slotIndex(hangerModule.getSlotIndex())
+                                        .build();
                                 return hangerDto;
                             })
                             .collect(Collectors.toList());
@@ -480,21 +448,18 @@ public class FleetService {
                 .collect(Collectors.toList());
     }
 
-    private ShipDto convertShipToDto(Ship ship) {
-        ShipDto dto = new ShipDto();
-        dto.setId(ship.getId());
-        dto.setFleetId(ship.getFleet().getId());
-        dto.setShipName(ship.getShipName());
-        dto.setPositionIndex(ship.getPositionIndex());
-        dto.setDescription(ship.getDescription());
-        dto.setCreated(ship.getCreated());
-        dto.setModified(ship.getModified());
-
+    private ShipInfoDto convertShipToShipInfoDto(Ship ship) {
         List<ShipModule> modules = shipModuleRepository.findByShipIdAndDeletedFalseOrderBySlotIndex(ship.getId());
-        List<BodyModuleDto> bodyDtos = convertToBodyModules(modules);
-        dto.setBodies(bodyDtos);
+        List<ModuleBodyInfoDto> bodyDtos = convertToBodyModules(modules);
 
-        return dto;
+        return ShipInfoDto.builder()
+                .id(ship.getId())
+                .fleetId(ship.getFleet().getId())
+                .shipName(ship.getShipName())
+                .positionIndex(ship.getPositionIndex())
+                .description(ship.getDescription())
+                .bodies(bodyDtos)
+                .build();
     }
 
     @Transactional
@@ -522,7 +487,7 @@ public class FleetService {
         }
 
         // 현재 함선 수에 따른 추가 비용 가져오기
-        CostStruct shipAddCost = gameDataService.getShipAddCost(currentShips.size());
+        CostStructDto shipAddCost = gameDataService.getShipAddCost(currentShips.size());
 
         // TechLevel 검증
         if (character.getTechLevel() < shipAddCost.getTechLevel()) {
@@ -563,12 +528,8 @@ public class FleetService {
         // 기본 모듈들 생성 (Body, Weapon, Engine)
         createDefaultModules(savedShip);
 
-        // 응답 생성
-        AddShipResponse response = new AddShipResponse(true, "함선이 성공적으로 추가되었습니다.");
-        response.setNewShipInfo(convertShipToDto(savedShip));
-
         // 비용 정보 (모든 미네랄 타입 포함)
-        CostRemainInfo costRemainInfo = new CostRemainInfo(
+        CostRemainInfoDto costRemainInfo = new CostRemainInfoDto(
                 shipAddCost.getMineral(),
                 shipAddCost.getMineralRare(),
                 shipAddCost.getMineralExotic(),
@@ -578,11 +539,15 @@ public class FleetService {
                 character.getMineralExotic(),
                 character.getMineralDark()
         );
-        response.setCostRemainInfo(costRemainInfo);
-        response.setUpdatedFleetInfo(convertToDetailDto(targetFleet));
 
-        log.info("AddShip Response - success: {}, message: {}, costRemainInfo: {}",
-                response.isSuccess(), response.getMessage(), response.getCostRemainInfo());
+        // 응답 생성
+        AddShipResponse response = AddShipResponse.builder()
+                .success(true)
+                .message("함선이 성공적으로 추가되었습니다.")
+                .newShipInfo(convertShipToShipInfoDto(savedShip))
+                .costRemainInfo(costRemainInfo)
+                .updatedFleetInfo(convertToDetailDto(targetFleet))
+                .build();
 
         return response;
     }
@@ -592,7 +557,7 @@ public class FleetService {
         ShipModule bodyModule = new ShipModule();
         bodyModule.setShip(ship);
         bodyModule.setModuleType(EModuleType.Body);
-        bodyModule.setModuleSubType(EModuleBodySubType.Battle);
+        bodyModule.setModuleSubType(EModuleSubType.Body_Battle);
         bodyModule.setModuleStyle(EModuleStyle.None);
         bodyModule.setModuleLevel(1);
         bodyModule.setBodyIndex(0);
@@ -606,7 +571,7 @@ public class FleetService {
         ShipModule weaponModule = new ShipModule();
         weaponModule.setShip(ship);
         weaponModule.setModuleType(EModuleType.Weapon);
-        weaponModule.setModuleSubType(EModuleWeaponSubType.Beam);
+        weaponModule.setModuleSubType(EModuleSubType.Weapon_Beam);
         weaponModule.setModuleStyle(EModuleStyle.None);
         weaponModule.setModuleLevel(1);
         weaponModule.setBodyIndex(0);
@@ -620,7 +585,7 @@ public class FleetService {
         ShipModule engineModule = new ShipModule();
         engineModule.setShip(ship);
         engineModule.setModuleType(EModuleType.Engine);
-        engineModule.setModuleSubType(EModuleEngineSubType.Standard);
+        engineModule.setModuleSubType(EModuleSubType.Engine_Standard);
         engineModule.setModuleStyle(EModuleStyle.None);
         engineModule.setModuleLevel(1);
         engineModule.setBodyIndex(0);
@@ -641,11 +606,16 @@ public class FleetService {
             throw new BusinessException(ServerErrorCode.FLEET_ACCESS_DENIED);
         }
 
+        EModuleType moduleType = ModuleTypeConverter.getType(request.getModuleTypePacked());
+        EModuleSubType moduleSubType = ModuleTypeConverter.getSubType(request.getModuleTypePacked());
+        //EModuleStyle moduleStyle = ModuleTypeConverter.getStyle(request.getModuleTypePacked());
         // 모듈 찾기
-        ShipModule module = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndDeletedFalse(
+        ShipModule module = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndModuleSubTypeAndSlotIndexAndDeletedFalse(
                 request.getShipId(),
                 request.getBodyIndex(),
-                EModuleType.valueOf(request.getModuleType())
+                moduleType,
+                moduleSubType,
+                request.getSlotIndex()
         ).orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_NOT_FOUND));
 
         // 현재 레벨 확인
@@ -658,19 +628,19 @@ public class FleetService {
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
 
         // 업그레이드 비용 계산 (현재 레벨부터 목표 레벨까지)
-        CostStruct totalCost = new CostStruct(0, 0L, 0L, 0L, 0L);
+        CostStructDto totalCost = new CostStructDto(0, 0L, 0L, 0L, 0L);
         int maxTechLevel = 0;
 
         if (module.getModuleType() == EModuleType.Body) {
-            List<ModuleBodyDataDto> moduleDataList = gameDataService.getBodyModules();
+            List<ModuleData> moduleDataList = gameDataService.getBodyModules();
             for (int level = request.getCurrentLevel(); level < request.getTargetLevel(); level++) {
                 final int currentLevel = level;
-                ModuleBodyDataDto levelData = moduleDataList.stream()
-                        .filter(data -> data.getLevel() == currentLevel)
+                ModuleData levelData = moduleDataList.stream()
+                        .filter(data -> data.getModuleLevel() == currentLevel)
                         .findFirst()
                         .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_DATA_NOT_FOUND));
 
-                CostStruct cost = levelData.getUpgradeCost();
+                CostStructDto cost = levelData.getUpgradeCost();
                 if (cost != null) {
                     maxTechLevel = Math.max(maxTechLevel, cost.getTechLevel());
                     totalCost.setMineral(totalCost.getMineral() + cost.getMineral());
@@ -680,15 +650,15 @@ public class FleetService {
                 }
             }
         } else if (module.getModuleType() == EModuleType.Weapon) {
-            List<ModuleWeaponDataDto> moduleDataList = gameDataService.getWeaponModules();
+            List<ModuleData> moduleDataList = gameDataService.getWeaponModules();
             for (int level = request.getCurrentLevel(); level < request.getTargetLevel(); level++) {
                 final int currentLevel = level;
-                ModuleWeaponDataDto levelData = moduleDataList.stream()
-                        .filter(data -> data.getLevel() == currentLevel)
+                ModuleData levelData = moduleDataList.stream()
+                        .filter(data -> data.getModuleLevel() == currentLevel)
                         .findFirst()
                         .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_DATA_NOT_FOUND));
 
-                CostStruct cost = levelData.getUpgradeCost();
+                CostStructDto cost = levelData.getUpgradeCost();
                 if (cost != null) {
                     maxTechLevel = Math.max(maxTechLevel, cost.getTechLevel());
                     totalCost.setMineral(totalCost.getMineral() + cost.getMineral());
@@ -698,15 +668,15 @@ public class FleetService {
                 }
             }
         } else if (module.getModuleType() == EModuleType.Engine) {
-            List<ModuleEngineDataDto> moduleDataList = gameDataService.getEngineModules();
+            List<ModuleData> moduleDataList = gameDataService.getEngineModules();
             for (int level = request.getCurrentLevel(); level < request.getTargetLevel(); level++) {
                 final int currentLevel = level;
-                ModuleEngineDataDto levelData = moduleDataList.stream()
-                        .filter(data -> data.getLevel() == currentLevel)
+                ModuleData levelData = moduleDataList.stream()
+                        .filter(data -> data.getModuleLevel() == currentLevel)
                         .findFirst()
                         .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_DATA_NOT_FOUND));
 
-                CostStruct cost = levelData.getUpgradeCost();
+                CostStructDto cost = levelData.getUpgradeCost();
                 if (cost != null) {
                     maxTechLevel = Math.max(maxTechLevel, cost.getTechLevel());
                     totalCost.setMineral(totalCost.getMineral() + cost.getMineral());
@@ -716,15 +686,15 @@ public class FleetService {
                 }
             }
         } else if (module.getModuleType() == EModuleType.Hanger) {
-            List<ModuleHangerDataDto> moduleDataList = gameDataService.getHangerModules();
+            List<ModuleData> moduleDataList = gameDataService.getHangerModules();
             for (int level = request.getCurrentLevel(); level < request.getTargetLevel(); level++) {
                 final int currentLevel = level;
-                ModuleHangerDataDto levelData = moduleDataList.stream()
-                        .filter(data -> data.getLevel() == currentLevel)
+                ModuleData levelData = moduleDataList.stream()
+                        .filter(data -> data.getModuleLevel() == currentLevel)
                         .findFirst()
                         .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_DATA_NOT_FOUND));
 
-                CostStruct cost = levelData.getUpgradeCost();
+                CostStructDto cost = levelData.getUpgradeCost();
                 if (cost != null) {
                     maxTechLevel = Math.max(maxTechLevel, cost.getTechLevel());
                     totalCost.setMineral(totalCost.getMineral() + cost.getMineral());
@@ -768,13 +738,14 @@ public class FleetService {
         shipModuleRepository.save(module);
 
         // 응답 생성
-        ModuleUpgradeResponse response = new ModuleUpgradeResponse();
-        response.setSuccess(true);
-        response.setNewLevel(module.getModuleLevel());
-        response.setMessage("Module upgrade completed successfully.");
+        ModuleUpgradeResponse response = ModuleUpgradeResponse.builder()
+                .success(true)
+                .newLevel(module.getModuleLevel())
+                .message("Module upgrade completed successfully.")
+                .build();
 
         // 비용 정보 (모든 미네랄 타입 포함)
-        CostRemainInfo costRemainInfo = new CostRemainInfo(
+        CostRemainInfoDto costRemainInfo = new CostRemainInfoDto(
                 totalCost.getMineral(),
                 totalCost.getMineralRare(),
                 totalCost.getMineralExotic(),
@@ -805,7 +776,10 @@ public class FleetService {
         // 편대 타입 유효성 검사
         EFormationType formationType = request.getFormationType();
         if (formationType == null) {
-            return ChangeFormationResponse.failure("Formation type is required");
+            return ChangeFormationResponse.builder()
+                    .success(false)
+                    .message("Formation type is required")
+                    .build();
         }
 
         // 편대 정보 업데이트
@@ -814,8 +788,12 @@ public class FleetService {
         fleetRepository.save(fleet);
 
         // 업데이트된 함대 정보 반환
-        FleetDto updatedFleet = convertToDetailDto(fleet);
-        return ChangeFormationResponse.success(updatedFleet);
+        FleetInfoDto updatedFleet = convertToDetailDto(fleet);
+        return ChangeFormationResponse.builder()
+                .success(true)
+                .message("Formation changed successfully")
+                .updatedFleetInfo(updatedFleet)
+                .build();
     }
 
     @Transactional
@@ -829,17 +807,28 @@ public class FleetService {
         }
 
         // 요청에서 모듈 타입 정보 추출
-        EModuleType moduleType = EModuleType.values()[request.getModuleType()];
-        int moduleSubTypeValue = request.getModuleSubTypeValue();
+        EModuleType moduleType = request.getModuleType();
+        EModuleSubType moduleSubType = request.getModuleSubType();
 
-        // 현재 슬롯 확인 (완전한 유니크 키로 조회)
-        var existingModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndModuleSubTypeValueAndSlotIndexAndDeletedFalse(
-                request.getShipId(),
-                request.getBodyIndex(),
-                moduleType,
-                moduleSubTypeValue,
-                request.getSlotIndex()
-        );
+        // 현재 슬롯 확인
+        // Weapon은 moduleSubType까지 조회, 그 외는 moduleType까지만 조회
+        Optional<ShipModule> existingModule;
+        if (moduleType == EModuleType.Weapon) {
+            existingModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndModuleSubTypeAndSlotIndexAndDeletedFalse(
+                    request.getShipId(),
+                    request.getBodyIndex(),
+                    moduleType,
+                    moduleSubType,
+                    request.getSlotIndex()
+            );
+        } else {
+            existingModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
+                    request.getShipId(),
+                    request.getBodyIndex(),
+                    moduleType,
+                    request.getSlotIndex()
+            );
+        }
 
         // 이미 모듈이 존재하면 Placeholder가 아님
         if (existingModule.isPresent()) {
@@ -868,22 +857,7 @@ public class FleetService {
         newModule.setBodyIndex(request.getBodyIndex());
         newModule.setSlotIndex(request.getSlotIndex());
         newModule.setModuleType(moduleType);
-
-        // moduleSubTypeValue를 적절한 enum으로 변환하여 설정
-        switch (moduleType) {
-            case Body:
-                newModule.setModuleSubType(EModuleBodySubType.values()[moduleSubTypeValue]);
-                break;
-            case Weapon:
-                newModule.setModuleSubType(EModuleWeaponSubType.values()[moduleSubTypeValue]);
-                break;
-            case Engine:
-                newModule.setModuleSubType(EModuleEngineSubType.values()[moduleSubTypeValue]);
-                break;
-            case Hanger:
-                newModule.setModuleSubType(EModuleHangerSubType.values()[moduleSubTypeValue]);
-                break;
-        }
+        newModule.setModuleSubType(moduleSubType);
 
         newModule.setModuleStyle(EModuleStyle.None);
         newModule.setModuleLevel(1);
@@ -893,10 +867,10 @@ public class FleetService {
         shipModuleRepository.save(newModule);
 
         // 업데이트된 함선 정보 조회
-        ShipDto updatedShipDto = convertShipToDto(ship);
+        ShipInfoDto updatedShipDto = convertShipToShipInfoDto(ship);
 
         // 비용 정보
-        CostRemainInfo costRemainInfo = new CostRemainInfo(
+        CostRemainInfoDto costRemainInfo = new CostRemainInfoDto(
                 mineralCost,
                 0L,
                 0L,
@@ -926,32 +900,39 @@ public class FleetService {
             throw new BusinessException(ServerErrorCode.FLEET_ACCESS_DENIED);
         }
 
-        // 현재 장착된 모듈 찾기
-        ShipModule currentModule = shipModuleRepository.findByShipIdAndBodyIndexAndSlotIndexAndDeletedFalse(
-                request.getShipId(),
-                request.getBodyIndex(),
-                request.getSlotIndex()
-        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_NOT_FOUND));
+        // 현재 모듈 타입 정보 추출
+        int currentModuleTypePacked = request.getCurrentModuleTypePacked();
+        EModuleType currentModuleType = ModuleTypeConverter.getType(currentModuleTypePacked);
+        EModuleSubType currentModuleSubType = ModuleTypeConverter.getSubType(currentModuleTypePacked);
 
-        // 현재 모듈 타입 검증
-        if (!currentModule.getModuleType().name().equals(request.getCurrentModuleType())) {
-            //throw new BusinessException(ServerErrorCode.MODULE_TYPE_MISMATCH);
-            throw new BusinessException(ServerErrorCode.UNKNOWN_ERROR);
-        }
-
-        // 새 모듈 타입 파싱
-        EModuleType newModuleType;
-        try {
-            newModuleType = EModuleType.valueOf(request.getNewModuleType());
-        } catch (IllegalArgumentException e) {
-            //throw new BusinessException(ServerErrorCode.INVALID_MODULE_TYPE);
-            throw new BusinessException(ServerErrorCode.UNKNOWN_ERROR);
-        }
+        // 새 모듈 타입 정보 추출
+        int newModuleTypePacked = request.getNewModuleTypePacked();
+        EModuleType newModuleType = ModuleTypeConverter.getType(newModuleTypePacked);
+        EModuleSubType newModuleSubType = ModuleTypeConverter.getSubType(newModuleTypePacked);
 
         // 모듈 타입이 같은지 확인 (Weapon->Weapon, Engine->Engine 만 가능)
-        if (currentModule.getModuleType() != newModuleType) {
-            //throw new BusinessException(ServerErrorCode.MODULE_TYPE_CHANGE_NOT_ALLOWED);
+        if (currentModuleType != newModuleType) {
             throw new BusinessException(ServerErrorCode.UNKNOWN_ERROR);
+        }
+
+        // 현재 장착된 모듈 찾기
+        // Weapon은 moduleSubType까지 조회, 그 외는 moduleType까지만 조회
+        ShipModule currentModule;
+        if (currentModuleType == EModuleType.Weapon) {
+            currentModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndModuleSubTypeAndSlotIndexAndDeletedFalse(
+                    request.getShipId(),
+                    request.getBodyIndex(),
+                    currentModuleType,
+                    currentModuleSubType,
+                    request.getSlotIndex()
+            ).orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_NOT_FOUND));
+        } else {
+            currentModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
+                    request.getShipId(),
+                    request.getBodyIndex(),
+                    currentModuleType,
+                    request.getSlotIndex()
+            ).orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_NOT_FOUND));
         }
 
         // 캐릭터 자원 조회
@@ -986,16 +967,17 @@ public class FleetService {
         character.setMineralDark(character.getMineralDark() - mineralDarkCost);
         characterRepository.save(character);
 
-        // 모듈 정보 업데이트 (레벨만 변경, 타입은 동일)
+        // 모듈 정보 업데이트 (레벨과 서브타입 변경, 메인 타입은 동일)
+        currentModule.setModuleSubType(newModuleSubType);
         currentModule.setModuleLevel(request.getNewModuleLevel());
         currentModule.setModified(LocalDateTime.now());
         shipModuleRepository.save(currentModule);
 
         // 업데이트된 함선 정보 조회
-        ShipDto updatedShipDto = convertShipToDto(ship);
+        ShipInfoDto updatedShipDto = convertShipToShipInfoDto(ship);
 
         // 비용 정보
-        CostRemainInfo costRemainInfo = new CostRemainInfo(
+        CostRemainInfoDto costRemainInfo = new CostRemainInfoDto(
                 mineralCost,
                 mineralRareCost,
                 mineralExoticCost,
@@ -1020,15 +1002,15 @@ public class FleetService {
         // 압축된 모듈 타입에서 정보 추출
         int moduleTypePacked = request.getModuleTypePacked();
         EModuleType moduleType = ModuleTypeConverter.getType(moduleTypePacked);
-        int moduleSubTypeValue = ModuleTypeConverter.getSubTypeValue(moduleTypePacked);
+        EModuleSubType moduleSubType = ModuleTypeConverter.getSubType(moduleTypePacked);
         EModuleStyle moduleStyle = ModuleTypeConverter.getStyle(moduleTypePacked);
 
         // 이미 개발되었는지 확인
-        Optional<ModuleResearch> existing = moduleResearchRepository.findByCharacterIdAndModuleTypeAndModuleSubTypeValueAndModuleStyleValue(
+        Optional<ModuleResearch> existing = moduleResearchRepository.findByCharacterIdAndModuleTypeAndModuleSubTypeAndModuleStyle(
                 characterId,
                 moduleType,
-                moduleSubTypeValue,
-                moduleStyle.ordinal()
+                moduleSubType,
+                moduleStyle
         );
 
         if (existing.isPresent() && existing.get().isResearched()) {
@@ -1076,8 +1058,8 @@ public class FleetService {
             moduleResearch = new ModuleResearch();
             moduleResearch.setCharacterId(characterId);
             moduleResearch.setModuleType(moduleType);
-            moduleResearch.setModuleSubTypeValue(moduleSubTypeValue);
-            moduleResearch.setModuleStyleValue(moduleStyle.ordinal());
+            moduleResearch.setModuleSubType(moduleSubType);
+            moduleResearch.setModuleStyle(moduleStyle);
             moduleResearch.setResearched(true);
         }
         moduleResearchRepository.save(moduleResearch);
@@ -1087,13 +1069,13 @@ public class FleetService {
         List<Integer> researchedModuleTypePackeds = researchedList.stream()
                 .map(r -> ModuleTypeConverter.pack(
                         r.getModuleType(),
-                        r.getModuleSubTypeValue(),
-                        EModuleStyle.values()[r.getModuleStyleValue()]
+                        r.getModuleSubType(),
+                        r.getModuleStyle()
                 ))
                 .collect(Collectors.toList());
 
         // 비용 정보
-        CostRemainInfo costRemainInfo = new CostRemainInfo(
+        CostRemainInfoDto costRemainInfo = new CostRemainInfoDto(
                 mineralCost,
                 mineralRareCost,
                 mineralExoticCost,
@@ -1121,8 +1103,8 @@ public class FleetService {
         return researchedList.stream()
                 .map(r -> ModuleTypeConverter.pack(
                         r.getModuleType(),
-                        r.getModuleSubTypeValue(),
-                        EModuleStyle.values()[r.getModuleStyleValue()]
+                        r.getModuleSubType(),
+                        r.getModuleStyle()
                 ))
                 .collect(Collectors.toList());
     }

@@ -8,39 +8,29 @@ public class ModuleTypeConverter {
     private static final int STYLE_SHIFT = 8;
     private static final int MASK = 0xFF;
 
-    public static int pack(EModuleType type, int subTypeValue, EModuleStyle style) {
-        return ((type.ordinal()) << TYPE_SHIFT)
-             | (subTypeValue << SUBTYPE_SHIFT)
-             | ((style.ordinal()) << STYLE_SHIFT);
-    }
-
-    public static int packBody(EModuleBodySubType subType, EModuleStyle style) {
-        return pack(EModuleType.Body, subType.getValue(), style);
-    }
-
-    public static int packWeapon(EModuleWeaponSubType subType, EModuleStyle style) {
-        return pack(EModuleType.Weapon, subType.getValue(), style);
-    }
-
-    public static int packEngine(EModuleEngineSubType subType, EModuleStyle style) {
-        return pack(EModuleType.Engine, subType.getValue(), style);
-    }
-
-    public static int packHanger(EModuleHangerSubType subType, EModuleStyle style) {
-        return pack(EModuleType.Hanger, subType.getValue(), style);
+    public static int pack(EModuleType type, EModuleSubType subType, EModuleStyle style) {
+        // SubType에서 순수한 서브타입 값만 추출 (1001 -> 1, 2002 -> 2)
+        int pureSubType = subType.getValue() % 1000;
+        return (type.getValue() << TYPE_SHIFT) | (pureSubType << SUBTYPE_SHIFT) | (style.getValue() << STYLE_SHIFT);
     }
 
     public static EModuleType getType(int packed) {
-        int typeOrdinal = (packed >> TYPE_SHIFT) & MASK;
-        return EModuleType.values()[typeOrdinal];
+        int typeValue = (packed >> TYPE_SHIFT) & MASK;
+        return EModuleType.fromValue(typeValue);
     }
 
-    public static int getSubTypeValue(int packed) {
-        return (packed >> SUBTYPE_SHIFT) & MASK;
+    public static EModuleSubType getSubType(int packed) {
+        int pureSubType = (packed >> SUBTYPE_SHIFT) & MASK;
+        if (pureSubType == 0) return EModuleSubType.None;
+
+        // Type 정보를 가져와서 완전한 SubType 값으로 복원 (Type=1, SubType=1 -> 1001)
+        EModuleType type = getType(packed);
+        int fullSubType = type.getValue() * 1000 + pureSubType;
+        return EModuleSubType.fromValue(fullSubType);
     }
 
     public static EModuleStyle getStyle(int packed) {
-        int styleOrdinal = (packed >> STYLE_SHIFT) & MASK;
-        return EModuleStyle.values()[styleOrdinal];
+        int styleValue = (packed >> STYLE_SHIFT) & MASK;
+        return EModuleStyle.fromValue(styleValue);
     }
 }

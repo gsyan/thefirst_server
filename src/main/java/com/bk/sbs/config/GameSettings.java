@@ -1,6 +1,6 @@
 package com.bk.sbs.config;
 
-import com.bk.sbs.dto.CostStruct;
+import com.bk.sbs.dto.CostStructDto;
 import lombok.Data;
 
 import java.util.List;
@@ -12,7 +12,7 @@ public class GameSettings {
 
     // Fleet Settings
     private int maxShipsPerFleet = 10;
-    private List<CostStruct> addShipCosts;
+    private List<CostStructDto> addShipCosts;
 
     // Formation Settings
     private float linearFormationSpacing = 3.0f;

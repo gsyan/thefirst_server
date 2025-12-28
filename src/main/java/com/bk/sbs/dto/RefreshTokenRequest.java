@@ -1,13 +1,14 @@
-//--------------------------------------------------------------------------------------------------
 package com.bk.sbs.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+/**
+ * RefreshTokenRequest
+ * Auto-generated from Unity C# RefreshTokenRequest class
+ */
+@Data
+@NoArgsConstructor
 public class RefreshTokenRequest {
-    @NotBlank(message = "Refresh token is required")
     private String refreshToken;
 }

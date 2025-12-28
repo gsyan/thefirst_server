@@ -1,7 +1,7 @@
 package com.bk.sbs.controller;
 
 import com.bk.sbs.config.ModuleDataTable;
-import com.bk.sbs.dto.ApiResponse;
+import com.bk.sbs.dto.nogenerated.ApiResponse;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.service.GameDataService;

@@ -1,0 +1,1 @@
+python generate_network_dtos.py

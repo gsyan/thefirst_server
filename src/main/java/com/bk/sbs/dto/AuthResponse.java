@@ -1,17 +1,23 @@
-//--------------------------------------------------------------------------------------------------
 package com.bk.sbs.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+/**
+ * AuthResponse
+ * Auto-generated from Unity C# AuthResponse class
+ */
+@Data
+@NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class AuthResponse {
     private String accessToken;
     private String refreshToken;
-    private FleetDto activeFleetInfo;
-    private CharacterStatusResponse characterInfo;
-    private List<Integer> researchedModuleTypePackeds; // 개발된 모듈 목록
+    private FleetInfoDto activeFleetInfo;
+    private CharacterInfoDto characterInfo;
+    private List<Integer> researchedModuleTypePackeds;
 }

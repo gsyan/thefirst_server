@@ -1,6 +1,7 @@
 package com.bk.sbs.repository;
 
 import com.bk.sbs.enums.EModuleType;
+import com.bk.sbs.enums.EModuleSubType;
 import com.bk.sbs.entity.ShipModule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,25 +13,15 @@ import java.util.Optional;
 
 @Repository
 public interface ShipModuleRepository extends JpaRepository<ShipModule, Long> {
-    
+
+    // ship_id
     List<ShipModule> findByShipIdAndDeletedFalseOrderBySlotIndex(Long shipId);
-    
-    Optional<ShipModule> findByIdAndDeletedFalse(Long id);
-    
-    List<ShipModule> findByShipIdAndModuleTypeAndDeletedFalse(Long shipId, EModuleType moduleType);
 
-    @Query("SELECT sm FROM ShipModule sm WHERE sm.ship.id = :shipId AND sm.ship.fleet.characterId = :characterId AND sm.deleted = false ORDER BY sm.slotIndex")
-    List<ShipModule> findByShipIdAndCharacterId(@Param("shipId") Long shipId, @Param("characterId") Long characterId);
-    
-    boolean existsByShipIdAndSlotIndexAndDeletedFalse(Long shipId, int slotIndex);
-    
-    Optional<ShipModule> findByShipIdAndSlotIndexAndDeletedFalse(Long shipId, int slotIndex);
+    // ship_id, body_index, module_type, module_sub_type, slot_index
+    Optional<ShipModule> findByShipIdAndBodyIndexAndModuleTypeAndModuleSubTypeAndSlotIndexAndDeletedFalse(
+            Long shipId, int bodyIndex, EModuleType moduleType, EModuleSubType moduleSubType, int slotIndex);
 
-    Optional<ShipModule> findByShipIdAndBodyIndexAndModuleTypeAndDeletedFalse(Long shipId, int bodyIndex, EModuleType moduleType);
-
-    Optional<ShipModule> findByShipIdAndBodyIndexAndSlotIndexAndDeletedFalse(Long shipId, int bodyIndex, int slotIndex);
-
-    // 완전한 유니크 키로 조회 (ship_id, body_index, module_type, module_sub_type_value, slot_index)
-    Optional<ShipModule> findByShipIdAndBodyIndexAndModuleTypeAndModuleSubTypeValueAndSlotIndexAndDeletedFalse(
-            Long shipId, int bodyIndex, EModuleType moduleType, int moduleSubTypeValue, int slotIndex);
+    // ship_id, body_index, module_type, slot_index
+    Optional<ShipModule> findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
+            Long shipId, int bodyIndex, EModuleType moduleType, int slotIndex);
 }

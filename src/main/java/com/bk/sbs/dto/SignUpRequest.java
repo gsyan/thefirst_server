@@ -1,11 +1,14 @@
-//--------------------------------------------------------------------------------------------------
 package com.bk.sbs.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+/**
+ * SignUpRequest
+ * Auto-generated from Unity C# SignUpRequest class
+ */
+@Data
+@NoArgsConstructor
 public class SignUpRequest {
     private String email;
     private String password;

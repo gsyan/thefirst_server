@@ -1,12 +1,12 @@
 //--------------------------------------------------------------------------------------------------
 package com.bk.sbs.controller;
 
-import com.bk.sbs.dto.ApiResponse;
+import com.bk.sbs.dto.nogenerated.ApiResponse;
 import com.bk.sbs.dto.AuthResponse;
 import com.bk.sbs.dto.CharacterCreateRequest;
 import com.bk.sbs.dto.CharacterResponse;
-import com.bk.sbs.dto.CharacterStatusResponse;
-import com.bk.sbs.dto.FleetDto;
+import com.bk.sbs.dto.CharacterInfoDto;
+import com.bk.sbs.dto.FleetInfoDto;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.security.JwtUtil;
@@ -80,7 +80,7 @@ public class CharacterController {
             String newRefreshToken = jwtUtil.createRefreshTokenWithCharacter(email, accountId, characterId);
 
             // 캐릭터의 활성 함대 정보 조회
-            FleetDto activeFleet = fleetService.getActiveFleet(actualCharacterId);
+            FleetInfoDto activeFleet = fleetService.getActiveFleet(actualCharacterId);
 
             // 활성 함대가 없다면 null로 반환 (캐릭터 생성 시 기본 함대가 생성되어야 함)
             // 정상적인 경우라면 이미 기본 함대가 존재해야 함
@@ -90,19 +90,22 @@ public class CharacterController {
             }
 
             // 캐릭터 상태 정보 조회
-            CharacterStatusResponse characterStatus = characterService.getCharacterStatus(actualCharacterId);
+            CharacterInfoDto characterInfoDto = characterService.getCharacterInfoDto(actualCharacterId);
 
             // 개발된 모듈 목록 조회
             var researchedModuleTypePackeds = fleetService.getResearchedModuleTypePackeds(actualCharacterId);
 
-            AuthResponse response = new AuthResponse();
-            response.setAccessToken(newAccessToken);
-            response.setRefreshToken(newRefreshToken);
-            response.setActiveFleetInfo(activeFleet);
-            response.setCharacterInfo(characterStatus);
-            response.setResearchedModuleTypePackeds(researchedModuleTypePackeds);
-
+            AuthResponse response = AuthResponse.builder()
+                    .accessToken(newAccessToken)
+                    .refreshToken(newRefreshToken)
+                    .activeFleetInfo(activeFleet)
+                    .characterInfo(characterInfoDto)
+                    .researchedModuleTypePackeds(researchedModuleTypePackeds)
+                    .build();
             return ApiResponse.success(response);
+
+
+
         } catch (BusinessException e) {
             return ApiResponse.error(e.getErrorCode());
         } catch (Exception e) {

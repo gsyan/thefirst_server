@@ -1,27 +1,22 @@
 package com.bk.sbs.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * ModuleUpgradeResponse
+ * Auto-generated from Unity C# ModuleUpgradeResponse class
+ */
 @Data
 @NoArgsConstructor
+@Builder
 @AllArgsConstructor
 public class ModuleUpgradeResponse {
-    private boolean success;
-    private int newLevel;
-    private ModuleStats newStats;
-    private CostRemainInfo costRemainInfo;
+    private Boolean success;
+    private Integer newLevel;
+    private ModuleStatsDto newStats;
+    private CostRemainInfoDto costRemainInfo;
     private String message;
-
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class ModuleStats {
-        private float health;
-        private float attackPower;
-        private float movementSpeed;
-        private float rotationSpeed;
-        private float cargoCapacity;
-    }
 }

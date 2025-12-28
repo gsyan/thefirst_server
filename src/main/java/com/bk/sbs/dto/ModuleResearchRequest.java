@@ -1,13 +1,14 @@
 package com.bk.sbs.dto;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+/**
+ * ModuleResearchRequest
+ * Auto-generated from Unity C# ModuleResearchRequest class
+ */
+@Data
+@NoArgsConstructor
 public class ModuleResearchRequest {
-    private int moduleTypePacked; // 압축된 모듈 타입 정보 (Type + SubType + Style)
-
-    public int getModuleTypePacked() {
-        return moduleTypePacked;
-    }
-
-    public void setModuleTypePacked(int moduleTypePacked) {
-        this.moduleTypePacked = moduleTypePacked;
-    }
+    private Integer moduleTypePacked;
 }

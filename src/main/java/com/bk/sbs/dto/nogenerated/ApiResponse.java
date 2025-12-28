@@ -1,5 +1,5 @@
 //--------------------------------------------------------------------------------------------------
-package com.bk.sbs.dto;
+package com.bk.sbs.dto.nogenerated;
 
 import com.bk.sbs.exception.ServerErrorCode;
 import lombok.Getter;

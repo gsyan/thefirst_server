@@ -1,12 +1,8 @@
 package com.bk.sbs.controller;
 
-import com.bk.sbs.dto.ApiResponse;
-import com.bk.sbs.dto.CharacterStatusResponse;
-import com.bk.sbs.dto.CostStruct;
-import com.bk.sbs.dto.DevCommandRequest;
-import com.bk.sbs.dto.AddShipRequest;
-import com.bk.sbs.dto.AddShipResponse;
-import com.bk.sbs.dto.FleetDto;
+import com.bk.sbs.dto.nogenerated.ApiResponse;
+import com.bk.sbs.dto.*;
+import com.bk.sbs.enums.*;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.security.JwtUtil;
@@ -16,6 +12,7 @@ import com.bk.sbs.service.GameDataService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/dev")
@@ -54,12 +51,12 @@ public class DevController {
         }
     }
 
-    private ApiResponse<String> executeDevCommand(String command, String[] params, Long characterId) {
+    private ApiResponse<String> executeDevCommand(String command, List<String> params, Long characterId) {
         switch (command.toLowerCase()) {
             case "setmineral":
-                if (params == null || params.length == 0) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
+                if (params == null || params.isEmpty()) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
                 try {
-                    Long material = Long.parseLong(params[0]);
+                    Long material = Long.parseLong(params.get(0));
                     characterService.updateMineral(characterId, material);
                     return ApiResponse.success("Mineral set to: " + material + "|mineral:" + material);
                 } catch (NumberFormatException e) {
@@ -67,9 +64,9 @@ public class DevController {
                 }
 
             case "addmineral":
-                if (params == null || params.length == 0) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
+                if (params == null || params.isEmpty()) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
                 try {
-                    Long additionalMaterial = Long.parseLong(params[0]);
+                    Long additionalMaterial = Long.parseLong(params.get(0));
                     Long newMineral = characterService.addMineral(characterId, additionalMaterial);
                     return ApiResponse.success("Mineral added: " + additionalMaterial + " (total: " + newMineral + ")|mineral:" + newMineral);
                 } catch (NumberFormatException e) {
@@ -77,9 +74,9 @@ public class DevController {
                 }
 
             case "setmineralrare":
-                if (params == null || params.length == 0) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
+                if (params == null || params.isEmpty()) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
                 try {
-                    Long mineralRare = Long.parseLong(params[0]);
+                    Long mineralRare = Long.parseLong(params.get(0));
                     characterService.updateMineralRare(characterId, mineralRare);
                     return ApiResponse.success("Mineral Rare set to: " + mineralRare + "|mineralRare:" + mineralRare);
                 } catch (NumberFormatException e) {
@@ -87,9 +84,9 @@ public class DevController {
                 }
 
             case "addmineralrare":
-                if (params == null || params.length == 0) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
+                if (params == null || params.isEmpty()) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
                 try {
-                    Long additionalMineralRare = Long.parseLong(params[0]);
+                    Long additionalMineralRare = Long.parseLong(params.get(0));
                     Long newMineralRare = characterService.addMineralRare(characterId, additionalMineralRare);
                     return ApiResponse.success("Mineral Rare added: " + additionalMineralRare + " (total: " + newMineralRare + ")|mineralRare:" + newMineralRare);
                 } catch (NumberFormatException e) {
@@ -97,9 +94,9 @@ public class DevController {
                 }
 
             case "setmineralexotic":
-                if (params == null || params.length == 0) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
+                if (params == null || params.isEmpty()) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
                 try {
-                    Long mineralExotic = Long.parseLong(params[0]);
+                    Long mineralExotic = Long.parseLong(params.get(0));
                     characterService.updateMineralExotic(characterId, mineralExotic);
                     return ApiResponse.success("Mineral Exotic set to: " + mineralExotic + "|mineralExotic:" + mineralExotic);
                 } catch (NumberFormatException e) {
@@ -107,9 +104,9 @@ public class DevController {
                 }
 
             case "addmineralexotic":
-                if (params == null || params.length == 0) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
+                if (params == null || params.isEmpty()) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
                 try {
-                    Long additionalMineralExotic = Long.parseLong(params[0]);
+                    Long additionalMineralExotic = Long.parseLong(params.get(0));
                     Long newMineralExotic = characterService.addMineralExotic(characterId, additionalMineralExotic);
                     return ApiResponse.success("Mineral Exotic added: " + additionalMineralExotic + " (total: " + newMineralExotic + ")|mineralExotic:" + newMineralExotic);
                 } catch (NumberFormatException e) {
@@ -117,9 +114,9 @@ public class DevController {
                 }
 
             case "setmineraldark":
-                if (params == null || params.length == 0) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
+                if (params == null || params.isEmpty()) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
                 try {
-                    Long mineralDark = Long.parseLong(params[0]);
+                    Long mineralDark = Long.parseLong(params.get(0));
                     characterService.updateMineralDark(characterId, mineralDark);
                     return ApiResponse.success("Mineral Dark set to: " + mineralDark + "|mineralDark:" + mineralDark);
                 } catch (NumberFormatException e) {
@@ -127,9 +124,9 @@ public class DevController {
                 }
 
             case "addmineraldark":
-                if (params == null || params.length == 0) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
+                if (params == null || params.isEmpty()) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
                 try {
-                    Long additionalMineralDark = Long.parseLong(params[0]);
+                    Long additionalMineralDark = Long.parseLong(params.get(0));
                     Long newMineralDark = characterService.addMineralDark(characterId, additionalMineralDark);
                     return ApiResponse.success("Mineral Dark added: " + additionalMineralDark + " (total: " + newMineralDark + ")|mineralDark:" + newMineralDark);
                 } catch (NumberFormatException e) {
@@ -137,9 +134,9 @@ public class DevController {
                 }
 
             case "addtech":
-                if (params == null || params.length == 0) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
+                if (params == null || params.isEmpty()) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
                 try {
-                    Integer additionalTech = Integer.parseInt(params[0]);
+                    Integer additionalTech = Integer.parseInt(params.get(0));
                     Integer newTechLevel = characterService.addTechLevel(characterId, additionalTech);
                     return ApiResponse.success("Technology added: " + additionalTech + " (total: " + newTechLevel + ")|tech:" + newTechLevel);
                 } catch (NumberFormatException e) {
@@ -147,7 +144,7 @@ public class DevController {
                 }
 
             case "getstatus":
-                CharacterStatusResponse status = characterService.getCharacterStatus(characterId);
+                CharacterInfoDto status = characterService.getCharacterInfoDto(characterId);
                 StringBuilder result = new StringBuilder();
                 result.append("=== Character Status ===\n");
                 result.append("Tech Level: ").append(status.getTechLevel());
@@ -160,14 +157,14 @@ public class DevController {
             case "addship":
                 try {
                     // 개발자 명령어: 자원이 부족할 경우 자동으로 충원
-                    CharacterStatusResponse currentStatus = characterService.getCharacterStatus(characterId);
+                    CharacterInfoDto currentStatus = characterService.getCharacterInfoDto(characterId);
 
                     // 현재 함선 수 확인
-                    FleetDto activeFleet = fleetService.getActiveFleet(characterId);
+                    FleetInfoDto activeFleet = fleetService.getActiveFleet(characterId);
                     int currentShipCount = activeFleet.getShips() != null ? activeFleet.getShips().size() : 0;
 
                     // 함선 추가에 필요한 자원 비용 확인 (GameDataService에서 가져오기)
-                    CostStruct shipAddCost = gameDataService.getShipAddCost(currentShipCount);
+                    CostStructDto shipAddCost = gameDataService.getShipAddCost(currentShipCount);
 
                     // 자원 부족 시 자동 충원 (모든 미네랄 타입)
                     if (currentStatus.getMineral() < shipAddCost.getMineral()) {
@@ -192,7 +189,7 @@ public class DevController {
 
                     AddShipResponse addShipResponse = fleetService.addShip(characterId, addShipRequest);
 
-                    if (addShipResponse.isSuccess()) {
+                    if (addShipResponse.getSuccess() == true) {
                         try {
                             String jsonResponse = objectMapper.writeValueAsString(addShipResponse);
                             return ApiResponse.success(jsonResponse);
@@ -209,13 +206,13 @@ public class DevController {
                 }
 
             case "changeformation":
-                if (params == null || params.length == 0) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
+                if (params == null || params.isEmpty()) return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
                 try {
-                    com.bk.sbs.enums.EFormationType formationType;
+                    EFormationType formationType;
 
-                    if (params[0].matches("\\d+")) {
-                        int index = Integer.parseInt(params[0]);
-                        com.bk.sbs.enums.EFormationType[] formations = com.bk.sbs.enums.EFormationType.values();
+                    if (params.get(0).matches("\\d+")) {
+                        int index = Integer.parseInt(params.get(0));
+                        EFormationType[] formations = EFormationType.values();
                         if (index >= 0 && index < formations.length) {
                             formationType = formations[index];
                         } else {
@@ -223,19 +220,19 @@ public class DevController {
                         }
                     } else {
                         try {
-                            formationType = com.bk.sbs.enums.EFormationType.valueOf(params[0]);
+                            formationType = EFormationType.valueOf(params.get(0));
                         } catch (IllegalArgumentException e) {
                             return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
                         }
                     }
 
-                    com.bk.sbs.dto.ChangeFormationRequest changeFormationRequest = new com.bk.sbs.dto.ChangeFormationRequest();
+                    ChangeFormationRequest changeFormationRequest = new ChangeFormationRequest();
                     changeFormationRequest.setFleetId(null);
                     changeFormationRequest.setFormationType(formationType);
 
-                    com.bk.sbs.dto.ChangeFormationResponse changeFormationResponse = fleetService.changeFormation(characterId, changeFormationRequest);
+                    ChangeFormationResponse changeFormationResponse = fleetService.changeFormation(characterId, changeFormationRequest);
 
-                    if (changeFormationResponse.isSuccess()) {
+                    if (changeFormationResponse.getSuccess() == true) {
                         try {
                             String jsonResponse = objectMapper.writeValueAsString(changeFormationResponse);
                             return ApiResponse.success(jsonResponse);

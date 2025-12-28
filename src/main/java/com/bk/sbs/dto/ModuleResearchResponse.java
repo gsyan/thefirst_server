@@ -1,18 +1,23 @@
 package com.bk.sbs.dto;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
+/**
+ * ModuleResearchResponse
+ * Auto-generated from Unity C# ModuleResearchResponse class
+ */
 @Data
 @NoArgsConstructor
+@Builder
 @AllArgsConstructor
 public class ModuleResearchResponse {
-    private boolean success;
-    private int moduleTypePacked; // 압축된 모듈 타입 정보 (Type + SubType + Style)
-    private CostRemainInfo costRemainInfo;
-    private List<Integer> researchedModuleTypePackeds; // 개발된 모든 모듈의 압축된 타입 정보 목록
+    private Boolean success;
+    private Integer moduleTypePacked;
+    private CostRemainInfoDto costRemainInfo;
+    private List<Integer> researchedModuleTypePacked;
     private String message;
 }

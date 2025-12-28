@@ -3,7 +3,8 @@ package com.bk.sbs.service;
 
 import com.bk.sbs.dto.CharacterCreateRequest;
 import com.bk.sbs.dto.CharacterResponse;
-import com.bk.sbs.dto.CharacterStatusResponse;
+import com.bk.sbs.dto.CharacterInfoDto;
+import com.bk.sbs.dto.ShipInfoDto;
 import com.bk.sbs.entity.Account;
 import com.bk.sbs.entity.Character;
 import com.bk.sbs.entity.ModuleResearch;
@@ -63,12 +64,11 @@ public class CharacterService {
         // 기본 모듈 개발 상태 설정
         initializeDefaultModules(savedCharacter.getId());
 
-        return new CharacterResponse(
-                savedCharacter.getId(),
-                savedCharacter.getCharacterName(),
-                savedCharacter.getDateTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
-                worldId
-        );
+        // characterId = worldId(8비트) + id(56비트)
+        return CharacterResponse.builder()
+                .characterId(((long) worldId << 56) | savedCharacter.getId())
+                .characterName(savedCharacter.getCharacterName())
+                .build();
     }
 
     /**
@@ -81,53 +81,54 @@ public class CharacterService {
     private void initializeDefaultModules(Long characterId) {
         LocalDateTime now = LocalDateTime.now();
 
-        // Body - Battle (StyleA)
+        // Body - Battle (Style.None)
         ModuleResearch bodyModule = new ModuleResearch();
         bodyModule.setCharacterId(characterId);
         bodyModule.setModuleType(EModuleType.Body);
-        bodyModule.setModuleSubTypeValue(EModuleBodySubType.Battle.getValue());
-        bodyModule.setModuleStyleValue(EModuleStyle.None.getValue());
+        bodyModule.setModuleSubType(EModuleSubType.Body_Battle);
+        bodyModule.setModuleStyle(EModuleStyle.None);
         bodyModule.setResearched(true);
         bodyModule.setCreated(now);
         bodyModule.setModified(now);
         moduleResearchRepository.save(bodyModule);
 
-        // Weapon - Beam (StyleA)
+        // Engine - Standard (Style.None)
+        ModuleResearch engineModule = new ModuleResearch();
+        engineModule.setCharacterId(characterId);
+        engineModule.setModuleType(EModuleType.Engine);
+        engineModule.setModuleSubType(EModuleSubType.Engine_Standard);
+        engineModule.setModuleStyle(EModuleStyle.None);
+        engineModule.setResearched(true);
+        engineModule.setCreated(now);
+        engineModule.setModified(now);
+        moduleResearchRepository.save(engineModule);
+
+        // Weapon - Beam (Style.None)
         ModuleResearch weaponModule = new ModuleResearch();
         weaponModule.setCharacterId(characterId);
         weaponModule.setModuleType(EModuleType.Weapon);
-        weaponModule.setModuleSubTypeValue(EModuleWeaponSubType.Beam.getValue());
-        weaponModule.setModuleStyleValue(EModuleStyle.None.getValue());
+        weaponModule.setModuleSubType(EModuleSubType.Weapon_Beam);
+        weaponModule.setModuleStyle(EModuleStyle.None);
         weaponModule.setResearched(true);
         weaponModule.setCreated(now);
         weaponModule.setModified(now);
         moduleResearchRepository.save(weaponModule);
 
-        // Engine - Standard (StyleA)
-        ModuleResearch engineModule = new ModuleResearch();
-        engineModule.setCharacterId(characterId);
-        engineModule.setModuleType(EModuleType.Engine);
-        engineModule.setModuleSubTypeValue(EModuleEngineSubType.Standard.getValue());
-        engineModule.setModuleStyleValue(EModuleStyle.None.getValue());
-        engineModule.setResearched(true);
-        engineModule.setCreated(now);
-        engineModule.setModified(now);
-        moduleResearchRepository.save(engineModule);
+
     }
 
-    public CharacterStatusResponse getCharacterStatus(Long characterId) {
+    public CharacterInfoDto getCharacterInfoDto(Long characterId) {
         Character character = characterRepository.findById(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
 
-        CharacterStatusResponse response = new CharacterStatusResponse();
-        response.setCharacterName(character.getCharacterName());
-        response.setTechLevel(character.getTechLevel());
-        response.setMineral(character.getMineral());
-        response.setMineralRare(character.getMineralRare());
-        response.setMineralExotic(character.getMineralExotic());
-        response.setMineralDark(character.getMineralDark());
-        
-        return response;
+        return CharacterInfoDto.builder()
+                .characterName(character.getCharacterName())
+                .techLevel(character.getTechLevel())
+                .mineral(character.getMineral())
+                .mineralRare(character.getMineralRare())
+                .mineralExotic(character.getMineralExotic())
+                .mineralDark(character.getMineralDark())
+                .build();
     }
 
     @Transactional

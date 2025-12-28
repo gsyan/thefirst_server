@@ -1,22 +1,22 @@
 package com.bk.sbs.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * AddShipResponse
+ * Auto-generated from Unity C# AddShipResponse class
+ */
 @Data
 @NoArgsConstructor
+@Builder
 @AllArgsConstructor
 public class AddShipResponse {
-    private boolean success;
+    private Boolean success;
     private String message;
-    private ShipDto newShipInfo;
-    private CostRemainInfo costRemainInfo;
-    private FleetDto updatedFleetInfo;
-
-    // Constructor with parameters
-    public AddShipResponse(boolean success, String message) {
-        this.success = success;
-        this.message = message;
-    }
+    private ShipInfoDto newShipInfo;
+    private CostRemainInfoDto costRemainInfo;
+    private FleetInfoDto updatedFleetInfo;
 }

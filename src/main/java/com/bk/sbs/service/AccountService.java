@@ -1,6 +1,7 @@
 //--------------------------------------------------------------------------------------------------
 package com.bk.sbs.service;
 
+import com.bk.sbs.dto.nogenerated.ApiResponse;
 import com.bk.sbs.dto.*;
 import com.bk.sbs.entity.Account;
 import com.bk.sbs.entity.Character;
@@ -72,10 +73,10 @@ public class AccountService {
             throw new BusinessException(ServerErrorCode.LOGIN_FAIL_REASON1);
         }
 
-        AuthResponse response = new AuthResponse();
-        response.setAccessToken(jwtUtil.createAccessToken(account.getEmail(), account.getId()));
-        response.setRefreshToken(jwtUtil.createRefreshToken(account.getEmail(), account.getId()));
-        return response;
+        return AuthResponse.builder()
+                .accessToken(jwtUtil.createAccessToken(account.getEmail(), account.getId()))
+                .refreshToken(jwtUtil.createRefreshToken(account.getEmail(), account.getId()))
+                .build();
     }
 
     public AuthResponse refreshToken(RefreshTokenRequest request) {
@@ -90,14 +91,14 @@ public class AccountService {
         Account account = accountRepository.findByEmail(email)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.ACCOUNT_NOT_FOUND));
 
-        AuthResponse response = new AuthResponse();
+        AuthResponse response = AuthResponse.builder()
+                .accessToken(jwtUtil.createAccessToken(email, account.getId()))
+                .refreshToken(jwtUtil.createRefreshToken(email, account.getId()))
+                .build();
 
         if (characterId != null) {
             response.setAccessToken(jwtUtil.createAccessTokenWithCharacter(email, account.getId(), characterId));
             response.setRefreshToken(jwtUtil.createRefreshTokenWithCharacter(email, account.getId(), characterId));
-        } else {
-            response.setAccessToken(jwtUtil.createAccessToken(email, account.getId()));
-            response.setRefreshToken(jwtUtil.createRefreshToken(email, account.getId()));
         }
 
         return response;
@@ -147,10 +148,10 @@ public class AccountService {
                         return accountRepository.save(newAccount);
                     });
 
-            AuthResponse response = new AuthResponse();
-            response.setAccessToken(jwtUtil.createAccessToken(account.getEmail(), account.getId()));
-            response.setRefreshToken(jwtUtil.createRefreshToken(account.getEmail(), account.getId()));
-            return response;
+            return AuthResponse.builder()
+                    .accessToken(jwtUtil.createAccessToken(account.getEmail(), account.getId()))
+                    .refreshToken(jwtUtil.createRefreshToken(account.getEmail(), account.getId()))
+                    .build();
 
         } catch (BusinessException e) {
             throw e;
@@ -173,12 +174,10 @@ public class AccountService {
 
             List<Character> characters = characterRepository.findByAccountId(account.getId());
             List<CharacterResponse> characterResponses = characters.stream()
-                    .map(character -> new CharacterResponse(
-                            character.getId(),
-                            character.getCharacterName(),
-                            character.getDateTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME),
-                            1
-                    ))
+                    .map(character -> CharacterResponse.builder()
+                            .characterId(((long) 1 << 56) | character.getId())
+                            .characterName(character.getCharacterName())
+                            .build())
                     .collect(Collectors.toList());
 
             return ApiResponse.success(characterResponses);

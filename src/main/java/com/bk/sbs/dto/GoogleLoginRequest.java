@@ -1,11 +1,14 @@
-//--------------------------------------------------------------------------------------------------
 package com.bk.sbs.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+/**
+ * GoogleLoginRequest
+ * Auto-generated from Unity C# GoogleLoginRequest class
+ */
+@Data
+@NoArgsConstructor
 public class GoogleLoginRequest {
     private String idToken;
 }

@@ -1,9 +1,6 @@
 package com.bk.sbs.config;
 
-import com.bk.sbs.dto.ModuleBodyDataDto;
-import com.bk.sbs.dto.ModuleEngineDataDto;
-import com.bk.sbs.dto.ModuleWeaponDataDto;
-import com.bk.sbs.dto.ModuleHangerDataDto;
+import com.bk.sbs.dto.ModuleData;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
@@ -12,25 +9,25 @@ import java.util.List;
 import java.util.Map;
 
 public class ModuleDataTable {
-    private volatile List<ModuleBodyDataDto> bodyModules = new ArrayList<>();
-    private volatile List<ModuleEngineDataDto> engineModules = new ArrayList<>();
-    private volatile List<ModuleWeaponDataDto> weaponModules = new ArrayList<>();
-    private volatile List<ModuleHangerDataDto> hangerModules = new ArrayList<>();
+    private volatile List<ModuleData> bodyModules = new ArrayList<>();
+    private volatile List<ModuleData> engineModules = new ArrayList<>();
+    private volatile List<ModuleData> weaponModules = new ArrayList<>();
+    private volatile List<ModuleData> hangerModules = new ArrayList<>();
 
 
-    public List<ModuleBodyDataDto> getBodyModules() {
+    public List<ModuleData> getBodyModules() {
         return Collections.unmodifiableList(bodyModules);
     }
 
-    public List<ModuleEngineDataDto> getEngineModules() {
+    public List<ModuleData> getEngineModules() {
         return Collections.unmodifiableList(engineModules);
     }
 
-    public List<ModuleWeaponDataDto> getWeaponModules() {
+    public List<ModuleData> getWeaponModules() {
         return Collections.unmodifiableList(weaponModules);
     }
 
-    public List<ModuleHangerDataDto> getHangerModules() {
+    public List<ModuleData> getHangerModules() {
         return Collections.unmodifiableList(hangerModules);
     }
 
@@ -43,22 +40,22 @@ public class ModuleDataTable {
             switch (moduleType) {
                 case 1:
                     bodyModules = entry.getValue().stream()
-                        .map(obj -> mapper.convertValue(obj, ModuleBodyDataDto.class))
+                        .map(obj -> mapper.convertValue(obj, ModuleData.class))
                         .toList();
                     break;
                 case 2:
                     engineModules = entry.getValue().stream()
-                        .map(obj -> mapper.convertValue(obj, ModuleEngineDataDto.class))
+                        .map(obj -> mapper.convertValue(obj, ModuleData.class))
                         .toList();
                     break;
                 case 3:
                     weaponModules = entry.getValue().stream()
-                        .map(obj -> mapper.convertValue(obj, ModuleWeaponDataDto.class))
+                        .map(obj -> mapper.convertValue(obj, ModuleData.class))
                         .toList();
                     break;
                 case 4:
                     hangerModules = entry.getValue().stream()
-                        .map(obj -> mapper.convertValue(obj, ModuleHangerDataDto.class))
+                        .map(obj -> mapper.convertValue(obj, ModuleData.class))
                         .toList();
                     break;
             }
