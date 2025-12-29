@@ -14,9 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class ModuleUpgradeResponse {
-    private Boolean success;
     private Integer newLevel;
     private ModuleStatsDto newStats;
     private CostRemainInfoDto costRemainInfo;
-    private String message;
 }

@@ -14,7 +14,5 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class ChangeFormationResponse {
-    private Boolean success;
-    private String message;
     private FleetInfoDto updatedFleetInfo;
 }

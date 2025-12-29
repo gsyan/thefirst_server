@@ -542,8 +542,6 @@ public class FleetService {
 
         // 응답 생성
         AddShipResponse response = AddShipResponse.builder()
-                .success(true)
-                .message("함선이 성공적으로 추가되었습니다.")
                 .newShipInfo(convertShipToShipInfoDto(savedShip))
                 .costRemainInfo(costRemainInfo)
                 .updatedFleetInfo(convertToDetailDto(targetFleet))
@@ -739,9 +737,7 @@ public class FleetService {
 
         // 응답 생성
         ModuleUpgradeResponse response = ModuleUpgradeResponse.builder()
-                .success(true)
                 .newLevel(module.getModuleLevel())
-                .message("Module upgrade completed successfully.")
                 .build();
 
         // 비용 정보 (모든 미네랄 타입 포함)
@@ -773,14 +769,7 @@ public class FleetService {
                     .orElseThrow(() -> new BusinessException(ServerErrorCode.FLEET_NOT_FOUND));
         }
 
-        // 편대 타입 유효성 검사
         EFormationType formationType = request.getFormationType();
-        if (formationType == null) {
-            return ChangeFormationResponse.builder()
-                    .success(false)
-                    .message("Formation type is required")
-                    .build();
-        }
 
         // 편대 정보 업데이트
         fleet.setFormation(formationType);
@@ -790,8 +779,6 @@ public class FleetService {
         // 업데이트된 함대 정보 반환
         FleetInfoDto updatedFleet = convertToDetailDto(fleet);
         return ChangeFormationResponse.builder()
-                .success(true)
-                .message("Formation changed successfully")
                 .updatedFleetInfo(updatedFleet)
                 .build();
     }
@@ -851,14 +838,21 @@ public class FleetService {
         character.setMineral(character.getMineral() - mineralCost);
         characterRepository.save(character);
 
+        // Weapon이 아닌 경우, moduleSubType이 None이면 기본값 설정
+        // 기본 subType = moduleType * 1000 + 1
+        EModuleSubType finalModuleSubType = moduleSubType;
+        if (moduleType != EModuleType.Weapon && moduleSubType == EModuleSubType.None) {
+            int defaultSubTypeValue = moduleType.getValue() * 1000 + 1;
+            finalModuleSubType = EModuleSubType.fromValue(defaultSubTypeValue);
+        }
+
         // 새로운 모듈 레코드 생성
         ShipModule newModule = new ShipModule();
         newModule.setShip(ship);
         newModule.setBodyIndex(request.getBodyIndex());
         newModule.setSlotIndex(request.getSlotIndex());
         newModule.setModuleType(moduleType);
-        newModule.setModuleSubType(moduleSubType);
-
+        newModule.setModuleSubType(finalModuleSubType);
         newModule.setModuleStyle(EModuleStyle.None);
         newModule.setModuleLevel(1);
         newModule.setDeleted(false);
@@ -883,10 +877,8 @@ public class FleetService {
 
         // 응답 생성
         return new ModuleUnlockResponse(
-                true,
                 updatedShipDto,
-                costRemainInfo,
-                "Module unlocked successfully."
+                costRemainInfo
         );
     }
 
@@ -935,65 +927,17 @@ public class FleetService {
             ).orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_NOT_FOUND));
         }
 
-        // 캐릭터 자원 조회
-        com.bk.sbs.entity.Character character = characterRepository.findById(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
-
-        // 모듈 교체 비용 계산 (간단한 예시: 레벨 차이에 따른 비용)
-        // TODO: 실제 게임 데이터에 따른 비용 계산 로직 구현 필요
-        long mineralCost = request.getNewModuleLevel() * 100L;
-        long mineralRareCost = request.getNewModuleLevel() * 50L;
-        long mineralExoticCost = request.getNewModuleLevel() * 25L;
-        long mineralDarkCost = request.getNewModuleLevel() * 10L;
-
-        // 자원 부족 검사
-        if (character.getMineral() < mineralCost) {
-            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL);
-        }
-        if (character.getMineralRare() < mineralRareCost) {
-            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_RARE);
-        }
-        if (character.getMineralExotic() < mineralExoticCost) {
-            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_EXOTIC);
-        }
-        if (character.getMineralDark() < mineralDarkCost) {
-            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_DARK);
-        }
-
-        // 자원 차감
-        character.setMineral(character.getMineral() - mineralCost);
-        character.setMineralRare(character.getMineralRare() - mineralRareCost);
-        character.setMineralExotic(character.getMineralExotic() - mineralExoticCost);
-        character.setMineralDark(character.getMineralDark() - mineralDarkCost);
-        characterRepository.save(character);
-
         // 모듈 정보 업데이트 (레벨과 서브타입 변경, 메인 타입은 동일)
         currentModule.setModuleSubType(newModuleSubType);
-        currentModule.setModuleLevel(request.getNewModuleLevel());
         currentModule.setModified(LocalDateTime.now());
         shipModuleRepository.save(currentModule);
 
         // 업데이트된 함선 정보 조회
         ShipInfoDto updatedShipDto = convertShipToShipInfoDto(ship);
 
-        // 비용 정보
-        CostRemainInfoDto costRemainInfo = new CostRemainInfoDto(
-                mineralCost,
-                mineralRareCost,
-                mineralExoticCost,
-                mineralDarkCost,
-                character.getMineral(),
-                character.getMineralRare(),
-                character.getMineralExotic(),
-                character.getMineralDark()
-        );
-
         // 응답 생성
         return new ModuleChangeResponse(
-                true,
-                updatedShipDto,
-                costRemainInfo,
-                "Module changed successfully."
+                updatedShipDto
         );
     }
 
@@ -1088,11 +1032,9 @@ public class FleetService {
 
         // 응답 생성
         return new ModuleResearchResponse(
-                true,
                 moduleTypePacked,
                 costRemainInfo,
-                researchedModuleTypePackeds,
-                "Module researched successfully."
+                researchedModuleTypePackeds
         );
     }
 

@@ -15,9 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class ModuleResearchResponse {
-    private Boolean success;
     private Integer moduleTypePacked;
     private CostRemainInfoDto costRemainInfo;
     private List<Integer> researchedModuleTypePacked;
-    private String message;
 }

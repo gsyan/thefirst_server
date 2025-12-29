@@ -188,15 +188,10 @@ public class DevController {
                     addShipRequest.setFleetId(null); // null이면 현재 활성 함대에 추가
 
                     AddShipResponse addShipResponse = fleetService.addShip(characterId, addShipRequest);
-
-                    if (addShipResponse.getSuccess() == true) {
-                        try {
-                            String jsonResponse = objectMapper.writeValueAsString(addShipResponse);
-                            return ApiResponse.success(jsonResponse);
-                        } catch (Exception e) {
-                            return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
-                        }
-                    } else {
+                    try {
+                        String jsonResponse = objectMapper.writeValueAsString(addShipResponse);
+                        return ApiResponse.success(jsonResponse);
+                    } catch (Exception e) {
                         return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
                     }
                 } catch (BusinessException e) {
@@ -231,15 +226,10 @@ public class DevController {
                     changeFormationRequest.setFormationType(formationType);
 
                     ChangeFormationResponse changeFormationResponse = fleetService.changeFormation(characterId, changeFormationRequest);
-
-                    if (changeFormationResponse.getSuccess() == true) {
-                        try {
-                            String jsonResponse = objectMapper.writeValueAsString(changeFormationResponse);
-                            return ApiResponse.success(jsonResponse);
-                        } catch (Exception e) {
-                            return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
-                        }
-                    } else {
+                    try {
+                        String jsonResponse = objectMapper.writeValueAsString(changeFormationResponse);
+                        return ApiResponse.success(jsonResponse);
+                    } catch (Exception e) {
                         return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
                     }
                 } catch (BusinessException e) {

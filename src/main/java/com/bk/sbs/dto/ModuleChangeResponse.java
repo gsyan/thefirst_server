@@ -14,8 +14,5 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class ModuleChangeResponse {
-    private Boolean success;
     private ShipInfoDto updatedShipInfo;
-    private CostRemainInfoDto costRemainInfo;
-    private String message;
 }

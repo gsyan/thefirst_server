@@ -14,8 +14,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class ModuleUnlockResponse {
-    private Boolean success;
     private ShipInfoDto updatedShipInfo;
     private CostRemainInfoDto costRemainInfo;
-    private String message;
 }
