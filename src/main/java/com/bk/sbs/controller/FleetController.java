@@ -28,9 +28,7 @@ public class FleetController {
     @GetMapping("/list")
     public ResponseEntity<ApiResponse<List<FleetInfoDto>>> getUserFleets(HttpServletRequest request) {
         try {
-            Long characterId = getCharacterIdFromToken(request);
-            // characterId에서 실제 character ID 추출 (하위 56비트)
-            Long actualCharacterId = characterId & 0x00FFFFFFFFFFFFFFL;
+            Long actualCharacterId = getCharacterIdFromToken(request);
             List<FleetInfoDto> fleets = fleetService.getUserFleets(actualCharacterId);
             return ResponseEntity.ok(ApiResponse.success(fleets));
         } catch (Exception e) {
@@ -42,9 +40,7 @@ public class FleetController {
     @GetMapping("/{fleetId}")
     public ResponseEntity<ApiResponse<FleetInfoDto>> getFleetDetail(@PathVariable("fleetId") Long fleetId, HttpServletRequest request) {
         try {
-            Long characterId = getCharacterIdFromToken(request);
-            // characterId에서 실제 character ID 추출 (하위 56비트)
-            Long actualCharacterId = characterId & 0x00FFFFFFFFFFFFFFL;
+            Long actualCharacterId = getCharacterIdFromToken(request);
             FleetInfoDto fleet = fleetService.getFleetDetail(actualCharacterId, fleetId);
             return ResponseEntity.ok(ApiResponse.success(fleet));
         } catch (Exception e) {
@@ -56,9 +52,7 @@ public class FleetController {
     @GetMapping("/active")
     public ResponseEntity<ApiResponse<FleetInfoDto>> getActiveFleet(HttpServletRequest request) {
         try {
-            Long characterId = getCharacterIdFromToken(request);
-            // characterId에서 실제 character ID 추출 (하위 56비트)
-            Long actualCharacterId = characterId & 0x00FFFFFFFFFFFFFFL;
+            Long actualCharacterId = getCharacterIdFromToken(request);
             FleetInfoDto fleet = fleetService.getActiveFleet(actualCharacterId);
             return ResponseEntity.ok(ApiResponse.success(fleet));
         } catch (Exception e) {
@@ -72,9 +66,7 @@ public class FleetController {
 //            @RequestBody CreateFleetRequest createRequest,
 //            HttpServletRequest request) {
 //        try {
-//            Long characterId = getCharacterIdFromToken(request);
-//            // characterId에서 실제 character ID 추출 (하위 56비트)
-//            Long actualCharacterId = characterId & 0x00FFFFFFFFFFFFFFL;
+//            Long actualCharacterId = getCharacterIdFromToken(request);
 //            FleetInfoDto fleet = fleetService.createFleet(actualCharacterId, createRequest.getFleetName(), createRequest.getDescription());
 //            return ResponseEntity.ok(ApiResponse.success(fleet));
 //        } catch (Exception e) {
@@ -86,9 +78,7 @@ public class FleetController {
     @PostMapping("/{fleetId}/activate")
     public ResponseEntity<ApiResponse<Void>> activateFleet(@PathVariable("fleetId") Long fleetId, HttpServletRequest request) {
         try {
-            Long characterId = getCharacterIdFromToken(request);
-            // characterId에서 실제 character ID 추출 (하위 56비트)
-            Long actualCharacterId = characterId & 0x00FFFFFFFFFFFFFFL;
+            Long actualCharacterId = getCharacterIdFromToken(request);
             fleetService.activateFleet(actualCharacterId, fleetId);
             return ResponseEntity.ok(ApiResponse.success(null));
         } catch (Exception e) {
@@ -100,9 +90,7 @@ public class FleetController {
 //    @GetMapping("/{fleetId}/export")
 //    public ResponseEntity<ApiResponse<FleetExportResponse>> exportFleet(@PathVariable("fleetId") Long fleetId, HttpServletRequest request) {
 //        try {
-//            Long characterId = getCharacterIdFromToken(request);
-//            // characterId에서 실제 character ID 추출 (하위 56비트)
-//            Long actualCharacterId = characterId & 0x00FFFFFFFFFFFFFFL;
+//            Long actualCharacterId = getCharacterIdFromToken(request);
 //            FleetExportResponse exportData = fleetService.exportFleet(actualCharacterId, fleetId);
 //            return ResponseEntity.ok(ApiResponse.success(exportData));
 //        } catch (Exception e) {
@@ -116,9 +104,7 @@ public class FleetController {
 //            @RequestBody FleetImportRequest importRequest,
 //            HttpServletRequest request) {
 //        try {
-//            Long characterId = getCharacterIdFromToken(request);
-//            // characterId에서 실제 character ID 추출 (하위 56비트)
-//            Long actualCharacterId = characterId & 0x00FFFFFFFFFFFFFFL;
+//            Long actualCharacterId = getCharacterIdFromToken(request);
 //            FleetInfoDto fleet = fleetService.importFleet(actualCharacterId, importRequest);
 //            return ResponseEntity.ok(ApiResponse.success(fleet));
 //        } catch (Exception e) {
@@ -130,9 +116,7 @@ public class FleetController {
 //    @PutMapping("/{fleetId}/import")
 //    public ResponseEntity<ApiResponse<FleetInfoDto>> updateFleetFromImport(@PathVariable("fleetId") Long fleetId, @RequestBody FleetImportRequest importRequest, HttpServletRequest request) {
 //        try {
-//            Long characterId = getCharacterIdFromToken(request);
-//            // characterId에서 실제 character ID 추출 (하위 56비트)
-//            Long actualCharacterId = characterId & 0x00FFFFFFFFFFFFFFL;
+//            Long actualCharacterId = getCharacterIdFromToken(request);
 //            FleetInfoDto fleet = fleetService.updateFleet(actualCharacterId, fleetId, importRequest);
 //            return ResponseEntity.ok(ApiResponse.success(fleet));
 //        } catch (Exception e) {
@@ -144,9 +128,7 @@ public class FleetController {
     @DeleteMapping("/{fleetId}")
     public ResponseEntity<ApiResponse<Void>> deleteFleet( @PathVariable("fleetId") Long fleetId, HttpServletRequest request) {
         try {
-            Long characterId = getCharacterIdFromToken(request);
-            // characterId에서 실제 character ID 추출 (하위 56비트)
-            Long actualCharacterId = characterId & 0x00FFFFFFFFFFFFFFL;
+            Long actualCharacterId = getCharacterIdFromToken(request);
             fleetService.deleteFleet(actualCharacterId, fleetId);
             return ResponseEntity.ok(ApiResponse.success(null));
         } catch (Exception e) {
@@ -160,9 +142,7 @@ public class FleetController {
             @RequestBody AddShipRequest request,
             HttpServletRequest httpRequest) {
         try {
-            Long characterId = getCharacterIdFromToken(httpRequest);
-            // characterId에서 실제 character ID 추출 (하위 56비트)
-            Long actualCharacterId = characterId & 0x00FFFFFFFFFFFFFFL;
+            Long actualCharacterId = getCharacterIdFromToken(httpRequest);
             AddShipResponse response = fleetService.addShip(actualCharacterId, request);
             return ResponseEntity.ok(ApiResponse.success(response));
         } catch (BusinessException e) {
@@ -178,9 +158,7 @@ public class FleetController {
             @RequestBody ModuleUpgradeRequest request,
             HttpServletRequest httpRequest) {
         try {
-            Long characterId = getCharacterIdFromToken(httpRequest);
-            // characterId에서 실제 character ID 추출 (하위 56비트)
-            Long actualCharacterId = characterId & 0x00FFFFFFFFFFFFFFL;
+            Long actualCharacterId = getCharacterIdFromToken(httpRequest);
             ModuleUpgradeResponse response = fleetService.upgradeModule(actualCharacterId, request);
             return ResponseEntity.ok(ApiResponse.success(response));
         } catch (BusinessException e) {
@@ -247,9 +225,7 @@ public class FleetController {
             @RequestBody ChangeFormationRequest request,
             HttpServletRequest httpRequest) {
         try {
-            Long characterId = getCharacterIdFromToken(httpRequest);
-            // characterId에서 실제 character ID 추출 (하위 56비트)
-            Long actualCharacterId = characterId & 0x00FFFFFFFFFFFFFFL;
+            Long actualCharacterId = getCharacterIdFromToken(httpRequest);
             ChangeFormationResponse response = fleetService.changeFormation(actualCharacterId, request);
             return ResponseEntity.ok(ApiResponse.success(response));
         } catch (BusinessException e) {
@@ -259,22 +235,23 @@ public class FleetController {
         }
     }
 
-    // JWT 토큰에서 캐릭터 ID 추출
+    // JWT 토큰에서 캐릭터 ID 추출 (비트 마스킹 포함)
     private Long getCharacterIdFromToken(HttpServletRequest request) {
         String token = jwtUtil.getTokenFromRequest(request);
         if (token == null) {
-            throw new RuntimeException("Authentication token required.");
+            throw new BusinessException(ServerErrorCode.FLEET_CONTROLLER_FAIL_INVALID_TOKEN);
         }
-        
+
         if (!jwtUtil.hasCharacterId(token)) {
-            throw new RuntimeException("Character selection required. Please refresh your token.");
+            throw new BusinessException(ServerErrorCode.FLEET_CONTROLLER_FAIL_JWT_HAS_CHARACTERID);
         }
-        
+
         Long characterId = jwtUtil.getCharacterIdFromToken(token);
         if (characterId == null) {
-            throw new RuntimeException("Invalid token.");
+            throw new BusinessException(ServerErrorCode.FLEET_CONTROLLER_FAIL_JWT_GET_CHARACTERID);
         }
-        
-        return characterId;
+
+        // characterId에서 실제 character ID 추출 (하위 56비트)
+        return characterId & 0x00FFFFFFFFFFFFFFL;
     }
 }

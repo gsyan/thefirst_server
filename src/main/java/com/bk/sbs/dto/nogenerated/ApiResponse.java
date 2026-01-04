@@ -9,12 +9,10 @@ import lombok.Setter;
 @Setter
 public class ApiResponse<T> {
     private int errorCode;
-    private String errorMessage;
     private T data;
 
     public ApiResponse(ServerErrorCode errorCode, T data) {
         this.errorCode = errorCode.getCode();
-        this.errorMessage = errorCode.getMessage();
         this.data = data;
     }
 

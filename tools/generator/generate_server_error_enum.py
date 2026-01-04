@@ -37,6 +37,7 @@ def generate_csharp_enum(java_file_path, output_file_path):
     matches = re.findall(pattern, content)
 
     # C# enum 코드 생성
+    header_comment = "// This file is auto-generated from ServerErrorCode.java\n// Do not edit manually - changes will be overwritten\n// To regenerate, run: python tools/generator/generate_server_error_enum.py\n\n"
     csharp_code = "using System.Collections.Generic;\n\n public enum ServerErrorCode\n{\n"
     mapping_code = "public static class ErrorCodeMapping\n{\n    public static readonly Dictionary<ServerErrorCode, string> Messages = new Dictionary<ServerErrorCode, string>\n    {\n"
     for name, value, message in matches:
@@ -47,12 +48,18 @@ def generate_csharp_enum(java_file_path, output_file_path):
             csharp_value = value
         csharp_code += f"    {name} = {csharp_value},\n"
         mapping_code += f"        {{ ServerErrorCode.{name}, \"{message}\" }},\n"
-    csharp_code += "}"
-    mapping_code += "    };\n}"
+    csharp_code += "}\n\n"
+    mapping_code += "    };\n\n"
+    mapping_code += "    public static string GetMessage(int errorCode)\n"
+    mapping_code += "    {\n"
+    mapping_code += "        ServerErrorCode code = (ServerErrorCode)errorCode;\n"
+    mapping_code += "        return Messages.ContainsKey(code) ? Messages[code] : Messages[ServerErrorCode.UNKNOWN_ERROR];\n"
+    mapping_code += "    }\n"
+    mapping_code += "}"
 
     # C# 파일 쓰기
     with open(output_file_path, 'w', encoding='utf-8') as file:
-        file.write(csharp_code + "\n\n" + mapping_code)
+        file.write(header_comment + csharp_code + mapping_code)
 
     print(f"C# enum file generated at: {output_file_path}")
 

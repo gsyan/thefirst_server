@@ -787,10 +787,10 @@ public class FleetService {
     public ModuleUnlockResponse unlockModule(Long characterId, ModuleUnlockRequest request) {
         // 함선 소유권 확인
         Ship ship = shipRepository.findById(request.getShipId())
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.SHIP_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.UNLOCK_MODULE_FAIL_SHIP_NOT_FOUND));
 
         if (!ship.getFleet().getCharacterId().equals(characterId)) {
-            throw new BusinessException(ServerErrorCode.FLEET_ACCESS_DENIED);
+            throw new BusinessException(ServerErrorCode.UNLOCK_MODULE_FAIL_FLEET_ACCESS_DENIED);
         }
 
         // 요청에서 모듈 타입 정보 추출
@@ -819,19 +819,19 @@ public class FleetService {
 
         // 이미 모듈이 존재하면 Placeholder가 아님
         if (existingModule.isPresent()) {
-            throw new BusinessException(ServerErrorCode.UNKNOWN_ERROR); // 이미 해금된 모듈
+            throw new BusinessException(ServerErrorCode.UNLOCK_MODULE_FAIL_ALREADY_UNLOCKED); // 이미 해금된 모듈
         }
 
         // 캐릭터 자원 조회
         com.bk.sbs.entity.Character character = characterRepository.findById(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.UNLOCK_MODULE_FAIL_CHARACTER_NOT_FOUND));
 
         // 모듈 해금 비용 (설정에서 가져오기 - 여기서는 하드코딩)
         long mineralCost = 1000L; // DataTableConfig.gameSettings.moduleReleasePrice 값과 동일하게
 
         // 자원 부족 검사
         if (character.getMineral() < mineralCost) {
-            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL);
+            throw new BusinessException(ServerErrorCode.UNLOCK_MODULE_FAIL_INSUFFICIENT_MINERAL);
         }
 
         // 자원 차감
