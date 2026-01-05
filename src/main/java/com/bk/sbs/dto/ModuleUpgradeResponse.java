@@ -14,7 +14,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class ModuleUpgradeResponse {
+    private Long shipId;
+    private Integer bodyIndex;
+    private Integer moduleTypePacked;
+    private Integer slotIndex;
     private Integer newLevel;
-    private ModuleStatsDto newStats;
     private CostRemainInfoDto costRemainInfo;
 }

@@ -51,9 +51,6 @@ public class ModuleData {
     @JsonAlias("m_movementSpeed")
     private Float movementSpeed;
 
-    @JsonAlias("m_rotationSpeed")
-    private Float rotationSpeed;
-
     @JsonAlias("m_attackFireCount")
     private Integer attackFireCount;
 

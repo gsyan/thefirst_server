@@ -735,11 +735,6 @@ public class FleetService {
 
         shipModuleRepository.save(module);
 
-        // 응답 생성
-        ModuleUpgradeResponse response = ModuleUpgradeResponse.builder()
-                .newLevel(module.getModuleLevel())
-                .build();
-
         // 비용 정보 (모든 미네랄 타입 포함)
         CostRemainInfoDto costRemainInfo = new CostRemainInfoDto(
                 totalCost.getMineral(),
@@ -751,7 +746,16 @@ public class FleetService {
                 character.getMineralExotic(),
                 character.getMineralDark()
         );
-        response.setCostRemainInfo(costRemainInfo);
+
+        // 응답 생성
+        ModuleUpgradeResponse response = ModuleUpgradeResponse.builder()
+                .shipId(request.getShipId())
+                .bodyIndex(request.getBodyIndex())
+                .moduleTypePacked(request.getModuleTypePacked())
+                .slotIndex(module.getSlotIndex())
+                .newLevel(module.getModuleLevel())
+                .costRemainInfo(costRemainInfo)
+                .build();
 
         return response;
     }
