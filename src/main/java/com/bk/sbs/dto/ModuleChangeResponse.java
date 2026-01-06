@@ -14,5 +14,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class ModuleChangeResponse {
-    private ShipInfoDto updatedShipInfo;
+    private Long shipId;
+    private Integer bodyIndex;
+    private Integer oldModuleTypePacked;
+    private Integer newModuleTypePacked;
+    private Integer slotIndex;
 }

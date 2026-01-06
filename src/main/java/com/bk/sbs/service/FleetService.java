@@ -936,13 +936,14 @@ public class FleetService {
         currentModule.setModified(LocalDateTime.now());
         shipModuleRepository.save(currentModule);
 
-        // 업데이트된 함선 정보 조회
-        ShipInfoDto updatedShipDto = convertShipToShipInfoDto(ship);
-
         // 응답 생성
-        return new ModuleChangeResponse(
-                updatedShipDto
-        );
+        return ModuleChangeResponse.builder()
+                .shipId(request.getShipId())
+                .bodyIndex(request.getBodyIndex())
+                .oldModuleTypePacked(currentModuleTypePacked)
+                .newModuleTypePacked(newModuleTypePacked)
+                .slotIndex(request.getSlotIndex())
+                .build();
     }
 
     @Transactional

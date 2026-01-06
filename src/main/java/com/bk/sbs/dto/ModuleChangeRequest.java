@@ -14,6 +14,5 @@ public class ModuleChangeRequest {
     private Integer bodyIndex;
     private Integer currentModuleTypePacked;
     private Integer newModuleTypePacked;
-    private Integer newModuleLevel;
     private Integer slotIndex;
 }
