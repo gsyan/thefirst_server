@@ -30,9 +30,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -63,9 +69,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -96,9 +108,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -129,9 +147,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -162,9 +186,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -195,9 +225,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -228,9 +264,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -261,9 +303,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -294,9 +342,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -327,9 +381,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -360,9 +420,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -393,9 +459,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -426,9 +498,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -459,9 +537,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -492,9 +576,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -525,9 +615,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -558,9 +654,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -591,9 +693,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -624,9 +732,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -657,9 +771,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -690,9 +810,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -723,9 +849,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -756,9 +888,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -789,9 +927,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -822,9 +966,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -855,9 +1005,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -888,9 +1044,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -921,9 +1083,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -954,9 +1122,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -987,9 +1161,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       }
     ],
     "2": [
@@ -1022,9 +1202,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1055,9 +1241,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1088,9 +1280,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1121,9 +1319,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1154,9 +1358,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1187,9 +1397,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1220,9 +1436,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1253,9 +1475,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1286,9 +1514,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1319,9 +1553,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1352,9 +1592,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1385,9 +1631,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1418,9 +1670,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1451,9 +1709,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1484,9 +1748,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1517,9 +1787,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1550,9 +1826,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1583,9 +1865,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1616,9 +1904,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1649,9 +1943,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1682,9 +1982,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1715,9 +2021,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1748,9 +2060,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1781,9 +2099,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1814,9 +2138,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1847,9 +2177,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1880,9 +2216,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1913,9 +2255,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1946,9 +2294,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -1979,9 +2333,15 @@
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       }
     ],
     "3": [
@@ -2006,17 +2366,23 @@
         "m_attackFireCount": 1,
         "m_attackPower": 15.0,
         "m_attackCoolTime": 1.95,
-        "m_projectileLength": 5.0,
-        "m_projectileWidth": 0.1,
-        "m_projectileSpeed": 20.0,
+        "m_projectileLength": 50.0,
+        "m_projectileWidth": 5.0,
+        "m_projectileSpeed": 200.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2039,17 +2405,23 @@
         "m_attackFireCount": 1,
         "m_attackPower": 20.0,
         "m_attackCoolTime": 1.9,
-        "m_projectileLength": 5.0,
-        "m_projectileWidth": 0.1,
-        "m_projectileSpeed": 20.0,
+        "m_projectileLength": 50.0,
+        "m_projectileWidth": 5.0,
+        "m_projectileSpeed": 200.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2072,17 +2444,23 @@
         "m_attackFireCount": 1,
         "m_attackPower": 25.0,
         "m_attackCoolTime": 1.85,
-        "m_projectileLength": 5.0,
-        "m_projectileWidth": 0.1,
-        "m_projectileSpeed": 20.0,
+        "m_projectileLength": 50.0,
+        "m_projectileWidth": 5.0,
+        "m_projectileSpeed": 200.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2105,17 +2483,23 @@
         "m_attackFireCount": 1,
         "m_attackPower": 30.0,
         "m_attackCoolTime": 1.8,
-        "m_projectileLength": 5.0,
-        "m_projectileWidth": 0.1,
-        "m_projectileSpeed": 20.0,
+        "m_projectileLength": 50.0,
+        "m_projectileWidth": 5.0,
+        "m_projectileSpeed": 200.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2138,17 +2522,23 @@
         "m_attackFireCount": 2,
         "m_attackPower": 35.0,
         "m_attackCoolTime": 1.75,
-        "m_projectileLength": 5.0,
-        "m_projectileWidth": 0.1,
-        "m_projectileSpeed": 20.0,
+        "m_projectileLength": 50.0,
+        "m_projectileWidth": 5.0,
+        "m_projectileSpeed": 200.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2171,17 +2561,23 @@
         "m_attackFireCount": 2,
         "m_attackPower": 40.0,
         "m_attackCoolTime": 1.7,
-        "m_projectileLength": 5.0,
-        "m_projectileWidth": 0.1,
-        "m_projectileSpeed": 20.0,
+        "m_projectileLength": 50.0,
+        "m_projectileWidth": 5.0,
+        "m_projectileSpeed": 200.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2204,17 +2600,23 @@
         "m_attackFireCount": 2,
         "m_attackPower": 45.0,
         "m_attackCoolTime": 1.65,
-        "m_projectileLength": 5.0,
-        "m_projectileWidth": 0.1,
-        "m_projectileSpeed": 20.0,
+        "m_projectileLength": 50.0,
+        "m_projectileWidth": 5.0,
+        "m_projectileSpeed": 200.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2237,17 +2639,23 @@
         "m_attackFireCount": 2,
         "m_attackPower": 50.0,
         "m_attackCoolTime": 1.6,
-        "m_projectileLength": 5.0,
-        "m_projectileWidth": 0.1,
-        "m_projectileSpeed": 20.0,
+        "m_projectileLength": 50.0,
+        "m_projectileWidth": 5.0,
+        "m_projectileSpeed": 200.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2270,17 +2678,23 @@
         "m_attackFireCount": 2,
         "m_attackPower": 55.0,
         "m_attackCoolTime": 1.55,
-        "m_projectileLength": 5.0,
-        "m_projectileWidth": 0.1,
-        "m_projectileSpeed": 20.0,
+        "m_projectileLength": 50.0,
+        "m_projectileWidth": 5.0,
+        "m_projectileSpeed": 200.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2303,17 +2717,23 @@
         "m_attackFireCount": 3,
         "m_attackPower": 60.0,
         "m_attackCoolTime": 1.5,
-        "m_projectileLength": 5.0,
-        "m_projectileWidth": 0.1,
-        "m_projectileSpeed": 20.0,
+        "m_projectileLength": 50.0,
+        "m_projectileWidth": 5.0,
+        "m_projectileSpeed": 200.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2336,17 +2756,23 @@
         "m_attackFireCount": 1,
         "m_attackPower": 15.0,
         "m_attackCoolTime": 1.95,
-        "m_projectileLength": 5.0,
-        "m_projectileWidth": 0.1,
-        "m_projectileSpeed": 20.0,
+        "m_projectileLength": 50.0,
+        "m_projectileWidth": 5.0,
+        "m_projectileSpeed": 200.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2369,17 +2795,23 @@
         "m_attackFireCount": 1,
         "m_attackPower": 20.0,
         "m_attackCoolTime": 1.9,
-        "m_projectileLength": 5.0,
-        "m_projectileWidth": 0.1,
-        "m_projectileSpeed": 20.0,
+        "m_projectileLength": 50.0,
+        "m_projectileWidth": 5.0,
+        "m_projectileSpeed": 200.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2402,17 +2834,23 @@
         "m_attackFireCount": 1,
         "m_attackPower": 25.0,
         "m_attackCoolTime": 1.85,
-        "m_projectileLength": 5.0,
-        "m_projectileWidth": 0.1,
-        "m_projectileSpeed": 20.0,
+        "m_projectileLength": 50.0,
+        "m_projectileWidth": 5.0,
+        "m_projectileSpeed": 200.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2435,17 +2873,23 @@
         "m_attackFireCount": 1,
         "m_attackPower": 30.0,
         "m_attackCoolTime": 1.8,
-        "m_projectileLength": 5.0,
-        "m_projectileWidth": 0.1,
-        "m_projectileSpeed": 20.0,
+        "m_projectileLength": 50.0,
+        "m_projectileWidth": 5.0,
+        "m_projectileSpeed": 200.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2468,17 +2912,23 @@
         "m_attackFireCount": 2,
         "m_attackPower": 35.0,
         "m_attackCoolTime": 1.75,
-        "m_projectileLength": 5.0,
-        "m_projectileWidth": 0.1,
-        "m_projectileSpeed": 20.0,
+        "m_projectileLength": 50.0,
+        "m_projectileWidth": 5.0,
+        "m_projectileSpeed": 200.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2501,17 +2951,23 @@
         "m_attackFireCount": 2,
         "m_attackPower": 40.0,
         "m_attackCoolTime": 1.7,
-        "m_projectileLength": 5.0,
-        "m_projectileWidth": 0.1,
-        "m_projectileSpeed": 20.0,
+        "m_projectileLength": 50.0,
+        "m_projectileWidth": 5.0,
+        "m_projectileSpeed": 200.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2534,17 +2990,23 @@
         "m_attackFireCount": 2,
         "m_attackPower": 45.0,
         "m_attackCoolTime": 1.65,
-        "m_projectileLength": 5.0,
-        "m_projectileWidth": 0.1,
-        "m_projectileSpeed": 20.0,
+        "m_projectileLength": 50.0,
+        "m_projectileWidth": 5.0,
+        "m_projectileSpeed": 200.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2567,17 +3029,23 @@
         "m_attackFireCount": 2,
         "m_attackPower": 50.0,
         "m_attackCoolTime": 1.6,
-        "m_projectileLength": 5.0,
-        "m_projectileWidth": 0.1,
-        "m_projectileSpeed": 20.0,
+        "m_projectileLength": 50.0,
+        "m_projectileWidth": 5.0,
+        "m_projectileSpeed": 200.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2600,17 +3068,23 @@
         "m_attackFireCount": 2,
         "m_attackPower": 55.0,
         "m_attackCoolTime": 1.55,
-        "m_projectileLength": 5.0,
-        "m_projectileWidth": 0.1,
-        "m_projectileSpeed": 20.0,
+        "m_projectileLength": 50.0,
+        "m_projectileWidth": 5.0,
+        "m_projectileSpeed": 200.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2633,17 +3107,23 @@
         "m_attackFireCount": 3,
         "m_attackPower": 60.0,
         "m_attackCoolTime": 1.5,
-        "m_projectileLength": 5.0,
-        "m_projectileWidth": 0.1,
-        "m_projectileSpeed": 20.0,
+        "m_projectileLength": 50.0,
+        "m_projectileWidth": 5.0,
+        "m_projectileSpeed": 200.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
         "m_launchCount": 1,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 100.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 10.0,
-        "m_aircraftAmmo": 10
+        "m_aircraftAttackRange": 100.0,
+        "m_aircraftAttackCooldown": 10.0,
+        "m_aircraftSpeed": 200.0,
+        "m_aircraftAmmo": 10,
+        "m_aircraftDetectionRadius": 200.0,
+        "m_aircraftAvoidanceRadius": 200.0
       }
     ],
     "4": [
@@ -2676,9 +3156,15 @@
         "m_launchCool": 2.85,
         "m_launchCount": 1,
         "m_maintenanceTime": 14.5,
+        "m_aircraftLaunchStraightDistance": 105.0,
         "m_aircraftHealth": 40.0,
         "m_aircraftAttackPower": 8.0,
-        "m_aircraftAmmo": 12
+        "m_aircraftAttackRange": 105.0,
+        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftSpeed": 305.0,
+        "m_aircraftAmmo": 12,
+        "m_aircraftDetectionRadius": 210.0,
+        "m_aircraftAvoidanceRadius": 205.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2709,9 +3195,15 @@
         "m_launchCool": 2.7,
         "m_launchCount": 1,
         "m_maintenanceTime": 14.0,
+        "m_aircraftLaunchStraightDistance": 110.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 11.0,
-        "m_aircraftAmmo": 14
+        "m_aircraftAttackRange": 110.0,
+        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftSpeed": 310.0,
+        "m_aircraftAmmo": 14,
+        "m_aircraftDetectionRadius": 220.0,
+        "m_aircraftAvoidanceRadius": 210.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2742,9 +3234,15 @@
         "m_launchCool": 2.55,
         "m_launchCount": 1,
         "m_maintenanceTime": 13.5,
+        "m_aircraftLaunchStraightDistance": 115.0,
         "m_aircraftHealth": 60.0,
         "m_aircraftAttackPower": 14.0,
-        "m_aircraftAmmo": 16
+        "m_aircraftAttackRange": 115.0,
+        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftSpeed": 315.0,
+        "m_aircraftAmmo": 16,
+        "m_aircraftDetectionRadius": 230.0,
+        "m_aircraftAvoidanceRadius": 215.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2775,9 +3273,15 @@
         "m_launchCool": 2.4,
         "m_launchCount": 2,
         "m_maintenanceTime": 13.0,
+        "m_aircraftLaunchStraightDistance": 120.0,
         "m_aircraftHealth": 70.0,
         "m_aircraftAttackPower": 17.0,
-        "m_aircraftAmmo": 18
+        "m_aircraftAttackRange": 120.0,
+        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftSpeed": 320.0,
+        "m_aircraftAmmo": 18,
+        "m_aircraftDetectionRadius": 240.0,
+        "m_aircraftAvoidanceRadius": 220.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2808,9 +3312,15 @@
         "m_launchCool": 2.25,
         "m_launchCount": 2,
         "m_maintenanceTime": 12.5,
+        "m_aircraftLaunchStraightDistance": 125.0,
         "m_aircraftHealth": 80.0,
         "m_aircraftAttackPower": 20.0,
-        "m_aircraftAmmo": 20
+        "m_aircraftAttackRange": 125.0,
+        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftSpeed": 325.0,
+        "m_aircraftAmmo": 20,
+        "m_aircraftDetectionRadius": 250.0,
+        "m_aircraftAvoidanceRadius": 225.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2841,9 +3351,15 @@
         "m_launchCool": 2.1,
         "m_launchCount": 2,
         "m_maintenanceTime": 12.0,
+        "m_aircraftLaunchStraightDistance": 130.0,
         "m_aircraftHealth": 90.0,
         "m_aircraftAttackPower": 23.0,
-        "m_aircraftAmmo": 22
+        "m_aircraftAttackRange": 130.0,
+        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftSpeed": 330.0,
+        "m_aircraftAmmo": 22,
+        "m_aircraftDetectionRadius": 260.0,
+        "m_aircraftAvoidanceRadius": 230.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2874,9 +3390,15 @@
         "m_launchCool": 1.94999993,
         "m_launchCount": 2,
         "m_maintenanceTime": 11.5,
+        "m_aircraftLaunchStraightDistance": 135.0,
         "m_aircraftHealth": 100.0,
         "m_aircraftAttackPower": 26.0,
-        "m_aircraftAmmo": 24
+        "m_aircraftAttackRange": 135.0,
+        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftSpeed": 335.0,
+        "m_aircraftAmmo": 24,
+        "m_aircraftDetectionRadius": 270.0,
+        "m_aircraftAvoidanceRadius": 235.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2907,9 +3429,15 @@
         "m_launchCool": 1.8,
         "m_launchCount": 3,
         "m_maintenanceTime": 11.0,
+        "m_aircraftLaunchStraightDistance": 140.0,
         "m_aircraftHealth": 110.0,
         "m_aircraftAttackPower": 29.0,
-        "m_aircraftAmmo": 26
+        "m_aircraftAttackRange": 140.0,
+        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftSpeed": 340.0,
+        "m_aircraftAmmo": 26,
+        "m_aircraftDetectionRadius": 280.0,
+        "m_aircraftAvoidanceRadius": 240.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2940,9 +3468,15 @@
         "m_launchCool": 1.65,
         "m_launchCount": 3,
         "m_maintenanceTime": 10.5,
+        "m_aircraftLaunchStraightDistance": 145.0,
         "m_aircraftHealth": 120.0,
         "m_aircraftAttackPower": 32.0,
-        "m_aircraftAmmo": 28
+        "m_aircraftAttackRange": 145.0,
+        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftSpeed": 345.0,
+        "m_aircraftAmmo": 28,
+        "m_aircraftDetectionRadius": 290.0,
+        "m_aircraftAvoidanceRadius": 245.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -2973,9 +3507,15 @@
         "m_launchCool": 1.5,
         "m_launchCount": 3,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 150.0,
         "m_aircraftHealth": 130.0,
         "m_aircraftAttackPower": 35.0,
-        "m_aircraftAmmo": 30
+        "m_aircraftAttackRange": 150.0,
+        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftSpeed": 350.0,
+        "m_aircraftAmmo": 30,
+        "m_aircraftDetectionRadius": 300.0,
+        "m_aircraftAvoidanceRadius": 250.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -3006,9 +3546,15 @@
         "m_launchCool": 2.85,
         "m_launchCount": 1,
         "m_maintenanceTime": 14.5,
+        "m_aircraftLaunchStraightDistance": 105.0,
         "m_aircraftHealth": 40.0,
         "m_aircraftAttackPower": 8.0,
-        "m_aircraftAmmo": 12
+        "m_aircraftAttackRange": 105.0,
+        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftSpeed": 305.0,
+        "m_aircraftAmmo": 12,
+        "m_aircraftDetectionRadius": 210.0,
+        "m_aircraftAvoidanceRadius": 205.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -3039,9 +3585,15 @@
         "m_launchCool": 2.7,
         "m_launchCount": 1,
         "m_maintenanceTime": 14.0,
+        "m_aircraftLaunchStraightDistance": 110.0,
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 11.0,
-        "m_aircraftAmmo": 14
+        "m_aircraftAttackRange": 110.0,
+        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftSpeed": 310.0,
+        "m_aircraftAmmo": 14,
+        "m_aircraftDetectionRadius": 220.0,
+        "m_aircraftAvoidanceRadius": 210.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -3072,9 +3624,15 @@
         "m_launchCool": 2.55,
         "m_launchCount": 1,
         "m_maintenanceTime": 13.5,
+        "m_aircraftLaunchStraightDistance": 115.0,
         "m_aircraftHealth": 60.0,
         "m_aircraftAttackPower": 14.0,
-        "m_aircraftAmmo": 16
+        "m_aircraftAttackRange": 115.0,
+        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftSpeed": 315.0,
+        "m_aircraftAmmo": 16,
+        "m_aircraftDetectionRadius": 230.0,
+        "m_aircraftAvoidanceRadius": 215.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -3105,9 +3663,15 @@
         "m_launchCool": 2.4,
         "m_launchCount": 2,
         "m_maintenanceTime": 13.0,
+        "m_aircraftLaunchStraightDistance": 120.0,
         "m_aircraftHealth": 70.0,
         "m_aircraftAttackPower": 17.0,
-        "m_aircraftAmmo": 18
+        "m_aircraftAttackRange": 120.0,
+        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftSpeed": 320.0,
+        "m_aircraftAmmo": 18,
+        "m_aircraftDetectionRadius": 240.0,
+        "m_aircraftAvoidanceRadius": 220.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -3138,9 +3702,15 @@
         "m_launchCool": 2.25,
         "m_launchCount": 2,
         "m_maintenanceTime": 12.5,
+        "m_aircraftLaunchStraightDistance": 125.0,
         "m_aircraftHealth": 80.0,
         "m_aircraftAttackPower": 20.0,
-        "m_aircraftAmmo": 20
+        "m_aircraftAttackRange": 125.0,
+        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftSpeed": 325.0,
+        "m_aircraftAmmo": 20,
+        "m_aircraftDetectionRadius": 250.0,
+        "m_aircraftAvoidanceRadius": 225.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -3171,9 +3741,15 @@
         "m_launchCool": 2.1,
         "m_launchCount": 2,
         "m_maintenanceTime": 12.0,
+        "m_aircraftLaunchStraightDistance": 130.0,
         "m_aircraftHealth": 90.0,
         "m_aircraftAttackPower": 23.0,
-        "m_aircraftAmmo": 22
+        "m_aircraftAttackRange": 130.0,
+        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftSpeed": 330.0,
+        "m_aircraftAmmo": 22,
+        "m_aircraftDetectionRadius": 260.0,
+        "m_aircraftAvoidanceRadius": 230.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -3204,9 +3780,15 @@
         "m_launchCool": 1.94999993,
         "m_launchCount": 2,
         "m_maintenanceTime": 11.5,
+        "m_aircraftLaunchStraightDistance": 135.0,
         "m_aircraftHealth": 100.0,
         "m_aircraftAttackPower": 26.0,
-        "m_aircraftAmmo": 24
+        "m_aircraftAttackRange": 135.0,
+        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftSpeed": 335.0,
+        "m_aircraftAmmo": 24,
+        "m_aircraftDetectionRadius": 270.0,
+        "m_aircraftAvoidanceRadius": 235.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -3237,9 +3819,15 @@
         "m_launchCool": 1.8,
         "m_launchCount": 3,
         "m_maintenanceTime": 11.0,
+        "m_aircraftLaunchStraightDistance": 140.0,
         "m_aircraftHealth": 110.0,
         "m_aircraftAttackPower": 29.0,
-        "m_aircraftAmmo": 26
+        "m_aircraftAttackRange": 140.0,
+        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftSpeed": 340.0,
+        "m_aircraftAmmo": 26,
+        "m_aircraftDetectionRadius": 280.0,
+        "m_aircraftAvoidanceRadius": 240.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -3270,9 +3858,15 @@
         "m_launchCool": 1.65,
         "m_launchCount": 3,
         "m_maintenanceTime": 10.5,
+        "m_aircraftLaunchStraightDistance": 145.0,
         "m_aircraftHealth": 120.0,
         "m_aircraftAttackPower": 32.0,
-        "m_aircraftAmmo": 28
+        "m_aircraftAttackRange": 145.0,
+        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftSpeed": 345.0,
+        "m_aircraftAmmo": 28,
+        "m_aircraftDetectionRadius": 290.0,
+        "m_aircraftAvoidanceRadius": 245.0
       },
       {
         "m_moduleTypePacked": 0,
@@ -3303,9 +3897,15 @@
         "m_launchCool": 1.5,
         "m_launchCount": 3,
         "m_maintenanceTime": 10.0,
+        "m_aircraftLaunchStraightDistance": 150.0,
         "m_aircraftHealth": 130.0,
         "m_aircraftAttackPower": 35.0,
-        "m_aircraftAmmo": 30
+        "m_aircraftAttackRange": 150.0,
+        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftSpeed": 350.0,
+        "m_aircraftAmmo": 30,
+        "m_aircraftDetectionRadius": 300.0,
+        "m_aircraftAvoidanceRadius": 250.0
       }
     ]
   }

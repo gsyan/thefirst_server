@@ -84,12 +84,30 @@ public class ModuleData {
     @JsonAlias("m_maintenanceTime")
     private Float maintenanceTime;
 
+    @JsonAlias("m_aircraftLaunchStraightDistance")
+    private Float aircraftLaunchStraightDistance;
+
     @JsonAlias("m_aircraftHealth")
     private Float aircraftHealth;
 
     @JsonAlias("m_aircraftAttackPower")
     private Float aircraftAttackPower;
 
+    @JsonAlias("m_aircraftAttackRange")
+    private Float aircraftAttackRange;
+
+    @JsonAlias("m_aircraftAttackCooldown")
+    private Float aircraftAttackCooldown;
+
+    @JsonAlias("m_aircraftSpeed")
+    private Float aircraftSpeed;
+
     @JsonAlias("m_aircraftAmmo")
     private Integer aircraftAmmo;
+
+    @JsonAlias("m_aircraftDetectionRadius")
+    private Float aircraftDetectionRadius;
+
+    @JsonAlias("m_aircraftAvoidanceRadius")
+    private Float aircraftAvoidanceRadius;
 }
