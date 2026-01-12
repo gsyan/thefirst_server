@@ -183,12 +183,43 @@ def generate_java_dto(csharp_file_path, output_dir, package_name, class_name):
     return output_file_path
 
 if __name__ == "__main__":
-    csharp_file_path = r"../../../thefirst_client_unity/Assets/Scripts/System/Data/DataTableModule.cs"
     output_dir = r"../../src/main/java/com/bk/sbs/dto"
     package_name = "com.bk.sbs.dto"
-    class_name = "ModuleData"
 
-    output_file = generate_java_dto(csharp_file_path, output_dir, package_name, class_name)
+    # ModuleData 생성
+    module_data_config = {
+        'csharp_file_path': r"../../../thefirst_client_unity/Assets/Scripts/System/Data/DataTableModule.cs",
+        'class_name': "ModuleData"
+    }
 
-    if output_file:
-        open_file_location(output_file)
+    # ModuleResearchData 생성
+    module_research_data_config = {
+        'csharp_file_path': r"../../../thefirst_client_unity/Assets/Scripts/System/Data/DataTableModuleResearch.cs",
+        'class_name': "ModuleResearchData"
+    }
+
+    # 두 클래스 모두 생성
+    configs = [module_data_config, module_research_data_config]
+
+    output_files = []
+    for config in configs:
+        print(f"\n{'='*60}")
+        print(f"Generating {config['class_name']} from {config['csharp_file_path']}")
+        print(f"{'='*60}")
+
+        output_file = generate_java_dto(
+            config['csharp_file_path'],
+            output_dir,
+            package_name,
+            config['class_name']
+        )
+
+        if output_file:
+            output_files.append(output_file)
+
+    # 생성된 파일들의 폴더 열기
+    if output_files:
+        print(f"\n{'='*60}")
+        print(f"Generated {len(output_files)} files successfully!")
+        print(f"{'='*60}")
+        open_file_location(output_files[0])

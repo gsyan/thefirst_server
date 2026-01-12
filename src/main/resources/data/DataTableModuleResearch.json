@@ -1,0 +1,124 @@
+{
+  "researchDataList": [
+    {
+      "m_moduleType": 1,
+      "m_moduleSubType": 1001,
+      "m_researchCost": {
+        "techLevel": 1,
+        "mineral": 1000,
+        "mineralRare": 0,
+        "mineralExotic": 0,
+        "mineralDark": 0
+      },
+      "m_description": "Research Body_Battle module technology"
+    },
+    {
+      "m_moduleType": 1,
+      "m_moduleSubType": 1002,
+      "m_researchCost": {
+        "techLevel": 1,
+        "mineral": 1000,
+        "mineralRare": 0,
+        "mineralExotic": 0,
+        "mineralDark": 0
+      },
+      "m_description": "Research Body_Aircraft module technology"
+    },
+    {
+      "m_moduleType": 1,
+      "m_moduleSubType": 1003,
+      "m_researchCost": {
+        "techLevel": 1,
+        "mineral": 1000,
+        "mineralRare": 0,
+        "mineralExotic": 0,
+        "mineralDark": 0
+      },
+      "m_description": "Research Body_Repair module technology"
+    },
+    {
+      "m_moduleType": 2,
+      "m_moduleSubType": 2001,
+      "m_researchCost": {
+        "techLevel": 1,
+        "mineral": 1000,
+        "mineralRare": 0,
+        "mineralExotic": 0,
+        "mineralDark": 0
+      },
+      "m_description": "Research Engine_Standard module technology"
+    },
+    {
+      "m_moduleType": 2,
+      "m_moduleSubType": 2002,
+      "m_researchCost": {
+        "techLevel": 1,
+        "mineral": 1000,
+        "mineralRare": 0,
+        "mineralExotic": 0,
+        "mineralDark": 0
+      },
+      "m_description": "Research Engine_Booster module technology"
+    },
+    {
+      "m_moduleType": 2,
+      "m_moduleSubType": 2003,
+      "m_researchCost": {
+        "techLevel": 1,
+        "mineral": 1000,
+        "mineralRare": 0,
+        "mineralExotic": 0,
+        "mineralDark": 0
+      },
+      "m_description": "Research Engine_Warp module technology"
+    },
+    {
+      "m_moduleType": 3,
+      "m_moduleSubType": 3001,
+      "m_researchCost": {
+        "techLevel": 1,
+        "mineral": 1000,
+        "mineralRare": 0,
+        "mineralExotic": 0,
+        "mineralDark": 0
+      },
+      "m_description": "Research Weapon_Beam module technology"
+    },
+    {
+      "m_moduleType": 3,
+      "m_moduleSubType": 3002,
+      "m_researchCost": {
+        "techLevel": 1,
+        "mineral": 1000,
+        "mineralRare": 0,
+        "mineralExotic": 0,
+        "mineralDark": 0
+      },
+      "m_description": "Research Weapon_Missile module technology"
+    },
+    {
+      "m_moduleType": 4,
+      "m_moduleSubType": 4001,
+      "m_researchCost": {
+        "techLevel": 1,
+        "mineral": 1000,
+        "mineralRare": 0,
+        "mineralExotic": 0,
+        "mineralDark": 0
+      },
+      "m_description": "Research Hanger_Standard module technology"
+    },
+    {
+      "m_moduleType": 4,
+      "m_moduleSubType": 4002,
+      "m_researchCost": {
+        "techLevel": 1,
+        "mineral": 1000,
+        "mineralRare": 0,
+        "mineralExotic": 0,
+        "mineralDark": 0
+      },
+      "m_description": "Research Hanger_Advanced module technology"
+    }
+  ]
+}

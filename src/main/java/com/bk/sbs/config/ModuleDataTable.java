@@ -1,6 +1,9 @@
 package com.bk.sbs.config;
 
 import com.bk.sbs.dto.ModuleData;
+import com.bk.sbs.dto.ModuleResearchData;
+import com.bk.sbs.dto.CostStructDto;
+import com.bk.sbs.enums.EModuleSubType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
@@ -13,6 +16,7 @@ public class ModuleDataTable {
     private volatile List<ModuleData> engineModules = new ArrayList<>();
     private volatile List<ModuleData> weaponModules = new ArrayList<>();
     private volatile List<ModuleData> hangerModules = new ArrayList<>();
+    private volatile List<ModuleResearchData> researchDataList = new ArrayList<>();
 
 
     public List<ModuleData> getBodyModules() {
@@ -29,6 +33,10 @@ public class ModuleDataTable {
 
     public List<ModuleData> getHangerModules() {
         return Collections.unmodifiableList(hangerModules);
+    }
+
+    public List<ModuleResearchData> getResearchDataList() {
+        return Collections.unmodifiableList(researchDataList);
     }
 
     @SuppressWarnings("unchecked")
@@ -60,6 +68,30 @@ public class ModuleDataTable {
                     break;
             }
         }
+    }
+
+    public void setResearchDataList(List<ModuleResearchData> researchDataList) {
+        this.researchDataList = researchDataList != null ? new ArrayList<>(researchDataList) : new ArrayList<>();
+    }
+
+    /**
+     * 특정 모듈 서브타입의 연구 비용 조회
+     */
+    public CostStructDto getResearchCost(EModuleSubType moduleSubType) {
+        if (researchDataList == null || moduleSubType == null) {
+            return new CostStructDto(0, 0L, 0L, 0L, 0L);
+        }
+
+        for (ModuleResearchData data : researchDataList) {
+            if (data.getModuleSubType() != null &&
+                data.getModuleSubType().equals(moduleSubType)) {
+                return data.getResearchCost() != null ?
+                       data.getResearchCost() :
+                       new CostStructDto(0, 0L, 0L, 0L, 0L);
+            }
+        }
+
+        return new CostStructDto(0, 0L, 0L, 0L, 0L);
     }
 }
 

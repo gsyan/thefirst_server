@@ -81,7 +81,7 @@
       "mineralDark": 0
     }
   ],
-  "moduleReleasePrice": 1000,
+  "moduleUnlockPrice": 1000,
   "enemyFleetSpawnInterval": 5.0,
   "explorationInterval": 15.0,
   "enemySpawnRate": 2.0,

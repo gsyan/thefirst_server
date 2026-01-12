@@ -4,8 +4,6 @@ import com.bk.sbs.config.GameSettings;
 import com.bk.sbs.config.ModuleDataTable;
 import com.bk.sbs.dto.CostStructDto;
 import com.bk.sbs.dto.ModuleData;
-import com.bk.sbs.dto.ModuleResearchData;
-import com.bk.sbs.enums.EModuleSubType;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,23 +43,6 @@ public class GameDataService {
                 log.info("DataTableModule.json loaded successfully from resources/data/ (fallback mode)");
             } else {
                 log.warn("No game data files found in resources/data/, using empty data");
-            }
-
-            ClassPathResource researchDataTableResource = new ClassPathResource("data/DataTableModuleResearch.json");
-            if (researchDataTableResource.exists()) {
-                String json = new String(researchDataTableResource.getInputStream().readAllBytes());
-                com.fasterxml.jackson.databind.JsonNode rootNode = objectMapper.readTree(json);
-                com.fasterxml.jackson.databind.JsonNode researchDataListNode = rootNode.get("researchDataList");
-                if (researchDataListNode != null) {
-                    List<ModuleResearchData> researchDataList = objectMapper.convertValue(
-                        researchDataListNode,
-                        objectMapper.getTypeFactory().constructCollectionType(List.class, ModuleResearchData.class)
-                    );
-                    moduleDataTable.setResearchDataList(researchDataList);
-                    log.info("DataTableModuleResearch.json loaded successfully from resources/data/ and merged into ModuleDataTable");
-                }
-            } else {
-                log.warn("DataTableModuleResearch.json not found in resources/data/, using empty data");
             }
             //loadGameConfig(gameConfig);
 
@@ -144,12 +125,5 @@ public class GameDataService {
     public ModuleData getFirstHangerModule() {
         List<ModuleData> modules = getHangerModules();
         return modules.isEmpty() ? new ModuleData() : modules.get(0);
-    }
-
-    public CostStructDto getModuleResearchCost(EModuleSubType moduleSubType) {
-        if (moduleDataTable == null) {
-            return new CostStructDto(0, 0L, 0L, 0L, 0L);
-        }
-        return moduleDataTable.getResearchCost(moduleSubType);
     }
 }

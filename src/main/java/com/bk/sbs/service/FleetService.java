@@ -970,31 +970,33 @@ public class FleetService {
         com.bk.sbs.entity.Character character = characterRepository.findById(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
 
-        // 모듈 개발 비용 계산 (TODO: 실제 게임 데이터 기반 비용 계산 필요)
-        long mineralCost = 1000L;
-        long mineralRareCost = 500L;
-        long mineralExoticCost = 250L;
-        long mineralDarkCost = 100L;
+        // 모듈 개발 비용 가져오기 (DataTableModuleResearch.json에서 로딩)
+        CostStructDto researchCost = gameDataService.getModuleResearchCost(moduleSubType);
+
+        // TechLevel 검증
+        if (character.getTechLevel() < researchCost.getTechLevel()) {
+            throw new BusinessException(ServerErrorCode.INSUFFICIENT_TECH_LEVEL);
+        }
 
         // 자원 부족 검사
-        if (character.getMineral() < mineralCost) {
+        if (character.getMineral() < researchCost.getMineral()) {
             throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL);
         }
-        if (character.getMineralRare() < mineralRareCost) {
+        if (character.getMineralRare() < researchCost.getMineralRare()) {
             throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_RARE);
         }
-        if (character.getMineralExotic() < mineralExoticCost) {
+        if (character.getMineralExotic() < researchCost.getMineralExotic()) {
             throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_EXOTIC);
         }
-        if (character.getMineralDark() < mineralDarkCost) {
+        if (character.getMineralDark() < researchCost.getMineralDark()) {
             throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_DARK);
         }
 
         // 자원 차감
-        character.setMineral(character.getMineral() - mineralCost);
-        character.setMineralRare(character.getMineralRare() - mineralRareCost);
-        character.setMineralExotic(character.getMineralExotic() - mineralExoticCost);
-        character.setMineralDark(character.getMineralDark() - mineralDarkCost);
+        character.setMineral(character.getMineral() - researchCost.getMineral());
+        character.setMineralRare(character.getMineralRare() - researchCost.getMineralRare());
+        character.setMineralExotic(character.getMineralExotic() - researchCost.getMineralExotic());
+        character.setMineralDark(character.getMineralDark() - researchCost.getMineralDark());
         characterRepository.save(character);
 
         // 모듈 개발 정보 저장 또는 업데이트
@@ -1025,10 +1027,10 @@ public class FleetService {
 
         // 비용 정보
         CostRemainInfoDto costRemainInfo = new CostRemainInfoDto(
-                mineralCost,
-                mineralRareCost,
-                mineralExoticCost,
-                mineralDarkCost,
+                researchCost.getMineral(),
+                researchCost.getMineralRare(),
+                researchCost.getMineralExotic(),
+                researchCost.getMineralDark(),
                 character.getMineral(),
                 character.getMineralRare(),
                 character.getMineralExotic(),
