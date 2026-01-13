@@ -31,8 +31,10 @@ public class FleetController {
             Long actualCharacterId = getCharacterIdFromToken(request);
             List<FleetInfoDto> fleets = fleetService.getUserFleets(actualCharacterId);
             return ResponseEntity.ok(ApiResponse.success(fleets));
+        } catch (BusinessException e) {
+            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
+            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
         }
     }
 
@@ -43,8 +45,10 @@ public class FleetController {
             Long actualCharacterId = getCharacterIdFromToken(request);
             FleetInfoDto fleet = fleetService.getFleetDetail(actualCharacterId, fleetId);
             return ResponseEntity.ok(ApiResponse.success(fleet));
+        } catch (BusinessException e) {
+            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
+            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
         }
     }
 
@@ -55,8 +59,10 @@ public class FleetController {
             Long actualCharacterId = getCharacterIdFromToken(request);
             FleetInfoDto fleet = fleetService.getActiveFleet(actualCharacterId);
             return ResponseEntity.ok(ApiResponse.success(fleet));
+        } catch (BusinessException e) {
+            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
+            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
         }
     }
 
@@ -69,8 +75,10 @@ public class FleetController {
 //            Long actualCharacterId = getCharacterIdFromToken(request);
 //            FleetInfoDto fleet = fleetService.createFleet(actualCharacterId, createRequest.getFleetName(), createRequest.getDescription());
 //            return ResponseEntity.ok(ApiResponse.success(fleet));
+//        } catch (BusinessException e) {
+//            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
 //        } catch (Exception e) {
-//            return ResponseEntity.badRequest().body(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
+//            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
 //        }
 //    }
 
@@ -81,8 +89,10 @@ public class FleetController {
             Long actualCharacterId = getCharacterIdFromToken(request);
             fleetService.activateFleet(actualCharacterId, fleetId);
             return ResponseEntity.ok(ApiResponse.success(null));
+        } catch (BusinessException e) {
+            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
+            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
         }
     }
 
@@ -93,8 +103,10 @@ public class FleetController {
 //            Long actualCharacterId = getCharacterIdFromToken(request);
 //            FleetExportResponse exportData = fleetService.exportFleet(actualCharacterId, fleetId);
 //            return ResponseEntity.ok(ApiResponse.success(exportData));
+//        } catch (BusinessException e) {
+//            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
 //        } catch (Exception e) {
-//            return ResponseEntity.badRequest().body(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
+//            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
 //        }
 //    }
 
@@ -107,8 +119,10 @@ public class FleetController {
 //            Long actualCharacterId = getCharacterIdFromToken(request);
 //            FleetInfoDto fleet = fleetService.importFleet(actualCharacterId, importRequest);
 //            return ResponseEntity.ok(ApiResponse.success(fleet));
+//        } catch (BusinessException e) {
+//            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
 //        } catch (Exception e) {
-//            return ResponseEntity.badRequest().body(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
+//            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
 //        }
 //    }
 
@@ -119,8 +133,10 @@ public class FleetController {
 //            Long actualCharacterId = getCharacterIdFromToken(request);
 //            FleetInfoDto fleet = fleetService.updateFleet(actualCharacterId, fleetId, importRequest);
 //            return ResponseEntity.ok(ApiResponse.success(fleet));
+//        } catch (BusinessException e) {
+//            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
 //        } catch (Exception e) {
-//            return ResponseEntity.badRequest().body(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
+//            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
 //        }
 //    }
 
@@ -131,8 +147,10 @@ public class FleetController {
             Long actualCharacterId = getCharacterIdFromToken(request);
             fleetService.deleteFleet(actualCharacterId, fleetId);
             return ResponseEntity.ok(ApiResponse.success(null));
+        } catch (BusinessException e) {
+            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
+            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
         }
     }
 
@@ -146,9 +164,9 @@ public class FleetController {
             AddShipResponse response = fleetService.addShip(actualCharacterId, request);
             return ResponseEntity.ok(ApiResponse.success(response));
         } catch (BusinessException e) {
-            return ResponseEntity.badRequest().body(ApiResponse.error(e.getErrorCode()));
+            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
+            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
         }
     }
 
@@ -162,9 +180,9 @@ public class FleetController {
             ModuleUpgradeResponse response = fleetService.upgradeModule(actualCharacterId, request);
             return ResponseEntity.ok(ApiResponse.success(response));
         } catch (BusinessException e) {
-            return ResponseEntity.badRequest().body(ApiResponse.error(e.getErrorCode()));
+            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
+            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
         }
     }
 
@@ -179,9 +197,9 @@ public class FleetController {
             ModuleChangeResponse response = fleetService.changeModule(actualCharacterId, request);
             return ResponseEntity.ok(ApiResponse.success(response));
         } catch (BusinessException e) {
-            return ResponseEntity.badRequest().body(ApiResponse.error(e.getErrorCode()));
+            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
+            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
         }
     }
 
@@ -196,9 +214,9 @@ public class FleetController {
             ModuleUnlockResponse response = fleetService.unlockModule(actualCharacterId, request);
             return ResponseEntity.ok(ApiResponse.success(response));
         } catch (BusinessException e) {
-            return ResponseEntity.badRequest().body(ApiResponse.error(e.getErrorCode()));
+            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
+            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
         }
     }
 
@@ -213,9 +231,9 @@ public class FleetController {
             ModuleResearchResponse response = fleetService.researchModule(actualCharacterId, request);
             return ResponseEntity.ok(ApiResponse.success(response));
         } catch (BusinessException e) {
-            return ResponseEntity.badRequest().body(ApiResponse.error(e.getErrorCode()));
+            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
+            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
         }
     }
 
@@ -229,9 +247,9 @@ public class FleetController {
             ChangeFormationResponse response = fleetService.changeFormation(actualCharacterId, request);
             return ResponseEntity.ok(ApiResponse.success(response));
         } catch (BusinessException e) {
-            return ResponseEntity.badRequest().body(ApiResponse.error(e.getErrorCode()));
+            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
+            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
         }
     }
 

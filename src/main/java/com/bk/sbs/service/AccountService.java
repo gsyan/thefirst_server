@@ -55,21 +55,87 @@ public class AccountService {
     }
 
     public String signUp(SignUpRequest request) {
-        if (accountRepository.existsByEmail(request.getEmail())) {
-            throw new BusinessException(ServerErrorCode.ACCOUNT_REGISTER_FAIL_REASON1);
+        // 1. Null 체크
+        if (request.getEmail() == null) {
+            throw new BusinessException(ServerErrorCode.ACCOUNT_REGISTER_FAIL_NULL_EMAIL);
         }
+        if (request.getPassword() == null) {
+            throw new BusinessException(ServerErrorCode.ACCOUNT_REGISTER_FAIL_NULL_PASSWORD);
+        }
+
+        // 2. 빈 문자열 및 공백 체크
+        String email = request.getEmail().trim();
+        String password = request.getPassword().trim();
+
+        if (email.isEmpty()) {
+            throw new BusinessException(ServerErrorCode.ACCOUNT_REGISTER_FAIL_EMPTY_EMAIL);
+        }
+        if (password.isEmpty()) {
+            throw new BusinessException(ServerErrorCode.ACCOUNT_REGISTER_FAIL_EMPTY_PASSWORD);
+        }
+
+        // 3. 이메일 형식 검증
+        if (!isValidEmail(email)) {
+            throw new BusinessException(ServerErrorCode.ACCOUNT_REGISTER_FAIL_INVALID_EMAIL_FORMAT);
+        }
+
+        // 4. 이메일 길이 제한 (DB VARCHAR 255)
+        if (email.length() > 255) {
+            throw new BusinessException(ServerErrorCode.ACCOUNT_REGISTER_FAIL_EMAIL_TOO_LONG);
+        }
+
+        // 5. 패스워드 길이 제한
+        if (password.length() < 8) {
+            throw new BusinessException(ServerErrorCode.ACCOUNT_REGISTER_FAIL_PASSWORD_TOO_SHORT);
+        }
+        if (password.length() > 50) {
+            throw new BusinessException(ServerErrorCode.ACCOUNT_REGISTER_FAIL_PASSWORD_TOO_LONG);
+        }
+
+        // 6. 중복 이메일 체크
+        if (accountRepository.existsByEmail(email)) {
+            throw new BusinessException(ServerErrorCode.ACCOUNT_REGISTER_FAIL_ALREADY_EXIST_EMAIL);
+        }
+
         Account account = new Account();
-        account.setEmail(request.getEmail());
-        account.setPassword(passwordEncoder.encode(request.getPassword()));
+        account.setEmail(email.toLowerCase()); // 소문자 변환
+        account.setPassword(passwordEncoder.encode(password));
         Account savedAccount = accountRepository.save(account);
         return "Account created successfully";
     }
 
+    // 이메일 형식 검증 메서드
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+        return email.matches(emailRegex);
+    }
+
     public AuthResponse login(LoginRequest request) {
-        Account account = accountRepository.findByEmail(request.getEmail())
+        // 1. Null 체크
+        if (request.getEmail() == null) {
+            throw new BusinessException(ServerErrorCode.LOGIN_FAIL_NULL_EMAIL);
+        }
+        if (request.getPassword() == null) {
+            throw new BusinessException(ServerErrorCode.LOGIN_FAIL_NULL_PASSWORD);
+        }
+
+        // 2. 빈 문자열 체크
+        String email = request.getEmail().trim();
+        String password = request.getPassword().trim();
+
+        if (email.isEmpty()) {
+            throw new BusinessException(ServerErrorCode.LOGIN_FAIL_EMPTY_EMAIL);
+        }
+        if (password.isEmpty()) {
+            throw new BusinessException(ServerErrorCode.LOGIN_FAIL_EMPTY_PASSWORD);
+        }
+
+        // 3. 계정 조회
+        Account account = accountRepository.findByEmail(email)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.LOGIN_FAIL_REASON1));
 
-        if (!passwordEncoder.matches(request.getPassword(), account.getPassword())) {
+        // 4. 패스워드 검증
+        if (!passwordEncoder.matches(password, account.getPassword())) {
             throw new BusinessException(ServerErrorCode.LOGIN_FAIL_REASON1);
         }
 
@@ -80,17 +146,31 @@ public class AccountService {
     }
 
     public AuthResponse refreshToken(RefreshTokenRequest request) {
-        String refreshToken = request.getRefreshToken();
-        if (!jwtUtil.validateToken(refreshToken)) {
-            throw new BusinessException(ServerErrorCode.INVALID_TOKEN);
+        // 1. Null 체크
+        if (request.getRefreshToken() == null) {
+            throw new BusinessException(ServerErrorCode.REFRESH_TOKEN_FAIL_NULL_TOKEN);
         }
 
+        // 2. 빈 문자열 체크
+        String refreshToken = request.getRefreshToken().trim();
+        if (refreshToken.isEmpty()) {
+            throw new BusinessException(ServerErrorCode.REFRESH_TOKEN_FAIL_EMPTY_TOKEN);
+        }
+
+        // 3. 토큰 유효성 검증
+        if (!jwtUtil.validateToken(refreshToken)) {
+            throw new BusinessException(ServerErrorCode.REFRESH_TOKEN_FAIL_INVALID_TOKEN);
+        }
+
+        // 4. 토큰에서 정보 추출
         String email = jwtUtil.getEmailFromToken(refreshToken);
         Long characterId = jwtUtil.getCharacterIdFromToken(refreshToken);
 
+        // 5. 계정 조회
         Account account = accountRepository.findByEmail(email)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.ACCOUNT_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.REFRESH_TOKEN_FAIL_ACCOUNT_NOT_FOUND));
 
+        // 6. 새 토큰 생성
         AuthResponse response = AuthResponse.builder()
                 .accessToken(jwtUtil.createAccessToken(email, account.getId()))
                 .refreshToken(jwtUtil.createRefreshToken(email, account.getId()))

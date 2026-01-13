@@ -127,24 +127,24 @@ public class FleetService {
         ShipModule weaponModule = new ShipModule();
         weaponModule.setShip(defaultShip);
         weaponModule.setModuleType(EModuleType.Weapon);
-        //weaponModule.setModuleSubType(EModuleSubType.Weapon_Beam);
-        weaponModule.setModuleSubType(EModuleSubType.Weapon_Missile);
+        weaponModule.setModuleSubType(EModuleSubType.Weapon_Beam);
+        //weaponModule.setModuleSubType(EModuleSubType.Weapon_Missile);
         weaponModule.setModuleStyle(EModuleStyle.None);
         weaponModule.setModuleLevel(weaponData.getModuleLevel());
         weaponModule.setBodyIndex(0);
         weaponModule.setSlotIndex(0);
         shipModuleRepository.save(weaponModule);
 
-        // 4. Hanger 모듈 (type 4)
-        ShipModule hangerModule = new ShipModule();
-        hangerModule.setShip(defaultShip);
-        hangerModule.setModuleType(EModuleType.Hanger);
-        hangerModule.setModuleSubType(EModuleSubType.Hanger_Standard);
-        hangerModule.setModuleStyle(EModuleStyle.None);
-        hangerModule.setModuleLevel(hangerData.getModuleLevel());
-        hangerModule.setBodyIndex(0);
-        hangerModule.setSlotIndex(0);
-        shipModuleRepository.save(hangerModule);
+//        // 4. Hanger 모듈 (type 4)
+//        ShipModule hangerModule = new ShipModule();
+//        hangerModule.setShip(defaultShip);
+//        hangerModule.setModuleType(EModuleType.Hanger);
+//        hangerModule.setModuleSubType(EModuleSubType.Hanger_Standard);
+//        hangerModule.setModuleStyle(EModuleStyle.None);
+//        hangerModule.setModuleLevel(hangerData.getModuleLevel());
+//        hangerModule.setBodyIndex(0);
+//        hangerModule.setSlotIndex(0);
+//        shipModuleRepository.save(hangerModule);
 
 
         System.out.println("Default ship and modules created: " + defaultShip.getShipName());
@@ -466,16 +466,16 @@ public class FleetService {
     public AddShipResponse addShip(Long characterId, AddShipRequest request) {
         // 캐릭터 조회 (비관적 락)
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_SHIP_FAIL_SHIP_NOT_FOUND));
 
         // 대상 함대 결정 (요청에 fleetId가 없으면 활성 함대 사용)
         Fleet targetFleet;
         if (request.getFleetId() != null) {
             targetFleet = fleetRepository.findByIdAndCharacterIdAndDeletedFalse(request.getFleetId(), characterId)
-                    .orElseThrow(() -> new BusinessException(ServerErrorCode.FLEET_NOT_FOUND));
+                    .orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_SHIP_FAIL_FLEET_NOT_FOUND));
         } else {
             targetFleet = fleetRepository.findByCharacterIdAndIsActiveTrueAndDeletedFalse(characterId)
-                    .orElseThrow(() -> new BusinessException(ServerErrorCode.ACTIVE_FLEET_NOT_FOUND));
+                    .orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_SHIP_FAIL_ACTIVE_FLEET_NOT_FOUND));
         }
 
         // 함선 추가 제한 검사 (GameSettings에서 가져오기)
@@ -483,7 +483,7 @@ public class FleetService {
 
         List<Ship> currentShips = shipRepository.findByFleetIdAndDeletedFalseOrderByPositionIndex(targetFleet.getId());
         if (currentShips.size() >= maxShipsPerFleet) {
-            throw new BusinessException(ServerErrorCode.FLEET_MAX_SHIPS_REACHED);
+            throw new BusinessException(ServerErrorCode.ADD_SHIP_FAIL_FLEET_MAX_SHIPS_REACHED);
         }
 
         // 현재 함선 수에 따른 추가 비용 가져오기
@@ -491,21 +491,21 @@ public class FleetService {
 
         // TechLevel 검증
         if (character.getTechLevel() < shipAddCost.getTechLevel()) {
-            throw new BusinessException(ServerErrorCode.INSUFFICIENT_TECH_LEVEL);
+            throw new BusinessException(ServerErrorCode.ADD_SHIP_FAIL_INSUFFICIENT_TECH_LEVEL);
         }
 
         // 자원 부족 검사
         if (character.getMineral() < shipAddCost.getMineral()) {
-            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL);
+            throw new BusinessException(ServerErrorCode.ADD_SHIP_FAIL_INSUFFICIENT_MINERAL);
         }
         if (character.getMineralRare() < shipAddCost.getMineralRare()) {
-            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_RARE);
+            throw new BusinessException(ServerErrorCode.ADD_SHIP_FAIL_INSUFFICIENT_MINERAL_RARE);
         }
         if (character.getMineralExotic() < shipAddCost.getMineralExotic()) {
-            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_EXOTIC);
+            throw new BusinessException(ServerErrorCode.ADD_SHIP_FAIL_INSUFFICIENT_MINERAL_EXOTIC);
         }
         if (character.getMineralDark() < shipAddCost.getMineralDark()) {
-            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_DARK);
+            throw new BusinessException(ServerErrorCode.ADD_SHIP_FAIL_INSUFFICIENT_MINERAL_DARK);
         }
 
         // 자원 차감
@@ -598,10 +598,10 @@ public class FleetService {
     public ModuleUpgradeResponse upgradeModule(Long characterId, ModuleUpgradeRequest request) {
         // 함선 소유권 확인
         Ship ship = shipRepository.findById(request.getShipId())
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.SHIP_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_SHIP_NOT_FOUND));
 
         if (!ship.getFleet().getCharacterId().equals(characterId)) {
-            throw new BusinessException(ServerErrorCode.FLEET_ACCESS_DENIED);
+            throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_FLEET_ACCESS_DENIED);
         }
 
         EModuleType moduleType = ModuleTypeConverter.getType(request.getModuleTypePacked());
@@ -614,16 +614,16 @@ public class FleetService {
                 moduleType,
                 moduleSubType,
                 request.getSlotIndex()
-        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_NOT_FOUND));
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MODULE_NOT_FOUND));
 
         // 현재 레벨 확인
         if (module.getModuleLevel() != request.getCurrentLevel()) {
-            throw new BusinessException(ServerErrorCode.MODULE_LEVEL_MISMATCH);
+            throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MODULE_LEVEL_MISMATCH);
         }
 
         // 캐릭터 자원 조회 (비관적 락)
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_CHARACTER_NOT_FOUND));
 
         // 업그레이드 비용 계산 (현재 레벨부터 목표 레벨까지)
         CostStructDto totalCost = new CostStructDto(0, 0L, 0L, 0L, 0L);
@@ -635,7 +635,7 @@ public class FleetService {
             ModuleData levelData = moduleDataList.stream()
                     .filter(data -> data.getModuleLevel() == currentLevel)
                     .findFirst()
-                    .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_DATA_NOT_FOUND));
+                    .orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MODULE_DATA_NOT_FOUND));
 
             CostStructDto cost = levelData.getUpgradeCost();
             if (cost != null) {
@@ -649,21 +649,21 @@ public class FleetService {
 
         // TechLevel 검증
         if (character.getTechLevel() < maxTechLevel) {
-            throw new BusinessException(ServerErrorCode.INSUFFICIENT_TECH_LEVEL);
+            throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_INSUFFICIENT_TECH_LEVEL);
         }
 
         // 자원 부족 검사 (업그레이드 진행 전에 먼저 체크)
         if (character.getMineral() < totalCost.getMineral()) {
-            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL);
+            throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_INSUFFICIENT_MINERAL);
         }
         if (character.getMineralRare() < totalCost.getMineralRare()) {
-            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_RARE);
+            throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_INSUFFICIENT_MINERAL_RARE);
         }
         if (character.getMineralExotic() < totalCost.getMineralExotic()) {
-            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_EXOTIC);
+            throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_INSUFFICIENT_MINERAL_EXOTIC);
         }
         if (character.getMineralDark() < totalCost.getMineralDark()) {
-            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_DARK);
+            throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_INSUFFICIENT_MINERAL_DARK);
         }
 
         // 자원 차감 (업그레이드 진행 전에 먼저 차감)
@@ -834,10 +834,10 @@ public class FleetService {
     public ModuleChangeResponse changeModule(Long characterId, ModuleChangeRequest request) {
         // 함선 소유권 확인
         Ship ship = shipRepository.findById(request.getShipId())
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.SHIP_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_SHIP_NOT_FOUND));
 
         if (!ship.getFleet().getCharacterId().equals(characterId)) {
-            throw new BusinessException(ServerErrorCode.FLEET_ACCESS_DENIED);
+            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_FLEET_ACCESS_DENIED);
         }
 
         // 현재 모듈 타입 정보 추출
@@ -849,10 +849,28 @@ public class FleetService {
         int newModuleTypePacked = request.getNewModuleTypePacked();
         EModuleType newModuleType = ModuleTypeConverter.getType(newModuleTypePacked);
         EModuleSubType newModuleSubType = ModuleTypeConverter.getSubType(newModuleTypePacked);
+        EModuleStyle newModuleStyle = ModuleTypeConverter.getStyle(newModuleTypePacked);
 
-        // 모듈 타입이 같은지 확인 (Weapon->Weapon, Engine->Engine 만 가능)
+        // 1. 같은 모듈인지 확인 (완전히 동일한 모듈로 변경 불가)
+        if (currentModuleTypePacked == newModuleTypePacked) {
+            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_SAME_MODULE);
+        }
+
+        // 2. 모듈 타입이 다르면 에러 (Weapon->Weapon, Engine->Engine 만 가능)
         if (currentModuleType != newModuleType) {
-            throw new BusinessException(ServerErrorCode.UNKNOWN_ERROR);
+            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_NOT_MATCH_MODULE_TYPE);
+        }
+
+        // 3. 새 모듈이 연구되었는지 확인
+        Optional<ModuleResearch> researchCheck = moduleResearchRepository.findByCharacterIdAndModuleTypeAndModuleSubTypeAndModuleStyle(
+                characterId,
+                newModuleType,
+                newModuleSubType,
+                newModuleStyle
+        );
+
+        if (!researchCheck.isPresent() || !researchCheck.get().isResearched()) {
+            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_NOT_RESEARCHED);
         }
 
         // 현재 장착된 모듈 찾기
@@ -865,14 +883,14 @@ public class FleetService {
                     currentModuleType,
                     currentModuleSubType,
                     request.getSlotIndex()
-            ).orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_NOT_FOUND));
+            ).orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_MODULE_WEAPON_NOT_FOUND));
         } else {
             currentModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
                     request.getShipId(),
                     request.getBodyIndex(),
                     currentModuleType,
                     request.getSlotIndex()
-            ).orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_NOT_FOUND));
+            ).orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_MODULE_NOT_FOUND));
         }
 
         // 모듈 정보 업데이트 (레벨과 서브타입 변경, 메인 타입은 동일)
@@ -907,33 +925,33 @@ public class FleetService {
         );
 
         if (existing.isPresent() && existing.get().isResearched()) {
-            throw new BusinessException(ServerErrorCode.MODULE_ALREADY_RESEARCHED);
+            throw new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_ALREADY_RESEARCHED);
         }
 
         // 캐릭터 자원 조회 (비관적 락)
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_CHARACTER_NOT_FOUND));
 
         // 모듈 개발 비용 가져오기 (DataTableModuleResearch.json에서 로딩)
         CostStructDto researchCost = gameDataService.getModuleResearchCost(moduleSubType);
 
         // TechLevel 검증
         if (character.getTechLevel() < researchCost.getTechLevel()) {
-            throw new BusinessException(ServerErrorCode.INSUFFICIENT_TECH_LEVEL);
+            throw new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_INSUFFICIENT_TECH_LEVEL);
         }
 
         // 자원 부족 검사
         if (character.getMineral() < researchCost.getMineral()) {
-            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL);
+            throw new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_INSUFFICIENT_MINERAL);
         }
         if (character.getMineralRare() < researchCost.getMineralRare()) {
-            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_RARE);
+            throw new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_INSUFFICIENT_MINERAL_RARE);
         }
         if (character.getMineralExotic() < researchCost.getMineralExotic()) {
-            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_EXOTIC);
+            throw new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_INSUFFICIENT_MINERAL_EXOTIC);
         }
         if (character.getMineralDark() < researchCost.getMineralDark()) {
-            throw new BusinessException(ServerErrorCode.INSUFFICIENT_MINERAL_DARK);
+            throw new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_INSUFFICIENT_MINERAL_DARK);
         }
 
         // 자원 차감

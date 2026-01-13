@@ -31,23 +31,18 @@ public class AccountController {
             return ApiResponse.success(message);
         } catch (BusinessException e) {
             return ApiResponse.error(e.getErrorCode());
-        } catch (IllegalArgumentException e) {
-            return ApiResponse.error(ServerErrorCode.ACCOUNT_REGISTER_FAIL_REASON1);
         } catch (Exception e) {
             return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
         }
     }
 
     @PostMapping("/login")
-    public ApiResponse<AuthResponse> login(@RequestBody LoginRequest request)
-    {
+    public ApiResponse<AuthResponse> login(@RequestBody LoginRequest request) {
         try {
             AuthResponse response = accountService.login(request);
             return ApiResponse.success(response);
         } catch (BusinessException e) {
             return ApiResponse.error(e.getErrorCode());
-        } catch (IllegalArgumentException e) {
-            return ApiResponse.error(ServerErrorCode.LOGIN_FAIL_REASON1);
         } catch (Exception e) {
             return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
         }
@@ -60,8 +55,6 @@ public class AccountController {
             return ApiResponse.success(response);
         } catch (BusinessException e) {
             return ApiResponse.error(e.getErrorCode());
-        } catch (IllegalArgumentException e) {
-            return ApiResponse.error(ServerErrorCode.LOGIN_FAIL_REASON1);
         } catch (Exception e) {
             return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
         }
