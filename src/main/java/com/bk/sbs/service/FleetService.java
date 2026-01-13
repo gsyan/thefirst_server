@@ -95,10 +95,10 @@ public class FleetService {
         defaultShip = shipRepository.save(defaultShip);
 
         // GameDataService에서 레벨 1 모듈 데이터 가져오기
-        ModuleData bodyData = gameDataService.getFirstBodyModule();
-        ModuleData weaponData = gameDataService.getFirstWeaponModule();
-        ModuleData engineData = gameDataService.getFirstEngineModule();
-        ModuleData hangerData = gameDataService.getFirstHangerModule();
+        ModuleData bodyData = gameDataService.getFirstModuleByType(EModuleType.Body);
+        ModuleData engineData = gameDataService.getFirstModuleByType(EModuleType.Engine);
+        ModuleData weaponData = gameDataService.getFirstModuleByType(EModuleType.Weapon);
+        ModuleData hangerData = gameDataService.getFirstModuleByType(EModuleType.Hanger);
 
         // 1. Body
         ShipModule bodyModule = new ShipModule();
@@ -464,8 +464,8 @@ public class FleetService {
 
     @Transactional
     public AddShipResponse addShip(Long characterId, AddShipRequest request) {
-        // 캐릭터 조회
-        com.bk.sbs.entity.Character character = characterRepository.findById(characterId)
+        // 캐릭터 조회 (비관적 락)
+        com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
 
         // 대상 함대 결정 (요청에 fleetId가 없으면 활성 함대 사용)
@@ -621,85 +621,29 @@ public class FleetService {
             throw new BusinessException(ServerErrorCode.MODULE_LEVEL_MISMATCH);
         }
 
-        // 캐릭터 자원 조회
-        com.bk.sbs.entity.Character character = characterRepository.findById(characterId)
+        // 캐릭터 자원 조회 (비관적 락)
+        com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
 
         // 업그레이드 비용 계산 (현재 레벨부터 목표 레벨까지)
         CostStructDto totalCost = new CostStructDto(0, 0L, 0L, 0L, 0L);
         int maxTechLevel = 0;
 
-        if (module.getModuleType() == EModuleType.Body) {
-            List<ModuleData> moduleDataList = gameDataService.getBodyModules();
-            for (int level = request.getCurrentLevel(); level < request.getTargetLevel(); level++) {
-                final int currentLevel = level;
-                ModuleData levelData = moduleDataList.stream()
-                        .filter(data -> data.getModuleLevel() == currentLevel)
-                        .findFirst()
-                        .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_DATA_NOT_FOUND));
+        List<ModuleData> moduleDataList = gameDataService.getModulesByType(moduleType);
+        for (int level = request.getCurrentLevel(); level < request.getTargetLevel(); level++) {
+            final int currentLevel = level;
+            ModuleData levelData = moduleDataList.stream()
+                    .filter(data -> data.getModuleLevel() == currentLevel)
+                    .findFirst()
+                    .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_DATA_NOT_FOUND));
 
-                CostStructDto cost = levelData.getUpgradeCost();
-                if (cost != null) {
-                    maxTechLevel = Math.max(maxTechLevel, cost.getTechLevel());
-                    totalCost.setMineral(totalCost.getMineral() + cost.getMineral());
-                    totalCost.setMineralRare(totalCost.getMineralRare() + cost.getMineralRare());
-                    totalCost.setMineralExotic(totalCost.getMineralExotic() + cost.getMineralExotic());
-                    totalCost.setMineralDark(totalCost.getMineralDark() + cost.getMineralDark());
-                }
-            }
-        } else if (module.getModuleType() == EModuleType.Weapon) {
-            List<ModuleData> moduleDataList = gameDataService.getWeaponModules();
-            for (int level = request.getCurrentLevel(); level < request.getTargetLevel(); level++) {
-                final int currentLevel = level;
-                ModuleData levelData = moduleDataList.stream()
-                        .filter(data -> data.getModuleLevel() == currentLevel)
-                        .findFirst()
-                        .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_DATA_NOT_FOUND));
-
-                CostStructDto cost = levelData.getUpgradeCost();
-                if (cost != null) {
-                    maxTechLevel = Math.max(maxTechLevel, cost.getTechLevel());
-                    totalCost.setMineral(totalCost.getMineral() + cost.getMineral());
-                    totalCost.setMineralRare(totalCost.getMineralRare() + cost.getMineralRare());
-                    totalCost.setMineralExotic(totalCost.getMineralExotic() + cost.getMineralExotic());
-                    totalCost.setMineralDark(totalCost.getMineralDark() + cost.getMineralDark());
-                }
-            }
-        } else if (module.getModuleType() == EModuleType.Engine) {
-            List<ModuleData> moduleDataList = gameDataService.getEngineModules();
-            for (int level = request.getCurrentLevel(); level < request.getTargetLevel(); level++) {
-                final int currentLevel = level;
-                ModuleData levelData = moduleDataList.stream()
-                        .filter(data -> data.getModuleLevel() == currentLevel)
-                        .findFirst()
-                        .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_DATA_NOT_FOUND));
-
-                CostStructDto cost = levelData.getUpgradeCost();
-                if (cost != null) {
-                    maxTechLevel = Math.max(maxTechLevel, cost.getTechLevel());
-                    totalCost.setMineral(totalCost.getMineral() + cost.getMineral());
-                    totalCost.setMineralRare(totalCost.getMineralRare() + cost.getMineralRare());
-                    totalCost.setMineralExotic(totalCost.getMineralExotic() + cost.getMineralExotic());
-                    totalCost.setMineralDark(totalCost.getMineralDark() + cost.getMineralDark());
-                }
-            }
-        } else if (module.getModuleType() == EModuleType.Hanger) {
-            List<ModuleData> moduleDataList = gameDataService.getHangerModules();
-            for (int level = request.getCurrentLevel(); level < request.getTargetLevel(); level++) {
-                final int currentLevel = level;
-                ModuleData levelData = moduleDataList.stream()
-                        .filter(data -> data.getModuleLevel() == currentLevel)
-                        .findFirst()
-                        .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_DATA_NOT_FOUND));
-
-                CostStructDto cost = levelData.getUpgradeCost();
-                if (cost != null) {
-                    maxTechLevel = Math.max(maxTechLevel, cost.getTechLevel());
-                    totalCost.setMineral(totalCost.getMineral() + cost.getMineral());
-                    totalCost.setMineralRare(totalCost.getMineralRare() + cost.getMineralRare());
-                    totalCost.setMineralExotic(totalCost.getMineralExotic() + cost.getMineralExotic());
-                    totalCost.setMineralDark(totalCost.getMineralDark() + cost.getMineralDark());
-                }
+            CostStructDto cost = levelData.getUpgradeCost();
+            if (cost != null) {
+                maxTechLevel = Math.max(maxTechLevel, cost.getTechLevel());
+                totalCost.setMineral(totalCost.getMineral() + cost.getMineral());
+                totalCost.setMineralRare(totalCost.getMineralRare() + cost.getMineralRare());
+                totalCost.setMineralExotic(totalCost.getMineralExotic() + cost.getMineralExotic());
+                totalCost.setMineralDark(totalCost.getMineralDark() + cost.getMineralDark());
             }
         }
 
@@ -826,8 +770,8 @@ public class FleetService {
             throw new BusinessException(ServerErrorCode.UNLOCK_MODULE_FAIL_ALREADY_UNLOCKED); // 이미 해금된 모듈
         }
 
-        // 캐릭터 자원 조회
-        com.bk.sbs.entity.Character character = characterRepository.findById(characterId)
+        // 캐릭터 자원 조회 (비관적 락)
+        com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.UNLOCK_MODULE_FAIL_CHARACTER_NOT_FOUND));
 
         // 모듈 해금 비용 (설정에서 가져오기 - 여기서는 하드코딩)
@@ -966,8 +910,8 @@ public class FleetService {
             throw new BusinessException(ServerErrorCode.MODULE_ALREADY_RESEARCHED);
         }
 
-        // 캐릭터 자원 조회
-        com.bk.sbs.entity.Character character = characterRepository.findById(characterId)
+        // 캐릭터 자원 조회 (비관적 락)
+        com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
 
         // 모듈 개발 비용 가져오기 (DataTableModuleResearch.json에서 로딩)

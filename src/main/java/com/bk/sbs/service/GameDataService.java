@@ -6,6 +6,7 @@ import com.bk.sbs.dto.CostStructDto;
 import com.bk.sbs.dto.ModuleData;
 import com.bk.sbs.dto.ModuleResearchData;
 import com.bk.sbs.enums.EModuleSubType;
+import com.bk.sbs.enums.EModuleType;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -110,39 +111,18 @@ public class GameDataService {
         return costs.getLast();
     }
 
-    public List<ModuleData> getBodyModules() {
-        return moduleDataTable.getBodyModules();
+    public List<ModuleData> getModulesByType(EModuleType moduleType) {
+        return switch (moduleType) {
+            case Body -> moduleDataTable.getBodyModules();
+            case Weapon -> moduleDataTable.getWeaponModules();
+            case Engine -> moduleDataTable.getEngineModules();
+            case Hanger -> moduleDataTable.getHangerModules();
+            default -> throw new BusinessException(ServerErrorCode.UNKNOWN_ERROR);
+        };
     }
 
-    public List<ModuleData> getWeaponModules() {
-        return moduleDataTable.getWeaponModules();
-    }
-
-    public List<ModuleData> getEngineModules() {
-        return moduleDataTable.getEngineModules();
-    }
-
-    public List<ModuleData> getHangerModules() {
-        return moduleDataTable.getHangerModules();
-    }
-
-    public ModuleData getFirstBodyModule() {
-        List<ModuleData> modules = getBodyModules();
-        return modules.isEmpty() ? new ModuleData() : modules.get(0);
-    }
-
-    public ModuleData getFirstWeaponModule() {
-        List<ModuleData> modules = getWeaponModules();
-        return modules.isEmpty() ? new ModuleData() : modules.get(0);
-    }
-
-    public ModuleData getFirstEngineModule() {
-        List<ModuleData> modules = getEngineModules();
-        return modules.isEmpty() ? new ModuleData() : modules.get(0);
-    }
-
-    public ModuleData getFirstHangerModule() {
-        List<ModuleData> modules = getHangerModules();
+    public ModuleData getFirstModuleByType(EModuleType moduleType) {
+        List<ModuleData> modules = getModulesByType(moduleType);
         return modules.isEmpty() ? new ModuleData() : modules.get(0);
     }
 
