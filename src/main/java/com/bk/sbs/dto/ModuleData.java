@@ -1,6 +1,6 @@
 package com.bk.sbs.dto;
 
-import com.bk.sbs.enums.EModuleStyle;
+import com.bk.sbs.enums.EModuleSlotType;
 import com.bk.sbs.enums.EModuleSubType;
 import com.bk.sbs.enums.EModuleType;
 import com.fasterxml.jackson.annotation.JsonAlias;
@@ -30,8 +30,8 @@ public class ModuleData {
     @JsonAlias("m_moduleSubType")
     private EModuleSubType moduleSubType;
 
-    @JsonAlias("m_moduleStyle")
-    private EModuleStyle moduleStyle;
+    @JsonAlias("m_moduleSlotType")
+    private EModuleSlotType moduleSlotType;
 
     @JsonAlias("m_moduleLevel")
     private Integer moduleLevel;

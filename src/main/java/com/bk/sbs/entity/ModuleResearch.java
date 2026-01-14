@@ -1,6 +1,6 @@
 package com.bk.sbs.entity;
 
-import com.bk.sbs.enums.EModuleStyle;
+import com.bk.sbs.enums.EModuleSlotType;
 import com.bk.sbs.enums.EModuleSubType;
 import com.bk.sbs.enums.EModuleType;
 import jakarta.persistence.*;
@@ -34,7 +34,7 @@ public class ModuleResearch {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private EModuleStyle moduleStyle; // 모듈 스타일 (None, StyleA, StyleB 등)
+    private EModuleSlotType moduleSlotType; // 모듈 슬롯 타입 (비트연산 All, Front, Top, Bottom, Left. Right, Rear)
 
     @Column(nullable = false)
     private boolean researched = false; // 개발 완료 여부
@@ -45,6 +45,6 @@ public class ModuleResearch {
     @Column(nullable = false)
     private LocalDateTime modified = LocalDateTime.now();
 
-    // 복합 인덱스: characterId + moduleType + moduleSubTypeValue + moduleStyleValue 조합으로 유니크
+    // 복합 인덱스: characterId + moduleType + moduleSubTypeValue + moduleSlotTypeValue 조합으로 유니크
     // (한 캐릭터가 같은 모듈을 중복으로 개발할 수 없음)
 }

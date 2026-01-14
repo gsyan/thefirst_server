@@ -70,42 +70,42 @@ public class CharacterService {
 
     /**
      * 캐릭터 생성 시 기본 모듈을 개발된 상태로 설정
-     * - Body: Battle (StyleA)
-     * - Weapon: Beam (StyleA)
-     * - Engine: Standard (StyleA)
+     * - Body: Battle (All)
+     * - Weapon: Beam (All)
+     * - Engine: Standard (All)
      * - Hanger: 제외
      */
     private void initializeDefaultModules(Long characterId) {
         LocalDateTime now = LocalDateTime.now();
 
-        // Body - Battle (Style.None)
+        // Body - Battle (SlotType.All)
         ModuleResearch bodyModule = new ModuleResearch();
         bodyModule.setCharacterId(characterId);
         bodyModule.setModuleType(EModuleType.Body);
         bodyModule.setModuleSubType(EModuleSubType.Body_Battle);
-        bodyModule.setModuleStyle(EModuleStyle.None);
+        bodyModule.setModuleSlotType(EModuleSlotType.All);
         bodyModule.setResearched(true);
         bodyModule.setCreated(now);
         bodyModule.setModified(now);
         moduleResearchRepository.save(bodyModule);
 
-        // Engine - Standard (Style.None)
+        // Engine - Standard (SlotType.All)
         ModuleResearch engineModule = new ModuleResearch();
         engineModule.setCharacterId(characterId);
         engineModule.setModuleType(EModuleType.Engine);
         engineModule.setModuleSubType(EModuleSubType.Engine_Standard);
-        engineModule.setModuleStyle(EModuleStyle.None);
+        engineModule.setModuleSlotType(EModuleSlotType.All);
         engineModule.setResearched(true);
         engineModule.setCreated(now);
         engineModule.setModified(now);
         moduleResearchRepository.save(engineModule);
 
-        // Weapon - Beam (Style.None)
+        // Weapon - Beam (SlotType.All)
         ModuleResearch weaponModule = new ModuleResearch();
         weaponModule.setCharacterId(characterId);
         weaponModule.setModuleType(EModuleType.Weapon);
         weaponModule.setModuleSubType(EModuleSubType.Weapon_Beam);
-        weaponModule.setModuleStyle(EModuleStyle.None);
+        weaponModule.setModuleSlotType(EModuleSlotType.All);
         weaponModule.setResearched(true);
         weaponModule.setCreated(now);
         weaponModule.setModified(now);

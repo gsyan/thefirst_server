@@ -5,13 +5,13 @@ import com.bk.sbs.enums.*;
 public class ModuleTypeConverter {
     private static final int TYPE_SHIFT = 24;
     private static final int SUBTYPE_SHIFT = 16;
-    private static final int STYLE_SHIFT = 8;
+    private static final int SLOTTYPE_SHIFT = 8;
     private static final int MASK = 0xFF;
 
-    public static int pack(EModuleType type, EModuleSubType subType, EModuleStyle style) {
+    public static int pack(EModuleType type, EModuleSubType subType, EModuleSlotType slotType) {
         // SubType에서 순수한 서브타입 값만 추출 (1001 -> 1, 2002 -> 2)
         int pureSubType = subType.getValue() % 1000;
-        return (type.getValue() << TYPE_SHIFT) | (pureSubType << SUBTYPE_SHIFT) | (style.getValue() << STYLE_SHIFT);
+        return (type.getValue() << TYPE_SHIFT) | (pureSubType << SUBTYPE_SHIFT) | (slotType.getValue() << SLOTTYPE_SHIFT);
     }
 
     public static EModuleType getType(int packed) {
@@ -29,8 +29,24 @@ public class ModuleTypeConverter {
         return EModuleSubType.fromValue(fullSubType);
     }
 
-    public static EModuleStyle getStyle(int packed) {
-        int styleValue = (packed >> STYLE_SHIFT) & MASK;
-        return EModuleStyle.fromValue(styleValue);
+    public static EModuleSlotType getSlotType(int packed) {
+        int slotTypeValue = (packed >> SLOTTYPE_SHIFT) & MASK;
+        return EModuleSlotType.fromValue(slotTypeValue);
+    }
+
+    /**
+     * 슬롯 타입 호환성 체크 (비트 AND 연산)
+     * @param moduleSlotType 모듈의 슬롯 타입
+     * @param slotType 실제 슬롯의 타입
+     * @return 부착 가능 여부
+     */
+    public static boolean canAttachToSlot(EModuleSlotType moduleSlotType, EModuleSlotType slotType) {
+        // All(0) = 모든 슬롯 허용
+        if (moduleSlotType == EModuleSlotType.All || slotType == EModuleSlotType.All) {
+            return true;
+        }
+
+        // 비트 AND 연산으로 호환성 체크
+        return (moduleSlotType.getValue() & slotType.getValue()) != 0;
     }
 }

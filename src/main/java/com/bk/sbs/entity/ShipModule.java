@@ -30,7 +30,7 @@ public class ShipModule {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private EModuleStyle moduleStyle;
+    private EModuleSlotType moduleSlotType;
 
     @Column(nullable = false)
     private int moduleLevel;

@@ -3,7 +3,7 @@ package com.bk.sbs.repository;
 import com.bk.sbs.entity.ModuleResearch;
 import com.bk.sbs.enums.EModuleType;
 import com.bk.sbs.enums.EModuleSubType;
-import com.bk.sbs.enums.EModuleStyle;
+import com.bk.sbs.enums.EModuleSlotType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -23,12 +23,12 @@ public interface ModuleResearchRepository extends JpaRepository<ModuleResearch, 
             EModuleSubType moduleSubType
     );
 
-    // 특정 모듈이 개발되었는지 확인 (스타일 포함)
-    Optional<ModuleResearch> findByCharacterIdAndModuleTypeAndModuleSubTypeAndModuleStyle(
+    // 특정 모듈이 개발되었는지 확인 (슬롯 타입 포함)
+    Optional<ModuleResearch> findByCharacterIdAndModuleTypeAndModuleSubTypeAndModuleSlotType(
             Long characterId,
             EModuleType moduleType,
             EModuleSubType moduleSubType,
-            EModuleStyle moduleStyle
+            EModuleSlotType moduleSlotType
     );
 
     // 특정 모듈이 개발되었는지 여부만 확인

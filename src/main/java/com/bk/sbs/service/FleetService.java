@@ -106,7 +106,7 @@ public class FleetService {
         bodyModule.setModuleType(EModuleType.Body);
         bodyModule.setModuleSubType(EModuleSubType.Body_Battle);
         //bodyModule.setModuleSubType(EModuleSubType.Body_Aircraft);
-        bodyModule.setModuleStyle(EModuleStyle.None);
+        bodyModule.setModuleSlotType(EModuleSlotType.All);
         bodyModule.setModuleLevel(bodyData.getModuleLevel());
         bodyModule.setBodyIndex(0);
         bodyModule.setSlotIndex(0);
@@ -117,7 +117,7 @@ public class FleetService {
         engineModule.setShip(defaultShip);
         engineModule.setModuleType(EModuleType.Engine);
         engineModule.setModuleSubType(EModuleSubType.Engine_Standard);
-        engineModule.setModuleStyle(EModuleStyle.None);
+        engineModule.setModuleSlotType(EModuleSlotType.All);
         engineModule.setModuleLevel(engineData.getModuleLevel());
         engineModule.setBodyIndex(0);
         engineModule.setSlotIndex(0);
@@ -129,7 +129,7 @@ public class FleetService {
         weaponModule.setModuleType(EModuleType.Weapon);
         weaponModule.setModuleSubType(EModuleSubType.Weapon_Beam);
         //weaponModule.setModuleSubType(EModuleSubType.Weapon_Missile);
-        weaponModule.setModuleStyle(EModuleStyle.None);
+        weaponModule.setModuleSlotType(EModuleSlotType.All);
         weaponModule.setModuleLevel(weaponData.getModuleLevel());
         weaponModule.setBodyIndex(0);
         weaponModule.setSlotIndex(0);
@@ -140,7 +140,7 @@ public class FleetService {
 //        hangerModule.setShip(defaultShip);
 //        hangerModule.setModuleType(EModuleType.Hanger);
 //        hangerModule.setModuleSubType(EModuleSubType.Hanger_Standard);
-//        hangerModule.setModuleStyle(EModuleStyle.None);
+//        hangerModule.setModuleSlotType(EModuleSlotType.All);
 //        hangerModule.setModuleLevel(hangerData.getModuleLevel());
 //        hangerModule.setBodyIndex(0);
 //        hangerModule.setSlotIndex(0);
@@ -394,7 +394,7 @@ public class FleetService {
                 .filter(m -> m.getModuleType() == EModuleType.Body)
                 .map(bodyModule -> {
                     ModuleBodyInfoDto bodyDto = ModuleBodyInfoDto.builder()
-                            .moduleTypePacked(ModuleTypeConverter.pack(bodyModule.getModuleType(), bodyModule.getModuleSubType(), bodyModule.getModuleStyle()))
+                            .moduleTypePacked(ModuleTypeConverter.pack(bodyModule.getModuleType(), bodyModule.getModuleSubType(), bodyModule.getModuleSlotType()))
                             .moduleLevel(bodyModule.getModuleLevel())
                             .bodyIndex(bodyModule.getBodyIndex())
                             .build();
@@ -404,7 +404,7 @@ public class FleetService {
                             .filter(m -> m.getModuleType() == EModuleType.Engine && m.getBodyIndex() == bodyIndex)
                             .map(engineModule -> {
                                 ModuleInfoDto engineDto = ModuleInfoDto.builder()
-                                        .moduleTypePacked(ModuleTypeConverter.pack(engineModule.getModuleType(), engineModule.getModuleSubType(), engineModule.getModuleStyle()))
+                                        .moduleTypePacked(ModuleTypeConverter.pack(engineModule.getModuleType(), engineModule.getModuleSubType(), engineModule.getModuleSlotType()))
                                         .moduleLevel(engineModule.getModuleLevel())
                                         .bodyIndex(engineModule.getBodyIndex())
                                         .slotIndex(engineModule.getSlotIndex())
@@ -417,7 +417,7 @@ public class FleetService {
                             .filter(m -> m.getModuleType() == EModuleType.Weapon && m.getBodyIndex() == bodyIndex)
                             .map(weaponModule -> {
                                 ModuleInfoDto weaponDto = ModuleInfoDto.builder()
-                                        .moduleTypePacked(ModuleTypeConverter.pack(weaponModule.getModuleType(), weaponModule.getModuleSubType(), weaponModule.getModuleStyle()))
+                                        .moduleTypePacked(ModuleTypeConverter.pack(weaponModule.getModuleType(), weaponModule.getModuleSubType(), weaponModule.getModuleSlotType()))
                                         .moduleLevel(weaponModule.getModuleLevel())
                                         .bodyIndex(weaponModule.getBodyIndex())
                                         .slotIndex(weaponModule.getSlotIndex())
@@ -430,7 +430,7 @@ public class FleetService {
                             .filter(m -> m.getModuleType() == EModuleType.Hanger && m.getBodyIndex() == bodyIndex)
                             .map(hangerModule -> {
                                 ModuleInfoDto hangerDto = ModuleInfoDto.builder()
-                                        .moduleTypePacked(ModuleTypeConverter.pack(hangerModule.getModuleType(), hangerModule.getModuleSubType(), hangerModule.getModuleStyle()))
+                                        .moduleTypePacked(ModuleTypeConverter.pack(hangerModule.getModuleType(), hangerModule.getModuleSubType(), hangerModule.getModuleSlotType()))
                                         .moduleLevel(hangerModule.getModuleLevel())
                                         .bodyIndex(hangerModule.getBodyIndex())
                                         .slotIndex(hangerModule.getSlotIndex())
@@ -556,7 +556,7 @@ public class FleetService {
         bodyModule.setShip(ship);
         bodyModule.setModuleType(EModuleType.Body);
         bodyModule.setModuleSubType(EModuleSubType.Body_Battle);
-        bodyModule.setModuleStyle(EModuleStyle.None);
+        bodyModule.setModuleSlotType(EModuleSlotType.All);
         bodyModule.setModuleLevel(1);
         bodyModule.setBodyIndex(0);
         bodyModule.setSlotIndex(0);
@@ -570,7 +570,7 @@ public class FleetService {
         weaponModule.setShip(ship);
         weaponModule.setModuleType(EModuleType.Weapon);
         weaponModule.setModuleSubType(EModuleSubType.Weapon_Beam);
-        weaponModule.setModuleStyle(EModuleStyle.None);
+        weaponModule.setModuleSlotType(EModuleSlotType.All);
         weaponModule.setModuleLevel(1);
         weaponModule.setBodyIndex(0);
         weaponModule.setSlotIndex(0);
@@ -584,7 +584,7 @@ public class FleetService {
         engineModule.setShip(ship);
         engineModule.setModuleType(EModuleType.Engine);
         engineModule.setModuleSubType(EModuleSubType.Engine_Standard);
-        engineModule.setModuleStyle(EModuleStyle.None);
+        engineModule.setModuleSlotType(EModuleSlotType.All);
         engineModule.setModuleLevel(1);
         engineModule.setBodyIndex(0);
         engineModule.setSlotIndex(0);
@@ -606,7 +606,7 @@ public class FleetService {
 
         EModuleType moduleType = ModuleTypeConverter.getType(request.getModuleTypePacked());
         EModuleSubType moduleSubType = ModuleTypeConverter.getSubType(request.getModuleTypePacked());
-        //EModuleStyle moduleStyle = ModuleTypeConverter.getStyle(request.getModuleTypePacked());
+        //EModuleSlotType moduleSlotType = ModuleTypeConverter.getSlotType(request.getModuleTypePacked());
         // 모듈 찾기
         ShipModule module = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndModuleSubTypeAndSlotIndexAndDeletedFalse(
                 request.getShipId(),
@@ -801,7 +801,7 @@ public class FleetService {
         newModule.setSlotIndex(request.getSlotIndex());
         newModule.setModuleType(moduleType);
         newModule.setModuleSubType(finalModuleSubType);
-        newModule.setModuleStyle(EModuleStyle.None);
+        newModule.setModuleSlotType(EModuleSlotType.All);
         newModule.setModuleLevel(1);
         newModule.setDeleted(false);
         newModule.setCreated(LocalDateTime.now());
@@ -849,7 +849,7 @@ public class FleetService {
         int newModuleTypePacked = request.getNewModuleTypePacked();
         EModuleType newModuleType = ModuleTypeConverter.getType(newModuleTypePacked);
         EModuleSubType newModuleSubType = ModuleTypeConverter.getSubType(newModuleTypePacked);
-        EModuleStyle newModuleStyle = ModuleTypeConverter.getStyle(newModuleTypePacked);
+        EModuleSlotType newModuleSlotType = ModuleTypeConverter.getSlotType(newModuleTypePacked);
 
         // 1. 같은 모듈인지 확인 (완전히 동일한 모듈로 변경 불가)
         if (currentModuleTypePacked == newModuleTypePacked) {
@@ -862,11 +862,11 @@ public class FleetService {
         }
 
         // 3. 새 모듈이 연구되었는지 확인
-        Optional<ModuleResearch> researchCheck = moduleResearchRepository.findByCharacterIdAndModuleTypeAndModuleSubTypeAndModuleStyle(
+        Optional<ModuleResearch> researchCheck = moduleResearchRepository.findByCharacterIdAndModuleTypeAndModuleSubTypeAndModuleSlotType(
                 characterId,
                 newModuleType,
                 newModuleSubType,
-                newModuleStyle
+                newModuleSlotType
         );
 
         if (!researchCheck.isPresent() || !researchCheck.get().isResearched()) {
@@ -914,14 +914,14 @@ public class FleetService {
         int moduleTypePacked = request.getModuleTypePacked();
         EModuleType moduleType = ModuleTypeConverter.getType(moduleTypePacked);
         EModuleSubType moduleSubType = ModuleTypeConverter.getSubType(moduleTypePacked);
-        EModuleStyle moduleStyle = ModuleTypeConverter.getStyle(moduleTypePacked);
+        EModuleSlotType moduleSlotType = ModuleTypeConverter.getSlotType(moduleTypePacked);
 
         // 이미 개발되었는지 확인
-        Optional<ModuleResearch> existing = moduleResearchRepository.findByCharacterIdAndModuleTypeAndModuleSubTypeAndModuleStyle(
+        Optional<ModuleResearch> existing = moduleResearchRepository.findByCharacterIdAndModuleTypeAndModuleSubTypeAndModuleSlotType(
                 characterId,
                 moduleType,
                 moduleSubType,
-                moduleStyle
+                moduleSlotType
         );
 
         if (existing.isPresent() && existing.get().isResearched()) {
@@ -972,7 +972,7 @@ public class FleetService {
             moduleResearch.setCharacterId(characterId);
             moduleResearch.setModuleType(moduleType);
             moduleResearch.setModuleSubType(moduleSubType);
-            moduleResearch.setModuleStyle(moduleStyle);
+            moduleResearch.setModuleSlotType(moduleSlotType);
             moduleResearch.setResearched(true);
         }
         moduleResearchRepository.save(moduleResearch);
@@ -983,7 +983,7 @@ public class FleetService {
                 .map(r -> ModuleTypeConverter.pack(
                         r.getModuleType(),
                         r.getModuleSubType(),
-                        r.getModuleStyle()
+                        r.getModuleSlotType()
                 ))
                 .collect(Collectors.toList());
 
@@ -1015,7 +1015,7 @@ public class FleetService {
                 .map(r -> ModuleTypeConverter.pack(
                         r.getModuleType(),
                         r.getModuleSubType(),
-                        r.getModuleStyle()
+                        r.getModuleSlotType()
                 ))
                 .collect(Collectors.toList());
     }
