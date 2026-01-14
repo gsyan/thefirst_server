@@ -44,16 +44,13 @@ public class CharacterService {
     public CharacterResponse createCharacter(CharacterCreateRequest request) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Account account = accountRepository.findByEmail(email)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.ACCOUNT_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_CREATE_FAIL_ACCOUNT_NOT_FOUND));
 
-        if (characterRepository.existsByCharacterName(request.getCharacterName())) {
-            throw new BusinessException(ServerErrorCode.CHARACTER_NAME_DUPLICATE);
-        }
+        if (characterRepository.existsByCharacterName(request.getCharacterName())) throw new BusinessException(ServerErrorCode.CHARACTER_CREATE_FAIL_NAME_DUPLICATE);
 
         Character character = new Character();
         character.setAccountId(account.getId());
         character.setCharacterName(request.getCharacterName());
-
         Character savedCharacter = characterRepository.save(character);
 
         // 캐릭터 생성과 동시에 기본 함대 생성 및 활성화
@@ -119,7 +116,7 @@ public class CharacterService {
 
     public CharacterInfoDto getCharacterInfoDto(Long characterId) {
         Character character = characterRepository.findById(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.GET_CHARACTER_INFO_DTO_FAIL_CHARACTER_NOT_FOUND));
 
         return CharacterInfoDto.builder()
                 .characterName(character.getCharacterName())
@@ -133,7 +130,7 @@ public class CharacterService {
 
     @Transactional
     public Long updateMineral(Long characterId, Long mineral) {
-        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
+        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.UPDATE_MINERAL_FAIL_CHARACTER_NOT_FOUND));
         character.setMineral(mineral);
         character = characterRepository.save(character);
         return mineral;
@@ -141,7 +138,7 @@ public class CharacterService {
 
     @Transactional
     public Long addMineral(Long characterId, Long amount) {
-        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
+        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_MINERAL_FAIL_CHARACTER_NOT_FOUND));
         Long before = character.getMineral();
         character.setMineral(before + amount);
         character = characterRepository.save(character);
@@ -150,7 +147,7 @@ public class CharacterService {
 
     @Transactional
     public Long updateMineralRare(Long characterId, Long mineralRare) {
-        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
+        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.UPDATE_MINERAL_RARE_FAIL_CHARACTER_NOT_FOUND));
         character.setMineralRare(mineralRare);
         character = characterRepository.save(character);
         return mineralRare;
@@ -158,7 +155,7 @@ public class CharacterService {
 
     @Transactional
     public Long addMineralRare(Long characterId, Long amount) {
-        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
+        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_MINERAL_RARE_FAIL_CHARACTER_NOT_FOUND));
         Long before = character.getMineralRare();
         character.setMineralRare(before + amount);
         character = characterRepository.save(character);
@@ -167,7 +164,7 @@ public class CharacterService {
 
     @Transactional
     public Long updateMineralExotic(Long characterId, Long mineralExotic) {
-        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
+        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.UPDATE_MINERAL_EXOTIC_FAIL_CHARACTER_NOT_FOUND));
         character.setMineralExotic(mineralExotic);
         character = characterRepository.save(character);
         return mineralExotic;
@@ -175,7 +172,7 @@ public class CharacterService {
 
     @Transactional
     public Long addMineralExotic(Long characterId, Long amount) {
-        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
+        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_MINERAL_EXOTIC_FAIL_CHARACTER_NOT_FOUND));
         Long before = character.getMineralExotic();
         character.setMineralExotic(before + amount);
         character = characterRepository.save(character);
@@ -184,7 +181,7 @@ public class CharacterService {
 
     @Transactional
     public Long updateMineralDark(Long characterId, Long mineralDark) {
-        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
+        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.UPDATE_MINERAL_DARK_FAIL_CHARACTER_NOT_FOUND));
         character.setMineralDark(mineralDark);
         character = characterRepository.save(character);
         return mineralDark;
@@ -192,7 +189,7 @@ public class CharacterService {
 
     @Transactional
     public Long addMineralDark(Long characterId, Long amount) {
-        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
+        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_MINERAL_DARK_FAIL_CHARACTER_NOT_FOUND));
         Long before = character.getMineralDark();
         character.setMineralDark(before + amount);
         character = characterRepository.save(character);
@@ -201,7 +198,7 @@ public class CharacterService {
 
     @Transactional
     public Integer updateTechLevel(Long characterId, Integer techLevel) {
-        Character character = characterRepository.findById(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
+        Character character = characterRepository.findById(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.UPDATE_TECH_LEVEL_FAIL_CHARACTER_NOT_FOUND));
         character.setTechLevel(techLevel);
         character = characterRepository.save(character);
         return techLevel;
@@ -209,7 +206,7 @@ public class CharacterService {
 
     @Transactional
     public Integer addTechLevel(Long characterId, Integer amount) {
-        Character character = characterRepository.findById(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_NOT_FOUND));
+        Character character = characterRepository.findById(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_TECH_LEVEL_FAIL_CHARACTER_NOT_FOUND));
         Integer before = character.getTechLevel();
         character.setTechLevel(before + amount);
         character = characterRepository.save(character);

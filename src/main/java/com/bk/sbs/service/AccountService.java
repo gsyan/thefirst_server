@@ -22,10 +22,13 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
@@ -132,11 +135,11 @@ public class AccountService {
 
         // 3. 계정 조회
         Account account = accountRepository.findByEmail(email)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.LOGIN_FAIL_REASON1));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.LOGIN_FAIL_FIND_BY_EMAIL));
 
         // 4. 패스워드 검증
         if (!passwordEncoder.matches(password, account.getPassword())) {
-            throw new BusinessException(ServerErrorCode.LOGIN_FAIL_REASON1);
+            throw new BusinessException(ServerErrorCode.LOGIN_FAIL_MATCH_PASSWORD);
         }
 
         return AuthResponse.builder()
@@ -185,59 +188,58 @@ public class AccountService {
     }
 
     public AuthResponse googleLogin(GoogleLoginRequest request) {
-        try {
-            log.info("Google login attempt with ID token, useFirebaseAuth={}", useFirebaseAuth);
+        log.info("Google login attempt with ID token, useFirebaseAuth={}", useFirebaseAuth);
 
-            String uid;
-            String email;
-            Boolean emailVerified;
+        String uid;
+        String email;
+        Boolean emailVerified;
 
-            if (useFirebaseAuth) {
+        if (useFirebaseAuth) {
+            try {
                 FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(request.getIdToken());
                 log.info("Firebase token verified successfully");
                 uid = decodedToken.getUid();
                 email = decodedToken.getEmail();
                 emailVerified = decodedToken.isEmailVerified();
-            } else {
+            } catch (FirebaseAuthException e) {
+                throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GOOGLE_FIREBASE_AUTH_EXCEPTION);
+            }
+        } else {
+            try {
                 GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
-                    .setAudience(Collections.singletonList(googleClientId))
-                    .build();
+                        .setAudience(Collections.singletonList(googleClientId))
+                        .build();
                 GoogleIdToken idToken = verifier.verify(request.getIdToken());
-                if (idToken == null)
-                    throw new BusinessException(ServerErrorCode.LOGIN_FAIL_REASON1);
+                if (idToken == null) throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GOOGLE_NULL_TOKEN);
                 log.info("Google ID token verified successfully");
                 Payload payload = idToken.getPayload();
                 uid = payload.getSubject();
                 email = payload.getEmail();
                 emailVerified = payload.getEmailVerified();
+            } catch (GeneralSecurityException | IOException e) {
+                throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GOOGLE_TOKEN_VERIFICATION_EXCEPTION);
             }
-
-            log.info("User info - email: {}, uid: {}, verified: {}", email, uid, emailVerified);
-
-            if (email == null || uid == null)
-                throw new BusinessException(ServerErrorCode.LOGIN_FAIL_REASON1);
-
-            if (emailVerified == null || emailVerified == false)
-                throw new BusinessException(ServerErrorCode.LOGIN_FAIL_REASON1);
-
-            Account account = accountRepository.findByEmail(email)
-                    .orElseGet(() -> {
-                        Account newAccount = new Account();
-                        newAccount.setEmail(email);
-                        newAccount.setPassword(passwordEncoder.encode(uid));
-                        return accountRepository.save(newAccount);
-                    });
-
-            return AuthResponse.builder()
-                    .accessToken(jwtUtil.createAccessToken(account.getEmail(), account.getId()))
-                    .refreshToken(jwtUtil.createRefreshToken(account.getEmail(), account.getId()))
-                    .build();
-
-        } catch (BusinessException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new BusinessException(ServerErrorCode.LOGIN_FAIL_REASON1);
         }
+
+        log.info("User info - email: {}, uid: {}, verified: {}", email, uid, emailVerified);
+
+        if (email == null) throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GOOGLE_NULL_EMAIL);
+        if (uid == null) throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GOOGLE_NULL_UID);
+        if (emailVerified == null) throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GOOGLE_NULL_EMAIL_VERIFIED);
+        if (emailVerified == false) throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GOOGLE_EMAIL_VERIFIED);
+
+        Account account = accountRepository.findByEmail(email)
+                .orElseGet(() -> {
+                    Account newAccount = new Account();
+                    newAccount.setEmail(email);
+                    newAccount.setPassword(passwordEncoder.encode(uid));
+                    return accountRepository.save(newAccount);
+                });
+
+        return AuthResponse.builder()
+                .accessToken(jwtUtil.createAccessToken(account.getEmail(), account.getId()))
+                .refreshToken(jwtUtil.createRefreshToken(account.getEmail(), account.getId()))
+                .build();
     }
 
     public boolean validateCharacterOwnership(Long accountId, Long characterId) {
@@ -247,32 +249,19 @@ public class AccountService {
     }
 
     public ApiResponse<List<CharacterResponse>> getAllCharacters() {
-        try {
-            String email = SecurityContextHolder.getContext().getAuthentication().getName();
-            Account account = accountRepository.findByEmail(email)
-                    .orElseThrow(() -> new BusinessException(ServerErrorCode.ACCOUNT_NOT_FOUND));
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Account account = accountRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.GET_ALL_CHARACTERS_FAIL_ACCOUNT_NOT_FOUND));
 
-            List<Character> characters = characterRepository.findByAccountId(account.getId());
-            List<CharacterResponse> characterResponses = characters.stream()
-                    .map(character -> CharacterResponse.builder()
-                            .characterId(((long) 1 << 56) | character.getId())
-                            .characterName(character.getCharacterName())
-                            .build())
-                    .collect(Collectors.toList());
+        List<Character> characters = characterRepository.findByAccountId(account.getId());
+        List<CharacterResponse> characterResponses = characters.stream()
+                .map(character -> CharacterResponse.builder()
+                        .characterId(((long) 1 << 56) | character.getId())
+                        .characterName(character.getCharacterName())
+                        .build())
+                .collect(Collectors.toList());
 
-            return ApiResponse.success(characterResponses);
-        } catch (BusinessException e) {
-            return ApiResponse.error(e.getErrorCode());
-        } catch (Exception e) {
-            return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
-        }
-    }
-
-    private ServerErrorCode determineErrorCode(String message) {
-        if (message.contains("Account not found")) {
-            return ServerErrorCode.LOGIN_FAIL_REASON1;
-        }
-        return ServerErrorCode.SUCCESS;
+        return ApiResponse.success(characterResponses);
     }
 
 }

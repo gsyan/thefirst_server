@@ -26,50 +26,26 @@ public class AccountController {
 
     @PostMapping("/signup")
     public ApiResponse<String> signUp(@RequestBody SignUpRequest request) {
-        try {
-            String message = accountService.signUp(request);
-            return ApiResponse.success(message);
-        } catch (BusinessException e) {
-            return ApiResponse.error(e.getErrorCode());
-        } catch (Exception e) {
-            return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
-        }
+        String message = accountService.signUp(request);
+        return ApiResponse.success(message);
     }
 
     @PostMapping("/login")
     public ApiResponse<AuthResponse> login(@RequestBody LoginRequest request) {
-        try {
-            AuthResponse response = accountService.login(request);
-            return ApiResponse.success(response);
-        } catch (BusinessException e) {
-            return ApiResponse.error(e.getErrorCode());
-        } catch (Exception e) {
-            return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
-        }
+        AuthResponse response = accountService.login(request);
+        return ApiResponse.success(response);
     }
 
     @PostMapping("/refresh")
     public ApiResponse<AuthResponse> refresh(@RequestBody RefreshTokenRequest request) {
-        try {
-            AuthResponse response = accountService.refreshToken(request);
-            return ApiResponse.success(response);
-        } catch (BusinessException e) {
-            return ApiResponse.error(e.getErrorCode());
-        } catch (Exception e) {
-            return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
-        }
+        AuthResponse response = accountService.refreshToken(request);
+        return ApiResponse.success(response);
     }
 
     @PostMapping("/google-login")
     public ApiResponse<AuthResponse> googleLogin(@RequestBody GoogleLoginRequest request) {
-        try {
-            AuthResponse response = accountService.googleLogin(request);
-            return ApiResponse.success(response);
-        } catch (BusinessException e) {
-            return ApiResponse.error(e.getErrorCode());
-        } catch (Exception e) {
-            return ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR);
-        }
+        AuthResponse response = accountService.googleLogin(request);
+        return ApiResponse.success(response);
     }
 
 }

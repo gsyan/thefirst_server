@@ -27,43 +27,25 @@ public class FleetController {
     // 캐릭터의 모든 함대 목록 조회
     @GetMapping("/list")
     public ResponseEntity<ApiResponse<List<FleetInfoDto>>> getUserFleets(HttpServletRequest request) {
-        try {
-            Long actualCharacterId = getCharacterIdFromToken(request);
-            List<FleetInfoDto> fleets = fleetService.getUserFleets(actualCharacterId);
-            return ResponseEntity.ok(ApiResponse.success(fleets));
-        } catch (BusinessException e) {
-            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
-        } catch (Exception e) {
-            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
-        }
+        Long actualCharacterId = getCharacterIdFromToken(request);
+        List<FleetInfoDto> fleets = fleetService.getUserFleets(actualCharacterId);
+        return ResponseEntity.ok(ApiResponse.success(fleets));
     }
 
     // 특정 함대 상세 조회
     @GetMapping("/{fleetId}")
     public ResponseEntity<ApiResponse<FleetInfoDto>> getFleetDetail(@PathVariable("fleetId") Long fleetId, HttpServletRequest request) {
-        try {
-            Long actualCharacterId = getCharacterIdFromToken(request);
-            FleetInfoDto fleet = fleetService.getFleetDetail(actualCharacterId, fleetId);
-            return ResponseEntity.ok(ApiResponse.success(fleet));
-        } catch (BusinessException e) {
-            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
-        } catch (Exception e) {
-            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
-        }
+        Long actualCharacterId = getCharacterIdFromToken(request);
+        FleetInfoDto fleet = fleetService.getFleetDetail(actualCharacterId, fleetId);
+        return ResponseEntity.ok(ApiResponse.success(fleet));
     }
 
     // 활성 함대 조회
     @GetMapping("/active")
     public ResponseEntity<ApiResponse<FleetInfoDto>> getActiveFleet(HttpServletRequest request) {
-        try {
-            Long actualCharacterId = getCharacterIdFromToken(request);
-            FleetInfoDto fleet = fleetService.getActiveFleet(actualCharacterId);
-            return ResponseEntity.ok(ApiResponse.success(fleet));
-        } catch (BusinessException e) {
-            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
-        } catch (Exception e) {
-            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
-        }
+        Long actualCharacterId = getCharacterIdFromToken(request);
+        FleetInfoDto fleet = fleetService.getActiveFleet(actualCharacterId);
+        return ResponseEntity.ok(ApiResponse.success(fleet));
     }
 
 //    // 새 함대 생성
@@ -71,43 +53,25 @@ public class FleetController {
 //    public ResponseEntity<ApiResponse<FleetInfoDto>> createFleet(
 //            @RequestBody CreateFleetRequest createRequest,
 //            HttpServletRequest request) {
-//        try {
 //            Long actualCharacterId = getCharacterIdFromToken(request);
 //            FleetInfoDto fleet = fleetService.createFleet(actualCharacterId, createRequest.getFleetName(), createRequest.getDescription());
 //            return ResponseEntity.ok(ApiResponse.success(fleet));
-//        } catch (BusinessException e) {
-//            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
-//        } catch (Exception e) {
-//            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
-//        }
 //    }
 
     // 함대 활성화
     @PostMapping("/{fleetId}/activate")
     public ResponseEntity<ApiResponse<Void>> activateFleet(@PathVariable("fleetId") Long fleetId, HttpServletRequest request) {
-        try {
-            Long actualCharacterId = getCharacterIdFromToken(request);
-            fleetService.activateFleet(actualCharacterId, fleetId);
-            return ResponseEntity.ok(ApiResponse.success(null));
-        } catch (BusinessException e) {
-            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
-        } catch (Exception e) {
-            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
-        }
+        Long actualCharacterId = getCharacterIdFromToken(request);
+        fleetService.activateFleet(actualCharacterId, fleetId);
+        return ResponseEntity.ok(ApiResponse.success(null));
     }
 
 //    // 함대 데이터 내보내기 (Export)
 //    @GetMapping("/{fleetId}/export")
 //    public ResponseEntity<ApiResponse<FleetExportResponse>> exportFleet(@PathVariable("fleetId") Long fleetId, HttpServletRequest request) {
-//        try {
 //            Long actualCharacterId = getCharacterIdFromToken(request);
 //            FleetExportResponse exportData = fleetService.exportFleet(actualCharacterId, fleetId);
 //            return ResponseEntity.ok(ApiResponse.success(exportData));
-//        } catch (BusinessException e) {
-//            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
-//        } catch (Exception e) {
-//            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
-//        }
 //    }
 
 //    // 함대 데이터 가져오기 (Import) - 새 함대 생성
@@ -115,43 +79,25 @@ public class FleetController {
 //    public ResponseEntity<ApiResponse<FleetInfoDto>> importFleet(
 //            @RequestBody FleetImportRequest importRequest,
 //            HttpServletRequest request) {
-//        try {
 //            Long actualCharacterId = getCharacterIdFromToken(request);
 //            FleetInfoDto fleet = fleetService.importFleet(actualCharacterId, importRequest);
 //            return ResponseEntity.ok(ApiResponse.success(fleet));
-//        } catch (BusinessException e) {
-//            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
-//        } catch (Exception e) {
-//            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
-//        }
 //    }
 
 //    // 함대 데이터 업데이트 (Import) - 기존 함대 수정
 //    @PutMapping("/{fleetId}/import")
 //    public ResponseEntity<ApiResponse<FleetInfoDto>> updateFleetFromImport(@PathVariable("fleetId") Long fleetId, @RequestBody FleetImportRequest importRequest, HttpServletRequest request) {
-//        try {
 //            Long actualCharacterId = getCharacterIdFromToken(request);
 //            FleetInfoDto fleet = fleetService.updateFleet(actualCharacterId, fleetId, importRequest);
 //            return ResponseEntity.ok(ApiResponse.success(fleet));
-//        } catch (BusinessException e) {
-//            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
-//        } catch (Exception e) {
-//            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
-//        }
 //    }
 
     // 함대 삭제
     @DeleteMapping("/{fleetId}")
     public ResponseEntity<ApiResponse<Void>> deleteFleet( @PathVariable("fleetId") Long fleetId, HttpServletRequest request) {
-        try {
-            Long actualCharacterId = getCharacterIdFromToken(request);
-            fleetService.deleteFleet(actualCharacterId, fleetId);
-            return ResponseEntity.ok(ApiResponse.success(null));
-        } catch (BusinessException e) {
-            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
-        } catch (Exception e) {
-            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
-        }
+        Long actualCharacterId = getCharacterIdFromToken(request);
+        fleetService.deleteFleet(actualCharacterId, fleetId);
+        return ResponseEntity.ok(ApiResponse.success(null));
     }
 
     // 함선 추가
@@ -159,15 +105,9 @@ public class FleetController {
     public ResponseEntity<ApiResponse<AddShipResponse>> addShip(
             @RequestBody AddShipRequest request,
             HttpServletRequest httpRequest) {
-        try {
-            Long actualCharacterId = getCharacterIdFromToken(httpRequest);
-            AddShipResponse response = fleetService.addShip(actualCharacterId, request);
-            return ResponseEntity.ok(ApiResponse.success(response));
-        } catch (BusinessException e) {
-            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
-        } catch (Exception e) {
-            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
-        }
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        AddShipResponse response = fleetService.addShip(actualCharacterId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     // 모듈 업그레이드
@@ -175,15 +115,9 @@ public class FleetController {
     public ResponseEntity<ApiResponse<ModuleUpgradeResponse>> upgradeModule(
             @RequestBody ModuleUpgradeRequest request,
             HttpServletRequest httpRequest) {
-        try {
-            Long actualCharacterId = getCharacterIdFromToken(httpRequest);
-            ModuleUpgradeResponse response = fleetService.upgradeModule(actualCharacterId, request);
-            return ResponseEntity.ok(ApiResponse.success(response));
-        } catch (BusinessException e) {
-            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
-        } catch (Exception e) {
-            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
-        }
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        ModuleUpgradeResponse response = fleetService.upgradeModule(actualCharacterId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     // 모듈 교체
@@ -191,16 +125,9 @@ public class FleetController {
     public ResponseEntity<ApiResponse<ModuleChangeResponse>> changeModule(
             @RequestBody ModuleChangeRequest request,
             HttpServletRequest httpRequest) {
-        try {
-            Long characterId = getCharacterIdFromToken(httpRequest);
-            Long actualCharacterId = characterId & 0x00FFFFFFFFFFFFFFL;
-            ModuleChangeResponse response = fleetService.changeModule(actualCharacterId, request);
-            return ResponseEntity.ok(ApiResponse.success(response));
-        } catch (BusinessException e) {
-            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
-        } catch (Exception e) {
-            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
-        }
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        ModuleChangeResponse response = fleetService.changeModule(actualCharacterId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     // 모듈 해금
@@ -208,16 +135,9 @@ public class FleetController {
     public ResponseEntity<ApiResponse<ModuleUnlockResponse>> unlockModule(
             @RequestBody ModuleUnlockRequest request,
             HttpServletRequest httpRequest) {
-        try {
-            Long characterId = getCharacterIdFromToken(httpRequest);
-            Long actualCharacterId = characterId & 0x00FFFFFFFFFFFFFFL;
-            ModuleUnlockResponse response = fleetService.unlockModule(actualCharacterId, request);
-            return ResponseEntity.ok(ApiResponse.success(response));
-        } catch (BusinessException e) {
-            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
-        } catch (Exception e) {
-            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
-        }
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        ModuleUnlockResponse response = fleetService.unlockModule(actualCharacterId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     // 모듈 개발(연구)
@@ -225,16 +145,9 @@ public class FleetController {
     public ResponseEntity<ApiResponse<ModuleResearchResponse>> researchModule(
             @RequestBody ModuleResearchRequest request,
             HttpServletRequest httpRequest) {
-        try {
-            Long characterId = getCharacterIdFromToken(httpRequest);
-            Long actualCharacterId = characterId & 0x00FFFFFFFFFFFFFFL;
-            ModuleResearchResponse response = fleetService.researchModule(actualCharacterId, request);
-            return ResponseEntity.ok(ApiResponse.success(response));
-        } catch (BusinessException e) {
-            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
-        } catch (Exception e) {
-            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
-        }
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        ModuleResearchResponse response = fleetService.researchModule(actualCharacterId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     // 편대 변경
@@ -242,32 +155,19 @@ public class FleetController {
     public ResponseEntity<ApiResponse<ChangeFormationResponse>> changeFormation(
             @RequestBody ChangeFormationRequest request,
             HttpServletRequest httpRequest) {
-        try {
-            Long actualCharacterId = getCharacterIdFromToken(httpRequest);
-            ChangeFormationResponse response = fleetService.changeFormation(actualCharacterId, request);
-            return ResponseEntity.ok(ApiResponse.success(response));
-        } catch (BusinessException e) {
-            return ResponseEntity.ok(ApiResponse.error(e.getErrorCode()));
-        } catch (Exception e) {
-            return ResponseEntity.ok(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR));
-        }
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        ChangeFormationResponse response = fleetService.changeFormation(actualCharacterId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     // JWT 토큰에서 캐릭터 ID 추출 (비트 마스킹 포함)
     private Long getCharacterIdFromToken(HttpServletRequest request) {
         String token = jwtUtil.getTokenFromRequest(request);
-        if (token == null) {
-            throw new BusinessException(ServerErrorCode.FLEET_CONTROLLER_FAIL_INVALID_TOKEN);
-        }
-
-        if (!jwtUtil.hasCharacterId(token)) {
-            throw new BusinessException(ServerErrorCode.FLEET_CONTROLLER_FAIL_JWT_HAS_CHARACTERID);
-        }
+        if (token == null) throw new BusinessException(ServerErrorCode.FLEET_CONTROLLER_FAIL_INVALID_TOKEN);
+        if (jwtUtil.hasCharacterId(token) == false) throw new BusinessException(ServerErrorCode.FLEET_CONTROLLER_FAIL_JWT_HAS_CHARACTERID);
 
         Long characterId = jwtUtil.getCharacterIdFromToken(token);
-        if (characterId == null) {
-            throw new BusinessException(ServerErrorCode.FLEET_CONTROLLER_FAIL_JWT_GET_CHARACTERID);
-        }
+        if (characterId == null) throw new BusinessException(ServerErrorCode.FLEET_CONTROLLER_FAIL_JWT_GET_CHARACTERID);
 
         // characterId에서 실제 character ID 추출 (하위 56비트)
         return characterId & 0x00FFFFFFFFFFFFFFL;
