@@ -19,5 +19,5 @@ public class AuthResponse {
     private String refreshToken;
     private FleetInfoDto activeFleetInfo;
     private CharacterInfoDto characterInfo;
-    private List<Integer> researchedModuleTypePackeds;
+    private List<List<Integer>> researchedModuleTypes;
 }

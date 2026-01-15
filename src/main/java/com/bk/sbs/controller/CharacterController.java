@@ -73,14 +73,14 @@ public class CharacterController {
         CharacterInfoDto characterInfoDto = characterService.getCharacterInfoDto(actualCharacterId);
 
         // 개발된 모듈 목록 조회
-        var researchedModuleTypePackeds = fleetService.getResearchedModuleTypePackeds(actualCharacterId);
+        var researchedModuleTypes = fleetService.getResearchedModuleTypePackeds(actualCharacterId);
 
         AuthResponse response = AuthResponse.builder()
                 .accessToken(newAccessToken)
                 .refreshToken(newRefreshToken)
                 .activeFleetInfo(activeFleet)
                 .characterInfo(characterInfoDto)
-                .researchedModuleTypePackeds(researchedModuleTypePackeds)
+                .researchedModuleTypes(researchedModuleTypes)
                 .build();
         return ApiResponse.success(response);
     }

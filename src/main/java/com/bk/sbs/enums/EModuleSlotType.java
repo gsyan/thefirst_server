@@ -9,12 +9,9 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 public enum EModuleSlotType {
     All(0),
-    Head(1 << 0),
-    Top(1 << 1),
-    Bottom(1 << 2),
-    Left(1 << 3),
-    Right(1 << 4),
-    Rear(1 << 5);
+    Head(1),
+    Rear(2),
+    Side(3);
 
     private final int value;
 

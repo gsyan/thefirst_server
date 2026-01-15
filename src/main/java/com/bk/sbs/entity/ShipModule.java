@@ -28,10 +28,6 @@ public class ShipModule {
     @Column(nullable = false)
     private EModuleSubType moduleSubType;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private EModuleSlotType moduleSlotType;
-
     @Column(nullable = false)
     private int moduleLevel;
 

@@ -141,9 +141,15 @@ def generate_java_dto(csharp_file_path, output_dir, package_name, class_name):
 
     # import 문 추가
     imports = set()
+    has_list = False
     for field in fields:
         if field['java_type'].startswith('E'):
             imports.add(f"import com.bk.sbs.enums.{field['java_type']};")
+        if field['java_type'].startswith('List<'):
+            has_list = True
+    
+    if has_list:
+        imports.add("import java.util.List;")
 
     imports.add("import com.fasterxml.jackson.annotation.JsonAlias;")
     imports.add("import lombok.Data;")
@@ -208,6 +214,7 @@ def generate_data_table_config_java(csharp_file_path, output_dir, package_name):
     # import 문 추가
     imports = set()
     imports.add("import lombok.Data;")
+    imports.add("import com.fasterxml.jackson.annotation.JsonAlias;")
 
     has_list = False
     for field in fields:
@@ -237,7 +244,8 @@ def generate_data_table_config_java(csharp_file_path, output_dir, package_name):
 
     # 필드 정의 (Dto 접미사 없이)
     for field in fields:
-        java_code += f"    private {field['java_type']} {field['java_name']};\n"
+        java_code += f"    @JsonAlias(\"{field['csharp_name']}\")\n"
+        java_code += f"    private {field['java_type']} {field['java_name']};\n\n"
 
     java_code += "}\n"
 

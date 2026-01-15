@@ -1,5 +1,7 @@
 package com.bk.sbs.dto;
 
+import com.bk.sbs.enums.EModuleSubType;
+import com.bk.sbs.enums.EModuleType;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +17,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class ModuleBodyInfoDto {
-    private Integer moduleTypePacked;
+    private EModuleType moduleType;
+    private EModuleSubType moduleSubType;
     private Integer moduleLevel;
     private Integer bodyIndex;
     private List<ModuleInfoDto> engines;

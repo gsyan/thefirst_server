@@ -1,5 +1,7 @@
 package com.bk.sbs.dto;
 
+import com.bk.sbs.enums.EModuleSubType;
+import com.bk.sbs.enums.EModuleType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,5 +12,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ModuleResearchRequest {
-    private Integer moduleTypePacked;
+    private EModuleType moduleType;
+    private EModuleSubType moduleSubType;
 }

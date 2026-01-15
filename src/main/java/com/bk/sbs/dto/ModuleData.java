@@ -4,11 +4,12 @@ import com.bk.sbs.enums.EModuleSlotType;
 import com.bk.sbs.enums.EModuleSubType;
 import com.bk.sbs.enums.EModuleType;
 import com.fasterxml.jackson.annotation.JsonAlias;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.List;
+
 /**
  * ModuleData
  * Auto-generated from Unity C# ModuleData class

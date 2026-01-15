@@ -1,5 +1,7 @@
 package com.bk.sbs.dto;
 
+import com.bk.sbs.enums.EModuleSubType;
+import com.bk.sbs.enums.EModuleType;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +17,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class ModuleResearchResponse {
-    private Integer moduleTypePacked;
+    private EModuleType moduleType;
+    private EModuleSubType moduleSubType;
     private CostRemainInfoDto costRemainInfo;
-    private List<Integer> researchedModuleTypePacked;
+    private List<List<Integer>> researchedModuleTypes;
 }

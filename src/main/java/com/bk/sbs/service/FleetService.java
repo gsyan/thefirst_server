@@ -85,7 +85,7 @@ public class FleetService {
         return convertToDetailDto(fleet);
     }
     
-    // 기본 함선과 모듈들을 생성하는 메서드
+    // 기본함선, 기본모듈 생성
     private void createDefaultShipsForFleet(Fleet fleet) {
         // 기본 함선 1개 생성
         Ship defaultShip = new Ship();
@@ -107,7 +107,6 @@ public class FleetService {
         bodyModule.setModuleType(EModuleType.Body);
         bodyModule.setModuleSubType(EModuleSubType.Body_Battle);
         //bodyModule.setModuleSubType(EModuleSubType.Body_Aircraft);
-        bodyModule.setModuleSlotType(EModuleSlotType.All);
         bodyModule.setModuleLevel(bodyData.getModuleLevel());
         bodyModule.setBodyIndex(0);
         bodyModule.setSlotIndex(0);
@@ -118,7 +117,6 @@ public class FleetService {
         engineModule.setShip(defaultShip);
         engineModule.setModuleType(EModuleType.Engine);
         engineModule.setModuleSubType(EModuleSubType.Engine_Standard);
-        engineModule.setModuleSlotType(EModuleSlotType.All);
         engineModule.setModuleLevel(engineData.getModuleLevel());
         engineModule.setBodyIndex(0);
         engineModule.setSlotIndex(0);
@@ -130,10 +128,9 @@ public class FleetService {
         weaponModule.setModuleType(EModuleType.Weapon);
         weaponModule.setModuleSubType(EModuleSubType.Weapon_Beam);
         //weaponModule.setModuleSubType(EModuleSubType.Weapon_Missile);
-        weaponModule.setModuleSlotType(EModuleSlotType.All);
         weaponModule.setModuleLevel(weaponData.getModuleLevel());
         weaponModule.setBodyIndex(0);
-        weaponModule.setSlotIndex(3);
+        weaponModule.setSlotIndex(0);
         shipModuleRepository.save(weaponModule);
 
 //        // 4. Hanger 모듈 (type 4)
@@ -141,7 +138,6 @@ public class FleetService {
 //        hangerModule.setShip(defaultShip);
 //        hangerModule.setModuleType(EModuleType.Hanger);
 //        hangerModule.setModuleSubType(EModuleSubType.Hanger_Standard);
-//        hangerModule.setModuleSlotType(EModuleSlotType.All);
 //        hangerModule.setModuleLevel(hangerData.getModuleLevel());
 //        hangerModule.setBodyIndex(0);
 //        hangerModule.setSlotIndex(0);
@@ -395,7 +391,8 @@ public class FleetService {
                 .filter(m -> m.getModuleType() == EModuleType.Body)
                 .map(bodyModule -> {
                     ModuleBodyInfoDto bodyDto = ModuleBodyInfoDto.builder()
-                            .moduleTypePacked(ModuleTypeConverter.pack(bodyModule.getModuleType(), bodyModule.getModuleSubType(), bodyModule.getModuleSlotType()))
+                            .moduleType(bodyModule.getModuleType())
+                            .moduleSubType(bodyModule.getModuleSubType())
                             .moduleLevel(bodyModule.getModuleLevel())
                             .bodyIndex(bodyModule.getBodyIndex())
                             .build();
@@ -405,7 +402,8 @@ public class FleetService {
                             .filter(m -> m.getModuleType() == EModuleType.Engine && m.getBodyIndex() == bodyIndex)
                             .map(engineModule -> {
                                 ModuleInfoDto engineDto = ModuleInfoDto.builder()
-                                        .moduleTypePacked(ModuleTypeConverter.pack(engineModule.getModuleType(), engineModule.getModuleSubType(), engineModule.getModuleSlotType()))
+                                        .moduleType(engineModule.getModuleType())
+                                        .moduleSubType(engineModule.getModuleSubType())
                                         .moduleLevel(engineModule.getModuleLevel())
                                         .bodyIndex(engineModule.getBodyIndex())
                                         .slotIndex(engineModule.getSlotIndex())
@@ -418,7 +416,8 @@ public class FleetService {
                             .filter(m -> m.getModuleType() == EModuleType.Weapon && m.getBodyIndex() == bodyIndex)
                             .map(weaponModule -> {
                                 ModuleInfoDto weaponDto = ModuleInfoDto.builder()
-                                        .moduleTypePacked(ModuleTypeConverter.pack(weaponModule.getModuleType(), weaponModule.getModuleSubType(), weaponModule.getModuleSlotType()))
+                                        .moduleType(weaponModule.getModuleType())
+                                        .moduleSubType(weaponModule.getModuleSubType())
                                         .moduleLevel(weaponModule.getModuleLevel())
                                         .bodyIndex(weaponModule.getBodyIndex())
                                         .slotIndex(weaponModule.getSlotIndex())
@@ -431,7 +430,8 @@ public class FleetService {
                             .filter(m -> m.getModuleType() == EModuleType.Hanger && m.getBodyIndex() == bodyIndex)
                             .map(hangerModule -> {
                                 ModuleInfoDto hangerDto = ModuleInfoDto.builder()
-                                        .moduleTypePacked(ModuleTypeConverter.pack(hangerModule.getModuleType(), hangerModule.getModuleSubType(), hangerModule.getModuleSlotType()))
+                                        .moduleType(hangerModule.getModuleType())
+                                        .moduleSubType(hangerModule.getModuleSubType())
                                         .moduleLevel(hangerModule.getModuleLevel())
                                         .bodyIndex(hangerModule.getBodyIndex())
                                         .slotIndex(hangerModule.getSlotIndex())
@@ -556,7 +556,6 @@ public class FleetService {
         bodyModule.setShip(ship);
         bodyModule.setModuleType(EModuleType.Body);
         bodyModule.setModuleSubType(EModuleSubType.Body_Battle);
-        bodyModule.setModuleSlotType(EModuleSlotType.All);
         bodyModule.setModuleLevel(1);
         bodyModule.setBodyIndex(0);
         bodyModule.setSlotIndex(0);
@@ -570,7 +569,6 @@ public class FleetService {
         weaponModule.setShip(ship);
         weaponModule.setModuleType(EModuleType.Weapon);
         weaponModule.setModuleSubType(EModuleSubType.Weapon_Beam);
-        weaponModule.setModuleSlotType(EModuleSlotType.All);
         weaponModule.setModuleLevel(1);
         weaponModule.setBodyIndex(0);
         weaponModule.setSlotIndex(0);
@@ -584,7 +582,6 @@ public class FleetService {
         engineModule.setShip(ship);
         engineModule.setModuleType(EModuleType.Engine);
         engineModule.setModuleSubType(EModuleSubType.Engine_Standard);
-        engineModule.setModuleSlotType(EModuleSlotType.All);
         engineModule.setModuleLevel(1);
         engineModule.setBodyIndex(0);
         engineModule.setSlotIndex(0);
@@ -604,9 +601,9 @@ public class FleetService {
             throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_FLEET_ACCESS_DENIED);
         }
 
-        EModuleType moduleType = ModuleTypeConverter.getType(request.getModuleTypePacked());
-        EModuleSubType moduleSubType = ModuleTypeConverter.getSubType(request.getModuleTypePacked());
-        //EModuleSlotType moduleSlotType = ModuleTypeConverter.getSlotType(request.getModuleTypePacked());
+        EModuleType moduleType = request.getModuleType();
+        EModuleSubType moduleSubType = request.getModuleSubType();
+
         // 모듈 찾기
         ShipModule module = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndModuleSubTypeAndSlotIndexAndDeletedFalse(
                 request.getShipId(),
@@ -695,7 +692,8 @@ public class FleetService {
         ModuleUpgradeResponse response = ModuleUpgradeResponse.builder()
                 .shipId(request.getShipId())
                 .bodyIndex(request.getBodyIndex())
-                .moduleTypePacked(request.getModuleTypePacked())
+                .moduleType(moduleType)
+                .moduleSubType(moduleSubType)
                 .slotIndex(module.getSlotIndex())
                 .newLevel(module.getModuleLevel())
                 .costRemainInfo(costRemainInfo)
@@ -742,10 +740,8 @@ public class FleetService {
         }
 
         // 요청에서 모듈 타입 정보 추출
-        int moduleTypePacked = request.getModuleTypePacked();
-        EModuleType moduleType = ModuleTypeConverter.getType(moduleTypePacked);
-        EModuleSubType moduleSubType = ModuleTypeConverter.getSubType(moduleTypePacked);
-        EModuleSlotType moduleSlotType = ModuleTypeConverter.getSlotType(moduleTypePacked);
+        EModuleType moduleType = request.getModuleType();
+        EModuleSubType moduleSubType = request.getModuleSubType();
 
         // 현재 슬롯 확인
         Optional<ShipModule> existingModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
@@ -777,9 +773,39 @@ public class FleetService {
         character.setMineral(character.getMineral() - mineralCost);
         characterRepository.save(character);
 
-        // 기본 subType = moduleType * 1000 + 1
+        // 1. 현재 함선의 Body 모듈 찾기
+        ShipModule bodyModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
+                request.getShipId(),
+                request.getBodyIndex(),
+                EModuleType.Body,
+                0 // Body는 항상 slotIndex 0
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.UNLOCK_MODULE_FAIL_BODY_MODULE_NOT_FOUND));
+
+        // 2. Body 모듈의 데이터 가져오기
+        List<ModuleData> bodyModuleDataList = gameDataService.getModulesByType(EModuleType.Body);
+        ModuleData bodyData = bodyModuleDataList.stream()
+                .filter(data -> data.getModuleLevel() == bodyModule.getModuleLevel() &&
+                        data.getModuleSubType() == bodyModule.getModuleSubType())
+                .findFirst()
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.UNLOCK_MODULE_FAIL_BODY_DATA_NOT_FOUND));
+
+        // 3. 요청된 슬롯 인덱스의 유효성 검사 및 슬롯 정보 확인
+        ModuleSlotInfoDto slotInfo = bodyData.getModuleSlots().stream()
+                .filter(s -> s.getModuleType() == moduleType && s.getSlotIndex().equals(request.getSlotIndex()))
+                .findFirst()
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.UNLOCK_MODULE_FAIL_SLOT_INDEX_OUT_OF_BOUNDS));
+
+        // 4. 모듈 타입 검증
+        if (slotInfo.getModuleType() != moduleType) {
+            throw new BusinessException(ServerErrorCode.UNLOCK_MODULE_FAIL_INVALID_MODULE_TYPE);
+        }
+
+        // 기본 subType 결정
         int defaultSubTypeValue = moduleType.getValue() * 1000 + 1;
+        if( slotInfo.getModuleSlotType() == EModuleSlotType.Side)
+            defaultSubTypeValue += 1;
         EModuleSubType finalModuleSubType = EModuleSubType.fromValue(defaultSubTypeValue);
+
 
         // 새로운 모듈 레코드 생성
         ShipModule newModule = new ShipModule();
@@ -788,14 +814,11 @@ public class FleetService {
         newModule.setSlotIndex(request.getSlotIndex());
         newModule.setModuleType(moduleType);
         newModule.setModuleSubType(finalModuleSubType);
-        newModule.setModuleSlotType(moduleSlotType);
         newModule.setModuleLevel(1);
         newModule.setDeleted(false);
         newModule.setCreated(LocalDateTime.now());
         newModule.setModified(LocalDateTime.now());
         shipModuleRepository.save(newModule);
-
-        int finalModuleTypePacked = ModuleTypeConverter.pack(moduleType, finalModuleSubType, moduleSlotType);
 
         // 비용 정보
         CostRemainInfoDto costRemainInfo = new CostRemainInfoDto(
@@ -813,7 +836,8 @@ public class FleetService {
         return new ModuleUnlockResponse(
                 request.getShipId(),
                 request.getBodyIndex(),
-                finalModuleTypePacked,
+                moduleType,
+                moduleSubType,
                 request.getSlotIndex(),
                 costRemainInfo
         );
@@ -830,18 +854,15 @@ public class FleetService {
         }
 
         // 현재 모듈 타입 정보 추출
-        int currentModuleTypePacked = request.getCurrentModuleTypePacked();
-        EModuleType currentModuleType = ModuleTypeConverter.getType(currentModuleTypePacked);
-        EModuleSubType currentModuleSubType = ModuleTypeConverter.getSubType(currentModuleTypePacked);
+        EModuleType currentModuleType = request.getModuleTypeCurrent();
+        EModuleSubType currentModuleSubType = request.getModuleSubTypeCurrent();
 
         // 새 모듈 타입 정보 추출
-        int newModuleTypePacked = request.getNewModuleTypePacked();
-        EModuleType newModuleType = ModuleTypeConverter.getType(newModuleTypePacked);
-        EModuleSubType newModuleSubType = ModuleTypeConverter.getSubType(newModuleTypePacked);
-        EModuleSlotType newModuleSlotType = ModuleTypeConverter.getSlotType(newModuleTypePacked);
+        EModuleType newModuleType = request.getModuleTypeNew();
+        EModuleSubType newModuleSubType = request.getModuleSubTypeNew();
 
         // 1. 같은 모듈인지 확인 (완전히 동일한 모듈로 변경 불가)
-        if (currentModuleTypePacked == newModuleTypePacked) {
+        if (currentModuleType == newModuleType &&  currentModuleSubType == newModuleSubType) {
             throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_SAME_MODULE);
         }
 
@@ -850,12 +871,11 @@ public class FleetService {
             throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_NOT_MATCH_MODULE_TYPE);
         }
 
-        // 3. 새 모듈이 연구되었는지 확인
-        Optional<ModuleResearch> researchCheck = moduleResearchRepository.findByCharacterIdAndModuleTypeAndModuleSubTypeAndModuleSlotType(
+        // 3. 새 모듈이 연구되었는지 확인 (slotType 제외, moduleType + moduleSubType 만으로 체크)
+        Optional<ModuleResearch> researchCheck = moduleResearchRepository.findByCharacterIdAndModuleTypeAndModuleSubType(
                 characterId,
                 newModuleType,
-                newModuleSubType,
-                newModuleSlotType
+                newModuleSubType
         );
 
         if (!researchCheck.isPresent() || !researchCheck.get().isResearched()) {
@@ -891,26 +911,24 @@ public class FleetService {
         return ModuleChangeResponse.builder()
                 .shipId(request.getShipId())
                 .bodyIndex(request.getBodyIndex())
-                .oldModuleTypePacked(currentModuleTypePacked)
-                .newModuleTypePacked(newModuleTypePacked)
+                .moduleTypeCurrent(currentModuleType)
+                .moduleSubTypeCurrent(currentModuleSubType)
+                .moduleTypeNew(newModuleType)
+                .moduleSubTypeNew(newModuleSubType)
                 .slotIndex(request.getSlotIndex())
                 .build();
     }
 
     @Transactional
     public ModuleResearchResponse researchModule(Long characterId, ModuleResearchRequest request) {
-        // 압축된 모듈 타입에서 정보 추출
-        int moduleTypePacked = request.getModuleTypePacked();
-        EModuleType moduleType = ModuleTypeConverter.getType(moduleTypePacked);
-        EModuleSubType moduleSubType = ModuleTypeConverter.getSubType(moduleTypePacked);
-        EModuleSlotType moduleSlotType = ModuleTypeConverter.getSlotType(moduleTypePacked);
+        EModuleType moduleType = request.getModuleType();
+        EModuleSubType moduleSubType = request.getModuleSubType();
 
-        // 이미 개발되었는지 확인
-        Optional<ModuleResearch> existing = moduleResearchRepository.findByCharacterIdAndModuleTypeAndModuleSubTypeAndModuleSlotType(
+        // 이미 개발되었는지 확인 (moduleType + moduleSubType만으로 체크)
+        Optional<ModuleResearch> existing = moduleResearchRepository.findByCharacterIdAndModuleTypeAndModuleSubType(
                 characterId,
                 moduleType,
-                moduleSubType,
-                moduleSlotType
+                moduleSubType
         );
 
         if (existing.isPresent() && existing.get().isResearched()) {
@@ -961,19 +979,14 @@ public class FleetService {
             moduleResearch.setCharacterId(characterId);
             moduleResearch.setModuleType(moduleType);
             moduleResearch.setModuleSubType(moduleSubType);
-            moduleResearch.setModuleSlotType(moduleSlotType);
             moduleResearch.setResearched(true);
         }
         moduleResearchRepository.save(moduleResearch);
 
         // 개발된 모든 모듈 목록 조회
         List<ModuleResearch> researchedList = moduleResearchRepository.findByCharacterIdAndResearchedTrue(characterId);
-        List<Integer> researchedModuleTypePackeds = researchedList.stream()
-                .map(r -> ModuleTypeConverter.pack(
-                        r.getModuleType(),
-                        r.getModuleSubType(),
-                        r.getModuleSlotType()
-                ))
+        List<List<Integer>> researchedModuleTypes = researchedList.stream()
+                .map(r -> List.of(r.getModuleType().ordinal(), r.getModuleSubType().ordinal()))
                 .collect(Collectors.toList());
 
         // 비용 정보
@@ -990,22 +1003,19 @@ public class FleetService {
 
         // 응답 생성
         return new ModuleResearchResponse(
-                moduleTypePacked,
+                moduleType,
+                moduleSubType,
                 costRemainInfo,
-                researchedModuleTypePackeds
+                researchedModuleTypes
         );
     }
 
     
     //캐릭터가 개발한 모든 모듈 목록 조회
-    public List<Integer> getResearchedModuleTypePackeds(Long characterId) {
+    public List<List<Integer>> getResearchedModuleTypePackeds(Long characterId) {
         List<ModuleResearch> researchedList = moduleResearchRepository.findByCharacterIdAndResearchedTrue(characterId);
         return researchedList.stream()
-                .map(r -> ModuleTypeConverter.pack(
-                        r.getModuleType(),
-                        r.getModuleSubType(),
-                        r.getModuleSlotType()
-                ))
+                .map(r -> List.of(r.getModuleType().ordinal(), r.getModuleSubType().ordinal()))
                 .collect(Collectors.toList());
     }
 }

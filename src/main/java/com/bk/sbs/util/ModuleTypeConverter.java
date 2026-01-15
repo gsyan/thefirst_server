@@ -35,7 +35,7 @@ public class ModuleTypeConverter {
     }
 
     /**
-     * 슬롯 타입 호환성 체크 (비트 AND 연산)
+     * 슬롯 타입 호환성 체크
      * @param moduleSlotType 모듈의 슬롯 타입
      * @param slotType 실제 슬롯의 타입
      * @return 부착 가능 여부
@@ -46,7 +46,13 @@ public class ModuleTypeConverter {
             return true;
         }
 
-        // 비트 AND 연산으로 호환성 체크
-        return (moduleSlotType.getValue() & slotType.getValue()) != 0;
+        // Side는 Head, Rear 제외한 모든 슬롯 허용
+        if (moduleSlotType == EModuleSlotType.Side || slotType == EModuleSlotType.Side) {
+            EModuleSlotType other = (moduleSlotType == EModuleSlotType.Side) ? slotType : moduleSlotType;
+            return other != EModuleSlotType.Head && other != EModuleSlotType.Rear;
+        }
+
+        // 정확히 일치해야 부착 가능
+        return moduleSlotType == slotType;
     }
 }

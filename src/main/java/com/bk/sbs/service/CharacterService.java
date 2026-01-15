@@ -68,49 +68,59 @@ public class CharacterService {
                 .build();
     }
 
-    /**
-     * 캐릭터 생성 시 기본 모듈을 개발된 상태로 설정
-     * - Body: Battle (All)
-     * - Weapon: Beam (All)
-     * - Engine: Standard (All)
-     * - Hanger: 제외
-     */
+    // 기본연구 세팅
     private void initializeDefaultModules(Long characterId) {
         LocalDateTime now = LocalDateTime.now();
 
-        // Body - Battle (SlotType.All)
-        ModuleResearch bodyModule = new ModuleResearch();
-        bodyModule.setCharacterId(characterId);
-        bodyModule.setModuleType(EModuleType.Body);
-        bodyModule.setModuleSubType(EModuleSubType.Body_Battle);
-        bodyModule.setModuleSlotType(EModuleSlotType.All);
-        bodyModule.setResearched(true);
-        bodyModule.setCreated(now);
-        bodyModule.setModified(now);
-        moduleResearchRepository.save(bodyModule);
+        // Body - Battle
+        ModuleResearch researchBody = new ModuleResearch();
+        researchBody.setCharacterId(characterId);
+        researchBody.setModuleType(EModuleType.Body);
+        researchBody.setModuleSubType(EModuleSubType.Body_Battle);
+        researchBody.setResearched(true);
+        researchBody.setCreated(now);
+        researchBody.setModified(now);
+        moduleResearchRepository.save(researchBody);
 
-        // Engine - Standard (SlotType.All)
-        ModuleResearch engineModule = new ModuleResearch();
-        engineModule.setCharacterId(characterId);
-        engineModule.setModuleType(EModuleType.Engine);
-        engineModule.setModuleSubType(EModuleSubType.Engine_Standard);
-        engineModule.setModuleSlotType(EModuleSlotType.All);
-        engineModule.setResearched(true);
-        engineModule.setCreated(now);
-        engineModule.setModified(now);
-        moduleResearchRepository.save(engineModule);
+        // Engine - Standard
+        ModuleResearch researchEngine = new ModuleResearch();
+        researchEngine.setCharacterId(characterId);
+        researchEngine.setModuleType(EModuleType.Engine);
+        researchEngine.setModuleSubType(EModuleSubType.Engine_Standard);
+        researchEngine.setResearched(true);
+        researchEngine.setCreated(now);
+        researchEngine.setModified(now);
+        moduleResearchRepository.save(researchEngine);
 
-        // Weapon - Beam (SlotType.All)
-        ModuleResearch weaponModule = new ModuleResearch();
-        weaponModule.setCharacterId(characterId);
-        weaponModule.setModuleType(EModuleType.Weapon);
-        weaponModule.setModuleSubType(EModuleSubType.Weapon_Beam);
-        weaponModule.setModuleSlotType(EModuleSlotType.All);
-        weaponModule.setResearched(true);
-        weaponModule.setCreated(now);
-        weaponModule.setModified(now);
-        moduleResearchRepository.save(weaponModule);
+        // Weapon - Beam
+        ModuleResearch researchWeapon = new ModuleResearch();
+        researchWeapon.setCharacterId(characterId);
+        researchWeapon.setModuleType(EModuleType.Weapon);
+        researchWeapon.setModuleSubType(EModuleSubType.Weapon_Beam);
+        researchWeapon.setResearched(true);
+        researchWeapon.setCreated(now);
+        researchWeapon.setModified(now);
+        moduleResearchRepository.save(researchWeapon);
 
+        // Weapon - Missile
+        ModuleResearch researchMissile = new ModuleResearch();
+        researchMissile.setCharacterId(characterId);
+        researchMissile.setModuleType(EModuleType.Weapon);
+        researchMissile.setModuleSubType(EModuleSubType.Weapon_Missile);
+        researchMissile.setResearched(true);
+        researchMissile.setCreated(now);
+        researchMissile.setModified(now);
+        moduleResearchRepository.save(researchMissile);
+
+        // Hanger - Standard
+        ModuleResearch researchHanger = new ModuleResearch();
+        researchHanger.setCharacterId(characterId);
+        researchHanger.setModuleType(EModuleType.Hanger);
+        researchHanger.setModuleSubType(EModuleSubType.Hanger_Standard);
+        researchHanger.setResearched(true);
+        researchHanger.setCreated(now);
+        researchHanger.setModified(now);
+        moduleResearchRepository.save(researchHanger);
 
     }
 

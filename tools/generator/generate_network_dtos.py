@@ -42,6 +42,12 @@ def map_csharp_type_to_java(csharp_type):
     if csharp_type.endswith('?'):
         csharp_type = csharp_type[:-1]
 
+    # 이중 배열 타입 처리 (int[][] -> List<List<Integer>>)
+    if csharp_type.endswith('[][]'):
+        element_type = csharp_type[:-4]
+        java_element_type = map_csharp_type_to_java(element_type)
+        return f'List<List<{java_element_type}>>'
+
     # 배열 타입 처리 (ShipInfo[] -> List<ShipInfo>)
     if csharp_type.endswith('[]'):
         element_type = csharp_type[:-2]
@@ -121,8 +127,8 @@ def extract_fields(class_body):
         if '=>' in stripped or '{' in stripped or '}' in stripped:
             continue
 
-        # public 필드 추출 (타입 필드명;) - nullable 타입(?) 지원, @params 같은 특수 케이스 지원
-        field_pattern = r'public\s+(\w+(?:\[\])?\??)\s+(@?\w+);'
+        # public 필드 추출 (타입 필드명;) - nullable 타입(?) 지원, 이중배열 지원, @params 같은 특수 케이스 지원
+        field_pattern = r'public\s+(\w+(?:\[\]){0,2}\??)\s+(@?\w+);'
         field_match = re.match(field_pattern, stripped)
 
         if field_match:
