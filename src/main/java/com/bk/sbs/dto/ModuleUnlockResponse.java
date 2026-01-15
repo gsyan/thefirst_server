@@ -14,6 +14,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class ModuleUnlockResponse {
-    private ShipInfoDto updatedShipInfo;
+    private Long shipId;
+    private Integer bodyIndex;
+    private Integer moduleTypePacked;
+    private Integer slotIndex;
     private CostRemainInfoDto costRemainInfo;
 }

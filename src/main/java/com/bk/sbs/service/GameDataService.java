@@ -1,7 +1,7 @@
 package com.bk.sbs.service;
 
-import com.bk.sbs.config.GameSettings;
-import com.bk.sbs.config.ModuleDataTable;
+import com.bk.sbs.config.DataTableConfig;
+import com.bk.sbs.config.DataTableModule;
 import com.bk.sbs.dto.CostStructDto;
 import com.bk.sbs.dto.ModuleData;
 import com.bk.sbs.dto.ModuleResearchData;
@@ -21,8 +21,8 @@ import java.util.List;
 @Service
 @Slf4j
 public class GameDataService {
-    private GameSettings gameSettings;
-    private ModuleDataTable moduleDataTable = new ModuleDataTable();
+    private DataTableConfig dataTableConfig;
+    private DataTableModule dataTableModule = new DataTableModule();
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -33,7 +33,7 @@ public class GameDataService {
             ClassPathResource gameConfigResource = new ClassPathResource("data/DataTableConfig.json");
             if (gameConfigResource.exists()) {
                 String json = new String(gameConfigResource.getInputStream().readAllBytes());
-                gameSettings = objectMapper.readValue(json, GameSettings.class);
+                dataTableConfig = objectMapper.readValue(json, DataTableConfig.class);
                 log.info("GameConfig.json loaded successfully from resources/data/");
             } else {
                 log.warn("No game config files found in resources/data/, using empty data");
@@ -42,7 +42,7 @@ public class GameDataService {
             ClassPathResource dataTableResource = new ClassPathResource("data/DataTableModule.json");
             if (dataTableResource.exists()) {
                 String json = new String(dataTableResource.getInputStream().readAllBytes());
-                moduleDataTable = objectMapper.readValue(json, ModuleDataTable.class);
+                dataTableModule = objectMapper.readValue(json, DataTableModule.class);
                 log.info("DataTableModule.json loaded successfully from resources/data/ (fallback mode)");
             } else {
                 log.warn("No game data files found in resources/data/, using empty data");
@@ -58,7 +58,7 @@ public class GameDataService {
                         researchDataListNode,
                         objectMapper.getTypeFactory().constructCollectionType(List.class, ModuleResearchData.class)
                     );
-                    moduleDataTable.setResearchDataList(researchDataList);
+                    dataTableModule.setResearchDataList(researchDataList);
                     log.info("DataTableModuleResearch.json loaded successfully from resources/data/ and merged into ModuleDataTable");
                 }
             } else {
@@ -69,35 +69,33 @@ public class GameDataService {
 
         } catch (Exception e) {
             log.error("Failed to load game data: " + e.getMessage(), e);
-            loadDefaultGameSettings();
+            loadDefaultDataTableConfig();
         }
     }
 
-    public void loadGameData(ModuleDataTable dataTable) {
+    public void loadGameData(DataTableModule dataTable) {
         if (dataTable == null) {
             throw new BusinessException(ServerErrorCode.INVALID_DATA_TABLE);
         }
 
-        this.moduleDataTable = dataTable;
+        this.dataTableModule = dataTable;
     }
 
 
-    private void loadDefaultGameSettings() {
-        this.gameSettings = new GameSettings();
+    private void loadDefaultDataTableConfig() {
+        this.dataTableConfig = new DataTableConfig();
         // Default values are already set in GameSettings constructor
         log.info("Using default game settings");
     }
 
-    public GameSettings getGameSettings() {
-        return gameSettings != null ? gameSettings : new GameSettings();
-    }
+    public DataTableConfig getDataTableConfig() { return dataTableConfig != null ? dataTableConfig : new DataTableConfig(); }
 
     public int getMaxShipsPerFleet() {
-        return getGameSettings().getMaxShipsPerFleet();
+        return getDataTableConfig().getMaxShipsPerFleet();
     }
 
     public CostStructDto getShipAddCost(int currentShipCount) {
-        List<CostStructDto> costs = getGameSettings().getAddShipCosts();
+        List<CostStructDto> costs = getDataTableConfig().getAddShipCosts();
         if (costs == null || costs.isEmpty()) {
             return new CostStructDto(0, 0L, 0L, 0L, 0L);
         }
@@ -113,10 +111,10 @@ public class GameDataService {
 
     public List<ModuleData> getModulesByType(EModuleType moduleType) {
         return switch (moduleType) {
-            case Body -> moduleDataTable.getBodyModules();
-            case Weapon -> moduleDataTable.getWeaponModules();
-            case Engine -> moduleDataTable.getEngineModules();
-            case Hanger -> moduleDataTable.getHangerModules();
+            case Body -> dataTableModule.getBodyModules();
+            case Weapon -> dataTableModule.getWeaponModules();
+            case Engine -> dataTableModule.getEngineModules();
+            case Hanger -> dataTableModule.getHangerModules();
             default -> throw new BusinessException(ServerErrorCode.UNKNOWN_ERROR);
         };
     }
@@ -127,9 +125,9 @@ public class GameDataService {
     }
 
     public CostStructDto getModuleResearchCost(EModuleSubType moduleSubType) {
-        if (moduleDataTable == null) {
+        if (dataTableModule == null) {
             return new CostStructDto(0, 0L, 0L, 0L, 0L);
         }
-        return moduleDataTable.getResearchCost(moduleSubType);
+        return dataTableModule.getResearchCost(moduleSubType);
     }
 }

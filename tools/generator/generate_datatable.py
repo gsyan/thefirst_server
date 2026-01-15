@@ -25,7 +25,7 @@ def open_file_location(file_path):
         print(f"Failed to open file location: {e}")
         print(f"File location: {os.path.abspath(file_path)}")
 
-def map_csharp_type_to_java(csharp_type):
+def map_csharp_type_to_java(csharp_type, add_dto_suffix=True):
     """C# 타입을 Java 타입으로 매핑"""
     type_mapping = {
         'int': 'Integer',
@@ -38,6 +38,12 @@ def map_csharp_type_to_java(csharp_type):
         'byte': 'Byte',
     }
 
+    # 배열 타입 처리 (예: CostStruct[] -> List<CostStructDto>)
+    if csharp_type.endswith('[]'):
+        element_type = csharp_type[:-2]
+        java_element_type = map_csharp_type_to_java(element_type, add_dto_suffix)
+        return f"List<{java_element_type}>"
+
     # enum 타입 (E로 시작하는 타입)은 그대로 유지
     if csharp_type.startswith('E'):
         return csharp_type
@@ -47,7 +53,7 @@ def map_csharp_type_to_java(csharp_type):
 
     # 커스텀 타입 (DTO 클래스)에는 Dto 접미사 추가
     # 기본 타입(Integer, String 등)이 아닌 경우
-    if mapped_type == csharp_type and csharp_type not in type_mapping:
+    if add_dto_suffix and mapped_type == csharp_type and csharp_type not in type_mapping:
         # Request/Response는 Dto 불필요
         if csharp_type.endswith('Request') or csharp_type.endswith('Response'):
             return csharp_type
@@ -93,8 +99,9 @@ def extract_class_fields(csharp_content, class_name):
         if stripped.startswith('//'):
             continue
 
-        # public 필드 찾기
-        field_pattern = r'public\s+(\w+)\s+(m_\w+)\s*=?\s*[^;]*;'
+        # public 필드 찾기 (배열 타입 포함: CostStruct[] 등)
+        # = 있는 경우와 ; 로 바로 끝나는 경우 모두 처리
+        field_pattern = r'public\s+(\w+(?:\[\])?)\s+(m_\w+)\s*[=;]'
         field_match = re.match(field_pattern, stripped)
 
         if field_match:
@@ -182,6 +189,76 @@ def generate_java_dto(csharp_file_path, output_dir, package_name, class_name):
 
     return output_file_path
 
+def generate_data_table_config_java(csharp_file_path, output_dir, package_name):
+    """DataTableConfig.java 생성 (config 패키지용, Dto 접미사 없음)"""
+    # C# 파일 읽기
+    with open(csharp_file_path, 'r', encoding='utf-8') as file:
+        content = file.read()
+
+    # 필드 추출 (C# GameSettings 클래스에서)
+    fields = extract_class_fields(content, "GameSettings")
+
+    if not fields:
+        print("No fields found in GameSettings class")
+        return None
+
+    # Java 코드 생성
+    java_code = f"package {package_name};\n\n"
+
+    # import 문 추가
+    imports = set()
+    imports.add("import lombok.Data;")
+
+    has_list = False
+    for field in fields:
+        if field['java_type'].startswith('List<'):
+            has_list = True
+        if field['java_type'].startswith('E'):
+            imports.add(f"import com.bk.sbs.enums.{field['java_type']};")
+        # List 내부의 Dto 타입 import
+        if 'Dto' in field['java_type']:
+            dto_type = re.search(r'(\w+Dto)', field['java_type'])
+            if dto_type:
+                imports.add(f"import com.bk.sbs.dto.{dto_type.group(1)};")
+
+    if has_list:
+        imports.add("import java.util.List;")
+
+    for imp in sorted(imports):
+        java_code += f"{imp}\n"
+
+    java_code += "\n"
+    java_code += "/**\n"
+    java_code += " * DataTableConfig\n"
+    java_code += " * Auto-generated from Unity C# DataTableConfig class\n"
+    java_code += " */\n"
+    java_code += "@Data\n"
+    java_code += "public class DataTableConfig {\n"
+
+    # 필드 정의 (Dto 접미사 없이)
+    for field in fields:
+        java_code += f"    private {field['java_type']} {field['java_name']};\n"
+
+    java_code += "}\n"
+
+    # 출력 파일 경로
+    output_file_path = os.path.join(output_dir, "DataTableConfig.java")
+
+    # 출력 디렉토리 생성
+    os.makedirs(output_dir, exist_ok=True)
+
+    # Java 파일 쓰기
+    with open(output_file_path, 'w', encoding='utf-8') as file:
+        file.write(java_code)
+
+    print(f"DataTableConfig.java generated: {output_file_path}")
+    print(f"  - Fields: {len(fields)}")
+    for field in fields:
+        print(f"    - {field['java_type']} {field['java_name']}")
+
+    return output_file_path
+
+
 if __name__ == "__main__":
     output_dir = r"../../src/main/java/com/bk/sbs/dto"
     package_name = "com.bk.sbs.dto"
@@ -216,6 +293,20 @@ if __name__ == "__main__":
 
         if output_file:
             output_files.append(output_file)
+
+    # DataTableConfig 생성 (config 패키지)
+    print(f"\n{'='*60}")
+    print("Generating DataTableConfig.java")
+    print(f"{'='*60}")
+
+    data_table_config_file = generate_data_table_config_java(
+        r"../../../thefirst_client_unity/Assets/Scripts/System/Data/DataTableConfig.cs",
+        r"../../src/main/java/com/bk/sbs/config",
+        "com.bk.sbs.config"
+    )
+
+    if data_table_config_file:
+        output_files.append(data_table_config_file)
 
     # 생성된 파일들의 폴더 열기
     if output_files:

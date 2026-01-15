@@ -1,8 +1,8 @@
 {
-  "version": "0.0.1",
-  "maxLives": 3,
-  "maxShipsPerFleet": 8,
-  "addShipCosts": [
+  "m_version": "0.0.1",
+  "m_maxLives": 3,
+  "m_maxShipsPerFleet": 8,
+  "m_addShipCosts": [
     {
       "techLevel": 0,
       "mineral": 0,
@@ -81,13 +81,8 @@
       "mineralDark": 0
     }
   ],
-  "moduleUnlockPrice": 1000,
-  "enemyFleetSpawnInterval": 5.0,
-  "explorationInterval": 15.0,
-  "enemySpawnRate": 2.0,
-  "linearFormationSpacing": 3.0,
-  "gridFormationSpacing": 5.0,
-  "circleFormationSpacing": 8.0,
-  "diamondFormationSpacing": 6.0,
-  "wedgeFormationSpacing": 3.0
+  "m_moduleUnlockPrice": 1000,
+  "m_enemyFleetSpawnInterval": 5.0,
+  "m_explorationInterval": 15.0,
+  "m_enemySpawnRate": 2.0
 }

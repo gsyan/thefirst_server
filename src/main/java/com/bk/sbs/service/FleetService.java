@@ -1,5 +1,6 @@
 package com.bk.sbs.service;
 
+import com.bk.sbs.config.DataTableModule;
 import com.bk.sbs.dto.*;
 import com.bk.sbs.entity.*;
 import com.bk.sbs.enums.*;
@@ -132,7 +133,7 @@ public class FleetService {
         weaponModule.setModuleSlotType(EModuleSlotType.All);
         weaponModule.setModuleLevel(weaponData.getModuleLevel());
         weaponModule.setBodyIndex(0);
-        weaponModule.setSlotIndex(0);
+        weaponModule.setSlotIndex(3);
         shipModuleRepository.save(weaponModule);
 
 //        // 4. Hanger 모듈 (type 4)
@@ -478,7 +479,6 @@ public class FleetService {
                     .orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_SHIP_FAIL_ACTIVE_FLEET_NOT_FOUND));
         }
 
-        // 함선 추가 제한 검사 (GameSettings에서 가져오기)
         int maxShipsPerFleet = gameDataService.getMaxShipsPerFleet();
 
         List<Ship> currentShips = shipRepository.findByFleetIdAndDeletedFalseOrderByPositionIndex(targetFleet.getId());
@@ -742,28 +742,18 @@ public class FleetService {
         }
 
         // 요청에서 모듈 타입 정보 추출
-        EModuleType moduleType = request.getModuleType();
-        EModuleSubType moduleSubType = request.getModuleSubType();
+        int moduleTypePacked = request.getModuleTypePacked();
+        EModuleType moduleType = ModuleTypeConverter.getType(moduleTypePacked);
+        EModuleSubType moduleSubType = ModuleTypeConverter.getSubType(moduleTypePacked);
+        EModuleSlotType moduleSlotType = ModuleTypeConverter.getSlotType(moduleTypePacked);
 
         // 현재 슬롯 확인
-        // Weapon은 moduleSubType까지 조회, 그 외는 moduleType까지만 조회
-        Optional<ShipModule> existingModule;
-        if (moduleType == EModuleType.Weapon) {
-            existingModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndModuleSubTypeAndSlotIndexAndDeletedFalse(
-                    request.getShipId(),
-                    request.getBodyIndex(),
-                    moduleType,
-                    moduleSubType,
-                    request.getSlotIndex()
-            );
-        } else {
-            existingModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
-                    request.getShipId(),
-                    request.getBodyIndex(),
-                    moduleType,
-                    request.getSlotIndex()
-            );
-        }
+        Optional<ShipModule> existingModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
+                request.getShipId(),
+                request.getBodyIndex(),
+                moduleType,
+                request.getSlotIndex()
+        );
 
         // 이미 모듈이 존재하면 Placeholder가 아님
         if (existingModule.isPresent()) {
@@ -774,8 +764,9 @@ public class FleetService {
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.UNLOCK_MODULE_FAIL_CHARACTER_NOT_FOUND));
 
-        // 모듈 해금 비용 (설정에서 가져오기 - 여기서는 하드코딩)
-        long mineralCost = 1000L; // DataTableConfig.gameSettings.moduleReleasePrice 값과 동일하게
+        // 모듈 해금 비용
+        long mineralCost = gameDataService.getDataTableConfig().getModuleUnlockPrice();
+
 
         // 자원 부족 검사
         if (character.getMineral() < mineralCost) {
@@ -786,13 +777,9 @@ public class FleetService {
         character.setMineral(character.getMineral() - mineralCost);
         characterRepository.save(character);
 
-        // Weapon이 아닌 경우, moduleSubType이 None이면 기본값 설정
         // 기본 subType = moduleType * 1000 + 1
-        EModuleSubType finalModuleSubType = moduleSubType;
-        if (moduleType != EModuleType.Weapon && moduleSubType == EModuleSubType.None) {
-            int defaultSubTypeValue = moduleType.getValue() * 1000 + 1;
-            finalModuleSubType = EModuleSubType.fromValue(defaultSubTypeValue);
-        }
+        int defaultSubTypeValue = moduleType.getValue() * 1000 + 1;
+        EModuleSubType finalModuleSubType = EModuleSubType.fromValue(defaultSubTypeValue);
 
         // 새로운 모듈 레코드 생성
         ShipModule newModule = new ShipModule();
@@ -801,15 +788,14 @@ public class FleetService {
         newModule.setSlotIndex(request.getSlotIndex());
         newModule.setModuleType(moduleType);
         newModule.setModuleSubType(finalModuleSubType);
-        newModule.setModuleSlotType(EModuleSlotType.All);
+        newModule.setModuleSlotType(moduleSlotType);
         newModule.setModuleLevel(1);
         newModule.setDeleted(false);
         newModule.setCreated(LocalDateTime.now());
         newModule.setModified(LocalDateTime.now());
         shipModuleRepository.save(newModule);
 
-        // 업데이트된 함선 정보 조회
-        ShipInfoDto updatedShipDto = convertShipToShipInfoDto(ship);
+        int finalModuleTypePacked = ModuleTypeConverter.pack(moduleType, finalModuleSubType, moduleSlotType);
 
         // 비용 정보
         CostRemainInfoDto costRemainInfo = new CostRemainInfoDto(
@@ -825,7 +811,10 @@ public class FleetService {
 
         // 응답 생성
         return new ModuleUnlockResponse(
-                updatedShipDto,
+                request.getShipId(),
+                request.getBodyIndex(),
+                finalModuleTypePacked,
+                request.getSlotIndex(),
                 costRemainInfo
         );
     }

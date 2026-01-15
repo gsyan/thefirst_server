@@ -1,1 +1,0 @@
-python generate_module_dto.py

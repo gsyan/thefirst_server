@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class ModuleDataTable {
+public class DataTableModule {
     private volatile List<ModuleData> bodyModules = new ArrayList<>();
     private volatile List<ModuleData> engineModules = new ArrayList<>();
     private volatile List<ModuleData> weaponModules = new ArrayList<>();

@@ -1,6 +1,6 @@
 package com.bk.sbs.controller;
 
-import com.bk.sbs.config.ModuleDataTable;
+import com.bk.sbs.config.DataTableModule;
 import com.bk.sbs.dto.nogenerated.ApiResponse;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
@@ -19,7 +19,7 @@ public class GameDataController {
     private GameDataService gameDataService;
 
     @PostMapping("/upload-data")
-    public ApiResponse<String> uploadData(@RequestBody ModuleDataTable dataTable) {
+    public ApiResponse<String> uploadData(@RequestBody DataTableModule dataTable) {
         try {
             gameDataService.loadGameData(dataTable);
             return ApiResponse.success("Game data loaded successfully");

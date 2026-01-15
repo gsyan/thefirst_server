@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import java.util.List;
 /**
  * ModuleData
  * Auto-generated from Unity C# ModuleData class
@@ -35,6 +35,9 @@ public class ModuleData {
 
     @JsonAlias("m_moduleLevel")
     private Integer moduleLevel;
+
+    @JsonAlias("m_moduleSlots")
+    private List<ModuleSlotInfoDto> moduleSlots;
 
     @JsonAlias("m_health")
     private Float health;
