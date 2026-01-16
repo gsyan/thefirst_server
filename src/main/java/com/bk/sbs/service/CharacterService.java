@@ -51,6 +51,7 @@ public class CharacterService {
         Character character = new Character();
         character.setAccountId(account.getId());
         character.setCharacterName(request.getCharacterName());
+        character.setMineral(5000L);  // 기본미네랄 5000 지급, 개발중 설정
         Character savedCharacter = characterRepository.save(character);
 
         // 캐릭터 생성과 동시에 기본 함대 생성 및 활성화
@@ -92,21 +93,21 @@ public class CharacterService {
         researchEngine.setModified(now);
         moduleResearchRepository.save(researchEngine);
 
-        // Weapon - Beam
+        // Beam
         ModuleResearch researchWeapon = new ModuleResearch();
         researchWeapon.setCharacterId(characterId);
-        researchWeapon.setModuleType(EModuleType.Weapon);
-        researchWeapon.setModuleSubType(EModuleSubType.Weapon_Beam);
+        researchWeapon.setModuleType(EModuleType.Beam);
+        researchWeapon.setModuleSubType(EModuleSubType.Beam_Standard);
         researchWeapon.setResearched(true);
         researchWeapon.setCreated(now);
         researchWeapon.setModified(now);
         moduleResearchRepository.save(researchWeapon);
 
-        // Weapon - Missile
+        // Missile
         ModuleResearch researchMissile = new ModuleResearch();
         researchMissile.setCharacterId(characterId);
-        researchMissile.setModuleType(EModuleType.Weapon);
-        researchMissile.setModuleSubType(EModuleSubType.Weapon_Missile);
+        researchMissile.setModuleType(EModuleType.Missile);
+        researchMissile.setModuleSubType(EModuleSubType.Missile_Standard);
         researchMissile.setResearched(true);
         researchMissile.setCreated(now);
         researchMissile.setModified(now);

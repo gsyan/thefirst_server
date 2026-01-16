@@ -1,6 +1,5 @@
 package com.bk.sbs.dto;
 
-import com.bk.sbs.enums.EModuleSlotType;
 import com.bk.sbs.enums.EModuleSubType;
 import com.bk.sbs.enums.EModuleType;
 import com.fasterxml.jackson.annotation.JsonAlias;
@@ -19,9 +18,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class ModuleData {
-    @JsonAlias("m_moduleTypePacked")
-    private Integer moduleTypePacked;
-
     @JsonAlias("m_moduleName")
     private String moduleName;
 
@@ -30,9 +26,6 @@ public class ModuleData {
 
     @JsonAlias("m_moduleSubType")
     private EModuleSubType moduleSubType;
-
-    @JsonAlias("m_moduleSlotType")
-    private EModuleSlotType moduleSlotType;
 
     @JsonAlias("m_moduleLevel")
     private Integer moduleLevel;

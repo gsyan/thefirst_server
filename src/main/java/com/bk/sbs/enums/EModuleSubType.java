@@ -15,10 +15,12 @@ public enum EModuleSubType {
     Engine_Standard(2001),
     Engine_Booster(2002),
     Engine_Warp(2003),
-    Weapon_Beam(3001),
-    Weapon_Missile(3002),
-    Hanger_Standard(4001),
-    Hanger_Advanced(4002);
+    Beam_Standard(3001),
+    Beam_Advanced(3002),
+    Missile_Standard(4001),
+    Missile_Advanced(4002),
+    Hanger_Standard(5001),
+    Hanger_Advanced(5002);
 
     private final int value;
 

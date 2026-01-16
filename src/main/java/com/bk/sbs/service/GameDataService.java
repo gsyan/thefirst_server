@@ -112,7 +112,8 @@ public class GameDataService {
     public List<ModuleData> getModulesByType(EModuleType moduleType) {
         return switch (moduleType) {
             case Body -> dataTableModule.getBodyModules();
-            case Weapon -> dataTableModule.getWeaponModules();
+            case Beam -> dataTableModule.getBeamModules();
+            case Missile -> dataTableModule.getMissileModules();
             case Engine -> dataTableModule.getEngineModules();
             case Hanger -> dataTableModule.getHangerModules();
             default -> throw new BusinessException(ServerErrorCode.UNKNOWN_ERROR);
