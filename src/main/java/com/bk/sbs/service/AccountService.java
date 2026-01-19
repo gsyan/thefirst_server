@@ -104,29 +104,38 @@ public class AccountService {
             throw new BusinessException(ServerErrorCode.ACCOUNT_REGISTER_FAIL_ALREADY_EXIST_EMAIL);
         }
 
-        // 7. 계정 생성
+        // 7. 계정 생성 + 기본 캐릭터 자동 생성
+        createAccountWithDefaultCharacter(email, password);
+
+        return "Account created successfully";
+    }
+
+    // 계정 생성 + 기본 캐릭터 생성 (공통 로직)
+    private Account createAccountWithDefaultCharacter(String email, String password) {
+        // 1. 계정 생성
         Account account = new Account();
-        account.setEmail(email.toLowerCase()); // 소문자 변환
+        account.setEmail(email.toLowerCase());
         account.setPassword(passwordEncoder.encode(password));
         Account savedAccount = accountRepository.save(account);
 
-        // 8. 기본 캐릭터 자동 생성(원래는 로그인 후 인증 정보가 있어야 함
-        // 계성 생성 단계에서 케릭터 생성, 자동 생성 설정은 가변적!! 추후 어떻게 될지 모름, 설정이 변하면 삭제
+        // 2. 기본 캐릭터 자동 생성
         String defaultCharacterName = generateDefaultCharacterName(email);
         CharacterCreateRequest characterRequest = new CharacterCreateRequest();
         characterRequest.setCharacterName(defaultCharacterName);
-        // SecurityContext에 인증 정보 임시 설정 (CharacterService에서 필요)
+
+        // SecurityContext에 인증 정보 임시 설정
         org.springframework.security.authentication.UsernamePasswordAuthenticationToken authentication =
             new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(
                 email, null, java.util.Collections.emptyList());
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
         try {
             characterService.createCharacter(characterRequest);
         } finally {
             SecurityContextHolder.clearContext();
         }
-        
-        return "Account created successfully";
+
+        return savedAccount;
     }
 
     // 이메일로부터 기본 캐릭터 이름 생성
@@ -223,6 +232,7 @@ public class AccountService {
         return response;
     }
 
+    @Transactional
     public AuthResponse googleLogin(GoogleLoginRequest request) {
         log.info("Google login attempt with ID token, useFirebaseAuth={}", useFirebaseAuth);
 
@@ -264,13 +274,9 @@ public class AccountService {
         if (emailVerified == null) throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GOOGLE_NULL_EMAIL_VERIFIED);
         if (emailVerified == false) throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GOOGLE_EMAIL_VERIFIED);
 
+        // 계정 조회 또는 생성 (신규 계정 시 기본 캐릭터 자동 생성)
         Account account = accountRepository.findByEmail(email)
-                .orElseGet(() -> {
-                    Account newAccount = new Account();
-                    newAccount.setEmail(email);
-                    newAccount.setPassword(passwordEncoder.encode(uid));
-                    return accountRepository.save(newAccount);
-                });
+                .orElseGet(() -> createAccountWithDefaultCharacter(email, uid));
 
         return AuthResponse.builder()
                 .accessToken(jwtUtil.createAccessToken(account.getEmail(), account.getId()))
