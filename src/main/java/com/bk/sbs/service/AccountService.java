@@ -34,6 +34,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class AccountService {
@@ -42,6 +43,7 @@ public class AccountService {
     private final JwtUtil jwtUtil;
     private final AccountRepository accountRepository;
     private final CharacterRepository characterRepository;
+    private final CharacterService characterService;
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Value("${google.client-id}")
@@ -50,13 +52,15 @@ public class AccountService {
     @Value("${google.use-firebase-auth:false}")
     private boolean useFirebaseAuth;
 
-    public AccountService(PasswordEncoder passwordEncoder, JwtUtil jwtUtil,AccountRepository accountRepository, CharacterRepository characterRepository) {
+    public AccountService(PasswordEncoder passwordEncoder, JwtUtil jwtUtil,AccountRepository accountRepository, CharacterRepository characterRepository, CharacterService characterService) {
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
         this.accountRepository = accountRepository;
         this.characterRepository = characterRepository;
+        this.characterService = characterService;
     }
 
+    @Transactional
     public String signUp(SignUpRequest request) {
         // 1. Null 체크
         if (request.getEmail() == null) {
@@ -100,11 +104,43 @@ public class AccountService {
             throw new BusinessException(ServerErrorCode.ACCOUNT_REGISTER_FAIL_ALREADY_EXIST_EMAIL);
         }
 
+        // 7. 계정 생성
         Account account = new Account();
         account.setEmail(email.toLowerCase()); // 소문자 변환
         account.setPassword(passwordEncoder.encode(password));
         Account savedAccount = accountRepository.save(account);
+
+        // 8. 기본 캐릭터 자동 생성(원래는 로그인 후 인증 정보가 있어야 함
+        // 계성 생성 단계에서 케릭터 생성, 자동 생성 설정은 가변적!! 추후 어떻게 될지 모름, 설정이 변하면 삭제
+        String defaultCharacterName = generateDefaultCharacterName(email);
+        CharacterCreateRequest characterRequest = new CharacterCreateRequest();
+        characterRequest.setCharacterName(defaultCharacterName);
+        // SecurityContext에 인증 정보 임시 설정 (CharacterService에서 필요)
+        org.springframework.security.authentication.UsernamePasswordAuthenticationToken authentication =
+            new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(
+                email, null, java.util.Collections.emptyList());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        try {
+            characterService.createCharacter(characterRequest);
+        } finally {
+            SecurityContextHolder.clearContext();
+        }
+        
         return "Account created successfully";
+    }
+
+    // 이메일로부터 기본 캐릭터 이름 생성
+    private String generateDefaultCharacterName(String email) {
+        String username = email.split("@")[0];
+        // 특수문자 제거 및 길이 제한
+        String sanitized = username.replaceAll("[^a-zA-Z0-9]", "");
+        if (sanitized.length() > 12) {
+            sanitized = sanitized.substring(0, 12);
+        }
+
+        // 중복 방지를 위해 타임스탬프 추가
+        String timestamp = String.valueOf(System.currentTimeMillis() % 10000);
+        return sanitized + timestamp;
     }
 
     // 이메일 형식 검증 메서드
