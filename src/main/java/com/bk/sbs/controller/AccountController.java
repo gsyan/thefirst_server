@@ -48,4 +48,10 @@ public class AccountController {
         return ApiResponse.success(response);
     }
 
+    @PostMapping("/guest-login")
+    public ApiResponse<AuthResponse> guestLogin(@RequestBody GuestLoginRequest request) {
+        AuthResponse response = accountService.guestLogin(request);
+        return ApiResponse.success(response);
+    }
+
 }

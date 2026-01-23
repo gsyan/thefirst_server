@@ -284,6 +284,30 @@ public class AccountService {
                 .build();
     }
 
+    @Transactional
+    public AuthResponse guestLogin(GuestLoginRequest request) {
+        log.info("Guest login attempt with guestId: {}", request.getGuestId());
+
+        if (request.getGuestId() == null || request.getGuestId().trim().isEmpty()) {
+            throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GUEST_NULL_ID);
+        }
+
+        // guestId를 email 형식으로 변환 (기존 DB 구조 활용)
+        String guestEmail = "guest_" + request.getGuestId();
+
+        // 계정 조회 또는 생성 (신규 계정 시 기본 캐릭터 자동 생성)
+        Account account = accountRepository.findByEmail(guestEmail)
+                .orElseGet(() -> {
+                    log.info("Creating new guest account with guestId: {}", request.getGuestId());
+                    return createAccountWithDefaultCharacter(guestEmail, request.getGuestId());
+                });
+
+        return AuthResponse.builder()
+                .accessToken(jwtUtil.createAccessToken(account.getEmail(), account.getId()))
+                .refreshToken(jwtUtil.createRefreshToken(account.getEmail(), account.getId()))
+                .build();
+    }
+
     public boolean validateCharacterOwnership(Long accountId, Long characterId) {
         return characterRepository.findById(characterId)
                 .map(character -> character.getAccountId().equals(accountId) && !character.isDeleted())
