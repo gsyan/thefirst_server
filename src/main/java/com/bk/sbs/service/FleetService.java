@@ -766,7 +766,6 @@ public class FleetService {
 
         // 요청에서 모듈 타입 정보 추출
         EModuleType moduleType = request.getModuleType();
-        EModuleSubType moduleSubType = request.getModuleSubType();
 
         // 현재 슬롯 확인
         Optional<ShipModule> existingModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(

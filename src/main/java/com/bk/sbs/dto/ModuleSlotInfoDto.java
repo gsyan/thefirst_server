@@ -1,6 +1,5 @@
 package com.bk.sbs.dto;
 
-import com.bk.sbs.enums.EModuleSubType;
 import com.bk.sbs.enums.EModuleType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,6 +16,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ModuleSlotInfoDto {
     private EModuleType moduleType;
-    private EModuleSubType moduleSubType;
     private Integer slotIndex;
 }
