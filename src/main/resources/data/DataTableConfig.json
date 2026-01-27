@@ -1,7 +1,7 @@
 {
   "m_version": "0.0.1",
   "m_maxLives": 3,
-  "m_maxShipsPerFleet": 8,
+  "m_maxShipsPerFleet": 9,
   "m_addShipCosts": [
     {
       "techLevel": 0,

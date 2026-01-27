@@ -6,9 +6,6 @@ package com.bk.sbs.enums;
  */
 public enum EFormationType {
     LinearHorizontal,
-    LinearVertical,
-    LinearDepth,
-    Grid,
     Circle,
     Cross,
     X;
