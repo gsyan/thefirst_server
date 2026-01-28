@@ -12,76 +12,76 @@
     },
     {
       "techLevel": 1,
-      "mineral": 100,
+      "mineral": 50000,
       "mineralRare": 0,
       "mineralExotic": 0,
       "mineralDark": 0
     },
     {
       "techLevel": 1,
-      "mineral": 200,
+      "mineral": 100000,
       "mineralRare": 0,
       "mineralExotic": 0,
       "mineralDark": 0
     },
     {
       "techLevel": 1,
-      "mineral": 400,
+      "mineral": 200000,
       "mineralRare": 0,
       "mineralExotic": 0,
       "mineralDark": 0
     },
     {
       "techLevel": 1,
-      "mineral": 800,
+      "mineral": 400000,
       "mineralRare": 0,
       "mineralExotic": 0,
       "mineralDark": 0
     },
     {
       "techLevel": 1,
-      "mineral": 1600,
+      "mineral": 800000,
       "mineralRare": 0,
       "mineralExotic": 0,
       "mineralDark": 0
     },
     {
       "techLevel": 1,
-      "mineral": 3200,
+      "mineral": 1600000,
       "mineralRare": 0,
       "mineralExotic": 0,
       "mineralDark": 0
     },
     {
       "techLevel": 1,
-      "mineral": 6400,
+      "mineral": 3200000,
       "mineralRare": 0,
       "mineralExotic": 0,
       "mineralDark": 0
     },
     {
       "techLevel": 1,
-      "mineral": 12800,
+      "mineral": 6400000,
       "mineralRare": 0,
       "mineralExotic": 0,
       "mineralDark": 0
     },
     {
       "techLevel": 1,
-      "mineral": 25600,
+      "mineral": 12800000,
       "mineralRare": 0,
       "mineralExotic": 0,
       "mineralDark": 0
     },
     {
       "techLevel": 1,
-      "mineral": 51200,
+      "mineral": 25600000,
       "mineralRare": 0,
       "mineralExotic": 0,
       "mineralDark": 0
     }
   ],
-  "m_moduleUnlockPrice": 1000,
+  "m_moduleUnlockPrice": 5000,
   "m_enemyFleetSpawnInterval": 5.0,
   "m_explorationInterval": 15.0,
   "m_enemySpawnRate": 2.0

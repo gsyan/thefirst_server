@@ -52,7 +52,7 @@
         "m_cargoCapacity": 75.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 50,
+          "mineral": 100,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -89,7 +89,7 @@
         "m_cargoCapacity": 100.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 100,
+          "mineral": 200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -126,7 +126,7 @@
         "m_cargoCapacity": 125.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 150,
+          "mineral": 400,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -163,7 +163,7 @@
         "m_cargoCapacity": 150.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 200,
+          "mineral": 800,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -200,7 +200,7 @@
         "m_cargoCapacity": 175.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 250,
+          "mineral": 1600,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -237,7 +237,7 @@
         "m_cargoCapacity": 200.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 300,
+          "mineral": 3200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -274,7 +274,7 @@
         "m_cargoCapacity": 225.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 350,
+          "mineral": 6400,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -311,7 +311,7 @@
         "m_cargoCapacity": 250.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 400,
+          "mineral": 12800,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -348,7 +348,7 @@
         "m_cargoCapacity": 275.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 450,
+          "mineral": 25600,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -385,7 +385,7 @@
         "m_cargoCapacity": 300.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 500,
+          "mineral": 51200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -451,7 +451,7 @@
         "m_cargoCapacity": 75.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 50,
+          "mineral": 100,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -488,7 +488,7 @@
         "m_cargoCapacity": 100.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 100,
+          "mineral": 200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -525,7 +525,7 @@
         "m_cargoCapacity": 125.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 150,
+          "mineral": 400,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -562,7 +562,7 @@
         "m_cargoCapacity": 150.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 200,
+          "mineral": 800,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -599,7 +599,7 @@
         "m_cargoCapacity": 175.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 250,
+          "mineral": 1600,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -636,7 +636,7 @@
         "m_cargoCapacity": 200.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 300,
+          "mineral": 3200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -673,7 +673,7 @@
         "m_cargoCapacity": 225.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 350,
+          "mineral": 6400,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -710,7 +710,7 @@
         "m_cargoCapacity": 250.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 400,
+          "mineral": 12800,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -747,7 +747,7 @@
         "m_cargoCapacity": 275.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 450,
+          "mineral": 25600,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -784,7 +784,7 @@
         "m_cargoCapacity": 300.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 500,
+          "mineral": 51200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -826,7 +826,7 @@
         "m_cargoCapacity": 75.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 50,
+          "mineral": 100,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -863,7 +863,7 @@
         "m_cargoCapacity": 100.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 100,
+          "mineral": 200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -900,7 +900,7 @@
         "m_cargoCapacity": 125.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 150,
+          "mineral": 400,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -937,7 +937,7 @@
         "m_cargoCapacity": 150.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 200,
+          "mineral": 800,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -974,7 +974,7 @@
         "m_cargoCapacity": 175.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 250,
+          "mineral": 1600,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -1011,7 +1011,7 @@
         "m_cargoCapacity": 200.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 300,
+          "mineral": 3200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -1048,7 +1048,7 @@
         "m_cargoCapacity": 225.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 350,
+          "mineral": 6400,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -1085,7 +1085,7 @@
         "m_cargoCapacity": 250.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 400,
+          "mineral": 12800,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -1122,7 +1122,7 @@
         "m_cargoCapacity": 275.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 450,
+          "mineral": 25600,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -1159,7 +1159,7 @@
         "m_cargoCapacity": 300.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 500,
+          "mineral": 51200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -1198,13 +1198,13 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 50,
+          "mineral": 100,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
         },
         "m_description": "Engine_Standard LV.1",
-        "m_movementSpeed": 55.0,
+        "m_movementSpeed": 20.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
         "m_attackCoolTime": 0.0,
@@ -1235,13 +1235,13 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 100,
+          "mineral": 200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
         },
         "m_description": "Engine_Standard LV.2",
-        "m_movementSpeed": 60.0,
+        "m_movementSpeed": 20.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
         "m_attackCoolTime": 0.0,
@@ -1272,13 +1272,13 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 150,
+          "mineral": 400,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
         },
         "m_description": "Engine_Standard LV.3",
-        "m_movementSpeed": 65.0,
+        "m_movementSpeed": 20.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
         "m_attackCoolTime": 0.0,
@@ -1309,13 +1309,13 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 200,
+          "mineral": 800,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
         },
         "m_description": "Engine_Standard LV.4",
-        "m_movementSpeed": 70.0,
+        "m_movementSpeed": 20.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
         "m_attackCoolTime": 0.0,
@@ -1346,13 +1346,13 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 250,
+          "mineral": 1600,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
         },
         "m_description": "Engine_Standard LV.5",
-        "m_movementSpeed": 75.0,
+        "m_movementSpeed": 20.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
         "m_attackCoolTime": 0.0,
@@ -1383,13 +1383,13 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 300,
+          "mineral": 3200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
         },
         "m_description": "Engine_Standard LV.6",
-        "m_movementSpeed": 80.0,
+        "m_movementSpeed": 20.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
         "m_attackCoolTime": 0.0,
@@ -1420,13 +1420,13 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 350,
+          "mineral": 6400,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
         },
         "m_description": "Engine_Standard LV.7",
-        "m_movementSpeed": 85.0,
+        "m_movementSpeed": 20.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
         "m_attackCoolTime": 0.0,
@@ -1457,13 +1457,13 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 400,
+          "mineral": 12800,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
         },
         "m_description": "Engine_Standard LV.8",
-        "m_movementSpeed": 90.0,
+        "m_movementSpeed": 20.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
         "m_attackCoolTime": 0.0,
@@ -1494,13 +1494,13 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 450,
+          "mineral": 25600,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
         },
         "m_description": "Engine_Standard LV.9",
-        "m_movementSpeed": 95.0,
+        "m_movementSpeed": 20.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
         "m_attackCoolTime": 0.0,
@@ -1531,13 +1531,13 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 500,
+          "mineral": 51200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
         },
         "m_description": "Engine_Standard LV.10",
-        "m_movementSpeed": 100.0,
+        "m_movementSpeed": 20.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
         "m_attackCoolTime": 0.0,
@@ -1568,7 +1568,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 50,
+          "mineral": 100,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -1605,7 +1605,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 100,
+          "mineral": 200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -1642,7 +1642,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 150,
+          "mineral": 400,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -1679,7 +1679,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 200,
+          "mineral": 800,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -1716,7 +1716,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 250,
+          "mineral": 1600,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -1753,7 +1753,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 300,
+          "mineral": 3200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -1790,7 +1790,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 350,
+          "mineral": 6400,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -1827,7 +1827,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 400,
+          "mineral": 12800,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -1864,7 +1864,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 450,
+          "mineral": 25600,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -1901,7 +1901,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 500,
+          "mineral": 51200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -1938,7 +1938,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 50,
+          "mineral": 100,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -1975,7 +1975,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 100,
+          "mineral": 200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2012,7 +2012,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 150,
+          "mineral": 400,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2049,7 +2049,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 200,
+          "mineral": 800,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2086,7 +2086,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 250,
+          "mineral": 1600,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2123,7 +2123,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 300,
+          "mineral": 3200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2160,7 +2160,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 350,
+          "mineral": 6400,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2197,7 +2197,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 400,
+          "mineral": 12800,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2234,7 +2234,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 450,
+          "mineral": 25600,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2271,7 +2271,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 500,
+          "mineral": 51200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2310,7 +2310,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 50,
+          "mineral": 100,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2347,7 +2347,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 100,
+          "mineral": 200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2384,7 +2384,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 150,
+          "mineral": 400,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2421,7 +2421,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 200,
+          "mineral": 800,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2458,7 +2458,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 250,
+          "mineral": 1600,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2495,7 +2495,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 300,
+          "mineral": 3200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2532,7 +2532,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 350,
+          "mineral": 6400,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2569,7 +2569,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 400,
+          "mineral": 12800,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2606,7 +2606,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 450,
+          "mineral": 25600,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2643,7 +2643,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 500,
+          "mineral": 51200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2680,7 +2680,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 50,
+          "mineral": 100,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2717,7 +2717,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 100,
+          "mineral": 200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2754,7 +2754,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 150,
+          "mineral": 400,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2791,7 +2791,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 200,
+          "mineral": 800,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2828,7 +2828,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 250,
+          "mineral": 1600,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2865,7 +2865,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 300,
+          "mineral": 3200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2902,7 +2902,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 350,
+          "mineral": 6400,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2939,7 +2939,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 400,
+          "mineral": 12800,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -2976,7 +2976,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 450,
+          "mineral": 25600,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3013,7 +3013,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 500,
+          "mineral": 51200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3052,7 +3052,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 50,
+          "mineral": 100,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3061,9 +3061,9 @@
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 15.0,
-        "m_attackCoolTime": 1.95,
+        "m_attackCoolTime": 4.14999962,
         "m_projectileWidth": 5.0,
-        "m_projectileSpeed": 200.0,
+        "m_projectileSpeed": 300.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
@@ -3089,7 +3089,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 100,
+          "mineral": 200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3098,9 +3098,9 @@
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 20.0,
-        "m_attackCoolTime": 1.9,
+        "m_attackCoolTime": 4.1,
         "m_projectileWidth": 5.0,
-        "m_projectileSpeed": 200.0,
+        "m_projectileSpeed": 300.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
@@ -3126,7 +3126,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 150,
+          "mineral": 400,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3135,9 +3135,9 @@
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 25.0,
-        "m_attackCoolTime": 1.85,
+        "m_attackCoolTime": 4.04999971,
         "m_projectileWidth": 5.0,
-        "m_projectileSpeed": 200.0,
+        "m_projectileSpeed": 300.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
@@ -3163,7 +3163,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 200,
+          "mineral": 800,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3172,9 +3172,9 @@
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 30.0,
-        "m_attackCoolTime": 1.8,
+        "m_attackCoolTime": 3.99999976,
         "m_projectileWidth": 5.0,
-        "m_projectileSpeed": 200.0,
+        "m_projectileSpeed": 300.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
@@ -3200,7 +3200,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 250,
+          "mineral": 1600,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3209,9 +3209,9 @@
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 35.0,
-        "m_attackCoolTime": 1.75,
+        "m_attackCoolTime": 3.94999981,
         "m_projectileWidth": 5.0,
-        "m_projectileSpeed": 200.0,
+        "m_projectileSpeed": 300.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
@@ -3237,7 +3237,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 300,
+          "mineral": 3200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3246,9 +3246,9 @@
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 40.0,
-        "m_attackCoolTime": 1.7,
+        "m_attackCoolTime": 3.89999986,
         "m_projectileWidth": 5.0,
-        "m_projectileSpeed": 200.0,
+        "m_projectileSpeed": 300.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
@@ -3274,7 +3274,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 350,
+          "mineral": 6400,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3283,9 +3283,9 @@
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 45.0,
-        "m_attackCoolTime": 1.65,
+        "m_attackCoolTime": 3.85,
         "m_projectileWidth": 5.0,
-        "m_projectileSpeed": 200.0,
+        "m_projectileSpeed": 300.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
@@ -3311,7 +3311,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 400,
+          "mineral": 12800,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3320,9 +3320,9 @@
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 50.0,
-        "m_attackCoolTime": 1.6,
+        "m_attackCoolTime": 3.79999971,
         "m_projectileWidth": 5.0,
-        "m_projectileSpeed": 200.0,
+        "m_projectileSpeed": 300.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
@@ -3348,7 +3348,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 450,
+          "mineral": 25600,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3357,9 +3357,9 @@
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 55.0,
-        "m_attackCoolTime": 1.55,
+        "m_attackCoolTime": 3.74999976,
         "m_projectileWidth": 5.0,
-        "m_projectileSpeed": 200.0,
+        "m_projectileSpeed": 300.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
@@ -3385,7 +3385,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 500,
+          "mineral": 51200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3394,9 +3394,9 @@
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 3,
         "m_attackPower": 60.0,
-        "m_attackCoolTime": 1.5,
+        "m_attackCoolTime": 3.69999981,
         "m_projectileWidth": 5.0,
-        "m_projectileSpeed": 200.0,
+        "m_projectileSpeed": 300.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
@@ -3422,7 +3422,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 50,
+          "mineral": 100,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3431,9 +3431,9 @@
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 15.0,
-        "m_attackCoolTime": 1.95,
+        "m_attackCoolTime": 4.14999962,
         "m_projectileWidth": 5.0,
-        "m_projectileSpeed": 200.0,
+        "m_projectileSpeed": 300.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
@@ -3459,7 +3459,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 100,
+          "mineral": 200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3468,9 +3468,9 @@
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 20.0,
-        "m_attackCoolTime": 1.9,
+        "m_attackCoolTime": 4.1,
         "m_projectileWidth": 5.0,
-        "m_projectileSpeed": 200.0,
+        "m_projectileSpeed": 300.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
@@ -3496,7 +3496,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 150,
+          "mineral": 400,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3505,9 +3505,9 @@
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 25.0,
-        "m_attackCoolTime": 1.85,
+        "m_attackCoolTime": 4.04999971,
         "m_projectileWidth": 5.0,
-        "m_projectileSpeed": 200.0,
+        "m_projectileSpeed": 300.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
@@ -3533,7 +3533,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 200,
+          "mineral": 800,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3542,9 +3542,9 @@
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 30.0,
-        "m_attackCoolTime": 1.8,
+        "m_attackCoolTime": 3.99999976,
         "m_projectileWidth": 5.0,
-        "m_projectileSpeed": 200.0,
+        "m_projectileSpeed": 300.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
@@ -3570,7 +3570,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 250,
+          "mineral": 1600,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3579,9 +3579,9 @@
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 35.0,
-        "m_attackCoolTime": 1.75,
+        "m_attackCoolTime": 3.94999981,
         "m_projectileWidth": 5.0,
-        "m_projectileSpeed": 200.0,
+        "m_projectileSpeed": 300.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
@@ -3607,7 +3607,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 300,
+          "mineral": 3200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3616,9 +3616,9 @@
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 40.0,
-        "m_attackCoolTime": 1.7,
+        "m_attackCoolTime": 3.89999986,
         "m_projectileWidth": 5.0,
-        "m_projectileSpeed": 200.0,
+        "m_projectileSpeed": 300.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
@@ -3644,7 +3644,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 350,
+          "mineral": 6400,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3653,9 +3653,9 @@
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 45.0,
-        "m_attackCoolTime": 1.65,
+        "m_attackCoolTime": 3.85,
         "m_projectileWidth": 5.0,
-        "m_projectileSpeed": 200.0,
+        "m_projectileSpeed": 300.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
@@ -3681,7 +3681,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 400,
+          "mineral": 12800,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3690,9 +3690,9 @@
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 50.0,
-        "m_attackCoolTime": 1.6,
+        "m_attackCoolTime": 3.79999971,
         "m_projectileWidth": 5.0,
-        "m_projectileSpeed": 200.0,
+        "m_projectileSpeed": 300.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
@@ -3718,7 +3718,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 450,
+          "mineral": 25600,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3727,9 +3727,9 @@
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 55.0,
-        "m_attackCoolTime": 1.55,
+        "m_attackCoolTime": 3.74999976,
         "m_projectileWidth": 5.0,
-        "m_projectileSpeed": 200.0,
+        "m_projectileSpeed": 300.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
@@ -3755,7 +3755,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 500,
+          "mineral": 51200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3764,9 +3764,9 @@
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 3,
         "m_attackPower": 60.0,
-        "m_attackCoolTime": 1.5,
+        "m_attackCoolTime": 3.69999981,
         "m_projectileWidth": 5.0,
-        "m_projectileSpeed": 200.0,
+        "m_projectileSpeed": 300.0,
         "m_hangarCapability": 5,
         "m_scoutCapability": 5,
         "m_launchCool": 1.0,
@@ -3794,7 +3794,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 50,
+          "mineral": 100,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3815,7 +3815,7 @@
         "m_aircraftHealth": 40.0,
         "m_aircraftAttackPower": 8.0,
         "m_aircraftAttackRange": 105.0,
-        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftAttackCooldown": 9.8,
         "m_aircraftSpeed": 305.0,
         "m_aircraftAmmo": 12,
         "m_aircraftDetectionRadius": 210.0,
@@ -3831,7 +3831,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 100,
+          "mineral": 200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3852,7 +3852,7 @@
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 11.0,
         "m_aircraftAttackRange": 110.0,
-        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftAttackCooldown": 9.6,
         "m_aircraftSpeed": 310.0,
         "m_aircraftAmmo": 14,
         "m_aircraftDetectionRadius": 220.0,
@@ -3868,7 +3868,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 150,
+          "mineral": 400,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3889,7 +3889,7 @@
         "m_aircraftHealth": 60.0,
         "m_aircraftAttackPower": 14.0,
         "m_aircraftAttackRange": 115.0,
-        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftAttackCooldown": 9.4,
         "m_aircraftSpeed": 315.0,
         "m_aircraftAmmo": 16,
         "m_aircraftDetectionRadius": 230.0,
@@ -3905,7 +3905,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 200,
+          "mineral": 800,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3926,7 +3926,7 @@
         "m_aircraftHealth": 70.0,
         "m_aircraftAttackPower": 17.0,
         "m_aircraftAttackRange": 120.0,
-        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftAttackCooldown": 9.2,
         "m_aircraftSpeed": 320.0,
         "m_aircraftAmmo": 18,
         "m_aircraftDetectionRadius": 240.0,
@@ -3942,7 +3942,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 250,
+          "mineral": 1600,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -3963,7 +3963,7 @@
         "m_aircraftHealth": 80.0,
         "m_aircraftAttackPower": 20.0,
         "m_aircraftAttackRange": 125.0,
-        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftAttackCooldown": 9.0,
         "m_aircraftSpeed": 325.0,
         "m_aircraftAmmo": 20,
         "m_aircraftDetectionRadius": 250.0,
@@ -3979,7 +3979,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 300,
+          "mineral": 3200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -4000,7 +4000,7 @@
         "m_aircraftHealth": 90.0,
         "m_aircraftAttackPower": 23.0,
         "m_aircraftAttackRange": 130.0,
-        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftAttackCooldown": 8.8,
         "m_aircraftSpeed": 330.0,
         "m_aircraftAmmo": 22,
         "m_aircraftDetectionRadius": 260.0,
@@ -4016,7 +4016,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 350,
+          "mineral": 6400,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -4037,7 +4037,7 @@
         "m_aircraftHealth": 100.0,
         "m_aircraftAttackPower": 26.0,
         "m_aircraftAttackRange": 135.0,
-        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftAttackCooldown": 8.6,
         "m_aircraftSpeed": 335.0,
         "m_aircraftAmmo": 24,
         "m_aircraftDetectionRadius": 270.0,
@@ -4053,7 +4053,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 400,
+          "mineral": 12800,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -4074,7 +4074,7 @@
         "m_aircraftHealth": 110.0,
         "m_aircraftAttackPower": 29.0,
         "m_aircraftAttackRange": 140.0,
-        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftAttackCooldown": 8.4,
         "m_aircraftSpeed": 340.0,
         "m_aircraftAmmo": 26,
         "m_aircraftDetectionRadius": 280.0,
@@ -4090,7 +4090,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 450,
+          "mineral": 25600,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -4111,7 +4111,7 @@
         "m_aircraftHealth": 120.0,
         "m_aircraftAttackPower": 32.0,
         "m_aircraftAttackRange": 145.0,
-        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftAttackCooldown": 8.2,
         "m_aircraftSpeed": 345.0,
         "m_aircraftAmmo": 28,
         "m_aircraftDetectionRadius": 290.0,
@@ -4127,7 +4127,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 500,
+          "mineral": 51200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -4148,7 +4148,7 @@
         "m_aircraftHealth": 130.0,
         "m_aircraftAttackPower": 35.0,
         "m_aircraftAttackRange": 150.0,
-        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftAttackCooldown": 8.0,
         "m_aircraftSpeed": 350.0,
         "m_aircraftAmmo": 30,
         "m_aircraftDetectionRadius": 300.0,
@@ -4164,7 +4164,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 50,
+          "mineral": 100,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -4185,7 +4185,7 @@
         "m_aircraftHealth": 40.0,
         "m_aircraftAttackPower": 8.0,
         "m_aircraftAttackRange": 105.0,
-        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftAttackCooldown": 9.8,
         "m_aircraftSpeed": 305.0,
         "m_aircraftAmmo": 12,
         "m_aircraftDetectionRadius": 210.0,
@@ -4201,7 +4201,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 100,
+          "mineral": 200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -4222,7 +4222,7 @@
         "m_aircraftHealth": 50.0,
         "m_aircraftAttackPower": 11.0,
         "m_aircraftAttackRange": 110.0,
-        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftAttackCooldown": 9.6,
         "m_aircraftSpeed": 310.0,
         "m_aircraftAmmo": 14,
         "m_aircraftDetectionRadius": 220.0,
@@ -4238,7 +4238,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 150,
+          "mineral": 400,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -4259,7 +4259,7 @@
         "m_aircraftHealth": 60.0,
         "m_aircraftAttackPower": 14.0,
         "m_aircraftAttackRange": 115.0,
-        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftAttackCooldown": 9.4,
         "m_aircraftSpeed": 315.0,
         "m_aircraftAmmo": 16,
         "m_aircraftDetectionRadius": 230.0,
@@ -4275,7 +4275,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 200,
+          "mineral": 800,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -4296,7 +4296,7 @@
         "m_aircraftHealth": 70.0,
         "m_aircraftAttackPower": 17.0,
         "m_aircraftAttackRange": 120.0,
-        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftAttackCooldown": 9.2,
         "m_aircraftSpeed": 320.0,
         "m_aircraftAmmo": 18,
         "m_aircraftDetectionRadius": 240.0,
@@ -4312,7 +4312,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 250,
+          "mineral": 1600,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -4333,7 +4333,7 @@
         "m_aircraftHealth": 80.0,
         "m_aircraftAttackPower": 20.0,
         "m_aircraftAttackRange": 125.0,
-        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftAttackCooldown": 9.0,
         "m_aircraftSpeed": 325.0,
         "m_aircraftAmmo": 20,
         "m_aircraftDetectionRadius": 250.0,
@@ -4349,7 +4349,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 300,
+          "mineral": 3200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -4370,7 +4370,7 @@
         "m_aircraftHealth": 90.0,
         "m_aircraftAttackPower": 23.0,
         "m_aircraftAttackRange": 130.0,
-        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftAttackCooldown": 8.8,
         "m_aircraftSpeed": 330.0,
         "m_aircraftAmmo": 22,
         "m_aircraftDetectionRadius": 260.0,
@@ -4386,7 +4386,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 350,
+          "mineral": 6400,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -4407,7 +4407,7 @@
         "m_aircraftHealth": 100.0,
         "m_aircraftAttackPower": 26.0,
         "m_aircraftAttackRange": 135.0,
-        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftAttackCooldown": 8.6,
         "m_aircraftSpeed": 335.0,
         "m_aircraftAmmo": 24,
         "m_aircraftDetectionRadius": 270.0,
@@ -4423,7 +4423,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 400,
+          "mineral": 12800,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -4444,7 +4444,7 @@
         "m_aircraftHealth": 110.0,
         "m_aircraftAttackPower": 29.0,
         "m_aircraftAttackRange": 140.0,
-        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftAttackCooldown": 8.4,
         "m_aircraftSpeed": 340.0,
         "m_aircraftAmmo": 26,
         "m_aircraftDetectionRadius": 280.0,
@@ -4460,7 +4460,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 450,
+          "mineral": 25600,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -4481,7 +4481,7 @@
         "m_aircraftHealth": 120.0,
         "m_aircraftAttackPower": 32.0,
         "m_aircraftAttackRange": 145.0,
-        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftAttackCooldown": 8.2,
         "m_aircraftSpeed": 345.0,
         "m_aircraftAmmo": 28,
         "m_aircraftDetectionRadius": 290.0,
@@ -4497,7 +4497,7 @@
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
-          "mineral": 500,
+          "mineral": 51200,
           "mineralRare": 0,
           "mineralExotic": 0,
           "mineralDark": 0
@@ -4518,7 +4518,7 @@
         "m_aircraftHealth": 130.0,
         "m_aircraftAttackPower": 35.0,
         "m_aircraftAttackRange": 150.0,
-        "m_aircraftAttackCooldown": 1.0,
+        "m_aircraftAttackCooldown": 8.0,
         "m_aircraftSpeed": 350.0,
         "m_aircraftAmmo": 30,
         "m_aircraftDetectionRadius": 300.0,
