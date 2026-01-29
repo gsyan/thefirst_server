@@ -23,4 +23,5 @@ public class ModuleChangeResponse {
     private EModuleType moduleTypeNew;
     private EModuleSubType moduleSubTypeNew;
     private Integer slotIndex;
+    private Integer moduleNewLevel;
 }

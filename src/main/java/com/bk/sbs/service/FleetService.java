@@ -25,16 +25,19 @@ public class FleetService {
     private final FleetRepository fleetRepository;
     private final ShipRepository shipRepository;
     private final ShipModuleRepository shipModuleRepository;
+    private final ShipModuleLevelRepository shipModuleLevelRepository;
     private final CharacterRepository characterRepository;
     private final ModuleResearchRepository moduleResearchRepository;
     private final GameDataService gameDataService;
 
     public FleetService(FleetRepository fleetRepository, ShipRepository shipRepository,
-                       ShipModuleRepository shipModuleRepository, CharacterRepository characterRepository,
+                       ShipModuleRepository shipModuleRepository, ShipModuleLevelRepository shipModuleLevelRepository,
+                       CharacterRepository characterRepository,
                        ModuleResearchRepository moduleResearchRepository, GameDataService gameDataService) {
         this.fleetRepository = fleetRepository;
         this.shipRepository = shipRepository;
         this.shipModuleRepository = shipModuleRepository;
+        this.shipModuleLevelRepository = shipModuleLevelRepository;
         this.characterRepository = characterRepository;
         this.moduleResearchRepository = moduleResearchRepository;
         this.gameDataService = gameDataService;
@@ -698,8 +701,27 @@ public class FleetService {
         // 모듈 레벨 업데이트 (능력치는 클라이언트가 DataTable에서 조회)
         module.setModuleLevel(request.getTargetLevel());
         module.setModified(LocalDateTime.now());
-
         shipModuleRepository.save(module);
+
+        // ShipModuleLevel에도 레벨 저장
+        ShipModuleLevel levelRecord = shipModuleLevelRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndModuleSubType(
+                request.getShipId(),
+                request.getBodyIndex(),
+                moduleType,
+                request.getSlotIndex(),
+                moduleSubType
+        ).orElseGet(() -> {
+            ShipModuleLevel newRecord = new ShipModuleLevel();
+            newRecord.setShip(ship);
+            newRecord.setBodyIndex(request.getBodyIndex());
+            newRecord.setModuleType(moduleType);
+            newRecord.setSlotIndex(request.getSlotIndex());
+            newRecord.setModuleSubType(moduleSubType);
+            return newRecord;
+        });
+        levelRecord.setLevel(request.getTargetLevel());
+        levelRecord.setModified(LocalDateTime.now());
+        shipModuleLevelRepository.save(levelRecord);
 
         // 비용 정보 (모든 미네랄 타입 포함)
         CostRemainInfoDto costRemainInfo = new CostRemainInfoDto(
@@ -876,11 +898,11 @@ public class FleetService {
         }
 
         // 현재 모듈 타입 정보 추출
-        EModuleType currentModuleType = request.getModuleTypeCurrent();
+        EModuleType currentModuleType = request.getModuleType();
         EModuleSubType currentModuleSubType = request.getModuleSubTypeCurrent();
 
         // 새 모듈 타입 정보 추출
-        EModuleType newModuleType = request.getModuleTypeNew();
+        EModuleType newModuleType = request.getModuleType();
         EModuleSubType newModuleSubType = request.getModuleSubTypeNew();
 
         // 1. 같은 모듈인지 확인 (완전히 동일한 모듈로 변경 불가)
@@ -912,8 +934,38 @@ public class FleetService {
                 request.getSlotIndex()
         ).orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_MODULE_NOT_FOUND));
 
-        // 모듈 정보 업데이트 (레벨과 서브타입 변경, 메인 타입은 동일)
+        // 1. 현재 모듈의 레벨을 ShipModuleLevel에 저장
+        ShipModuleLevel currentLevelRecord = shipModuleLevelRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndModuleSubType(
+                request.getShipId(),
+                request.getBodyIndex(),
+                currentModuleType,
+                request.getSlotIndex(),
+                currentModuleSubType
+        ).orElseGet(() -> {
+            ShipModuleLevel newRecord = new ShipModuleLevel();
+            newRecord.setShip(ship);
+            newRecord.setBodyIndex(request.getBodyIndex());
+            newRecord.setModuleType(currentModuleType);
+            newRecord.setSlotIndex(request.getSlotIndex());
+            newRecord.setModuleSubType(currentModuleSubType);
+            return newRecord;
+        });
+        currentLevelRecord.setLevel(currentModule.getModuleLevel());
+        currentLevelRecord.setModified(LocalDateTime.now());
+        shipModuleLevelRepository.save(currentLevelRecord);
+
+        // 2. 새 모듈의 레벨을 ShipModuleLevel에서 조회 (없으면 1)
+        int newModuleLevel = shipModuleLevelRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndModuleSubType(
+                request.getShipId(),
+                request.getBodyIndex(),
+                newModuleType,
+                request.getSlotIndex(),
+                newModuleSubType
+        ).map(ShipModuleLevel::getLevel).orElse(1);
+
+        // 3. 모듈 정보 업데이트 (서브타입 + 레벨 변경)
         currentModule.setModuleSubType(newModuleSubType);
+        currentModule.setModuleLevel(newModuleLevel);
         currentModule.setModified(LocalDateTime.now());
         shipModuleRepository.save(currentModule);
 
@@ -926,6 +978,7 @@ public class FleetService {
                 .moduleTypeNew(newModuleType)
                 .moduleSubTypeNew(newModuleSubType)
                 .slotIndex(request.getSlotIndex())
+                .moduleNewLevel(newModuleLevel)
                 .build();
     }
 

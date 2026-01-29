@@ -14,9 +14,8 @@ import lombok.NoArgsConstructor;
 public class ModuleChangeRequest {
     private Long shipId;
     private Integer bodyIndex;
-    private EModuleType moduleTypeCurrent;
+    private EModuleType moduleType;
     private EModuleSubType moduleSubTypeCurrent;
-    private EModuleType moduleTypeNew;
     private EModuleSubType moduleSubTypeNew;
     private Integer slotIndex;
 }

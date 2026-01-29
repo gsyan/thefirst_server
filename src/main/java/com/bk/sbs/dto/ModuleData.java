@@ -57,9 +57,6 @@ public class ModuleData {
     @JsonAlias("m_attackCoolTime")
     private Float attackCoolTime;
 
-    @JsonAlias("m_projectileLength")
-    private Float projectileLength;
-
     @JsonAlias("m_projectileWidth")
     private Float projectileWidth;
 
