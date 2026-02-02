@@ -51,7 +51,7 @@ public class CharacterService {
         Character character = new Character();
         character.setAccountId(account.getId());
         character.setCharacterName(request.getCharacterName());
-        character.setMineral(50000L);  // 기본미네랄 5000 지급, 개발중 설정
+        character.setMineral(5100L);  // 기본미네랄 5100 지급
         Character savedCharacter = characterRepository.save(character);
 
         // 캐릭터 생성과 동시에 기본 함대 생성 및 활성화
