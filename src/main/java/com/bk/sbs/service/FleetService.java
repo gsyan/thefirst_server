@@ -127,15 +127,15 @@ public class FleetService {
         engineModule.setSlotIndex(0);
         shipModuleRepository.save(engineModule);
 
-        // Beam
-        ShipModule beamModule = new ShipModule();
-        beamModule.setShip(defaultShip);
-        beamModule.setModuleType(EModuleType.Beam);
-        beamModule.setModuleSubType(EModuleSubType.Beam_Standard);
-        beamModule.setModuleLevel(beamData.getModuleLevel());
-        beamModule.setBodyIndex(0);
-        beamModule.setSlotIndex(0);
-        shipModuleRepository.save(beamModule);
+//        // Beam
+//        ShipModule beamModule = new ShipModule();
+//        beamModule.setShip(defaultShip);
+//        beamModule.setModuleType(EModuleType.Beam);
+//        beamModule.setModuleSubType(EModuleSubType.Beam_Standard);
+//        beamModule.setModuleLevel(beamData.getModuleLevel());
+//        beamModule.setBodyIndex(0);
+//        beamModule.setSlotIndex(0);
+//        shipModuleRepository.save(beamModule);
 
 //        // Missile
 //        ShipModule missileModule = new ShipModule();
