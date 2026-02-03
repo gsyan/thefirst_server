@@ -136,6 +136,7 @@ public class CharacterService {
                 .mineralRare(character.getMineralRare())
                 .mineralExotic(character.getMineralExotic())
                 .mineralDark(character.getMineralDark())
+                .clearedZone(character.getClearedZone())
                 .build();
     }
 

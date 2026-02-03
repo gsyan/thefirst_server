@@ -20,4 +20,5 @@ public class CharacterInfoDto {
     private Long mineralRare;
     private Long mineralExotic;
     private Long mineralDark;
+    private String clearedZone;
 }

@@ -40,6 +40,10 @@ public class Character {
     @Column(nullable = false)
     private Long mineralDark = 0L;
 
+    // 클리어한 최고 zone (예: "3-5"), 신규는 빈 문자열
+    @Column(nullable = false)
+    private String clearedZone = "";
+
     @Column(nullable = false)
     private boolean deleted = false;
 
