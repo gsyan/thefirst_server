@@ -13,8 +13,7 @@ import com.bk.sbs.repository.CharacterRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,10 +42,11 @@ public class ZoneService {
             return ZoneClearResponse.builder()
                     .clearedZone(currentClearedZone)
                     .rewardInfo(null)
+                    .collectDateTime(character.getCollectDateTime() != null ? character.getCollectDateTime().toString() : null)
                     .build();
         }
 
-        LocalDateTime now = LocalDateTime.now();
+        Instant now = Instant.now();
 
         // 이전 존의 미수집 자원 먼저 collect
         long[] rewards = collectZoneResources(character, currentClearedZone, now, true);
@@ -56,9 +56,15 @@ public class ZoneService {
         character.setCollectDateTime(now);
 
         // 클리어 보상 추가 지급
-        long clearBonus = calculateMineralReward(newZoneName);
-        rewards[0] += clearBonus;
-        character.setMineral(character.getMineral() + clearBonus);
+        long[] clearRewards = calculateClearRewards(newZoneName);
+        rewards[0] += clearRewards[0];
+        rewards[1] += clearRewards[1];
+        rewards[2] += clearRewards[2];
+        rewards[3] += clearRewards[3];
+        character.setMineral(character.getMineral() + clearRewards[0]);
+        character.setMineralRare(character.getMineralRare() + clearRewards[1]);
+        character.setMineralExotic(character.getMineralExotic() + clearRewards[2]);
+        character.setMineralDark(character.getMineralDark() + clearRewards[3]);
 
         characterRepository.save(character);
 
@@ -76,6 +82,7 @@ public class ZoneService {
         return ZoneClearResponse.builder()
                 .clearedZone(newZoneName)
                 .rewardInfo(rewardInfo)
+                .collectDateTime(now.toString())
                 .build();
     }
 
@@ -89,12 +96,8 @@ public class ZoneService {
             throw new BusinessException(ServerErrorCode.ZONE_COLLECT_FAIL_NO_CLEARED_ZONE);
         }
 
-        if (!clearedZone.equals(request.getZoneName())) {
-            throw new BusinessException(ServerErrorCode.ZONE_COLLECT_FAIL_INVALID_ZONE);
-        }
-
-        LocalDateTime lastCollectTime = character.getCollectDateTime();
-        LocalDateTime now = LocalDateTime.now();
+        Instant lastCollectTime = character.getCollectDateTime();
+        Instant now = Instant.now();
 
         if (lastCollectTime == null) {
             lastCollectTime = now.minusSeconds(1);
@@ -103,7 +106,7 @@ public class ZoneService {
         long elapsedSeconds = ChronoUnit.SECONDS.between(lastCollectTime, now);
         if (elapsedSeconds <= 0) {
             return ZoneCollectResponse.builder()
-                    .collectDateTime(lastCollectTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
+                    .collectDateTime(lastCollectTime.toString())
                     .rewardInfo(CostRemainInfoDto.builder()
                             .mineralCost(0L)
                             .mineralRareCost(0L)
@@ -135,13 +138,13 @@ public class ZoneService {
                 .build();
 
         return ZoneCollectResponse.builder()
-                .collectDateTime(now.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
+                .collectDateTime(now.toString())
                 .rewardInfo(rewardInfo)
                 .build();
     }
 
     // 공통: 자원 수집 로직 (반환: [mineral, mineralRare, mineralExotic, mineralDark])
-    private long[] collectZoneResources(Character character, String zoneName, LocalDateTime now, boolean resetFraction) {
+    private long[] collectZoneResources(Character character, String zoneName, Instant now, boolean resetFraction) {
         long[] rewards = {0L, 0L, 0L, 0L};
 
         if (zoneName == null || zoneName.isEmpty() || character.getCollectDateTime() == null) {
@@ -237,11 +240,18 @@ public class ZoneService {
         }
     }
 
-    // 클리어 보상 계산
-    private long calculateMineralReward(String zoneName) {
-        int[] parts = parseZoneName(zoneName);
-        int shipCount = parts[0];
-        int moduleLevel = parts[1];
-        return (long) shipCount * moduleLevel * 100;
+    // 클리어 보상 계산 (ZoneConfigData에서 가져옴)
+    private long[] calculateClearRewards(String zoneName) {
+        long[] rewards = {0L, 0L, 0L, 0L};
+
+        ZoneConfigData zoneConfig = gameDataService.getZoneConfigByName(zoneName);
+        if (zoneConfig == null) return rewards;
+
+        rewards[0] = zoneConfig.getClearMineral() != null ? zoneConfig.getClearMineral().longValue() : 0L;
+        rewards[1] = zoneConfig.getClearMineralRare() != null ? zoneConfig.getClearMineralRare().longValue() : 0L;
+        rewards[2] = zoneConfig.getClearMineralExotic() != null ? zoneConfig.getClearMineralExotic().longValue() : 0L;
+        rewards[3] = zoneConfig.getClearMineralDark() != null ? zoneConfig.getClearMineralDark().longValue() : 0L;
+
+        return rewards;
     }
 }

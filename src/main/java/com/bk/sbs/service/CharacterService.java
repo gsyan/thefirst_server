@@ -137,6 +137,7 @@ public class CharacterService {
                 .mineralExotic(character.getMineralExotic())
                 .mineralDark(character.getMineralDark())
                 .clearedZone(character.getClearedZone())
+                .collectDateTime(character.getCollectDateTime() != null ? character.getCollectDateTime().toString() : null)
                 .build();
     }
 

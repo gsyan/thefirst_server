@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity
@@ -57,8 +58,8 @@ public class Character {
     @Column(nullable = false)
     private String clearedZone = "";
 
-    // 마지막 자원 수집 시간 (zone clear 시 또는 collect 시 갱신)
-    private LocalDateTime collectDateTime;
+    // 마지막 자원 수집 시간 (zone clear 시 또는 collect 시 갱신, UTC)
+    private Instant collectDateTime;
 
     @Column(nullable = false)
     private boolean deleted = false;

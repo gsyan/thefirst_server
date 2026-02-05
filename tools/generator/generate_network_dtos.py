@@ -163,9 +163,9 @@ def generate_java_dto(class_info, package_name):
     generic_type = class_info['generic_type']
     fields = extract_fields(class_info['body'])
 
-    if not fields and not generic_type:
-        # 필드가 없고 제네릭도 아닌 경우
-        return None
+    # 필드가 없어도 Request 클래스는 생성 (빈 body로 요청하는 경우)
+    # if not fields and not generic_type:
+    #     return None
 
     # Java 클래스명에 Dto 접미사 추가 (Request/Response 제외)
     if original_class_name.endswith('Request') or original_class_name.endswith('Response'):
