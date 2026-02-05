@@ -1,8 +1,11 @@
 package com.bk.sbs.service;
 
+import com.bk.sbs.dto.ZoneConfigData;
 import com.bk.sbs.dto.CostRemainInfoDto;
 import com.bk.sbs.dto.ZoneClearRequest;
 import com.bk.sbs.dto.ZoneClearResponse;
+import com.bk.sbs.dto.ZoneCollectRequest;
+import com.bk.sbs.dto.ZoneCollectResponse;
 import com.bk.sbs.entity.Character;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
@@ -10,13 +13,21 @@ import com.bk.sbs.repository.CharacterRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class ZoneService {
 
     private final CharacterRepository characterRepository;
+    private final GameDataService gameDataService;
 
-    public ZoneService(CharacterRepository characterRepository) {
+    public ZoneService(CharacterRepository characterRepository, GameDataService gameDataService) {
         this.characterRepository = characterRepository;
+        this.gameDataService = gameDataService;
     }
 
     @Transactional
@@ -29,27 +40,33 @@ public class ZoneService {
 
         // 새로운 zone이 현재 클리어 zone보다 높은 난이도인지 확인
         if (!isHigherZone(newZoneName, currentClearedZone)) {
-            // 이미 클리어한 zone이면 보상 없이 현재 상태 반환
             return ZoneClearResponse.builder()
                     .clearedZone(currentClearedZone)
                     .rewardInfo(null)
                     .build();
         }
 
-        // clearedZone 업데이트
-        character.setClearedZone(newZoneName);
+        LocalDateTime now = LocalDateTime.now();
 
-        // 보상 계산 및 지급
-        long mineralReward = calculateMineralReward(newZoneName);
-        character.setMineral(character.getMineral() + mineralReward);
+        // 이전 존의 미수집 자원 먼저 collect
+        long[] rewards = collectZoneResources(character, currentClearedZone, now, true);
+
+        // clearedZone 업데이트 및 collectDateTime 설정
+        character.setClearedZone(newZoneName);
+        character.setCollectDateTime(now);
+
+        // 클리어 보상 추가 지급
+        long clearBonus = calculateMineralReward(newZoneName);
+        rewards[0] += clearBonus;
+        character.setMineral(character.getMineral() + clearBonus);
 
         characterRepository.save(character);
 
         CostRemainInfoDto rewardInfo = CostRemainInfoDto.builder()
-                .mineralCost(-mineralReward)  // 음수로 표시 (획득)
-                .mineralRareCost(0L)
-                .mineralExoticCost(0L)
-                .mineralDarkCost(0L)
+                .mineralCost(-rewards[0])
+                .mineralRareCost(-rewards[1])
+                .mineralExoticCost(-rewards[2])
+                .mineralDarkCost(-rewards[3])
                 .remainMineral(character.getMineral())
                 .remainMineralRare(character.getMineralRare())
                 .remainMineralExotic(character.getMineralExotic())
@@ -62,6 +79,137 @@ public class ZoneService {
                 .build();
     }
 
+    @Transactional
+    public ZoneCollectResponse collectZone(Long characterId, ZoneCollectRequest request) {
+        Character character = characterRepository.findByIdForUpdate(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.ZONE_CLEAR_FAIL_CHARACTER_NOT_FOUND));
+
+        String clearedZone = character.getClearedZone();
+        if (clearedZone == null || clearedZone.isEmpty()) {
+            throw new BusinessException(ServerErrorCode.ZONE_COLLECT_FAIL_NO_CLEARED_ZONE);
+        }
+
+        if (!clearedZone.equals(request.getZoneName())) {
+            throw new BusinessException(ServerErrorCode.ZONE_COLLECT_FAIL_INVALID_ZONE);
+        }
+
+        LocalDateTime lastCollectTime = character.getCollectDateTime();
+        LocalDateTime now = LocalDateTime.now();
+
+        if (lastCollectTime == null) {
+            lastCollectTime = now.minusSeconds(1);
+        }
+
+        long elapsedSeconds = ChronoUnit.SECONDS.between(lastCollectTime, now);
+        if (elapsedSeconds <= 0) {
+            return ZoneCollectResponse.builder()
+                    .collectDateTime(lastCollectTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
+                    .rewardInfo(CostRemainInfoDto.builder()
+                            .mineralCost(0L)
+                            .mineralRareCost(0L)
+                            .mineralExoticCost(0L)
+                            .mineralDarkCost(0L)
+                            .remainMineral(character.getMineral())
+                            .remainMineralRare(character.getMineralRare())
+                            .remainMineralExotic(character.getMineralExotic())
+                            .remainMineralDark(character.getMineralDark())
+                            .build())
+                    .build();
+        }
+
+        // 자원 수집 (fraction 유지)
+        long[] rewards = collectZoneResources(character, clearedZone, now, false);
+
+        character.setCollectDateTime(now);
+        characterRepository.save(character);
+
+        CostRemainInfoDto rewardInfo = CostRemainInfoDto.builder()
+                .mineralCost(-rewards[0])
+                .mineralRareCost(-rewards[1])
+                .mineralExoticCost(-rewards[2])
+                .mineralDarkCost(-rewards[3])
+                .remainMineral(character.getMineral())
+                .remainMineralRare(character.getMineralRare())
+                .remainMineralExotic(character.getMineralExotic())
+                .remainMineralDark(character.getMineralDark())
+                .build();
+
+        return ZoneCollectResponse.builder()
+                .collectDateTime(now.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
+                .rewardInfo(rewardInfo)
+                .build();
+    }
+
+    // 공통: 자원 수집 로직 (반환: [mineral, mineralRare, mineralExotic, mineralDark])
+    private long[] collectZoneResources(Character character, String zoneName, LocalDateTime now, boolean resetFraction) {
+        long[] rewards = {0L, 0L, 0L, 0L};
+
+        if (zoneName == null || zoneName.isEmpty() || character.getCollectDateTime() == null) {
+            if (resetFraction) {
+                character.setMineralFraction(0.0);
+                character.setMineralRareFraction(0.0);
+                character.setMineralExoticFraction(0.0);
+                character.setMineralDarkFraction(0.0);
+            }
+            return rewards;
+        }
+
+        long elapsedSeconds = ChronoUnit.SECONDS.between(character.getCollectDateTime(), now);
+        if (elapsedSeconds <= 0) {
+            if (resetFraction) {
+                character.setMineralFraction(0.0);
+                character.setMineralRareFraction(0.0);
+                character.setMineralExoticFraction(0.0);
+                character.setMineralDarkFraction(0.0);
+            }
+            return rewards;
+        }
+
+        ZoneConfigData zoneConfig = gameDataService.getZoneConfigByName(zoneName);
+        if (zoneConfig == null) {
+            if (resetFraction) {
+                character.setMineralFraction(0.0);
+                character.setMineralRareFraction(0.0);
+                character.setMineralExoticFraction(0.0);
+                character.setMineralDarkFraction(0.0);
+            }
+            return rewards;
+        }
+
+        // 소수점까지 계산 후 기존 fraction과 합산
+        double mineralTotal = character.getMineralFraction() + (zoneConfig.getMineralPerHour() / 3600.0 * elapsedSeconds);
+        double mineralRareTotal = character.getMineralRareFraction() + (zoneConfig.getMineralRarePerHour() / 3600.0 * elapsedSeconds);
+        double mineralExoticTotal = character.getMineralExoticFraction() + (zoneConfig.getMineralExoticPerHour() / 3600.0 * elapsedSeconds);
+        double mineralDarkTotal = character.getMineralDarkFraction() + (zoneConfig.getMineralDarkPerHour() / 3600.0 * elapsedSeconds);
+
+        // 정수부만 지급
+        rewards[0] = (long) mineralTotal;
+        rewards[1] = (long) mineralRareTotal;
+        rewards[2] = (long) mineralExoticTotal;
+        rewards[3] = (long) mineralDarkTotal;
+
+        // 자원 지급
+        character.setMineral(character.getMineral() + rewards[0]);
+        character.setMineralRare(character.getMineralRare() + rewards[1]);
+        character.setMineralExotic(character.getMineralExotic() + rewards[2]);
+        character.setMineralDark(character.getMineralDark() + rewards[3]);
+
+        // fraction 처리
+        if (resetFraction) {
+            character.setMineralFraction(0.0);
+            character.setMineralRareFraction(0.0);
+            character.setMineralExoticFraction(0.0);
+            character.setMineralDarkFraction(0.0);
+        } else {
+            character.setMineralFraction(mineralTotal - rewards[0]);
+            character.setMineralRareFraction(mineralRareTotal - rewards[1]);
+            character.setMineralExoticFraction(mineralExoticTotal - rewards[2]);
+            character.setMineralDarkFraction(mineralDarkTotal - rewards[3]);
+        }
+
+        return rewards;
+    }
+
     // zone 난이도 비교 (x-y 형식)
     private boolean isHigherZone(String newZone, String currentZone) {
         if (currentZone == null || currentZone.isEmpty()) return true;
@@ -69,9 +217,7 @@ public class ZoneService {
         int[] newParts = parseZoneName(newZone);
         int[] currentParts = parseZoneName(currentZone);
 
-        // 함선 개수(x)가 더 크면 높은 난이도
         if (newParts[0] > currentParts[0]) return true;
-        // 함선 개수가 같고 모듈 레벨(y)이 더 크면 높은 난이도
         if (newParts[0] == currentParts[0] && newParts[1] > currentParts[1]) return true;
 
         return false;
@@ -91,13 +237,11 @@ public class ZoneService {
         }
     }
 
-    // 보상 계산 (zone 난이도에 따라)
+    // 클리어 보상 계산
     private long calculateMineralReward(String zoneName) {
         int[] parts = parseZoneName(zoneName);
-        int shipCount = parts[0];  // 함선 개수
-        int moduleLevel = parts[1];  // 모듈 레벨
-
-        // 기본 보상: 함선 개수 * 모듈 레벨 * 100
+        int shipCount = parts[0];
+        int moduleLevel = parts[1];
         return (long) shipCount * moduleLevel * 100;
     }
 }

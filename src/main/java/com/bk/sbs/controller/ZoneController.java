@@ -2,6 +2,8 @@ package com.bk.sbs.controller;
 
 import com.bk.sbs.dto.ZoneClearRequest;
 import com.bk.sbs.dto.ZoneClearResponse;
+import com.bk.sbs.dto.ZoneCollectRequest;
+import com.bk.sbs.dto.ZoneCollectResponse;
 import com.bk.sbs.dto.nogenerated.ApiResponse;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
@@ -31,6 +33,16 @@ public class ZoneController {
             HttpServletRequest httpRequest) {
         Long actualCharacterId = getCharacterIdFromToken(httpRequest);
         ZoneClearResponse response = zoneService.clearZone(actualCharacterId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    // Zone 자원 수확
+    @PostMapping("/collect")
+    public ResponseEntity<ApiResponse<ZoneCollectResponse>> collectZone(
+            @RequestBody ZoneCollectRequest request,
+            HttpServletRequest httpRequest) {
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        ZoneCollectResponse response = zoneService.collectZone(actualCharacterId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 

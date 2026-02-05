@@ -84,7 +84,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1001,
         "m_moduleLevel": 2,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 200.0,
         "m_cargoCapacity": 100.0,
         "m_upgradeCost": {
@@ -121,7 +121,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1001,
         "m_moduleLevel": 3,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 250.0,
         "m_cargoCapacity": 125.0,
         "m_upgradeCost": {
@@ -158,7 +158,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1001,
         "m_moduleLevel": 4,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 300.0,
         "m_cargoCapacity": 150.0,
         "m_upgradeCost": {
@@ -195,7 +195,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1001,
         "m_moduleLevel": 5,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 350.0,
         "m_cargoCapacity": 175.0,
         "m_upgradeCost": {
@@ -232,7 +232,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1001,
         "m_moduleLevel": 6,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 400.0,
         "m_cargoCapacity": 200.0,
         "m_upgradeCost": {
@@ -269,7 +269,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1001,
         "m_moduleLevel": 7,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 450.0,
         "m_cargoCapacity": 225.0,
         "m_upgradeCost": {
@@ -306,7 +306,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1001,
         "m_moduleLevel": 8,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 500.0,
         "m_cargoCapacity": 250.0,
         "m_upgradeCost": {
@@ -343,7 +343,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1001,
         "m_moduleLevel": 9,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 550.0,
         "m_cargoCapacity": 275.0,
         "m_upgradeCost": {
@@ -380,7 +380,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1001,
         "m_moduleLevel": 10,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 600.0,
         "m_cargoCapacity": 300.0,
         "m_upgradeCost": {
@@ -483,7 +483,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1002,
         "m_moduleLevel": 2,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 200.0,
         "m_cargoCapacity": 100.0,
         "m_upgradeCost": {
@@ -520,7 +520,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1002,
         "m_moduleLevel": 3,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 250.0,
         "m_cargoCapacity": 125.0,
         "m_upgradeCost": {
@@ -557,7 +557,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1002,
         "m_moduleLevel": 4,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 300.0,
         "m_cargoCapacity": 150.0,
         "m_upgradeCost": {
@@ -594,7 +594,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1002,
         "m_moduleLevel": 5,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 350.0,
         "m_cargoCapacity": 175.0,
         "m_upgradeCost": {
@@ -631,7 +631,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1002,
         "m_moduleLevel": 6,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 400.0,
         "m_cargoCapacity": 200.0,
         "m_upgradeCost": {
@@ -668,7 +668,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1002,
         "m_moduleLevel": 7,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 450.0,
         "m_cargoCapacity": 225.0,
         "m_upgradeCost": {
@@ -705,7 +705,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1002,
         "m_moduleLevel": 8,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 500.0,
         "m_cargoCapacity": 250.0,
         "m_upgradeCost": {
@@ -742,7 +742,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1002,
         "m_moduleLevel": 9,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 550.0,
         "m_cargoCapacity": 275.0,
         "m_upgradeCost": {
@@ -779,7 +779,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1002,
         "m_moduleLevel": 10,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 600.0,
         "m_cargoCapacity": 300.0,
         "m_upgradeCost": {
@@ -858,7 +858,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1003,
         "m_moduleLevel": 2,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 200.0,
         "m_cargoCapacity": 100.0,
         "m_upgradeCost": {
@@ -895,7 +895,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1003,
         "m_moduleLevel": 3,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 250.0,
         "m_cargoCapacity": 125.0,
         "m_upgradeCost": {
@@ -932,7 +932,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1003,
         "m_moduleLevel": 4,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 300.0,
         "m_cargoCapacity": 150.0,
         "m_upgradeCost": {
@@ -969,7 +969,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1003,
         "m_moduleLevel": 5,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 350.0,
         "m_cargoCapacity": 175.0,
         "m_upgradeCost": {
@@ -1006,7 +1006,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1003,
         "m_moduleLevel": 6,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 400.0,
         "m_cargoCapacity": 200.0,
         "m_upgradeCost": {
@@ -1043,7 +1043,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1003,
         "m_moduleLevel": 7,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 450.0,
         "m_cargoCapacity": 225.0,
         "m_upgradeCost": {
@@ -1080,7 +1080,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1003,
         "m_moduleLevel": 8,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 500.0,
         "m_cargoCapacity": 250.0,
         "m_upgradeCost": {
@@ -1117,7 +1117,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1003,
         "m_moduleLevel": 9,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 550.0,
         "m_cargoCapacity": 275.0,
         "m_upgradeCost": {
@@ -1154,7 +1154,7 @@
         "m_moduleType": 1,
         "m_moduleSubType": 1003,
         "m_moduleLevel": 10,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 600.0,
         "m_cargoCapacity": 300.0,
         "m_upgradeCost": {
@@ -1193,7 +1193,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2001,
         "m_moduleLevel": 1,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 40.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -1230,7 +1230,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2001,
         "m_moduleLevel": 2,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 50.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -1267,7 +1267,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2001,
         "m_moduleLevel": 3,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 60.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -1304,7 +1304,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2001,
         "m_moduleLevel": 4,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 70.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -1341,7 +1341,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2001,
         "m_moduleLevel": 5,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 80.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -1378,7 +1378,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2001,
         "m_moduleLevel": 6,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 90.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -1415,7 +1415,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2001,
         "m_moduleLevel": 7,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 100.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -1452,7 +1452,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2001,
         "m_moduleLevel": 8,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 110.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -1489,7 +1489,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2001,
         "m_moduleLevel": 9,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 120.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -1526,7 +1526,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2001,
         "m_moduleLevel": 10,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 130.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -1563,7 +1563,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2002,
         "m_moduleLevel": 1,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 40.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -1600,7 +1600,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2002,
         "m_moduleLevel": 2,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 50.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -1637,7 +1637,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2002,
         "m_moduleLevel": 3,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 60.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -1674,7 +1674,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2002,
         "m_moduleLevel": 4,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 70.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -1711,7 +1711,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2002,
         "m_moduleLevel": 5,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 80.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -1748,7 +1748,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2002,
         "m_moduleLevel": 6,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 90.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -1785,7 +1785,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2002,
         "m_moduleLevel": 7,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 100.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -1822,7 +1822,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2002,
         "m_moduleLevel": 8,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 110.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -1859,7 +1859,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2002,
         "m_moduleLevel": 9,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 120.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -1896,7 +1896,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2002,
         "m_moduleLevel": 10,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 130.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -1933,7 +1933,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2003,
         "m_moduleLevel": 1,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 40.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -1970,7 +1970,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2003,
         "m_moduleLevel": 2,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 50.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2007,7 +2007,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2003,
         "m_moduleLevel": 3,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 60.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2044,7 +2044,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2003,
         "m_moduleLevel": 4,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 70.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2081,7 +2081,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2003,
         "m_moduleLevel": 5,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 80.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2118,7 +2118,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2003,
         "m_moduleLevel": 6,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 90.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2155,7 +2155,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2003,
         "m_moduleLevel": 7,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 100.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2192,7 +2192,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2003,
         "m_moduleLevel": 8,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 110.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2229,7 +2229,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2003,
         "m_moduleLevel": 9,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 120.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2266,7 +2266,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2003,
         "m_moduleLevel": 10,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 130.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2305,7 +2305,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3001,
         "m_moduleLevel": 1,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 40.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2342,7 +2342,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3001,
         "m_moduleLevel": 2,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 50.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2379,7 +2379,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3001,
         "m_moduleLevel": 3,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 60.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2416,7 +2416,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3001,
         "m_moduleLevel": 4,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 70.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2453,7 +2453,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3001,
         "m_moduleLevel": 5,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 80.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2490,7 +2490,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3001,
         "m_moduleLevel": 6,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 90.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2527,7 +2527,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3001,
         "m_moduleLevel": 7,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 100.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2564,7 +2564,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3001,
         "m_moduleLevel": 8,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 110.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2601,7 +2601,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3001,
         "m_moduleLevel": 9,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 120.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2638,7 +2638,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3001,
         "m_moduleLevel": 10,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 130.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2675,7 +2675,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3002,
         "m_moduleLevel": 1,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 40.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2712,7 +2712,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3002,
         "m_moduleLevel": 2,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 50.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2749,7 +2749,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3002,
         "m_moduleLevel": 3,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 60.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2786,7 +2786,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3002,
         "m_moduleLevel": 4,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 70.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2823,7 +2823,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3002,
         "m_moduleLevel": 5,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 80.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2860,7 +2860,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3002,
         "m_moduleLevel": 6,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 90.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2897,7 +2897,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3002,
         "m_moduleLevel": 7,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 100.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2934,7 +2934,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3002,
         "m_moduleLevel": 8,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 110.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -2971,7 +2971,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3002,
         "m_moduleLevel": 9,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 120.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3008,7 +3008,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3002,
         "m_moduleLevel": 10,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 130.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3047,7 +3047,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4001,
         "m_moduleLevel": 1,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 40.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3084,7 +3084,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4001,
         "m_moduleLevel": 2,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 50.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3121,7 +3121,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4001,
         "m_moduleLevel": 3,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 60.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3158,7 +3158,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4001,
         "m_moduleLevel": 4,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 70.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3195,7 +3195,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4001,
         "m_moduleLevel": 5,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 80.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3232,7 +3232,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4001,
         "m_moduleLevel": 6,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 90.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3269,7 +3269,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4001,
         "m_moduleLevel": 7,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 100.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3306,7 +3306,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4001,
         "m_moduleLevel": 8,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 110.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3343,7 +3343,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4001,
         "m_moduleLevel": 9,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 120.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3380,7 +3380,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4001,
         "m_moduleLevel": 10,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 130.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3417,7 +3417,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4002,
         "m_moduleLevel": 1,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 40.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3454,7 +3454,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4002,
         "m_moduleLevel": 2,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 50.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3491,7 +3491,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4002,
         "m_moduleLevel": 3,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 60.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3528,7 +3528,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4002,
         "m_moduleLevel": 4,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 70.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3565,7 +3565,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4002,
         "m_moduleLevel": 5,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 80.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3602,7 +3602,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4002,
         "m_moduleLevel": 6,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 90.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3639,7 +3639,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4002,
         "m_moduleLevel": 7,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 100.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3676,7 +3676,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4002,
         "m_moduleLevel": 8,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 110.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3713,7 +3713,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4002,
         "m_moduleLevel": 9,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 120.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3750,7 +3750,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4002,
         "m_moduleLevel": 10,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 130.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3789,7 +3789,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5001,
         "m_moduleLevel": 1,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 55.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3826,7 +3826,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5001,
         "m_moduleLevel": 2,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 70.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3863,7 +3863,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5001,
         "m_moduleLevel": 3,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 85.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3900,7 +3900,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5001,
         "m_moduleLevel": 4,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 100.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3937,7 +3937,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5001,
         "m_moduleLevel": 5,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 115.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -3974,7 +3974,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5001,
         "m_moduleLevel": 6,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 130.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -4011,7 +4011,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5001,
         "m_moduleLevel": 7,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 145.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -4048,7 +4048,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5001,
         "m_moduleLevel": 8,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 160.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -4085,7 +4085,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5001,
         "m_moduleLevel": 9,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 175.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -4122,7 +4122,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5001,
         "m_moduleLevel": 10,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 190.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -4159,7 +4159,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5002,
         "m_moduleLevel": 1,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 95.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -4196,7 +4196,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5002,
         "m_moduleLevel": 2,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 110.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -4233,7 +4233,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5002,
         "m_moduleLevel": 3,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 125.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -4270,7 +4270,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5002,
         "m_moduleLevel": 4,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 140.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -4307,7 +4307,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5002,
         "m_moduleLevel": 5,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 155.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -4344,7 +4344,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5002,
         "m_moduleLevel": 6,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 170.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -4381,7 +4381,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5002,
         "m_moduleLevel": 7,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 185.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -4418,7 +4418,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5002,
         "m_moduleLevel": 8,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 200.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -4455,7 +4455,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5002,
         "m_moduleLevel": 9,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 215.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
@@ -4492,7 +4492,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5002,
         "m_moduleLevel": 10,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_health": 230.0,
         "m_cargoCapacity": 0.0,
         "m_upgradeCost": {

@@ -6,14 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * ZoneClearResponse
- * Auto-generated from Unity C# ZoneClearResponse class
+ * ZoneCollectResponse
+ * Auto-generated from Unity C# ZoneCollectResponse class
  */
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class ZoneClearResponse {
-    private String clearedZone;
+public class ZoneCollectResponse {
+    private String collectDateTime;
     private CostRemainInfoDto rewardInfo;
 }

@@ -40,9 +40,25 @@ public class Character {
     @Column(nullable = false)
     private Long mineralDark = 0L;
 
+    // 소수점 자원 누적분 (0.0 ~ 0.999...)
+    @Column(nullable = false)
+    private Double mineralFraction = 0.0;
+
+    @Column(nullable = false)
+    private Double mineralRareFraction = 0.0;
+
+    @Column(nullable = false)
+    private Double mineralExoticFraction = 0.0;
+
+    @Column(nullable = false)
+    private Double mineralDarkFraction = 0.0;
+
     // 클리어한 최고 zone (예: "3-5"), 신규는 빈 문자열
     @Column(nullable = false)
     private String clearedZone = "";
+
+    // 마지막 자원 수집 시간 (zone clear 시 또는 collect 시 갱신)
+    private LocalDateTime collectDateTime;
 
     @Column(nullable = false)
     private boolean deleted = false;

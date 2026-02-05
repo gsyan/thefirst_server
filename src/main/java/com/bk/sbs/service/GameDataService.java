@@ -2,6 +2,8 @@ package com.bk.sbs.service;
 
 import com.bk.sbs.config.DataTableConfig;
 import com.bk.sbs.config.DataTableModule;
+import com.bk.sbs.config.ZoneConfig;
+import com.bk.sbs.dto.ZoneConfigData;
 import com.bk.sbs.dto.CostStructDto;
 import com.bk.sbs.dto.ModuleData;
 import com.bk.sbs.dto.ModuleResearchData;
@@ -23,6 +25,7 @@ import java.util.List;
 public class GameDataService {
     private DataTableConfig dataTableConfig;
     private DataTableModule dataTableModule = new DataTableModule();
+    private ZoneConfig zoneConfig = new ZoneConfig();
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -64,8 +67,15 @@ public class GameDataService {
             } else {
                 log.warn("DataTableModuleResearch.json not found in resources/data/, using empty data");
             }
-            //loadGameConfig(gameConfig);
 
+            ClassPathResource zoneConfigResource = new ClassPathResource("data/DataTableZone.json");
+            if (zoneConfigResource.exists()) {
+                String json = new String(zoneConfigResource.getInputStream().readAllBytes());
+                zoneConfig = objectMapper.readValue(json, ZoneConfig.class);
+                log.info("ZoneConfig.json loaded successfully from resources/data/");
+            } else {
+                log.warn("ZoneConfig.json not found in resources/data/, using empty data");
+            }
 
         } catch (Exception e) {
             log.error("Failed to load game data: " + e.getMessage(), e);
@@ -130,5 +140,13 @@ public class GameDataService {
             return new CostStructDto(0, 0L, 0L, 0L, 0L);
         }
         return dataTableModule.getResearchCost(moduleSubType);
+    }
+
+    public ZoneConfig getZoneConfig() {
+        return zoneConfig != null ? zoneConfig : new ZoneConfig();
+    }
+
+    public ZoneConfigData getZoneConfigByName(String zoneName) {
+        return getZoneConfig().getZoneByName(zoneName);
     }
 }

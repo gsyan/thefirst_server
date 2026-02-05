@@ -1,0 +1,641 @@
+{
+  "zones": [
+    {
+      "zoneName": "Zone-0",
+      "mineralPerHour": 3600.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "1-1",
+      "mineralPerHour": 100.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "1-2",
+      "mineralPerHour": 101.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "1-3",
+      "mineralPerHour": 102.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "1-4",
+      "mineralPerHour": 103.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "1-5",
+      "mineralPerHour": 104.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "1-6",
+      "mineralPerHour": 105.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "1-7",
+      "mineralPerHour": 106.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "1-8",
+      "mineralPerHour": 107.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "1-9",
+      "mineralPerHour": 108.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "1-10",
+      "mineralPerHour": 109.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "2-1",
+      "mineralPerHour": 200.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "2-2",
+      "mineralPerHour": 201.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "2-3",
+      "mineralPerHour": 202.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "2-4",
+      "mineralPerHour": 203.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "2-5",
+      "mineralPerHour": 204.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "2-6",
+      "mineralPerHour": 205.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "2-7",
+      "mineralPerHour": 206.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "2-8",
+      "mineralPerHour": 207.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "2-9",
+      "mineralPerHour": 208.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "2-10",
+      "mineralPerHour": 209.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "3-1",
+      "mineralPerHour": 300.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "3-2",
+      "mineralPerHour": 301.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "3-3",
+      "mineralPerHour": 302.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "3-4",
+      "mineralPerHour": 303.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "3-5",
+      "mineralPerHour": 304.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "3-6",
+      "mineralPerHour": 305.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "3-7",
+      "mineralPerHour": 306.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "3-8",
+      "mineralPerHour": 307.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "3-9",
+      "mineralPerHour": 308.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "3-10",
+      "mineralPerHour": 309.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "4-1",
+      "mineralPerHour": 400.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "4-2",
+      "mineralPerHour": 401.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "4-3",
+      "mineralPerHour": 402.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "4-4",
+      "mineralPerHour": 403.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "4-5",
+      "mineralPerHour": 404.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "4-6",
+      "mineralPerHour": 405.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "4-7",
+      "mineralPerHour": 406.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "4-8",
+      "mineralPerHour": 407.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "4-9",
+      "mineralPerHour": 408.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "4-10",
+      "mineralPerHour": 409.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "5-1",
+      "mineralPerHour": 500.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "5-2",
+      "mineralPerHour": 501.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "5-3",
+      "mineralPerHour": 502.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "5-4",
+      "mineralPerHour": 503.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "5-5",
+      "mineralPerHour": 504.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "5-6",
+      "mineralPerHour": 505.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "5-7",
+      "mineralPerHour": 506.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "5-8",
+      "mineralPerHour": 507.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "5-9",
+      "mineralPerHour": 508.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "5-10",
+      "mineralPerHour": 509.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "6-1",
+      "mineralPerHour": 600.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "6-2",
+      "mineralPerHour": 601.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "6-3",
+      "mineralPerHour": 602.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "6-4",
+      "mineralPerHour": 603.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "6-5",
+      "mineralPerHour": 604.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "6-6",
+      "mineralPerHour": 605.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "6-7",
+      "mineralPerHour": 606.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "6-8",
+      "mineralPerHour": 607.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "6-9",
+      "mineralPerHour": 608.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "6-10",
+      "mineralPerHour": 609.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "7-1",
+      "mineralPerHour": 700.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "7-2",
+      "mineralPerHour": 701.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "7-3",
+      "mineralPerHour": 702.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "7-4",
+      "mineralPerHour": 703.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "7-5",
+      "mineralPerHour": 704.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "7-6",
+      "mineralPerHour": 705.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "7-7",
+      "mineralPerHour": 706.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "7-8",
+      "mineralPerHour": 707.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "7-9",
+      "mineralPerHour": 708.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "7-10",
+      "mineralPerHour": 709.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "8-1",
+      "mineralPerHour": 800.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "8-2",
+      "mineralPerHour": 801.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "8-3",
+      "mineralPerHour": 802.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "8-4",
+      "mineralPerHour": 803.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "8-5",
+      "mineralPerHour": 804.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "8-6",
+      "mineralPerHour": 805.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "8-7",
+      "mineralPerHour": 806.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "8-8",
+      "mineralPerHour": 807.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "8-9",
+      "mineralPerHour": 808.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "8-10",
+      "mineralPerHour": 809.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "9-1",
+      "mineralPerHour": 900.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "9-2",
+      "mineralPerHour": 901.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "9-3",
+      "mineralPerHour": 902.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "9-4",
+      "mineralPerHour": 903.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "9-5",
+      "mineralPerHour": 904.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "9-6",
+      "mineralPerHour": 905.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "9-7",
+      "mineralPerHour": 906.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "9-8",
+      "mineralPerHour": 907.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "9-9",
+      "mineralPerHour": 908.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    },
+    {
+      "zoneName": "9-10",
+      "mineralPerHour": 909.0,
+      "mineralRarePerHour": 0.0,
+      "mineralExoticPerHour": 0.0,
+      "mineralDarkPerHour": 0.0
+    }
+  ]
+}

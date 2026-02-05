@@ -21,4 +21,5 @@ public class CharacterInfoDto {
     private Long mineralExotic;
     private Long mineralDark;
     private String clearedZone;
+    private String collectDateTime;
 }
