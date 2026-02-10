@@ -21,7 +21,7 @@ public class ModuleTypeConverter {
 
     public static EModuleSubType getSubType(int packed) {
         int pureSubType = (packed >> SUBTYPE_SHIFT) & MASK;
-        if (pureSubType == 0) return EModuleSubType.None;
+        if (pureSubType == 0) return EModuleSubType.none;
 
         // Type 정보를 가져와서 완전한 SubType 값으로 복원 (Type=1, SubType=1 -> 1001)
         EModuleType type = getType(packed);

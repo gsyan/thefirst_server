@@ -8,13 +8,13 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * Auto-generated from Unity C# EModuleType enum
  */
 public enum EModuleType {
-    None(0),
-    Body(1),
-    Engine(2),
-    Beam(3),
-    Missile(4),
-    Hanger(5),
-    Max(6);
+    none(0),
+    body(1),
+    engine(2),
+    beam(3),
+    missile(4),
+    hanger(5),
+    max(6);
 
     private final int value;
 
@@ -32,6 +32,6 @@ public enum EModuleType {
         for (EModuleType type : values()) {
             if (type.value == value) return type;
         }
-        return None;
+        return none;
     }
 }

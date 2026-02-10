@@ -79,7 +79,7 @@ public class FleetService {
         fleet.setFleetName(fleetName);
         fleet.setDescription(description);
         fleet.setActive(false); // 기본값: 비활성
-        fleet.setFormation(EFormationType.LinearHorizontal);
+        fleet.setFormation(EFormationType.formation_type_linear_horizontal);
         
         fleet = fleetRepository.save(fleet);
         
@@ -100,17 +100,17 @@ public class FleetService {
         defaultShip = shipRepository.save(defaultShip);
 
         // GameDataService에서 레벨 1 모듈 데이터 가져오기
-        ModuleData bodyData = gameDataService.getFirstModuleByType(EModuleType.Body);
-        ModuleData engineData = gameDataService.getFirstModuleByType(EModuleType.Engine);
-        ModuleData beamData = gameDataService.getFirstModuleByType(EModuleType.Beam);
-        ModuleData missileData = gameDataService.getFirstModuleByType(EModuleType.Missile);
-        ModuleData hangerData = gameDataService.getFirstModuleByType(EModuleType.Hanger);
+        ModuleData bodyData = gameDataService.getFirstModuleByType(EModuleType.body);
+        ModuleData engineData = gameDataService.getFirstModuleByType(EModuleType.engine);
+        ModuleData beamData = gameDataService.getFirstModuleByType(EModuleType.beam);
+        ModuleData missileData = gameDataService.getFirstModuleByType(EModuleType.missile);
+        ModuleData hangerData = gameDataService.getFirstModuleByType(EModuleType.hanger);
 
         // 1. Body
         ShipModule bodyModule = new ShipModule();
         bodyModule.setShip(defaultShip);
-        bodyModule.setModuleType(EModuleType.Body);
-        bodyModule.setModuleSubType(EModuleSubType.Body_Battle);
+        bodyModule.setModuleType(EModuleType.body);
+        bodyModule.setModuleSubType(EModuleSubType.body_battle);
         //bodyModule.setModuleSubType(EModuleSubType.Body_Aircraft);
         bodyModule.setModuleLevel(bodyData.getModuleLevel());
         bodyModule.setBodyIndex(0);
@@ -120,8 +120,8 @@ public class FleetService {
         // 2. Engine
         ShipModule engineModule = new ShipModule();
         engineModule.setShip(defaultShip);
-        engineModule.setModuleType(EModuleType.Engine);
-        engineModule.setModuleSubType(EModuleSubType.Engine_Standard);
+        engineModule.setModuleType(EModuleType.engine);
+        engineModule.setModuleSubType(EModuleSubType.engine_standard);
         engineModule.setModuleLevel(engineData.getModuleLevel());
         engineModule.setBodyIndex(0);
         engineModule.setSlotIndex(0);
@@ -402,7 +402,7 @@ public class FleetService {
 
     private List<ModuleBodyInfoDto> convertToBodyModules(List<ShipModule> modules) {
         return modules.stream()
-                .filter(m -> m.getModuleType() == EModuleType.Body)
+                .filter(m -> m.getModuleType() == EModuleType.body)
                 .map(bodyModule -> {
                     ModuleBodyInfoDto bodyDto = ModuleBodyInfoDto.builder()
                             .moduleType(bodyModule.getModuleType())
@@ -413,7 +413,7 @@ public class FleetService {
 
                     int bodyIndex = bodyModule.getBodyIndex();
                     List<ModuleInfoDto> engines = modules.stream()
-                            .filter(m -> m.getModuleType() == EModuleType.Engine && m.getBodyIndex() == bodyIndex)
+                            .filter(m -> m.getModuleType() == EModuleType.engine && m.getBodyIndex() == bodyIndex)
                             .map(engineModule -> {
                                 ModuleInfoDto engineDto = ModuleInfoDto.builder()
                                         .moduleType(engineModule.getModuleType())
@@ -427,7 +427,7 @@ public class FleetService {
                             .collect(Collectors.toList());
 
                     List<ModuleInfoDto> beams = modules.stream()
-                            .filter(m -> m.getModuleType() == EModuleType.Beam && m.getBodyIndex() == bodyIndex)
+                            .filter(m -> m.getModuleType() == EModuleType.beam && m.getBodyIndex() == bodyIndex)
                             .map(beamModule -> {
                                 ModuleInfoDto beamDto = ModuleInfoDto.builder()
                                         .moduleType(beamModule.getModuleType())
@@ -441,7 +441,7 @@ public class FleetService {
                             .collect(Collectors.toList());
 
                     List<ModuleInfoDto> missiles = modules.stream()
-                            .filter(m -> m.getModuleType() == EModuleType.Missile && m.getBodyIndex() == bodyIndex)
+                            .filter(m -> m.getModuleType() == EModuleType.missile && m.getBodyIndex() == bodyIndex)
                             .map(missileModule -> {
                                 ModuleInfoDto missileDto = ModuleInfoDto.builder()
                                         .moduleType(missileModule.getModuleType())
@@ -455,7 +455,7 @@ public class FleetService {
                             .collect(Collectors.toList());
 
                     List<ModuleInfoDto> hangers = modules.stream()
-                            .filter(m -> m.getModuleType() == EModuleType.Hanger && m.getBodyIndex() == bodyIndex)
+                            .filter(m -> m.getModuleType() == EModuleType.hanger && m.getBodyIndex() == bodyIndex)
                             .map(hangerModule -> {
                                 ModuleInfoDto hangerDto = ModuleInfoDto.builder()
                                         .moduleType(hangerModule.getModuleType())
@@ -583,8 +583,8 @@ public class FleetService {
         // Body 모듈
         ShipModule bodyModule = new ShipModule();
         bodyModule.setShip(ship);
-        bodyModule.setModuleType(EModuleType.Body);
-        bodyModule.setModuleSubType(EModuleSubType.Body_Battle);
+        bodyModule.setModuleType(EModuleType.body);
+        bodyModule.setModuleSubType(EModuleSubType.body_battle);
         bodyModule.setModuleLevel(1);
         bodyModule.setBodyIndex(0);
         bodyModule.setSlotIndex(0);
@@ -596,8 +596,8 @@ public class FleetService {
         // Engine 모듈
         ShipModule engineModule = new ShipModule();
         engineModule.setShip(ship);
-        engineModule.setModuleType(EModuleType.Engine);
-        engineModule.setModuleSubType(EModuleSubType.Engine_Standard);
+        engineModule.setModuleType(EModuleType.engine);
+        engineModule.setModuleSubType(EModuleSubType.engine_standard);
         engineModule.setModuleLevel(1);
         engineModule.setBodyIndex(0);
         engineModule.setSlotIndex(0);
@@ -609,8 +609,8 @@ public class FleetService {
         // Beam 모듈
         ShipModule weaponModule = new ShipModule();
         weaponModule.setShip(ship);
-        weaponModule.setModuleType(EModuleType.Beam);
-        weaponModule.setModuleSubType(EModuleSubType.Beam_Standard);
+        weaponModule.setModuleType(EModuleType.beam);
+        weaponModule.setModuleSubType(EModuleSubType.beam_standard);
         weaponModule.setModuleLevel(1);
         weaponModule.setBodyIndex(0);
         weaponModule.setSlotIndex(0);
@@ -823,12 +823,12 @@ public class FleetService {
         ShipModule bodyModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
                 request.getShipId(),
                 request.getBodyIndex(),
-                EModuleType.Body,
+                EModuleType.body,
                 0 // Body는 항상 slotIndex 0
         ).orElseThrow(() -> new BusinessException(ServerErrorCode.UNLOCK_MODULE_FAIL_BODY_MODULE_NOT_FOUND));
 
         // 2. Body 모듈의 데이터 가져오기
-        List<ModuleData> bodyModuleDataList = gameDataService.getModulesByType(EModuleType.Body);
+        List<ModuleData> bodyModuleDataList = gameDataService.getModulesByType(EModuleType.body);
         ModuleData bodyData = bodyModuleDataList.stream()
                 .filter(data -> data.getModuleLevel() == bodyModule.getModuleLevel() &&
                         data.getModuleSubType() == bodyModule.getModuleSubType())

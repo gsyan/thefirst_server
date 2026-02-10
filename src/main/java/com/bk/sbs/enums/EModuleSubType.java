@@ -8,19 +8,19 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * Auto-generated from Unity C# EModuleSubType enum
  */
 public enum EModuleSubType {
-    None(0),
-    Body_Battle(1001),
-    Body_Aircraft(1002),
-    Body_Repair(1003),
-    Engine_Standard(2001),
-    Engine_Booster(2002),
-    Engine_Warp(2003),
-    Beam_Standard(3001),
-    Beam_Advanced(3002),
-    Missile_Standard(4001),
-    Missile_Advanced(4002),
-    Hanger_Standard(5001),
-    Hanger_Advanced(5002);
+    none(0),
+    body_battle(1001),
+    body_aircraft(1002),
+    body_repair(1003),
+    engine_standard(2001),
+    engine_booster(2002),
+    engine_warp(2003),
+    beam_standard(3001),
+    beam_advanced(3002),
+    missile_standard(4001),
+    missile_advanced(4002),
+    hanger_standard(5001),
+    hanger_advanced(5002);
 
     private final int value;
 
@@ -38,6 +38,6 @@ public enum EModuleSubType {
         for (EModuleSubType type : values()) {
             if (type.value == value) return type;
         }
-        return None;
+        return none;
     }
 }

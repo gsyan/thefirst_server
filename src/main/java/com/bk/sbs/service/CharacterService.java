@@ -76,8 +76,8 @@ public class CharacterService {
         // Body - Battle
         ModuleResearch researchBody = new ModuleResearch();
         researchBody.setCharacterId(characterId);
-        researchBody.setModuleType(EModuleType.Body);
-        researchBody.setModuleSubType(EModuleSubType.Body_Battle);
+        researchBody.setModuleType(EModuleType.body);
+        researchBody.setModuleSubType(EModuleSubType.body_battle);
         researchBody.setResearched(true);
         researchBody.setCreated(now);
         researchBody.setModified(now);
@@ -86,8 +86,8 @@ public class CharacterService {
         // Engine - Standard
         ModuleResearch researchEngine = new ModuleResearch();
         researchEngine.setCharacterId(characterId);
-        researchEngine.setModuleType(EModuleType.Engine);
-        researchEngine.setModuleSubType(EModuleSubType.Engine_Standard);
+        researchEngine.setModuleType(EModuleType.engine);
+        researchEngine.setModuleSubType(EModuleSubType.engine_standard);
         researchEngine.setResearched(true);
         researchEngine.setCreated(now);
         researchEngine.setModified(now);
@@ -96,8 +96,8 @@ public class CharacterService {
         // Beam
         ModuleResearch researchWeapon = new ModuleResearch();
         researchWeapon.setCharacterId(characterId);
-        researchWeapon.setModuleType(EModuleType.Beam);
-        researchWeapon.setModuleSubType(EModuleSubType.Beam_Standard);
+        researchWeapon.setModuleType(EModuleType.beam);
+        researchWeapon.setModuleSubType(EModuleSubType.beam_standard);
         researchWeapon.setResearched(true);
         researchWeapon.setCreated(now);
         researchWeapon.setModified(now);
@@ -106,8 +106,8 @@ public class CharacterService {
         // Missile
         ModuleResearch researchMissile = new ModuleResearch();
         researchMissile.setCharacterId(characterId);
-        researchMissile.setModuleType(EModuleType.Missile);
-        researchMissile.setModuleSubType(EModuleSubType.Missile_Standard);
+        researchMissile.setModuleType(EModuleType.missile);
+        researchMissile.setModuleSubType(EModuleSubType.missile_standard);
         researchMissile.setResearched(true);
         researchMissile.setCreated(now);
         researchMissile.setModified(now);
@@ -116,8 +116,8 @@ public class CharacterService {
         // Hanger - Standard
         ModuleResearch researchHanger = new ModuleResearch();
         researchHanger.setCharacterId(characterId);
-        researchHanger.setModuleType(EModuleType.Hanger);
-        researchHanger.setModuleSubType(EModuleSubType.Hanger_Standard);
+        researchHanger.setModuleType(EModuleType.hanger);
+        researchHanger.setModuleSubType(EModuleSubType.hanger_standard);
         researchHanger.setResearched(true);
         researchHanger.setCreated(now);
         researchHanger.setModified(now);

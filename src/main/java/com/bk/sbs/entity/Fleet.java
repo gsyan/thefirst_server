@@ -34,7 +34,7 @@ public class Fleet {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private EFormationType formation = EFormationType.LinearHorizontal;
+    private EFormationType formation = EFormationType.formation_type_linear_horizontal;
 
     @Column(nullable = false)
     private LocalDateTime created = LocalDateTime.now();
