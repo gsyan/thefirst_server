@@ -28,8 +28,6 @@
             "slotIndex": 0
           }
         ],
-        "m_health": 150.0,
-        "m_cargoCapacity": 75.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 100,
@@ -38,6 +36,9 @@
           "mineralDark": 0
         },
         "m_description": "body_battle-class hull module level 1",
+        "m_health": 150.0,
+        "m_cargoCapacity": 75.0,
+        "m_repairPower": 2.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -65,8 +66,6 @@
         "m_moduleSubType": 1001,
         "m_moduleLevel": 2,
         "m_moduleSlots": null,
-        "m_health": 200.0,
-        "m_cargoCapacity": 100.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 200,
@@ -75,6 +74,9 @@
           "mineralDark": 0
         },
         "m_description": "body_battle-class hull module level 2",
+        "m_health": 200.0,
+        "m_cargoCapacity": 100.0,
+        "m_repairPower": 3.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -102,8 +104,6 @@
         "m_moduleSubType": 1001,
         "m_moduleLevel": 3,
         "m_moduleSlots": null,
-        "m_health": 250.0,
-        "m_cargoCapacity": 125.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 400,
@@ -112,6 +112,9 @@
           "mineralDark": 0
         },
         "m_description": "body_battle-class hull module level 3",
+        "m_health": 250.0,
+        "m_cargoCapacity": 125.0,
+        "m_repairPower": 4.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -139,8 +142,6 @@
         "m_moduleSubType": 1001,
         "m_moduleLevel": 4,
         "m_moduleSlots": null,
-        "m_health": 300.0,
-        "m_cargoCapacity": 150.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 800,
@@ -149,6 +150,9 @@
           "mineralDark": 0
         },
         "m_description": "body_battle-class hull module level 4",
+        "m_health": 300.0,
+        "m_cargoCapacity": 150.0,
+        "m_repairPower": 5.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -176,8 +180,6 @@
         "m_moduleSubType": 1001,
         "m_moduleLevel": 5,
         "m_moduleSlots": null,
-        "m_health": 350.0,
-        "m_cargoCapacity": 175.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 1600,
@@ -186,6 +188,9 @@
           "mineralDark": 0
         },
         "m_description": "body_battle-class hull module level 5",
+        "m_health": 350.0,
+        "m_cargoCapacity": 175.0,
+        "m_repairPower": 6.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -213,8 +218,6 @@
         "m_moduleSubType": 1001,
         "m_moduleLevel": 6,
         "m_moduleSlots": null,
-        "m_health": 400.0,
-        "m_cargoCapacity": 200.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 3200,
@@ -223,6 +226,9 @@
           "mineralDark": 0
         },
         "m_description": "body_battle-class hull module level 6",
+        "m_health": 400.0,
+        "m_cargoCapacity": 200.0,
+        "m_repairPower": 7.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -250,8 +256,6 @@
         "m_moduleSubType": 1001,
         "m_moduleLevel": 7,
         "m_moduleSlots": null,
-        "m_health": 450.0,
-        "m_cargoCapacity": 225.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 6400,
@@ -260,6 +264,9 @@
           "mineralDark": 0
         },
         "m_description": "body_battle-class hull module level 7",
+        "m_health": 450.0,
+        "m_cargoCapacity": 225.0,
+        "m_repairPower": 8.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -287,8 +294,6 @@
         "m_moduleSubType": 1001,
         "m_moduleLevel": 8,
         "m_moduleSlots": null,
-        "m_health": 500.0,
-        "m_cargoCapacity": 250.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 12800,
@@ -297,6 +302,9 @@
           "mineralDark": 0
         },
         "m_description": "body_battle-class hull module level 8",
+        "m_health": 500.0,
+        "m_cargoCapacity": 250.0,
+        "m_repairPower": 9.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -324,8 +332,6 @@
         "m_moduleSubType": 1001,
         "m_moduleLevel": 9,
         "m_moduleSlots": null,
-        "m_health": 550.0,
-        "m_cargoCapacity": 275.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 25600,
@@ -334,6 +340,9 @@
           "mineralDark": 0
         },
         "m_description": "body_battle-class hull module level 9",
+        "m_health": 550.0,
+        "m_cargoCapacity": 275.0,
+        "m_repairPower": 10.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -402,8 +411,6 @@
             "slotIndex": 0
           }
         ],
-        "m_health": 600.0,
-        "m_cargoCapacity": 300.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 51200,
@@ -412,6 +419,9 @@
           "mineralDark": 0
         },
         "m_description": "body_battle-class hull module level 10",
+        "m_health": 600.0,
+        "m_cargoCapacity": 300.0,
+        "m_repairPower": 11.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -468,8 +478,6 @@
             "slotIndex": 1
           }
         ],
-        "m_health": 150.0,
-        "m_cargoCapacity": 75.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 1000,
@@ -478,6 +486,9 @@
           "mineralDark": 0
         },
         "m_description": "body_aircraft-class hull module level 1",
+        "m_health": 150.0,
+        "m_cargoCapacity": 75.0,
+        "m_repairPower": 2.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -505,8 +516,6 @@
         "m_moduleSubType": 1002,
         "m_moduleLevel": 2,
         "m_moduleSlots": null,
-        "m_health": 200.0,
-        "m_cargoCapacity": 100.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 2000,
@@ -515,6 +524,9 @@
           "mineralDark": 0
         },
         "m_description": "body_aircraft-class hull module level 2",
+        "m_health": 200.0,
+        "m_cargoCapacity": 100.0,
+        "m_repairPower": 3.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -542,8 +554,6 @@
         "m_moduleSubType": 1002,
         "m_moduleLevel": 3,
         "m_moduleSlots": null,
-        "m_health": 250.0,
-        "m_cargoCapacity": 125.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 4000,
@@ -552,6 +562,9 @@
           "mineralDark": 0
         },
         "m_description": "body_aircraft-class hull module level 3",
+        "m_health": 250.0,
+        "m_cargoCapacity": 125.0,
+        "m_repairPower": 4.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -579,8 +592,6 @@
         "m_moduleSubType": 1002,
         "m_moduleLevel": 4,
         "m_moduleSlots": null,
-        "m_health": 300.0,
-        "m_cargoCapacity": 150.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 8000,
@@ -589,6 +600,9 @@
           "mineralDark": 0
         },
         "m_description": "body_aircraft-class hull module level 4",
+        "m_health": 300.0,
+        "m_cargoCapacity": 150.0,
+        "m_repairPower": 5.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -616,8 +630,6 @@
         "m_moduleSubType": 1002,
         "m_moduleLevel": 5,
         "m_moduleSlots": null,
-        "m_health": 350.0,
-        "m_cargoCapacity": 175.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 16000,
@@ -626,6 +638,9 @@
           "mineralDark": 0
         },
         "m_description": "body_aircraft-class hull module level 5",
+        "m_health": 350.0,
+        "m_cargoCapacity": 175.0,
+        "m_repairPower": 6.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -653,8 +668,6 @@
         "m_moduleSubType": 1002,
         "m_moduleLevel": 6,
         "m_moduleSlots": null,
-        "m_health": 400.0,
-        "m_cargoCapacity": 200.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 32000,
@@ -663,6 +676,9 @@
           "mineralDark": 0
         },
         "m_description": "body_aircraft-class hull module level 6",
+        "m_health": 400.0,
+        "m_cargoCapacity": 200.0,
+        "m_repairPower": 7.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -690,8 +706,6 @@
         "m_moduleSubType": 1002,
         "m_moduleLevel": 7,
         "m_moduleSlots": null,
-        "m_health": 450.0,
-        "m_cargoCapacity": 225.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 64000,
@@ -700,6 +714,9 @@
           "mineralDark": 0
         },
         "m_description": "body_aircraft-class hull module level 7",
+        "m_health": 450.0,
+        "m_cargoCapacity": 225.0,
+        "m_repairPower": 8.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -727,8 +744,6 @@
         "m_moduleSubType": 1002,
         "m_moduleLevel": 8,
         "m_moduleSlots": null,
-        "m_health": 500.0,
-        "m_cargoCapacity": 250.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 128000,
@@ -737,6 +752,9 @@
           "mineralDark": 0
         },
         "m_description": "body_aircraft-class hull module level 8",
+        "m_health": 500.0,
+        "m_cargoCapacity": 250.0,
+        "m_repairPower": 9.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -764,8 +782,6 @@
         "m_moduleSubType": 1002,
         "m_moduleLevel": 9,
         "m_moduleSlots": null,
-        "m_health": 550.0,
-        "m_cargoCapacity": 275.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 256000,
@@ -774,6 +790,9 @@
           "mineralDark": 0
         },
         "m_description": "body_aircraft-class hull module level 9",
+        "m_health": 550.0,
+        "m_cargoCapacity": 275.0,
+        "m_repairPower": 10.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -801,8 +820,6 @@
         "m_moduleSubType": 1002,
         "m_moduleLevel": 10,
         "m_moduleSlots": null,
-        "m_health": 600.0,
-        "m_cargoCapacity": 300.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 512000,
@@ -811,6 +828,9 @@
           "mineralDark": 0
         },
         "m_description": "body_aircraft-class hull module level 10",
+        "m_health": 600.0,
+        "m_cargoCapacity": 300.0,
+        "m_repairPower": 11.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -843,8 +863,6 @@
             "slotIndex": 0
           }
         ],
-        "m_health": 150.0,
-        "m_cargoCapacity": 75.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 1000,
@@ -853,6 +871,9 @@
           "mineralDark": 0
         },
         "m_description": "body_repair-class hull module level 1",
+        "m_health": 150.0,
+        "m_cargoCapacity": 75.0,
+        "m_repairPower": 2.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -880,8 +901,6 @@
         "m_moduleSubType": 1003,
         "m_moduleLevel": 2,
         "m_moduleSlots": null,
-        "m_health": 200.0,
-        "m_cargoCapacity": 100.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 2000,
@@ -890,6 +909,9 @@
           "mineralDark": 0
         },
         "m_description": "body_repair-class hull module level 2",
+        "m_health": 200.0,
+        "m_cargoCapacity": 100.0,
+        "m_repairPower": 3.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -917,8 +939,6 @@
         "m_moduleSubType": 1003,
         "m_moduleLevel": 3,
         "m_moduleSlots": null,
-        "m_health": 250.0,
-        "m_cargoCapacity": 125.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 4000,
@@ -927,6 +947,9 @@
           "mineralDark": 0
         },
         "m_description": "body_repair-class hull module level 3",
+        "m_health": 250.0,
+        "m_cargoCapacity": 125.0,
+        "m_repairPower": 4.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -954,8 +977,6 @@
         "m_moduleSubType": 1003,
         "m_moduleLevel": 4,
         "m_moduleSlots": null,
-        "m_health": 300.0,
-        "m_cargoCapacity": 150.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 8000,
@@ -964,6 +985,9 @@
           "mineralDark": 0
         },
         "m_description": "body_repair-class hull module level 4",
+        "m_health": 300.0,
+        "m_cargoCapacity": 150.0,
+        "m_repairPower": 5.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -991,8 +1015,6 @@
         "m_moduleSubType": 1003,
         "m_moduleLevel": 5,
         "m_moduleSlots": null,
-        "m_health": 350.0,
-        "m_cargoCapacity": 175.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 16000,
@@ -1001,6 +1023,9 @@
           "mineralDark": 0
         },
         "m_description": "body_repair-class hull module level 5",
+        "m_health": 350.0,
+        "m_cargoCapacity": 175.0,
+        "m_repairPower": 6.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1028,8 +1053,6 @@
         "m_moduleSubType": 1003,
         "m_moduleLevel": 6,
         "m_moduleSlots": null,
-        "m_health": 400.0,
-        "m_cargoCapacity": 200.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 32000,
@@ -1038,6 +1061,9 @@
           "mineralDark": 0
         },
         "m_description": "body_repair-class hull module level 6",
+        "m_health": 400.0,
+        "m_cargoCapacity": 200.0,
+        "m_repairPower": 7.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1065,8 +1091,6 @@
         "m_moduleSubType": 1003,
         "m_moduleLevel": 7,
         "m_moduleSlots": null,
-        "m_health": 450.0,
-        "m_cargoCapacity": 225.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 64000,
@@ -1075,6 +1099,9 @@
           "mineralDark": 0
         },
         "m_description": "body_repair-class hull module level 7",
+        "m_health": 450.0,
+        "m_cargoCapacity": 225.0,
+        "m_repairPower": 8.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1102,8 +1129,6 @@
         "m_moduleSubType": 1003,
         "m_moduleLevel": 8,
         "m_moduleSlots": null,
-        "m_health": 500.0,
-        "m_cargoCapacity": 250.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 128000,
@@ -1112,6 +1137,9 @@
           "mineralDark": 0
         },
         "m_description": "body_repair-class hull module level 8",
+        "m_health": 500.0,
+        "m_cargoCapacity": 250.0,
+        "m_repairPower": 9.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1139,8 +1167,6 @@
         "m_moduleSubType": 1003,
         "m_moduleLevel": 9,
         "m_moduleSlots": null,
-        "m_health": 550.0,
-        "m_cargoCapacity": 275.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 256000,
@@ -1149,6 +1175,9 @@
           "mineralDark": 0
         },
         "m_description": "body_repair-class hull module level 9",
+        "m_health": 550.0,
+        "m_cargoCapacity": 275.0,
+        "m_repairPower": 10.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1176,8 +1205,6 @@
         "m_moduleSubType": 1003,
         "m_moduleLevel": 10,
         "m_moduleSlots": null,
-        "m_health": 600.0,
-        "m_cargoCapacity": 300.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 512000,
@@ -1186,6 +1213,9 @@
           "mineralDark": 0
         },
         "m_description": "body_repair-class hull module level 10",
+        "m_health": 600.0,
+        "m_cargoCapacity": 300.0,
+        "m_repairPower": 11.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1215,8 +1245,6 @@
         "m_moduleSubType": 2001,
         "m_moduleLevel": 1,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 100,
@@ -1225,6 +1253,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_standard LV.1",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 55.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1252,8 +1283,6 @@
         "m_moduleSubType": 2001,
         "m_moduleLevel": 2,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 200,
@@ -1262,6 +1291,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_standard LV.2",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 60.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1289,8 +1321,6 @@
         "m_moduleSubType": 2001,
         "m_moduleLevel": 3,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 400,
@@ -1299,6 +1329,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_standard LV.3",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 65.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1326,8 +1359,6 @@
         "m_moduleSubType": 2001,
         "m_moduleLevel": 4,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 800,
@@ -1336,6 +1367,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_standard LV.4",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 70.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1363,8 +1397,6 @@
         "m_moduleSubType": 2001,
         "m_moduleLevel": 5,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 1600,
@@ -1373,6 +1405,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_standard LV.5",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 75.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1400,8 +1435,6 @@
         "m_moduleSubType": 2001,
         "m_moduleLevel": 6,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 3200,
@@ -1410,6 +1443,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_standard LV.6",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 80.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1437,8 +1473,6 @@
         "m_moduleSubType": 2001,
         "m_moduleLevel": 7,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 6400,
@@ -1447,6 +1481,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_standard LV.7",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 85.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1474,8 +1511,6 @@
         "m_moduleSubType": 2001,
         "m_moduleLevel": 8,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 12800,
@@ -1484,6 +1519,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_standard LV.8",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 90.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1511,8 +1549,6 @@
         "m_moduleSubType": 2001,
         "m_moduleLevel": 9,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 25600,
@@ -1521,6 +1557,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_standard LV.9",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 95.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1548,8 +1587,6 @@
         "m_moduleSubType": 2001,
         "m_moduleLevel": 10,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 51200,
@@ -1558,6 +1595,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_standard LV.10",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 100.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1585,8 +1625,6 @@
         "m_moduleSubType": 2002,
         "m_moduleLevel": 1,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 1000,
@@ -1595,6 +1633,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_booster LV.1",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 55.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1622,8 +1663,6 @@
         "m_moduleSubType": 2002,
         "m_moduleLevel": 2,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 2000,
@@ -1632,6 +1671,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_booster LV.2",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 60.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1659,8 +1701,6 @@
         "m_moduleSubType": 2002,
         "m_moduleLevel": 3,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 4000,
@@ -1669,6 +1709,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_booster LV.3",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 65.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1696,8 +1739,6 @@
         "m_moduleSubType": 2002,
         "m_moduleLevel": 4,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 8000,
@@ -1706,6 +1747,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_booster LV.4",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 70.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1733,8 +1777,6 @@
         "m_moduleSubType": 2002,
         "m_moduleLevel": 5,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 16000,
@@ -1743,6 +1785,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_booster LV.5",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 75.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1770,8 +1815,6 @@
         "m_moduleSubType": 2002,
         "m_moduleLevel": 6,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 32000,
@@ -1780,6 +1823,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_booster LV.6",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 80.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1807,8 +1853,6 @@
         "m_moduleSubType": 2002,
         "m_moduleLevel": 7,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 64000,
@@ -1817,6 +1861,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_booster LV.7",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 85.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1844,8 +1891,6 @@
         "m_moduleSubType": 2002,
         "m_moduleLevel": 8,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 128000,
@@ -1854,6 +1899,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_booster LV.8",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 90.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1881,8 +1929,6 @@
         "m_moduleSubType": 2002,
         "m_moduleLevel": 9,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 256000,
@@ -1891,6 +1937,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_booster LV.9",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 95.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1918,8 +1967,6 @@
         "m_moduleSubType": 2002,
         "m_moduleLevel": 10,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 512000,
@@ -1928,6 +1975,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_booster LV.10",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 100.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1955,8 +2005,6 @@
         "m_moduleSubType": 2003,
         "m_moduleLevel": 1,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 1000,
@@ -1965,6 +2013,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_warp LV.1",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 55.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -1992,8 +2043,6 @@
         "m_moduleSubType": 2003,
         "m_moduleLevel": 2,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 2000,
@@ -2002,6 +2051,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_warp LV.2",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 60.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -2029,8 +2081,6 @@
         "m_moduleSubType": 2003,
         "m_moduleLevel": 3,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 4000,
@@ -2039,6 +2089,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_warp LV.3",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 65.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -2066,8 +2119,6 @@
         "m_moduleSubType": 2003,
         "m_moduleLevel": 4,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 8000,
@@ -2076,6 +2127,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_warp LV.4",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 70.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -2103,8 +2157,6 @@
         "m_moduleSubType": 2003,
         "m_moduleLevel": 5,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 16000,
@@ -2113,6 +2165,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_warp LV.5",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 75.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -2140,8 +2195,6 @@
         "m_moduleSubType": 2003,
         "m_moduleLevel": 6,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 32000,
@@ -2150,6 +2203,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_warp LV.6",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 80.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -2177,8 +2233,6 @@
         "m_moduleSubType": 2003,
         "m_moduleLevel": 7,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 64000,
@@ -2187,6 +2241,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_warp LV.7",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 85.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -2214,8 +2271,6 @@
         "m_moduleSubType": 2003,
         "m_moduleLevel": 8,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 128000,
@@ -2224,6 +2279,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_warp LV.8",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 90.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -2251,8 +2309,6 @@
         "m_moduleSubType": 2003,
         "m_moduleLevel": 9,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 256000,
@@ -2261,6 +2317,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_warp LV.9",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 95.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -2288,8 +2347,6 @@
         "m_moduleSubType": 2003,
         "m_moduleLevel": 10,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 512000,
@@ -2298,6 +2355,9 @@
           "mineralDark": 0
         },
         "m_description": "engine_warp LV.10",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 100.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -2327,8 +2387,6 @@
         "m_moduleSubType": 3001,
         "m_moduleLevel": 1,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 100,
@@ -2337,6 +2395,9 @@
           "mineralDark": 0
         },
         "m_description": "beam_standard Lv.1",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 15.0,
@@ -2364,8 +2425,6 @@
         "m_moduleSubType": 3001,
         "m_moduleLevel": 2,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 200,
@@ -2374,6 +2433,9 @@
           "mineralDark": 0
         },
         "m_description": "beam_standard Lv.2",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 20.0,
@@ -2401,8 +2463,6 @@
         "m_moduleSubType": 3001,
         "m_moduleLevel": 3,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 400,
@@ -2411,6 +2471,9 @@
           "mineralDark": 0
         },
         "m_description": "beam_standard Lv.3",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 25.0,
@@ -2438,8 +2501,6 @@
         "m_moduleSubType": 3001,
         "m_moduleLevel": 4,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 800,
@@ -2448,6 +2509,9 @@
           "mineralDark": 0
         },
         "m_description": "beam_standard Lv.4",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 30.0,
@@ -2475,8 +2539,6 @@
         "m_moduleSubType": 3001,
         "m_moduleLevel": 5,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 1600,
@@ -2485,6 +2547,9 @@
           "mineralDark": 0
         },
         "m_description": "beam_standard Lv.5",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 35.0,
@@ -2512,8 +2577,6 @@
         "m_moduleSubType": 3001,
         "m_moduleLevel": 6,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 3200,
@@ -2522,6 +2585,9 @@
           "mineralDark": 0
         },
         "m_description": "beam_standard Lv.6",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 40.0,
@@ -2549,8 +2615,6 @@
         "m_moduleSubType": 3001,
         "m_moduleLevel": 7,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 6400,
@@ -2559,6 +2623,9 @@
           "mineralDark": 0
         },
         "m_description": "beam_standard Lv.7",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 45.0,
@@ -2586,8 +2653,6 @@
         "m_moduleSubType": 3001,
         "m_moduleLevel": 8,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 12800,
@@ -2596,6 +2661,9 @@
           "mineralDark": 0
         },
         "m_description": "beam_standard Lv.8",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 50.0,
@@ -2623,8 +2691,6 @@
         "m_moduleSubType": 3001,
         "m_moduleLevel": 9,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 25600,
@@ -2633,6 +2699,9 @@
           "mineralDark": 0
         },
         "m_description": "beam_standard Lv.9",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 55.0,
@@ -2660,8 +2729,6 @@
         "m_moduleSubType": 3001,
         "m_moduleLevel": 10,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 51200,
@@ -2670,6 +2737,9 @@
           "mineralDark": 0
         },
         "m_description": "beam_standard Lv.10",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 60.0,
@@ -2697,8 +2767,6 @@
         "m_moduleSubType": 3002,
         "m_moduleLevel": 1,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 1000,
@@ -2707,6 +2775,9 @@
           "mineralDark": 0
         },
         "m_description": "beam_advanced Lv.1",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 15.0,
@@ -2734,8 +2805,6 @@
         "m_moduleSubType": 3002,
         "m_moduleLevel": 2,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 2000,
@@ -2744,6 +2813,9 @@
           "mineralDark": 0
         },
         "m_description": "beam_advanced Lv.2",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 20.0,
@@ -2771,8 +2843,6 @@
         "m_moduleSubType": 3002,
         "m_moduleLevel": 3,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 4000,
@@ -2781,6 +2851,9 @@
           "mineralDark": 0
         },
         "m_description": "beam_advanced Lv.3",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 25.0,
@@ -2808,8 +2881,6 @@
         "m_moduleSubType": 3002,
         "m_moduleLevel": 4,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 8000,
@@ -2818,6 +2889,9 @@
           "mineralDark": 0
         },
         "m_description": "beam_advanced Lv.4",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 30.0,
@@ -2845,8 +2919,6 @@
         "m_moduleSubType": 3002,
         "m_moduleLevel": 5,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 16000,
@@ -2855,6 +2927,9 @@
           "mineralDark": 0
         },
         "m_description": "beam_advanced Lv.5",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 35.0,
@@ -2882,8 +2957,6 @@
         "m_moduleSubType": 3002,
         "m_moduleLevel": 6,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 32000,
@@ -2892,6 +2965,9 @@
           "mineralDark": 0
         },
         "m_description": "beam_advanced Lv.6",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 40.0,
@@ -2919,8 +2995,6 @@
         "m_moduleSubType": 3002,
         "m_moduleLevel": 7,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 64000,
@@ -2929,6 +3003,9 @@
           "mineralDark": 0
         },
         "m_description": "beam_advanced Lv.7",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 45.0,
@@ -2956,8 +3033,6 @@
         "m_moduleSubType": 3002,
         "m_moduleLevel": 8,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 128000,
@@ -2966,6 +3041,9 @@
           "mineralDark": 0
         },
         "m_description": "beam_advanced Lv.8",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 50.0,
@@ -2993,8 +3071,6 @@
         "m_moduleSubType": 3002,
         "m_moduleLevel": 9,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 256000,
@@ -3003,6 +3079,9 @@
           "mineralDark": 0
         },
         "m_description": "beam_advanced Lv.9",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 55.0,
@@ -3030,8 +3109,6 @@
         "m_moduleSubType": 3002,
         "m_moduleLevel": 10,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 512000,
@@ -3040,6 +3117,9 @@
           "mineralDark": 0
         },
         "m_description": "beam_advanced Lv.10",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 60.0,
@@ -3069,8 +3149,6 @@
         "m_moduleSubType": 4001,
         "m_moduleLevel": 1,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 100,
@@ -3079,6 +3157,9 @@
           "mineralDark": 0
         },
         "m_description": "missile_standard Lv.1",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 15.0,
@@ -3106,8 +3187,6 @@
         "m_moduleSubType": 4001,
         "m_moduleLevel": 2,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 200,
@@ -3116,6 +3195,9 @@
           "mineralDark": 0
         },
         "m_description": "missile_standard Lv.2",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 20.0,
@@ -3143,8 +3225,6 @@
         "m_moduleSubType": 4001,
         "m_moduleLevel": 3,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 400,
@@ -3153,6 +3233,9 @@
           "mineralDark": 0
         },
         "m_description": "missile_standard Lv.3",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 25.0,
@@ -3180,8 +3263,6 @@
         "m_moduleSubType": 4001,
         "m_moduleLevel": 4,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 800,
@@ -3190,6 +3271,9 @@
           "mineralDark": 0
         },
         "m_description": "missile_standard Lv.4",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 30.0,
@@ -3217,8 +3301,6 @@
         "m_moduleSubType": 4001,
         "m_moduleLevel": 5,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 1600,
@@ -3227,6 +3309,9 @@
           "mineralDark": 0
         },
         "m_description": "missile_standard Lv.5",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 35.0,
@@ -3254,8 +3339,6 @@
         "m_moduleSubType": 4001,
         "m_moduleLevel": 6,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 3200,
@@ -3264,6 +3347,9 @@
           "mineralDark": 0
         },
         "m_description": "missile_standard Lv.6",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 40.0,
@@ -3291,8 +3377,6 @@
         "m_moduleSubType": 4001,
         "m_moduleLevel": 7,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 6400,
@@ -3301,6 +3385,9 @@
           "mineralDark": 0
         },
         "m_description": "missile_standard Lv.7",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 45.0,
@@ -3328,8 +3415,6 @@
         "m_moduleSubType": 4001,
         "m_moduleLevel": 8,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 12800,
@@ -3338,6 +3423,9 @@
           "mineralDark": 0
         },
         "m_description": "missile_standard Lv.8",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 50.0,
@@ -3365,8 +3453,6 @@
         "m_moduleSubType": 4001,
         "m_moduleLevel": 9,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 25600,
@@ -3375,6 +3461,9 @@
           "mineralDark": 0
         },
         "m_description": "missile_standard Lv.9",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 55.0,
@@ -3402,8 +3491,6 @@
         "m_moduleSubType": 4001,
         "m_moduleLevel": 10,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 51200,
@@ -3412,6 +3499,9 @@
           "mineralDark": 0
         },
         "m_description": "missile_standard Lv.10",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 1,
         "m_attackPower": 60.0,
@@ -3439,8 +3529,6 @@
         "m_moduleSubType": 4002,
         "m_moduleLevel": 1,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 1000,
@@ -3449,6 +3537,9 @@
           "mineralDark": 0
         },
         "m_description": "missile_advanced Lv.1",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 15.0,
@@ -3476,8 +3567,6 @@
         "m_moduleSubType": 4002,
         "m_moduleLevel": 2,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 2000,
@@ -3486,6 +3575,9 @@
           "mineralDark": 0
         },
         "m_description": "missile_advanced Lv.2",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 20.0,
@@ -3513,8 +3605,6 @@
         "m_moduleSubType": 4002,
         "m_moduleLevel": 3,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 4000,
@@ -3523,6 +3613,9 @@
           "mineralDark": 0
         },
         "m_description": "missile_advanced Lv.3",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 25.0,
@@ -3550,8 +3643,6 @@
         "m_moduleSubType": 4002,
         "m_moduleLevel": 4,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 8000,
@@ -3560,6 +3651,9 @@
           "mineralDark": 0
         },
         "m_description": "missile_advanced Lv.4",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 30.0,
@@ -3587,8 +3681,6 @@
         "m_moduleSubType": 4002,
         "m_moduleLevel": 5,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 16000,
@@ -3597,6 +3689,9 @@
           "mineralDark": 0
         },
         "m_description": "missile_advanced Lv.5",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 35.0,
@@ -3624,8 +3719,6 @@
         "m_moduleSubType": 4002,
         "m_moduleLevel": 6,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 32000,
@@ -3634,6 +3727,9 @@
           "mineralDark": 0
         },
         "m_description": "missile_advanced Lv.6",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 40.0,
@@ -3661,8 +3757,6 @@
         "m_moduleSubType": 4002,
         "m_moduleLevel": 7,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 64000,
@@ -3671,6 +3765,9 @@
           "mineralDark": 0
         },
         "m_description": "missile_advanced Lv.7",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 45.0,
@@ -3698,8 +3795,6 @@
         "m_moduleSubType": 4002,
         "m_moduleLevel": 8,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 128000,
@@ -3708,6 +3803,9 @@
           "mineralDark": 0
         },
         "m_description": "missile_advanced Lv.8",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 50.0,
@@ -3735,8 +3833,6 @@
         "m_moduleSubType": 4002,
         "m_moduleLevel": 9,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 256000,
@@ -3745,6 +3841,9 @@
           "mineralDark": 0
         },
         "m_description": "missile_advanced Lv.9",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 55.0,
@@ -3772,8 +3871,6 @@
         "m_moduleSubType": 4002,
         "m_moduleLevel": 10,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 512000,
@@ -3782,6 +3879,9 @@
           "mineralDark": 0
         },
         "m_description": "missile_advanced Lv.10",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 2,
         "m_attackPower": 60.0,
@@ -3811,8 +3911,6 @@
         "m_moduleSubType": 5001,
         "m_moduleLevel": 1,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 100,
@@ -3821,6 +3919,9 @@
           "mineralDark": 0
         },
         "m_description": "hanger_standard hanger bay level 1",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -3848,8 +3949,6 @@
         "m_moduleSubType": 5001,
         "m_moduleLevel": 2,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 200,
@@ -3858,6 +3957,9 @@
           "mineralDark": 0
         },
         "m_description": "hanger_standard hanger bay level 2",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -3885,8 +3987,6 @@
         "m_moduleSubType": 5001,
         "m_moduleLevel": 3,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 400,
@@ -3895,6 +3995,9 @@
           "mineralDark": 0
         },
         "m_description": "hanger_standard hanger bay level 3",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -3922,8 +4025,6 @@
         "m_moduleSubType": 5001,
         "m_moduleLevel": 4,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 800,
@@ -3932,6 +4033,9 @@
           "mineralDark": 0
         },
         "m_description": "hanger_standard hanger bay level 4",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -3959,8 +4063,6 @@
         "m_moduleSubType": 5001,
         "m_moduleLevel": 5,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 1600,
@@ -3969,6 +4071,9 @@
           "mineralDark": 0
         },
         "m_description": "hanger_standard hanger bay level 5",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -3996,8 +4101,6 @@
         "m_moduleSubType": 5001,
         "m_moduleLevel": 6,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 3200,
@@ -4006,6 +4109,9 @@
           "mineralDark": 0
         },
         "m_description": "hanger_standard hanger bay level 6",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -4033,8 +4139,6 @@
         "m_moduleSubType": 5001,
         "m_moduleLevel": 7,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 6400,
@@ -4043,6 +4147,9 @@
           "mineralDark": 0
         },
         "m_description": "hanger_standard hanger bay level 7",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -4070,8 +4177,6 @@
         "m_moduleSubType": 5001,
         "m_moduleLevel": 8,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 12800,
@@ -4080,6 +4185,9 @@
           "mineralDark": 0
         },
         "m_description": "hanger_standard hanger bay level 8",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -4107,8 +4215,6 @@
         "m_moduleSubType": 5001,
         "m_moduleLevel": 9,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 25600,
@@ -4117,6 +4223,9 @@
           "mineralDark": 0
         },
         "m_description": "hanger_standard hanger bay level 9",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -4144,8 +4253,6 @@
         "m_moduleSubType": 5001,
         "m_moduleLevel": 10,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 51200,
@@ -4154,6 +4261,9 @@
           "mineralDark": 0
         },
         "m_description": "hanger_standard hanger bay level 10",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -4181,8 +4291,6 @@
         "m_moduleSubType": 5002,
         "m_moduleLevel": 1,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 1000,
@@ -4191,6 +4299,9 @@
           "mineralDark": 0
         },
         "m_description": "hanger_advanced hanger bay level 1",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -4218,8 +4329,6 @@
         "m_moduleSubType": 5002,
         "m_moduleLevel": 2,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 2000,
@@ -4228,6 +4337,9 @@
           "mineralDark": 0
         },
         "m_description": "hanger_advanced hanger bay level 2",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -4255,8 +4367,6 @@
         "m_moduleSubType": 5002,
         "m_moduleLevel": 3,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 4000,
@@ -4265,6 +4375,9 @@
           "mineralDark": 0
         },
         "m_description": "hanger_advanced hanger bay level 3",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -4292,8 +4405,6 @@
         "m_moduleSubType": 5002,
         "m_moduleLevel": 4,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 8000,
@@ -4302,6 +4413,9 @@
           "mineralDark": 0
         },
         "m_description": "hanger_advanced hanger bay level 4",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -4329,8 +4443,6 @@
         "m_moduleSubType": 5002,
         "m_moduleLevel": 5,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 16000,
@@ -4339,6 +4451,9 @@
           "mineralDark": 0
         },
         "m_description": "hanger_advanced hanger bay level 5",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -4366,8 +4481,6 @@
         "m_moduleSubType": 5002,
         "m_moduleLevel": 6,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 32000,
@@ -4376,6 +4489,9 @@
           "mineralDark": 0
         },
         "m_description": "hanger_advanced hanger bay level 6",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -4403,8 +4519,6 @@
         "m_moduleSubType": 5002,
         "m_moduleLevel": 7,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 64000,
@@ -4413,6 +4527,9 @@
           "mineralDark": 0
         },
         "m_description": "hanger_advanced hanger bay level 7",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -4440,8 +4557,6 @@
         "m_moduleSubType": 5002,
         "m_moduleLevel": 8,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 128000,
@@ -4450,6 +4565,9 @@
           "mineralDark": 0
         },
         "m_description": "hanger_advanced hanger bay level 8",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -4477,8 +4595,6 @@
         "m_moduleSubType": 5002,
         "m_moduleLevel": 9,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 256000,
@@ -4487,6 +4603,9 @@
           "mineralDark": 0
         },
         "m_description": "hanger_advanced hanger bay level 9",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,
@@ -4514,8 +4633,6 @@
         "m_moduleSubType": 5002,
         "m_moduleLevel": 10,
         "m_moduleSlots": null,
-        "m_health": 0.0,
-        "m_cargoCapacity": 0.0,
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 512000,
@@ -4524,6 +4641,9 @@
           "mineralDark": 0
         },
         "m_description": "hanger_advanced hanger bay level 10",
+        "m_health": 0.0,
+        "m_cargoCapacity": 0.0,
+        "m_repairPower": 0.0,
         "m_movementSpeed": 0.0,
         "m_attackFireCount": 0,
         "m_attackPower": 0.0,

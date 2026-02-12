@@ -33,17 +33,20 @@ public class ModuleData {
     @JsonAlias("m_moduleSlots")
     private List<ModuleSlotInfoDto> moduleSlots;
 
+    @JsonAlias("m_upgradeCost")
+    private CostStructDto upgradeCost;
+
+    @JsonAlias("m_description")
+    private String description;
+
     @JsonAlias("m_health")
     private Float health;
 
     @JsonAlias("m_cargoCapacity")
     private Float cargoCapacity;
 
-    @JsonAlias("m_upgradeCost")
-    private CostStructDto upgradeCost;
-
-    @JsonAlias("m_description")
-    private String description;
+    @JsonAlias("m_repairPower")
+    private Float repairPower;
 
     @JsonAlias("m_movementSpeed")
     private Float movementSpeed;
