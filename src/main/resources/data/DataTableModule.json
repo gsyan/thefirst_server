@@ -1698,7 +1698,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2001,
         "m_moduleLevel": 1,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 100,
@@ -1736,7 +1736,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2001,
         "m_moduleLevel": 2,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 200,
@@ -1774,7 +1774,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2001,
         "m_moduleLevel": 3,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 400,
@@ -1812,7 +1812,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2001,
         "m_moduleLevel": 4,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 800,
@@ -1850,7 +1850,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2001,
         "m_moduleLevel": 5,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 1600,
@@ -1888,7 +1888,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2001,
         "m_moduleLevel": 6,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 3200,
@@ -1926,7 +1926,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2001,
         "m_moduleLevel": 7,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 6400,
@@ -1964,7 +1964,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2001,
         "m_moduleLevel": 8,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 12800,
@@ -2002,7 +2002,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2001,
         "m_moduleLevel": 9,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 25600,
@@ -2040,7 +2040,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2001,
         "m_moduleLevel": 10,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 51200,
@@ -2078,7 +2078,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2002,
         "m_moduleLevel": 1,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 1000,
@@ -2116,7 +2116,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2002,
         "m_moduleLevel": 2,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 2000,
@@ -2154,7 +2154,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2002,
         "m_moduleLevel": 3,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 4000,
@@ -2192,7 +2192,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2002,
         "m_moduleLevel": 4,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 8000,
@@ -2230,7 +2230,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2002,
         "m_moduleLevel": 5,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 16000,
@@ -2268,7 +2268,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2002,
         "m_moduleLevel": 6,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 32000,
@@ -2306,7 +2306,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2002,
         "m_moduleLevel": 7,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 64000,
@@ -2344,7 +2344,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2002,
         "m_moduleLevel": 8,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 128000,
@@ -2382,7 +2382,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2002,
         "m_moduleLevel": 9,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 256000,
@@ -2420,7 +2420,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2002,
         "m_moduleLevel": 10,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 512000,
@@ -2458,7 +2458,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2003,
         "m_moduleLevel": 1,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 1000,
@@ -2496,7 +2496,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2003,
         "m_moduleLevel": 2,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 2000,
@@ -2534,7 +2534,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2003,
         "m_moduleLevel": 3,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 4000,
@@ -2572,7 +2572,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2003,
         "m_moduleLevel": 4,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 8000,
@@ -2610,7 +2610,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2003,
         "m_moduleLevel": 5,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 16000,
@@ -2648,7 +2648,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2003,
         "m_moduleLevel": 6,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 32000,
@@ -2686,7 +2686,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2003,
         "m_moduleLevel": 7,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 64000,
@@ -2724,7 +2724,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2003,
         "m_moduleLevel": 8,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 128000,
@@ -2762,7 +2762,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2003,
         "m_moduleLevel": 9,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 256000,
@@ -2800,7 +2800,7 @@
         "m_moduleType": 2,
         "m_moduleSubType": 2003,
         "m_moduleLevel": 10,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 512000,
@@ -2840,7 +2840,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3001,
         "m_moduleLevel": 1,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 100,
@@ -2878,7 +2878,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3001,
         "m_moduleLevel": 2,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 200,
@@ -2916,7 +2916,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3001,
         "m_moduleLevel": 3,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 400,
@@ -2954,7 +2954,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3001,
         "m_moduleLevel": 4,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 800,
@@ -2992,7 +2992,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3001,
         "m_moduleLevel": 5,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 1600,
@@ -3030,7 +3030,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3001,
         "m_moduleLevel": 6,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 3200,
@@ -3068,7 +3068,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3001,
         "m_moduleLevel": 7,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 6400,
@@ -3106,7 +3106,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3001,
         "m_moduleLevel": 8,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 12800,
@@ -3144,7 +3144,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3001,
         "m_moduleLevel": 9,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 25600,
@@ -3182,7 +3182,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3001,
         "m_moduleLevel": 10,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 51200,
@@ -3220,7 +3220,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3002,
         "m_moduleLevel": 1,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 1000,
@@ -3258,7 +3258,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3002,
         "m_moduleLevel": 2,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 2000,
@@ -3296,7 +3296,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3002,
         "m_moduleLevel": 3,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 4000,
@@ -3334,7 +3334,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3002,
         "m_moduleLevel": 4,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 8000,
@@ -3372,7 +3372,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3002,
         "m_moduleLevel": 5,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 16000,
@@ -3410,7 +3410,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3002,
         "m_moduleLevel": 6,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 32000,
@@ -3448,7 +3448,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3002,
         "m_moduleLevel": 7,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 64000,
@@ -3486,7 +3486,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3002,
         "m_moduleLevel": 8,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 128000,
@@ -3524,7 +3524,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3002,
         "m_moduleLevel": 9,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 256000,
@@ -3562,7 +3562,7 @@
         "m_moduleType": 3,
         "m_moduleSubType": 3002,
         "m_moduleLevel": 10,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 512000,
@@ -3602,7 +3602,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4001,
         "m_moduleLevel": 1,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 100,
@@ -3640,7 +3640,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4001,
         "m_moduleLevel": 2,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 200,
@@ -3678,7 +3678,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4001,
         "m_moduleLevel": 3,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 400,
@@ -3716,7 +3716,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4001,
         "m_moduleLevel": 4,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 800,
@@ -3754,7 +3754,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4001,
         "m_moduleLevel": 5,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 1600,
@@ -3792,7 +3792,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4001,
         "m_moduleLevel": 6,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 3200,
@@ -3830,7 +3830,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4001,
         "m_moduleLevel": 7,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 6400,
@@ -3868,7 +3868,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4001,
         "m_moduleLevel": 8,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 12800,
@@ -3906,7 +3906,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4001,
         "m_moduleLevel": 9,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 25600,
@@ -3944,7 +3944,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4001,
         "m_moduleLevel": 10,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 51200,
@@ -3982,7 +3982,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4002,
         "m_moduleLevel": 1,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 1000,
@@ -4020,7 +4020,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4002,
         "m_moduleLevel": 2,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 2000,
@@ -4058,7 +4058,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4002,
         "m_moduleLevel": 3,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 4000,
@@ -4096,7 +4096,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4002,
         "m_moduleLevel": 4,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 8000,
@@ -4134,7 +4134,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4002,
         "m_moduleLevel": 5,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 16000,
@@ -4172,7 +4172,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4002,
         "m_moduleLevel": 6,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 32000,
@@ -4210,7 +4210,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4002,
         "m_moduleLevel": 7,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 64000,
@@ -4248,7 +4248,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4002,
         "m_moduleLevel": 8,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 128000,
@@ -4286,7 +4286,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4002,
         "m_moduleLevel": 9,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 256000,
@@ -4324,7 +4324,7 @@
         "m_moduleType": 4,
         "m_moduleSubType": 4002,
         "m_moduleLevel": 10,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 512000,
@@ -4364,7 +4364,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5001,
         "m_moduleLevel": 1,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 100,
@@ -4402,7 +4402,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5001,
         "m_moduleLevel": 2,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 200,
@@ -4440,7 +4440,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5001,
         "m_moduleLevel": 3,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 400,
@@ -4478,7 +4478,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5001,
         "m_moduleLevel": 4,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 800,
@@ -4516,7 +4516,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5001,
         "m_moduleLevel": 5,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 1600,
@@ -4554,7 +4554,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5001,
         "m_moduleLevel": 6,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 3200,
@@ -4592,7 +4592,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5001,
         "m_moduleLevel": 7,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 6400,
@@ -4630,7 +4630,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5001,
         "m_moduleLevel": 8,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 12800,
@@ -4668,7 +4668,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5001,
         "m_moduleLevel": 9,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 25600,
@@ -4706,7 +4706,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5001,
         "m_moduleLevel": 10,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 51200,
@@ -4744,7 +4744,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5002,
         "m_moduleLevel": 1,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 1000,
@@ -4782,7 +4782,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5002,
         "m_moduleLevel": 2,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 2000,
@@ -4820,7 +4820,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5002,
         "m_moduleLevel": 3,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 4000,
@@ -4858,7 +4858,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5002,
         "m_moduleLevel": 4,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 8000,
@@ -4896,7 +4896,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5002,
         "m_moduleLevel": 5,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 16000,
@@ -4934,7 +4934,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5002,
         "m_moduleLevel": 6,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 32000,
@@ -4972,7 +4972,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5002,
         "m_moduleLevel": 7,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 64000,
@@ -5010,7 +5010,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5002,
         "m_moduleLevel": 8,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 128000,
@@ -5048,7 +5048,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5002,
         "m_moduleLevel": 9,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 256000,
@@ -5086,7 +5086,7 @@
         "m_moduleType": 5,
         "m_moduleSubType": 5002,
         "m_moduleLevel": 10,
-        "m_moduleSlots": null,
+        "m_moduleSlots": [],
         "m_upgradeCost": {
           "techLevel": 1,
           "mineral": 512000,
