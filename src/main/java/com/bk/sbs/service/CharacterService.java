@@ -15,6 +15,7 @@ import com.bk.sbs.repository.AccountRepository;
 import com.bk.sbs.repository.CharacterRepository;
 import com.bk.sbs.repository.ModuleResearchRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,15 +30,17 @@ public class CharacterService {
     private final AccountRepository accountRepository;
     private final FleetService fleetService;
     private final ModuleResearchRepository moduleResearchRepository;
+    private final StringRedisTemplate redisTemplate;
 
     @Value("${worldid}")
     private int worldId;
 
-    public CharacterService(CharacterRepository characterRepository, AccountRepository accountRepository, FleetService fleetService, ModuleResearchRepository moduleResearchRepository) {
+    public CharacterService(CharacterRepository characterRepository, AccountRepository accountRepository, FleetService fleetService, ModuleResearchRepository moduleResearchRepository, StringRedisTemplate redisTemplate) {
         this.characterRepository = characterRepository;
         this.accountRepository = accountRepository;
         this.fleetService = fleetService;
         this.moduleResearchRepository = moduleResearchRepository;
+        this.redisTemplate = redisTemplate;
     }
 
     @Transactional
@@ -61,6 +64,17 @@ public class CharacterService {
 
         // 기본 모듈 개발 상태 설정
         initializeDefaultModules(savedCharacter.getId());
+
+//        // Redis에 캐릭터 생성 로그 남기기 (테스트용)
+//        try {
+//            String logKey = "log:character:create:" + savedCharacter.getId();
+//            String logValue = String.format("Character created: id=%d, name=%s, time=%s",
+//                    savedCharacter.getId(), savedCharacter.getCharacterName(), LocalDateTime.now());
+//            redisTemplate.opsForValue().set(logKey, logValue);
+//        } catch (Exception e) {
+//            // Redis 로그 실패해도 트랜잭션은 계속 진행
+//            System.err.println("Failed to log character creation to Redis: " + e.getMessage());
+//        }
 
         // characterId = worldId(8비트) + id(56비트)
         return CharacterResponse.builder()

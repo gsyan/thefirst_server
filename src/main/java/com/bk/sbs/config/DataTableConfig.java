@@ -23,16 +23,22 @@ public class DataTableConfig {
     @JsonAlias("m_addShipCosts")
     private List<CostStructDto> addShipCosts;
 
+    @JsonAlias("m_pvpListCount")
+    private Integer pvpListCount;
+
+    @JsonAlias("m_pvpListRefreshCount")
+    private Integer pvpListRefreshCount;
+
+    @JsonAlias("m_pvpRankScoreInit")
+    private Integer pvpRankScoreInit;
+
+    @JsonAlias("m_pvpRankScorePenalty")
+    private Integer pvpRankScorePenalty;
+
     @JsonAlias("m_moduleUnlockPrice")
     private Integer moduleUnlockPrice;
 
-    @JsonAlias("m_enemyFleetSpawnInterval")
-    private Float enemyFleetSpawnInterval;
-
     @JsonAlias("m_explorationInterval")
     private Float explorationInterval;
-
-    @JsonAlias("m_enemySpawnRate")
-    private Float enemySpawnRate;
 
 }
