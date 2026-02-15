@@ -17,5 +17,6 @@ public class PvpOpponentInfoDto {
     private Long characterId;
     private String characterName;
     private Integer pvpScore;
+    private Integer rank;
     private FleetInfoDto fleetInfo;
 }

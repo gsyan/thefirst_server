@@ -293,11 +293,13 @@ public class PvpService {
             FleetInfoDto fleet = fleetService.getActiveFleet(opponentId);
 
             Double score = pvpRedisService.getScore(opponentId);
+            Long rank = pvpRedisService.getRank(opponentId);
 
             PvpOpponentInfoDto info = new PvpOpponentInfoDto();
             info.setCharacterId(opponentId);
             info.setCharacterName(character.getCharacterName());
             info.setPvpScore(score != null ? score.intValue() : 1000);
+            info.setRank(rank != null ? rank.intValue() + 1 : 0);
             info.setFleetInfo(fleet);
             opponents.add(info);
         }
