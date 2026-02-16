@@ -44,6 +44,13 @@ def map_csharp_type_to_java(csharp_type, add_dto_suffix=True):
         java_element_type = map_csharp_type_to_java(element_type, add_dto_suffix)
         return f"List<{java_element_type}>"
 
+    # C# 제네릭 타입 처리 (예: List<string> -> List<String>)
+    generic_match = re.match(r'(\w+)<(\w+)>', csharp_type)
+    if generic_match:
+        element_type = generic_match.group(2)
+        java_element_type = map_csharp_type_to_java(element_type, add_dto_suffix)
+        return f"List<{java_element_type}>"
+
     # enum 타입 (E로 시작하는 타입)은 그대로 유지
     if csharp_type.startswith('E'):
         return csharp_type
@@ -62,16 +69,22 @@ def map_csharp_type_to_java(csharp_type, add_dto_suffix=True):
     return mapped_type
 
 def extract_class_fields(csharp_content, class_name):
-    """C# 클래스에서 public 필드 추출"""
-    # 클래스 정의 찾기
-    class_pattern = rf'public\s+class\s+{class_name}\s*\{{(.*?)\n\}}'
+    """C# 클래스에서 public 필드 추출 (부모 클래스 필드 포함)"""
+    # 클래스 정의 찾기 (상속 구문에서 부모 클래스명도 캡처)
+    class_pattern = rf'public\s+class\s+{class_name}(?:\s*:\s*(\w+))?\s*\{{(.*?)\n\}}'
     class_match = re.search(class_pattern, csharp_content, re.DOTALL)
 
     if not class_match:
         print(f"Class {class_name} not found")
         return []
 
-    class_body = class_match.group(1)
+    # 부모 클래스가 있으면 부모 필드를 먼저 재귀적으로 추출
+    parent_fields = []
+    parent_class = class_match.group(1)
+    if parent_class:
+        parent_fields = extract_class_fields(csharp_content, parent_class)
+
+    class_body = class_match.group(2)
 
     # public 필드 추출 (Unity attributes와 #if 블록 제외)
     fields = []
@@ -99,9 +112,9 @@ def extract_class_fields(csharp_content, class_name):
         if stripped.startswith('//'):
             continue
 
-        # public 필드 찾기 (배열 타입 포함: CostStruct[] 등)
+        # public 필드 찾기 (배열 타입, 제네릭 타입 포함: CostStruct[], List<string> 등)
         # = 있는 경우와 ; 로 바로 끝나는 경우 모두 처리
-        field_pattern = r'public\s+(\w+(?:\[\])?)\s+(m_\w+)\s*[=;]'
+        field_pattern = r'public\s+(\w+(?:<\w+>)?(?:\[\])?)\s+(m_\w+)\s*[=;]'
         field_match = re.match(field_pattern, stripped)
 
         if field_match:
@@ -121,7 +134,7 @@ def extract_class_fields(csharp_content, class_name):
                 'java_type': java_type
             })
 
-    return fields
+    return parent_fields + fields
 
 def generate_java_dto(csharp_file_path, output_dir, package_name, class_name):
     """C# 클래스에서 Java DTO 생성"""
@@ -279,7 +292,7 @@ if __name__ == "__main__":
 
     # ModuleResearchData 생성
     module_research_data_config = {
-        'csharp_file_path': r"../../../thefirst_client_unity/Assets/Scripts/System/Data/DataTableModuleResearch.cs",
+        'csharp_file_path': r"../../../thefirst_client_unity/Assets/Scripts/System/Data/DataTableResearch.cs",
         'class_name': "ModuleResearchData"
     }
 

@@ -51,7 +51,7 @@ public class GameDataService {
                 log.warn("No game data files found in resources/data/, using empty data");
             }
 
-            ClassPathResource researchDataTableResource = new ClassPathResource("data/DataTableModuleResearch.json");
+            ClassPathResource researchDataTableResource = new ClassPathResource("data/DataTableResearch.json");
             if (researchDataTableResource.exists()) {
                 String json = new String(researchDataTableResource.getInputStream().readAllBytes());
                 com.fasterxml.jackson.databind.JsonNode rootNode = objectMapper.readTree(json);
@@ -62,10 +62,10 @@ public class GameDataService {
                         objectMapper.getTypeFactory().constructCollectionType(List.class, ModuleResearchData.class)
                     );
                     dataTableModule.setResearchDataList(researchDataList);
-                    log.info("DataTableModuleResearch.json loaded successfully from resources/data/ and merged into ModuleDataTable");
+                    log.info("DataTableResearch.json loaded successfully from resources/data/ and merged into ModuleDataTable");
                 }
             } else {
-                log.warn("DataTableModuleResearch.json not found in resources/data/, using empty data");
+                log.warn("DataTableResearch.json not found in resources/data/, using empty data");
             }
 
             ClassPathResource zoneConfigResource = new ClassPathResource("data/DataTableZone.json");

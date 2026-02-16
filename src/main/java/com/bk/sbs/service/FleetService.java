@@ -1002,7 +1002,7 @@ public class FleetService {
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_CHARACTER_NOT_FOUND));
 
-        // 모듈 개발 비용 가져오기 (DataTableModuleResearch.json에서 로딩)
+        // 모듈 개발 비용 가져오기 (DataTableResearch.json에서 로딩)
         CostStructDto researchCost = gameDataService.getModuleResearchCost(moduleSubType);
 
         // TechLevel 검증
