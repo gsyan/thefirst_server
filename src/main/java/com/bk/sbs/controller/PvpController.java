@@ -64,6 +64,16 @@ public class PvpController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
+    // 랭킹 보드 페이지 조회
+    @PostMapping("/ranking")
+    public ResponseEntity<ApiResponse<PvpRankingResponse>> getRanking(
+            @RequestBody PvpRankingRequest request,
+            HttpServletRequest httpRequest) {
+        getCharacterIdFromToken(httpRequest); // 인증 확인
+        PvpRankingResponse response = pvpService.getRanking(request.getOffset(), request.getLimit());
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
     private Long getCharacterIdFromToken(HttpServletRequest request) {
         String token = jwtUtil.getTokenFromRequest(request);
         if (token == null) throw new BusinessException(ServerErrorCode.PVP_CONTROLLER_FAIL_INVALID_TOKEN);

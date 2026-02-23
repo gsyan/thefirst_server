@@ -160,4 +160,26 @@ public class PvpRedisService {
     public void deleteCachedOpponentList(Long characterId) {
         redisTemplate.delete(LIST_PREFIX + characterId);
     }
+
+    // 전체 랭킹 인원 수
+    public long getTotalRankingCount() {
+        Long count = redisTemplate.opsForZSet().zCard(RANKING_KEY);
+        return count != null ? count : 0L;
+    }
+
+    // 순위 기반 페이지 조회 (높은점수=1위, offset 0-based) → 순서 보장 LinkedHashMap
+    public LinkedHashMap<Long, Integer> getRankingPage(int offset, int limit) {
+        Set<ZSetOperations.TypedTuple<String>> result = redisTemplate.opsForZSet()
+                .reverseRangeWithScores(RANKING_KEY, offset, (long) offset + limit - 1);
+
+        LinkedHashMap<Long, Integer> map = new LinkedHashMap<>();
+        if (result == null) return map;
+
+        for (ZSetOperations.TypedTuple<String> tuple : result) {
+            if (tuple.getValue() == null) continue;
+            int score = tuple.getScore() != null ? tuple.getScore().intValue() : 0;
+            map.put(Long.parseLong(tuple.getValue()), score);
+        }
+        return map;
+    }
 }

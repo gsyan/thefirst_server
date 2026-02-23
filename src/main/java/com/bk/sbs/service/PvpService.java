@@ -212,6 +212,34 @@ public class PvpService {
         return response;
     }
 
+    // 랭킹 보드 페이지 조회 (offset 0-based, limit 개수)
+    public PvpRankingResponse getRanking(int offset, int limit) {
+        long totalCount = pvpRedisService.getTotalRankingCount();
+        LinkedHashMap<Long, Integer> page = pvpRedisService.getRankingPage(offset, limit);
+
+        // 캐릭터 이름 일괄 조회 (N+1 방지)
+        Map<Long, String> nameMap = new HashMap<>();
+        characterRepository.findAllById(page.keySet())
+                .forEach(c -> nameMap.put(c.getId(), c.getCharacterName()));
+
+        List<PvpRankingEntryDto> items = new ArrayList<>();
+        int idx = 0;
+        for (Map.Entry<Long, Integer> entry : page.entrySet()) {
+            PvpRankingEntryDto dto = new PvpRankingEntryDto();
+            dto.setRank(offset + idx + 1);
+            dto.setCharacterId(entry.getKey());
+            dto.setCharacterName(nameMap.getOrDefault(entry.getKey(), "Unknown"));
+            dto.setPvpScore(entry.getValue());
+            items.add(dto);
+            idx++;
+        }
+
+        PvpRankingResponse response = new PvpRankingResponse();
+        response.setTotalCount((int) totalCount);
+        response.setItems(items);
+        return response;
+    }
+
     // 점수 변동 계산
     public int[] calculateScoreChange(int winnerScore, int loserScore, int penalty) {
         int diff = Math.abs(winnerScore - loserScore);
