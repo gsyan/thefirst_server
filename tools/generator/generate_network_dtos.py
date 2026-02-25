@@ -206,9 +206,10 @@ def generate_java_dto(class_info, package_name):
     is_request = original_class_name.endswith('Request')
 
     if not is_request:
-        # Response/Info: Builder + AllArgsConstructor도 추가
+        # Response/Info: Builder + AllArgsConstructor도 추가 (필드 없으면 NoArgsConstructor와 충돌하므로 제외)
         imports.add("import lombok.Builder;")
-        imports.add("import lombok.AllArgsConstructor;")
+        if fields:
+            imports.add("import lombok.AllArgsConstructor;")
 
     for imp in sorted(imports):
         java_code += f"{imp}\n"
@@ -222,7 +223,8 @@ def generate_java_dto(class_info, package_name):
     java_code += "@NoArgsConstructor\n"  # 모든 DTO에 추가 (Jackson 역직렬화용)
     if not is_request:
         java_code += "@Builder\n"
-        java_code += "@AllArgsConstructor\n"
+        if fields:
+            java_code += "@AllArgsConstructor\n"
 
     # 클래스 선언
     if generic_type:

@@ -4,6 +4,10 @@ import com.bk.sbs.dto.ZoneClearRequest;
 import com.bk.sbs.dto.ZoneClearResponse;
 import com.bk.sbs.dto.ZoneCollectRequest;
 import com.bk.sbs.dto.ZoneCollectResponse;
+import com.bk.sbs.dto.ZoneKillRequest;
+import com.bk.sbs.dto.ZoneKillResponse;
+import com.bk.sbs.dto.HeartbeatRequest;
+import com.bk.sbs.dto.HeartbeatResponse;
 import com.bk.sbs.dto.nogenerated.ApiResponse;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
@@ -43,6 +47,26 @@ public class ZoneController {
             HttpServletRequest httpRequest) {
         Long actualCharacterId = getCharacterIdFromToken(httpRequest);
         ZoneCollectResponse response = zoneService.collectZone(actualCharacterId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    // 적 함선 킬 보상
+    @PostMapping("/kill")
+    public ResponseEntity<ApiResponse<ZoneKillResponse>> killZone(
+            @RequestBody ZoneKillRequest request,
+            HttpServletRequest httpRequest) {
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        ZoneKillResponse response = zoneService.killZone(actualCharacterId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    // 하트비트 (온라인 시간 갱신)
+    @PostMapping("/heartbeat")
+    public ResponseEntity<ApiResponse<HeartbeatResponse>> heartbeat(
+            @RequestBody HeartbeatRequest request,
+            HttpServletRequest httpRequest) {
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        HeartbeatResponse response = zoneService.heartbeat(actualCharacterId);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 

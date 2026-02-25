@@ -61,6 +61,9 @@ public class Character {
     // 마지막 자원 수집 시간 (zone clear 시 또는 collect 시 갱신, UTC)
     private Instant collectDateTime;
 
+    // 마지막 온라인 시간 (heartbeat로 갱신, 오프라인 보상 계산용, UTC)
+    private Instant lastOnlineAt;
+
     @Column(nullable = false)
     private boolean deleted = false;
 

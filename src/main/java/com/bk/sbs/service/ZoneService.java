@@ -6,6 +6,10 @@ import com.bk.sbs.dto.ZoneClearRequest;
 import com.bk.sbs.dto.ZoneClearResponse;
 import com.bk.sbs.dto.ZoneCollectRequest;
 import com.bk.sbs.dto.ZoneCollectResponse;
+import com.bk.sbs.dto.ZoneKillRequest;
+import com.bk.sbs.dto.ZoneKillResponse;
+import com.bk.sbs.dto.HeartbeatRequest;
+import com.bk.sbs.dto.HeartbeatResponse;
 import com.bk.sbs.entity.Character;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
@@ -54,17 +58,6 @@ public class ZoneService {
         // clearedZone 업데이트 및 collectDateTime 설정
         character.setClearedZone(newZoneName);
         character.setCollectDateTime(now);
-
-        // 클리어 보상 추가 지급
-        long[] clearRewards = calculateClearRewards(newZoneName);
-        rewards[0] += clearRewards[0];
-        rewards[1] += clearRewards[1];
-        rewards[2] += clearRewards[2];
-        rewards[3] += clearRewards[3];
-        character.setMineral(character.getMineral() + clearRewards[0]);
-        character.setMineralRare(character.getMineralRare() + clearRewards[1]);
-        character.setMineralExotic(character.getMineralExotic() + clearRewards[2]);
-        character.setMineralDark(character.getMineralDark() + clearRewards[3]);
 
         characterRepository.save(character);
 
@@ -240,17 +233,52 @@ public class ZoneService {
         }
     }
 
-    // 클리어 보상 계산 (ZoneConfigData에서 가져옴)
-    private long[] calculateClearRewards(String zoneName) {
+    @Transactional
+    public ZoneKillResponse killZone(Long characterId, ZoneKillRequest request) {
+        Character character = characterRepository.findByIdForUpdate(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.ZONE_KILL_FAIL_CHARACTER_NOT_FOUND));
+
+        long[] rewards = calculateKillRewards(request.getZoneName());
+        character.setMineral(character.getMineral() + rewards[0]);
+        character.setMineralRare(character.getMineralRare() + rewards[1]);
+        character.setMineralExotic(character.getMineralExotic() + rewards[2]);
+        character.setMineralDark(character.getMineralDark() + rewards[3]);
+        characterRepository.save(character);
+
+        CostRemainInfoDto rewardInfo = CostRemainInfoDto.builder()
+                .mineralCost(-rewards[0])
+                .mineralRareCost(-rewards[1])
+                .mineralExoticCost(-rewards[2])
+                .mineralDarkCost(-rewards[3])
+                .remainMineral(character.getMineral())
+                .remainMineralRare(character.getMineralRare())
+                .remainMineralExotic(character.getMineralExotic())
+                .remainMineralDark(character.getMineralDark())
+                .build();
+
+        return ZoneKillResponse.builder().rewardInfo(rewardInfo).build();
+    }
+
+    @Transactional
+    public HeartbeatResponse heartbeat(Long characterId) {
+        Character character = characterRepository.findByIdForUpdate(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.HEARTBEAT_FAIL_CHARACTER_NOT_FOUND));
+        character.setLastOnlineAt(Instant.now());
+        characterRepository.save(character);
+        return new HeartbeatResponse();
+    }
+
+    // 킬 보상 계산 (ZoneConfigData에서 가져옴)
+    private long[] calculateKillRewards(String zoneName) {
         long[] rewards = {0L, 0L, 0L, 0L};
 
         ZoneConfigData zoneConfig = gameDataService.getZoneConfigByName(zoneName);
         if (zoneConfig == null) return rewards;
 
-        rewards[0] = zoneConfig.getClearMineral() != null ? zoneConfig.getClearMineral().longValue() : 0L;
-        rewards[1] = zoneConfig.getClearMineralRare() != null ? zoneConfig.getClearMineralRare().longValue() : 0L;
-        rewards[2] = zoneConfig.getClearMineralExotic() != null ? zoneConfig.getClearMineralExotic().longValue() : 0L;
-        rewards[3] = zoneConfig.getClearMineralDark() != null ? zoneConfig.getClearMineralDark().longValue() : 0L;
+        rewards[0] = zoneConfig.getKillRewardMineral() != null ? zoneConfig.getKillRewardMineral().longValue() : 0L;
+        rewards[1] = zoneConfig.getKillRewardMineralRare() != null ? zoneConfig.getKillRewardMineralRare().longValue() : 0L;
+        rewards[2] = zoneConfig.getKillRewardMineralExotic() != null ? zoneConfig.getKillRewardMineralExotic().longValue() : 0L;
+        rewards[3] = zoneConfig.getKillRewardMineralDark() != null ? zoneConfig.getKillRewardMineralDark().longValue() : 0L;
 
         return rewards;
     }

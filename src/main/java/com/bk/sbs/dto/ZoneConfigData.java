@@ -15,12 +15,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ZoneConfigData {
     private String zoneName;
-    private Float clearMineral;
-    private Float clearMineralRare;
-    private Float clearMineralExotic;
-    private Float clearMineralDark;
     private Float mineralPerHour;
     private Float mineralRarePerHour;
     private Float mineralExoticPerHour;
     private Float mineralDarkPerHour;
+    private Float killRewardMineral;
+    private Float killRewardMineralRare;
+    private Float killRewardMineralExotic;
+    private Float killRewardMineralDark;
 }

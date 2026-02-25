@@ -5,6 +5,7 @@ import com.bk.sbs.dto.CharacterCreateRequest;
 import com.bk.sbs.dto.CharacterResponse;
 import com.bk.sbs.dto.CharacterInfoDto;
 import com.bk.sbs.dto.ShipInfoDto;
+import com.bk.sbs.dto.ZoneConfigData;
 import com.bk.sbs.entity.Account;
 import com.bk.sbs.entity.Character;
 import com.bk.sbs.entity.ModuleResearch;
@@ -20,8 +21,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 @Service
 public class CharacterService {
@@ -31,16 +34,21 @@ public class CharacterService {
     private final FleetService fleetService;
     private final ModuleResearchRepository moduleResearchRepository;
     private final StringRedisTemplate redisTemplate;
+    private final GameDataService gameDataService;
+
+    // 오프라인 보상 최대 시간 (12시간)
+    private static final long MAX_OFFLINE_SECONDS = 43200L;
 
     @Value("${worldid}")
     private int worldId;
 
-    public CharacterService(CharacterRepository characterRepository, AccountRepository accountRepository, FleetService fleetService, ModuleResearchRepository moduleResearchRepository, StringRedisTemplate redisTemplate) {
+    public CharacterService(CharacterRepository characterRepository, AccountRepository accountRepository, FleetService fleetService, ModuleResearchRepository moduleResearchRepository, StringRedisTemplate redisTemplate, GameDataService gameDataService) {
         this.characterRepository = characterRepository;
         this.accountRepository = accountRepository;
         this.fleetService = fleetService;
         this.moduleResearchRepository = moduleResearchRepository;
         this.redisTemplate = redisTemplate;
+        this.gameDataService = gameDataService;
     }
 
     @Transactional
@@ -137,6 +145,47 @@ public class CharacterService {
         researchHanger.setModified(now);
         moduleResearchRepository.save(researchHanger);
 
+    }
+
+    // 오프라인 보상 지급 + lastOnlineAt 갱신 (selectCharacter 진입 시 호출)
+    @Transactional
+    public void applyOfflineRewardAndUpdateLastOnline(Long characterId) {
+        Character character = characterRepository.findByIdForUpdate(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.GET_CHARACTER_INFO_DTO_FAIL_CHARACTER_NOT_FOUND));
+
+        Instant now = Instant.now();
+        String clearedZone = character.getClearedZone();
+        Instant lastOnlineAt = character.getLastOnlineAt();
+
+        // clearedZone이 있고 lastOnlineAt이 기록된 경우에만 오프라인 보상 지급
+        if (lastOnlineAt != null && clearedZone != null && !clearedZone.isEmpty()) {
+            long offlineSec = Math.min(ChronoUnit.SECONDS.between(lastOnlineAt, now), MAX_OFFLINE_SECONDS);
+
+            if (offlineSec > 0) {
+                ZoneConfigData zoneConfig = gameDataService.getZoneConfigByName(clearedZone);
+                if (zoneConfig != null) {
+                    double mineralTotal = (zoneConfig.getMineralPerHour() / 3600.0 * offlineSec);
+                    double mineralRareTotal = (zoneConfig.getMineralRarePerHour() / 3600.0 * offlineSec);
+                    double mineralExoticTotal = (zoneConfig.getMineralExoticPerHour() / 3600.0 * offlineSec);
+                    double mineralDarkTotal = (zoneConfig.getMineralDarkPerHour() / 3600.0 * offlineSec);
+
+                    character.setMineral(character.getMineral() + (long) mineralTotal);
+                    character.setMineralRare(character.getMineralRare() + (long) mineralRareTotal);
+                    character.setMineralExotic(character.getMineralExotic() + (long) mineralExoticTotal);
+                    character.setMineralDark(character.getMineralDark() + (long) mineralDarkTotal);
+
+                    // 오프라인 보상으로 collect 기간 소비 → collectDateTime 리셋
+                    character.setCollectDateTime(now);
+                    character.setMineralFraction(0.0);
+                    character.setMineralRareFraction(0.0);
+                    character.setMineralExoticFraction(0.0);
+                    character.setMineralDarkFraction(0.0);
+                }
+            }
+        }
+
+        character.setLastOnlineAt(now);
+        characterRepository.save(character);
     }
 
     public CharacterInfoDto getCharacterInfoDto(Long characterId) {

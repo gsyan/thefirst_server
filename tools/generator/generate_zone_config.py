@@ -36,14 +36,14 @@ def generate_zone_config_dto(output_dir, package_name):
 
     server_fields = [
         {'name': 'zoneName', 'type': 'String'},
-        {'name': 'clearMineral', 'type': 'Float'},
-        {'name': 'clearMineralRare', 'type': 'Float'},
-        {'name': 'clearMineralExotic', 'type': 'Float'},
-        {'name': 'clearMineralDark', 'type': 'Float'},
         {'name': 'mineralPerHour', 'type': 'Float'},
         {'name': 'mineralRarePerHour', 'type': 'Float'},
         {'name': 'mineralExoticPerHour', 'type': 'Float'},
         {'name': 'mineralDarkPerHour', 'type': 'Float'},
+        {'name': 'killRewardMineral', 'type': 'Float'},
+        {'name': 'killRewardMineralRare', 'type': 'Float'},
+        {'name': 'killRewardMineralExotic', 'type': 'Float'},
+        {'name': 'killRewardMineralDark', 'type': 'Float'},
     ]
 
     java_class_name = "ZoneConfigData"
