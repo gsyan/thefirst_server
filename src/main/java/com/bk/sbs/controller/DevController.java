@@ -54,41 +54,25 @@ public class DevController {
                 Long additionalMaterial = parseOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMIKNERAL_PARSE_PARAM);
                 Long newMineral = characterService.addMineral(characterId, additionalMaterial);
                 return ApiResponse.success("Mineral added: " + additionalMaterial + " (total: " + newMineral + ")|mineral:" + newMineral);
-            case "setmineralrare":
-                if (params == null || params.isEmpty()) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_SETMINERALRARE_INVALID_PARAM);
-                Long mineralRare = parseOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_SETMINERALRARE_PARSE_PARAM);
-                characterService.updateMineralRare(characterId, mineralRare);
-                return ApiResponse.success("Mineral Rare set to: " + mineralRare + "|mineralRare:" + mineralRare);
 
-            case "addmineralrare":
-                if (params == null || params.isEmpty()) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMINERALRARE_INVALID_PARAM);
-                Long additionalMineralRare = parseOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMINERALRARE_PARSE_PARAM);
-                Long newMineralRare = characterService.addMineralRare(characterId, additionalMineralRare);
-                return ApiResponse.success("Mineral Rare added: " + additionalMineralRare + " (total: " + newMineralRare + ")|mineralRare:" + newMineralRare);
-
-            case "setmineralexotic":
-                if (params == null || params.isEmpty()) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_SETMINERALEXOTIC_INVALID_PARAM);
-                Long mineralExotic = parseOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_SETMINERALEXOTIC_PARSE_PARAM);
-                characterService.updateMineralExotic(characterId, mineralExotic);
-                return ApiResponse.success("Mineral Exotic set to: " + mineralExotic + "|mineralExotic:" + mineralExotic);
-
-            case "addmineralexotic":
-                if (params == null || params.isEmpty()) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMINERALEXOTIC_INVALID_PARAM);
-                Long additionalMineralExotic = parseOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMINERALEXOTIC_PARSE_PARAM);
-                Long newMineralExotic = characterService.addMineralExotic(characterId, additionalMineralExotic);
-                return ApiResponse.success("Mineral Exotic added: " + additionalMineralExotic + " (total: " + newMineralExotic + ")|mineralExotic:" + newMineralExotic);
-
-            case "setmineraldark":
-                if (params == null || params.isEmpty()) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_SETMINERALDARK_INVALID_PARAM);
-                Long mineralDark = parseOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_SETMINERALDARK_PARSE_PARAM);
-                characterService.updateMineralDark(characterId, mineralDark);
-                return ApiResponse.success("Mineral Dark set to: " + mineralDark + "|mineralDark:" + mineralDark);
-
-            case "addmineraldark":
-                if (params == null || params.isEmpty()) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMINERALDARK_INVALID_PARAM);
-                Long additionalMineralDark = parseOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMINERALDARK_PARSE_PARAM);
-                Long newMineralDark = characterService.addMineralDark(characterId, additionalMineralDark);
-                return ApiResponse.success("Mineral Dark added: " + additionalMineralDark + " (total: " + newMineralDark + ")|mineralDark:" + newMineralDark);
+            // addmineral/rare/exotic/dark 를 한 번에 처리 (0이면 해당 타입 스킵)
+            // usage: addminerals [mineral] [mineralRare] [mineralExotic] [mineralDark]
+            case "addminerals":
+                if (params == null || params.size() < 4) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMIKNERAL_INVALID_PARAM);
+                Long amtMineral      = parseOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMIKNERAL_PARSE_PARAM);
+                Long amtMineralRare  = parseOrThrow(params.get(1), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMINERALRARE_PARSE_PARAM);
+                Long amtMineralExotic = parseOrThrow(params.get(2), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMINERALEXOTIC_PARSE_PARAM);
+                Long amtMineralDark  = parseOrThrow(params.get(3), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMINERALDARK_PARSE_PARAM);
+                if (amtMineral > 0)       characterService.addMineral(characterId, amtMineral);
+                if (amtMineralRare > 0)   characterService.addMineralRare(characterId, amtMineralRare);
+                if (amtMineralExotic > 0) characterService.addMineralExotic(characterId, amtMineralExotic);
+                if (amtMineralDark > 0)   characterService.addMineralDark(characterId, amtMineralDark);
+                CharacterInfoDto updated = characterService.getCharacterInfoDto(characterId);
+                return ApiResponse.success("Minerals added"
+                    + "|mineral:" + updated.getMineral()
+                    + "|mineralRare:" + updated.getMineralRare()
+                    + "|mineralExotic:" + updated.getMineralExotic()
+                    + "|mineralDark:" + updated.getMineralDark());
 
             case "addtech":
                 if (params == null || params.isEmpty()) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDTECH_INVALID_PARAM);
