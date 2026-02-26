@@ -110,7 +110,7 @@ public class FleetService {
         ShipModule bodyModule = new ShipModule();
         bodyModule.setShip(defaultShip);
         bodyModule.setModuleType(EModuleType.body);
-        bodyModule.setModuleSubType(EModuleSubType.body_battle);
+        bodyModule.setModuleSubType(EModuleSubType.body_t1_std);
         //bodyModule.setModuleSubType(EModuleSubType.Body_Aircraft);
         bodyModule.setModuleLevel(bodyData.getModuleLevel());
         bodyModule.setBodyIndex(0);
@@ -121,7 +121,7 @@ public class FleetService {
         ShipModule engineModule = new ShipModule();
         engineModule.setShip(defaultShip);
         engineModule.setModuleType(EModuleType.engine);
-        engineModule.setModuleSubType(EModuleSubType.engine_standard);
+        engineModule.setModuleSubType(EModuleSubType.engine_t1_std);
         engineModule.setModuleLevel(engineData.getModuleLevel());
         engineModule.setBodyIndex(0);
         engineModule.setSlotIndex(0);
@@ -130,8 +130,8 @@ public class FleetService {
 //        // Beam
 //        ShipModule beamModule = new ShipModule();
 //        beamModule.setShip(defaultShip);
-//        beamModule.setModuleType(EModuleType.Beam);
-//        beamModule.setModuleSubType(EModuleSubType.Beam_Standard);
+//        beamModule.setModuleType(EModuleType.beam);
+//        beamModule.setModuleSubType(EModuleSubType.beam_t1_std);
 //        beamModule.setModuleLevel(beamData.getModuleLevel());
 //        beamModule.setBodyIndex(0);
 //        beamModule.setSlotIndex(0);
@@ -140,8 +140,8 @@ public class FleetService {
 //        // Missile
 //        ShipModule missileModule = new ShipModule();
 //        missileModule.setShip(defaultShip);
-//        missileModule.setModuleType(EModuleType.Missile);
-//        missileModule.setModuleSubType(EModuleSubType.Missile_Standard);
+//        missileModule.setModuleType(EModuleType.missile);
+//        missileModule.setModuleSubType(EModuleSubType.missile_t1_std);
 //        missileModule.setModuleLevel(missileData.getModuleLevel());
 //        missileModule.setBodyIndex(0);
 //        missileModule.setSlotIndex(0);
@@ -150,8 +150,8 @@ public class FleetService {
 //        // Hanger 모듈 (type 4)
 //        ShipModule hangerModule = new ShipModule();
 //        hangerModule.setShip(defaultShip);
-//        hangerModule.setModuleType(EModuleType.Hanger);
-//        hangerModule.setModuleSubType(EModuleSubType.Hanger_Standard);
+//        hangerModule.setModuleType(EModuleType.hanger);
+//        hangerModule.setModuleSubType(EModuleSubType.hanger_t1_std);
 //        hangerModule.setModuleLevel(hangerData.getModuleLevel());
 //        hangerModule.setBodyIndex(0);
 //        hangerModule.setSlotIndex(0);
@@ -584,7 +584,7 @@ public class FleetService {
         ShipModule bodyModule = new ShipModule();
         bodyModule.setShip(ship);
         bodyModule.setModuleType(EModuleType.body);
-        bodyModule.setModuleSubType(EModuleSubType.body_battle);
+        bodyModule.setModuleSubType(EModuleSubType.body_t1_std);
         bodyModule.setModuleLevel(1);
         bodyModule.setBodyIndex(0);
         bodyModule.setSlotIndex(0);
@@ -597,7 +597,7 @@ public class FleetService {
         ShipModule engineModule = new ShipModule();
         engineModule.setShip(ship);
         engineModule.setModuleType(EModuleType.engine);
-        engineModule.setModuleSubType(EModuleSubType.engine_standard);
+        engineModule.setModuleSubType(EModuleSubType.engine_t1_std);
         engineModule.setModuleLevel(1);
         engineModule.setBodyIndex(0);
         engineModule.setSlotIndex(0);
@@ -610,7 +610,7 @@ public class FleetService {
         ShipModule weaponModule = new ShipModule();
         weaponModule.setShip(ship);
         weaponModule.setModuleType(EModuleType.beam);
-        weaponModule.setModuleSubType(EModuleSubType.beam_standard);
+        weaponModule.setModuleSubType(EModuleSubType.beam_t1_std);
         weaponModule.setModuleLevel(1);
         weaponModule.setBodyIndex(0);
         weaponModule.setSlotIndex(0);

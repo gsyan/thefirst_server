@@ -71,7 +71,7 @@ public class CharacterService {
         fleetService.activateFirstFleet(savedCharacter.getId());
 
         // 기본 모듈 개발 상태 설정
-        initializeDefaultModules(savedCharacter.getId());
+        initializeDefaultResearchModules(savedCharacter.getId());
 
 //        // Redis에 캐릭터 생성 로그 남기기 (테스트용)
 //        try {
@@ -92,14 +92,14 @@ public class CharacterService {
     }
 
     // 기본연구 세팅
-    private void initializeDefaultModules(Long characterId) {
+    private void initializeDefaultResearchModules(Long characterId) {
         LocalDateTime now = LocalDateTime.now();
 
         // Body - Battle
         ModuleResearch researchBody = new ModuleResearch();
         researchBody.setCharacterId(characterId);
         researchBody.setModuleType(EModuleType.body);
-        researchBody.setModuleSubType(EModuleSubType.body_battle);
+        researchBody.setModuleSubType(EModuleSubType.body_t1_std);
         researchBody.setResearched(true);
         researchBody.setCreated(now);
         researchBody.setModified(now);
@@ -109,7 +109,7 @@ public class CharacterService {
         ModuleResearch researchEngine = new ModuleResearch();
         researchEngine.setCharacterId(characterId);
         researchEngine.setModuleType(EModuleType.engine);
-        researchEngine.setModuleSubType(EModuleSubType.engine_standard);
+        researchEngine.setModuleSubType(EModuleSubType.engine_t1_std);
         researchEngine.setResearched(true);
         researchEngine.setCreated(now);
         researchEngine.setModified(now);
@@ -119,7 +119,7 @@ public class CharacterService {
         ModuleResearch researchWeapon = new ModuleResearch();
         researchWeapon.setCharacterId(characterId);
         researchWeapon.setModuleType(EModuleType.beam);
-        researchWeapon.setModuleSubType(EModuleSubType.beam_standard);
+        researchWeapon.setModuleSubType(EModuleSubType.beam_t1_std);
         researchWeapon.setResearched(true);
         researchWeapon.setCreated(now);
         researchWeapon.setModified(now);
@@ -129,7 +129,7 @@ public class CharacterService {
         ModuleResearch researchMissile = new ModuleResearch();
         researchMissile.setCharacterId(characterId);
         researchMissile.setModuleType(EModuleType.missile);
-        researchMissile.setModuleSubType(EModuleSubType.missile_standard);
+        researchMissile.setModuleSubType(EModuleSubType.missile_t1_std);
         researchMissile.setResearched(true);
         researchMissile.setCreated(now);
         researchMissile.setModified(now);
@@ -139,7 +139,7 @@ public class CharacterService {
         ModuleResearch researchHanger = new ModuleResearch();
         researchHanger.setCharacterId(characterId);
         researchHanger.setModuleType(EModuleType.hanger);
-        researchHanger.setModuleSubType(EModuleSubType.hanger_standard);
+        researchHanger.setModuleSubType(EModuleSubType.hanger_t1_std);
         researchHanger.setResearched(true);
         researchHanger.setCreated(now);
         researchHanger.setModified(now);
