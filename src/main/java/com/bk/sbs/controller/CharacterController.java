@@ -62,8 +62,8 @@ public class CharacterController {
         String newAccessToken = jwtUtil.createAccessTokenWithCharacter(email, accountId, characterId);
         String newRefreshToken = jwtUtil.createRefreshTokenWithCharacter(email, accountId, characterId);
 
-        // 오프라인 보상 지급 + 마지막 온라인 시간 갱신
-        characterService.applyOfflineRewardAndUpdateLastOnline(actualCharacterId);
+        // collectDateTime 12h 캡 적용 + 마지막 온라인 시간 갱신
+        characterService.applyOfflineCapAndUpdateLastOnline(actualCharacterId);
 
         // 캐릭터의 활성 함대 정보 조회
         FleetInfoDto activeFleet = fleetService.getActiveFleet(actualCharacterId);

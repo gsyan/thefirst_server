@@ -147,40 +147,22 @@ public class CharacterService {
 
     }
 
-    // 오프라인 보상 지급 + lastOnlineAt 갱신 (selectCharacter 진입 시 호출)
+    // 접속 시 collectDateTime 12h 캡 적용 + lastOnlineAt 갱신
+    // collectDateTime이 12h 초과면 now-12h로 고정 → ZoneCollect 시 최대 12h치만 수령
     @Transactional
-    public void applyOfflineRewardAndUpdateLastOnline(Long characterId) {
+    public void applyOfflineCapAndUpdateLastOnline(Long characterId) {
         Character character = characterRepository.findByIdForUpdate(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.GET_CHARACTER_INFO_DTO_FAIL_CHARACTER_NOT_FOUND));
 
         Instant now = Instant.now();
+        Instant collectDt = character.getCollectDateTime();
         String clearedZone = character.getClearedZone();
-        Instant lastOnlineAt = character.getLastOnlineAt();
 
-        // clearedZone이 있고 lastOnlineAt이 기록된 경우에만 오프라인 보상 지급
-        if (lastOnlineAt != null && clearedZone != null && !clearedZone.isEmpty()) {
-            long offlineSec = Math.min(ChronoUnit.SECONDS.between(lastOnlineAt, now), MAX_OFFLINE_SECONDS);
-
-            if (offlineSec > 0) {
-                ZoneConfigData zoneConfig = gameDataService.getZoneConfigByName(clearedZone);
-                if (zoneConfig != null) {
-                    double mineralTotal = (zoneConfig.getMineralPerHour() / 3600.0 * offlineSec);
-                    double mineralRareTotal = (zoneConfig.getMineralRarePerHour() / 3600.0 * offlineSec);
-                    double mineralExoticTotal = (zoneConfig.getMineralExoticPerHour() / 3600.0 * offlineSec);
-                    double mineralDarkTotal = (zoneConfig.getMineralDarkPerHour() / 3600.0 * offlineSec);
-
-                    character.setMineral(character.getMineral() + (long) mineralTotal);
-                    character.setMineralRare(character.getMineralRare() + (long) mineralRareTotal);
-                    character.setMineralExotic(character.getMineralExotic() + (long) mineralExoticTotal);
-                    character.setMineralDark(character.getMineralDark() + (long) mineralDarkTotal);
-
-                    // 오프라인 보상으로 collect 기간 소비 → collectDateTime 리셋
-                    character.setCollectDateTime(now);
-                    character.setMineralFraction(0.0);
-                    character.setMineralRareFraction(0.0);
-                    character.setMineralExoticFraction(0.0);
-                    character.setMineralDarkFraction(0.0);
-                }
+        // clearedZone이 있고 collectDateTime이 12h 초과면 now-12h로 고정
+        if (collectDt != null && clearedZone != null && !clearedZone.isEmpty()) {
+            long sinceCollect = ChronoUnit.SECONDS.between(collectDt, now);
+            if (sinceCollect > MAX_OFFLINE_SECONDS) {
+                character.setCollectDateTime(now.minusSeconds(MAX_OFFLINE_SECONDS));
             }
         }
 
