@@ -114,16 +114,15 @@ def extract_class_fields(csharp_content, class_name):
 
         # public 필드 찾기 (배열 타입, 제네릭 타입 포함: CostStruct[], List<string> 등)
         # = 있는 경우와 ; 로 바로 끝나는 경우 모두 처리
-        field_pattern = r'public\s+(\w+(?:<\w+>)?(?:\[\])?)\s+(m_\w+)\s*[=;]'
+        field_pattern = r'public\s+(\w+(?:<\w+>)?(?:\[\])?)\s+(\w+)\s*[=;]'
         field_match = re.match(field_pattern, stripped)
 
         if field_match:
             field_type = field_match.group(1)
             field_name = field_match.group(2)
 
-            # m_ 접두사 제거하고 camelCase로 변환
-            java_field_name = field_name[2:]  # m_ 제거
-            java_field_name = java_field_name[0].lower() + java_field_name[1:]  # 첫 글자 소문자
+            # camelCase로 변환 (첫 글자 소문자)
+            java_field_name = field_name[0].lower() + field_name[1:]
 
             # C# 타입을 Java 타입으로 매핑
             java_type = map_csharp_type_to_java(field_type)
@@ -164,7 +163,9 @@ def generate_java_dto(csharp_file_path, output_dir, package_name, class_name):
     if has_list:
         imports.add("import java.util.List;")
 
-    imports.add("import com.fasterxml.jackson.annotation.JsonAlias;")
+    has_alias = any(f['csharp_name'] != f['java_name'] for f in fields)
+    if has_alias:
+        imports.add("import com.fasterxml.jackson.annotation.JsonAlias;")
     imports.add("import lombok.Data;")
     imports.add("import lombok.NoArgsConstructor;")
     imports.add("import lombok.Builder;")
@@ -186,7 +187,8 @@ def generate_java_dto(csharp_file_path, output_dir, package_name, class_name):
 
     # 필드 정의
     for field in fields:
-        java_code += f"    @JsonAlias(\"{field['csharp_name']}\")\n"
+        if field['csharp_name'] != field['java_name']:
+            java_code += f"    @JsonAlias(\"{field['csharp_name']}\")\n"
         java_code += f"    private {field['java_type']} {field['java_name']};\n\n"
 
     java_code = java_code.rstrip() + "\n}\n"
@@ -227,7 +229,6 @@ def generate_data_table_config_java(csharp_file_path, output_dir, package_name):
     # import 문 추가
     imports = set()
     imports.add("import lombok.Data;")
-    imports.add("import com.fasterxml.jackson.annotation.JsonAlias;")
 
     has_list = False
     for field in fields:
@@ -243,6 +244,9 @@ def generate_data_table_config_java(csharp_file_path, output_dir, package_name):
 
     if has_list:
         imports.add("import java.util.List;")
+    has_alias = any(f['csharp_name'] != f['java_name'] for f in fields)
+    if has_alias:
+        imports.add("import com.fasterxml.jackson.annotation.JsonAlias;")
 
     for imp in sorted(imports):
         java_code += f"{imp}\n"
@@ -257,7 +261,8 @@ def generate_data_table_config_java(csharp_file_path, output_dir, package_name):
 
     # 필드 정의 (Dto 접미사 없이)
     for field in fields:
-        java_code += f"    @JsonAlias(\"{field['csharp_name']}\")\n"
+        if field['csharp_name'] != field['java_name']:
+            java_code += f"    @JsonAlias(\"{field['csharp_name']}\")\n"
         java_code += f"    private {field['java_type']} {field['java_name']};\n\n"
 
     java_code += "}\n"

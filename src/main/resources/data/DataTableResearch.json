@@ -1,12 +1,12 @@
 {
   "researchDataList": [
     {
-      "m_moduleType": 1,
-      "m_moduleSubType": 1001,
-      "m_description": "Research body_battle module technology",
-      "m_researchId": "body_battle",
-      "m_prerequisiteIds": [],
-      "m_researchCost": {
+      "moduleType": 1,
+      "moduleSubType": 1001,
+      "description": "Research body_battle module technology",
+      "researchId": "body_battle",
+      "prerequisiteIds": [],
+      "researchCost": {
         "techLevel": 1,
         "mineral": 10000,
         "mineralRare": 0,
@@ -15,14 +15,14 @@
       }
     },
     {
-      "m_moduleType": 1,
-      "m_moduleSubType": 1002,
-      "m_description": "Research body_aircraft module technology",
-      "m_researchId": "body_aircraft",
-      "m_prerequisiteIds": [
+      "moduleType": 1,
+      "moduleSubType": 1002,
+      "description": "Research body_aircraft module technology",
+      "researchId": "body_aircraft",
+      "prerequisiteIds": [
         "body_battle"
       ],
-      "m_researchCost": {
+      "researchCost": {
         "techLevel": 1,
         "mineral": 100000,
         "mineralRare": 0,
@@ -31,14 +31,14 @@
       }
     },
     {
-      "m_moduleType": 1,
-      "m_moduleSubType": 1003,
-      "m_description": "Research body_repair module technology",
-      "m_researchId": "body_repair",
-      "m_prerequisiteIds": [
+      "moduleType": 1,
+      "moduleSubType": 1003,
+      "description": "Research body_repair module technology",
+      "researchId": "body_repair",
+      "prerequisiteIds": [
         "body_aircraft"
       ],
-      "m_researchCost": {
+      "researchCost": {
         "techLevel": 1,
         "mineral": 1000000,
         "mineralRare": 0,
@@ -47,12 +47,12 @@
       }
     },
     {
-      "m_moduleType": 2,
-      "m_moduleSubType": 2001,
-      "m_description": "Research engine_standard module technology",
-      "m_researchId": "engine_standard",
-      "m_prerequisiteIds": [],
-      "m_researchCost": {
+      "moduleType": 2,
+      "moduleSubType": 2001,
+      "description": "Research engine_standard module technology",
+      "researchId": "engine_standard",
+      "prerequisiteIds": [],
+      "researchCost": {
         "techLevel": 1,
         "mineral": 10000,
         "mineralRare": 0,
@@ -61,14 +61,14 @@
       }
     },
     {
-      "m_moduleType": 2,
-      "m_moduleSubType": 2002,
-      "m_description": "Research engine_booster module technology",
-      "m_researchId": "engine_booster",
-      "m_prerequisiteIds": [
+      "moduleType": 2,
+      "moduleSubType": 2002,
+      "description": "Research engine_booster module technology",
+      "researchId": "engine_booster",
+      "prerequisiteIds": [
         "engine_standard"
       ],
-      "m_researchCost": {
+      "researchCost": {
         "techLevel": 1,
         "mineral": 100000,
         "mineralRare": 0,
@@ -77,14 +77,14 @@
       }
     },
     {
-      "m_moduleType": 2,
-      "m_moduleSubType": 2003,
-      "m_description": "Research engine_warp module technology",
-      "m_researchId": "engine_warp",
-      "m_prerequisiteIds": [
+      "moduleType": 2,
+      "moduleSubType": 2003,
+      "description": "Research engine_warp module technology",
+      "researchId": "engine_warp",
+      "prerequisiteIds": [
         "engine_booster"
       ],
-      "m_researchCost": {
+      "researchCost": {
         "techLevel": 1,
         "mineral": 1000000,
         "mineralRare": 0,
@@ -93,12 +93,12 @@
       }
     },
     {
-      "m_moduleType": 3,
-      "m_moduleSubType": 3001,
-      "m_description": "Research beam_standard module technology",
-      "m_researchId": "beam_standard",
-      "m_prerequisiteIds": [],
-      "m_researchCost": {
+      "moduleType": 3,
+      "moduleSubType": 3001,
+      "description": "Research beam_standard module technology",
+      "researchId": "beam_standard",
+      "prerequisiteIds": [],
+      "researchCost": {
         "techLevel": 1,
         "mineral": 10000,
         "mineralRare": 0,
@@ -107,14 +107,14 @@
       }
     },
     {
-      "m_moduleType": 3,
-      "m_moduleSubType": 3002,
-      "m_description": "Research beam_advanced module technology",
-      "m_researchId": "beam_advanced",
-      "m_prerequisiteIds": [
+      "moduleType": 3,
+      "moduleSubType": 3002,
+      "description": "Research beam_advanced module technology",
+      "researchId": "beam_advanced",
+      "prerequisiteIds": [
         "beam_standard"
       ],
-      "m_researchCost": {
+      "researchCost": {
         "techLevel": 1,
         "mineral": 100000,
         "mineralRare": 0,
@@ -123,12 +123,12 @@
       }
     },
     {
-      "m_moduleType": 4,
-      "m_moduleSubType": 4001,
-      "m_description": "Research missile_standard module technology",
-      "m_researchId": "missile_standard",
-      "m_prerequisiteIds": [],
-      "m_researchCost": {
+      "moduleType": 4,
+      "moduleSubType": 4001,
+      "description": "Research missile_standard module technology",
+      "researchId": "missile_standard",
+      "prerequisiteIds": [],
+      "researchCost": {
         "techLevel": 1,
         "mineral": 10000,
         "mineralRare": 0,
@@ -137,14 +137,14 @@
       }
     },
     {
-      "m_moduleType": 4,
-      "m_moduleSubType": 4002,
-      "m_description": "Research missile_advanced module technology",
-      "m_researchId": "missile_advanced",
-      "m_prerequisiteIds": [
+      "moduleType": 4,
+      "moduleSubType": 4002,
+      "description": "Research missile_advanced module technology",
+      "researchId": "missile_advanced",
+      "prerequisiteIds": [
         "missile_standard"
       ],
-      "m_researchCost": {
+      "researchCost": {
         "techLevel": 1,
         "mineral": 100000,
         "mineralRare": 0,
@@ -153,12 +153,12 @@
       }
     },
     {
-      "m_moduleType": 5,
-      "m_moduleSubType": 5001,
-      "m_description": "Research hanger_standard module technology",
-      "m_researchId": "hanger_standard",
-      "m_prerequisiteIds": [],
-      "m_researchCost": {
+      "moduleType": 5,
+      "moduleSubType": 5001,
+      "description": "Research hanger_standard module technology",
+      "researchId": "hanger_standard",
+      "prerequisiteIds": [],
+      "researchCost": {
         "techLevel": 1,
         "mineral": 10000,
         "mineralRare": 0,
@@ -167,14 +167,14 @@
       }
     },
     {
-      "m_moduleType": 5,
-      "m_moduleSubType": 5002,
-      "m_description": "Research hanger_advanced module technology",
-      "m_researchId": "hanger_advanced",
-      "m_prerequisiteIds": [
+      "moduleType": 5,
+      "moduleSubType": 5002,
+      "description": "Research hanger_advanced module technology",
+      "researchId": "hanger_advanced",
+      "prerequisiteIds": [
         "hanger_standard"
       ],
-      "m_researchCost": {
+      "researchCost": {
         "techLevel": 1,
         "mineral": 100000,
         "mineralRare": 0,

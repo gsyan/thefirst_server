@@ -1,7 +1,6 @@
 package com.bk.sbs.config;
 
 import com.bk.sbs.dto.CostStructDto;
-import com.fasterxml.jackson.annotation.JsonAlias;
 import java.util.List;
 import lombok.Data;
 
@@ -11,34 +10,20 @@ import lombok.Data;
  */
 @Data
 public class DataTableConfig {
-    @JsonAlias("m_version")
     private String version;
 
-    @JsonAlias("m_maxLives")
-    private Integer maxLives;
-
-    @JsonAlias("m_maxShipsPerFleet")
     private Integer maxShipsPerFleet;
 
-    @JsonAlias("m_addShipCosts")
     private List<CostStructDto> addShipCosts;
 
-    @JsonAlias("m_pvpListCount")
     private Integer pvpListCount;
 
-    @JsonAlias("m_pvpListRefreshCount")
     private Integer pvpListRefreshCount;
 
-    @JsonAlias("m_pvpRankScoreInit")
     private Integer pvpRankScoreInit;
 
-    @JsonAlias("m_pvpRankScorePenalty")
     private Integer pvpRankScorePenalty;
 
-    @JsonAlias("m_moduleUnlockPrice")
     private Integer moduleUnlockPrice;
-
-    @JsonAlias("m_explorationInterval")
-    private Float explorationInterval;
 
 }
