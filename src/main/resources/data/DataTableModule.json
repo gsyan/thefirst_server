@@ -2,7 +2,7 @@
   "modules": {
     "1": [
       {
-        "moduleName": "body_battle Lv.1",
+        "moduleName": "body_t1_std Lv.1",
         "moduleType": 1,
         "moduleSubType": 1001,
         "moduleLevel": 1,
@@ -57,7 +57,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "body_battle Lv.2",
+        "moduleName": "body_t1_std Lv.2",
         "moduleType": 1,
         "moduleSubType": 1001,
         "moduleLevel": 2,
@@ -112,7 +112,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "body_battle Lv.3",
+        "moduleName": "body_t1_std Lv.3",
         "moduleType": 1,
         "moduleSubType": 1001,
         "moduleLevel": 3,
@@ -167,7 +167,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "body_battle Lv.4",
+        "moduleName": "body_t1_std Lv.4",
         "moduleType": 1,
         "moduleSubType": 1001,
         "moduleLevel": 4,
@@ -222,7 +222,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "body_battle Lv.5",
+        "moduleName": "body_t1_std Lv.5",
         "moduleType": 1,
         "moduleSubType": 1001,
         "moduleLevel": 5,
@@ -277,7 +277,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "body_battle Lv.6",
+        "moduleName": "body_t1_std Lv.6",
         "moduleType": 1,
         "moduleSubType": 1001,
         "moduleLevel": 6,
@@ -332,7 +332,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "body_battle Lv.7",
+        "moduleName": "body_t1_std Lv.7",
         "moduleType": 1,
         "moduleSubType": 1001,
         "moduleLevel": 7,
@@ -387,7 +387,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "body_battle Lv.8",
+        "moduleName": "body_t1_std Lv.8",
         "moduleType": 1,
         "moduleSubType": 1001,
         "moduleLevel": 8,
@@ -442,7 +442,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "body_battle Lv.9",
+        "moduleName": "body_t1_std Lv.9",
         "moduleType": 1,
         "moduleSubType": 1001,
         "moduleLevel": 9,
@@ -497,7 +497,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "body_battle Lv.10",
+        "moduleName": "body_t1_std Lv.10",
         "moduleType": 1,
         "moduleSubType": 1001,
         "moduleLevel": 10,
@@ -552,7 +552,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "body_aircraft Lv.1",
+        "moduleName": "body_t1_adv Lv.1",
         "moduleType": 1,
         "moduleSubType": 1002,
         "moduleLevel": 1,
@@ -615,7 +615,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "body_aircraft Lv.2",
+        "moduleName": "body_t1_adv Lv.2",
         "moduleType": 1,
         "moduleSubType": 1002,
         "moduleLevel": 2,
@@ -678,7 +678,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "body_aircraft Lv.3",
+        "moduleName": "body_t1_adv Lv.3",
         "moduleType": 1,
         "moduleSubType": 1002,
         "moduleLevel": 3,
@@ -741,7 +741,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "body_aircraft Lv.4",
+        "moduleName": "body_t1_adv Lv.4",
         "moduleType": 1,
         "moduleSubType": 1002,
         "moduleLevel": 4,
@@ -804,7 +804,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "body_aircraft Lv.5",
+        "moduleName": "body_t1_adv Lv.5",
         "moduleType": 1,
         "moduleSubType": 1002,
         "moduleLevel": 5,
@@ -867,7 +867,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "body_aircraft Lv.6",
+        "moduleName": "body_t1_adv Lv.6",
         "moduleType": 1,
         "moduleSubType": 1002,
         "moduleLevel": 6,
@@ -930,7 +930,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "body_aircraft Lv.7",
+        "moduleName": "body_t1_adv Lv.7",
         "moduleType": 1,
         "moduleSubType": 1002,
         "moduleLevel": 7,
@@ -993,7 +993,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "body_aircraft Lv.8",
+        "moduleName": "body_t1_adv Lv.8",
         "moduleType": 1,
         "moduleSubType": 1002,
         "moduleLevel": 8,
@@ -1056,7 +1056,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "body_aircraft Lv.9",
+        "moduleName": "body_t1_adv Lv.9",
         "moduleType": 1,
         "moduleSubType": 1002,
         "moduleLevel": 9,
@@ -1119,7 +1119,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "body_aircraft Lv.10",
+        "moduleName": "body_t1_adv Lv.10",
         "moduleType": 1,
         "moduleSubType": 1002,
         "moduleLevel": 10,
@@ -1184,7 +1184,7 @@
     ],
     "2": [
       {
-        "moduleName": "engine_standard Lv.1",
+        "moduleName": "engine_t1_std Lv.1",
         "moduleType": 2,
         "moduleSubType": 2001,
         "moduleLevel": 1,
@@ -1199,7 +1199,7 @@
         "moduleSlots": [],
         "health": 0.0,
         "repairPower": 0.0,
-        "speed": 5.0,
+        "speed": 50.0,
         "attackFireCount": 0,
         "attackPower": 0.0,
         "attackCoolTime": 0.0,
@@ -1218,7 +1218,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "engine_standard Lv.2",
+        "moduleName": "engine_t1_std Lv.2",
         "moduleType": 2,
         "moduleSubType": 2001,
         "moduleLevel": 2,
@@ -1233,7 +1233,7 @@
         "moduleSlots": [],
         "health": 0.0,
         "repairPower": 0.0,
-        "speed": 5.5,
+        "speed": 55.0,
         "attackFireCount": 0,
         "attackPower": 0.0,
         "attackCoolTime": 0.0,
@@ -1252,7 +1252,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "engine_standard Lv.3",
+        "moduleName": "engine_t1_std Lv.3",
         "moduleType": 2,
         "moduleSubType": 2001,
         "moduleLevel": 3,
@@ -1267,7 +1267,7 @@
         "moduleSlots": [],
         "health": 0.0,
         "repairPower": 0.0,
-        "speed": 6.1,
+        "speed": 60.5,
         "attackFireCount": 0,
         "attackPower": 0.0,
         "attackCoolTime": 0.0,
@@ -1286,7 +1286,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "engine_standard Lv.4",
+        "moduleName": "engine_t1_std Lv.4",
         "moduleType": 2,
         "moduleSubType": 2001,
         "moduleLevel": 4,
@@ -1301,7 +1301,7 @@
         "moduleSlots": [],
         "health": 0.0,
         "repairPower": 0.0,
-        "speed": 6.7,
+        "speed": 66.6,
         "attackFireCount": 0,
         "attackPower": 0.0,
         "attackCoolTime": 0.0,
@@ -1320,7 +1320,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "engine_standard Lv.5",
+        "moduleName": "engine_t1_std Lv.5",
         "moduleType": 2,
         "moduleSubType": 2001,
         "moduleLevel": 5,
@@ -1335,7 +1335,7 @@
         "moduleSlots": [],
         "health": 0.0,
         "repairPower": 0.0,
-        "speed": 7.3,
+        "speed": 73.2,
         "attackFireCount": 0,
         "attackPower": 0.0,
         "attackCoolTime": 0.0,
@@ -1354,7 +1354,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "engine_standard Lv.6",
+        "moduleName": "engine_t1_std Lv.6",
         "moduleType": 2,
         "moduleSubType": 2001,
         "moduleLevel": 6,
@@ -1369,7 +1369,7 @@
         "moduleSlots": [],
         "health": 0.0,
         "repairPower": 0.0,
-        "speed": 8.1,
+        "speed": 80.5,
         "attackFireCount": 0,
         "attackPower": 0.0,
         "attackCoolTime": 0.0,
@@ -1388,7 +1388,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "engine_standard Lv.7",
+        "moduleName": "engine_t1_std Lv.7",
         "moduleType": 2,
         "moduleSubType": 2001,
         "moduleLevel": 7,
@@ -1403,7 +1403,7 @@
         "moduleSlots": [],
         "health": 0.0,
         "repairPower": 0.0,
-        "speed": 8.9,
+        "speed": 88.6,
         "attackFireCount": 0,
         "attackPower": 0.0,
         "attackCoolTime": 0.0,
@@ -1422,7 +1422,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "engine_standard Lv.8",
+        "moduleName": "engine_t1_std Lv.8",
         "moduleType": 2,
         "moduleSubType": 2001,
         "moduleLevel": 8,
@@ -1437,7 +1437,7 @@
         "moduleSlots": [],
         "health": 0.0,
         "repairPower": 0.0,
-        "speed": 9.7,
+        "speed": 97.4,
         "attackFireCount": 0,
         "attackPower": 0.0,
         "attackCoolTime": 0.0,
@@ -1456,7 +1456,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "engine_standard Lv.9",
+        "moduleName": "engine_t1_std Lv.9",
         "moduleType": 2,
         "moduleSubType": 2001,
         "moduleLevel": 9,
@@ -1471,7 +1471,7 @@
         "moduleSlots": [],
         "health": 0.0,
         "repairPower": 0.0,
-        "speed": 10.7,
+        "speed": 107.2,
         "attackFireCount": 0,
         "attackPower": 0.0,
         "attackCoolTime": 0.0,
@@ -1490,7 +1490,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "engine_standard Lv.10",
+        "moduleName": "engine_t1_std Lv.10",
         "moduleType": 2,
         "moduleSubType": 2001,
         "moduleLevel": 10,
@@ -1505,7 +1505,7 @@
         "moduleSlots": [],
         "health": 0.0,
         "repairPower": 0.0,
-        "speed": 11.8,
+        "speed": 117.9,
         "attackFireCount": 0,
         "attackPower": 0.0,
         "attackCoolTime": 0.0,
@@ -1524,7 +1524,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "engine_booster Lv.1",
+        "moduleName": "engine_t1_adv Lv.1",
         "moduleType": 2,
         "moduleSubType": 2002,
         "moduleLevel": 1,
@@ -1539,7 +1539,7 @@
         "moduleSlots": [],
         "health": 0.0,
         "repairPower": 0.0,
-        "speed": 20.0,
+        "speed": 200.0,
         "attackFireCount": 0,
         "attackPower": 0.0,
         "attackCoolTime": 0.0,
@@ -1558,7 +1558,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "engine_booster Lv.2",
+        "moduleName": "engine_t1_adv Lv.2",
         "moduleType": 2,
         "moduleSubType": 2002,
         "moduleLevel": 2,
@@ -1573,7 +1573,7 @@
         "moduleSlots": [],
         "health": 0.0,
         "repairPower": 0.0,
-        "speed": 22.0,
+        "speed": 220.0,
         "attackFireCount": 0,
         "attackPower": 0.0,
         "attackCoolTime": 0.0,
@@ -1592,7 +1592,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "engine_booster Lv.3",
+        "moduleName": "engine_t1_adv Lv.3",
         "moduleType": 2,
         "moduleSubType": 2002,
         "moduleLevel": 3,
@@ -1607,7 +1607,7 @@
         "moduleSlots": [],
         "health": 0.0,
         "repairPower": 0.0,
-        "speed": 24.2,
+        "speed": 242.0,
         "attackFireCount": 0,
         "attackPower": 0.0,
         "attackCoolTime": 0.0,
@@ -1626,7 +1626,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "engine_booster Lv.4",
+        "moduleName": "engine_t1_adv Lv.4",
         "moduleType": 2,
         "moduleSubType": 2002,
         "moduleLevel": 4,
@@ -1641,7 +1641,7 @@
         "moduleSlots": [],
         "health": 0.0,
         "repairPower": 0.0,
-        "speed": 26.6,
+        "speed": 266.2,
         "attackFireCount": 0,
         "attackPower": 0.0,
         "attackCoolTime": 0.0,
@@ -1660,7 +1660,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "engine_booster Lv.5",
+        "moduleName": "engine_t1_adv Lv.5",
         "moduleType": 2,
         "moduleSubType": 2002,
         "moduleLevel": 5,
@@ -1675,7 +1675,7 @@
         "moduleSlots": [],
         "health": 0.0,
         "repairPower": 0.0,
-        "speed": 29.3,
+        "speed": 292.8,
         "attackFireCount": 0,
         "attackPower": 0.0,
         "attackCoolTime": 0.0,
@@ -1694,7 +1694,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "engine_booster Lv.6",
+        "moduleName": "engine_t1_adv Lv.6",
         "moduleType": 2,
         "moduleSubType": 2002,
         "moduleLevel": 6,
@@ -1709,7 +1709,7 @@
         "moduleSlots": [],
         "health": 0.0,
         "repairPower": 0.0,
-        "speed": 32.2,
+        "speed": 322.1,
         "attackFireCount": 0,
         "attackPower": 0.0,
         "attackCoolTime": 0.0,
@@ -1728,7 +1728,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "engine_booster Lv.7",
+        "moduleName": "engine_t1_adv Lv.7",
         "moduleType": 2,
         "moduleSubType": 2002,
         "moduleLevel": 7,
@@ -1743,7 +1743,7 @@
         "moduleSlots": [],
         "health": 0.0,
         "repairPower": 0.0,
-        "speed": 35.4,
+        "speed": 354.3,
         "attackFireCount": 0,
         "attackPower": 0.0,
         "attackCoolTime": 0.0,
@@ -1762,7 +1762,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "engine_booster Lv.8",
+        "moduleName": "engine_t1_adv Lv.8",
         "moduleType": 2,
         "moduleSubType": 2002,
         "moduleLevel": 8,
@@ -1777,7 +1777,7 @@
         "moduleSlots": [],
         "health": 0.0,
         "repairPower": 0.0,
-        "speed": 39.0,
+        "speed": 389.7,
         "attackFireCount": 0,
         "attackPower": 0.0,
         "attackCoolTime": 0.0,
@@ -1796,7 +1796,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "engine_booster Lv.9",
+        "moduleName": "engine_t1_adv Lv.9",
         "moduleType": 2,
         "moduleSubType": 2002,
         "moduleLevel": 9,
@@ -1811,7 +1811,7 @@
         "moduleSlots": [],
         "health": 0.0,
         "repairPower": 0.0,
-        "speed": 42.9,
+        "speed": 428.7,
         "attackFireCount": 0,
         "attackPower": 0.0,
         "attackCoolTime": 0.0,
@@ -1830,7 +1830,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "engine_booster Lv.10",
+        "moduleName": "engine_t1_adv Lv.10",
         "moduleType": 2,
         "moduleSubType": 2002,
         "moduleLevel": 10,
@@ -1845,7 +1845,7 @@
         "moduleSlots": [],
         "health": 0.0,
         "repairPower": 0.0,
-        "speed": 47.2,
+        "speed": 471.6,
         "attackFireCount": 0,
         "attackPower": 0.0,
         "attackCoolTime": 0.0,
@@ -1866,7 +1866,7 @@
     ],
     "3": [
       {
-        "moduleName": "beam_standard Lv.1",
+        "moduleName": "beam_t1_std Lv.1",
         "moduleType": 3,
         "moduleSubType": 3001,
         "moduleLevel": 1,
@@ -1900,7 +1900,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "beam_standard Lv.2",
+        "moduleName": "beam_t1_std Lv.2",
         "moduleType": 3,
         "moduleSubType": 3001,
         "moduleLevel": 2,
@@ -1934,7 +1934,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "beam_standard Lv.3",
+        "moduleName": "beam_t1_std Lv.3",
         "moduleType": 3,
         "moduleSubType": 3001,
         "moduleLevel": 3,
@@ -1968,7 +1968,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "beam_standard Lv.4",
+        "moduleName": "beam_t1_std Lv.4",
         "moduleType": 3,
         "moduleSubType": 3001,
         "moduleLevel": 4,
@@ -2002,7 +2002,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "beam_standard Lv.5",
+        "moduleName": "beam_t1_std Lv.5",
         "moduleType": 3,
         "moduleSubType": 3001,
         "moduleLevel": 5,
@@ -2036,7 +2036,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "beam_standard Lv.6",
+        "moduleName": "beam_t1_std Lv.6",
         "moduleType": 3,
         "moduleSubType": 3001,
         "moduleLevel": 6,
@@ -2070,7 +2070,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "beam_standard Lv.7",
+        "moduleName": "beam_t1_std Lv.7",
         "moduleType": 3,
         "moduleSubType": 3001,
         "moduleLevel": 7,
@@ -2104,7 +2104,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "beam_standard Lv.8",
+        "moduleName": "beam_t1_std Lv.8",
         "moduleType": 3,
         "moduleSubType": 3001,
         "moduleLevel": 8,
@@ -2138,7 +2138,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "beam_standard Lv.9",
+        "moduleName": "beam_t1_std Lv.9",
         "moduleType": 3,
         "moduleSubType": 3001,
         "moduleLevel": 9,
@@ -2172,7 +2172,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "beam_standard Lv.10",
+        "moduleName": "beam_t1_std Lv.10",
         "moduleType": 3,
         "moduleSubType": 3001,
         "moduleLevel": 10,
@@ -2206,7 +2206,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "beam_advanced Lv.1",
+        "moduleName": "beam_t1_adv Lv.1",
         "moduleType": 3,
         "moduleSubType": 3002,
         "moduleLevel": 1,
@@ -2240,7 +2240,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "beam_advanced Lv.2",
+        "moduleName": "beam_t1_adv Lv.2",
         "moduleType": 3,
         "moduleSubType": 3002,
         "moduleLevel": 2,
@@ -2274,7 +2274,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "beam_advanced Lv.3",
+        "moduleName": "beam_t1_adv Lv.3",
         "moduleType": 3,
         "moduleSubType": 3002,
         "moduleLevel": 3,
@@ -2308,7 +2308,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "beam_advanced Lv.4",
+        "moduleName": "beam_t1_adv Lv.4",
         "moduleType": 3,
         "moduleSubType": 3002,
         "moduleLevel": 4,
@@ -2342,7 +2342,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "beam_advanced Lv.5",
+        "moduleName": "beam_t1_adv Lv.5",
         "moduleType": 3,
         "moduleSubType": 3002,
         "moduleLevel": 5,
@@ -2376,7 +2376,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "beam_advanced Lv.6",
+        "moduleName": "beam_t1_adv Lv.6",
         "moduleType": 3,
         "moduleSubType": 3002,
         "moduleLevel": 6,
@@ -2410,7 +2410,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "beam_advanced Lv.7",
+        "moduleName": "beam_t1_adv Lv.7",
         "moduleType": 3,
         "moduleSubType": 3002,
         "moduleLevel": 7,
@@ -2444,7 +2444,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "beam_advanced Lv.8",
+        "moduleName": "beam_t1_adv Lv.8",
         "moduleType": 3,
         "moduleSubType": 3002,
         "moduleLevel": 8,
@@ -2478,7 +2478,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "beam_advanced Lv.9",
+        "moduleName": "beam_t1_adv Lv.9",
         "moduleType": 3,
         "moduleSubType": 3002,
         "moduleLevel": 9,
@@ -2512,7 +2512,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "beam_advanced Lv.10",
+        "moduleName": "beam_t1_adv Lv.10",
         "moduleType": 3,
         "moduleSubType": 3002,
         "moduleLevel": 10,
@@ -2548,7 +2548,7 @@
     ],
     "4": [
       {
-        "moduleName": "missile_standard Lv.1",
+        "moduleName": "missile_t1_std Lv.1",
         "moduleType": 4,
         "moduleSubType": 4001,
         "moduleLevel": 1,
@@ -2582,7 +2582,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "missile_standard Lv.2",
+        "moduleName": "missile_t1_std Lv.2",
         "moduleType": 4,
         "moduleSubType": 4001,
         "moduleLevel": 2,
@@ -2616,7 +2616,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "missile_standard Lv.3",
+        "moduleName": "missile_t1_std Lv.3",
         "moduleType": 4,
         "moduleSubType": 4001,
         "moduleLevel": 3,
@@ -2650,7 +2650,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "missile_standard Lv.4",
+        "moduleName": "missile_t1_std Lv.4",
         "moduleType": 4,
         "moduleSubType": 4001,
         "moduleLevel": 4,
@@ -2684,7 +2684,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "missile_standard Lv.5",
+        "moduleName": "missile_t1_std Lv.5",
         "moduleType": 4,
         "moduleSubType": 4001,
         "moduleLevel": 5,
@@ -2718,7 +2718,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "missile_standard Lv.6",
+        "moduleName": "missile_t1_std Lv.6",
         "moduleType": 4,
         "moduleSubType": 4001,
         "moduleLevel": 6,
@@ -2752,7 +2752,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "missile_standard Lv.7",
+        "moduleName": "missile_t1_std Lv.7",
         "moduleType": 4,
         "moduleSubType": 4001,
         "moduleLevel": 7,
@@ -2786,7 +2786,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "missile_standard Lv.8",
+        "moduleName": "missile_t1_std Lv.8",
         "moduleType": 4,
         "moduleSubType": 4001,
         "moduleLevel": 8,
@@ -2820,7 +2820,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "missile_standard Lv.9",
+        "moduleName": "missile_t1_std Lv.9",
         "moduleType": 4,
         "moduleSubType": 4001,
         "moduleLevel": 9,
@@ -2854,7 +2854,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "missile_standard Lv.10",
+        "moduleName": "missile_t1_std Lv.10",
         "moduleType": 4,
         "moduleSubType": 4001,
         "moduleLevel": 10,
@@ -2888,7 +2888,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "missile_advanced Lv.1",
+        "moduleName": "missile_t1_adv Lv.1",
         "moduleType": 4,
         "moduleSubType": 4002,
         "moduleLevel": 1,
@@ -2922,7 +2922,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "missile_advanced Lv.2",
+        "moduleName": "missile_t1_adv Lv.2",
         "moduleType": 4,
         "moduleSubType": 4002,
         "moduleLevel": 2,
@@ -2956,7 +2956,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "missile_advanced Lv.3",
+        "moduleName": "missile_t1_adv Lv.3",
         "moduleType": 4,
         "moduleSubType": 4002,
         "moduleLevel": 3,
@@ -2990,7 +2990,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "missile_advanced Lv.4",
+        "moduleName": "missile_t1_adv Lv.4",
         "moduleType": 4,
         "moduleSubType": 4002,
         "moduleLevel": 4,
@@ -3024,7 +3024,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "missile_advanced Lv.5",
+        "moduleName": "missile_t1_adv Lv.5",
         "moduleType": 4,
         "moduleSubType": 4002,
         "moduleLevel": 5,
@@ -3058,7 +3058,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "missile_advanced Lv.6",
+        "moduleName": "missile_t1_adv Lv.6",
         "moduleType": 4,
         "moduleSubType": 4002,
         "moduleLevel": 6,
@@ -3092,7 +3092,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "missile_advanced Lv.7",
+        "moduleName": "missile_t1_adv Lv.7",
         "moduleType": 4,
         "moduleSubType": 4002,
         "moduleLevel": 7,
@@ -3126,7 +3126,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "missile_advanced Lv.8",
+        "moduleName": "missile_t1_adv Lv.8",
         "moduleType": 4,
         "moduleSubType": 4002,
         "moduleLevel": 8,
@@ -3160,7 +3160,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "missile_advanced Lv.9",
+        "moduleName": "missile_t1_adv Lv.9",
         "moduleType": 4,
         "moduleSubType": 4002,
         "moduleLevel": 9,
@@ -3194,7 +3194,7 @@
         "aircraftAvoidanceRadius": 0.0
       },
       {
-        "moduleName": "missile_advanced Lv.10",
+        "moduleName": "missile_t1_adv Lv.10",
         "moduleType": 4,
         "moduleSubType": 4002,
         "moduleLevel": 10,
@@ -3230,7 +3230,7 @@
     ],
     "5": [
       {
-        "moduleName": "hanger_standard Lv.1",
+        "moduleName": "hanger_t1_std Lv.1",
         "moduleType": 5,
         "moduleSubType": 5001,
         "moduleLevel": 1,
@@ -3264,7 +3264,7 @@
         "aircraftAvoidanceRadius": 200.0
       },
       {
-        "moduleName": "hanger_standard Lv.2",
+        "moduleName": "hanger_t1_std Lv.2",
         "moduleType": 5,
         "moduleSubType": 5001,
         "moduleLevel": 2,
@@ -3298,7 +3298,7 @@
         "aircraftAvoidanceRadius": 200.0
       },
       {
-        "moduleName": "hanger_standard Lv.3",
+        "moduleName": "hanger_t1_std Lv.3",
         "moduleType": 5,
         "moduleSubType": 5001,
         "moduleLevel": 3,
@@ -3332,7 +3332,7 @@
         "aircraftAvoidanceRadius": 200.0
       },
       {
-        "moduleName": "hanger_standard Lv.4",
+        "moduleName": "hanger_t1_std Lv.4",
         "moduleType": 5,
         "moduleSubType": 5001,
         "moduleLevel": 4,
@@ -3366,7 +3366,7 @@
         "aircraftAvoidanceRadius": 200.0
       },
       {
-        "moduleName": "hanger_standard Lv.5",
+        "moduleName": "hanger_t1_std Lv.5",
         "moduleType": 5,
         "moduleSubType": 5001,
         "moduleLevel": 5,
@@ -3400,7 +3400,7 @@
         "aircraftAvoidanceRadius": 200.0
       },
       {
-        "moduleName": "hanger_standard Lv.6",
+        "moduleName": "hanger_t1_std Lv.6",
         "moduleType": 5,
         "moduleSubType": 5001,
         "moduleLevel": 6,
@@ -3434,7 +3434,7 @@
         "aircraftAvoidanceRadius": 200.0
       },
       {
-        "moduleName": "hanger_standard Lv.7",
+        "moduleName": "hanger_t1_std Lv.7",
         "moduleType": 5,
         "moduleSubType": 5001,
         "moduleLevel": 7,
@@ -3468,7 +3468,7 @@
         "aircraftAvoidanceRadius": 200.0
       },
       {
-        "moduleName": "hanger_standard Lv.8",
+        "moduleName": "hanger_t1_std Lv.8",
         "moduleType": 5,
         "moduleSubType": 5001,
         "moduleLevel": 8,
@@ -3502,7 +3502,7 @@
         "aircraftAvoidanceRadius": 200.0
       },
       {
-        "moduleName": "hanger_standard Lv.9",
+        "moduleName": "hanger_t1_std Lv.9",
         "moduleType": 5,
         "moduleSubType": 5001,
         "moduleLevel": 9,
@@ -3536,7 +3536,7 @@
         "aircraftAvoidanceRadius": 200.0
       },
       {
-        "moduleName": "hanger_standard Lv.10",
+        "moduleName": "hanger_t1_std Lv.10",
         "moduleType": 5,
         "moduleSubType": 5001,
         "moduleLevel": 10,
@@ -3570,7 +3570,7 @@
         "aircraftAvoidanceRadius": 200.0
       },
       {
-        "moduleName": "hanger_advanced Lv.1",
+        "moduleName": "hanger_t1_adv Lv.1",
         "moduleType": 5,
         "moduleSubType": 5002,
         "moduleLevel": 1,
@@ -3604,7 +3604,7 @@
         "aircraftAvoidanceRadius": 200.0
       },
       {
-        "moduleName": "hanger_advanced Lv.2",
+        "moduleName": "hanger_t1_adv Lv.2",
         "moduleType": 5,
         "moduleSubType": 5002,
         "moduleLevel": 2,
@@ -3638,7 +3638,7 @@
         "aircraftAvoidanceRadius": 200.0
       },
       {
-        "moduleName": "hanger_advanced Lv.3",
+        "moduleName": "hanger_t1_adv Lv.3",
         "moduleType": 5,
         "moduleSubType": 5002,
         "moduleLevel": 3,
@@ -3672,7 +3672,7 @@
         "aircraftAvoidanceRadius": 200.0
       },
       {
-        "moduleName": "hanger_advanced Lv.4",
+        "moduleName": "hanger_t1_adv Lv.4",
         "moduleType": 5,
         "moduleSubType": 5002,
         "moduleLevel": 4,
@@ -3706,7 +3706,7 @@
         "aircraftAvoidanceRadius": 200.0
       },
       {
-        "moduleName": "hanger_advanced Lv.5",
+        "moduleName": "hanger_t1_adv Lv.5",
         "moduleType": 5,
         "moduleSubType": 5002,
         "moduleLevel": 5,
@@ -3740,7 +3740,7 @@
         "aircraftAvoidanceRadius": 200.0
       },
       {
-        "moduleName": "hanger_advanced Lv.6",
+        "moduleName": "hanger_t1_adv Lv.6",
         "moduleType": 5,
         "moduleSubType": 5002,
         "moduleLevel": 6,
@@ -3774,7 +3774,7 @@
         "aircraftAvoidanceRadius": 200.0
       },
       {
-        "moduleName": "hanger_advanced Lv.7",
+        "moduleName": "hanger_t1_adv Lv.7",
         "moduleType": 5,
         "moduleSubType": 5002,
         "moduleLevel": 7,
@@ -3808,7 +3808,7 @@
         "aircraftAvoidanceRadius": 200.0
       },
       {
-        "moduleName": "hanger_advanced Lv.8",
+        "moduleName": "hanger_t1_adv Lv.8",
         "moduleType": 5,
         "moduleSubType": 5002,
         "moduleLevel": 8,
@@ -3842,7 +3842,7 @@
         "aircraftAvoidanceRadius": 200.0
       },
       {
-        "moduleName": "hanger_advanced Lv.9",
+        "moduleName": "hanger_t1_adv Lv.9",
         "moduleType": 5,
         "moduleSubType": 5002,
         "moduleLevel": 9,
@@ -3876,7 +3876,7 @@
         "aircraftAvoidanceRadius": 200.0
       },
       {
-        "moduleName": "hanger_advanced Lv.10",
+        "moduleName": "hanger_t1_adv Lv.10",
         "moduleType": 5,
         "moduleSubType": 5002,
         "moduleLevel": 10,

@@ -25,11 +25,11 @@ public class ModuleData {
 
     private Integer moduleLevel;
 
-    private List<ModuleSlotInfoDto> moduleSlots;
-
     private CostStructDto upgradeCost;
 
     private String description;
+
+    private List<ModuleSlotInfoDto> moduleSlots;
 
     private Float health;
 

@@ -26,6 +26,4 @@ public class ModuleResearchData {
     private EModuleType moduleType;
 
     private EModuleSubType moduleSubType;
-
-    private String description;
 }
