@@ -161,6 +161,18 @@ public class PvpRedisService {
         redisTemplate.delete(LIST_PREFIX + characterId);
     }
 
+    // 서버 시작 시 pvp 관련 모든 Redis 키 삭제
+    public void clearAllPvpData() {
+        Set<String> rankingKey = redisTemplate.keys(RANKING_KEY);
+        if (rankingKey != null && !rankingKey.isEmpty()) redisTemplate.delete(rankingKey);
+
+        Set<String> infoKeys = redisTemplate.keys(INFO_PREFIX + "*");
+        if (infoKeys != null && !infoKeys.isEmpty()) redisTemplate.delete(infoKeys);
+
+        Set<String> listKeys = redisTemplate.keys(LIST_PREFIX + "*");
+        if (listKeys != null && !listKeys.isEmpty()) redisTemplate.delete(listKeys);
+    }
+
     // 전체 랭킹 인원 수
     public long getTotalRankingCount() {
         Long count = redisTemplate.opsForZSet().zCard(RANKING_KEY);

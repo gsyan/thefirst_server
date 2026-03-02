@@ -17,4 +17,7 @@ import lombok.NoArgsConstructor;
 public class PvpRankingResponse {
     private Integer totalCount;
     private List<PvpRankingEntryDto> items;
+    private String seasonName;
+    private String seasonStartTime;
+    private String seasonEndTime;
 }

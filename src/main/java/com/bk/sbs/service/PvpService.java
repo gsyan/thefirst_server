@@ -10,6 +10,9 @@ import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.repository.CharacterRepository;
 import com.bk.sbs.repository.PvpRecordRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +37,26 @@ public class PvpService {
         this.fleetService = fleetService;
         this.characterRepository = characterRepository;
         this.gameDataService = gameDataService;
+    }
+
+    // 서버 시작 시 Redis를 DB 상태로 동기화 (고아 키 제거) - TestDataInitializer(@Order(1)) 이후 실행
+    @EventListener(ApplicationReadyEvent.class)
+    @Order(2)
+    public void syncRedisFromDb() {
+        pvpRedisService.clearAllPvpData();
+
+        List<PvpRecord> records = pvpRecordRepository.findAll();
+        if (records.isEmpty()) {
+            log.info("PVP Redis 동기화: DB 레코드 없음, Redis 클리어만 수행");
+            return;
+        }
+
+        DataTableConfig config = gameDataService.getDataTableConfig();
+        for (PvpRecord record : records) {
+            pvpRedisService.setScore(record.getCharacterId(), record.getScore());
+            pvpRedisService.initInfo(record.getCharacterId(), config.getPvpListRefreshCount());
+        }
+        log.info("PVP Redis 동기화 완료: {}건", records.size());
     }
 
     // PvP 최초 접근 시 Lazy 초기화 (Redis + DB)
@@ -82,14 +105,14 @@ public class PvpService {
         // 캐시된 리스트 확인
         List<Long> cachedIds = pvpRedisService.getCachedOpponentList(characterId);
         if (cachedIds != null && cachedIds.size() >= listCount) {
-            return buildPvpListResponse(characterId, cachedIds, config);
+            return buildPvpListResponse(cachedIds);
         }
 
         // 매칭 수행
         List<Long> opponentIds = findOpponents(characterId, listCount);
         pvpRedisService.cacheOpponentList(characterId, opponentIds);
 
-        return buildPvpListResponse(characterId, opponentIds, config);
+        return buildPvpListResponse(opponentIds);
     }
 
     // 상대 리스트 새로고침
@@ -289,10 +312,11 @@ public class PvpService {
         return result;
     }
 
-    // PvpListResponse 빌드
-    private PvpListResponse buildPvpListResponse(Long characterId, List<Long> opponentIds, DataTableConfig config) {
-        List<PvpOpponentInfoDto> opponents = buildOpponentInfoList(opponentIds);
+    // 내 랭크 정보 조회
+    public PvpMyRankResponse getMyRank(Long characterId) {
+        getOrCreatePvpRecord(characterId);
 
+        DataTableConfig config = gameDataService.getDataTableConfig();
         Double myScore = pvpRedisService.getScore(characterId);
         Long myRank = pvpRedisService.getRank(characterId);
         Map<Object, Object> myInfo = pvpRedisService.getInfo(characterId);
@@ -305,9 +329,16 @@ public class PvpService {
         rankInfo.setPvpLosses(getIntFromHash(myInfo, "losses"));
         rankInfo.setPvpListRefreshRemain(refreshRemain);
 
+        PvpMyRankResponse response = new PvpMyRankResponse();
+        response.setMyRankInfo(rankInfo);
+        return response;
+    }
+
+    // PvpListResponse 빌드
+    private PvpListResponse buildPvpListResponse(List<Long> opponentIds) {
+        List<PvpOpponentInfoDto> opponents = buildOpponentInfoList(opponentIds);
         PvpListResponse response = new PvpListResponse();
         response.setOpponents(opponents);
-        response.setMyRankInfo(rankInfo);
         return response;
     }
 
