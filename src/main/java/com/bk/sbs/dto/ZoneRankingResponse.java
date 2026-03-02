@@ -7,19 +7,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * PvpRankingResponse
- * Auto-generated from Unity C# PvpRankingResponse class
+ * ZoneRankingResponse
+ * Auto-generated from Unity C# ZoneRankingResponse class
  */
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class PvpRankingResponse {
+public class ZoneRankingResponse {
     private Integer totalCount;
     private List<RankingEntryDto> items;
     private RankingEntryDto myInfo;
     private String lastUpdatedAt;
-    private String seasonName;
-    private String seasonStartTime;
-    private String seasonEndTime;
 }

@@ -22,4 +22,5 @@ public class CharacterInfoDto {
     private Long mineralDark;
     private String clearedZone;
     private String collectDateTime;
+    private Integer nameChangeCount;
 }

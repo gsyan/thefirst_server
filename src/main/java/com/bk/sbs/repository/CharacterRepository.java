@@ -19,4 +19,8 @@ public interface CharacterRepository extends JpaRepository<Character, Long> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("SELECT c FROM Character c WHERE c.id = :id")
     Optional<Character> findByIdForUpdate(@Param("id") Long id);
+
+    // Zone 랭킹 서버 시작 시 동기화 - clearedZone 있는 캐릭터 전체 조회
+    @Query("SELECT c FROM Character c WHERE c.deleted = false AND c.clearedZone IS NOT NULL AND c.clearedZone != ''")
+    List<Character> findAllWithClearedZone();
 }

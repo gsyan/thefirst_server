@@ -10,6 +10,7 @@ import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.repository.CharacterRepository;
 import com.bk.sbs.repository.PvpRecordRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
@@ -23,16 +24,19 @@ import java.util.*;
 @Slf4j
 public class PvpService {
 
-    private final PvpRedisService pvpRedisService;
+    @Value("${ranking.pvp.sync.rate-minutes:60}")
+    private long pvpSyncRateMinutes;
+
+    private final RedisService redisService;
     private final PvpRecordRepository pvpRecordRepository;
     private final FleetService fleetService;
     private final CharacterRepository characterRepository;
     private final GameDataService gameDataService;
 
-    public PvpService(PvpRedisService pvpRedisService, PvpRecordRepository pvpRecordRepository,
+    public PvpService(RedisService redisService, PvpRecordRepository pvpRecordRepository,
                       FleetService fleetService, CharacterRepository characterRepository,
                       GameDataService gameDataService) {
-        this.pvpRedisService = pvpRedisService;
+        this.redisService = redisService;
         this.pvpRecordRepository = pvpRecordRepository;
         this.fleetService = fleetService;
         this.characterRepository = characterRepository;
@@ -43,7 +47,7 @@ public class PvpService {
     @EventListener(ApplicationReadyEvent.class)
     @Order(2)
     public void syncRedisFromDb() {
-        pvpRedisService.clearAllPvpData();
+        redisService.clearAllPvpData();
 
         List<PvpRecord> records = pvpRecordRepository.findAll();
         if (records.isEmpty()) {
@@ -51,12 +55,41 @@ public class PvpService {
             return;
         }
 
+        // characterId → characterName 일괄 로드
+        List<Long> ids = records.stream()
+                .map(PvpRecord::getCharacterId)
+                .collect(java.util.stream.Collectors.toList());
+        Map<Long, String> nameMap = new HashMap<>();
+        characterRepository.findAllById(ids).forEach(c -> nameMap.put(c.getId(), c.getCharacterName()));
+
         DataTableConfig config = gameDataService.getDataTableConfig();
         for (PvpRecord record : records) {
-            pvpRedisService.setScore(record.getCharacterId(), record.getScore());
-            pvpRedisService.initInfo(record.getCharacterId(), config.getPvpListRefreshCount());
+            redisService.setPvpScore(record.getCharacterId(), record.getScore());
+            redisService.initPvpInfo(record.getCharacterId(), config.getPvpListRefreshCount(), record.getScore());
+            String name = nameMap.get(record.getCharacterId());
+            if (name != null) redisService.setRankName(record.getCharacterId(), name);
         }
+
+        redisService.snapshotPvpRanking();
+        String nextUpdatedAt = java.time.Instant.now().plusSeconds(pvpSyncRateMinutes * 60).toString();
+        redisService.setPvpRankingUpdatedAt(nextUpdatedAt);
         log.info("PVP Redis 동기화 완료: {}건", records.size());
+    }
+
+    // PVP 랭킹 주기 재동기화 - DB → pvp:ranking 재구축 후 snapshot 갱신
+    @org.springframework.scheduling.annotation.Scheduled(fixedRateString = "#{${ranking.pvp.sync.rate-minutes:60} * 60000}")
+    public void syncPvpRankingFromDb() {
+        redisService.clearPvpRankingZset();
+
+        List<PvpRecord> records = pvpRecordRepository.findAll();
+        for (PvpRecord record : records) {
+            redisService.setPvpScore(record.getCharacterId(), record.getScore());
+        }
+
+        redisService.snapshotPvpRanking();
+        String nextUpdatedAt = java.time.Instant.now().plusSeconds(pvpSyncRateMinutes * 60).toString();
+        redisService.setPvpRankingUpdatedAt(nextUpdatedAt);
+        log.info("PVP 랭킹 주기 동기화 완료: {}건", records.size());
     }
 
     // PvP 최초 접근 시 Lazy 초기화 (Redis + DB)
@@ -64,19 +97,16 @@ public class PvpService {
     public PvpRecord getOrCreatePvpRecord(Long characterId) {
         Optional<PvpRecord> existing = pvpRecordRepository.findByCharacterId(characterId);
         if (existing.isPresent()) {
-            // Redis에도 확인
-            Double redisScore = pvpRedisService.getScore(characterId);
+            Double redisScore = redisService.getPvpScore(characterId);
             if (redisScore == null) {
-                // Redis에 없으면 DB에서 복원
                 PvpRecord record = existing.get();
-                pvpRedisService.setScore(characterId, record.getScore());
+                redisService.setPvpScore(characterId, record.getScore());
                 DataTableConfig config = gameDataService.getDataTableConfig();
-                pvpRedisService.initInfo(characterId, config.getPvpListRefreshCount());
+                redisService.initPvpInfo(characterId, config.getPvpListRefreshCount(), record.getScore());
             }
             return existing.get();
         }
 
-        // 신규 생성
         DataTableConfig config = gameDataService.getDataTableConfig();
         int initScore = config.getPvpRankScoreInit();
 
@@ -88,9 +118,12 @@ public class PvpService {
         record.setLastUpdated(LocalDateTime.now());
         pvpRecordRepository.save(record);
 
-        // Redis 초기화
-        pvpRedisService.setScore(characterId, initScore);
-        pvpRedisService.initInfo(characterId, config.getPvpListRefreshCount());
+        redisService.setPvpScore(characterId, initScore);
+        redisService.initPvpInfo(characterId, config.getPvpListRefreshCount(), initScore);
+
+        // 신규 캐릭터 이름도 rankName에 등록
+        characterRepository.findById(characterId)
+                .ifPresent(c -> redisService.setRankName(characterId, c.getCharacterName()));
 
         return record;
     }
@@ -102,15 +135,13 @@ public class PvpService {
         DataTableConfig config = gameDataService.getDataTableConfig();
         int listCount = config.getPvpListCount();
 
-        // 캐시된 리스트 확인
-        List<Long> cachedIds = pvpRedisService.getCachedOpponentList(characterId);
+        List<Long> cachedIds = redisService.getCachedOpponentList(characterId);
         if (cachedIds != null && cachedIds.size() >= listCount) {
             return buildPvpListResponse(cachedIds);
         }
 
-        // 매칭 수행
         List<Long> opponentIds = findOpponents(characterId, listCount);
-        pvpRedisService.cacheOpponentList(characterId, opponentIds);
+        redisService.cacheOpponentList(characterId, opponentIds);
 
         return buildPvpListResponse(opponentIds);
     }
@@ -120,16 +151,16 @@ public class PvpService {
         getOrCreatePvpRecord(characterId);
 
         DataTableConfig config = gameDataService.getDataTableConfig();
-        int refreshRemain = pvpRedisService.getRefreshRemain(characterId, config.getPvpListRefreshCount());
+        int refreshRemain = redisService.getRefreshRemain(characterId, config.getPvpListRefreshCount());
         if (refreshRemain <= 0) {
             throw new BusinessException(ServerErrorCode.PVP_REFRESH_LIMIT_EXCEEDED);
         }
 
-        pvpRedisService.decrementRefreshRemain(characterId);
-        pvpRedisService.deleteCachedOpponentList(characterId);
+        redisService.decrementRefreshRemain(characterId);
+        redisService.deleteCachedOpponentList(characterId);
 
         List<Long> opponentIds = findOpponents(characterId, config.getPvpListCount());
-        pvpRedisService.cacheOpponentList(characterId, opponentIds);
+        redisService.cacheOpponentList(characterId, opponentIds);
 
         List<PvpOpponentInfoDto> opponents = buildOpponentInfoList(opponentIds);
 
@@ -143,15 +174,13 @@ public class PvpService {
     public PvpBattleStartResponse startBattle(Long characterId, Long opponentCharacterId) {
         getOrCreatePvpRecord(characterId);
 
-        // 상대 활성 함대 조회
         FleetInfoDto opponentFleet = fleetService.getActiveFleet(opponentCharacterId);
         if (opponentFleet == null) {
             throw new BusinessException(ServerErrorCode.PVP_OPPONENT_FLEET_NOT_FOUND);
         }
 
-        // battleToken 생성
         String battleToken = UUID.randomUUID().toString();
-        pvpRedisService.saveBattleToken(battleToken, characterId, opponentCharacterId);
+        redisService.saveBattleToken(battleToken, characterId, opponentCharacterId);
 
         PvpBattleStartResponse response = new PvpBattleStartResponse();
         response.setOpponentFleetInfo(opponentFleet);
@@ -162,8 +191,7 @@ public class PvpService {
     // 전투 결과 처리
     @Transactional
     public PvpBattleResultResponse reportBattleResult(Long characterId, String battleToken, boolean isVictory) {
-        // 토큰 유효성 검증
-        Map<String, Long> tokenData = pvpRedisService.getBattleToken(battleToken);
+        Map<String, Long> tokenData = redisService.getBattleToken(battleToken);
         if (tokenData == null) {
             throw new BusinessException(ServerErrorCode.PVP_BATTLE_TOKEN_INVALID);
         }
@@ -174,15 +202,13 @@ public class PvpService {
             throw new BusinessException(ServerErrorCode.PVP_BATTLE_TOKEN_INVALID);
         }
 
-        pvpRedisService.deleteBattleToken(battleToken);
+        redisService.deleteBattleToken(battleToken);
 
-        // 점수 조회
-        Double attackerScoreD = pvpRedisService.getScore(attackerId);
-        Double defenderScoreD = pvpRedisService.getScore(defenderId);
+        Double attackerScoreD = redisService.getPvpScore(attackerId);
+        Double defenderScoreD = redisService.getPvpScore(defenderId);
         int attackerScore = attackerScoreD != null ? attackerScoreD.intValue() : 1000;
         int defenderScore = defenderScoreD != null ? defenderScoreD.intValue() : 1000;
 
-        // 점수 변동 계산
         DataTableConfig config = gameDataService.getDataTableConfig();
         int penalty = config.getPvpRankScorePenalty();
         int winnerId, loserId;
@@ -204,62 +230,31 @@ public class PvpService {
         int winnerChange = changes[0];
         int loserChange = changes[1];
 
-        // Redis 점수 갱신
-        pvpRedisService.incrementScore(attackerId, isVictory ? winnerChange : loserChange);
-        pvpRedisService.incrementScore(defenderId, isVictory ? loserChange : winnerChange);
+        // pvp:ranking ZSET 실시간 반영 (매칭용) / snapshot은 주기 동기화 시에만 갱신
+        int attackerChange = isVictory ? winnerChange : loserChange;
+        int defenderChange = isVictory ? loserChange : winnerChange;
+        redisService.incrementPvpScore(attackerId, attackerChange);
+        redisService.incrementPvpScore(defenderId, defenderChange);
 
-        // Redis 전적 갱신
         if (isVictory) {
-            pvpRedisService.incrementWins(attackerId);
-            pvpRedisService.incrementLosses(defenderId);
+            redisService.incrementWins(attackerId);
+            redisService.incrementLosses(defenderId);
         } else {
-            pvpRedisService.incrementLosses(attackerId);
-            pvpRedisService.incrementWins(defenderId);
+            redisService.incrementLosses(attackerId);
+            redisService.incrementWins(defenderId);
         }
 
-        // DB 백업 (attacker)
-        int attackerChange = isVictory ? winnerChange : loserChange;
         updatePvpRecordDb(attackerId, attackerChange, isVictory);
-        // DB 백업 (defender)
-        int defenderChange = isVictory ? loserChange : winnerChange;
         updatePvpRecordDb(defenderId, defenderChange, isVictory == false);
 
-        // 응답
-        Double newScore = pvpRedisService.getScore(attackerId);
-        Long newRank = pvpRedisService.getRank(attackerId);
+        Double newScoreD = redisService.getPvpScore(attackerId);
+        int newScoreVal = newScoreD != null ? newScoreD.intValue() : 0;
+        Long newRank = redisService.getPvpSnapshotRank(attackerId);
 
         PvpBattleResultResponse response = new PvpBattleResultResponse();
         response.setScoreChange(attackerChange);
-        response.setNewScore(newScore != null ? newScore.intValue() : attackerScore + attackerChange);
+        response.setNewScore(newScoreVal);
         response.setNewRank(newRank != null ? newRank.intValue() : 0);
-        return response;
-    }
-
-    // 랭킹 보드 페이지 조회 (offset 0-based, limit 개수)
-    public PvpRankingResponse getRanking(int offset, int limit) {
-        long totalCount = pvpRedisService.getTotalRankingCount();
-        LinkedHashMap<Long, Integer> page = pvpRedisService.getRankingPage(offset, limit);
-
-        // 캐릭터 이름 일괄 조회 (N+1 방지)
-        Map<Long, String> nameMap = new HashMap<>();
-        characterRepository.findAllById(page.keySet())
-                .forEach(c -> nameMap.put(c.getId(), c.getCharacterName()));
-
-        List<PvpRankingEntryDto> items = new ArrayList<>();
-        int idx = 0;
-        for (Map.Entry<Long, Integer> entry : page.entrySet()) {
-            PvpRankingEntryDto dto = new PvpRankingEntryDto();
-            dto.setRank(offset + idx + 1);
-            dto.setCharacterId(entry.getKey());
-            dto.setCharacterName(nameMap.getOrDefault(entry.getKey(), "Unknown"));
-            dto.setPvpScore(entry.getValue());
-            items.add(dto);
-            idx++;
-        }
-
-        PvpRankingResponse response = new PvpRankingResponse();
-        response.setTotalCount((int) totalCount);
-        response.setItems(items);
         return response;
     }
 
@@ -289,7 +284,7 @@ public class PvpService {
 
     // 매칭: 점수 범위 확장 검색
     private List<Long> findOpponents(Long characterId, int count) {
-        Double myScore = pvpRedisService.getScore(characterId);
+        Double myScore = redisService.getPvpScore(characterId);
         if (myScore == null) return Collections.emptyList();
 
         List<Long> result = new ArrayList<>();
@@ -297,7 +292,7 @@ public class PvpService {
 
         for (int i = 1; i <= maxExpand && result.size() < count; i++) {
             double range = i * 100.0;
-            Set<String> candidates = pvpRedisService.findByScoreRange(
+            Set<String> candidates = redisService.findPvpByScoreRange(
                     myScore - range, myScore + range, count * 3L);
 
             for (String candidateId : candidates) {
@@ -312,18 +307,19 @@ public class PvpService {
         return result;
     }
 
-    // 내 랭크 정보 조회
+    // 내 랭크 정보 조회 - score는 pvp:ranking 실시간, rank는 snapshot 기준
     public PvpMyRankResponse getMyRank(Long characterId) {
         getOrCreatePvpRecord(characterId);
 
         DataTableConfig config = gameDataService.getDataTableConfig();
-        Double myScore = pvpRedisService.getScore(characterId);
-        Long myRank = pvpRedisService.getRank(characterId);
-        Map<Object, Object> myInfo = pvpRedisService.getInfo(characterId);
-        int refreshRemain = pvpRedisService.getRefreshRemain(characterId, config.getPvpListRefreshCount());
+        Double myScoreD = redisService.getPvpScore(characterId);
+        int myScore = myScoreD != null ? myScoreD.intValue() : 0;
+        Long myRank = redisService.getPvpSnapshotRank(characterId);
+        Map<Object, Object> myInfo = redisService.getPvpInfo(characterId);
+        int refreshRemain = redisService.getRefreshRemain(characterId, config.getPvpListRefreshCount());
 
         PvpRankInfoDto rankInfo = new PvpRankInfoDto();
-        rankInfo.setPvpScore(myScore != null ? myScore.intValue() : config.getPvpRankScoreInit());
+        rankInfo.setPvpScore(myScore > 0 ? myScore : config.getPvpRankScoreInit());
         rankInfo.setPvpRank(myRank != null ? myRank.intValue() : 0);
         rankInfo.setPvpWins(getIntFromHash(myInfo, "wins"));
         rankInfo.setPvpLosses(getIntFromHash(myInfo, "losses"));
@@ -334,7 +330,6 @@ public class PvpService {
         return response;
     }
 
-    // PvpListResponse 빌드
     private PvpListResponse buildPvpListResponse(List<Long> opponentIds) {
         List<PvpOpponentInfoDto> opponents = buildOpponentInfoList(opponentIds);
         PvpListResponse response = new PvpListResponse();
@@ -342,7 +337,6 @@ public class PvpService {
         return response;
     }
 
-    // 상대 정보 리스트 빌드
     private List<PvpOpponentInfoDto> buildOpponentInfoList(List<Long> opponentIds) {
         List<PvpOpponentInfoDto> opponents = new ArrayList<>();
         for (Long opponentId : opponentIds) {
@@ -351,21 +345,20 @@ public class PvpService {
 
             FleetInfoDto fleet = fleetService.getActiveFleet(opponentId);
 
-            Double score = pvpRedisService.getScore(opponentId);
-            Long rank = pvpRedisService.getRank(opponentId);
+            Double score = redisService.getPvpScore(opponentId);
+            Long rank = redisService.getPvpRank(opponentId);
 
             PvpOpponentInfoDto info = new PvpOpponentInfoDto();
             info.setCharacterId(opponentId);
             info.setCharacterName(character.getCharacterName());
             info.setPvpScore(score != null ? score.intValue() : 1000);
-            info.setRank(rank != null ? rank.intValue() + 1 : 0);
+            info.setRank(rank != null ? rank.intValue() : 0);
             info.setFleetInfo(fleet);
             opponents.add(info);
         }
         return opponents;
     }
 
-    // DB 백업 업데이트
     private void updatePvpRecordDb(Long characterId, int scoreChange, boolean isWin) {
         pvpRecordRepository.findByCharacterId((long) characterId).ifPresent(record -> {
             record.setScore(record.getScore() + scoreChange);

@@ -6,16 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * PvpRankingEntryDto
- * Auto-generated from Unity C# PvpRankingEntry class
+ * RankingEntryDto
+ * Auto-generated from Unity C# RankingEntry class
  */
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class PvpRankingEntryDto {
+public class RankingEntryDto {
     private Integer rank;
     private Long characterId;
     private String characterName;
-    private Integer pvpScore;
+    private String score;
 }

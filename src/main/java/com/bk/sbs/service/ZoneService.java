@@ -27,10 +27,12 @@ public class ZoneService {
 
     private final CharacterRepository characterRepository;
     private final GameDataService gameDataService;
+    private final RedisService redisService;
 
-    public ZoneService(CharacterRepository characterRepository, GameDataService gameDataService) {
+    public ZoneService(CharacterRepository characterRepository, GameDataService gameDataService, RedisService redisService) {
         this.characterRepository = characterRepository;
         this.gameDataService = gameDataService;
+        this.redisService = redisService;
     }
 
     @Transactional
@@ -60,6 +62,12 @@ public class ZoneService {
         character.setCollectDateTime(now);
 
         characterRepository.save(character);
+
+        // zone:ranking ZSET 즉시 반영 (매칭용 / snapshot은 주기 동기화 시 갱신)
+        int[] parts = parseZoneName(newZoneName);
+        long zoneScore = (long) parts[0] * 1000 + parts[1];
+        redisService.setZoneScore(characterId, zoneScore);
+        redisService.setRankName(characterId, character.getCharacterName());
 
         CostRemainInfoDto rewardInfo = CostRemainInfoDto.builder()
                 .mineralCost(-rewards[0])

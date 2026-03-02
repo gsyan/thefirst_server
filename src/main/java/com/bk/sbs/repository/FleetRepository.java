@@ -1,6 +1,7 @@
 package com.bk.sbs.repository;
 
 import com.bk.sbs.entity.Fleet;
+import com.bk.sbs.enums.EModuleType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
