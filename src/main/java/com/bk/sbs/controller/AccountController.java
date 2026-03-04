@@ -54,4 +54,16 @@ public class AccountController {
         return ApiResponse.success(response);
     }
 
+    @PostMapping("/link-google")
+    public ApiResponse<AuthResponse> linkGoogle(@RequestBody LinkGoogleRequest request) {
+        AuthResponse response = accountService.linkGoogle(request);
+        return ApiResponse.success(response);
+    }
+
+    @PostMapping("/unlink-google")
+    public ApiResponse<UnlinkGoogleResponse> unlinkGoogle() {
+        UnlinkGoogleResponse response = accountService.unlinkGoogle();
+        return ApiResponse.success(response);
+    }
+
 }

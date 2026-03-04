@@ -33,6 +33,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -118,15 +119,14 @@ public class AccountService {
         account.setPassword(passwordEncoder.encode(password));
         Account savedAccount = accountRepository.save(account);
 
-        // 2. 기본 캐릭터 자동 생성
-        String defaultCharacterName = generateDefaultCharacterName(email);
+        log.info("createAccountWithDefaultCharacter: accountId={}, email={}", savedAccount.getId(), savedAccount.getEmail());
+        // 2. 기본 캐릭터 자동 생성 (이름은 null → CharacterService에서 "empty"로 설정)
         CharacterCreateRequest characterRequest = new CharacterCreateRequest();
-        characterRequest.setCharacterName(defaultCharacterName);
 
-        // SecurityContext에 인증 정보 임시 설정
+        // SecurityContext에 accountId로 임시 인증 설정
         org.springframework.security.authentication.UsernamePasswordAuthenticationToken authentication =
             new org.springframework.security.authentication.UsernamePasswordAuthenticationToken(
-                email, null, java.util.Collections.emptyList());
+                savedAccount.getId().toString(), null, java.util.Collections.emptyList());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         try {
@@ -136,20 +136,6 @@ public class AccountService {
         }
 
         return savedAccount;
-    }
-
-    // 이메일로부터 기본 캐릭터 이름 생성
-    private String generateDefaultCharacterName(String email) {
-        String username = email.split("@")[0];
-        // 특수문자 제거 및 길이 제한
-        String sanitized = username.replaceAll("[^a-zA-Z0-9]", "");
-        if (sanitized.length() > 12) {
-            sanitized = sanitized.substring(0, 12);
-        }
-
-        // 중복 방지를 위해 타임스탬프 추가
-        String timestamp = String.valueOf(System.currentTimeMillis() % 10000);
-        return sanitized + timestamp;
     }
 
     // 이메일 형식 검증 메서드
@@ -188,8 +174,8 @@ public class AccountService {
         }
 
         return AuthResponse.builder()
-                .accessToken(jwtUtil.createAccessToken(account.getEmail(), account.getId()))
-                .refreshToken(jwtUtil.createRefreshToken(account.getEmail(), account.getId()))
+                .accessToken(jwtUtil.createAccessToken(account.getId()))
+                .refreshToken(jwtUtil.createRefreshToken(account.getId()))
                 .build();
     }
 
@@ -210,23 +196,33 @@ public class AccountService {
             throw new BusinessException(ServerErrorCode.REFRESH_TOKEN_FAIL_INVALID_TOKEN);
         }
 
-        // 4. 토큰에서 정보 추출
-        String email = jwtUtil.getEmailFromToken(refreshToken);
-        Long characterId = jwtUtil.getCharacterIdFromToken(refreshToken);
+        // 4. 토큰에서 accountId 추출 (구 email subject 토큰이면 파싱 실패)
+        Long accountId;
+        Long characterId;
+        try {
+            accountId = jwtUtil.getAccountIdFromSubject(refreshToken);
+            characterId = jwtUtil.getCharacterIdFromToken(refreshToken);
+        } catch (Exception e) {
+            throw new BusinessException(ServerErrorCode.REFRESH_TOKEN_FAIL_INVALID_TOKEN2);
+        }
+
 
         // 5. 계정 조회
-        Account account = accountRepository.findByEmail(email)
+        Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.REFRESH_TOKEN_FAIL_ACCOUNT_NOT_FOUND));
+
+        boolean bGoogleLinked = isGoogleLinked(account.getId());
 
         // 6. 새 토큰 생성
         AuthResponse response = AuthResponse.builder()
-                .accessToken(jwtUtil.createAccessToken(email, account.getId()))
-                .refreshToken(jwtUtil.createRefreshToken(email, account.getId()))
+                .accessToken(jwtUtil.createAccessToken(account.getId()))
+                .refreshToken(jwtUtil.createRefreshToken(account.getId()))
+                .bGoogleLinked(bGoogleLinked)
                 .build();
 
         if (characterId != null) {
-            response.setAccessToken(jwtUtil.createAccessTokenWithCharacter(email, account.getId(), characterId));
-            response.setRefreshToken(jwtUtil.createRefreshTokenWithCharacter(email, account.getId(), characterId));
+            response.setAccessToken(jwtUtil.createAccessTokenWithCharacter(account.getId(), characterId));
+            response.setRefreshToken(jwtUtil.createRefreshTokenWithCharacter(account.getId(), characterId));
         }
 
         return response;
@@ -237,7 +233,7 @@ public class AccountService {
         log.info("Google login attempt with ID token, useFirebaseAuth={}", useFirebaseAuth);
 
         String uid;
-        String email;
+        String googleEmail;
         Boolean emailVerified;
 
         if (useFirebaseAuth) {
@@ -245,7 +241,7 @@ public class AccountService {
                 FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(request.getIdToken());
                 log.info("Firebase token verified successfully");
                 uid = decodedToken.getUid();
-                email = decodedToken.getEmail();
+                googleEmail = decodedToken.getEmail();
                 emailVerified = decodedToken.isEmailVerified();
             } catch (FirebaseAuthException e) {
                 throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GOOGLE_FIREBASE_AUTH_EXCEPTION);
@@ -260,28 +256,106 @@ public class AccountService {
                 log.info("Google ID token verified successfully");
                 Payload payload = idToken.getPayload();
                 uid = payload.getSubject();
-                email = payload.getEmail();
+                googleEmail = payload.getEmail();
                 emailVerified = payload.getEmailVerified();
             } catch (GeneralSecurityException | IOException e) {
                 throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GOOGLE_TOKEN_VERIFICATION_EXCEPTION);
             }
         }
 
-        log.info("User info - email: {}, uid: {}, verified: {}", email, uid, emailVerified);
+        log.info("User info - uid: {}, verified: {}", uid, emailVerified);
 
-        if (email == null) throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GOOGLE_NULL_EMAIL);
+        if (googleEmail == null) throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GOOGLE_NULL_EMAIL);
         if (uid == null) throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GOOGLE_NULL_UID);
         if (emailVerified == null) throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GOOGLE_NULL_EMAIL_VERIFIED);
         if (emailVerified == false) throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GOOGLE_EMAIL_VERIFIED);
 
-        // 계정 조회 또는 생성 (신규 계정 시 기본 캐릭터 자동 생성)
-        Account account = accountRepository.findByEmail(email)
-                .orElseGet(() -> createAccountWithDefaultCharacter(email, uid));
+        // googleId로 조회 → 없으면 신규 생성 (email은 googlelink_uid 형식으로 저장)
+        Account account = accountRepository.findByGoogleId(uid).orElseGet(() ->
+            createAccountWithDefaultCharacter("googlelink_" + uid, uid)
+        );
+
+        if (account.getGoogleId() == null) {
+            account.setGoogleId(uid);
+            accountRepository.save(account);
+        }
 
         return AuthResponse.builder()
-                .accessToken(jwtUtil.createAccessToken(account.getEmail(), account.getId()))
-                .refreshToken(jwtUtil.createRefreshToken(account.getEmail(), account.getId()))
+                .accessToken(jwtUtil.createAccessToken(account.getId()))
+                .refreshToken(jwtUtil.createRefreshToken(account.getId()))
+                .bGoogleLinked(true)
                 .build();
+    }
+
+    // 현재 로그인된 계정에 구글 계정 연동 — email을 googlelink_uid 형식으로 변경
+    @Transactional
+    public AuthResponse linkGoogle(LinkGoogleRequest request) {
+        Long accountId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.REFRESH_TOKEN_FAIL_ACCOUNT_NOT_FOUND));
+
+        String uid;
+        try {
+            GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
+                    .setAudience(Collections.singletonList(googleClientId))
+                    .build();
+            GoogleIdToken idToken = verifier.verify(request.getIdToken());
+            if (idToken == null) throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GOOGLE_NULL_TOKEN);
+            uid = idToken.getPayload().getSubject();
+        } catch (GeneralSecurityException | IOException e) {
+            throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GOOGLE_TOKEN_VERIFICATION_EXCEPTION);
+        }
+
+        if (account.getGoogleId() != null && account.getGoogleId().equals(uid))
+            throw new BusinessException(ServerErrorCode.LINK_GOOGLE_FAIL_ALREADY_LINKED);
+        if (accountRepository.existsByGoogleId(uid))
+            throw new BusinessException(ServerErrorCode.LINK_GOOGLE_FAIL_GOOGLE_ID_ALREADY_USED);
+
+        account.setGoogleId(uid);
+        account.setEmail("googlelink_" + uid);
+        accountRepository.save(account);
+        log.info("Google account linked for accountId={}", account.getId());
+
+        // subject = accountId(불변)이므로 기존 토큰 그대로 유효, 재발급 불필요
+        return AuthResponse.builder()
+                .bGoogleLinked(true)
+                .build();
+    }
+
+    // 구글 연동 해제 — 게스트 계정으로 전환 (email: guest_newUuid)
+    @Transactional
+    public UnlinkGoogleResponse unlinkGoogle() {
+        Long accountId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.REFRESH_TOKEN_FAIL_ACCOUNT_NOT_FOUND));
+
+        if (account.getGoogleId() == null)
+            throw new BusinessException(ServerErrorCode.UNLINK_GOOGLE_FAIL_NOT_LINKED);
+
+        account.setGoogleId(null);
+
+        String guestId;
+        if (account.getEmail().startsWith("guest_")) {
+            guestId = account.getEmail().substring(6);
+        } else {
+            // googlelink_ 또는 기타 → 새 게스트 계정으로 전환
+            guestId = UUID.randomUUID().toString();
+            account.setEmail("guest_" + guestId);
+        }
+
+        accountRepository.save(account);
+        log.info("Google account unlinked for accountId={}", account.getId());
+
+        return UnlinkGoogleResponse.builder()
+                .guestId(guestId)
+                .build();
+    }
+
+    // 계정의 구글 연동 여부 조회
+    public boolean isGoogleLinked(Long accountId) {
+        return accountRepository.findById(accountId)
+                .map(account -> account.getGoogleId() != null)
+                .orElse(false);
     }
 
     @Transactional
@@ -303,8 +377,8 @@ public class AccountService {
                 });
 
         return AuthResponse.builder()
-                .accessToken(jwtUtil.createAccessToken(account.getEmail(), account.getId()))
-                .refreshToken(jwtUtil.createRefreshToken(account.getEmail(), account.getId()))
+                .accessToken(jwtUtil.createAccessToken(account.getId()))
+                .refreshToken(jwtUtil.createRefreshToken(account.getId()))
                 .build();
     }
 
@@ -315,8 +389,8 @@ public class AccountService {
     }
 
     public ApiResponse<List<CharacterResponse>> getAllCharacters() {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        Account account = accountRepository.findByEmail(email)
+        Long accountId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
+        Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.GET_ALL_CHARACTERS_FAIL_ACCOUNT_NOT_FOUND));
 
         List<Character> characters = characterRepository.findByAccountId(account.getId());

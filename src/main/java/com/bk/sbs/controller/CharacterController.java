@@ -4,6 +4,9 @@ package com.bk.sbs.controller;
 import com.bk.sbs.dto.nogenerated.ApiResponse;
 import com.bk.sbs.dto.AuthResponse;
 import com.bk.sbs.dto.CharacterCreateRequest;
+import com.bk.sbs.dto.CharacterRenameRequest;
+import com.bk.sbs.dto.CharacterRenameResponse;
+import com.bk.sbs.dto.CharacterValidateNameRequest;
 import com.bk.sbs.dto.CharacterResponse;
 import com.bk.sbs.dto.CharacterInfoDto;
 import com.bk.sbs.dto.FleetInfoDto;
@@ -47,9 +50,7 @@ public class CharacterController {
     public ApiResponse<AuthResponse> selectCharacter(@PathVariable("characterId") Long characterId, HttpServletRequest request) {
         String token = jwtUtil.getTokenFromRequest(request);
         if (token == null) throw new BusinessException(ServerErrorCode.CHARACTER_CONTROLLER_FAIL_NULL_TOKEN);
-        String email = jwtUtil.getEmailFromToken(token);
-        if (email == null) throw new BusinessException(ServerErrorCode.CHARACTER_CONTROLLER_FAIL_NULL_EMAIL);
-        Long accountId = jwtUtil.getAccountIdFromToken(token);
+        Long accountId = jwtUtil.getAccountIdFromSubject(token);
         if (accountId == null) throw new BusinessException(ServerErrorCode.CHARACTER_CONTROLLER_FAIL_NULL_ACCOUNTID);
         // characterId에서 실제 character ID 추출 (하위 56비트)
         Long actualCharacterId = characterId & 0x00FFFFFFFFFFFFFFL;
@@ -59,8 +60,8 @@ public class CharacterController {
         if (isValidCharacter == false) throw new BusinessException(ServerErrorCode.CHARACTER_CONTROLLER_FAIL_INVALID_CHARACTER);
 
         // 새로운 토큰 생성 (characterId 포함)
-        String newAccessToken = jwtUtil.createAccessTokenWithCharacter(email, accountId, characterId);
-        String newRefreshToken = jwtUtil.createRefreshTokenWithCharacter(email, accountId, characterId);
+        String newAccessToken = jwtUtil.createAccessTokenWithCharacter(accountId, characterId);
+        String newRefreshToken = jwtUtil.createRefreshTokenWithCharacter(accountId, characterId);
 
         // collectDateTime 12h 캡 적용 + 마지막 온라인 시간 갱신
         characterService.applyOfflineCapAndUpdateLastOnline(actualCharacterId);
@@ -78,12 +79,15 @@ public class CharacterController {
         // 개발된 모듈 목록 조회
         var researchedModuleTypes = fleetService.getResearchedModuleTypes(actualCharacterId);
 
+        boolean bGoogleLinked = accountService.isGoogleLinked(accountId);
+
         AuthResponse response = AuthResponse.builder()
                 .accessToken(newAccessToken)
                 .refreshToken(newRefreshToken)
                 .activeFleetInfo(activeFleet)
                 .characterInfo(characterInfoDto)
                 .researchedModuleTypes(researchedModuleTypes)
+                .bGoogleLinked(bGoogleLinked)
                 .build();
         return ApiResponse.success(response);
     }
@@ -91,5 +95,30 @@ public class CharacterController {
     @GetMapping("/characters")
     public ApiResponse<List<CharacterResponse>> getAllCharacters() {
         return accountService.getAllCharacters();
+    }
+
+    // 이름 유효성 검사 (실시간 입력 중 호출) — 중복·비속어만 검사, 포맷은 클라에서 처리
+    @PostMapping("/validate-name")
+    public ApiResponse<Boolean> validateCharacterName(@RequestBody CharacterValidateNameRequest request) {
+        characterService.validateCharacterName(request.getName());
+        return ApiResponse.success(true);
+    }
+
+    // 캐릭터 이름 변경 — JWT에서 characterId 추출, 횟수 차감
+    @PostMapping("/rename")
+    public ApiResponse<CharacterRenameResponse> renameCharacter(@RequestBody CharacterRenameRequest request, HttpServletRequest httpRequest) {
+        Long actualCharacterId = getActualCharacterIdFromToken(httpRequest);
+        CharacterRenameResponse response = characterService.renameCharacter(actualCharacterId, request);
+        return ApiResponse.success(response);
+    }
+
+    // JWT 토큰에서 캐릭터 ID 추출 (비트 마스킹 포함)
+    private Long getActualCharacterIdFromToken(HttpServletRequest request) {
+        String token = jwtUtil.getTokenFromRequest(request);
+        if (token == null) throw new BusinessException(ServerErrorCode.CHARACTER_CONTROLLER_FAIL_NULL_TOKEN);
+        if (jwtUtil.hasCharacterId(token) == false) throw new BusinessException(ServerErrorCode.CHARACTER_CONTROLLER_FAIL_INVALID_CHARACTER);
+        Long characterId = jwtUtil.getCharacterIdFromToken(token);
+        if (characterId == null) throw new BusinessException(ServerErrorCode.CHARACTER_CONTROLLER_FAIL_INVALID_CHARACTER);
+        return characterId & 0x00FFFFFFFFFFFFFFL;
     }
 }

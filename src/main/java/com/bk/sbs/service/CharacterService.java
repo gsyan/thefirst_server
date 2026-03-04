@@ -2,8 +2,11 @@
 package com.bk.sbs.service;
 
 import com.bk.sbs.dto.CharacterCreateRequest;
+import com.bk.sbs.dto.CharacterRenameRequest;
+import com.bk.sbs.dto.CharacterRenameResponse;
 import com.bk.sbs.dto.CharacterResponse;
 import com.bk.sbs.dto.CharacterInfoDto;
+import com.bk.sbs.util.ProfanityFilter;
 import com.bk.sbs.dto.ShipInfoDto;
 import com.bk.sbs.dto.ZoneConfigData;
 import com.bk.sbs.entity.Account;
@@ -25,9 +28,11 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.UUID;
 
 @Service
 public class CharacterService {
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CharacterService.class);
 
     private final CharacterRepository characterRepository;
     private final AccountRepository accountRepository;
@@ -53,17 +58,30 @@ public class CharacterService {
 
     @Transactional
     public CharacterResponse createCharacter(CharacterCreateRequest request) {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        Account account = accountRepository.findByEmail(email)
+        Long accountId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
+        Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_CREATE_FAIL_ACCOUNT_NOT_FOUND));
 
-        if (characterRepository.existsByCharacterName(request.getCharacterName())) throw new BusinessException(ServerErrorCode.CHARACTER_CREATE_FAIL_NAME_DUPLICATE);
+        // characterName이 null/empty면 자동 이름 모드 — "empty" 고정, 중복 검사 생략
+        String requestedName = request.getCharacterName();
+        boolean isAutoName = (requestedName == null || requestedName.isEmpty());
+        if (isAutoName == false) {
+            if (characterRepository.existsByCharacterName(requestedName)) throw new BusinessException(ServerErrorCode.CHARACTER_CREATE_FAIL_NAME_DUPLICATE);
+        }
 
         Character character = new Character();
         character.setAccountId(account.getId());
-        character.setCharacterName(request.getCharacterName());
+        // 자동 이름 모드: 충돌 없는 UUID 임시 이름으로 저장 → 이후 empty_+id로 교체
+        character.setCharacterName(isAutoName ? UUID.randomUUID().toString() : requestedName);
         character.setMineral(5100L);  // 기본미네랄 5100 지급
         Character savedCharacter = characterRepository.save(character);
+
+        // 자동 이름: 저장 후 확정된 id로 empty_+id 설정 (유니크 보장)
+        if (isAutoName == true) {
+            savedCharacter.setCharacterName("empty_" + savedCharacter.getId());
+            savedCharacter = characterRepository.save(savedCharacter);
+        }
+        log.info("createCharacter: accountId={}, characterId={}, name={}", accountId, savedCharacter.getId(), savedCharacter.getCharacterName());
 
         // 캐릭터 생성과 동시에 기본 함대 생성 및 활성화
         // 실패 시 전체 트랜잭션 롤백됨
@@ -175,6 +193,7 @@ public class CharacterService {
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.GET_CHARACTER_INFO_DTO_FAIL_CHARACTER_NOT_FOUND));
 
         return CharacterInfoDto.builder()
+                .characterId(characterId)
                 .characterName(character.getCharacterName())
                 .techLevel(character.getTechLevel())
                 .mineral(character.getMineral())
@@ -183,6 +202,40 @@ public class CharacterService {
                 .mineralDark(character.getMineralDark())
                 .clearedZone(character.getClearedZone())
                 .collectDateTime(character.getCollectDateTime() != null ? character.getCollectDateTime().toString() : null)
+                .nameChangeCount(character.getNameChangeCount())
+                .build();
+    }
+
+    // 이름 유효성 검사 (중복·비속어) — validate-name 엔드포인트용
+    public boolean validateCharacterName(String name) {
+        if (characterRepository.existsByCharacterName(name))
+            throw new BusinessException(ServerErrorCode.CHARACTER_VALIDATE_NAME_DUPLICATE);
+        if (ProfanityFilter.containsProfanity(name))
+            throw new BusinessException(ServerErrorCode.CHARACTER_VALIDATE_NAME_PROFANITY);
+        return true;
+    }
+
+    @Transactional
+    public CharacterRenameResponse renameCharacter(Long characterId, CharacterRenameRequest request) {
+        Character character = characterRepository.findByIdForUpdate(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.CHARACTER_RENAME_FAIL_CHARACTER_NOT_FOUND));
+
+        if (character.getNameChangeCount() <= 0)
+            throw new BusinessException(ServerErrorCode.CHARACTER_RENAME_FAIL_NO_REMAINING_COUNT);
+
+        if (characterRepository.existsByCharacterName(request.getNewName()))
+            throw new BusinessException(ServerErrorCode.CHARACTER_RENAME_FAIL_NAME_DUPLICATE);
+
+        if (ProfanityFilter.containsProfanity(request.getNewName()))
+            throw new BusinessException(ServerErrorCode.CHARACTER_RENAME_FAIL_PROFANITY);
+
+        character.setCharacterName(request.getNewName());
+        character.setNameChangeCount(character.getNameChangeCount() - 1);
+        characterRepository.save(character);
+
+        return CharacterRenameResponse.builder()
+                .characterName(character.getCharacterName())
+                .nameChangeCount(character.getNameChangeCount())
                 .build();
     }
 

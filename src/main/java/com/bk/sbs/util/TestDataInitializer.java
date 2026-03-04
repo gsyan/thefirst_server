@@ -75,11 +75,19 @@ public class TestDataInitializer {
         if (exists != null && exists > 0) {
             log.info("TestDataInitializer: 기본 더미 데이터 이미 존재");
             return jdbc.queryForList(
-                    "SELECT id FROM `character` WHERE character_name LIKE 'guest%' ORDER BY id",
+                    "SELECT c.id FROM `character` c JOIN account a ON a.id = c.account_id" +
+                    " WHERE a.email LIKE 'guest\\_test%' ORDER BY c.id",
                     Long.class);
         }
 
-        log.info("TestDataInitializer: 기본 더미 데이터 {}개 생성 시작", TEST_COUNT);
+        Long charAutoInc = jdbc.queryForObject(
+                "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_NAME = 'character' AND TABLE_SCHEMA = DATABASE()",
+                Long.class);
+        Long accAutoInc = jdbc.queryForObject(
+                "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_NAME = 'account' AND TABLE_SCHEMA = DATABASE()",
+                Long.class);
+        log.info("TestDataInitializer: 기본 더미 데이터 {}개 생성 시작 — account AUTO_INCREMENT={}, character AUTO_INCREMENT={}",
+                TEST_COUNT, accAutoInc, charAutoInc);
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
         String encodedPw = passwordEncoder.encode("testpassword1");
 
@@ -98,13 +106,13 @@ public class TestDataInitializer {
 
         // 2. Account ID 목록
         List<Long> accountIds = jdbc.queryForList(
-                "SELECT id FROM account WHERE email LIKE 'guest\\_%@test.com' ORDER BY id",
+                "SELECT id FROM account WHERE email LIKE 'guest\\_test%' ORDER BY id",
                 Long.class);
 
         // 3. Character
         List<Object[]> charRows = new ArrayList<>(TEST_COUNT);
         for (int i = 0; i < TEST_COUNT; i++)
-            charRows.add(new Object[]{accountIds.get(i), buildCharName(i + 1), 5100L, now});
+            charRows.add(new Object[]{accountIds.get(i), "empty_test" + String.format("%04d", i + 1), 5100L, now});
         jdbc.batchUpdate(
                 "INSERT INTO `character` (account_id, character_name, tech_level, mineral," +
                 " mineral_rare, mineral_exotic, mineral_dark," +
@@ -119,7 +127,8 @@ public class TestDataInitializer {
 
         // 4. Character ID 목록
         List<Long> charIds = jdbc.queryForList(
-                "SELECT id FROM `character` WHERE character_name LIKE 'guest%' ORDER BY id",
+                "SELECT c.id FROM `character` c JOIN account a ON a.id = c.account_id" +
+                " WHERE a.email LIKE 'guest\\_test%' ORDER BY c.id",
                 Long.class);
 
         // 5. Fleet
@@ -139,7 +148,7 @@ public class TestDataInitializer {
         // 6. Fleet ID 목록
         List<Long> fleetIds = jdbc.queryForList(
                 "SELECT f.id FROM fleet f JOIN `character` c ON c.id = f.character_id" +
-                " WHERE c.character_name LIKE 'guest%' ORDER BY f.id",
+                " JOIN account a ON a.id = c.account_id WHERE a.email LIKE 'guest\\_test%' ORDER BY f.id",
                 Long.class);
 
         // 7. Ship
@@ -160,7 +169,7 @@ public class TestDataInitializer {
         List<Long> shipIds = jdbc.queryForList(
                 "SELECT s.id FROM ship s JOIN fleet f ON f.id = s.fleet_id" +
                 " JOIN `character` c ON c.id = f.character_id" +
-                " WHERE c.character_name LIKE 'guest%' ORDER BY s.id",
+                " JOIN account a ON a.id = c.account_id WHERE a.email LIKE 'guest\\_test%' ORDER BY s.id",
                 Long.class);
 
         // 9. ShipModule (body + engine)
@@ -201,7 +210,10 @@ public class TestDataInitializer {
                     ps.setTimestamp(5, (Timestamp) row[3]);
                 });
 
-        log.info("TestDataInitializer: 기본 더미 데이터 {}개 생성 완료", TEST_COUNT);
+        log.info("TestDataInitializer: 기본 더미 데이터 {}개 생성 완료 — accountId {}~{}, characterId {}~{}",
+                TEST_COUNT,
+                accountIds.get(0), accountIds.get(accountIds.size() - 1),
+                charIds.get(0), charIds.get(charIds.size() - 1));
         return charIds;
     }
 
@@ -271,6 +283,5 @@ public class TestDataInitializer {
         return ZONE_LIST[zoneIndex];
     }
 
-    private String buildEmail(int seq)    { return "guest_" + String.format("%04d", seq) + "@test.com"; }
-    private String buildCharName(int seq) { return "guest"  + String.format("%04d", seq); }
+    private String buildEmail(int seq) { return "guest_test" + String.format("%04d", seq); }
 }

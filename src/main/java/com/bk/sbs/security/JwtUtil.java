@@ -31,26 +31,26 @@ public class JwtUtil {
     }
 
     // 로그인 시 accountId만 포함된 토큰 생성
-    public String createAccessToken(String email, Long accountId) {
-        return createToken(email, accountId, null, accessTokenValidity);
+    public String createAccessToken(Long accountId) {
+        return createToken(accountId, null, accessTokenValidity);
     }
 
-    public String createRefreshToken(String email, Long accountId) {
-        return createToken(email, accountId, null, refreshTokenValidity);
+    public String createRefreshToken(Long accountId) {
+        return createToken(accountId, null, refreshTokenValidity);
     }
 
     // 캐릭터 선택 후 characterId까지 포함된 토큰 생성
-    public String createAccessTokenWithCharacter(String email, Long accountId, Long characterId) {
-        return createToken(email, accountId, characterId, accessTokenValidity);
+    public String createAccessTokenWithCharacter(Long accountId, Long characterId) {
+        return createToken(accountId, characterId, accessTokenValidity);
     }
 
-    public String createRefreshTokenWithCharacter(String email, Long accountId, Long characterId) {
-        return createToken(email, accountId, characterId, refreshTokenValidity);
+    public String createRefreshTokenWithCharacter(Long accountId, Long characterId) {
+        return createToken(accountId, characterId, refreshTokenValidity);
     }
 
-    private String createToken(String email, Long accountId, Long characterId, long validity) {
-        Claims claims = Jwts.claims().setSubject(email);
-        claims.put("accountId", accountId);
+    // subject = accountId (불변값), email 제거
+    private String createToken(Long accountId, Long characterId, long validity) {
+        Claims claims = Jwts.claims().setSubject(accountId.toString());
         if (characterId != null) {
             claims.put("characterId", characterId);
         }
@@ -65,14 +65,9 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String getEmailFromToken(String token) {
-        Claims claims = getClaimsFromToken(token);
-        return claims.getSubject();
-    }
-
-    public Long getAccountIdFromToken(String token) {
-        Claims claims = getClaimsFromToken(token);
-        return claims.get("accountId", Long.class);
+    // subject에서 accountId 추출
+    public Long getAccountIdFromSubject(String token) {
+        return Long.parseLong(getClaimsFromToken(token).getSubject());
     }
 
     public Long getCharacterIdFromToken(String token) {

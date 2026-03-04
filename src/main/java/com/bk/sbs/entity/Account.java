@@ -22,6 +22,9 @@ public class Account {
     @Column(nullable = false)
     private String password;
 
+    @Column(unique = true)
+    private String googleId;  // 구글 계정 연동 시 Google UID 저장 (null = 미연동)
+
     @Column(nullable = false)
     private boolean deleted = false;
 

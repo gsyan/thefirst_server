@@ -379,7 +379,6 @@ public class FleetService {
     private FleetInfoDto convertFleetToFleetInfoDto(Fleet fleet) {
         return FleetInfoDto.builder()
                 .id(fleet.getId())
-                .characterId(fleet.getCharacterId())
                 .fleetName(fleet.getFleetName())
                 .description(fleet.getDescription())
                 .isActive(fleet.isActive())

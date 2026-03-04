@@ -58,6 +58,10 @@ public class Character {
     @Column(nullable = false)
     private String clearedZone = "";
 
+    // 이름 변경 가능 횟수 (초기값 2, 0이면 변경 불가)
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 2")
+    private Integer nameChangeCount = 2;
+
     // 마지막 자원 수집 시간 (zone clear 시 또는 collect 시 갱신, UTC)
     private Instant collectDateTime;
 

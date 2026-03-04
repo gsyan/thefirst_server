@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class FleetInfoDto {
     private Long id;
-    private Long characterId;
     private String fleetName;
     private String description;
     private Boolean isActive;
