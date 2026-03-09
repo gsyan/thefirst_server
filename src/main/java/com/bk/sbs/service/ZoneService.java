@@ -11,14 +11,20 @@ import com.bk.sbs.dto.ZoneKillResponse;
 import com.bk.sbs.dto.HeartbeatRequest;
 import com.bk.sbs.dto.HeartbeatResponse;
 import com.bk.sbs.entity.Character;
+import com.bk.sbs.entity.Fleet;
+import com.bk.sbs.entity.ModuleResearch;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.repository.CharacterRepository;
+import com.bk.sbs.repository.FleetRepository;
+import com.bk.sbs.repository.ModuleResearchRepository;
+import com.bk.sbs.repository.ShipRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -26,11 +32,17 @@ import lombok.extern.slf4j.Slf4j;
 public class ZoneService {
 
     private final CharacterRepository characterRepository;
+    private final FleetRepository fleetRepository;
+    private final ShipRepository shipRepository;
+    private final ModuleResearchRepository moduleResearchRepository;
     private final GameDataService gameDataService;
     private final RedisService redisService;
 
-    public ZoneService(CharacterRepository characterRepository, GameDataService gameDataService, RedisService redisService) {
+    public ZoneService(CharacterRepository characterRepository, FleetRepository fleetRepository, ShipRepository shipRepository, ModuleResearchRepository moduleResearchRepository, GameDataService gameDataService, RedisService redisService) {
         this.characterRepository = characterRepository;
+        this.fleetRepository = fleetRepository;
+        this.shipRepository = shipRepository;
+        this.moduleResearchRepository = moduleResearchRepository;
         this.gameDataService = gameDataService;
         this.redisService = redisService;
     }
@@ -42,6 +54,18 @@ public class ZoneService {
 
         String newZoneName = request.getZoneName();
         String currentClearedZone = character.getClearedZone();
+
+        // zone X-Y: 함선 X척 이상 보유 조건 검증
+        int[] zoneParts = parseZoneName(newZoneName);
+        int requiredShips = zoneParts[0];
+        if (requiredShips > 0) {
+            Fleet activeFleet = fleetRepository.findByCharacterIdAndIsActiveTrueAndDeletedFalse(characterId)
+                    .orElse(null);
+            int shipCount = (activeFleet == null) ? 0
+                    : shipRepository.findByFleetIdAndDeletedFalseOrderByPositionIndex(activeFleet.getId()).size();
+            if (shipCount < requiredShips)
+                throw new BusinessException(ServerErrorCode.ZONE_CLEAR_FAIL_INSUFFICIENT_SHIPS);
+        }
 
         // 새로운 zone이 현재 클리어 zone보다 높은 난이도인지 확인
         if (!isHigherZone(newZoneName, currentClearedZone)) {
@@ -55,7 +79,8 @@ public class ZoneService {
         Instant now = Instant.now();
 
         // 이전 존의 미수집 자원 먼저 collect
-        long[] rewards = collectZoneResources(character, currentClearedZone, now, true);
+        long offlineCap = calcOfflineCapSeconds(characterId);
+        long[] rewards = collectZoneResources(character, currentClearedZone, now, true, offlineCap);
 
         // clearedZone 업데이트 및 collectDateTime 설정
         character.setClearedZone(newZoneName);
@@ -122,7 +147,8 @@ public class ZoneService {
         }
 
         // 자원 수집 (fraction 유지)
-        long[] rewards = collectZoneResources(character, clearedZone, now, false);
+        long offlineCap = calcOfflineCapSeconds(characterId);
+        long[] rewards = collectZoneResources(character, clearedZone, now, false, offlineCap);
 
         character.setCollectDateTime(now);
         characterRepository.save(character);
@@ -144,8 +170,23 @@ public class ZoneService {
                 .build();
     }
 
-    // 공통: 자원 수집 로직 (반환: [mineral, mineralRare, mineralExotic, mineralDark])
-    private long[] collectZoneResources(Character character, String zoneName, Instant now, boolean resetFraction) {
+    // 기술레벨 기반 오프라인 캡(초) 계산 — 3h + techLevel/2 시간, 구독 시 24h (TODO: 구독 구현 시 반영)
+    private long calcOfflineCapSeconds(Long characterId) {
+        List<ModuleResearch> techResearches = moduleResearchRepository
+                .findByCharacterIdAndResearchIdStartingWithAndResearchedTrue(characterId, "tech_level_");
+        int maxTechLevel = 0;
+        for (ModuleResearch r : techResearches) {
+            try {
+                int level = Integer.parseInt(r.getResearchId().substring("tech_level_".length()));
+                if (level > maxTechLevel) maxTechLevel = level;
+            } catch (NumberFormatException ignored) { }
+        }
+        long capHours = 3L + (maxTechLevel / 2);
+        return capHours * 3600L;
+    }
+
+    // 공통: 자원 수집 로직 — 클리어된 모든 존의 시간당 수확량 합산 (반환: [mineral, mineralRare, mineralExotic, mineralDark])
+    private long[] collectZoneResources(Character character, String zoneName, Instant now, boolean resetFraction, long maxOfflineSeconds) {
         long[] rewards = {0L, 0L, 0L, 0L};
 
         if (zoneName == null || zoneName.isEmpty() || character.getCollectDateTime() == null) {
@@ -159,6 +200,7 @@ public class ZoneService {
         }
 
         long elapsedSeconds = ChronoUnit.SECONDS.between(character.getCollectDateTime(), now);
+        elapsedSeconds = Math.min(elapsedSeconds, maxOfflineSeconds); // 오프라인 캡 적용
         if (elapsedSeconds <= 0) {
             if (resetFraction) {
                 character.setMineralFraction(0.0);
@@ -169,8 +211,9 @@ public class ZoneService {
             return rewards;
         }
 
-        ZoneConfigData zoneConfig = gameDataService.getZoneConfigByName(zoneName);
-        if (zoneConfig == null) {
+        // 클리어된 모든 존의 시간당 수확량 합산
+        List<ZoneConfigData> clearedZones = gameDataService.getAllZoneConfigsUpTo(zoneName);
+        if (clearedZones.isEmpty()) {
             if (resetFraction) {
                 character.setMineralFraction(0.0);
                 character.setMineralRareFraction(0.0);
@@ -180,11 +223,20 @@ public class ZoneService {
             return rewards;
         }
 
+        double totalMineralPerHour = 0.0, totalMineralRarePerHour = 0.0;
+        double totalMineralExoticPerHour = 0.0, totalMineralDarkPerHour = 0.0;
+        for (ZoneConfigData z : clearedZones) {
+            totalMineralPerHour += z.getMineralPerHour();
+            totalMineralRarePerHour += z.getMineralRarePerHour();
+            totalMineralExoticPerHour += z.getMineralExoticPerHour();
+            totalMineralDarkPerHour += z.getMineralDarkPerHour();
+        }
+
         // 소수점까지 계산 후 기존 fraction과 합산
-        double mineralTotal = character.getMineralFraction() + (zoneConfig.getMineralPerHour() / 3600.0 * elapsedSeconds);
-        double mineralRareTotal = character.getMineralRareFraction() + (zoneConfig.getMineralRarePerHour() / 3600.0 * elapsedSeconds);
-        double mineralExoticTotal = character.getMineralExoticFraction() + (zoneConfig.getMineralExoticPerHour() / 3600.0 * elapsedSeconds);
-        double mineralDarkTotal = character.getMineralDarkFraction() + (zoneConfig.getMineralDarkPerHour() / 3600.0 * elapsedSeconds);
+        double mineralTotal = character.getMineralFraction() + (totalMineralPerHour / 3600.0 * elapsedSeconds);
+        double mineralRareTotal = character.getMineralRareFraction() + (totalMineralRarePerHour / 3600.0 * elapsedSeconds);
+        double mineralExoticTotal = character.getMineralExoticFraction() + (totalMineralExoticPerHour / 3600.0 * elapsedSeconds);
+        double mineralDarkTotal = character.getMineralDarkFraction() + (totalMineralDarkPerHour / 3600.0 * elapsedSeconds);
 
         // 정수부만 지급
         rewards[0] = (long) mineralTotal;

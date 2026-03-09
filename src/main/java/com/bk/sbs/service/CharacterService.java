@@ -117,7 +117,7 @@ public class CharacterService {
         ModuleResearch researchBody = new ModuleResearch();
         researchBody.setCharacterId(characterId);
         researchBody.setModuleType(EModuleType.body);
-        researchBody.setModuleSubType(EModuleSubType.body_t1_std);
+        researchBody.setModuleSubType(EModuleSubType.body_t1_std_ver1);
         researchBody.setResearched(true);
         researchBody.setCreated(now);
         researchBody.setModified(now);
@@ -127,7 +127,7 @@ public class CharacterService {
         ModuleResearch researchEngine = new ModuleResearch();
         researchEngine.setCharacterId(characterId);
         researchEngine.setModuleType(EModuleType.engine);
-        researchEngine.setModuleSubType(EModuleSubType.engine_t1_std);
+        researchEngine.setModuleSubType(EModuleSubType.engine_t1_std_ver1);
         researchEngine.setResearched(true);
         researchEngine.setCreated(now);
         researchEngine.setModified(now);
@@ -137,7 +137,7 @@ public class CharacterService {
         ModuleResearch researchWeapon = new ModuleResearch();
         researchWeapon.setCharacterId(characterId);
         researchWeapon.setModuleType(EModuleType.beam);
-        researchWeapon.setModuleSubType(EModuleSubType.beam_t1_std);
+        researchWeapon.setModuleSubType(EModuleSubType.beam_t1_std_ver1);
         researchWeapon.setResearched(true);
         researchWeapon.setCreated(now);
         researchWeapon.setModified(now);
@@ -147,7 +147,7 @@ public class CharacterService {
         ModuleResearch researchMissile = new ModuleResearch();
         researchMissile.setCharacterId(characterId);
         researchMissile.setModuleType(EModuleType.missile);
-        researchMissile.setModuleSubType(EModuleSubType.missile_t1_std);
+        researchMissile.setModuleSubType(EModuleSubType.missile_t1_std_ver1);
         researchMissile.setResearched(true);
         researchMissile.setCreated(now);
         researchMissile.setModified(now);
@@ -157,12 +157,20 @@ public class CharacterService {
         ModuleResearch researchHanger = new ModuleResearch();
         researchHanger.setCharacterId(characterId);
         researchHanger.setModuleType(EModuleType.hanger);
-        researchHanger.setModuleSubType(EModuleSubType.hanger_t1_std);
+        researchHanger.setModuleSubType(EModuleSubType.hanger_t1_std_ver1);
         researchHanger.setResearched(true);
         researchHanger.setCreated(now);
         researchHanger.setModified(now);
         moduleResearchRepository.save(researchHanger);
 
+        // 기본 기술레벨 1 (모든 신규 캐릭터는 tech_level_1을 완료 상태로 시작)
+        ModuleResearch techLevel1 = new ModuleResearch();
+        techLevel1.setCharacterId(characterId);
+        techLevel1.setResearchId("tech_level_1");
+        techLevel1.setResearched(true);
+        techLevel1.setCreated(now);
+        techLevel1.setModified(now);
+        moduleResearchRepository.save(techLevel1);
     }
 
     // 접속 시 collectDateTime 12h 캡 적용 + lastOnlineAt 갱신
@@ -195,7 +203,6 @@ public class CharacterService {
         return CharacterInfoDto.builder()
                 .characterId(characterId)
                 .characterName(character.getCharacterName())
-                .techLevel(character.getTechLevel())
                 .mineral(character.getMineral())
                 .mineralRare(character.getMineralRare())
                 .mineralExotic(character.getMineralExotic())
@@ -307,21 +314,21 @@ public class CharacterService {
         return character.getMineralDark();
     }
 
+    // 기술레벨 업그레이드: module_research에 tech_level_N 행 삽입 후 현재 기술레벨 반환
     @Transactional
-    public Integer updateTechLevel(Long characterId, Integer techLevel) {
-        Character character = characterRepository.findById(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.UPDATE_TECH_LEVEL_FAIL_CHARACTER_NOT_FOUND));
-        character.setTechLevel(techLevel);
-        character = characterRepository.save(character);
-        return techLevel;
-    }
+    public Integer addTechLevelResearch(Long characterId, Integer targetLevel) {
+        String researchId = "tech_level_" + targetLevel;
+        ModuleResearch existing = moduleResearchRepository.findByCharacterIdAndResearchId(characterId, researchId)
+                .orElse(null);
+        if (existing != null && existing.isResearched()) return targetLevel;
 
-    @Transactional
-    public Integer addTechLevel(Long characterId, Integer amount) {
-        Character character = characterRepository.findById(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_TECH_LEVEL_FAIL_CHARACTER_NOT_FOUND));
-        Integer before = character.getTechLevel();
-        character.setTechLevel(before + amount);
-        character = characterRepository.save(character);
-        return character.getTechLevel();
+        ModuleResearch research = existing != null ? existing : new ModuleResearch();
+        research.setCharacterId(characterId);
+        research.setResearchId(researchId);
+        research.setResearched(true);
+        research.setModified(LocalDateTime.now());
+        moduleResearchRepository.save(research);
+        return targetLevel;
     }
 
 }

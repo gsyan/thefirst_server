@@ -8,9 +8,10 @@ public class ModuleTypeConverter {
     private static final int SLOTTYPE_SHIFT = 8;
     private static final int MASK = 0xFF;
 
+    // TODO: 7자리 SubType(e.g. 1010101) 도입으로 pureSubType이 8비트(255)를 초과함
+    // 현재 미호출 코드. 실제 사용 시 비트팩 구조 전면 재설계 필요
     public static int pack(EModuleType type, EModuleSubType subType, EModuleSlotType slotType) {
-        // SubType에서 순수한 서브타입 값만 추출 (1001 -> 1, 2002 -> 2)
-        int pureSubType = subType.getValue() % 1000;
+        int pureSubType = subType.getValue() % 1000000; // 7자리 인코딩 하위 6자리
         return (type.getValue() << TYPE_SHIFT) | (pureSubType << SUBTYPE_SHIFT) | (slotType.getValue() << SLOTTYPE_SHIFT);
     }
 

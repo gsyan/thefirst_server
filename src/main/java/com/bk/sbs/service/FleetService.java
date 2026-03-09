@@ -110,7 +110,7 @@ public class FleetService {
         ShipModule bodyModule = new ShipModule();
         bodyModule.setShip(defaultShip);
         bodyModule.setModuleType(EModuleType.body);
-        bodyModule.setModuleSubType(EModuleSubType.body_t1_std);
+        bodyModule.setModuleSubType(EModuleSubType.body_t1_std_ver1);
         //bodyModule.setModuleSubType(EModuleSubType.Body_Aircraft);
         bodyModule.setModuleLevel(bodyData.getModuleLevel());
         bodyModule.setBodyIndex(0);
@@ -121,7 +121,7 @@ public class FleetService {
         ShipModule engineModule = new ShipModule();
         engineModule.setShip(defaultShip);
         engineModule.setModuleType(EModuleType.engine);
-        engineModule.setModuleSubType(EModuleSubType.engine_t1_std);
+        engineModule.setModuleSubType(EModuleSubType.engine_t1_std_ver1);
         engineModule.setModuleLevel(engineData.getModuleLevel());
         engineModule.setBodyIndex(0);
         engineModule.setSlotIndex(0);
@@ -517,8 +517,8 @@ public class FleetService {
         // 현재 함선 수에 따른 추가 비용 가져오기
         CostStructDto shipAddCost = gameDataService.getShipAddCost(currentShips.size());
 
-        // TechLevel 검증
-        if (character.getTechLevel() < shipAddCost.getTechLevel()) {
+        // TechLevel 검증 (module_research 기반)
+        if (getCharacterTechLevel(characterId) < shipAddCost.getTechLevel()) {
             throw new BusinessException(ServerErrorCode.ADD_SHIP_FAIL_INSUFFICIENT_TECH_LEVEL);
         }
 
@@ -583,7 +583,7 @@ public class FleetService {
         ShipModule bodyModule = new ShipModule();
         bodyModule.setShip(ship);
         bodyModule.setModuleType(EModuleType.body);
-        bodyModule.setModuleSubType(EModuleSubType.body_t1_std);
+        bodyModule.setModuleSubType(EModuleSubType.body_t1_std_ver1);
         bodyModule.setModuleLevel(1);
         bodyModule.setBodyIndex(0);
         bodyModule.setSlotIndex(0);
@@ -596,7 +596,7 @@ public class FleetService {
         ShipModule engineModule = new ShipModule();
         engineModule.setShip(ship);
         engineModule.setModuleType(EModuleType.engine);
-        engineModule.setModuleSubType(EModuleSubType.engine_t1_std);
+        engineModule.setModuleSubType(EModuleSubType.engine_t1_std_ver1);
         engineModule.setModuleLevel(1);
         engineModule.setBodyIndex(0);
         engineModule.setSlotIndex(0);
@@ -609,7 +609,7 @@ public class FleetService {
         ShipModule weaponModule = new ShipModule();
         weaponModule.setShip(ship);
         weaponModule.setModuleType(EModuleType.beam);
-        weaponModule.setModuleSubType(EModuleSubType.beam_t1_std);
+        weaponModule.setModuleSubType(EModuleSubType.beam_t1_std_ver1);
         weaponModule.setModuleLevel(1);
         weaponModule.setBodyIndex(0);
         weaponModule.setSlotIndex(0);
@@ -671,8 +671,8 @@ public class FleetService {
             }
         }
 
-        // TechLevel 검증
-        if (character.getTechLevel() < maxTechLevel) {
+        // TechLevel 검증 (module_research 기반)
+        if (getCharacterTechLevel(characterId) < maxTechLevel) {
             throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_INSUFFICIENT_TECH_LEVEL);
         }
 
@@ -846,7 +846,7 @@ public class FleetService {
         }
 
         // 기본 subType 결정
-        int defaultSubTypeValue = moduleType.getValue() * 1000 + 1;
+        int defaultSubTypeValue = moduleType.getValue() * 1000000 + 10101; // 7자리 인코딩: t1(01) std(01) ver1(01)
         EModuleSubType finalModuleSubType = EModuleSubType.fromValue(defaultSubTypeValue);
 
 
@@ -933,6 +933,27 @@ public class FleetService {
                 request.getSlotIndex()
         ).orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_MODULE_NOT_FOUND));
 
+        // 4. 현재 모듈이 max level인지 확인
+        int maxLevel = gameDataService.getMaxModuleLevel(currentModuleType, currentModuleSubType);
+        if (currentModule.getModuleLevel() < maxLevel) {
+            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_NOT_MAX_LEVEL);
+        }
+
+        // 5. 교체 비용 검증 및 차감 (비관적 락)
+        com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_SHIP_NOT_FOUND));
+
+        CostStructDto changeCost = gameDataService.getModuleChangeCost(newModuleSubType);
+        if (character.getMineralRare() < changeCost.getMineralRare()
+                || character.getMineralExotic() < changeCost.getMineralExotic()
+                || character.getMineralDark() < changeCost.getMineralDark()) {
+            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_INSUFFICIENT_MINERAL_RARE);
+        }
+        character.setMineralRare(character.getMineralRare() - changeCost.getMineralRare());
+        character.setMineralExotic(character.getMineralExotic() - changeCost.getMineralExotic());
+        character.setMineralDark(character.getMineralDark() - changeCost.getMineralDark());
+        characterRepository.save(character);
+
         // 1. 현재 모듈의 레벨을 ShipModuleLevel에 저장
         ShipModuleLevel currentLevelRecord = shipModuleLevelRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndModuleSubType(
                 request.getShipId(),
@@ -969,6 +990,12 @@ public class FleetService {
         shipModuleRepository.save(currentModule);
 
         // 응답 생성
+        CostRemainInfoDto costRemainInfo = new CostRemainInfoDto(
+                0L, changeCost.getMineralRare(), changeCost.getMineralExotic(), changeCost.getMineralDark(),
+                character.getMineral(), character.getMineralRare(),
+                character.getMineralExotic(), character.getMineralDark()
+        );
+
         return ModuleChangeResponse.builder()
                 .shipId(request.getShipId())
                 .bodyIndex(request.getBodyIndex())
@@ -978,11 +1005,17 @@ public class FleetService {
                 .moduleSubTypeNew(newModuleSubType)
                 .slotIndex(request.getSlotIndex())
                 .moduleNewLevel(newModuleLevel)
+                .costRemainInfo(costRemainInfo)
                 .build();
     }
 
     @Transactional
     public ModuleResearchResponse researchModule(Long characterId, ModuleResearchRequest request) {
+        // tech_level_N 연구는 별도 처리
+        if (request.getResearchId() != null) {
+            return researchTechLevel(characterId, request.getResearchId());
+        }
+
         EModuleType moduleType = request.getModuleType();
         EModuleSubType moduleSubType = request.getModuleSubType();
 
@@ -1004,8 +1037,8 @@ public class FleetService {
         // 모듈 개발 비용 가져오기 (DataTableResearch.json에서 로딩)
         CostStructDto researchCost = gameDataService.getModuleResearchCost(moduleSubType);
 
-        // TechLevel 검증
-        if (character.getTechLevel() < researchCost.getTechLevel()) {
+        // TechLevel 검증 (module_research 기반)
+        if (getCharacterTechLevel(characterId) < researchCost.getTechLevel()) {
             throw new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_INSUFFICIENT_TECH_LEVEL);
         }
 
@@ -1048,7 +1081,12 @@ public class FleetService {
         // 개발된 모든 모듈 목록 조회
         List<ModuleResearch> researchedList = moduleResearchRepository.findByCharacterIdAndResearchedTrue(characterId);
         List<List<Integer>> researchedModuleTypes = researchedList.stream()
+                .filter(r -> r.getModuleType() != null && r.getModuleSubType() != null)
                 .map(r -> List.of(r.getModuleType().getValue(), r.getModuleSubType().getValue()))
+                .collect(Collectors.toList());
+        List<String> researchedIds = researchedList.stream()
+                .filter(r -> r.getResearchId() != null)
+                .map(ModuleResearch::getResearchId)
                 .collect(Collectors.toList());
 
         // 비용 정보
@@ -1068,16 +1106,92 @@ public class FleetService {
                 moduleType,
                 moduleSubType,
                 costRemainInfo,
-                researchedModuleTypes
+                researchedModuleTypes,
+                researchedIds
         );
     }
 
 
-    //캐릭터가 개발한 모든 모듈 목록 조회
+    // tech_level_N 문자열 기반 연구 처리: 비용 차감 후 DB 저장, researchedIds 반환
+    private ModuleResearchResponse researchTechLevel(Long characterId, String researchId) {
+        // 이미 연구 완료 체크
+        ModuleResearch existing = moduleResearchRepository.findByCharacterIdAndResearchId(characterId, researchId).orElse(null);
+        if (existing != null && existing.isResearched()) {
+            throw new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_ALREADY_RESEARCHED);
+        }
+
+        // 캐릭터 자원 조회 (비관적 락)
+        com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_CHARACTER_NOT_FOUND));
+
+        // 비용 조회 및 선행 기술레벨 검증 (순차 업그레이드만 허용)
+        CostStructDto researchCost = gameDataService.getTechLevelResearchCost(researchId);
+        int targetLevel = Integer.parseInt(researchId.substring("tech_level_".length()));
+        if (getCharacterTechLevel(characterId) < targetLevel - 1) {
+            throw new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_INSUFFICIENT_TECH_LEVEL);
+        }
+
+        // 자원 부족 검사
+        if (character.getMineral() < researchCost.getMineral())
+            throw new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_INSUFFICIENT_MINERAL);
+        if (character.getMineralRare() < researchCost.getMineralRare())
+            throw new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_INSUFFICIENT_MINERAL_RARE);
+        if (character.getMineralExotic() < researchCost.getMineralExotic())
+            throw new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_INSUFFICIENT_MINERAL_EXOTIC);
+        if (character.getMineralDark() < researchCost.getMineralDark())
+            throw new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_INSUFFICIENT_MINERAL_DARK);
+
+        // 자원 차감
+        character.setMineral(character.getMineral() - researchCost.getMineral());
+        character.setMineralRare(character.getMineralRare() - researchCost.getMineralRare());
+        character.setMineralExotic(character.getMineralExotic() - researchCost.getMineralExotic());
+        character.setMineralDark(character.getMineralDark() - researchCost.getMineralDark());
+        characterRepository.save(character);
+
+        // 기술레벨 연구 저장
+        ModuleResearch research = existing != null ? existing : new ModuleResearch();
+        research.setCharacterId(characterId);
+        research.setResearchId(researchId);
+        research.setResearched(true);
+        research.setModified(LocalDateTime.now());
+        moduleResearchRepository.save(research);
+
+        // 완료된 researchedIds 반환
+        List<String> researchedIds = getResearchedIds(characterId);
+        CostRemainInfoDto costRemainInfo = new CostRemainInfoDto(
+                researchCost.getMineral(), researchCost.getMineralRare(),
+                researchCost.getMineralExotic(), researchCost.getMineralDark(),
+                character.getMineral(), character.getMineralRare(),
+                character.getMineralExotic(), character.getMineralDark()
+        );
+        return new ModuleResearchResponse(null, null, costRemainInfo, null, researchedIds);
+    }
+
+    // 캐릭터가 개발한 모든 모듈 목록 조회 (moduleType+subType 쌍)
     public List<List<Integer>> getResearchedModuleTypes(Long characterId) {
         List<ModuleResearch> researchedList = moduleResearchRepository.findByCharacterIdAndResearchedTrue(characterId);
         return researchedList.stream()
+                .filter(r -> r.getModuleType() != null && r.getModuleSubType() != null)
                 .map(r -> List.of(r.getModuleType().getValue(), r.getModuleSubType().getValue()))
                 .collect(Collectors.toList());
+    }
+
+    // 문자열 기반 완료 연구 ID 목록 조회 (tech_level_N 등)
+    public List<String> getResearchedIds(Long characterId) {
+        return moduleResearchRepository.findByCharacterIdAndResearchIdIsNotNullAndResearchedTrue(characterId)
+                .stream()
+                .map(ModuleResearch::getResearchId)
+                .collect(Collectors.toList());
+    }
+
+    // module_research에서 기술레벨 파생 (tech_level_N 중 최댓값, 기본값 1)
+    private int getCharacterTechLevel(Long characterId) {
+        return moduleResearchRepository
+                .findByCharacterIdAndResearchIdStartingWithAndResearchedTrue(characterId, "tech_level_")
+                .stream()
+                .map(r -> r.getResearchId().substring("tech_level_".length()))
+                .mapToInt(s -> { try { return Integer.parseInt(s); } catch (NumberFormatException e) { return 0; } })
+                .max()
+                .orElse(1);
     }
 }

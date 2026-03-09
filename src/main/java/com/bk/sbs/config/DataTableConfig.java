@@ -1,6 +1,7 @@
 package com.bk.sbs.config;
 
 import com.bk.sbs.dto.CostStructDto;
+import com.bk.sbs.dto.ModuleChangeCostEntryDto;
 import java.util.List;
 import lombok.Data;
 
@@ -25,5 +26,7 @@ public class DataTableConfig {
     private Integer pvpRankScorePenalty;
 
     private Integer moduleUnlockPrice;
+
+    private List<ModuleChangeCostEntryDto> moduleChangeCosts;
 
 }

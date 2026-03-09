@@ -14,4 +14,5 @@ import lombok.NoArgsConstructor;
 public class ModuleResearchRequest {
     private EModuleType moduleType;
     private EModuleSubType moduleSubType;
+    private String researchId;
 }

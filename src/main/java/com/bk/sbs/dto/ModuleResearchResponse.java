@@ -21,4 +21,5 @@ public class ModuleResearchResponse {
     private EModuleSubType moduleSubType;
     private CostRemainInfoDto costRemainInfo;
     private List<List<Integer>> researchedModuleTypes;
+    private List<String> researchedIds;
 }

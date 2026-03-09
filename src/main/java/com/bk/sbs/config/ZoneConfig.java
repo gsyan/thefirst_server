@@ -19,4 +19,17 @@ public class ZoneConfig {
                 .findFirst()
                 .orElse(null);
     }
+
+    // clearedZoneName 포함, 그 이전 모든 존 반환 (index 0 = Zone-0 안전지역 제외)
+    public List<ZoneConfigData> getAllZonesUpTo(String zoneName) {
+        List<ZoneConfigData> result = new ArrayList<>();
+        if (zoneName == null || zoneName.isEmpty()) return result;
+        boolean skipFirst = true;
+        for (ZoneConfigData z : zones) {
+            if (skipFirst) { skipFirst = false; continue; } // Zone-0 제외
+            result.add(z);
+            if (zoneName.equals(z.getZoneName())) break;
+        }
+        return result;
+    }
 }

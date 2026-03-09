@@ -76,8 +76,9 @@ public class CharacterController {
         // 캐릭터 상태 정보 조회
         CharacterInfoDto characterInfoDto = characterService.getCharacterInfoDto(actualCharacterId);
 
-        // 개발된 모듈 목록 조회
+        // 개발된 모듈 목록 및 문자열 기반 연구 ID 조회
         var researchedModuleTypes = fleetService.getResearchedModuleTypes(actualCharacterId);
+        var researchedIds = fleetService.getResearchedIds(actualCharacterId);
 
         boolean bGoogleLinked = accountService.isGoogleLinked(accountId);
 
@@ -87,6 +88,7 @@ public class CharacterController {
                 .activeFleetInfo(activeFleet)
                 .characterInfo(characterInfoDto)
                 .researchedModuleTypes(researchedModuleTypes)
+                .researchedIds(researchedIds)
                 .bGoogleLinked(bGoogleLinked)
                 .build();
         return ApiResponse.success(response);

@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 public class CharacterInfoDto {
     private Long characterId;
     private String characterName;
-    private Integer techLevel;
     private Long mineral;
     private Long mineralRare;
     private Long mineralExotic;

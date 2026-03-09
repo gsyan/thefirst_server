@@ -24,4 +24,5 @@ public class ModuleChangeResponse {
     private EModuleSubType moduleSubTypeNew;
     private Integer slotIndex;
     private Integer moduleNewLevel;
+    private CostRemainInfoDto costRemainInfo;
 }

@@ -76,15 +76,15 @@ public class DevController {
 
             case "addtech":
                 if (params == null || params.isEmpty()) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDTECH_INVALID_PARAM);
-                Integer additionalTech = parseIntOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDTECH_PARSE_PARAM);
-                Integer newTechLevel = characterService.addTechLevel(characterId, additionalTech);
-                return ApiResponse.success("Technology added: " + additionalTech + " (total: " + newTechLevel + ")|tech:" + newTechLevel);
+                Integer targetTechLevel = parseIntOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDTECH_PARSE_PARAM);
+                Integer newTechLevel = characterService.addTechLevelResearch(characterId, targetTechLevel);
+                return ApiResponse.success("Technology set to: " + newTechLevel + "|tech:" + newTechLevel);
 
             case "getstatus":
                 CharacterInfoDto status = characterService.getCharacterInfoDto(characterId);
                 StringBuilder result = new StringBuilder();
                 result.append("=== Character Status ===\n");
-                result.append("Tech Level: ").append(status.getTechLevel());
+                result.append("Tech Level: ").append(fleetService.getResearchedIds(characterId).stream().filter(s -> s.startsWith("tech_level_")).findFirst().orElse("1"));
                 result.append("Mineral: ").append(status.getMineral()).append("\n");
                 result.append("Mineral Rare: ").append(status.getMineralRare()).append("\n");
                 result.append("Mineral Exotic: ").append(status.getMineralExotic()).append("\n");

@@ -9,7 +9,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 /**
- * 캐릭터별 모듈 개발(연구) 상태를 저장하는 엔티티
+ * 캐릭터별 연구 상태 저장 엔티티 - 모듈 연구(moduleType/SubType) 및 문자열 기반 연구(researchId, 예: tech_level_N) 통합 관리
  */
 @Entity
 @Getter
@@ -24,12 +24,15 @@ public class ModuleResearch {
     private Long characterId; // 캐릭터 ID
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private EModuleType moduleType; // 모듈 타입 (Body, Weapon, Engine, Hanger)
+    @Column(nullable = true)
+    private EModuleType moduleType; // 모듈 타입 (tech_level 연구 시 null)
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private EModuleSubType moduleSubType; // 서브타입 (Body_Battle, Engine_Standard 등)
+    @Column(nullable = true)
+    private EModuleSubType moduleSubType; // 서브타입 (tech_level 연구 시 null)
+
+    @Column(nullable = true)
+    private String researchId; // 문자열 기반 연구 ID (예: tech_level_2), 모듈 연구 시 null
 
     @Column(nullable = false)
     private boolean researched = false; // 개발 완료 여부
@@ -39,7 +42,4 @@ public class ModuleResearch {
 
     @Column(nullable = false)
     private LocalDateTime modified = LocalDateTime.now();
-
-    // 복합 인덱스: characterId + moduleType + moduleSubType 조합으로 유니크
-    // (한 캐릭터가 같은 모듈을 중복으로 개발할 수 없음)
 }

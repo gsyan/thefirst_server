@@ -2,12 +2,12 @@
   "researchDataList": [
     {
       "moduleType": 1,
-      "moduleSubType": 1001,
-      "researchId": "body_t1_std",
+      "moduleSubType": 1010101,
+      "researchId": "body_t1_std_ver1",
       "prerequisiteIds": [],
       "researchCost": {
         "techLevel": 1,
-        "mineral": 10000,
+        "mineral": 0,
         "mineralRare": 0,
         "mineralExotic": 0,
         "mineralDark": 0
@@ -15,14 +15,27 @@
     },
     {
       "moduleType": 1,
-      "moduleSubType": 1002,
-      "researchId": "body_t1_adv",
+      "moduleSubType": 1010201,
+      "researchId": "body_t1_adv_ver1",
       "prerequisiteIds": [
-        "body_t1_std"
+        "body_t1_std_ver1"
       ],
       "researchCost": {
         "techLevel": 1,
-        "mineral": 100000,
+        "mineral": 0,
+        "mineralRare": 50000,
+        "mineralExotic": 0,
+        "mineralDark": 0
+      }
+    },
+    {
+      "moduleType": 2,
+      "moduleSubType": 2010101,
+      "researchId": "engine_t1_std_ver1",
+      "prerequisiteIds": [],
+      "researchCost": {
+        "techLevel": 1,
+        "mineral": 0,
         "mineralRare": 0,
         "mineralExotic": 0,
         "mineralDark": 0
@@ -30,27 +43,27 @@
     },
     {
       "moduleType": 2,
-      "moduleSubType": 2001,
-      "researchId": "engine_t1_std",
-      "prerequisiteIds": [],
+      "moduleSubType": 2010201,
+      "researchId": "engine_t1_adv_ver1",
+      "prerequisiteIds": [
+        "engine_t1_std_ver1"
+      ],
       "researchCost": {
         "techLevel": 1,
-        "mineral": 10000,
-        "mineralRare": 0,
+        "mineral": 0,
+        "mineralRare": 50000,
         "mineralExotic": 0,
         "mineralDark": 0
       }
     },
     {
-      "moduleType": 2,
-      "moduleSubType": 2002,
-      "researchId": "engine_t1_adv",
-      "prerequisiteIds": [
-        "engine_t1_std"
-      ],
+      "moduleType": 3,
+      "moduleSubType": 3010101,
+      "researchId": "beam_t1_std_ver1",
+      "prerequisiteIds": [],
       "researchCost": {
         "techLevel": 1,
-        "mineral": 100000,
+        "mineral": 0,
         "mineralRare": 0,
         "mineralExotic": 0,
         "mineralDark": 0
@@ -58,27 +71,27 @@
     },
     {
       "moduleType": 3,
-      "moduleSubType": 3001,
-      "researchId": "beam_t1_std",
-      "prerequisiteIds": [],
+      "moduleSubType": 3010201,
+      "researchId": "beam_t1_adv_ver1",
+      "prerequisiteIds": [
+        "beam_t1_std_ver1"
+      ],
       "researchCost": {
         "techLevel": 1,
-        "mineral": 10000,
-        "mineralRare": 0,
+        "mineral": 0,
+        "mineralRare": 50000,
         "mineralExotic": 0,
         "mineralDark": 0
       }
     },
     {
-      "moduleType": 3,
-      "moduleSubType": 3002,
-      "researchId": "beam_t1_adv",
-      "prerequisiteIds": [
-        "beam_t1_std"
-      ],
+      "moduleType": 4,
+      "moduleSubType": 4010101,
+      "researchId": "missile_t1_std_ver1",
+      "prerequisiteIds": [],
       "researchCost": {
         "techLevel": 1,
-        "mineral": 100000,
+        "mineral": 0,
         "mineralRare": 0,
         "mineralExotic": 0,
         "mineralDark": 0
@@ -86,27 +99,27 @@
     },
     {
       "moduleType": 4,
-      "moduleSubType": 4001,
-      "researchId": "missile_t1_std",
-      "prerequisiteIds": [],
+      "moduleSubType": 4010201,
+      "researchId": "missile_t1_adv_ver1",
+      "prerequisiteIds": [
+        "missile_t1_std_ver1"
+      ],
       "researchCost": {
         "techLevel": 1,
-        "mineral": 10000,
-        "mineralRare": 0,
+        "mineral": 0,
+        "mineralRare": 50000,
         "mineralExotic": 0,
         "mineralDark": 0
       }
     },
     {
-      "moduleType": 4,
-      "moduleSubType": 4002,
-      "researchId": "missile_t1_adv",
-      "prerequisiteIds": [
-        "missile_t1_std"
-      ],
+      "moduleType": 5,
+      "moduleSubType": 5010101,
+      "researchId": "hanger_t1_std_ver1",
+      "prerequisiteIds": [],
       "researchCost": {
         "techLevel": 1,
-        "mineral": 100000,
+        "mineral": 0,
         "mineralRare": 0,
         "mineralExotic": 0,
         "mineralDark": 0
@@ -114,27 +127,56 @@
     },
     {
       "moduleType": 5,
-      "moduleSubType": 5001,
-      "researchId": "hanger_t1_std",
-      "prerequisiteIds": [],
+      "moduleSubType": 5010201,
+      "researchId": "hanger_t1_adv_ver1",
+      "prerequisiteIds": [
+        "hanger_t1_std_ver1"
+      ],
       "researchCost": {
         "techLevel": 1,
-        "mineral": 10000,
+        "mineral": 0,
+        "mineralRare": 50000,
+        "mineralExotic": 0,
+        "mineralDark": 0
+      }
+    }
+  ],
+  "techLevelDataList": [
+    {
+      "targetTechLevel": 1,
+      "researchId": "tech_level_1",
+      "prerequisiteIds": [],
+      "researchCost": {
+        "techLevel": 0,
+        "mineral": 0,
         "mineralRare": 0,
         "mineralExotic": 0,
         "mineralDark": 0
       }
     },
     {
-      "moduleType": 5,
-      "moduleSubType": 5002,
-      "researchId": "hanger_t1_adv",
+      "targetTechLevel": 2,
+      "researchId": "tech_level_2",
       "prerequisiteIds": [
-        "hanger_t1_std"
+        "tech_level_1"
       ],
       "researchCost": {
-        "techLevel": 1,
-        "mineral": 100000,
+        "techLevel": 0,
+        "mineral": 5000,
+        "mineralRare": 0,
+        "mineralExotic": 0,
+        "mineralDark": 0
+      }
+    },
+    {
+      "targetTechLevel": 3,
+      "researchId": "tech_level_3",
+      "prerequisiteIds": [
+        "tech_level_2"
+      ],
+      "researchCost": {
+        "techLevel": 0,
+        "mineral": 15000,
         "mineralRare": 0,
         "mineralExotic": 0,
         "mineralDark": 0

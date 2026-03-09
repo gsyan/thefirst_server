@@ -18,7 +18,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PostConstruct;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -26,6 +28,8 @@ public class GameDataService {
     private DataTableConfig dataTableConfig;
     private DataTableModule dataTableModule = new DataTableModule();
     private ZoneConfig zoneConfig = new ZoneConfig();
+    // researchId → 연구 비용 (tech_level_N 등)
+    private Map<String, CostStructDto> techLevelResearchCostMap = new HashMap<>();
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -63,6 +67,20 @@ public class GameDataService {
                     );
                     dataTableModule.setResearchDataList(researchDataList);
                     log.info("DataTableResearch.json loaded successfully from resources/data/ and merged into ModuleDataTable");
+                }
+                // techLevelDataList: researchId → researchCost 맵으로 로드
+                com.fasterxml.jackson.databind.JsonNode techLevelDataListNode = rootNode.get("techLevelDataList");
+                if (techLevelDataListNode != null) {
+                    techLevelResearchCostMap.clear();
+                    for (com.fasterxml.jackson.databind.JsonNode techNode : techLevelDataListNode) {
+                        String rId = techNode.path("researchId").asText(null);
+                        com.fasterxml.jackson.databind.JsonNode costNode = techNode.path("researchCost");
+                        if (rId != null && !costNode.isMissingNode()) {
+                            CostStructDto cost = objectMapper.convertValue(costNode, CostStructDto.class);
+                            techLevelResearchCostMap.put(rId, cost);
+                        }
+                    }
+                    log.info("techLevelDataList loaded: {} entries", techLevelResearchCostMap.size());
                 }
             } else {
                 log.warn("DataTableResearch.json not found in resources/data/, using empty data");
@@ -135,11 +153,40 @@ public class GameDataService {
         return modules.isEmpty() ? new ModuleData() : modules.get(0);
     }
 
+    // 특정 subType의 최대 레벨 반환 — moduleLevel 최댓값 기준
+    public int getMaxModuleLevel(EModuleType moduleType, EModuleSubType moduleSubType) {
+        List<ModuleData> modules = getModulesByType(moduleType);
+        return modules.stream()
+                .filter(m -> moduleSubType.equals(m.getModuleSubType()))
+                .mapToInt(ModuleData::getModuleLevel)
+                .max()
+                .orElse(0);
+    }
+
+    // 새 모듈 subType에 해당하는 교체(적용) 비용 반환 (없으면 기본값 MR 5000)
+    public CostStructDto getModuleChangeCost(EModuleSubType newSubType) {
+        List<com.bk.sbs.dto.ModuleChangeCostEntryDto> costs = getDataTableConfig().getModuleChangeCosts();
+        if (costs == null || costs.isEmpty()) {
+            return new CostStructDto(0, 0L, 5000L, 0L, 0L);
+        }
+        return costs.stream()
+                .filter(e -> newSubType.equals(e.getModuleSubType()))
+                .map(com.bk.sbs.dto.ModuleChangeCostEntryDto::getCost)
+                .findFirst()
+                .orElse(new CostStructDto(0, 0L, 5000L, 0L, 0L));
+    }
+
     public CostStructDto getModuleResearchCost(EModuleSubType moduleSubType) {
         if (dataTableModule == null) {
             return new CostStructDto(0, 0L, 0L, 0L, 0L);
         }
         return dataTableModule.getResearchCost(moduleSubType);
+    }
+
+    // tech_level_N 연구 비용 반환 (데이터 없으면 비용 0)
+    public CostStructDto getTechLevelResearchCost(String researchId) {
+        CostStructDto cost = techLevelResearchCostMap.get(researchId);
+        return cost != null ? cost : new CostStructDto(0, 0L, 0L, 0L, 0L);
     }
 
     public ZoneConfig getZoneConfig() {
@@ -148,5 +195,9 @@ public class GameDataService {
 
     public ZoneConfigData getZoneConfigByName(String zoneName) {
         return getZoneConfig().getZoneByName(zoneName);
+    }
+
+    public List<ZoneConfigData> getAllZoneConfigsUpTo(String zoneName) {
+        return getZoneConfig().getAllZonesUpTo(zoneName);
     }
 }

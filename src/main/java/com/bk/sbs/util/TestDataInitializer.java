@@ -114,10 +114,10 @@ public class TestDataInitializer {
         for (int i = 0; i < TEST_COUNT; i++)
             charRows.add(new Object[]{accountIds.get(i), "empty_test" + String.format("%04d", i + 1), 5100L, now});
         jdbc.batchUpdate(
-                "INSERT INTO `character` (account_id, character_name, tech_level, mineral," +
+                "INSERT INTO `character` (account_id, character_name, mineral," +
                 " mineral_rare, mineral_exotic, mineral_dark," +
                 " mineral_fraction, mineral_rare_fraction, mineral_exotic_fraction, mineral_dark_fraction," +
-                " cleared_zone, deleted, date_time) VALUES (?, ?, 1, ?, 0, 0, 0, 0.0, 0.0, 0.0, 0.0, '', false, ?)",
+                " cleared_zone, deleted, date_time) VALUES (?, ?, ?, 0, 0, 0, 0.0, 0.0, 0.0, 0.0, '', false, ?)",
                 charRows, BATCH_SIZE, (ps, row) -> {
                     ps.setLong(1,  (Long)      row[0]);
                     ps.setString(2, (String)   row[1]);
