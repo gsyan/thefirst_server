@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class ZoneClearResponse {
-    private String clearedZone;
+    private String clearedZoneName;
     private CostRemainInfoDto rewardInfo;
     private String collectDateTime;
 }

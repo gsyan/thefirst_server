@@ -111,11 +111,11 @@ public class FleetService {
         bodyModule.setShip(defaultShip);
         bodyModule.setModuleType(EModuleType.body);
         bodyModule.setModuleSubType(EModuleSubType.body_t1_std_ver1);
-        //bodyModule.setModuleSubType(EModuleSubType.Body_Aircraft);
         bodyModule.setModuleLevel(bodyData.getModuleLevel());
         bodyModule.setBodyIndex(0);
         bodyModule.setSlotIndex(0);
         shipModuleRepository.save(bodyModule);
+        saveInitialModuleLevel(defaultShip, EModuleType.body, EModuleSubType.body_t1_std_ver1, bodyData.getModuleLevel(), 0, 0);
 
         // 2. Engine
         ShipModule engineModule = new ShipModule();
@@ -126,6 +126,7 @@ public class FleetService {
         engineModule.setBodyIndex(0);
         engineModule.setSlotIndex(0);
         shipModuleRepository.save(engineModule);
+        saveInitialModuleLevel(defaultShip, EModuleType.engine, EModuleSubType.engine_t1_std_ver1, engineData.getModuleLevel(), 0, 0);
 
 //        // Beam
 //        ShipModule beamModule = new ShipModule();
@@ -159,6 +160,18 @@ public class FleetService {
 
 
         System.out.println("Default ship and modules created: " + defaultShip.getShipName());
+    }
+
+    // 초기 모듈 생성 시 ship_module_level에 ver1 서브타입을 무료 이력으로 등록
+    private void saveInitialModuleLevel(Ship ship, EModuleType moduleType, EModuleSubType moduleSubType, int level, int bodyIndex, int slotIndex) {
+        ShipModuleLevel record = new ShipModuleLevel();
+        record.setShip(ship);
+        record.setBodyIndex(bodyIndex);
+        record.setModuleType(moduleType);
+        record.setSlotIndex(slotIndex);
+        record.setModuleSubType(moduleSubType);
+        record.setLevel(level);
+        shipModuleLevelRepository.save(record);
     }
 
     // 함대 활성화
@@ -399,87 +412,98 @@ public class FleetService {
         return dto;
     }
 
-    private List<ModuleBodyInfoDto> convertToBodyModules(List<ShipModule> modules) {
+    private List<ModuleBodyInfoDto> convertToBodyModules(List<ShipModule> modules, List<ShipModuleLevel> allLevels) {
+        // bodyIndex+moduleType+slotIndex → unlockedSubTypes 맵 (한 번만 빌드)
+        java.util.Map<String, List<EModuleSubType>> unlockedMap = new java.util.HashMap<>();
+        for (ShipModuleLevel lvl : allLevels) {
+            String key = lvl.getBodyIndex() + "_" + lvl.getModuleType() + "_" + lvl.getSlotIndex();
+            unlockedMap.computeIfAbsent(key, k -> new java.util.ArrayList<>()).add(lvl.getModuleSubType());
+        }
+
         return modules.stream()
                 .filter(m -> m.getModuleType() == EModuleType.body)
                 .map(bodyModule -> {
-                    ModuleBodyInfoDto bodyDto = ModuleBodyInfoDto.builder()
-                            .moduleType(bodyModule.getModuleType())
-                            .moduleSubType(bodyModule.getModuleSubType())
-                            .moduleLevel(bodyModule.getModuleLevel())
-                            .bodyIndex(bodyModule.getBodyIndex())
-                            .build();
-
                     int bodyIndex = bodyModule.getBodyIndex();
+
                     List<ModuleInfoDto> engines = modules.stream()
                             .filter(m -> m.getModuleType() == EModuleType.engine && m.getBodyIndex() == bodyIndex)
-                            .map(engineModule -> {
-                                ModuleInfoDto engineDto = ModuleInfoDto.builder()
-                                        .moduleType(engineModule.getModuleType())
-                                        .moduleSubType(engineModule.getModuleSubType())
-                                        .moduleLevel(engineModule.getModuleLevel())
-                                        .bodyIndex(engineModule.getBodyIndex())
-                                        .slotIndex(engineModule.getSlotIndex())
-                                        .build();
-                                return engineDto;
-                            })
+                            .map(engineModule -> ModuleInfoDto.builder()
+                                    .moduleType(engineModule.getModuleType())
+                                    .moduleSubType(engineModule.getModuleSubType())
+                                    .moduleLevel(engineModule.getModuleLevel())
+                                    .bodyIndex(engineModule.getBodyIndex())
+                                    .slotIndex(engineModule.getSlotIndex())
+                                    .unlockedSubTypes(unlockedMap.getOrDefault(
+                                            bodyIndex + "_" + EModuleType.engine + "_" + engineModule.getSlotIndex(),
+                                            java.util.Collections.emptyList()))
+                                    .build())
                             .collect(Collectors.toList());
 
                     List<ModuleInfoDto> beams = modules.stream()
                             .filter(m -> m.getModuleType() == EModuleType.beam && m.getBodyIndex() == bodyIndex)
-                            .map(beamModule -> {
-                                ModuleInfoDto beamDto = ModuleInfoDto.builder()
-                                        .moduleType(beamModule.getModuleType())
-                                        .moduleSubType(beamModule.getModuleSubType())
-                                        .moduleLevel(beamModule.getModuleLevel())
-                                        .bodyIndex(beamModule.getBodyIndex())
-                                        .slotIndex(beamModule.getSlotIndex())
-                                        .build();
-                                return beamDto;
-                            })
+                            .map(beamModule -> ModuleInfoDto.builder()
+                                    .moduleType(beamModule.getModuleType())
+                                    .moduleSubType(beamModule.getModuleSubType())
+                                    .moduleLevel(beamModule.getModuleLevel())
+                                    .bodyIndex(beamModule.getBodyIndex())
+                                    .slotIndex(beamModule.getSlotIndex())
+                                    .unlockedSubTypes(unlockedMap.getOrDefault(
+                                            bodyIndex + "_" + EModuleType.beam + "_" + beamModule.getSlotIndex(),
+                                            java.util.Collections.emptyList()))
+                                    .build())
                             .collect(Collectors.toList());
 
                     List<ModuleInfoDto> missiles = modules.stream()
                             .filter(m -> m.getModuleType() == EModuleType.missile && m.getBodyIndex() == bodyIndex)
-                            .map(missileModule -> {
-                                ModuleInfoDto missileDto = ModuleInfoDto.builder()
-                                        .moduleType(missileModule.getModuleType())
-                                        .moduleSubType(missileModule.getModuleSubType())
-                                        .moduleLevel(missileModule.getModuleLevel())
-                                        .bodyIndex(missileModule.getBodyIndex())
-                                        .slotIndex(missileModule.getSlotIndex())
-                                        .build();
-                                return missileDto;
-                            })
+                            .map(missileModule -> ModuleInfoDto.builder()
+                                    .moduleType(missileModule.getModuleType())
+                                    .moduleSubType(missileModule.getModuleSubType())
+                                    .moduleLevel(missileModule.getModuleLevel())
+                                    .bodyIndex(missileModule.getBodyIndex())
+                                    .slotIndex(missileModule.getSlotIndex())
+                                    .unlockedSubTypes(unlockedMap.getOrDefault(
+                                            bodyIndex + "_" + EModuleType.missile + "_" + missileModule.getSlotIndex(),
+                                            java.util.Collections.emptyList()))
+                                    .build())
                             .collect(Collectors.toList());
 
                     List<ModuleInfoDto> hangers = modules.stream()
                             .filter(m -> m.getModuleType() == EModuleType.hanger && m.getBodyIndex() == bodyIndex)
-                            .map(hangerModule -> {
-                                ModuleInfoDto hangerDto = ModuleInfoDto.builder()
-                                        .moduleType(hangerModule.getModuleType())
-                                        .moduleSubType(hangerModule.getModuleSubType())
-                                        .moduleLevel(hangerModule.getModuleLevel())
-                                        .bodyIndex(hangerModule.getBodyIndex())
-                                        .slotIndex(hangerModule.getSlotIndex())
-                                        .build();
-                                return hangerDto;
-                            })
+                            .map(hangerModule -> ModuleInfoDto.builder()
+                                    .moduleType(hangerModule.getModuleType())
+                                    .moduleSubType(hangerModule.getModuleSubType())
+                                    .moduleLevel(hangerModule.getModuleLevel())
+                                    .bodyIndex(hangerModule.getBodyIndex())
+                                    .slotIndex(hangerModule.getSlotIndex())
+                                    .unlockedSubTypes(unlockedMap.getOrDefault(
+                                            bodyIndex + "_" + EModuleType.hanger + "_" + hangerModule.getSlotIndex(),
+                                            java.util.Collections.emptyList()))
+                                    .build())
                             .collect(Collectors.toList());
 
-                    bodyDto.setEngines(engines);
-                    bodyDto.setBeams(beams);
-                    bodyDto.setMissiles(missiles);
-                    bodyDto.setHangers(hangers);
+                    // body 자체의 unlockedSubTypes (slotIndex=0 고정)
+                    List<EModuleSubType> bodyUnlocked = unlockedMap.getOrDefault(
+                            bodyIndex + "_" + EModuleType.body + "_0", java.util.Collections.emptyList());
 
-                    return bodyDto;
+                    return ModuleBodyInfoDto.builder()
+                            .moduleType(bodyModule.getModuleType())
+                            .moduleSubType(bodyModule.getModuleSubType())
+                            .moduleLevel(bodyModule.getModuleLevel())
+                            .bodyIndex(bodyIndex)
+                            .engines(engines)
+                            .beams(beams)
+                            .missiles(missiles)
+                            .hangers(hangers)
+                            .unlockedSubTypes(bodyUnlocked)
+                            .build();
                 })
                 .collect(Collectors.toList());
     }
 
     private ShipInfoDto convertShipToShipInfoDto(Ship ship) {
         List<ShipModule> modules = shipModuleRepository.findByShipIdAndDeletedFalseOrderBySlotIndex(ship.getId());
-        List<ModuleBodyInfoDto> bodyDtos = convertToBodyModules(modules);
+        List<ShipModuleLevel> allLevels = shipModuleLevelRepository.findAllByShipId(ship.getId());
+        List<ModuleBodyInfoDto> bodyDtos = convertToBodyModules(modules, allLevels);
 
         return ShipInfoDto.builder()
                 .id(ship.getId())
@@ -862,6 +886,7 @@ public class FleetService {
         newModule.setCreated(LocalDateTime.now());
         newModule.setModified(LocalDateTime.now());
         shipModuleRepository.save(newModule);
+        saveInitialModuleLevel(ship, moduleType, finalModuleSubType, 1, request.getBodyIndex(), request.getSlotIndex());
 
         // 비용 정보
         CostRemainInfoDto costRemainInfo = new CostRemainInfoDto(
@@ -914,17 +939,6 @@ public class FleetService {
             throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_NOT_MATCH_MODULE_TYPE);
         }
 
-        // 3. 새 모듈이 연구되었는지 확인 (slotType 제외, moduleType + moduleSubType 만으로 체크)
-        Optional<ModuleResearch> researchCheck = moduleResearchRepository.findByCharacterIdAndModuleTypeAndModuleSubType(
-                characterId,
-                newModuleType,
-                newModuleSubType
-        );
-
-        if (!researchCheck.isPresent() || !researchCheck.get().isResearched()) {
-            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_NOT_RESEARCHED);
-        }
-
         // 현재 장착된 모듈 찾기
         ShipModule currentModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
                 request.getShipId(),
@@ -933,26 +947,38 @@ public class FleetService {
                 request.getSlotIndex()
         ).orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_MODULE_NOT_FOUND));
 
-        // 4. 현재 모듈이 max level인지 확인
+        // 3. 현재 모듈이 max level인지 확인
         int maxLevel = gameDataService.getMaxModuleLevel(currentModuleType, currentModuleSubType);
         if (currentModule.getModuleLevel() < maxLevel) {
             throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_NOT_MAX_LEVEL);
         }
 
-        // 5. 교체 비용 검증 및 차감 (비관적 락)
+        // 4. 슬롯 단위 추가 이력 확인 — ShipModuleLevel 레코드 존재 = 이미 추가됨(무료)
+        Optional<ShipModuleLevel> newModuleLevelRecord = shipModuleLevelRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndModuleSubType(
+                request.getShipId(),
+                request.getBodyIndex(),
+                newModuleType,
+                request.getSlotIndex(),
+                newModuleSubType
+        );
+        boolean alreadyAdded = newModuleLevelRecord.isPresent();
+
+        // 5. 최초 추가 시에만 비용 차감 (비관적 락)
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_SHIP_NOT_FOUND));
 
-        CostStructDto changeCost = gameDataService.getModuleChangeCost(newModuleSubType);
-        if (character.getMineralRare() < changeCost.getMineralRare()
-                || character.getMineralExotic() < changeCost.getMineralExotic()
-                || character.getMineralDark() < changeCost.getMineralDark()) {
-            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_INSUFFICIENT_MINERAL_RARE);
+        CostStructDto addCost = gameDataService.getSubTypeAddCost(newModuleSubType);
+        if (!alreadyAdded) {
+            if (character.getMineralRare() < addCost.getMineralRare()
+                    || character.getMineralExotic() < addCost.getMineralExotic()
+                    || character.getMineralDark() < addCost.getMineralDark()) {
+                throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_INSUFFICIENT_MINERAL_RARE);
+            }
+            character.setMineralRare(character.getMineralRare() - addCost.getMineralRare());
+            character.setMineralExotic(character.getMineralExotic() - addCost.getMineralExotic());
+            character.setMineralDark(character.getMineralDark() - addCost.getMineralDark());
+            characterRepository.save(character);
         }
-        character.setMineralRare(character.getMineralRare() - changeCost.getMineralRare());
-        character.setMineralExotic(character.getMineralExotic() - changeCost.getMineralExotic());
-        character.setMineralDark(character.getMineralDark() - changeCost.getMineralDark());
-        characterRepository.save(character);
 
         // 1. 현재 모듈의 레벨을 ShipModuleLevel에 저장
         ShipModuleLevel currentLevelRecord = shipModuleLevelRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndModuleSubType(
@@ -975,13 +1001,7 @@ public class FleetService {
         shipModuleLevelRepository.save(currentLevelRecord);
 
         // 2. 새 모듈의 레벨을 ShipModuleLevel에서 조회 (없으면 1)
-        int newModuleLevel = shipModuleLevelRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndModuleSubType(
-                request.getShipId(),
-                request.getBodyIndex(),
-                newModuleType,
-                request.getSlotIndex(),
-                newModuleSubType
-        ).map(ShipModuleLevel::getLevel).orElse(1);
+        int newModuleLevel = newModuleLevelRecord.map(ShipModuleLevel::getLevel).orElse(1);
 
         // 3. 모듈 정보 업데이트 (서브타입 + 레벨 변경)
         currentModule.setModuleSubType(newModuleSubType);
@@ -989,12 +1009,21 @@ public class FleetService {
         currentModule.setModified(LocalDateTime.now());
         shipModuleRepository.save(currentModule);
 
-        // 응답 생성
+        // 응답 생성 (actualCost: 최초 추가 시 실차감액, 재추가 시 0)
+        CostStructDto actualCost = alreadyAdded ? new CostStructDto(0, 0L, 0L, 0L, 0L) : addCost;
         CostRemainInfoDto costRemainInfo = new CostRemainInfoDto(
-                0L, changeCost.getMineralRare(), changeCost.getMineralExotic(), changeCost.getMineralDark(),
+                0L, actualCost.getMineralRare(), actualCost.getMineralExotic(), actualCost.getMineralDark(),
                 character.getMineral(), character.getMineralRare(),
                 character.getMineralExotic(), character.getMineralDark()
         );
+
+        // 해당 슬롯에 이력이 있는 모든 서브타입 = 비용 없이 교체 가능한 목록
+        List<EModuleSubType> unlockedSubTypes = shipModuleLevelRepository
+                .findAllByShipIdAndBodyIndexAndModuleTypeAndSlotIndex(
+                        request.getShipId(), request.getBodyIndex(), newModuleType, request.getSlotIndex())
+                .stream()
+                .map(ShipModuleLevel::getModuleSubType)
+                .collect(java.util.stream.Collectors.toList());
 
         return ModuleChangeResponse.builder()
                 .shipId(request.getShipId())
@@ -1006,114 +1035,14 @@ public class FleetService {
                 .slotIndex(request.getSlotIndex())
                 .moduleNewLevel(newModuleLevel)
                 .costRemainInfo(costRemainInfo)
+                .newUnlockedSubTypes(unlockedSubTypes)
                 .build();
     }
 
-    @Transactional
-    public ModuleResearchResponse researchModule(Long characterId, ModuleResearchRequest request) {
-        // tech_level_N 연구는 별도 처리
-        if (request.getResearchId() != null) {
-            return researchTechLevel(characterId, request.getResearchId());
-        }
-
-        EModuleType moduleType = request.getModuleType();
-        EModuleSubType moduleSubType = request.getModuleSubType();
-
-        // 이미 개발되었는지 확인 (moduleType + moduleSubType만으로 체크)
-        Optional<ModuleResearch> existing = moduleResearchRepository.findByCharacterIdAndModuleTypeAndModuleSubType(
-                characterId,
-                moduleType,
-                moduleSubType
-        );
-
-        if (existing.isPresent() && existing.get().isResearched()) {
-            throw new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_ALREADY_RESEARCHED);
-        }
-
-        // 캐릭터 자원 조회 (비관적 락)
-        com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_CHARACTER_NOT_FOUND));
-
-        // 모듈 개발 비용 가져오기 (DataTableResearch.json에서 로딩)
-        CostStructDto researchCost = gameDataService.getModuleResearchCost(moduleSubType);
-
-        // TechLevel 검증 (module_research 기반)
-        if (getCharacterTechLevel(characterId) < researchCost.getTechLevel()) {
-            throw new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_INSUFFICIENT_TECH_LEVEL);
-        }
-
-        // 자원 부족 검사
-        if (character.getMineral() < researchCost.getMineral()) {
-            throw new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_INSUFFICIENT_MINERAL);
-        }
-        if (character.getMineralRare() < researchCost.getMineralRare()) {
-            throw new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_INSUFFICIENT_MINERAL_RARE);
-        }
-        if (character.getMineralExotic() < researchCost.getMineralExotic()) {
-            throw new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_INSUFFICIENT_MINERAL_EXOTIC);
-        }
-        if (character.getMineralDark() < researchCost.getMineralDark()) {
-            throw new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_INSUFFICIENT_MINERAL_DARK);
-        }
-
-        // 자원 차감
-        character.setMineral(character.getMineral() - researchCost.getMineral());
-        character.setMineralRare(character.getMineralRare() - researchCost.getMineralRare());
-        character.setMineralExotic(character.getMineralExotic() - researchCost.getMineralExotic());
-        character.setMineralDark(character.getMineralDark() - researchCost.getMineralDark());
-        characterRepository.save(character);
-
-        // 모듈 개발 정보 저장 또는 업데이트
-        ModuleResearch moduleResearch;
-        if (existing.isPresent()) {
-            moduleResearch = existing.get();
-            moduleResearch.setResearched(true);
-            moduleResearch.setModified(LocalDateTime.now());
-        } else {
-            moduleResearch = new ModuleResearch();
-            moduleResearch.setCharacterId(characterId);
-            moduleResearch.setModuleType(moduleType);
-            moduleResearch.setModuleSubType(moduleSubType);
-            moduleResearch.setResearched(true);
-        }
-        moduleResearchRepository.save(moduleResearch);
-
-        // 개발된 모든 모듈 목록 조회
-        List<ModuleResearch> researchedList = moduleResearchRepository.findByCharacterIdAndResearchedTrue(characterId);
-        List<List<Integer>> researchedModuleTypes = researchedList.stream()
-                .filter(r -> r.getModuleType() != null && r.getModuleSubType() != null)
-                .map(r -> List.of(r.getModuleType().getValue(), r.getModuleSubType().getValue()))
-                .collect(Collectors.toList());
-        List<String> researchedIds = researchedList.stream()
-                .filter(r -> r.getResearchId() != null)
-                .map(ModuleResearch::getResearchId)
-                .collect(Collectors.toList());
-
-        // 비용 정보
-        CostRemainInfoDto costRemainInfo = new CostRemainInfoDto(
-                researchCost.getMineral(),
-                researchCost.getMineralRare(),
-                researchCost.getMineralExotic(),
-                researchCost.getMineralDark(),
-                character.getMineral(),
-                character.getMineralRare(),
-                character.getMineralExotic(),
-                character.getMineralDark()
-        );
-
-        // 응답 생성
-        return new ModuleResearchResponse(
-                moduleType,
-                moduleSubType,
-                costRemainInfo,
-                researchedModuleTypes,
-                researchedIds
-        );
-    }
-
-
     // tech_level_N 문자열 기반 연구 처리: 비용 차감 후 DB 저장, researchedIds 반환
-    private ModuleResearchResponse researchTechLevel(Long characterId, String researchId) {
+    @Transactional
+    public TechLevelResearchResponse researchTechLevel(Long characterId, TechLevelResearchRequest request) {
+        String researchId = request.getResearchId();
         // 이미 연구 완료 체크
         ModuleResearch existing = moduleResearchRepository.findByCharacterIdAndResearchId(characterId, researchId).orElse(null);
         if (existing != null && existing.isResearched()) {
@@ -1164,7 +1093,7 @@ public class FleetService {
                 character.getMineral(), character.getMineralRare(),
                 character.getMineralExotic(), character.getMineralDark()
         );
-        return new ModuleResearchResponse(null, null, costRemainInfo, null, researchedIds);
+        return new TechLevelResearchResponse(costRemainInfo, researchedIds);
     }
 
     // 캐릭터가 개발한 모든 모듈 목록 조회 (moduleType+subType 쌍)

@@ -17,6 +17,7 @@ import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.repository.AccountRepository;
 import com.bk.sbs.repository.CharacterRepository;
+import com.bk.sbs.repository.ClearedZoneRepository;
 import com.bk.sbs.repository.ModuleResearchRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -38,6 +39,7 @@ public class CharacterService {
     private final AccountRepository accountRepository;
     private final FleetService fleetService;
     private final ModuleResearchRepository moduleResearchRepository;
+    private final ClearedZoneRepository clearedZoneRepository;
     private final StringRedisTemplate redisTemplate;
     private final GameDataService gameDataService;
 
@@ -47,11 +49,12 @@ public class CharacterService {
     @Value("${worldid}")
     private int worldId;
 
-    public CharacterService(CharacterRepository characterRepository, AccountRepository accountRepository, FleetService fleetService, ModuleResearchRepository moduleResearchRepository, StringRedisTemplate redisTemplate, GameDataService gameDataService) {
+    public CharacterService(CharacterRepository characterRepository, AccountRepository accountRepository, FleetService fleetService, ModuleResearchRepository moduleResearchRepository, ClearedZoneRepository clearedZoneRepository, StringRedisTemplate redisTemplate, GameDataService gameDataService) {
         this.characterRepository = characterRepository;
         this.accountRepository = accountRepository;
         this.fleetService = fleetService;
         this.moduleResearchRepository = moduleResearchRepository;
+        this.clearedZoneRepository = clearedZoneRepository;
         this.redisTemplate = redisTemplate;
         this.gameDataService = gameDataService;
     }
@@ -88,8 +91,8 @@ public class CharacterService {
         fleetService.createFleet(savedCharacter.getId(), "Default Fleet", "Auto-generated default fleet.");
         fleetService.activateFirstFleet(savedCharacter.getId());
 
-        // 기본 모듈 개발 상태 설정
-        initializeDefaultResearchModules(savedCharacter.getId());
+        // 기본 기술레벨 1 초기화
+        initializeDefaultTechLevel(savedCharacter.getId());
 
 //        // Redis에 캐릭터 생성 로그 남기기 (테스트용)
 //        try {
@@ -109,61 +112,9 @@ public class CharacterService {
                 .build();
     }
 
-    // 기본연구 세팅
-    private void initializeDefaultResearchModules(Long characterId) {
+    // 신규 캐릭터 기본 기술레벨 1 완료 처리
+    private void initializeDefaultTechLevel(Long characterId) {
         LocalDateTime now = LocalDateTime.now();
-
-        // Body - Battle
-        ModuleResearch researchBody = new ModuleResearch();
-        researchBody.setCharacterId(characterId);
-        researchBody.setModuleType(EModuleType.body);
-        researchBody.setModuleSubType(EModuleSubType.body_t1_std_ver1);
-        researchBody.setResearched(true);
-        researchBody.setCreated(now);
-        researchBody.setModified(now);
-        moduleResearchRepository.save(researchBody);
-
-        // Engine - Standard
-        ModuleResearch researchEngine = new ModuleResearch();
-        researchEngine.setCharacterId(characterId);
-        researchEngine.setModuleType(EModuleType.engine);
-        researchEngine.setModuleSubType(EModuleSubType.engine_t1_std_ver1);
-        researchEngine.setResearched(true);
-        researchEngine.setCreated(now);
-        researchEngine.setModified(now);
-        moduleResearchRepository.save(researchEngine);
-
-        // Beam
-        ModuleResearch researchWeapon = new ModuleResearch();
-        researchWeapon.setCharacterId(characterId);
-        researchWeapon.setModuleType(EModuleType.beam);
-        researchWeapon.setModuleSubType(EModuleSubType.beam_t1_std_ver1);
-        researchWeapon.setResearched(true);
-        researchWeapon.setCreated(now);
-        researchWeapon.setModified(now);
-        moduleResearchRepository.save(researchWeapon);
-
-        // Missile
-        ModuleResearch researchMissile = new ModuleResearch();
-        researchMissile.setCharacterId(characterId);
-        researchMissile.setModuleType(EModuleType.missile);
-        researchMissile.setModuleSubType(EModuleSubType.missile_t1_std_ver1);
-        researchMissile.setResearched(true);
-        researchMissile.setCreated(now);
-        researchMissile.setModified(now);
-        moduleResearchRepository.save(researchMissile);
-
-        // Hanger - Standard
-        ModuleResearch researchHanger = new ModuleResearch();
-        researchHanger.setCharacterId(characterId);
-        researchHanger.setModuleType(EModuleType.hanger);
-        researchHanger.setModuleSubType(EModuleSubType.hanger_t1_std_ver1);
-        researchHanger.setResearched(true);
-        researchHanger.setCreated(now);
-        researchHanger.setModified(now);
-        moduleResearchRepository.save(researchHanger);
-
-        // 기본 기술레벨 1 (모든 신규 캐릭터는 tech_level_1을 완료 상태로 시작)
         ModuleResearch techLevel1 = new ModuleResearch();
         techLevel1.setCharacterId(characterId);
         techLevel1.setResearchId("tech_level_1");
@@ -182,10 +133,10 @@ public class CharacterService {
 
         Instant now = Instant.now();
         Instant collectDt = character.getCollectDateTime();
-        String clearedZone = character.getClearedZone();
+        boolean hasClearedZone = !clearedZoneRepository.findZoneNamesByCharacterId(characterId).isEmpty();
 
-        // clearedZone이 있고 collectDateTime이 12h 초과면 now-12h로 고정
-        if (collectDt != null && clearedZone != null && !clearedZone.isEmpty()) {
+        // 클리어된 존이 있고 collectDateTime이 12h 초과면 now-12h로 고정
+        if (collectDt != null && hasClearedZone == true) {
             long sinceCollect = ChronoUnit.SECONDS.between(collectDt, now);
             if (sinceCollect > MAX_OFFLINE_SECONDS) {
                 character.setCollectDateTime(now.minusSeconds(MAX_OFFLINE_SECONDS));
@@ -207,7 +158,7 @@ public class CharacterService {
                 .mineralRare(character.getMineralRare())
                 .mineralExotic(character.getMineralExotic())
                 .mineralDark(character.getMineralDark())
-                .clearedZone(character.getClearedZone())
+                .clearedZones(clearedZoneRepository.findZoneNamesByCharacterId(characterId))
                 .collectDateTime(character.getCollectDateTime() != null ? character.getCollectDateTime().toString() : null)
                 .nameChangeCount(character.getNameChangeCount())
                 .build();

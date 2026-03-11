@@ -1,5 +1,6 @@
 package com.bk.sbs.dto;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,7 +21,7 @@ public class CharacterInfoDto {
     private Long mineralRare;
     private Long mineralExotic;
     private Long mineralDark;
-    private String clearedZone;
+    private List<String> clearedZones;
     private String collectDateTime;
     private Integer nameChangeCount;
 }

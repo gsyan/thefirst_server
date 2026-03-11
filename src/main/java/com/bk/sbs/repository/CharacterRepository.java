@@ -2,6 +2,7 @@
 package com.bk.sbs.repository;
 
 import com.bk.sbs.entity.Character;
+import com.bk.sbs.entity.ClearedZone;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
@@ -20,7 +21,7 @@ public interface CharacterRepository extends JpaRepository<Character, Long> {
     @Query("SELECT c FROM Character c WHERE c.id = :id")
     Optional<Character> findByIdForUpdate(@Param("id") Long id);
 
-    // Zone 랭킹 서버 시작 시 동기화 - clearedZone 있는 캐릭터 전체 조회
-    @Query("SELECT c FROM Character c WHERE c.deleted = false AND c.clearedZone IS NOT NULL AND c.clearedZone != ''")
+    // Zone 랭킹 서버 시작 시 동기화 - cleared_zone 테이블에 1개 이상 존 있는 캐릭터 조회
+    @Query("SELECT c FROM Character c WHERE c.deleted = false AND c.id IN (SELECT cz.characterId FROM ClearedZone cz)")
     List<Character> findAllWithClearedZone();
 }

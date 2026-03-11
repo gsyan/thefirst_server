@@ -51,9 +51,6 @@ public class Character {
     @Column(nullable = false)
     private Double mineralDarkFraction = 0.0;
 
-    // 클리어한 최고 zone (예: "3-5"), 신규는 빈 문자열
-    @Column(nullable = false)
-    private String clearedZone = "";
 
     // 이름 변경 가능 횟수 (초기값 2, 0이면 변경 불가)
     @Column(nullable = false, columnDefinition = "INT DEFAULT 2")

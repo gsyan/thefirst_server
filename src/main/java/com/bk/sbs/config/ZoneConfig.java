@@ -20,15 +20,13 @@ public class ZoneConfig {
                 .orElse(null);
     }
 
-    // clearedZoneName 포함, 그 이전 모든 존 반환 (index 0 = Zone-0 안전지역 제외)
-    public List<ZoneConfigData> getAllZonesUpTo(String zoneName) {
+    // 이름 목록으로 ZoneConfigData 반환 (순서 무관)
+    public List<ZoneConfigData> getZonesByNames(List<String> zoneNames) {
         List<ZoneConfigData> result = new ArrayList<>();
-        if (zoneName == null || zoneName.isEmpty()) return result;
-        boolean skipFirst = true;
-        for (ZoneConfigData z : zones) {
-            if (skipFirst) { skipFirst = false; continue; } // Zone-0 제외
-            result.add(z);
-            if (zoneName.equals(z.getZoneName())) break;
+        if (zoneNames == null) return result;
+        for (String name : zoneNames) {
+            ZoneConfigData z = getZoneByName(name);
+            if (z != null) result.add(z);
         }
         return result;
     }

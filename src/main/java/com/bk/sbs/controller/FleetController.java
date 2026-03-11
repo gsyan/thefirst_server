@@ -140,13 +140,13 @@ public class FleetController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
-    // 모듈 개발(연구)
-    @PostMapping("/research-module")
-    public ResponseEntity<ApiResponse<ModuleResearchResponse>> researchModule(
-            @RequestBody ModuleResearchRequest request,
+    // 기술레벨 연구
+    @PostMapping("/research-tech-level")
+    public ResponseEntity<ApiResponse<TechLevelResearchResponse>> researchTechLevel(
+            @RequestBody TechLevelResearchRequest request,
             HttpServletRequest httpRequest) {
         Long actualCharacterId = getCharacterIdFromToken(httpRequest);
-        ModuleResearchResponse response = fleetService.researchModule(actualCharacterId, request);
+        TechLevelResearchResponse response = fleetService.researchTechLevel(actualCharacterId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 

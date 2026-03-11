@@ -3,6 +3,7 @@ package com.bk.sbs.service;
 import com.bk.sbs.dto.*;
 import com.bk.sbs.entity.Character;
 import com.bk.sbs.repository.CharacterRepository;
+import com.bk.sbs.repository.ClearedZoneRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -24,10 +25,12 @@ public class RankingService {
 
     private final RedisService redisService;
     private final CharacterRepository characterRepository;
+    private final ClearedZoneRepository clearedZoneRepository;
 
-    public RankingService(RedisService redisService, CharacterRepository characterRepository) {
+    public RankingService(RedisService redisService, CharacterRepository characterRepository, ClearedZoneRepository clearedZoneRepository) {
         this.redisService = redisService;
         this.characterRepository = characterRepository;
+        this.clearedZoneRepository = clearedZoneRepository;
     }
 
     // 서버 시작 시 Zone 랭킹 Redis 초기화 (PvpService @Order(2) 이후)
@@ -44,9 +47,10 @@ public class RankingService {
 
         List<Character> characters = characterRepository.findAllWithClearedZone();
         for (Character c : characters) {
-            long score = computeZoneScore(c.getClearedZone());
-            if (score > 0) {
-                redisService.setZoneScore(c.getId(), score);
+            List<String> zoneNames = clearedZoneRepository.findZoneNamesByCharacterId(c.getId());
+            long maxScore = zoneNames.stream().mapToLong(this::computeZoneScore).max().orElse(0L);
+            if (maxScore > 0) {
+                redisService.setZoneScore(c.getId(), maxScore);
                 redisService.setRankName(c.getId(), c.getCharacterName());
             }
         }
