@@ -673,9 +673,14 @@ public class FleetService {
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_CHARACTER_NOT_FOUND));
 
+        // 기술레벨 검증 — 서브타입 인코딩에서 파싱: (value/10000)%100
+        int requiredTechTier = (moduleSubType.getValue() / 10000) % 100;
+        if (getCharacterTechLevel(characterId) < requiredTechTier) {
+            throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_INSUFFICIENT_TECH_LEVEL);
+        }
+
         // 업그레이드 비용 계산 (현재 레벨부터 목표 레벨까지)
         CostStructDto totalCost = new CostStructDto(0, 0L, 0L, 0L, 0L);
-        int maxTechLevel = 0;
 
         List<ModuleData> moduleDataList = gameDataService.getModulesByType(moduleType);
         for (int level = request.getCurrentLevel(); level < request.getTargetLevel(); level++) {
@@ -687,17 +692,11 @@ public class FleetService {
 
             CostStructDto cost = levelData.getUpgradeCost();
             if (cost != null) {
-                maxTechLevel = Math.max(maxTechLevel, cost.getTechLevel());
                 totalCost.setMineral(totalCost.getMineral() + cost.getMineral());
                 totalCost.setMineralRare(totalCost.getMineralRare() + cost.getMineralRare());
                 totalCost.setMineralExotic(totalCost.getMineralExotic() + cost.getMineralExotic());
                 totalCost.setMineralDark(totalCost.getMineralDark() + cost.getMineralDark());
             }
-        }
-
-        // TechLevel 검증 (module_research 기반)
-        if (getCharacterTechLevel(characterId) < maxTechLevel) {
-            throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_INSUFFICIENT_TECH_LEVEL);
         }
 
         // 자원 부족 검사 (업그레이드 진행 전에 먼저 체크)
@@ -951,6 +950,12 @@ public class FleetService {
         int maxLevel = gameDataService.getMaxModuleLevel(currentModuleType, currentModuleSubType);
         if (currentModule.getModuleLevel() < maxLevel) {
             throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_NOT_MAX_LEVEL);
+        }
+
+        // 기술레벨 검증 — 서브타입 인코딩에서 파싱: (value/10000)%100
+        int requiredTechTier = (newModuleSubType.getValue() / 10000) % 100;
+        if (getCharacterTechLevel(characterId) < requiredTechTier) {
+            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_INSUFFICIENT_TECH_LEVEL);
         }
 
         // 4. 슬롯 단위 추가 이력 확인 — ShipModuleLevel 레코드 존재 = 이미 추가됨(무료)

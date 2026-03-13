@@ -28,7 +28,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
 @Service
@@ -43,10 +42,7 @@ public class CharacterService {
     private final StringRedisTemplate redisTemplate;
     private final GameDataService gameDataService;
 
-    // 오프라인 보상 최대 시간 (12시간)
-    private static final long MAX_OFFLINE_SECONDS = 43200L;
-
-    @Value("${worldid}")
+@Value("${worldid}")
     private int worldId;
 
     public CharacterService(CharacterRepository characterRepository, AccountRepository accountRepository, FleetService fleetService, ModuleResearchRepository moduleResearchRepository, ClearedZoneRepository clearedZoneRepository, StringRedisTemplate redisTemplate, GameDataService gameDataService) {
@@ -124,26 +120,13 @@ public class CharacterService {
         moduleResearchRepository.save(techLevel1);
     }
 
-    // 접속 시 collectDateTime 12h 캡 적용 + lastOnlineAt 갱신
-    // collectDateTime이 12h 초과면 now-12h로 고정 → ZoneCollect 시 최대 12h치만 수령
+    // 접속 시 lastOnlineAt 갱신 — collectDateTime은 ZoneService에서 캡 적용
     @Transactional
-    public void applyOfflineCapAndUpdateLastOnline(Long characterId) {
+    public void updateLastOnline(Long characterId) {
         Character character = characterRepository.findByIdForUpdate(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.GET_CHARACTER_INFO_DTO_FAIL_CHARACTER_NOT_FOUND));
 
-        Instant now = Instant.now();
-        Instant collectDt = character.getCollectDateTime();
-        boolean hasClearedZone = !clearedZoneRepository.findZoneNamesByCharacterId(characterId).isEmpty();
-
-        // 클리어된 존이 있고 collectDateTime이 12h 초과면 now-12h로 고정
-        if (collectDt != null && hasClearedZone == true) {
-            long sinceCollect = ChronoUnit.SECONDS.between(collectDt, now);
-            if (sinceCollect > MAX_OFFLINE_SECONDS) {
-                character.setCollectDateTime(now.minusSeconds(MAX_OFFLINE_SECONDS));
-            }
-        }
-
-        character.setLastOnlineAt(now);
+        character.setLastOnlineAt(Instant.now());
         characterRepository.save(character);
     }
 

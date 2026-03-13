@@ -70,57 +70,5 @@
   "pvpListRefreshCount": 5,
   "pvpRankScoreInit": 1000,
   "pvpRankScorePenalty": 1,
-  "moduleUnlockPrice": 5000,
-  "moduleChangeCosts": [
-    {
-      "moduleSubType": 1010201,
-      "cost": {
-        "techLevel": 0,
-        "mineral": 0,
-        "mineralRare": 5000,
-        "mineralExotic": 0,
-        "mineralDark": 0
-      }
-    },
-    {
-      "moduleSubType": 2010201,
-      "cost": {
-        "techLevel": 0,
-        "mineral": 0,
-        "mineralRare": 5000,
-        "mineralExotic": 0,
-        "mineralDark": 0
-      }
-    },
-    {
-      "moduleSubType": 3010201,
-      "cost": {
-        "techLevel": 0,
-        "mineral": 0,
-        "mineralRare": 5000,
-        "mineralExotic": 0,
-        "mineralDark": 0
-      }
-    },
-    {
-      "moduleSubType": 4010201,
-      "cost": {
-        "techLevel": 0,
-        "mineral": 0,
-        "mineralRare": 5000,
-        "mineralExotic": 0,
-        "mineralDark": 0
-      }
-    },
-    {
-      "moduleSubType": 5010201,
-      "cost": {
-        "techLevel": 0,
-        "mineral": 0,
-        "mineralRare": 5000,
-        "mineralExotic": 0,
-        "mineralDark": 0
-      }
-    }
-  ]
+  "moduleUnlockPrice": 5000
 }
