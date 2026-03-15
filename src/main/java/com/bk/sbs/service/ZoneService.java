@@ -146,6 +146,7 @@ public class ZoneService {
         }
 
         long offlineCap = calcOfflineCapSeconds(characterId);
+        long creditedSeconds = Math.min(elapsedSeconds, offlineCap);
         long[] rewards = collectZoneResources(character, clearedZoneNames, now, false, offlineCap);
 
         character.setCollectDateTime(now);
@@ -153,6 +154,7 @@ public class ZoneService {
 
         return ZoneCollectResponse.builder()
                 .collectDateTime(now.toString())
+                .elapsedSeconds(creditedSeconds)
                 .rewardInfo(buildRewardInfo(character, rewards))
                 .build();
     }

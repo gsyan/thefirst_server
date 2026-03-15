@@ -15,5 +15,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ZoneCollectResponse {
     private String collectDateTime;
+    private Long elapsedSeconds;
     private CostRemainInfoDto rewardInfo;
 }
