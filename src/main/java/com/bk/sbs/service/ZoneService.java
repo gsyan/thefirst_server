@@ -134,6 +134,7 @@ public class ZoneService {
         if (elapsedSeconds <= 0) {
             return ZoneCollectResponse.builder()
                     .collectDateTime(lastCollectTime.toString())
+                    .onlineSeconds(0L).offlineSeconds(0L).offlineCapSeconds(0L)
                     .rewardInfo(CostRemainInfoDto.builder()
                             .mineralCost(0L).mineralRareCost(0L)
                             .mineralExoticCost(0L).mineralDarkCost(0L)
@@ -146,16 +147,34 @@ public class ZoneService {
         }
 
         long offlineCap = calcOfflineCapSeconds(characterId);
-        long[] rewards = collectZoneResources(character, clearedZoneNames, now, false, offlineCap);
-        long creditedSeconds = calcCreditedSeconds(character.getCollectDateTime(), character.getLastOnlineAt(), now, offlineCap);
+        long[] timeSplit = calcTimeSplitArr(character.getCollectDateTime(), character.getLastOnlineAt(), now, offlineCap);
+        long onlineSec = timeSplit[0];
+        long offlineSec = timeSplit[1];
+
+        long[][] splitRewards = collectZoneResourcesSplit(character, clearedZoneNames, onlineSec, offlineSec);
+        long[] onlineRewards  = splitRewards[0];
+        long[] offlineRewards = splitRewards[1];
+        long[] totalRewards   = {
+            onlineRewards[0] + offlineRewards[0], onlineRewards[1] + offlineRewards[1],
+            onlineRewards[2] + offlineRewards[2], onlineRewards[3] + offlineRewards[3]
+        };
 
         character.setCollectDateTime(now);
         characterRepository.save(character);
 
+        CostRemainInfoDto onlineRewardInfo = CostRemainInfoDto.builder()
+                .mineralCost(-onlineRewards[0]).mineralRareCost(-onlineRewards[1])
+                .mineralExoticCost(-onlineRewards[2]).mineralDarkCost(-onlineRewards[3])
+                .remainMineral(0L).remainMineralRare(0L).remainMineralExotic(0L).remainMineralDark(0L)
+                .build();
+
         return ZoneCollectResponse.builder()
                 .collectDateTime(now.toString())
-                .elapsedSeconds(creditedSeconds)
-                .rewardInfo(buildRewardInfo(character, rewards))
+                .onlineSeconds(onlineSec)
+                .offlineSeconds(offlineSec)
+                .offlineCapSeconds(offlineCap)
+                .onlineRewardInfo(onlineRewardInfo)
+                .rewardInfo(buildRewardInfo(character, totalRewards))
                 .build();
     }
 
@@ -229,6 +248,90 @@ public class ZoneService {
         }
 
         return rewards;
+    }
+
+    // 온라인/오프라인 시간을 분리하여 반환: [0]=onlineSeconds, [1]=offlineSeconds
+    private long[] calcTimeSplitArr(Instant collectDateTime, Instant lastOnlineAt, Instant now, long offlineCap) {
+        if (collectDateTime == null) return new long[]{0L, 0L};
+        final long GRACE_SECONDS = 60L;
+
+        if (lastOnlineAt == null) {
+            long total = Math.max(0L, ChronoUnit.SECONDS.between(collectDateTime, now));
+            return new long[]{0L, Math.min(total, offlineCap)};
+        }
+
+        long nMinusL = ChronoUnit.SECONDS.between(lastOnlineAt, now);
+        if (nMinusL <= GRACE_SECONDS) {
+            // 현재 온라인 중 → 전 구간 온라인, 캡 없음
+            long total = Math.max(0L, ChronoUnit.SECONDS.between(collectDateTime, now));
+            return new long[]{total, 0L};
+        }
+
+        long onlineSec  = Math.max(0L, ChronoUnit.SECONDS.between(collectDateTime, lastOnlineAt));
+        long offlineSec = Math.min(nMinusL, offlineCap);
+        return new long[]{onlineSec, offlineSec};
+    }
+
+    // 온라인/오프라인 보상을 분리 계산: [0]=onlineRewards[4], [1]=offlineRewards[4]
+    // 분수(fraction)를 온라인→오프라인 순서로 연속 적용하여 정확도 보장
+    private long[][] collectZoneResourcesSplit(Character character, List<String> clearedZoneNames,
+                                               long onlineSeconds, long offlineSeconds) {
+        long[] onlineRewards  = {0L, 0L, 0L, 0L};
+        long[] offlineRewards = {0L, 0L, 0L, 0L};
+
+        if (clearedZoneNames.isEmpty() || character.getCollectDateTime() == null
+                || onlineSeconds + offlineSeconds <= 0) {
+            resetFractions(character);
+            return new long[][]{onlineRewards, offlineRewards};
+        }
+
+        List<ZoneConfigData> clearedZones = gameDataService.getZoneConfigsByNames(clearedZoneNames);
+        if (clearedZones.isEmpty()) {
+            resetFractions(character);
+            return new long[][]{onlineRewards, offlineRewards};
+        }
+
+        double totalM = 0, totalMR = 0, totalME = 0, totalMD = 0;
+        for (ZoneConfigData z : clearedZones) {
+            totalM  += z.getMineralPerHour();
+            totalMR += z.getMineralRarePerHour();
+            totalME += z.getMineralExoticPerHour();
+            totalMD += z.getMineralDarkPerHour();
+        }
+
+        // 온라인 구간: 기존 fraction + 온라인 시간 적립
+        double omT  = character.getMineralFraction()       + (totalM  / 3600.0 * onlineSeconds);
+        double omrT = character.getMineralRareFraction()   + (totalMR / 3600.0 * onlineSeconds);
+        double omeT = character.getMineralExoticFraction() + (totalME / 3600.0 * onlineSeconds);
+        double omdT = character.getMineralDarkFraction()   + (totalMD / 3600.0 * onlineSeconds);
+
+        onlineRewards[0] = (long) omT;
+        onlineRewards[1] = (long) omrT;
+        onlineRewards[2] = (long) omeT;
+        onlineRewards[3] = (long) omdT;
+
+        // 오프라인 구간: 온라인 잔여 fraction + 오프라인 시간 적립
+        double xmT  = (omT  - onlineRewards[0]) + (totalM  / 3600.0 * offlineSeconds);
+        double xmrT = (omrT - onlineRewards[1]) + (totalMR / 3600.0 * offlineSeconds);
+        double xmeT = (omeT - onlineRewards[2]) + (totalME / 3600.0 * offlineSeconds);
+        double xmdT = (omdT - onlineRewards[3]) + (totalMD / 3600.0 * offlineSeconds);
+
+        offlineRewards[0] = (long) xmT;
+        offlineRewards[1] = (long) xmrT;
+        offlineRewards[2] = (long) xmeT;
+        offlineRewards[3] = (long) xmdT;
+
+        character.setMineral(character.getMineral()           + onlineRewards[0] + offlineRewards[0]);
+        character.setMineralRare(character.getMineralRare()   + onlineRewards[1] + offlineRewards[1]);
+        character.setMineralExotic(character.getMineralExotic()+ onlineRewards[2] + offlineRewards[2]);
+        character.setMineralDark(character.getMineralDark()   + onlineRewards[3] + offlineRewards[3]);
+
+        character.setMineralFraction(xmT  - offlineRewards[0]);
+        character.setMineralRareFraction(xmrT - offlineRewards[1]);
+        character.setMineralExoticFraction(xmeT - offlineRewards[2]);
+        character.setMineralDarkFraction(xmdT - offlineRewards[3]);
+
+        return new long[][]{onlineRewards, offlineRewards};
     }
 
     // 온라인/오프라인 구간 분리 적립 시간 계산

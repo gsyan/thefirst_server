@@ -1,10 +1,9 @@
 // 서버 시작 시 테스트용 더미 데이터 자동 생성 (JdbcTemplate 배치 INSERT)
-// test.data.enabled / test.data.pvp.enabled / test.data.zone.enabled 로 개별 제어
+// test.data.count 로 생성 수 제어, pvp/zone base/deviation 으로 점수·존 분포 설정
 package com.bk.sbs.util;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
@@ -19,16 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@ConditionalOnProperty(name = "test.data.enabled", havingValue = "true")
 @Slf4j
 public class TestDataInitializer {
 
-    private static final int TEST_COUNT    = 100;
-    private static final int BATCH_SIZE    = 500;
-
-    // PVP 점수 범위
-    private static final int SCORE_MAX     = 2000;
-    private static final int SCORE_MIN     = 500;
+    private static final int BATCH_SIZE = 500;
 
     // Zone 목록 (1-1 ~ 9-10, 총 90개)
     private static final String[] ZONE_LIST = buildZoneList();
@@ -42,11 +35,31 @@ public class TestDataInitializer {
         return zones;
     }
 
+    // 생성할 테스트 계정 수 (0 = 생성 안 함)
+    @Value("${test.data.count:0}")
+    private int requestedCount;
+
     @Value("${test.data.pvp.enabled:false}")
     private boolean pvpEnabled;
 
+    // PVP 점수 중간값 (i=0 에 배정되는 점수)
+    @Value("${test.data.pvp.base-score:1000}")
+    private int pvpBaseScore;
+
+    // PVP 점수 간격: base, base-dev, base+dev, base-2*dev, base+2*dev ...
+    @Value("${test.data.pvp.deviation:100}")
+    private int pvpDeviation;
+
     @Value("${test.data.zone.enabled:false}")
     private boolean zoneEnabled;
+
+    // Zone 기준값 (예: "5-5"), i=0 에 배정
+    @Value("${test.data.zone.base:5-5}")
+    private String zoneBase;
+
+    // Zone 인덱스 간격
+    @Value("${test.data.zone.deviation:5}")
+    private int zoneDeviation;
 
     private final JdbcTemplate jdbc;
     private final PasswordEncoder passwordEncoder;
@@ -60,16 +73,44 @@ public class TestDataInitializer {
     @Order(1)
     @Transactional
     public void initTestData() {
-        List<Long> charIds = ensureBaseData();
+        if (requestedCount <= 0) return;
+
+        int effectiveCount = clampCount(requestedCount);
+        if (effectiveCount != requestedCount)
+            log.warn("TestDataInitializer: count={} 요청 → 설정 범위 초과로 {}로 자동 조정 (pvpEnabled={}, pvpBase={}, pvpDev={}, zoneBase={}, zoneDev={})",
+                    requestedCount, effectiveCount, pvpEnabled, pvpBaseScore, pvpDeviation, zoneBase, zoneDeviation);
+
+        List<Long> charIds = ensureBaseData(effectiveCount);
         if (charIds.isEmpty()) return;
 
         if (pvpEnabled)  ensurePvpData(charIds);
         if (zoneEnabled) ensureZoneData(charIds);
     }
 
+    /**
+     * 요청 count를 pvp/zone 분포 설정 한계로 클램프
+     * pvp: base - k*dev >= 0 → maxK = base / dev → max = 2*maxK + 1
+     * zone: 기준 인덱스 양쪽 여유 기준 동일 계산
+     */
+    private int clampCount(int requested) {
+        int max = Integer.MAX_VALUE;
+        if (pvpEnabled && pvpDeviation > 0) {
+            int maxK   = pvpBaseScore / pvpDeviation;
+            int maxPvp = 2 * maxK + 1;
+            max = Math.min(max, maxPvp);
+        }
+        if (zoneEnabled && zoneDeviation > 0) {
+            int baseIdx = parseZoneIndex(zoneBase);
+            int maxK    = Math.min(baseIdx / zoneDeviation, (ZONE_LIST.length - 1 - baseIdx) / zoneDeviation);
+            int maxZone = 2 * maxK + 1;
+            max = Math.min(max, maxZone);
+        }
+        return max == Integer.MAX_VALUE ? requested : Math.min(requested, max);
+    }
+
     // ── 기본 데이터 (account / character / fleet / ship / module_research) ──────
 
-    private List<Long> ensureBaseData() {
+    private List<Long> ensureBaseData(int count) {
         Integer exists = jdbc.queryForObject(
                 "SELECT COUNT(*) FROM account WHERE email = ?", Integer.class, buildEmail(1));
         if (exists != null && exists > 0) {
@@ -87,13 +128,13 @@ public class TestDataInitializer {
                 "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_NAME = 'account' AND TABLE_SCHEMA = DATABASE()",
                 Long.class);
         log.info("TestDataInitializer: 기본 더미 데이터 {}개 생성 시작 — account AUTO_INCREMENT={}, character AUTO_INCREMENT={}",
-                TEST_COUNT, accAutoInc, charAutoInc);
+                count, accAutoInc, charAutoInc);
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
         String encodedPw = passwordEncoder.encode("testpassword1");
 
         // 1. Account
-        List<Object[]> accountRows = new ArrayList<>(TEST_COUNT);
-        for (int i = 1; i <= TEST_COUNT; i++)
+        List<Object[]> accountRows = new ArrayList<>(count);
+        for (int i = 1; i <= count; i++)
             accountRows.add(new Object[]{buildEmail(i), encodedPw, false, now});
         jdbc.batchUpdate(
                 "INSERT INTO account (email, password, deleted, date_time) VALUES (?, ?, ?, ?)",
@@ -110,14 +151,14 @@ public class TestDataInitializer {
                 Long.class);
 
         // 3. Character
-        List<Object[]> charRows = new ArrayList<>(TEST_COUNT);
-        for (int i = 0; i < TEST_COUNT; i++)
+        List<Object[]> charRows = new ArrayList<>(count);
+        for (int i = 0; i < count; i++)
             charRows.add(new Object[]{accountIds.get(i), "empty_test" + String.format("%04d", i + 1), 5100L, now});
         jdbc.batchUpdate(
                 "INSERT INTO `character` (account_id, character_name, mineral," +
                 " mineral_rare, mineral_exotic, mineral_dark," +
                 " mineral_fraction, mineral_rare_fraction, mineral_exotic_fraction, mineral_dark_fraction," +
-                " cleared_zone, deleted, date_time) VALUES (?, ?, ?, 0, 0, 0, 0.0, 0.0, 0.0, 0.0, '', false, ?)",
+                " deleted, date_time) VALUES (?, ?, ?, 0, 0, 0, 0.0, 0.0, 0.0, 0.0, false, ?)",
                 charRows, BATCH_SIZE, (ps, row) -> {
                     ps.setLong(1,  (Long)      row[0]);
                     ps.setString(2, (String)   row[1]);
@@ -132,7 +173,7 @@ public class TestDataInitializer {
                 Long.class);
 
         // 5. Fleet
-        List<Object[]> fleetRows = new ArrayList<>(TEST_COUNT);
+        List<Object[]> fleetRows = new ArrayList<>(count);
         for (Long charId : charIds)
             fleetRows.add(new Object[]{charId, now});
         jdbc.batchUpdate(
@@ -152,7 +193,7 @@ public class TestDataInitializer {
                 Long.class);
 
         // 7. Ship
-        List<Object[]> shipRows = new ArrayList<>(TEST_COUNT);
+        List<Object[]> shipRows = new ArrayList<>(count);
         for (Long fleetId : fleetIds)
             shipRows.add(new Object[]{fleetId, now});
         jdbc.batchUpdate(
@@ -173,10 +214,10 @@ public class TestDataInitializer {
                 Long.class);
 
         // 9. ShipModule (body + engine)
-        List<Object[]> moduleRows = new ArrayList<>(TEST_COUNT * 2);
+        List<Object[]> moduleRows = new ArrayList<>(count * 2);
         for (Long shipId : shipIds) {
-            moduleRows.add(new Object[]{shipId, "body",   "body_t1_std",   1, now});
-            moduleRows.add(new Object[]{shipId, "engine", "engine_t1_std", 1, now});
+            moduleRows.add(new Object[]{shipId, "body",   "body_t1_std_ver1",   1, now});
+            moduleRows.add(new Object[]{shipId, "engine", "engine_t1_std_ver1", 1, now});
         }
         jdbc.batchUpdate(
                 "INSERT INTO ship_module (ship_id, module_type, module_sub_type, module_level," +
@@ -192,10 +233,10 @@ public class TestDataInitializer {
 
         // 10. ModuleResearch
         String[][] researches = {
-                {"body", "body_t1_std"}, {"engine", "engine_t1_std"},
-                {"beam", "beam_t1_std"}, {"missile", "missile_t1_std"}, {"hanger", "hanger_t1_std"},
+                {"body", "body_t1_std_ver1"}, {"engine", "engine_t1_std_ver1"},
+                {"beam", "beam_t1_std_ver1"}, {"missile", "missile_t1_std_ver1"}, {"hanger", "hanger_t1_std_ver1"},
         };
-        List<Object[]> researchRows = new ArrayList<>(TEST_COUNT * researches.length);
+        List<Object[]> researchRows = new ArrayList<>(count * researches.length);
         for (Long charId : charIds)
             for (String[] r : researches)
                 researchRows.add(new Object[]{charId, r[0], r[1], now});
@@ -211,7 +252,7 @@ public class TestDataInitializer {
                 });
 
         log.info("TestDataInitializer: 기본 더미 데이터 {}개 생성 완료 — accountId {}~{}, characterId {}~{}",
-                TEST_COUNT,
+                count,
                 accountIds.get(0), accountIds.get(accountIds.size() - 1),
                 charIds.get(0), charIds.get(charIds.size() - 1));
         return charIds;
@@ -232,7 +273,7 @@ public class TestDataInitializer {
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
         List<Object[]> pvpRows = new ArrayList<>(total);
         for (int i = 0; i < total; i++)
-            pvpRows.add(new Object[]{charIds.get(i), calcPvpScore(i, total), now});
+            pvpRows.add(new Object[]{charIds.get(i), calcPvpScore(i), now});
         jdbc.batchUpdate(
                 "INSERT INTO pvp_record (character_id, score, wins, losses, last_updated)" +
                 " VALUES (?, ?, 0, 0, ?)",
@@ -241,46 +282,61 @@ public class TestDataInitializer {
                     ps.setInt(2,   (int)        row[1]);
                     ps.setTimestamp(3, (Timestamp) row[2]);
                 });
-        log.info("TestDataInitializer: PVP 더미 데이터 {}개 생성 완료 (점수 {}~{})",
-                total, SCORE_MAX, SCORE_MIN);
+        log.info("TestDataInitializer: PVP 더미 데이터 {}개 생성 완료 (base={}, dev={})", total, pvpBaseScore, pvpDeviation);
     }
 
     // ── Zone 클리어 데이터 ─────────────────────────────────────────────────────
 
     private void ensureZoneData(List<Long> charIds) {
-        String firstZone = jdbc.queryForObject(
-                "SELECT cleared_zone FROM `character` WHERE id = ?",
-                String.class, charIds.get(0));
-        if (firstZone != null && firstZone.isEmpty() == false) {
+        Integer exists = jdbc.queryForObject(
+                "SELECT COUNT(*) FROM cleared_zone WHERE character_id = ?",
+                Integer.class, charIds.get(0));
+        if (exists != null && exists > 0) {
             log.info("TestDataInitializer: Zone 더미 데이터 이미 존재, 스킵");
             return;
         }
 
         int total = charIds.size();
+        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
         List<Object[]> zoneRows = new ArrayList<>(total);
         for (int i = 0; i < total; i++)
-            zoneRows.add(new Object[]{calcZoneName(i, total), charIds.get(i)});
+            zoneRows.add(new Object[]{charIds.get(i), calcZoneName(i), now});
         jdbc.batchUpdate(
-                "UPDATE `character` SET cleared_zone = ? WHERE id = ?",
+                "INSERT INTO cleared_zone (character_id, zone_name, cleared_at) VALUES (?, ?, ?)",
                 zoneRows, BATCH_SIZE, (ps, row) -> {
-                    ps.setString(1, (String) row[0]);
-                    ps.setLong(2,   (Long)   row[1]);
+                    ps.setLong(1,   (Long)      row[0]);
+                    ps.setString(2, (String)    row[1]);
+                    ps.setTimestamp(3, (Timestamp) row[2]);
                 });
-        log.info("TestDataInitializer: Zone 더미 데이터 {}개 생성 완료 ({}~{})",
-                total, calcZoneName(0, total), calcZoneName(total - 1, total));
+        log.info("TestDataInitializer: Zone 더미 데이터 {}개 생성 완료 (base={}, dev={})", total, zoneBase, zoneDeviation);
     }
 
     // ── 계산 헬퍼 ──────────────────────────────────────────────────────────────
 
-    // i=0 → 2000점, i=total-1 → 500점 (균등 분포)
-    private int calcPvpScore(int i, int total) {
-        return (int) Math.round(SCORE_MAX - (double)(SCORE_MAX - SCORE_MIN) * i / (total - 1));
+    // i=0 → base, i=1 → base-dev, i=2 → base+dev, i=3 → base-2*dev, i=4 → base+2*dev ...
+    private int calcPvpScore(int i) {
+        if (i == 0) return pvpBaseScore;
+        int half = (i + 1) / 2;
+        int sign = (i % 2 == 1) ? -1 : 1;
+        return pvpBaseScore + sign * half * pvpDeviation;
     }
 
-    // i=0 → "9-10"(최고), i=total-1 → "1-1"(최저) (유효 존 목록 기준 균등 분포)
-    private String calcZoneName(int i, int total) {
-        int zoneIndex = (int) Math.round((double)(ZONE_LIST.length - 1) * (total - 1 - i) / (total - 1));
-        return ZONE_LIST[zoneIndex];
+    // i=0 → base zone, 이후 동일 패턴으로 인덱스 이동
+    private String calcZoneName(int i) {
+        int baseIdx = parseZoneIndex(zoneBase);
+        if (i == 0) return ZONE_LIST[baseIdx];
+        int half = (i + 1) / 2;
+        int sign = (i % 2 == 1) ? -1 : 1;
+        int idx  = Math.max(0, Math.min(ZONE_LIST.length - 1, baseIdx + sign * half * zoneDeviation));
+        return ZONE_LIST[idx];
+    }
+
+    // "챕터-스테이지" → ZONE_LIST 인덱스
+    private int parseZoneIndex(String zone) {
+        String[] parts = zone.split("-");
+        int ch = Integer.parseInt(parts[0]);
+        int st = Integer.parseInt(parts[1]);
+        return (ch - 1) * 10 + (st - 1);
     }
 
     private String buildEmail(int seq) { return "guest_test" + String.format("%04d", seq); }
