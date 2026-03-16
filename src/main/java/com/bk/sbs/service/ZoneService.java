@@ -146,8 +146,8 @@ public class ZoneService {
         }
 
         long offlineCap = calcOfflineCapSeconds(characterId);
-        long creditedSeconds = Math.min(elapsedSeconds, offlineCap);
         long[] rewards = collectZoneResources(character, clearedZoneNames, now, false, offlineCap);
+        long creditedSeconds = calcCreditedSeconds(character.getCollectDateTime(), character.getLastOnlineAt(), now, offlineCap);
 
         character.setCollectDateTime(now);
         characterRepository.save(character);
@@ -184,9 +184,7 @@ public class ZoneService {
             return rewards;
         }
 
-        long elapsedSeconds = Math.min(
-                ChronoUnit.SECONDS.between(character.getCollectDateTime(), now),
-                maxOfflineSeconds);
+        long elapsedSeconds = calcCreditedSeconds(character.getCollectDateTime(), character.getLastOnlineAt(), now, maxOfflineSeconds);
         if (elapsedSeconds <= 0) {
             if (resetFraction) resetFractions(character);
             return rewards;
@@ -231,6 +229,30 @@ public class ZoneService {
         }
 
         return rewards;
+    }
+
+    // 온라인/오프라인 구간 분리 적립 시간 계산
+    // C→L: 온라인 구간(캡 없음), L→N: 오프라인 구간(offlineCap 적용)
+    // N-L ≤ 60s(grace)이면 전 구간 온라인 취급
+    private long calcCreditedSeconds(Instant collectDateTime, Instant lastOnlineAt, Instant now, long offlineCap) {
+        if (collectDateTime == null) return 0L;
+        final long GRACE_SECONDS = 60L;
+
+        if (lastOnlineAt == null) {
+            // lastOnlineAt 없음 → 전 구간 오프라인 취급
+            return Math.min(ChronoUnit.SECONDS.between(collectDateTime, now), offlineCap);
+        }
+
+        long nMinusL = ChronoUnit.SECONDS.between(lastOnlineAt, now);
+        if (nMinusL <= GRACE_SECONDS) {
+            // 현재 온라인 중 → 전 구간 온라인, 캡 없음
+            return Math.max(0L, ChronoUnit.SECONDS.between(collectDateTime, now));
+        }
+
+        // C→L 온라인(캡 없음) + L→N 오프라인(offlineCap)
+        long onlineSeconds = Math.max(0L, ChronoUnit.SECONDS.between(collectDateTime, lastOnlineAt));
+        long offlineSeconds = Math.min(nMinusL, offlineCap);
+        return onlineSeconds + offlineSeconds;
     }
 
     private void resetFractions(Character character) {
