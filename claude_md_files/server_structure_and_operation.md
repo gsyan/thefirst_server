@@ -7,8 +7,6 @@
     ↓
 [JwtAuthenticationFilter]     토큰 검증, SecurityContext 설정
     ↓
-[OnlineActivityInterceptor]   요청 전달 (preHandle 없음)
-    ↓
 [Controller]                  요청 파싱, characterId 추출, Service 호출
     ↓
 [Service]                     비즈니스 로직, @Transactional
@@ -16,8 +14,6 @@
 [Repository]                  DB 접근 (JPA)
     ↓
 응답 전송
-    ↓
-[OnlineActivityInterceptor.afterCompletion()]  lastOnlineAt 갱신 (30s 스로틀)
 ```
 
 ---
@@ -49,71 +45,49 @@ JWT 내 characterId = (worldId << 56) | actualCharacterId
 
 ---
 
-## OnlineActivityInterceptor / Service / WebMvcConfig 세트
+## 오프라인 기간 자원 및 시간 계산
 
-### 역할
-모든 인증된 게임 API 호출 성공 시 `Character.lastOnlineAt`을 갱신.
-자원 수확 시 온라인/오프라인 구간을 구분하는 기준값으로 사용됨.
+### lastOnlineAt 갱신 방식
+`lastOnlineAt`은 **heartbeat API만** 갱신. 다른 API 호출은 갱신하지 않음.
+- `OnlineActivityInterceptor` / `OnlineActivityService` / `WebMvcConfig` 제거됨
+- 이유: pre-game API(`GetAllCharacters`, `SelectCharacter` 등)가 character 토큰으로 호출될 때 `lastOnlineAt`을 오염시켜 오프라인 계산 오류 발생
 
-### 흐름
+**클라이언트 heartbeat 발송 시점:**
+- `InvokeRepeating` 30초 주기 (게임 플레이 중)
+- `OnApplicationPause(true)` 앱 종료/백그라운드 진입 시 즉시 1회 (최종 시각 정확히 기록)
+- 수확 버튼 클릭 시 선발송 후 collect 호출
+
+### 수확 경로 2가지
+
+#### 1. collectZone — 수확 버튼 클릭 (온라인 수확)
+유저가 온라인 중에 버튼을 누르는 것이므로 **전 구간 온라인 처리, offlineCap 없음**.
 ```
-WebMvcConfig
-  → OnlineActivityInterceptor를 /api/** (단, /api/account/** 제외) 에 등록
-
-OnlineActivityInterceptor.afterCompletion()
-  → 응답 상태 2xx 확인
-  → JWT에서 characterId 추출
-  → OnlineActivityService.touch(characterId) 호출
-
-OnlineActivityService.touch()
-  → @Transactional(REQUIRES_NEW)  ← 요청 트랜잭션과 독립
-  → CharacterRepository.updateLastOnlineAtIfStale()
-     UPDATE Character SET lastOnlineAt = :now
-     WHERE id = :id AND (lastOnlineAt IS NULL OR lastOnlineAt < :threshold)
-     -- threshold = now - 30s → 30초 이내면 업데이트 안 함 (스로틀)
+elapsedSeconds = now - collectDateTime
+collectZoneResourcesOnline(character, zones, elapsedSeconds)
+→ rate × elapsedSeconds (캡 없음)
+→ collectDateTime = now
 ```
 
-### REQUIRES_NEW를 쓰는 이유
-`afterCompletion`은 서비스 메서드의 `@Transactional`이 이미 커밋된 후 실행됨.
-기존 트랜잭션이 없으므로 독립적인 새 트랜잭션을 열어야 `@Modifying` 쿼리가 실행 가능.
-
----
-
-## 온라인/오프라인 자원 적립 계산 (calcCreditedSeconds)
-
-### 배경
-- 온라인(포그라운드): 캡 없이 전량 적립
-- 오프라인(백그라운드/종료): offlineCap 적용 (기본 3h, 기술레벨에 따라 최대 7h)
-
-### 변수
-- C = `collectDateTime` (마지막 수확 시각)
-- L = `lastOnlineAt` (마지막 온라인 확인 시각, 하트비트 또는 API 호출로 갱신)
-- N = `now` (현재 시각)
-- grace = 60초 (하트비트 누락 여유시간)
-
-### 계산 로직
+#### 2. collectZoneOnLogin — 로그인 시 자동 수확 (오프라인 보상)
+`selectCharacter` 호출 시 실행. lastOnlineAt 갱신 전에 반드시 호출되어야 정확한 계산 가능.
 ```
-L == null
-  → 전 구간 오프라인 취급: min(N - C, offlineCap)
+C = collectDateTime, L = lastOnlineAt, N = now
 
-N - L ≤ grace(60s)
-  → 현재 온라인 중: N - C (캡 없음)
+L == null → 전 구간 오프라인: min(N - C, offlineCap)
+L != null → C→L: 온라인(캡 없음), L→N: 오프라인(offlineCap 적용)
 
-N - L > grace
-  → C→L 구간: 온라인, 전량 적립 (max(0, L - C))
-  → L→N 구간: 오프라인, min(N - L, offlineCap)
-  → 합산 반환
+totalRewards == 0 → null 반환 (팝업 없음, collectDateTime은 갱신됨)
 ```
 
 ### offlineCap 계산 (calcOfflineCapSeconds)
 ```java
 capHours = 3 + (maxTechLevel / 2)
-// 기술레벨 0/1 → 3h, 2/3 → 4h, 4/5 → 5h, 6/7 → 6h, 8 → 7h
+// 기술레벨 0/1→3h, 2/3→4h, 4/5→5h, 6/7→6h, 8→7h
 ```
 
-### 수확 전 하트비트 선발송 (클라이언트)
-"미네랄 수확" 버튼 클릭 시 하트비트를 먼저 보내고 collect 호출.
-네트워크 불안정으로 하트비트가 누락된 구간을 보정하기 위함.
+### lastOnlineAt 오차 허용 범위
+heartbeat 30초 주기 + OnApplicationPause 실패(네트워크 오류) 시 최대 30초 오차.
+최고 zone 기준 30초 오차 = mineral ~133개 → 게임 밸런스상 허용 범위.
 
 ---
 
@@ -249,19 +223,27 @@ rank:name            Hash   characterId → characterName 매핑
 ## 자원 수확 전체 흐름
 
 ```
-POST /api/zone/collect
+[버튼 수확] POST /api/zone/collect
   → collectZone(characterId)
     → findByIdForUpdate (비관적 락)
-    → calcOfflineCapSeconds (기술레벨 기반)
-    → collectZoneResources
-        → calcCreditedSeconds(C, L, N, offlineCap)
-           온라인 구간(C→L) + 오프라인 구간(L→N, 캡 적용)
+    → elapsedSeconds = now - collectDateTime
+    → collectZoneResourcesOnline(character, zones, elapsedSeconds)
         → 클리어된 존 전체 rate 합산
-        → rate × creditedSeconds → 자원 계산
+        → rate × elapsedSeconds (캡 없음, 전 구간 온라인)
         → fraction 누적 (소수점 손실 방지)
-    → collectDateTime = now
-    → save
-  → response: collectDateTime, elapsedSeconds(실제 적립 시간), rewardInfo
+    → collectDateTime = now / save
+  → response: onlineSeconds, offlineSeconds=0, rewardInfo
+
+[로그인 수확] selectCharacter 내부
+  → collectZoneOnLogin(characterId)  ← lastOnlineAt 갱신 전 호출 필수
+    → findByIdForUpdate (비관적 락)
+    → calcOfflineCapSeconds (기술레벨 기반)
+    → calcTimeSplitArr(C, L, N, offlineCap)
+        → C→L: 온라인 / L→N: 오프라인(offlineCap 적용)
+    → collectZoneResourcesSplit(onlineSec, offlineSec)
+    → totalRewards == 0 → null 반환
+    → collectDateTime = now / save
+  → response: loginCollectResult (null이면 팝업 없음)
 ```
 
 ---

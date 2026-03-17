@@ -13,9 +13,11 @@ import com.bk.sbs.dto.FleetInfoDto;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.security.JwtUtil;
+import com.bk.sbs.dto.ZoneCollectResponse;
 import com.bk.sbs.service.AccountService;
 import com.bk.sbs.service.CharacterService;
 import com.bk.sbs.service.FleetService;
+import com.bk.sbs.service.ZoneService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,12 +31,14 @@ public class CharacterController {
     private final AccountService accountService;
     private final CharacterService characterService;
     private final FleetService fleetService;
+    private final ZoneService zoneService;
     private final JwtUtil jwtUtil;
 
-    public CharacterController(AccountService accountService, CharacterService characterService, FleetService fleetService, JwtUtil jwtUtil) {
+    public CharacterController(AccountService accountService, CharacterService characterService, FleetService fleetService, ZoneService zoneService, JwtUtil jwtUtil) {
         this.accountService = accountService;
         this.characterService = characterService;
         this.fleetService = fleetService;
+        this.zoneService = zoneService;
         this.jwtUtil = jwtUtil;
     }
 
@@ -63,8 +67,8 @@ public class CharacterController {
         String newAccessToken = jwtUtil.createAccessTokenWithCharacter(accountId, characterId);
         String newRefreshToken = jwtUtil.createRefreshTokenWithCharacter(accountId, characterId);
 
-        // 마지막 온라인 시간 갱신
-        characterService.updateLastOnline(actualCharacterId);
+        // 로그인 자동 수확 — lastOnlineAt 갱신 전에 실행해야 오프라인 구간 정상 계산
+        ZoneCollectResponse loginCollectResult = zoneService.collectZoneOnLogin(actualCharacterId);
 
         // 캐릭터의 활성 함대 정보 조회
         FleetInfoDto activeFleet = fleetService.getActiveFleet(actualCharacterId);
@@ -90,6 +94,7 @@ public class CharacterController {
                 .researchedModuleTypes(researchedModuleTypes)
                 .researchedIds(researchedIds)
                 .bGoogleLinked(bGoogleLinked)
+                .loginCollectResult(loginCollectResult)
                 .build();
         return ApiResponse.success(response);
     }

@@ -22,4 +22,5 @@ public class AuthResponse {
     private List<List<Integer>> researchedModuleTypes;
     private List<String> researchedIds;
     private Boolean bGoogleLinked;
+    private ZoneCollectResponse loginCollectResult;
 }
