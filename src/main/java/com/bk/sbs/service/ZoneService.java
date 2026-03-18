@@ -8,7 +8,6 @@ import com.bk.sbs.dto.ZoneCollectRequest;
 import com.bk.sbs.dto.ZoneCollectResponse;
 import com.bk.sbs.dto.ZoneKillRequest;
 import com.bk.sbs.dto.ZoneKillResponse;
-import com.bk.sbs.dto.HeartbeatRequest;
 import com.bk.sbs.dto.HeartbeatResponse;
 import com.bk.sbs.entity.Character;
 import com.bk.sbs.entity.ClearedZone;
@@ -21,6 +20,7 @@ import com.bk.sbs.repository.ClearedZoneRepository;
 import com.bk.sbs.repository.FleetRepository;
 import com.bk.sbs.repository.ModuleResearchRepository;
 import com.bk.sbs.repository.ShipRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +32,9 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class ZoneService {
+
+    @Value("${heartbeat.throttle-seconds:30}")
+    private long heartbeatThrottleSeconds;
 
     private final CharacterRepository characterRepository;
     private final ClearedZoneRepository clearedZoneRepository;
@@ -75,8 +78,9 @@ public class ZoneService {
 
         Instant now = Instant.now();
         List<String> clearedZoneNames = clearedZoneRepository.findZoneNamesByCharacterId(characterId);
+        long offlineCap = calcOfflineCapSeconds(characterId);
         long elapsedSeconds = character.getCollectDateTime() != null
-                ? ChronoUnit.SECONDS.between(character.getCollectDateTime(), now) : 0L;
+                ? Math.min(ChronoUnit.SECONDS.between(character.getCollectDateTime(), now), offlineCap) : 0L;
 
         // 이미 클리어된 존 — 이전 미수집 자원만 수집 후 반환
         if (clearedZoneNames.contains(newZoneName)) {
@@ -91,7 +95,7 @@ public class ZoneService {
                     .build();
         }
 
-        // 신규 클리어 — 이전 미수집 자원 먼저 collect
+        // 신규 클리어 — 이전 미수집 자원 먼저 수집 (캡 적용)
         long[] rewards = collectZoneResourcesOnline(character, clearedZoneNames, elapsedSeconds);
 
         // cleared_zone 테이블에 추가
@@ -126,17 +130,13 @@ public class ZoneService {
 
         Instant lastCollectTime = character.getCollectDateTime();
         Instant now = Instant.now();
+        if (lastCollectTime == null) lastCollectTime = now.minusSeconds(1);
 
-        if (lastCollectTime == null) {
-            lastCollectTime = now.minusSeconds(1);
-        }
-
-        // 온라인 수확: collectDateTime~now 전 구간 온라인, 캡 없음
-        long elapsedSeconds = ChronoUnit.SECONDS.between(lastCollectTime, now);
-        if (elapsedSeconds <= 0) {
+        long offlineCap = calcOfflineCapSeconds(characterId);
+        long cappedSeconds = Math.min(ChronoUnit.SECONDS.between(lastCollectTime, now), offlineCap);
+        if (cappedSeconds <= 0) {
             return ZoneCollectResponse.builder()
                     .collectDateTime(lastCollectTime.toString())
-                    .onlineSeconds(0L).offlineSeconds(0L).offlineCapSeconds(0L)
                     .rewardInfo(CostRemainInfoDto.builder()
                             .mineralCost(0L).mineralRareCost(0L)
                             .mineralExoticCost(0L).mineralDarkCost(0L)
@@ -148,15 +148,12 @@ public class ZoneService {
                     .build();
         }
 
-        long[] rewards = collectZoneResourcesOnline(character, clearedZoneNames, elapsedSeconds);
+        long[] rewards = collectZoneResourcesOnline(character, clearedZoneNames, cappedSeconds);
         character.setCollectDateTime(now);
         characterRepository.save(character);
 
         return ZoneCollectResponse.builder()
                 .collectDateTime(now.toString())
-                .onlineSeconds(elapsedSeconds)
-                .offlineSeconds(0L)
-                .offlineCapSeconds(0L)
                 .rewardInfo(buildRewardInfo(character, rewards))
                 .build();
     }
@@ -209,87 +206,6 @@ public class ZoneService {
     }
 
 
-    // 온라인/오프라인 시간을 분리하여 반환: [0]=onlineSeconds, [1]=offlineSeconds
-    // C→L: 온라인, L→N: 오프라인(offlineCap 적용)
-    private long[] calcTimeSplitArr(Instant collectDateTime, Instant lastOnlineAt, Instant now, long offlineCap) {
-        log.info("[calcTimeSplitArr] collectDateTime={}, lastOnlineAt={}, now={}", collectDateTime, lastOnlineAt, now);
-        if (collectDateTime == null) return new long[]{0L, 0L};
-
-        if (lastOnlineAt == null) {
-            long total = Math.max(0L, ChronoUnit.SECONDS.between(collectDateTime, now));
-            return new long[]{0L, Math.min(total, offlineCap)};
-        }
-
-        long onlineSec  = Math.max(0L, ChronoUnit.SECONDS.between(collectDateTime, lastOnlineAt));
-        long offlineSec = Math.min(ChronoUnit.SECONDS.between(lastOnlineAt, now), offlineCap);
-        log.info("[calcTimeSplitArr] onlineSec={}, offlineSec={}", onlineSec, offlineSec);
-        return new long[]{onlineSec, offlineSec};
-    }
-
-    // 온라인/오프라인 보상을 분리 계산: [0]=onlineRewards[4], [1]=offlineRewards[4]
-    // 분수(fraction)를 온라인→오프라인 순서로 연속 적용하여 정확도 보장
-    private long[][] collectZoneResourcesSplit(Character character, List<String> clearedZoneNames,
-                                               long onlineSeconds, long offlineSeconds) {
-        long[] onlineRewards  = {0L, 0L, 0L, 0L};
-        long[] offlineRewards = {0L, 0L, 0L, 0L};
-
-        if (clearedZoneNames.isEmpty() || character.getCollectDateTime() == null
-                || onlineSeconds + offlineSeconds <= 0) {
-            resetFractions(character);
-            return new long[][]{onlineRewards, offlineRewards};
-        }
-
-        List<ZoneConfigData> clearedZones = gameDataService.getZoneConfigsByNames(clearedZoneNames);
-        if (clearedZones.isEmpty()) {
-            resetFractions(character);
-            return new long[][]{onlineRewards, offlineRewards};
-        }
-
-        double totalM = 0, totalMR = 0, totalME = 0, totalMD = 0;
-        for (ZoneConfigData z : clearedZones) {
-            totalM  += z.getMineralPerHour();
-            totalMR += z.getMineralRarePerHour();
-            totalME += z.getMineralExoticPerHour();
-            totalMD += z.getMineralDarkPerHour();
-        }
-
-        // 온라인 구간: 기존 fraction + 온라인 시간 적립
-        double omT  = character.getMineralFraction()       + (totalM  / 3600.0 * onlineSeconds);
-        double omrT = character.getMineralRareFraction()   + (totalMR / 3600.0 * onlineSeconds);
-        double omeT = character.getMineralExoticFraction() + (totalME / 3600.0 * onlineSeconds);
-        double omdT = character.getMineralDarkFraction()   + (totalMD / 3600.0 * onlineSeconds);
-
-        onlineRewards[0] = (long) omT;
-        onlineRewards[1] = (long) omrT;
-        onlineRewards[2] = (long) omeT;
-        onlineRewards[3] = (long) omdT;
-
-        // 오프라인 구간: 온라인 잔여 fraction + 오프라인 시간 적립
-        double xmT  = (omT  - onlineRewards[0]) + (totalM  / 3600.0 * offlineSeconds);
-        double xmrT = (omrT - onlineRewards[1]) + (totalMR / 3600.0 * offlineSeconds);
-        double xmeT = (omeT - onlineRewards[2]) + (totalME / 3600.0 * offlineSeconds);
-        double xmdT = (omdT - onlineRewards[3]) + (totalMD / 3600.0 * offlineSeconds);
-
-        offlineRewards[0] = (long) xmT;
-        offlineRewards[1] = (long) xmrT;
-        offlineRewards[2] = (long) xmeT;
-        offlineRewards[3] = (long) xmdT;
-
-        character.setMineral(character.getMineral()           + onlineRewards[0] + offlineRewards[0]);
-        character.setMineralRare(character.getMineralRare()   + onlineRewards[1] + offlineRewards[1]);
-        character.setMineralExotic(character.getMineralExotic()+ onlineRewards[2] + offlineRewards[2]);
-        character.setMineralDark(character.getMineralDark()   + onlineRewards[3] + offlineRewards[3]);
-
-        character.setMineralFraction(xmT  - offlineRewards[0]);
-        character.setMineralRareFraction(xmrT - offlineRewards[1]);
-        character.setMineralExoticFraction(xmeT - offlineRewards[2]);
-        character.setMineralDarkFraction(xmdT - offlineRewards[3]);
-
-        return new long[][]{onlineRewards, offlineRewards};
-    }
-
-    // 온라인/오프라인 구간 분리 적립 시간 계산
-
     private void resetFractions(Character character) {
         character.setMineralFraction(0.0);
         character.setMineralRareFraction(0.0);
@@ -337,61 +253,12 @@ public class ZoneService {
         return ZoneKillResponse.builder().rewardInfo(buildRewardInfo(character, rewards)).build();
     }
 
-    // 로그인(selectCharacter) 시 자동 수확 — lastOnlineAt 갱신 전에 호출되어야 정상 오프라인 계산
-    @Transactional
-    public ZoneCollectResponse collectZoneOnLogin(Long characterId) {
-        Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.ZONE_CLEAR_FAIL_CHARACTER_NOT_FOUND));
-
-        List<String> clearedZoneNames = clearedZoneRepository.findZoneNamesByCharacterId(characterId);
-        if (clearedZoneNames.isEmpty() || character.getCollectDateTime() == null)
-            return null;
-
-        Instant now = Instant.now();
-
-        long offlineCap = calcOfflineCapSeconds(characterId);
-        long[] timeSplit = calcTimeSplitArr(character.getCollectDateTime(), character.getLastOnlineAt(), now, offlineCap);
-        long onlineSec  = timeSplit[0];
-        long offlineSec = timeSplit[1];
-
-        long[][] splitRewards = collectZoneResourcesSplit(character, clearedZoneNames, onlineSec, offlineSec);
-        long[] onlineRewards  = splitRewards[0];
-        long[] offlineRewards = splitRewards[1];
-        long[] totalRewards   = {
-            onlineRewards[0] + offlineRewards[0], onlineRewards[1] + offlineRewards[1],
-            onlineRewards[2] + offlineRewards[2], onlineRewards[3] + offlineRewards[3]
-        };
-
-        character.setCollectDateTime(now);
-        characterRepository.save(character);
-
-        // 보상량 0이면 팝업 불필요 (fraction 누적은 저장됨)
-        if (totalRewards[0] == 0 && totalRewards[1] == 0 && totalRewards[2] == 0 && totalRewards[3] == 0)
-            return null;
-
-        CostRemainInfoDto onlineRewardInfo = CostRemainInfoDto.builder()
-                .mineralCost(-onlineRewards[0]).mineralRareCost(-onlineRewards[1])
-                .mineralExoticCost(-onlineRewards[2]).mineralDarkCost(-onlineRewards[3])
-                .remainMineral(0L).remainMineralRare(0L).remainMineralExotic(0L).remainMineralDark(0L)
-                .build();
-
-        return ZoneCollectResponse.builder()
-                .collectDateTime(now.toString())
-                .onlineSeconds(onlineSec)
-                .offlineSeconds(offlineSec)
-                .offlineCapSeconds(offlineCap)
-                .onlineRewardInfo(onlineRewardInfo)
-                .rewardInfo(buildRewardInfo(character, totalRewards))
-                .build();
-    }
-
     @Transactional
     public HeartbeatResponse heartbeat(Long characterId) {
-        Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.HEARTBEAT_FAIL_CHARACTER_NOT_FOUND));
-        character.setLastOnlineAt(Instant.now());
-        characterRepository.save(character);
-        return new HeartbeatResponse();
+        Instant now = Instant.now();
+        // 스로틀: 마지막 갱신이 heartbeatThrottleSeconds 이상 지난 경우에만 업데이트
+        characterRepository.updateLastOnlineAtIfStale(characterId, now, now.minusSeconds(heartbeatThrottleSeconds));
+        return HeartbeatResponse.builder().build();
     }
 
     private long[] calculateKillRewards(String zoneName) {

@@ -2,6 +2,8 @@
 package com.bk.sbs.exception;
 
 import com.bk.sbs.dto.nogenerated.ApiResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice // 명시적으로 호출되지 않았으나, 스프링의 @RestControllerAdvice로 자동 적용됨
 public class GlobalExceptionHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ApiResponse<?>> handleBusinessException(BusinessException ex) {
@@ -22,6 +26,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<?>> handleGeneralException(Exception ex) {
+        log.error("[UNKNOWN_ERROR] {}: {}", ex.getClass().getSimpleName(), ex.getMessage(), ex);
         return new ResponseEntity<>(ApiResponse.error(ServerErrorCode.UNKNOWN_ERROR), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
