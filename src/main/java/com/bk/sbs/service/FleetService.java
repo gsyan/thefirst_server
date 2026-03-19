@@ -946,19 +946,13 @@ public class FleetService {
                 request.getSlotIndex()
         ).orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_MODULE_NOT_FOUND));
 
-        // 3. 현재 모듈이 max level인지 확인
-        int maxLevel = gameDataService.getMaxModuleLevel(currentModuleType, currentModuleSubType);
-        if (currentModule.getModuleLevel() < maxLevel) {
-            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_NOT_MAX_LEVEL);
-        }
-
         // 기술레벨 검증 — 서브타입 인코딩에서 파싱: (value/10000)%100
         int requiredTechTier = (newModuleSubType.getValue() / 10000) % 100;
         if (getCharacterTechLevel(characterId) < requiredTechTier) {
             throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_INSUFFICIENT_TECH_LEVEL);
         }
 
-        // 4. 슬롯 단위 추가 이력 확인 — ShipModuleLevel 레코드 존재 = 이미 추가됨(무료)
+        // 3. 슬롯 단위 추가 이력 확인 — ShipModuleLevel 레코드 존재 = 이미 추가됨(무료)
         Optional<ShipModuleLevel> newModuleLevelRecord = shipModuleLevelRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndModuleSubType(
                 request.getShipId(),
                 request.getBodyIndex(),
@@ -967,6 +961,14 @@ public class FleetService {
                 newModuleSubType
         );
         boolean alreadyAdded = newModuleLevelRecord.isPresent();
+
+        // 4. 신규 잠금해제 시에만 max level 요구 (이미 보유한 서브타입은 레벨 무관하게 교체 가능)
+        if (!alreadyAdded) {
+            int maxLevel = gameDataService.getMaxModuleLevel(currentModuleType, currentModuleSubType);
+            if (currentModule.getModuleLevel() < maxLevel) {
+                throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_CURRENT_MODULE_NOT_MAX_LEVEL);
+            }
+        }
 
         // 5. 최초 추가 시에만 비용 차감 (비관적 락)
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
