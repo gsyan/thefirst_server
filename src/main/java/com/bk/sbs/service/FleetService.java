@@ -974,7 +974,7 @@ public class FleetService {
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_SHIP_NOT_FOUND));
 
-        CostStructDto addCost = gameDataService.getSubTypeAddCost(newModuleSubType);
+        CostStructDto addCost = gameDataService.getModuleResearchCost(newModuleSubType);
         if (!alreadyAdded) {
             if (character.getMineralRare() < addCost.getMineralRare()
                     || character.getMineralExotic() < addCost.getMineralExotic()

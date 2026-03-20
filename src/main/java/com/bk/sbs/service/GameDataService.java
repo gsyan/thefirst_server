@@ -30,9 +30,6 @@ public class GameDataService {
     private ZoneConfig zoneConfig = new ZoneConfig();
     // researchId → 연구 비용 (tech_level_N 등)
     private Map<String, CostStructDto> techLevelResearchCostMap = new HashMap<>();
-    // DataTableResearch.json에서 로드한 adv 모듈 추가 비용 목록 (슬롯 1회)
-    private List<com.bk.sbs.dto.ModuleChangeCostEntryDto> subTypeAddCostList = new java.util.ArrayList<>();
-
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -70,14 +67,6 @@ public class GameDataService {
                     dataTableModule.setResearchDataList(researchDataList);
                     log.info("DataTableResearch.json loaded successfully from resources/data/ and merged into ModuleDataTable");
                 }
-                // subTypeAddCosts: DataTableResearch로 이동한 모듈 교체 비용
-                com.fasterxml.jackson.databind.JsonNode subTypeAddCostsNode = rootNode.get("subTypeAddCosts");
-                if (subTypeAddCostsNode != null) {
-                    subTypeAddCostList = objectMapper.convertValue(subTypeAddCostsNode,
-                        objectMapper.getTypeFactory().constructCollectionType(List.class, com.bk.sbs.dto.ModuleChangeCostEntryDto.class));
-                    log.info("subTypeAddCosts loaded: {} entries", subTypeAddCostList.size());
-                }
-
                 // techLevelDataList: researchId → researchCost 맵으로 로드
                 com.fasterxml.jackson.databind.JsonNode techLevelDataListNode = rootNode.get("techLevelDataList");
                 if (techLevelDataListNode != null) {
@@ -171,18 +160,6 @@ public class GameDataService {
                 .mapToInt(ModuleData::getModuleLevel)
                 .max()
                 .orElse(0);
-    }
-
-    // 새 모듈 subType 추가 비용 반환 (DataTableResearch 기준, 없으면 기본값 MR 5000)
-    public CostStructDto getSubTypeAddCost(EModuleSubType newSubType) {
-        if (subTypeAddCostList == null || subTypeAddCostList.isEmpty()) {
-            return new CostStructDto(0, 0L, 5000L, 0L, 0L);
-        }
-        return subTypeAddCostList.stream()
-                .filter(e -> newSubType.equals(e.getModuleSubType()))
-                .map(com.bk.sbs.dto.ModuleChangeCostEntryDto::getCost)
-                .findFirst()
-                .orElse(new CostStructDto(0, 0L, 5000L, 0L, 0L));
     }
 
     public CostStructDto getModuleResearchCost(EModuleSubType moduleSubType) {

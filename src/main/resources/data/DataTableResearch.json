@@ -1,60 +1,8 @@
 {
-  "subTypeAddCosts": [
-    {
-      "moduleSubType": 1010201,
-      "cost": {
-        "techLevel": 0,
-        "mineral": 0,
-        "mineralRare": 5000,
-        "mineralExotic": 0,
-        "mineralDark": 0
-      }
-    },
-    {
-      "moduleSubType": 2010201,
-      "cost": {
-        "techLevel": 0,
-        "mineral": 0,
-        "mineralRare": 5000,
-        "mineralExotic": 0,
-        "mineralDark": 0
-      }
-    },
-    {
-      "moduleSubType": 3010201,
-      "cost": {
-        "techLevel": 0,
-        "mineral": 0,
-        "mineralRare": 5000,
-        "mineralExotic": 0,
-        "mineralDark": 0
-      }
-    },
-    {
-      "moduleSubType": 4010201,
-      "cost": {
-        "techLevel": 0,
-        "mineral": 0,
-        "mineralRare": 5000,
-        "mineralExotic": 0,
-        "mineralDark": 0
-      }
-    },
-    {
-      "moduleSubType": 5010201,
-      "cost": {
-        "techLevel": 0,
-        "mineral": 0,
-        "mineralRare": 5000,
-        "mineralExotic": 0,
-        "mineralDark": 0
-      }
-    }
-  ],
   "researchDataList": [
     {
-      "moduleType": 1,
-      "moduleSubType": 1010101,
+      "moduleType": "body",
+      "moduleSubType": "body_t1_std_ver1",
       "researchId": "body_t1_std_ver1",
       "prerequisiteIds": [],
       "researchCost": {
@@ -66,8 +14,8 @@
       }
     },
     {
-      "moduleType": 1,
-      "moduleSubType": 1010201,
+      "moduleType": "body",
+      "moduleSubType": "body_t1_adv_ver1",
       "researchId": "body_t1_adv_ver1",
       "prerequisiteIds": [
         "body_t1_std_ver1"
@@ -81,8 +29,8 @@
       }
     },
     {
-      "moduleType": 2,
-      "moduleSubType": 2010101,
+      "moduleType": "engine",
+      "moduleSubType": "engine_t1_std_ver1",
       "researchId": "engine_t1_std_ver1",
       "prerequisiteIds": [],
       "researchCost": {
@@ -94,8 +42,8 @@
       }
     },
     {
-      "moduleType": 2,
-      "moduleSubType": 2010201,
+      "moduleType": "engine",
+      "moduleSubType": "engine_t1_adv_ver1",
       "researchId": "engine_t1_adv_ver1",
       "prerequisiteIds": [
         "engine_t1_std_ver1"
@@ -109,8 +57,8 @@
       }
     },
     {
-      "moduleType": 3,
-      "moduleSubType": 3010101,
+      "moduleType": "beam",
+      "moduleSubType": "beam_t1_std_ver1",
       "researchId": "beam_t1_std_ver1",
       "prerequisiteIds": [],
       "researchCost": {
@@ -122,8 +70,8 @@
       }
     },
     {
-      "moduleType": 3,
-      "moduleSubType": 3010201,
+      "moduleType": "beam",
+      "moduleSubType": "beam_t1_adv_ver1",
       "researchId": "beam_t1_adv_ver1",
       "prerequisiteIds": [
         "beam_t1_std_ver1"
@@ -137,8 +85,8 @@
       }
     },
     {
-      "moduleType": 4,
-      "moduleSubType": 4010101,
+      "moduleType": "missile",
+      "moduleSubType": "missile_t1_std_ver1",
       "researchId": "missile_t1_std_ver1",
       "prerequisiteIds": [],
       "researchCost": {
@@ -150,8 +98,8 @@
       }
     },
     {
-      "moduleType": 4,
-      "moduleSubType": 4010201,
+      "moduleType": "missile",
+      "moduleSubType": "missile_t1_adv_ver1",
       "researchId": "missile_t1_adv_ver1",
       "prerequisiteIds": [
         "missile_t1_std_ver1"
@@ -165,8 +113,8 @@
       }
     },
     {
-      "moduleType": 5,
-      "moduleSubType": 5010101,
+      "moduleType": "hanger",
+      "moduleSubType": "hanger_t1_std_ver1",
       "researchId": "hanger_t1_std_ver1",
       "prerequisiteIds": [],
       "researchCost": {
@@ -178,8 +126,8 @@
       }
     },
     {
-      "moduleType": 5,
-      "moduleSubType": 5010201,
+      "moduleType": "hanger",
+      "moduleSubType": "hanger_t1_adv_ver1",
       "researchId": "hanger_t1_adv_ver1",
       "prerequisiteIds": [
         "hanger_t1_std_ver1"
