@@ -174,6 +174,9 @@ public class CharacterService {
         character.setNameChangeCount(character.getNameChangeCount() - 1);
         characterRepository.save(character);
 
+        // Redis rank:name 해시 동기화 (랭킹 보드에서 이름이 즉시 반영되도록)
+        redisTemplate.opsForHash().put("rank:name", characterId.toString(), request.getNewName());
+
         return CharacterRenameResponse.builder()
                 .characterName(character.getCharacterName())
                 .nameChangeCount(character.getNameChangeCount())

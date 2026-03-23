@@ -33,15 +33,15 @@ public class ModuleData {
 
     private Float health;
 
-    private Float repairPower;
+    private Float repair;
 
     private Float speed;
 
     private Integer attackFireCount;
 
-    private Float attackPower;
+    private Float attack;
 
-    private Float attackCoolTime;
+    private Float attackCool;
 
     private Float projectileWidth;
 
@@ -49,23 +49,23 @@ public class ModuleData {
 
     private Integer airCount;
 
-    private Float maintenanceTime;
+    private Float airMaintenanceTime;
 
-    private Float aircraftLaunchStraightDistance;
+    private Float airLaunchDist;
 
-    private Float aircraftHealth;
+    private Float airHealth;
 
-    private Float aircraftAttackPower;
+    private Float airAttack;
 
-    private Float aircraftAttackRange;
+    private Float airAttackRange;
 
-    private Float aircraftAttackCooldown;
+    private Float airAttackCool;
 
-    private Float aircraftSpeed;
+    private Float airSpeed;
 
-    private Integer aircraftAmmo;
+    private Integer airAmmo;
 
-    private Float aircraftDetectionRadius;
+    private Float airDetectRadius;
 
-    private Float aircraftAvoidanceRadius;
+    private Float airAvoidRadius;
 }

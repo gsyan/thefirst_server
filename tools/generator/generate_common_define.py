@@ -104,13 +104,26 @@ def generate_java_enum_from_csharp(csharp_file_path, output_dir, package_name):
             java_code += "    public int getValue() {\n"
             java_code += "        return value;\n"
             java_code += "    }\n\n"
-            java_code += "    @JsonCreator\n"
+            # int 기반 코드 호출용 (JsonCreator 없음)
+            first_value_name = values[0][0]
             java_code += f"    public static {enum_name} fromValue(int value) {{\n"
             java_code += f"        for ({enum_name} type : values()) {{\n"
             java_code += "            if (type.value == value) return type;\n"
             java_code += "        }\n"
-            # 첫 번째 값을 기본값으로 반환
-            first_value_name = values[0][0]
+            java_code += f"        return {first_value_name};\n"
+            java_code += "    }\n\n"
+            # JSON 역직렬화용 (string name 또는 int string 처리)
+            java_code += "    @JsonCreator\n"
+            java_code += f"    public static {enum_name} fromJson(String value) {{\n"
+            java_code += f"        for ({enum_name} type : values()) {{\n"
+            java_code += "            if (type.name().equals(value)) return type;\n"
+            java_code += "        }\n"
+            java_code += "        try {\n"
+            java_code += "            int intVal = Integer.parseInt(value);\n"
+            java_code += f"            for ({enum_name} type : values()) {{\n"
+            java_code += "                if (type.value == intVal) return type;\n"
+            java_code += "            }\n"
+            java_code += "        } catch (NumberFormatException e) { /* ignore */ }\n"
             java_code += f"        return {first_value_name};\n"
             java_code += "    }\n"
 

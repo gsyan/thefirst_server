@@ -24,11 +24,24 @@ public enum ESpaceMineralState {
         return value;
     }
 
-    @JsonCreator
     public static ESpaceMineralState fromValue(int value) {
         for (ESpaceMineralState type : values()) {
             if (type.value == value) return type;
         }
+        return None;
+    }
+
+    @JsonCreator
+    public static ESpaceMineralState fromJson(String value) {
+        for (ESpaceMineralState type : values()) {
+            if (type.name().equals(value)) return type;
+        }
+        try {
+            int intVal = Integer.parseInt(value);
+            for (ESpaceMineralState type : values()) {
+                if (type.value == intVal) return type;
+            }
+        } catch (NumberFormatException e) { /* ignore */ }
         return None;
     }
 }

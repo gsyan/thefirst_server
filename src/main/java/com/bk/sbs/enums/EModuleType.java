@@ -22,31 +22,29 @@ public enum EModuleType {
         this.value = value;
     }
 
+    @JsonValue
     public int getValue() {
         return value;
-    }
-
-    @JsonValue
-    public String getName() {
-        return name();
-    }
-
-    @JsonCreator
-    public static EModuleType fromName(String name) {
-        for (EModuleType type : values()) {
-            if (type.name().equals(name)) return type;
-        }
-        // 정수 문자열("3" 등) fallback
-        try {
-            return fromValue(Integer.parseInt(name));
-        } catch (NumberFormatException ignored) {}
-        return none;
     }
 
     public static EModuleType fromValue(int value) {
         for (EModuleType type : values()) {
             if (type.value == value) return type;
         }
+        return none;
+    }
+
+    @JsonCreator
+    public static EModuleType fromJson(String value) {
+        for (EModuleType type : values()) {
+            if (type.name().equals(value)) return type;
+        }
+        try {
+            int intVal = Integer.parseInt(value);
+            for (EModuleType type : values()) {
+                if (type.value == intVal) return type;
+            }
+        } catch (NumberFormatException e) { /* ignore */ }
         return none;
     }
 }
