@@ -2,12 +2,12 @@ package com.bk.sbs.service;
 
 import com.bk.sbs.dto.ZoneConfigData;
 import com.bk.sbs.dto.CostRemainInfoDto;
-import com.bk.sbs.dto.ZoneClearRequest;
-import com.bk.sbs.dto.ZoneClearResponse;
+import com.bk.sbs.dto.DestroyZoneStageWaveRequest;
+import com.bk.sbs.dto.DestroyZoneStageWaveResponse;
+import com.bk.sbs.dto.ExitZoneRequest;
+import com.bk.sbs.dto.ExitZoneResponse;
 import com.bk.sbs.dto.ZoneCollectRequest;
 import com.bk.sbs.dto.ZoneCollectResponse;
-import com.bk.sbs.dto.ZoneKillRequest;
-import com.bk.sbs.dto.ZoneKillResponse;
 import com.bk.sbs.dto.HeartbeatResponse;
 import com.bk.sbs.entity.Character;
 import com.bk.sbs.entity.ClearedZone;
@@ -57,65 +57,101 @@ public class ZoneService {
         this.redisService = redisService;
     }
 
+    /**
+     * 웨이브 1개 처치 보고 — 킬 보상 지급 + 미클리어 스테이지는 카운트 누적 후 클리어 판정
+     *
+     * 케이스1) 이미 클리어된 존: 킬 보상만 지급, isZoneCleared = false
+     * 케이스2) 미클리어 존: Redis waveCount 누적, 충족 시 DB 클리어 저장 + isZoneCleared = true
+     */
     @Transactional
-    public ZoneClearResponse clearZone(Long characterId, ZoneClearRequest request) {
+    public DestroyZoneStageWaveResponse destroyZoneStageWave(Long characterId, DestroyZoneStageWaveRequest request) {
         Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.ZONE_CLEAR_FAIL_CHARACTER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.ZONE_DESTROY_WAVE_FAIL_CHARACTER_NOT_FOUND));
 
-        String newZoneName = request.getZoneName();
+        String zoneName = request.getZoneName();
+        ZoneConfigData zoneConfig = gameDataService.getZoneConfigByName(zoneName);
+        if (zoneConfig == null)
+            throw new BusinessException(ServerErrorCode.ZONE_DESTROY_WAVE_FAIL_ZONE_NOT_FOUND);
 
-        // zone X-Y: 함선 X척 이상 보유 조건 검증
-        int[] zoneParts = parseZoneName(newZoneName);
-        int requiredShips = zoneParts[0];
-        if (requiredShips > 0) {
-            Fleet activeFleet = fleetRepository.findByCharacterIdAndIsActiveTrueAndDeletedFalse(characterId)
-                    .orElse(null);
-            int shipCount = (activeFleet == null) ? 0
-                    : shipRepository.findByFleetIdAndDeletedFalseOrderByPositionIndex(activeFleet.getId()).size();
-            if (shipCount < requiredShips)
-                throw new BusinessException(ServerErrorCode.ZONE_CLEAR_FAIL_INSUFFICIENT_SHIPS);
-        }
+        // 킬 보상 계산 (케이스1, 2 공통)
+        long[] killRewards = calculateKillRewards(zoneConfig);
+        character.setMineral(character.getMineral() + killRewards[0]);
+        character.setMineralRare(character.getMineralRare() + killRewards[1]);
+        character.setMineralExotic(character.getMineralExotic() + killRewards[2]);
+        character.setMineralDark(character.getMineralDark() + killRewards[3]);
 
-        Instant now = Instant.now();
         List<String> clearedZoneNames = clearedZoneRepository.findZoneNamesByCharacterId(characterId);
-        long offlineCap = calcOfflineCapSeconds(characterId);
-        long elapsedSeconds = character.getCollectDateTime() != null
-                ? Math.min(ChronoUnit.SECONDS.between(character.getCollectDateTime(), now), offlineCap) : 0L;
 
-        // 이미 클리어된 존 — 이전 미수집 자원만 수집 후 반환
-        if (clearedZoneNames.contains(newZoneName)) {
-            long[] rewards = collectZoneResourcesOnline(character, clearedZoneNames, elapsedSeconds);
-            character.setCollectDateTime(now);
+        // 케이스1: 이미 클리어된 존 — 보상만 지급
+        if (clearedZoneNames.contains(zoneName)) {
             characterRepository.save(character);
-
-            return ZoneClearResponse.builder()
-                    .clearedZoneName(newZoneName)
-                    .rewardInfo(buildRewardInfo(character, rewards))
-                    .collectDateTime(now.toString())
+            return DestroyZoneStageWaveResponse.builder()
+                    .rewardInfo(buildRewardInfo(character, killRewards))
+                    .isZoneCleared(false)
                     .build();
         }
 
-        // 신규 클리어 — 이전 미수집 자원 먼저 수집 (캡 적용)
-        long[] rewards = collectZoneResourcesOnline(character, clearedZoneNames, elapsedSeconds);
+        // 케이스2: 미클리어 존 — waveIndex 검증 후 카운트 누적
+        long currentCount = redisService.getZoneWaveCount(characterId, zoneName);
+        if (request.getWaveIndex() != (int) currentCount) {
+            // waveIndex=0이면 앱 재시작으로 간주 → Redis 리셋 후 재진행
+            if (request.getWaveIndex() == 0)
+                redisService.deleteZoneWaveCount(characterId, zoneName);
+            else
+                throw new BusinessException(ServerErrorCode.ZONE_DESTROY_WAVE_FAIL_WAVE_INDEX_MISMATCH);
+        }
 
-        // cleared_zone 테이블에 추가
-        clearedZoneRepository.save(new ClearedZone(characterId, newZoneName));
+        long newCount = redisService.incrementZoneWaveCount(characterId, zoneName);
+
+        // 클리어 조건 미달 — 보상만 지급
+        if (newCount < zoneConfig.getZoneClearCount()) {
+            characterRepository.save(character);
+            return DestroyZoneStageWaveResponse.builder()
+                    .rewardInfo(buildRewardInfo(character, killRewards))
+                    .isZoneCleared(false)
+                    .build();
+        }
+
+        // 클리어 조건 충족 — 이전 미수집 자원 정산 후 클리어 처리
+        Instant now = Instant.now();
+        long offlineCap = calcOfflineCapSeconds(characterId);
+        long elapsedSeconds = character.getCollectDateTime() != null
+                ? Math.min(ChronoUnit.SECONDS.between(character.getCollectDateTime(), now), offlineCap) : 0L;
+        long[] collectRewards = collectZoneResourcesOnline(character, clearedZoneNames, elapsedSeconds);
+
+        clearedZoneRepository.save(new ClearedZone(characterId, zoneName));
         character.setCollectDateTime(now);
         characterRepository.save(character);
+        redisService.deleteZoneWaveCount(characterId, zoneName);
 
-        // Redis 랭킹: 클리어된 존 중 가장 높은 점수 기준
-        clearedZoneNames.add(newZoneName);
+        // Redis 랭킹 갱신
+        clearedZoneNames.add(zoneName);
         long maxScore = clearedZoneNames.stream()
                 .mapToLong(z -> { int[] p = parseZoneName(z); return (long) p[0] * 1000 + p[1]; })
                 .max().orElse(0L);
         redisService.setZoneScore(characterId, maxScore);
         redisService.setRankName(characterId, character.getCharacterName());
 
-        return ZoneClearResponse.builder()
-                .clearedZoneName(newZoneName)
-                .rewardInfo(buildRewardInfo(character, rewards))
+        // 킬 보상 + 수집 보상 합산하여 반환
+        long[] totalRewards = {
+            killRewards[0] + collectRewards[0],
+            killRewards[1] + collectRewards[1],
+            killRewards[2] + collectRewards[2],
+            killRewards[3] + collectRewards[3]
+        };
+
+        return DestroyZoneStageWaveResponse.builder()
+                .rewardInfo(buildRewardInfo(character, totalRewards))
+                .isZoneCleared(true)
+                .clearedZoneName(zoneName)
                 .collectDateTime(now.toString())
                 .build();
+    }
+
+    /** 존 이탈 — 미클리어 스테이지의 웨이브 카운트 초기화 */
+    public ExitZoneResponse exitZone(Long characterId, ExitZoneRequest request) {
+        redisService.deleteZoneWaveCount(characterId, request.getZoneName());
+        return ExitZoneResponse.builder().build();
     }
 
     @Transactional
@@ -158,7 +194,7 @@ public class ZoneService {
                 .build();
     }
 
-    // 기술레벨 기반 오프라인 캡(초) 계산 — 3h + techLevel/2 시간, 구독 시 24h (TODO: 구독 구현 시 반영)
+    // 기술레벨 기반 오프라인 캡(초) 계산 — 3h + techLevel/2 시간
     private long calcOfflineCapSeconds(Long characterId) {
         List<ModuleResearch> techResearches = moduleResearchRepository
                 .findByCharacterIdAndResearchIdStartingWithAndResearchedTrue(characterId, "tech_level_");
@@ -173,7 +209,6 @@ public class ZoneService {
         return capHours * 3600L;
     }
 
-    // 온라인 수확 전용: elapsed seconds 직접 지정, 온/오프 분리 없이 전 구간 적립
     private long[] collectZoneResourcesOnline(Character character, List<String> clearedZoneNames, long elapsedSeconds) {
         long[] rewards = {0L, 0L, 0L, 0L};
         if (clearedZoneNames.isEmpty() || elapsedSeconds <= 0) { resetFractions(character); return rewards; }
@@ -205,7 +240,6 @@ public class ZoneService {
         return rewards;
     }
 
-
     private void resetFractions(Character character) {
         character.setMineralFraction(0.0);
         character.setMineralRareFraction(0.0);
@@ -226,7 +260,15 @@ public class ZoneService {
                 .build();
     }
 
-    // "x-y" 형식 파싱
+    private long[] calculateKillRewards(ZoneConfigData zoneConfig) {
+        return new long[]{
+            zoneConfig.getKillRewardMineral()       != null ? zoneConfig.getKillRewardMineral().longValue()       : 0L,
+            zoneConfig.getKillRewardMineralRare()   != null ? zoneConfig.getKillRewardMineralRare().longValue()   : 0L,
+            zoneConfig.getKillRewardMineralExotic() != null ? zoneConfig.getKillRewardMineralExotic().longValue() : 0L,
+            zoneConfig.getKillRewardMineralDark()   != null ? zoneConfig.getKillRewardMineralDark().longValue()   : 0L
+        };
+    }
+
     private int[] parseZoneName(String zoneName) {
         if (zoneName == null || zoneName.isEmpty()) return new int[]{0, 0};
         String[] parts = zoneName.split("-");
@@ -239,36 +281,9 @@ public class ZoneService {
     }
 
     @Transactional
-    public ZoneKillResponse killZone(Long characterId, ZoneKillRequest request) {
-        Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.ZONE_KILL_FAIL_CHARACTER_NOT_FOUND));
-
-        long[] rewards = calculateKillRewards(request.getZoneName());
-        character.setMineral(character.getMineral() + rewards[0]);
-        character.setMineralRare(character.getMineralRare() + rewards[1]);
-        character.setMineralExotic(character.getMineralExotic() + rewards[2]);
-        character.setMineralDark(character.getMineralDark() + rewards[3]);
-        characterRepository.save(character);
-
-        return ZoneKillResponse.builder().rewardInfo(buildRewardInfo(character, rewards)).build();
-    }
-
-    @Transactional
     public HeartbeatResponse heartbeat(Long characterId) {
         Instant now = Instant.now();
-        // 스로틀: 마지막 갱신이 heartbeatThrottleSeconds 이상 지난 경우에만 업데이트
         characterRepository.updateLastOnlineAtIfStale(characterId, now, now.minusSeconds(heartbeatThrottleSeconds));
         return HeartbeatResponse.builder().build();
-    }
-
-    private long[] calculateKillRewards(String zoneName) {
-        long[] rewards = {0L, 0L, 0L, 0L};
-        ZoneConfigData zoneConfig = gameDataService.getZoneConfigByName(zoneName);
-        if (zoneConfig == null) return rewards;
-        rewards[0] = zoneConfig.getKillRewardMineral()      != null ? zoneConfig.getKillRewardMineral().longValue()      : 0L;
-        rewards[1] = zoneConfig.getKillRewardMineralRare()  != null ? zoneConfig.getKillRewardMineralRare().longValue()  : 0L;
-        rewards[2] = zoneConfig.getKillRewardMineralExotic()!= null ? zoneConfig.getKillRewardMineralExotic().longValue(): 0L;
-        rewards[3] = zoneConfig.getKillRewardMineralDark()  != null ? zoneConfig.getKillRewardMineralDark().longValue()  : 0L;
-        return rewards;
     }
 }

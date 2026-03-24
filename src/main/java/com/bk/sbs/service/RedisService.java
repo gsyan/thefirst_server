@@ -28,6 +28,7 @@ public class RedisService {
     private static final String RANK_NAME_KEY            = "rank:name";
     private static final String RANKING_UPDATED_PVP      = "ranking:pvp:updated";
     private static final String RANKING_UPDATED_ZONE     = "ranking:zone:updated";
+    private static final String ZONE_WAVE_PREFIX         = "zone_wave:"; // zone_wave:{characterId}:{zoneName}
 
     private final StringRedisTemplate redisTemplate;
     private final ObjectMapper objectMapper;
@@ -341,6 +342,30 @@ public class RedisService {
     public Long getZoneSnapshotRank(Long characterId) {
         Long rank = redisTemplate.opsForZSet().reverseRank(ZONE_RANKING_SNAPSHOT_KEY, characterId.toString());
         return rank != null ? rank + 1 : null;
+    }
+
+    // ══════════════════════════════════════════════════════════════════════
+    // Zone 웨이브 카운트 (미클리어 스테이지 진행 추적)
+    // ══════════════════════════════════════════════════════════════════════
+
+    /** 웨이브 카운트 +1, TTL 30분 갱신 후 현재 카운트 반환 */
+    public long incrementZoneWaveCount(Long characterId, String zoneName) {
+        String key = ZONE_WAVE_PREFIX + characterId + ":" + zoneName;
+        Long count = redisTemplate.opsForValue().increment(key);
+        redisTemplate.expire(key, Duration.ofMinutes(30));
+        return count != null ? count : 1L;
+    }
+
+    /** 웨이브 카운트 조회 (없으면 0) */
+    public long getZoneWaveCount(Long characterId, String zoneName) {
+        String key = ZONE_WAVE_PREFIX + characterId + ":" + zoneName;
+        String val = redisTemplate.opsForValue().get(key);
+        return val != null ? Long.parseLong(val) : 0L;
+    }
+
+    /** 웨이브 카운트 삭제 (클리어 완료 또는 포기 시) */
+    public void deleteZoneWaveCount(Long characterId, String zoneName) {
+        redisTemplate.delete(ZONE_WAVE_PREFIX + characterId + ":" + zoneName);
     }
 
     // ── 내부 헬퍼 ──────────────────────────────────────────────────────────

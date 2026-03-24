@@ -1,11 +1,11 @@
 package com.bk.sbs.controller;
 
-import com.bk.sbs.dto.ZoneClearRequest;
-import com.bk.sbs.dto.ZoneClearResponse;
+import com.bk.sbs.dto.DestroyZoneStageWaveRequest;
+import com.bk.sbs.dto.DestroyZoneStageWaveResponse;
+import com.bk.sbs.dto.ExitZoneRequest;
+import com.bk.sbs.dto.ExitZoneResponse;
 import com.bk.sbs.dto.ZoneCollectRequest;
 import com.bk.sbs.dto.ZoneCollectResponse;
-import com.bk.sbs.dto.ZoneKillRequest;
-import com.bk.sbs.dto.ZoneKillResponse;
 import com.bk.sbs.dto.HeartbeatRequest;
 import com.bk.sbs.dto.HeartbeatResponse;
 import com.bk.sbs.dto.nogenerated.ApiResponse;
@@ -30,13 +30,23 @@ public class ZoneController {
         this.jwtUtil = jwtUtil;
     }
 
-    // Zone 클리어
-    @PostMapping("/clear")
-    public ResponseEntity<ApiResponse<ZoneClearResponse>> clearZone(
-            @RequestBody ZoneClearRequest request,
+    // 웨이브 1개 처치 보고 — 킬 보상 + 클리어 판정
+    @PostMapping("/destroy-wave")
+    public ResponseEntity<ApiResponse<DestroyZoneStageWaveResponse>> destroyZoneStageWave(
+            @RequestBody DestroyZoneStageWaveRequest request,
             HttpServletRequest httpRequest) {
         Long actualCharacterId = getCharacterIdFromToken(httpRequest);
-        ZoneClearResponse response = zoneService.clearZone(actualCharacterId, request);
+        DestroyZoneStageWaveResponse response = zoneService.destroyZoneStageWave(actualCharacterId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    // 존 이탈 — 미클리어 스테이지 웨이브 카운트 초기화
+    @PostMapping("/exit")
+    public ResponseEntity<ApiResponse<ExitZoneResponse>> exitZone(
+            @RequestBody ExitZoneRequest request,
+            HttpServletRequest httpRequest) {
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        ExitZoneResponse response = zoneService.exitZone(actualCharacterId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
@@ -47,16 +57,6 @@ public class ZoneController {
             HttpServletRequest httpRequest) {
         Long actualCharacterId = getCharacterIdFromToken(httpRequest);
         ZoneCollectResponse response = zoneService.collectZone(actualCharacterId, request);
-        return ResponseEntity.ok(ApiResponse.success(response));
-    }
-
-    // 적 함선 킬 보상
-    @PostMapping("/kill")
-    public ResponseEntity<ApiResponse<ZoneKillResponse>> killZone(
-            @RequestBody ZoneKillRequest request,
-            HttpServletRequest httpRequest) {
-        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
-        ZoneKillResponse response = zoneService.killZone(actualCharacterId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 

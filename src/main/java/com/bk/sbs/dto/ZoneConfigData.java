@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ZoneConfigData {
     private String zoneName;
+    private Integer zoneClearCount;
     private Float mineralPerHour;
     private Float mineralRarePerHour;
     private Float mineralExoticPerHour;
