@@ -213,11 +213,10 @@ public class TestDataInitializer {
                 " JOIN account a ON a.id = c.account_id WHERE a.email LIKE 'guest\\_test%' ORDER BY s.id",
                 Long.class);
 
-        // 9. ShipModule (body + engine)
-        List<Object[]> moduleRows = new ArrayList<>(count * 2);
+        // 9. ShipModule (body only)
+        List<Object[]> moduleRows = new ArrayList<>(count);
         for (Long shipId : shipIds) {
-            moduleRows.add(new Object[]{shipId, "body",   "body_t1_std_ver1",   1, now});
-            moduleRows.add(new Object[]{shipId, "engine", "engine_t1_std_ver1", 1, now});
+            moduleRows.add(new Object[]{shipId, "body", "body_t1_std_ver1", 1, now});
         }
         jdbc.batchUpdate(
                 "INSERT INTO ship_module (ship_id, module_type, module_sub_type, module_level," +
@@ -233,7 +232,7 @@ public class TestDataInitializer {
 
         // 10. ModuleResearch
         String[][] researches = {
-                {"body", "body_t1_std_ver1"}, {"engine", "engine_t1_std_ver1"},
+                {"body", "body_t1_std_ver1"},
                 {"beam", "beam_t1_std_ver1"}, {"missile", "missile_t1_std_ver1"}, {"hanger", "hanger_t1_std_ver1"},
         };
         List<Object[]> researchRows = new ArrayList<>(count * researches.length);

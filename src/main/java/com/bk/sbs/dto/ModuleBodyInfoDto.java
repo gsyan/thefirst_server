@@ -21,7 +21,6 @@ public class ModuleBodyInfoDto {
     private EModuleSubType moduleSubType;
     private Integer moduleLevel;
     private Integer bodyIndex;
-    private List<ModuleInfoDto> engines;
     private List<ModuleInfoDto> beams;
     private List<ModuleInfoDto> missiles;
     private List<ModuleInfoDto> hangers;

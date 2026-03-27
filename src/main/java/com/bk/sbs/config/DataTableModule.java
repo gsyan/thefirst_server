@@ -15,7 +15,6 @@ import java.util.Map;
 
 public class DataTableModule {
     private volatile List<ModuleData> bodyModules = new ArrayList<>();
-    private volatile List<ModuleData> engineModules = new ArrayList<>();
     private volatile List<ModuleData> beamModules = new ArrayList<>();
     private volatile List<ModuleData> missileModules = new ArrayList<>();
     private volatile List<ModuleData> hangerModules = new ArrayList<>();
@@ -23,39 +22,25 @@ public class DataTableModule {
 
     /**
      * JSON의 "modules" 맵을 파싱하여 각 타입별 리스트에 분배
-     * Key: EModuleType의 ordinal 값 (1=Body, 2=Engine, 3=Beam, 4=Missile, 5=Hanger)
+     * Key: EModuleType의 value 값 문자열
      */
     @JsonProperty("modules")
     public void setModules(Map<String, List<ModuleData>> modules) {
         if (modules == null) return;
 
-        // EModuleType.Body = 1
-        if (modules.containsKey("1")) {
-            this.bodyModules = new ArrayList<>(modules.get("1"));
-        }
-        // EModuleType.Engine = 2
-        if (modules.containsKey("2")) {
-            this.engineModules = new ArrayList<>(modules.get("2"));
-        }
-        // EModuleType.Beam = 3
-        if (modules.containsKey("3")) {
-            this.beamModules = new ArrayList<>(modules.get("3"));
-        }
-        // EModuleType.Missile = 4
-        if (modules.containsKey("4")) {
-            this.missileModules = new ArrayList<>(modules.get("4"));
-        }
-        // EModuleType.Hanger = 5
-        if (modules.containsKey("5")) {
-            this.hangerModules = new ArrayList<>(modules.get("5"));
-        }
+        String bodyKey    = String.valueOf(EModuleType.body.getValue());
+        String beamKey    = String.valueOf(EModuleType.beam.getValue());
+        String missileKey = String.valueOf(EModuleType.missile.getValue());
+        String hangerKey  = String.valueOf(EModuleType.hanger.getValue());
+
+        if (modules.containsKey(bodyKey))    this.bodyModules    = new ArrayList<>(modules.get(bodyKey));
+        if (modules.containsKey(beamKey))    this.beamModules    = new ArrayList<>(modules.get(beamKey));
+        if (modules.containsKey(missileKey)) this.missileModules = new ArrayList<>(modules.get(missileKey));
+        if (modules.containsKey(hangerKey))  this.hangerModules  = new ArrayList<>(modules.get(hangerKey));
     }
 
     public List<ModuleData> getBodyModules() {
         return Collections.unmodifiableList(bodyModules);
-    }
-    public List<ModuleData> getEngineModules() {
-        return Collections.unmodifiableList(engineModules);
     }
     public List<ModuleData> getBeamModules() {
         return Collections.unmodifiableList(beamModules);

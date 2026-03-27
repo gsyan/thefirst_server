@@ -33,7 +33,7 @@ CREATE TABLE ship (
 CREATE TABLE ship_module (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     ship_id BIGINT NOT NULL,
-    module_type INT NOT NULL COMMENT '0: Body, 1: Weapon, 2: Engine',
+    module_type INT NOT NULL COMMENT '1: Body, 2: Beam, 3:Missile, 4:Hanger',
     module_level INT NOT NULL,
     slot_index INT NOT NULL,
     

@@ -35,7 +35,7 @@ public class ShipModule {
     private int bodyIndex; // 어떤 body 모듈에 장착될 것인지 (Body 모듈인 경우 자신의 인덱스)
 
     @Column(nullable = false)
-    private int slotIndex; // 함선 내에서 모듈의 슬롯 위치 (Body는 0, Weapon과 Engine은 여러 개 가능)
+    private int slotIndex; // 함선 내에서 모듈의 슬롯 위치
 
     @Column(nullable = false)
     private boolean deleted = false;

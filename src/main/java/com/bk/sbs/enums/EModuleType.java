@@ -10,11 +10,10 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum EModuleType {
     none(0),
     body(1),
-    engine(2),
-    beam(3),
-    missile(4),
-    hanger(5),
-    max(6);
+    beam(2),
+    missile(3),
+    hanger(4),
+    max(5);
 
     private final int value;
 

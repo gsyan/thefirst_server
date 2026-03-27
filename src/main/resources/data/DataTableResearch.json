@@ -29,34 +29,6 @@
       }
     },
     {
-      "moduleType": "engine",
-      "moduleSubType": "engine_t1_std_ver1",
-      "researchId": "engine_t1_std_ver1",
-      "prerequisiteIds": [],
-      "researchCost": {
-        "techLevel": 0,
-        "mineral": 0,
-        "mineralRare": 0,
-        "mineralExotic": 0,
-        "mineralDark": 0
-      }
-    },
-    {
-      "moduleType": "engine",
-      "moduleSubType": "engine_t1_adv_ver1",
-      "researchId": "engine_t1_adv_ver1",
-      "prerequisiteIds": [
-        "engine_t1_std_ver1"
-      ],
-      "researchCost": {
-        "techLevel": 0,
-        "mineral": 0,
-        "mineralRare": 50000,
-        "mineralExotic": 0,
-        "mineralDark": 0
-      }
-    },
-    {
       "moduleType": "beam",
       "moduleSubType": "beam_t1_std_ver1",
       "researchId": "beam_t1_std_ver1",
