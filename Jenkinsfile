@@ -40,16 +40,20 @@ pipeline {
                         icacls "${SSH_KEY}" /grant:r "NT AUTHORITY\\SYSTEM:(R)"
                         icacls "${SSH_KEY}" /grant:r "BUILTIN\\Administrators:(R)"
 
-                        echo [1/3] DB DROP and CREATE...
+                        echo [1/4] 서버 컨테이너 중지...
+                        ssh -o StrictHostKeyChecking=no -i "${SSH_KEY}" ${SSH_USER}@${DEPLOY_HOST} "cd ${DEPLOY_DIR} && docker compose stop sbs-app && docker compose ps sbs-app"
+
+                        echo [2/4] DB DROP and CREATE...
                         ssh -o StrictHostKeyChecking=no -i "${SSH_KEY}" ${SSH_USER}@${DEPLOY_HOST} "mysql -u ${DB_USER} -p${DB_PASS} -e 'DROP DATABASE IF EXISTS ${DB_NAME}; CREATE DATABASE ${DB_NAME} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;'"
 
-                        echo [2/3] schema.sql 전송...
+                        echo [3/4] schema.sql 전송 및 실행...
                         scp -o StrictHostKeyChecking=no -i "${SSH_KEY}" src\\main\\resources\\sql\\schema.sql ${SSH_USER}@${DEPLOY_HOST}:/tmp/schema.sql
-
-                        echo [3/3] schema.sql 실행...
                         ssh -o StrictHostKeyChecking=no -i "${SSH_KEY}" ${SSH_USER}@${DEPLOY_HOST} "mysql -u ${DB_USER} -p${DB_PASS} ${DB_NAME} < /tmp/schema.sql && rm /tmp/schema.sql"
 
-                        echo DB 재생성 완료!
+                        echo [4/4] Redis FLUSHALL...
+                        ssh -o StrictHostKeyChecking=no -i "${SSH_KEY}" ${SSH_USER}@${DEPLOY_HOST} "redis-cli FLUSHALL"
+
+                        echo DB 재생성 완료! 서버는 중지 상태. SERVER_RUN 으로 재시작 필요.
                     """
                 }
             }
