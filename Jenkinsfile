@@ -51,7 +51,7 @@ pipeline {
                         ssh -o StrictHostKeyChecking=no -i "${SSH_KEY}" ${SSH_USER}@${DEPLOY_HOST} "mysql -u ${DB_USER} -p${DB_PASS} ${DB_NAME} < /tmp/schema.sql && rm /tmp/schema.sql"
 
                         echo [4/4] Redis FLUSHALL...
-                        ssh -o StrictHostKeyChecking=no -i "${SSH_KEY}" ${SSH_USER}@${DEPLOY_HOST} "redis-cli FLUSHALL"
+                        ssh -o StrictHostKeyChecking=no -i "${SSH_KEY}" ${SSH_USER}@${DEPLOY_HOST} "docker exec redis-server redis-cli FLUSHALL"
 
                         echo DB 재생성 완료! 서버는 중지 상태. SERVER_RUN 으로 재시작 필요.
                     """
