@@ -1,0 +1,220 @@
+-- GameDB 전체 스키마
+-- Hibernate 6 + Spring Boot 3 + MariaDB 기준 (SpringPhysicalNamingStrategy 적용)
+-- 사용법: validate 모드 전환 전 또는 DB 초기화 시 수동으로 실행
+
+-- ============================================================
+-- 초기화 (FK 의존성 역순으로 DROP)
+-- ============================================================
+SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS ship_module_level;
+DROP TABLE IF EXISTS ship_module;
+DROP TABLE IF EXISTS ship;
+DROP TABLE IF EXISTS fleet;
+DROP TABLE IF EXISTS cleared_zone;
+DROP TABLE IF EXISTS module_research;
+DROP TABLE IF EXISTS pvp_record;
+DROP TABLE IF EXISTS progress;
+DROP TABLE IF EXISTS `character`;
+DROP TABLE IF EXISTS account;
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- ============================================================
+-- account
+-- ============================================================
+CREATE TABLE account (
+    id          BIGINT          NOT NULL AUTO_INCREMENT,
+    email       VARCHAR(255)    NOT NULL,
+    password    VARCHAR(255)    NOT NULL,
+    google_id   VARCHAR(255)        NULL,
+    deleted     TINYINT(1)      NOT NULL DEFAULT 0,
+    date_time   DATETIME(6)     NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_account_email     (email),
+    UNIQUE KEY uk_account_google_id (google_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- character  (MariaDB 예약어 — 백틱 필수)
+-- ============================================================
+CREATE TABLE `character` (
+    id                      BIGINT          NOT NULL AUTO_INCREMENT,
+    account_id              BIGINT          NOT NULL,
+    character_name          VARCHAR(255)    NOT NULL,
+    last_location           BIGINT              NULL,
+    mineral                 BIGINT          NOT NULL DEFAULT 0,
+    mineral_rare            BIGINT          NOT NULL DEFAULT 0,
+    mineral_exotic          BIGINT          NOT NULL DEFAULT 0,
+    mineral_dark            BIGINT          NOT NULL DEFAULT 0,
+    mineral_fraction        DOUBLE          NOT NULL DEFAULT 0,
+    mineral_rare_fraction   DOUBLE          NOT NULL DEFAULT 0,
+    mineral_exotic_fraction DOUBLE          NOT NULL DEFAULT 0,
+    mineral_dark_fraction   DOUBLE          NOT NULL DEFAULT 0,
+    name_change_count       INT             NOT NULL DEFAULT 2,
+    collect_date_time       DATETIME(6)         NULL,
+    last_online_at          DATETIME(6)         NULL,
+    deleted                 TINYINT(1)      NOT NULL DEFAULT 0,
+    date_time               DATETIME(6)     NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_character_name (character_name),
+    INDEX idx_character_account (account_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- fleet
+-- ============================================================
+CREATE TABLE fleet (
+    id              BIGINT          NOT NULL AUTO_INCREMENT,
+    character_id    BIGINT          NOT NULL,
+    fleet_name      VARCHAR(255)    NOT NULL,
+    description     TEXT                NULL,
+    is_active       TINYINT(1)      NOT NULL DEFAULT 1,
+    deleted         TINYINT(1)      NOT NULL DEFAULT 0,
+    formation       VARCHAR(255)    NOT NULL,
+    created         DATETIME(6)     NOT NULL,
+    modified        DATETIME(6)     NOT NULL,
+    PRIMARY KEY (id),
+    INDEX idx_fleet_character (character_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- ship
+-- ============================================================
+CREATE TABLE ship (
+    id              BIGINT          NOT NULL AUTO_INCREMENT,
+    fleet_id        BIGINT          NOT NULL,
+    ship_name       VARCHAR(255)    NOT NULL,
+    position_index  INT             NOT NULL,
+    description     TEXT                NULL,
+    deleted         TINYINT(1)      NOT NULL DEFAULT 0,
+    created         DATETIME(6)     NOT NULL,
+    modified        DATETIME(6)     NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_ship_fleet FOREIGN KEY (fleet_id) REFERENCES fleet (id),
+    INDEX idx_ship_fleet (fleet_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- ship_module
+-- ============================================================
+CREATE TABLE ship_module (
+    id              BIGINT          NOT NULL AUTO_INCREMENT,
+    ship_id         BIGINT          NOT NULL,
+    module_type     VARCHAR(100)    NOT NULL,
+    module_sub_type VARCHAR(100)    NOT NULL,
+    module_level    INT             NOT NULL,
+    body_index      INT             NOT NULL,
+    slot_index      INT             NOT NULL,
+    deleted         TINYINT(1)      NOT NULL DEFAULT 0,
+    created         DATETIME(6)     NOT NULL,
+    modified        DATETIME(6)     NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_ship_module_ship FOREIGN KEY (ship_id) REFERENCES ship (id),
+    INDEX idx_module_ship (ship_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- ship_module_level
+-- 유니크: ship_id + body_index + module_type + slot_index + module_sub_type
+-- (Entity의 @UniqueConstraint camelCase → Hibernate가 snake_case로 변환 적용)
+-- ============================================================
+CREATE TABLE ship_module_level (
+    id              BIGINT          NOT NULL AUTO_INCREMENT,
+    ship_id         BIGINT          NOT NULL,
+    body_index      INT             NOT NULL,
+    module_type     VARCHAR(100)    NOT NULL,
+    slot_index      INT             NOT NULL,
+    module_sub_type VARCHAR(100)    NOT NULL,
+    level           INT             NOT NULL DEFAULT 1,
+    created         DATETIME(6)     NOT NULL,
+    modified        DATETIME(6)     NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_sml_ship FOREIGN KEY (ship_id) REFERENCES ship (id),
+    UNIQUE KEY uk_sml (ship_id, body_index, module_type, slot_index, module_sub_type)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- progress
+-- 유니크: character_id + category + progress_key
+-- ============================================================
+CREATE TABLE progress (
+    id                      BIGINT          NOT NULL AUTO_INCREMENT,
+    character_id            BIGINT          NOT NULL,
+    category                VARCHAR(50)     NOT NULL,
+    progress_key            VARCHAR(100)    NOT NULL,
+    value                   INT                 NULL,
+    completed_date_time     DATETIME(6)     NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_progress (character_id, category, progress_key),
+    INDEX idx_progress_character (character_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- pvp_record  (Redis 동기화용 백업)
+-- ============================================================
+CREATE TABLE pvp_record (
+    id              BIGINT          NOT NULL AUTO_INCREMENT,
+    character_id    BIGINT          NOT NULL,
+    score           INT             NOT NULL DEFAULT 1000,
+    wins            INT             NOT NULL DEFAULT 0,
+    losses          INT             NOT NULL DEFAULT 0,
+    last_updated    DATETIME(6)     NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_pvp_character (character_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- module_research
+-- 모듈 연구(moduleType+SubType)와 tech_level(researchId) 통합
+-- ============================================================
+CREATE TABLE module_research (
+    id              BIGINT          NOT NULL AUTO_INCREMENT,
+    character_id    BIGINT          NOT NULL,
+    module_type     VARCHAR(100)        NULL,
+    module_sub_type VARCHAR(100)        NULL,
+    research_id     VARCHAR(255)        NULL,
+    researched      TINYINT(1)      NOT NULL DEFAULT 0,
+    created         DATETIME(6)     NOT NULL,
+    modified        DATETIME(6)     NOT NULL,
+    PRIMARY KEY (id),
+    INDEX idx_research_character (character_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- cleared_zone
+-- 유니크: character_id + zone_name
+-- ============================================================
+CREATE TABLE cleared_zone (
+    id              BIGINT          NOT NULL AUTO_INCREMENT,
+    character_id    BIGINT          NOT NULL,
+    zone_name       VARCHAR(255)    NOT NULL,
+    cleared_at      DATETIME(6)     NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_cleared_zone (character_id, zone_name),
+    INDEX idx_cleared_character (character_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- ============================================================
+-- MariaDB Stored Procedure 예시
+-- MSSQL의 SP와 거의 동일한 문법
+-- Spring에서: @Query(nativeQuery=true, value="CALL proc_name(:param)")
+--             또는 JdbcTemplate.execute("CALL proc_name(?)", ...)
+-- ============================================================
+
+DELIMITER $$
+
+-- 캐릭터의 자원 현황 조회 예시 SP
+DROP PROCEDURE IF EXISTS sp_get_character_resources$$
+CREATE PROCEDURE sp_get_character_resources(
+    IN  p_character_id  BIGINT,
+    OUT p_mineral       BIGINT,
+    OUT p_mineral_rare  BIGINT
+)
+BEGIN
+    SELECT mineral, mineral_rare
+    INTO   p_mineral, p_mineral_rare
+    FROM   `character`
+    WHERE  id = p_character_id AND deleted = 0;
+END$$
+
+DELIMITER ;

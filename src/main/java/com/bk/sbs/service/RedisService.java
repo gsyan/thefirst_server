@@ -348,11 +348,11 @@ public class RedisService {
     // Zone 웨이브 카운트 (미클리어 스테이지 진행 추적)
     // ══════════════════════════════════════════════════════════════════════
 
-    /** 웨이브 카운트 +1, TTL 30분 갱신 후 현재 카운트 반환 */
+    /** 웨이브 카운트 +1, TTL 1분 갱신 후 현재 카운트 반환 (테스트용: 원래 30분) */
     public long incrementZoneWaveCount(Long characterId, String zoneName) {
         String key = ZONE_WAVE_PREFIX + characterId + ":" + zoneName;
         Long count = redisTemplate.opsForValue().increment(key);
-        redisTemplate.expire(key, Duration.ofMinutes(30));
+        redisTemplate.expire(key, Duration.ofMinutes(1));
         return count != null ? count : 1L;
     }
 
