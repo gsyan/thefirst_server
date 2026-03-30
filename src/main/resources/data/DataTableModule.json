@@ -34,7 +34,7 @@
         ],
         "health": 100.0,
         "repair": 1.0,
-        "speed": 5.0,
+        "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
         "attackCool": 0.0,
@@ -1116,7 +1116,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1150,7 +1150,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1184,7 +1184,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1218,7 +1218,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1252,7 +1252,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1286,7 +1286,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1320,7 +1320,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1354,7 +1354,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1388,7 +1388,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1422,7 +1422,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1456,7 +1456,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1490,7 +1490,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1524,7 +1524,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1558,7 +1558,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1592,7 +1592,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1626,7 +1626,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1660,7 +1660,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1694,7 +1694,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1728,7 +1728,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1762,7 +1762,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1798,7 +1798,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1832,7 +1832,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1866,7 +1866,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1900,7 +1900,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1934,7 +1934,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1968,7 +1968,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2002,7 +2002,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2036,7 +2036,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2070,7 +2070,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2104,7 +2104,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2138,7 +2138,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2172,7 +2172,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2206,7 +2206,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2240,7 +2240,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2274,7 +2274,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2308,7 +2308,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2342,7 +2342,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2376,7 +2376,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2410,7 +2410,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2444,7 +2444,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2480,7 +2480,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2514,7 +2514,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2548,7 +2548,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2582,7 +2582,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2616,7 +2616,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2650,7 +2650,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2684,7 +2684,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2718,7 +2718,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2752,7 +2752,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2786,7 +2786,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2820,7 +2820,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2854,7 +2854,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2888,7 +2888,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2922,7 +2922,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2956,7 +2956,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2990,7 +2990,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -3024,7 +3024,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -3058,7 +3058,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -3092,7 +3092,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -3126,7 +3126,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": null,
+        "moduleSlots": [],
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
