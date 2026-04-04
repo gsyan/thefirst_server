@@ -2,9 +2,9 @@
   "modules": {
     "1": [
       {
-        "moduleName": "body_t1_std_ver1 Lv.1",
+        "moduleName": "body_t1_m1 Lv.1",
         "moduleType": "body",
-        "moduleSubType": "body_t1_std_ver1",
+        "moduleSubType": "body_t1_m1",
         "moduleLevel": 1,
         "upgradeCost": {
           "techLevel": 0,
@@ -18,10 +18,6 @@
           {
             "moduleType": "beam",
             "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
           },
           {
             "moduleType": "missile",
@@ -53,9 +49,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "body_t1_std_ver1 Lv.2",
+        "moduleName": "body_t1_m1 Lv.2",
         "moduleType": "body",
-        "moduleSubType": "body_t1_std_ver1",
+        "moduleSubType": "body_t1_m1",
         "moduleLevel": 2,
         "upgradeCost": {
           "techLevel": 0,
@@ -69,10 +65,6 @@
           {
             "moduleType": "beam",
             "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
           },
           {
             "moduleType": "missile",
@@ -104,9 +96,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "body_t1_std_ver1 Lv.3",
+        "moduleName": "body_t1_m1 Lv.3",
         "moduleType": "body",
-        "moduleSubType": "body_t1_std_ver1",
+        "moduleSubType": "body_t1_m1",
         "moduleLevel": 3,
         "upgradeCost": {
           "techLevel": 0,
@@ -120,10 +112,6 @@
           {
             "moduleType": "beam",
             "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
           },
           {
             "moduleType": "missile",
@@ -155,9 +143,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "body_t1_std_ver1 Lv.4",
+        "moduleName": "body_t1_m1 Lv.4",
         "moduleType": "body",
-        "moduleSubType": "body_t1_std_ver1",
+        "moduleSubType": "body_t1_m1",
         "moduleLevel": 4,
         "upgradeCost": {
           "techLevel": 0,
@@ -171,10 +159,6 @@
           {
             "moduleType": "beam",
             "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
           },
           {
             "moduleType": "missile",
@@ -206,9 +190,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "body_t1_std_ver1 Lv.5",
+        "moduleName": "body_t1_m1 Lv.5",
         "moduleType": "body",
-        "moduleSubType": "body_t1_std_ver1",
+        "moduleSubType": "body_t1_m1",
         "moduleLevel": 5,
         "upgradeCost": {
           "techLevel": 0,
@@ -222,10 +206,6 @@
           {
             "moduleType": "beam",
             "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
           },
           {
             "moduleType": "missile",
@@ -257,9 +237,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "body_t1_std_ver1 Lv.6",
+        "moduleName": "body_t1_m1 Lv.6",
         "moduleType": "body",
-        "moduleSubType": "body_t1_std_ver1",
+        "moduleSubType": "body_t1_m1",
         "moduleLevel": 6,
         "upgradeCost": {
           "techLevel": 0,
@@ -273,10 +253,6 @@
           {
             "moduleType": "beam",
             "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
           },
           {
             "moduleType": "missile",
@@ -308,9 +284,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "body_t1_std_ver1 Lv.7",
+        "moduleName": "body_t1_m1 Lv.7",
         "moduleType": "body",
-        "moduleSubType": "body_t1_std_ver1",
+        "moduleSubType": "body_t1_m1",
         "moduleLevel": 7,
         "upgradeCost": {
           "techLevel": 0,
@@ -324,10 +300,6 @@
           {
             "moduleType": "beam",
             "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
           },
           {
             "moduleType": "missile",
@@ -359,9 +331,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "body_t1_std_ver1 Lv.8",
+        "moduleName": "body_t1_m1 Lv.8",
         "moduleType": "body",
-        "moduleSubType": "body_t1_std_ver1",
+        "moduleSubType": "body_t1_m1",
         "moduleLevel": 8,
         "upgradeCost": {
           "techLevel": 0,
@@ -375,10 +347,6 @@
           {
             "moduleType": "beam",
             "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
           },
           {
             "moduleType": "missile",
@@ -410,9 +378,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "body_t1_std_ver1 Lv.9",
+        "moduleName": "body_t1_m1 Lv.9",
         "moduleType": "body",
-        "moduleSubType": "body_t1_std_ver1",
+        "moduleSubType": "body_t1_m1",
         "moduleLevel": 9,
         "upgradeCost": {
           "techLevel": 0,
@@ -426,10 +394,6 @@
           {
             "moduleType": "beam",
             "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
           },
           {
             "moduleType": "missile",
@@ -461,9 +425,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "body_t1_std_ver1 Lv.10",
+        "moduleName": "body_t1_m1 Lv.10",
         "moduleType": "body",
-        "moduleSubType": "body_t1_std_ver1",
+        "moduleSubType": "body_t1_m1",
         "moduleLevel": 10,
         "upgradeCost": {
           "techLevel": 0,
@@ -477,10 +441,6 @@
           {
             "moduleType": "beam",
             "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
           },
           {
             "moduleType": "missile",
@@ -512,9 +472,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "body_t1_adv_ver1 Lv.1",
+        "moduleName": "body_t1_m2 Lv.1",
         "moduleType": "body",
-        "moduleSubType": "body_t1_adv_ver1",
+        "moduleSubType": "body_t1_m2",
         "moduleLevel": 1,
         "upgradeCost": {
           "techLevel": 0,
@@ -524,32 +484,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hanger",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hanger",
-            "slotIndex": 1
-          }
-        ],
+        "moduleSlots": null,
         "health": 1000.0,
         "repair": 10.0,
         "speed": 1.0,
@@ -571,9 +506,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "body_t1_adv_ver1 Lv.2",
+        "moduleName": "body_t1_m2 Lv.2",
         "moduleType": "body",
-        "moduleSubType": "body_t1_adv_ver1",
+        "moduleSubType": "body_t1_m2",
         "moduleLevel": 2,
         "upgradeCost": {
           "techLevel": 0,
@@ -583,32 +518,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hanger",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hanger",
-            "slotIndex": 1
-          }
-        ],
+        "moduleSlots": null,
         "health": 1500.0,
         "repair": 10.0,
         "speed": 1.0,
@@ -630,9 +540,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "body_t1_adv_ver1 Lv.3",
+        "moduleName": "body_t1_m2 Lv.3",
         "moduleType": "body",
-        "moduleSubType": "body_t1_adv_ver1",
+        "moduleSubType": "body_t1_m2",
         "moduleLevel": 3,
         "upgradeCost": {
           "techLevel": 0,
@@ -642,32 +552,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hanger",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hanger",
-            "slotIndex": 1
-          }
-        ],
+        "moduleSlots": null,
         "health": 2000.0,
         "repair": 20.0,
         "speed": 1.0,
@@ -689,9 +574,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "body_t1_adv_ver1 Lv.4",
+        "moduleName": "body_t1_m2 Lv.4",
         "moduleType": "body",
-        "moduleSubType": "body_t1_adv_ver1",
+        "moduleSubType": "body_t1_m2",
         "moduleLevel": 4,
         "upgradeCost": {
           "techLevel": 0,
@@ -701,32 +586,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hanger",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hanger",
-            "slotIndex": 1
-          }
-        ],
+        "moduleSlots": null,
         "health": 2500.0,
         "repair": 20.0,
         "speed": 1.0,
@@ -748,9 +608,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "body_t1_adv_ver1 Lv.5",
+        "moduleName": "body_t1_m2 Lv.5",
         "moduleType": "body",
-        "moduleSubType": "body_t1_adv_ver1",
+        "moduleSubType": "body_t1_m2",
         "moduleLevel": 5,
         "upgradeCost": {
           "techLevel": 0,
@@ -760,32 +620,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hanger",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hanger",
-            "slotIndex": 1
-          }
-        ],
+        "moduleSlots": null,
         "health": 3000.0,
         "repair": 30.0,
         "speed": 1.0,
@@ -807,9 +642,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "body_t1_adv_ver1 Lv.6",
+        "moduleName": "body_t1_m2 Lv.6",
         "moduleType": "body",
-        "moduleSubType": "body_t1_adv_ver1",
+        "moduleSubType": "body_t1_m2",
         "moduleLevel": 6,
         "upgradeCost": {
           "techLevel": 0,
@@ -819,32 +654,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hanger",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hanger",
-            "slotIndex": 1
-          }
-        ],
+        "moduleSlots": null,
         "health": 3500.0,
         "repair": 30.0,
         "speed": 1.0,
@@ -866,9 +676,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "body_t1_adv_ver1 Lv.7",
+        "moduleName": "body_t1_m2 Lv.7",
         "moduleType": "body",
-        "moduleSubType": "body_t1_adv_ver1",
+        "moduleSubType": "body_t1_m2",
         "moduleLevel": 7,
         "upgradeCost": {
           "techLevel": 0,
@@ -878,32 +688,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hanger",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hanger",
-            "slotIndex": 1
-          }
-        ],
+        "moduleSlots": null,
         "health": 4000.0,
         "repair": 40.0,
         "speed": 1.0,
@@ -925,9 +710,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "body_t1_adv_ver1 Lv.8",
+        "moduleName": "body_t1_m2 Lv.8",
         "moduleType": "body",
-        "moduleSubType": "body_t1_adv_ver1",
+        "moduleSubType": "body_t1_m2",
         "moduleLevel": 8,
         "upgradeCost": {
           "techLevel": 0,
@@ -937,32 +722,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hanger",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hanger",
-            "slotIndex": 1
-          }
-        ],
+        "moduleSlots": null,
         "health": 4500.0,
         "repair": 40.0,
         "speed": 1.0,
@@ -984,9 +744,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "body_t1_adv_ver1 Lv.9",
+        "moduleName": "body_t1_m2 Lv.9",
         "moduleType": "body",
-        "moduleSubType": "body_t1_adv_ver1",
+        "moduleSubType": "body_t1_m2",
         "moduleLevel": 9,
         "upgradeCost": {
           "techLevel": 0,
@@ -996,32 +756,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hanger",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hanger",
-            "slotIndex": 1
-          }
-        ],
+        "moduleSlots": null,
         "health": 5000.0,
         "repair": 50.0,
         "speed": 1.0,
@@ -1043,9 +778,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "body_t1_adv_ver1 Lv.10",
+        "moduleName": "body_t1_m2 Lv.10",
         "moduleType": "body",
-        "moduleSubType": "body_t1_adv_ver1",
+        "moduleSubType": "body_t1_m2",
         "moduleLevel": 10,
         "upgradeCost": {
           "techLevel": 0,
@@ -1055,32 +790,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hanger",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hanger",
-            "slotIndex": 1
-          }
-        ],
+        "moduleSlots": null,
         "health": 5500.0,
         "repair": 50.0,
         "speed": 1.0,
@@ -1104,9 +814,9 @@
     ],
     "2": [
       {
-        "moduleName": "beam_t1_std_ver1 Lv.1",
+        "moduleName": "beam_t1_m1 Lv.1",
         "moduleType": "beam",
-        "moduleSubType": "beam_t1_std_ver1",
+        "moduleSubType": "beam_t1_m1",
         "moduleLevel": 1,
         "upgradeCost": {
           "techLevel": 0,
@@ -1116,7 +826,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1138,9 +848,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "beam_t1_std_ver1 Lv.2",
+        "moduleName": "beam_t1_m1 Lv.2",
         "moduleType": "beam",
-        "moduleSubType": "beam_t1_std_ver1",
+        "moduleSubType": "beam_t1_m1",
         "moduleLevel": 2,
         "upgradeCost": {
           "techLevel": 0,
@@ -1150,7 +860,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1172,9 +882,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "beam_t1_std_ver1 Lv.3",
+        "moduleName": "beam_t1_m1 Lv.3",
         "moduleType": "beam",
-        "moduleSubType": "beam_t1_std_ver1",
+        "moduleSubType": "beam_t1_m1",
         "moduleLevel": 3,
         "upgradeCost": {
           "techLevel": 0,
@@ -1184,7 +894,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1206,9 +916,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "beam_t1_std_ver1 Lv.4",
+        "moduleName": "beam_t1_m1 Lv.4",
         "moduleType": "beam",
-        "moduleSubType": "beam_t1_std_ver1",
+        "moduleSubType": "beam_t1_m1",
         "moduleLevel": 4,
         "upgradeCost": {
           "techLevel": 0,
@@ -1218,7 +928,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1240,9 +950,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "beam_t1_std_ver1 Lv.5",
+        "moduleName": "beam_t1_m1 Lv.5",
         "moduleType": "beam",
-        "moduleSubType": "beam_t1_std_ver1",
+        "moduleSubType": "beam_t1_m1",
         "moduleLevel": 5,
         "upgradeCost": {
           "techLevel": 0,
@@ -1252,7 +962,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1274,9 +984,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "beam_t1_std_ver1 Lv.6",
+        "moduleName": "beam_t1_m1 Lv.6",
         "moduleType": "beam",
-        "moduleSubType": "beam_t1_std_ver1",
+        "moduleSubType": "beam_t1_m1",
         "moduleLevel": 6,
         "upgradeCost": {
           "techLevel": 0,
@@ -1286,7 +996,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1308,9 +1018,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "beam_t1_std_ver1 Lv.7",
+        "moduleName": "beam_t1_m1 Lv.7",
         "moduleType": "beam",
-        "moduleSubType": "beam_t1_std_ver1",
+        "moduleSubType": "beam_t1_m1",
         "moduleLevel": 7,
         "upgradeCost": {
           "techLevel": 0,
@@ -1320,7 +1030,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1342,9 +1052,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "beam_t1_std_ver1 Lv.8",
+        "moduleName": "beam_t1_m1 Lv.8",
         "moduleType": "beam",
-        "moduleSubType": "beam_t1_std_ver1",
+        "moduleSubType": "beam_t1_m1",
         "moduleLevel": 8,
         "upgradeCost": {
           "techLevel": 0,
@@ -1354,7 +1064,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1376,9 +1086,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "beam_t1_std_ver1 Lv.9",
+        "moduleName": "beam_t1_m1 Lv.9",
         "moduleType": "beam",
-        "moduleSubType": "beam_t1_std_ver1",
+        "moduleSubType": "beam_t1_m1",
         "moduleLevel": 9,
         "upgradeCost": {
           "techLevel": 0,
@@ -1388,7 +1098,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1410,9 +1120,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "beam_t1_std_ver1 Lv.10",
+        "moduleName": "beam_t1_m1 Lv.10",
         "moduleType": "beam",
-        "moduleSubType": "beam_t1_std_ver1",
+        "moduleSubType": "beam_t1_m1",
         "moduleLevel": 10,
         "upgradeCost": {
           "techLevel": 0,
@@ -1422,7 +1132,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1444,9 +1154,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "beam_t1_adv_ver1 Lv.1",
+        "moduleName": "beam_t1_m2 Lv.1",
         "moduleType": "beam",
-        "moduleSubType": "beam_t1_adv_ver1",
+        "moduleSubType": "beam_t1_m2",
         "moduleLevel": 1,
         "upgradeCost": {
           "techLevel": 0,
@@ -1456,7 +1166,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1478,9 +1188,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "beam_t1_adv_ver1 Lv.2",
+        "moduleName": "beam_t1_m2 Lv.2",
         "moduleType": "beam",
-        "moduleSubType": "beam_t1_adv_ver1",
+        "moduleSubType": "beam_t1_m2",
         "moduleLevel": 2,
         "upgradeCost": {
           "techLevel": 0,
@@ -1490,7 +1200,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1512,9 +1222,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "beam_t1_adv_ver1 Lv.3",
+        "moduleName": "beam_t1_m2 Lv.3",
         "moduleType": "beam",
-        "moduleSubType": "beam_t1_adv_ver1",
+        "moduleSubType": "beam_t1_m2",
         "moduleLevel": 3,
         "upgradeCost": {
           "techLevel": 0,
@@ -1524,7 +1234,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1546,9 +1256,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "beam_t1_adv_ver1 Lv.4",
+        "moduleName": "beam_t1_m2 Lv.4",
         "moduleType": "beam",
-        "moduleSubType": "beam_t1_adv_ver1",
+        "moduleSubType": "beam_t1_m2",
         "moduleLevel": 4,
         "upgradeCost": {
           "techLevel": 0,
@@ -1558,7 +1268,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1580,9 +1290,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "beam_t1_adv_ver1 Lv.5",
+        "moduleName": "beam_t1_m2 Lv.5",
         "moduleType": "beam",
-        "moduleSubType": "beam_t1_adv_ver1",
+        "moduleSubType": "beam_t1_m2",
         "moduleLevel": 5,
         "upgradeCost": {
           "techLevel": 0,
@@ -1592,7 +1302,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1614,9 +1324,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "beam_t1_adv_ver1 Lv.6",
+        "moduleName": "beam_t1_m2 Lv.6",
         "moduleType": "beam",
-        "moduleSubType": "beam_t1_adv_ver1",
+        "moduleSubType": "beam_t1_m2",
         "moduleLevel": 6,
         "upgradeCost": {
           "techLevel": 0,
@@ -1626,7 +1336,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1648,9 +1358,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "beam_t1_adv_ver1 Lv.7",
+        "moduleName": "beam_t1_m2 Lv.7",
         "moduleType": "beam",
-        "moduleSubType": "beam_t1_adv_ver1",
+        "moduleSubType": "beam_t1_m2",
         "moduleLevel": 7,
         "upgradeCost": {
           "techLevel": 0,
@@ -1660,7 +1370,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1682,9 +1392,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "beam_t1_adv_ver1 Lv.8",
+        "moduleName": "beam_t1_m2 Lv.8",
         "moduleType": "beam",
-        "moduleSubType": "beam_t1_adv_ver1",
+        "moduleSubType": "beam_t1_m2",
         "moduleLevel": 8,
         "upgradeCost": {
           "techLevel": 0,
@@ -1694,7 +1404,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1716,9 +1426,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "beam_t1_adv_ver1 Lv.9",
+        "moduleName": "beam_t1_m2 Lv.9",
         "moduleType": "beam",
-        "moduleSubType": "beam_t1_adv_ver1",
+        "moduleSubType": "beam_t1_m2",
         "moduleLevel": 9,
         "upgradeCost": {
           "techLevel": 0,
@@ -1728,7 +1438,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1750,9 +1460,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "beam_t1_adv_ver1 Lv.10",
+        "moduleName": "beam_t1_m2 Lv.10",
         "moduleType": "beam",
-        "moduleSubType": "beam_t1_adv_ver1",
+        "moduleSubType": "beam_t1_m2",
         "moduleLevel": 10,
         "upgradeCost": {
           "techLevel": 0,
@@ -1762,7 +1472,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1786,9 +1496,9 @@
     ],
     "3": [
       {
-        "moduleName": "missile_t1_std_ver1 Lv.1",
+        "moduleName": "missile_t1_m1 Lv.1",
         "moduleType": "missile",
-        "moduleSubType": "missile_t1_std_ver1",
+        "moduleSubType": "missile_t1_m1",
         "moduleLevel": 1,
         "upgradeCost": {
           "techLevel": 0,
@@ -1798,7 +1508,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1820,9 +1530,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "missile_t1_std_ver1 Lv.2",
+        "moduleName": "missile_t1_m1 Lv.2",
         "moduleType": "missile",
-        "moduleSubType": "missile_t1_std_ver1",
+        "moduleSubType": "missile_t1_m1",
         "moduleLevel": 2,
         "upgradeCost": {
           "techLevel": 0,
@@ -1832,7 +1542,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1854,9 +1564,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "missile_t1_std_ver1 Lv.3",
+        "moduleName": "missile_t1_m1 Lv.3",
         "moduleType": "missile",
-        "moduleSubType": "missile_t1_std_ver1",
+        "moduleSubType": "missile_t1_m1",
         "moduleLevel": 3,
         "upgradeCost": {
           "techLevel": 0,
@@ -1866,7 +1576,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1888,9 +1598,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "missile_t1_std_ver1 Lv.4",
+        "moduleName": "missile_t1_m1 Lv.4",
         "moduleType": "missile",
-        "moduleSubType": "missile_t1_std_ver1",
+        "moduleSubType": "missile_t1_m1",
         "moduleLevel": 4,
         "upgradeCost": {
           "techLevel": 0,
@@ -1900,7 +1610,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1922,9 +1632,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "missile_t1_std_ver1 Lv.5",
+        "moduleName": "missile_t1_m1 Lv.5",
         "moduleType": "missile",
-        "moduleSubType": "missile_t1_std_ver1",
+        "moduleSubType": "missile_t1_m1",
         "moduleLevel": 5,
         "upgradeCost": {
           "techLevel": 0,
@@ -1934,7 +1644,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1956,9 +1666,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "missile_t1_std_ver1 Lv.6",
+        "moduleName": "missile_t1_m1 Lv.6",
         "moduleType": "missile",
-        "moduleSubType": "missile_t1_std_ver1",
+        "moduleSubType": "missile_t1_m1",
         "moduleLevel": 6,
         "upgradeCost": {
           "techLevel": 0,
@@ -1968,7 +1678,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -1990,9 +1700,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "missile_t1_std_ver1 Lv.7",
+        "moduleName": "missile_t1_m1 Lv.7",
         "moduleType": "missile",
-        "moduleSubType": "missile_t1_std_ver1",
+        "moduleSubType": "missile_t1_m1",
         "moduleLevel": 7,
         "upgradeCost": {
           "techLevel": 0,
@@ -2002,7 +1712,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2024,9 +1734,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "missile_t1_std_ver1 Lv.8",
+        "moduleName": "missile_t1_m1 Lv.8",
         "moduleType": "missile",
-        "moduleSubType": "missile_t1_std_ver1",
+        "moduleSubType": "missile_t1_m1",
         "moduleLevel": 8,
         "upgradeCost": {
           "techLevel": 0,
@@ -2036,7 +1746,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2058,9 +1768,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "missile_t1_std_ver1 Lv.9",
+        "moduleName": "missile_t1_m1 Lv.9",
         "moduleType": "missile",
-        "moduleSubType": "missile_t1_std_ver1",
+        "moduleSubType": "missile_t1_m1",
         "moduleLevel": 9,
         "upgradeCost": {
           "techLevel": 0,
@@ -2070,7 +1780,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2092,9 +1802,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "missile_t1_std_ver1 Lv.10",
+        "moduleName": "missile_t1_m1 Lv.10",
         "moduleType": "missile",
-        "moduleSubType": "missile_t1_std_ver1",
+        "moduleSubType": "missile_t1_m1",
         "moduleLevel": 10,
         "upgradeCost": {
           "techLevel": 0,
@@ -2104,7 +1814,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2126,9 +1836,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "missile_t1_adv_ver1 Lv.1",
+        "moduleName": "missile_t1_m2 Lv.1",
         "moduleType": "missile",
-        "moduleSubType": "missile_t1_adv_ver1",
+        "moduleSubType": "missile_t1_m2",
         "moduleLevel": 1,
         "upgradeCost": {
           "techLevel": 0,
@@ -2138,7 +1848,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2160,9 +1870,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "missile_t1_adv_ver1 Lv.2",
+        "moduleName": "missile_t1_m2 Lv.2",
         "moduleType": "missile",
-        "moduleSubType": "missile_t1_adv_ver1",
+        "moduleSubType": "missile_t1_m2",
         "moduleLevel": 2,
         "upgradeCost": {
           "techLevel": 0,
@@ -2172,7 +1882,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2194,9 +1904,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "missile_t1_adv_ver1 Lv.3",
+        "moduleName": "missile_t1_m2 Lv.3",
         "moduleType": "missile",
-        "moduleSubType": "missile_t1_adv_ver1",
+        "moduleSubType": "missile_t1_m2",
         "moduleLevel": 3,
         "upgradeCost": {
           "techLevel": 0,
@@ -2206,7 +1916,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2228,9 +1938,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "missile_t1_adv_ver1 Lv.4",
+        "moduleName": "missile_t1_m2 Lv.4",
         "moduleType": "missile",
-        "moduleSubType": "missile_t1_adv_ver1",
+        "moduleSubType": "missile_t1_m2",
         "moduleLevel": 4,
         "upgradeCost": {
           "techLevel": 0,
@@ -2240,7 +1950,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2262,9 +1972,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "missile_t1_adv_ver1 Lv.5",
+        "moduleName": "missile_t1_m2 Lv.5",
         "moduleType": "missile",
-        "moduleSubType": "missile_t1_adv_ver1",
+        "moduleSubType": "missile_t1_m2",
         "moduleLevel": 5,
         "upgradeCost": {
           "techLevel": 0,
@@ -2274,7 +1984,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2296,9 +2006,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "missile_t1_adv_ver1 Lv.6",
+        "moduleName": "missile_t1_m2 Lv.6",
         "moduleType": "missile",
-        "moduleSubType": "missile_t1_adv_ver1",
+        "moduleSubType": "missile_t1_m2",
         "moduleLevel": 6,
         "upgradeCost": {
           "techLevel": 0,
@@ -2308,7 +2018,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2330,9 +2040,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "missile_t1_adv_ver1 Lv.7",
+        "moduleName": "missile_t1_m2 Lv.7",
         "moduleType": "missile",
-        "moduleSubType": "missile_t1_adv_ver1",
+        "moduleSubType": "missile_t1_m2",
         "moduleLevel": 7,
         "upgradeCost": {
           "techLevel": 0,
@@ -2342,7 +2052,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2364,9 +2074,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "missile_t1_adv_ver1 Lv.8",
+        "moduleName": "missile_t1_m2 Lv.8",
         "moduleType": "missile",
-        "moduleSubType": "missile_t1_adv_ver1",
+        "moduleSubType": "missile_t1_m2",
         "moduleLevel": 8,
         "upgradeCost": {
           "techLevel": 0,
@@ -2376,7 +2086,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2398,9 +2108,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "missile_t1_adv_ver1 Lv.9",
+        "moduleName": "missile_t1_m2 Lv.9",
         "moduleType": "missile",
-        "moduleSubType": "missile_t1_adv_ver1",
+        "moduleSubType": "missile_t1_m2",
         "moduleLevel": 9,
         "upgradeCost": {
           "techLevel": 0,
@@ -2410,7 +2120,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2432,9 +2142,9 @@
         "airAvoidRadius": 0.0
       },
       {
-        "moduleName": "missile_t1_adv_ver1 Lv.10",
+        "moduleName": "missile_t1_m2 Lv.10",
         "moduleType": "missile",
-        "moduleSubType": "missile_t1_adv_ver1",
+        "moduleSubType": "missile_t1_m2",
         "moduleLevel": 10,
         "upgradeCost": {
           "techLevel": 0,
@@ -2444,7 +2154,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2468,9 +2178,9 @@
     ],
     "4": [
       {
-        "moduleName": "hanger_t1_std_ver1 Lv.1",
+        "moduleName": "hanger_t1_m1 Lv.1",
         "moduleType": "hanger",
-        "moduleSubType": "hanger_t1_std_ver1",
+        "moduleSubType": "hanger_t1_m1",
         "moduleLevel": 1,
         "upgradeCost": {
           "techLevel": 0,
@@ -2480,7 +2190,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2502,9 +2212,9 @@
         "airAvoidRadius": 2.0
       },
       {
-        "moduleName": "hanger_t1_std_ver1 Lv.2",
+        "moduleName": "hanger_t1_m1 Lv.2",
         "moduleType": "hanger",
-        "moduleSubType": "hanger_t1_std_ver1",
+        "moduleSubType": "hanger_t1_m1",
         "moduleLevel": 2,
         "upgradeCost": {
           "techLevel": 0,
@@ -2514,7 +2224,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2536,9 +2246,9 @@
         "airAvoidRadius": 2.0
       },
       {
-        "moduleName": "hanger_t1_std_ver1 Lv.3",
+        "moduleName": "hanger_t1_m1 Lv.3",
         "moduleType": "hanger",
-        "moduleSubType": "hanger_t1_std_ver1",
+        "moduleSubType": "hanger_t1_m1",
         "moduleLevel": 3,
         "upgradeCost": {
           "techLevel": 0,
@@ -2548,7 +2258,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2570,9 +2280,9 @@
         "airAvoidRadius": 2.0
       },
       {
-        "moduleName": "hanger_t1_std_ver1 Lv.4",
+        "moduleName": "hanger_t1_m1 Lv.4",
         "moduleType": "hanger",
-        "moduleSubType": "hanger_t1_std_ver1",
+        "moduleSubType": "hanger_t1_m1",
         "moduleLevel": 4,
         "upgradeCost": {
           "techLevel": 0,
@@ -2582,7 +2292,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2604,9 +2314,9 @@
         "airAvoidRadius": 2.0
       },
       {
-        "moduleName": "hanger_t1_std_ver1 Lv.5",
+        "moduleName": "hanger_t1_m1 Lv.5",
         "moduleType": "hanger",
-        "moduleSubType": "hanger_t1_std_ver1",
+        "moduleSubType": "hanger_t1_m1",
         "moduleLevel": 5,
         "upgradeCost": {
           "techLevel": 0,
@@ -2616,7 +2326,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2638,9 +2348,9 @@
         "airAvoidRadius": 2.0
       },
       {
-        "moduleName": "hanger_t1_std_ver1 Lv.6",
+        "moduleName": "hanger_t1_m1 Lv.6",
         "moduleType": "hanger",
-        "moduleSubType": "hanger_t1_std_ver1",
+        "moduleSubType": "hanger_t1_m1",
         "moduleLevel": 6,
         "upgradeCost": {
           "techLevel": 0,
@@ -2650,7 +2360,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2672,9 +2382,9 @@
         "airAvoidRadius": 2.0
       },
       {
-        "moduleName": "hanger_t1_std_ver1 Lv.7",
+        "moduleName": "hanger_t1_m1 Lv.7",
         "moduleType": "hanger",
-        "moduleSubType": "hanger_t1_std_ver1",
+        "moduleSubType": "hanger_t1_m1",
         "moduleLevel": 7,
         "upgradeCost": {
           "techLevel": 0,
@@ -2684,7 +2394,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2706,9 +2416,9 @@
         "airAvoidRadius": 2.0
       },
       {
-        "moduleName": "hanger_t1_std_ver1 Lv.8",
+        "moduleName": "hanger_t1_m1 Lv.8",
         "moduleType": "hanger",
-        "moduleSubType": "hanger_t1_std_ver1",
+        "moduleSubType": "hanger_t1_m1",
         "moduleLevel": 8,
         "upgradeCost": {
           "techLevel": 0,
@@ -2718,7 +2428,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2740,9 +2450,9 @@
         "airAvoidRadius": 2.0
       },
       {
-        "moduleName": "hanger_t1_std_ver1 Lv.9",
+        "moduleName": "hanger_t1_m1 Lv.9",
         "moduleType": "hanger",
-        "moduleSubType": "hanger_t1_std_ver1",
+        "moduleSubType": "hanger_t1_m1",
         "moduleLevel": 9,
         "upgradeCost": {
           "techLevel": 0,
@@ -2752,7 +2462,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2774,9 +2484,9 @@
         "airAvoidRadius": 2.0
       },
       {
-        "moduleName": "hanger_t1_std_ver1 Lv.10",
+        "moduleName": "hanger_t1_m1 Lv.10",
         "moduleType": "hanger",
-        "moduleSubType": "hanger_t1_std_ver1",
+        "moduleSubType": "hanger_t1_m1",
         "moduleLevel": 10,
         "upgradeCost": {
           "techLevel": 0,
@@ -2786,7 +2496,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2808,9 +2518,9 @@
         "airAvoidRadius": 2.0
       },
       {
-        "moduleName": "hanger_t1_adv_ver1 Lv.1",
+        "moduleName": "hanger_t1_m2 Lv.1",
         "moduleType": "hanger",
-        "moduleSubType": "hanger_t1_adv_ver1",
+        "moduleSubType": "hanger_t1_m2",
         "moduleLevel": 1,
         "upgradeCost": {
           "techLevel": 0,
@@ -2820,7 +2530,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2842,9 +2552,9 @@
         "airAvoidRadius": 2.0
       },
       {
-        "moduleName": "hanger_t1_adv_ver1 Lv.2",
+        "moduleName": "hanger_t1_m2 Lv.2",
         "moduleType": "hanger",
-        "moduleSubType": "hanger_t1_adv_ver1",
+        "moduleSubType": "hanger_t1_m2",
         "moduleLevel": 2,
         "upgradeCost": {
           "techLevel": 0,
@@ -2854,7 +2564,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2876,9 +2586,9 @@
         "airAvoidRadius": 2.0
       },
       {
-        "moduleName": "hanger_t1_adv_ver1 Lv.3",
+        "moduleName": "hanger_t1_m2 Lv.3",
         "moduleType": "hanger",
-        "moduleSubType": "hanger_t1_adv_ver1",
+        "moduleSubType": "hanger_t1_m2",
         "moduleLevel": 3,
         "upgradeCost": {
           "techLevel": 0,
@@ -2888,7 +2598,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2910,9 +2620,9 @@
         "airAvoidRadius": 2.0
       },
       {
-        "moduleName": "hanger_t1_adv_ver1 Lv.4",
+        "moduleName": "hanger_t1_m2 Lv.4",
         "moduleType": "hanger",
-        "moduleSubType": "hanger_t1_adv_ver1",
+        "moduleSubType": "hanger_t1_m2",
         "moduleLevel": 4,
         "upgradeCost": {
           "techLevel": 0,
@@ -2922,7 +2632,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2944,9 +2654,9 @@
         "airAvoidRadius": 2.0
       },
       {
-        "moduleName": "hanger_t1_adv_ver1 Lv.5",
+        "moduleName": "hanger_t1_m2 Lv.5",
         "moduleType": "hanger",
-        "moduleSubType": "hanger_t1_adv_ver1",
+        "moduleSubType": "hanger_t1_m2",
         "moduleLevel": 5,
         "upgradeCost": {
           "techLevel": 0,
@@ -2956,7 +2666,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -2978,9 +2688,9 @@
         "airAvoidRadius": 2.0
       },
       {
-        "moduleName": "hanger_t1_adv_ver1 Lv.6",
+        "moduleName": "hanger_t1_m2 Lv.6",
         "moduleType": "hanger",
-        "moduleSubType": "hanger_t1_adv_ver1",
+        "moduleSubType": "hanger_t1_m2",
         "moduleLevel": 6,
         "upgradeCost": {
           "techLevel": 0,
@@ -2990,7 +2700,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -3012,9 +2722,9 @@
         "airAvoidRadius": 2.0
       },
       {
-        "moduleName": "hanger_t1_adv_ver1 Lv.7",
+        "moduleName": "hanger_t1_m2 Lv.7",
         "moduleType": "hanger",
-        "moduleSubType": "hanger_t1_adv_ver1",
+        "moduleSubType": "hanger_t1_m2",
         "moduleLevel": 7,
         "upgradeCost": {
           "techLevel": 0,
@@ -3024,7 +2734,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -3046,9 +2756,9 @@
         "airAvoidRadius": 2.0
       },
       {
-        "moduleName": "hanger_t1_adv_ver1 Lv.8",
+        "moduleName": "hanger_t1_m2 Lv.8",
         "moduleType": "hanger",
-        "moduleSubType": "hanger_t1_adv_ver1",
+        "moduleSubType": "hanger_t1_m2",
         "moduleLevel": 8,
         "upgradeCost": {
           "techLevel": 0,
@@ -3058,7 +2768,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -3080,9 +2790,9 @@
         "airAvoidRadius": 2.0
       },
       {
-        "moduleName": "hanger_t1_adv_ver1 Lv.9",
+        "moduleName": "hanger_t1_m2 Lv.9",
         "moduleType": "hanger",
-        "moduleSubType": "hanger_t1_adv_ver1",
+        "moduleSubType": "hanger_t1_m2",
         "moduleLevel": 9,
         "upgradeCost": {
           "techLevel": 0,
@@ -3092,7 +2802,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -3114,9 +2824,9 @@
         "airAvoidRadius": 2.0
       },
       {
-        "moduleName": "hanger_t1_adv_ver1 Lv.10",
+        "moduleName": "hanger_t1_m2 Lv.10",
         "moduleType": "hanger",
-        "moduleSubType": "hanger_t1_adv_ver1",
+        "moduleSubType": "hanger_t1_m2",
         "moduleLevel": 10,
         "upgradeCost": {
           "techLevel": 0,
@@ -3126,7 +2836,7 @@
           "mineralDark": 0
         },
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,

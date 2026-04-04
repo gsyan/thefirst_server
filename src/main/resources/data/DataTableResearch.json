@@ -2,8 +2,8 @@
   "researchDataList": [
     {
       "moduleType": "body",
-      "moduleSubType": "body_t1_std_ver1",
-      "researchId": "body_t1_std_ver1",
+      "moduleSubType": "body_t1_m1",
+      "researchId": "body_t1_m1",
       "prerequisiteIds": [],
       "researchCost": {
         "techLevel": 0,
@@ -15,10 +15,10 @@
     },
     {
       "moduleType": "body",
-      "moduleSubType": "body_t1_adv_ver1",
-      "researchId": "body_t1_adv_ver1",
+      "moduleSubType": "body_t1_m2",
+      "researchId": "body_t1_m2",
       "prerequisiteIds": [
-        "body_t1_std_ver1"
+        "body_t1_m1"
       ],
       "researchCost": {
         "techLevel": 0,
@@ -30,8 +30,8 @@
     },
     {
       "moduleType": "beam",
-      "moduleSubType": "beam_t1_std_ver1",
-      "researchId": "beam_t1_std_ver1",
+      "moduleSubType": "beam_t1_m1",
+      "researchId": "beam_t1_m1",
       "prerequisiteIds": [],
       "researchCost": {
         "techLevel": 0,
@@ -43,10 +43,10 @@
     },
     {
       "moduleType": "beam",
-      "moduleSubType": "beam_t1_adv_ver1",
-      "researchId": "beam_t1_adv_ver1",
+      "moduleSubType": "beam_t1_m2",
+      "researchId": "beam_t1_m2",
       "prerequisiteIds": [
-        "beam_t1_std_ver1"
+        "beam_t1_m1"
       ],
       "researchCost": {
         "techLevel": 0,
@@ -58,8 +58,8 @@
     },
     {
       "moduleType": "missile",
-      "moduleSubType": "missile_t1_std_ver1",
-      "researchId": "missile_t1_std_ver1",
+      "moduleSubType": "missile_t1_m1",
+      "researchId": "missile_t1_m1",
       "prerequisiteIds": [],
       "researchCost": {
         "techLevel": 0,
@@ -71,10 +71,10 @@
     },
     {
       "moduleType": "missile",
-      "moduleSubType": "missile_t1_adv_ver1",
-      "researchId": "missile_t1_adv_ver1",
+      "moduleSubType": "missile_t1_m2",
+      "researchId": "missile_t1_m2",
       "prerequisiteIds": [
-        "missile_t1_std_ver1"
+        "missile_t1_m1"
       ],
       "researchCost": {
         "techLevel": 0,
@@ -86,8 +86,8 @@
     },
     {
       "moduleType": "hanger",
-      "moduleSubType": "hanger_t1_std_ver1",
-      "researchId": "hanger_t1_std_ver1",
+      "moduleSubType": "hanger_t1_m1",
+      "researchId": "hanger_t1_m1",
       "prerequisiteIds": [],
       "researchCost": {
         "techLevel": 0,
@@ -99,10 +99,10 @@
     },
     {
       "moduleType": "hanger",
-      "moduleSubType": "hanger_t1_adv_ver1",
-      "researchId": "hanger_t1_adv_ver1",
+      "moduleSubType": "hanger_t1_m2",
+      "researchId": "hanger_t1_m2",
       "prerequisiteIds": [
-        "hanger_t1_std_ver1"
+        "hanger_t1_m1"
       ],
       "researchCost": {
         "techLevel": 0,

@@ -9,14 +9,14 @@ import com.fasterxml.jackson.annotation.JsonValue;
  */
 public enum EModuleSubType {
     none(0),
-    body_t1_std_ver1(1010101),
-    body_t1_adv_ver1(1010201),
-    beam_t1_std_ver1(2010101),
-    beam_t1_adv_ver1(2010201),
-    missile_t1_std_ver1(3010101),
-    missile_t1_adv_ver1(3010201),
-    hanger_t1_std_ver1(4010101),
-    hanger_t1_adv_ver1(4010201);
+    body_t1_m1(10101),
+    body_t1_m2(10102),
+    beam_t1_m1(20101),
+    beam_t1_m2(20102),
+    missile_t1_m1(30101),
+    missile_t1_m2(30102),
+    hanger_t1_m1(40101),
+    hanger_t1_m2(40102);
 
     private final int value;
 

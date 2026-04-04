@@ -109,12 +109,12 @@ public class FleetService {
         ShipModule bodyModule = new ShipModule();
         bodyModule.setShip(defaultShip);
         bodyModule.setModuleType(EModuleType.body);
-        bodyModule.setModuleSubType(EModuleSubType.body_t1_std_ver1);
+        bodyModule.setModuleSubType(EModuleSubType.body_t1_m1);
         bodyModule.setModuleLevel(bodyData.getModuleLevel());
         bodyModule.setBodyIndex(0);
         bodyModule.setSlotIndex(0);
         shipModuleRepository.save(bodyModule);
-        saveInitialModuleLevel(defaultShip, EModuleType.body, EModuleSubType.body_t1_std_ver1, bodyData.getModuleLevel(), 0, 0);
+        saveInitialModuleLevel(defaultShip, EModuleType.body, EModuleSubType.body_t1_m1, bodyData.getModuleLevel(), 0, 0);
 
         // 2. Beam
 //        ShipModule beamModule = new ShipModule();
@@ -580,7 +580,7 @@ public class FleetService {
         ShipModule bodyModule = new ShipModule();
         bodyModule.setShip(ship);
         bodyModule.setModuleType(EModuleType.body);
-        bodyModule.setModuleSubType(EModuleSubType.body_t1_std_ver1);
+        bodyModule.setModuleSubType(EModuleSubType.body_t1_m1);
         bodyModule.setModuleLevel(1);
         bodyModule.setBodyIndex(0);
         bodyModule.setSlotIndex(0);
@@ -593,7 +593,7 @@ public class FleetService {
         ShipModule weaponModule = new ShipModule();
         weaponModule.setShip(ship);
         weaponModule.setModuleType(EModuleType.beam);
-        weaponModule.setModuleSubType(EModuleSubType.beam_t1_std_ver1);
+        weaponModule.setModuleSubType(EModuleSubType.beam_t1_m1);
         weaponModule.setModuleLevel(1);
         weaponModule.setBodyIndex(0);
         weaponModule.setSlotIndex(0);
@@ -633,8 +633,8 @@ public class FleetService {
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_CHARACTER_NOT_FOUND));
 
-        // 기술레벨 검증 — 서브타입 인코딩에서 파싱: (value/10000)%100
-        int requiredTechTier = (moduleSubType.getValue() / 10000) % 100;
+        // 기술레벨 검증 — 서브타입 인코딩에서 파싱: (value/100)%100
+        int requiredTechTier = (moduleSubType.getValue() / 100) % 100;
         if (getCharacterTechLevel(characterId) < requiredTechTier) {
             throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_INSUFFICIENT_TECH_LEVEL);
         }
@@ -829,7 +829,7 @@ public class FleetService {
         }
 
         // 기본 subType 결정
-        int defaultSubTypeValue = moduleType.getValue() * 1000000 + 10101; // 7자리 인코딩: t1(01) std(01) ver1(01)
+        int defaultSubTypeValue = moduleType.getValue() * 10000 + 101; // 7자리 인코딩: t1(01) m1(01)
         EModuleSubType finalModuleSubType = EModuleSubType.fromValue(defaultSubTypeValue);
 
 
@@ -907,7 +907,7 @@ public class FleetService {
         ).orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_MODULE_NOT_FOUND));
 
         // 기술레벨 검증 — 서브타입 인코딩에서 파싱: (value/10000)%100
-        int requiredTechTier = (newModuleSubType.getValue() / 10000) % 100;
+        int requiredTechTier = (newModuleSubType.getValue() / 100) % 100;
         if (getCharacterTechLevel(characterId) < requiredTechTier) {
             throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_INSUFFICIENT_TECH_LEVEL);
         }
