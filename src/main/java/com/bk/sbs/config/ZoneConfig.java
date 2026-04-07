@@ -10,11 +10,11 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class ZoneConfig {
-    private List<ZoneConfigData> zones = new ArrayList<>();
+    private List<ZoneConfigData> zoneStages = new ArrayList<>();
 
     public ZoneConfigData getZoneByName(String zoneName) {
         if (zoneName == null || zoneName.isEmpty()) return null;
-        return zones.stream()
+        return zoneStages.stream()
                 .filter(z -> zoneName.equals(z.getZoneName()))
                 .findFirst()
                 .orElse(null);

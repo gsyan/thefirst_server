@@ -15,10 +15,13 @@ import com.bk.sbs.entity.ModuleResearch;
 import com.bk.sbs.enums.*;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
+import com.bk.sbs.entity.ClearedZone;
+import com.bk.sbs.entity.ZoneMeta;
 import com.bk.sbs.repository.AccountRepository;
 import com.bk.sbs.repository.CharacterRepository;
 import com.bk.sbs.repository.ClearedZoneRepository;
 import com.bk.sbs.repository.ModuleResearchRepository;
+import com.bk.sbs.repository.ZoneMetaRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,7 +31,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class CharacterService {
@@ -39,18 +45,20 @@ public class CharacterService {
     private final FleetService fleetService;
     private final ModuleResearchRepository moduleResearchRepository;
     private final ClearedZoneRepository clearedZoneRepository;
+    private final ZoneMetaRepository zoneMetaRepository;
     private final StringRedisTemplate redisTemplate;
     private final GameDataService gameDataService;
 
 @Value("${worldid}")
     private int worldId;
 
-    public CharacterService(CharacterRepository characterRepository, AccountRepository accountRepository, FleetService fleetService, ModuleResearchRepository moduleResearchRepository, ClearedZoneRepository clearedZoneRepository, StringRedisTemplate redisTemplate, GameDataService gameDataService) {
+    public CharacterService(CharacterRepository characterRepository, AccountRepository accountRepository, FleetService fleetService, ModuleResearchRepository moduleResearchRepository, ClearedZoneRepository clearedZoneRepository, ZoneMetaRepository zoneMetaRepository, StringRedisTemplate redisTemplate, GameDataService gameDataService) {
         this.characterRepository = characterRepository;
         this.accountRepository = accountRepository;
         this.fleetService = fleetService;
         this.moduleResearchRepository = moduleResearchRepository;
         this.clearedZoneRepository = clearedZoneRepository;
+        this.zoneMetaRepository = zoneMetaRepository;
         this.redisTemplate = redisTemplate;
         this.gameDataService = gameDataService;
     }
@@ -130,9 +138,13 @@ public class CharacterService {
         characterRepository.save(character);
     }
 
+    @Transactional
     public CharacterInfoDto getCharacterInfoDto(Long characterId) {
         Character character = characterRepository.findById(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.GET_CHARACTER_INFO_DTO_FAIL_CHARACTER_NOT_FOUND));
+
+        ZoneMeta zoneMeta = zoneMetaRepository.findByCharacterId(characterId).orElse(null);
+        processEnemyRestore(characterId, zoneMeta);
 
         return CharacterInfoDto.builder()
                 .characterId(characterId)
@@ -145,6 +157,43 @@ public class CharacterService {
                 .collectDateTime(character.getCollectDateTime() != null ? character.getCollectDateTime().toString() : null)
                 .nameChangeCount(character.getNameChangeCount())
                 .build();
+    }
+
+    // 접속 시 24h 경과 여부 체크 — zone 2+ 활성 클리어 존 중 랜덤 하나를 수복 상태로 전환
+    private void processEnemyRestore(Long characterId, ZoneMeta zoneMeta) {
+        if (zoneMeta == null || zoneMeta.getEnemyRestoreTime() == null) return;
+        if (ChronoUnit.HOURS.between(zoneMeta.getEnemyRestoreTime(), Instant.now()) < 24) return;
+
+        List<ClearedZone> allActive = clearedZoneRepository.findActiveByCharacterId(characterId);
+
+        // 클리어된 최고 그룹 번호 산출
+        int maxGroup = allActive.stream()
+                .mapToInt(cz -> parseZoneGroup(cz.getZoneName()))
+                .max().orElse(0);
+
+        if (maxGroup < 2) return;
+
+        // 최고 그룹 존만 대상으로 한정
+        List<ClearedZone> candidates = allActive.stream()
+                .filter(cz -> parseZoneGroup(cz.getZoneName()) == maxGroup)
+                .collect(java.util.stream.Collectors.toList());
+
+        if (candidates.isEmpty()) return;
+
+        ClearedZone target = candidates.get(ThreadLocalRandom.current().nextInt(candidates.size()));
+        target.setRestored(true);
+        target.setRestoredAt(Instant.now());
+        clearedZoneRepository.save(target);
+
+        zoneMeta.setEnemyRestoreTime(Instant.now());
+        zoneMetaRepository.save(zoneMeta);
+    }
+
+    private int parseZoneGroup(String zoneName) {
+        if (zoneName == null || zoneName.isEmpty()) return 0;
+        int idx = zoneName.indexOf('-');
+        if (idx <= 0) return 0;
+        try { return Integer.parseInt(zoneName.substring(0, idx)); } catch (NumberFormatException e) { return 0; }
     }
 
     // 이름 유효성 검사 (중복·비속어) — validate-name 엔드포인트용

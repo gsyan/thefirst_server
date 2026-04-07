@@ -1,6 +1,17 @@
 import os
+import re
 import subprocess
 import platform
+
+# C# → Java 타입 매핑
+CS_TO_JAVA_TYPE = {
+    'string': 'String',
+    'int':    'Integer',
+    'float':  'Float',
+    'double': 'Double',
+    'long':   'Long',
+    'bool':   'Boolean',
+}
 
 def open_file_location(file_path):
     """생성된 파일이 있는 폴더를 운영체제의 기본 파일 탐색기로 열기"""
@@ -21,35 +32,44 @@ def open_file_location(file_path):
         print(f"Failed to open file location: {e}")
 
 
-def generate_zone_config_dto(output_dir, package_name):
-    """ZoneConfig에서 서버에 필요한 필드만 추출하여 ZoneConfigDto 생성
+def parse_server_fields_from_csharp(cs_file_path, class_name):
+    """C# 소스에서 class_name 클래스의 // [server] 마커가 붙은 public 필드를 추출"""
+    with open(cs_file_path, 'r', encoding='utf-8') as f:
+        source = f.read()
 
-    클라이언트 ZoneConfig 중 서버에서 필요한 필드:
-    - zoneName: 존 이름
-    - mineralPerHour: 시간당 일반 자원 수확량
-    - mineralRarePerHour: 시간당 레어 자원 수확량
-    - mineralExoticPerHour: 시간당 엑조틱 자원 수확량
-    - mineralDarkPerHour: 시간당 다크 자원 수확량
+    # class_name 클래스 블록 추출
+    pattern = rf'public class {re.escape(class_name)}\s*\{{(.*?)\n\}}'
+    match = re.search(pattern, source, re.DOTALL)
+    if not match:
+        raise ValueError(f"Class '{class_name}' not found in {cs_file_path}")
 
-    WaveConfig, EnemyShipConfig 등 전투 관련 설정은 클라 전용
-    """
+    class_body = match.group(1)
 
-    server_fields = [
-        {'name': 'zoneName', 'type': 'String'},
-        {'name': 'zoneClearCount', 'type': 'Integer'},
-        {'name': 'mineralPerHour', 'type': 'Float'},
-        {'name': 'mineralRarePerHour', 'type': 'Float'},
-        {'name': 'mineralExoticPerHour', 'type': 'Float'},
-        {'name': 'mineralDarkPerHour', 'type': 'Float'},
-        {'name': 'killRewardMineral', 'type': 'Float'},
-        {'name': 'killRewardMineralRare', 'type': 'Float'},
-        {'name': 'killRewardMineralExotic', 'type': 'Float'},
-        {'name': 'killRewardMineralDark', 'type': 'Float'},
-    ]
+    # public <type> <name> ... // [server] 패턴 추출
+    field_pattern = re.compile(
+        r'public\s+(' + '|'.join(CS_TO_JAVA_TYPE.keys()) + r')\s+(\w+)[^;]*;\s*//\s*\[server\]',
+        re.MULTILINE
+    )
+
+    fields = []
+    for m in field_pattern.finditer(class_body):
+        cs_type, field_name = m.group(1), m.group(2)
+        java_type = CS_TO_JAVA_TYPE[cs_type]
+        fields.append({'name': field_name, 'type': java_type})
+
+    return fields
+
+
+def generate_zone_config_dto(cs_source_path, output_dir, package_name):
+    """C# ZoneStageConfig에서 [server] 마커 필드를 읽어 ZoneConfigData.java 생성"""
+
+    server_fields = parse_server_fields_from_csharp(cs_source_path, 'ZoneStageConfig')
+    if not server_fields:
+        raise ValueError("No [server] fields found in ZoneStageConfig. Check // [server] markers in DataTableZone.cs")
 
     java_class_name = "ZoneConfigData"
 
-    java_code = f"package {package_name};\n\n"
+    java_code  = f"package {package_name};\n\n"
     java_code += "import lombok.AllArgsConstructor;\n"
     java_code += "import lombok.Builder;\n"
     java_code += "import lombok.Data;\n"
@@ -57,7 +77,7 @@ def generate_zone_config_dto(output_dir, package_name):
     java_code += "\n"
     java_code += "/**\n"
     java_code += f" * {java_class_name}\n"
-    java_code += " * Auto-generated from Unity C# ZoneConfig class (server-required fields only)\n"
+    java_code += " * Auto-generated from Unity C# ZoneStageConfig class (server-required fields only)\n"
     java_code += " */\n"
     java_code += "@Data\n"
     java_code += "@NoArgsConstructor\n"
@@ -84,13 +104,21 @@ def generate_zone_config_dto(output_dir, package_name):
 
 if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    output_dir = os.path.join(script_dir, r"../../src/main/java/com/bk/sbs/dto")
+
+    # C# 소스 경로 (클라 프로젝트 기준 상대 경로)
+    cs_source_path = os.path.join(
+        script_dir,
+        r"../../../thefirst_client_unity/Assets/Scripts/System/Data/DataTableZone.cs"
+    )
+
+    output_dir   = os.path.join(script_dir, r"../../src/main/java/com/bk/sbs/dto")
     package_name = "com.bk.sbs.dto"
 
-    print("Generating ZoneConfigDto (server-required fields only)")
-    print("="*50)
+    print("Generating ZoneConfigData (parsed from C# // [server] markers)")
+    print("="*55)
+    print(f"Source: {os.path.abspath(cs_source_path)}")
 
-    output_file = generate_zone_config_dto(output_dir, package_name)
+    output_file = generate_zone_config_dto(cs_source_path, output_dir, package_name)
 
     if output_file:
         open_file_location(output_file)

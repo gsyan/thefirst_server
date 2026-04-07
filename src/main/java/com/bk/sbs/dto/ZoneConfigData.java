@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * ZoneConfigData
- * Auto-generated from Unity C# ZoneConfig class (server-required fields only)
+ * Auto-generated from Unity C# ZoneStageConfig class (server-required fields only)
  */
 @Data
 @NoArgsConstructor
@@ -15,13 +15,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ZoneConfigData {
     private String zoneName;
-    private Integer zoneClearCount;
     private Float mineralPerHour;
     private Float mineralRarePerHour;
     private Float mineralExoticPerHour;
     private Float mineralDarkPerHour;
-    private Float killRewardMineral;
-    private Float killRewardMineralRare;
-    private Float killRewardMineralExotic;
-    private Float killRewardMineralDark;
 }

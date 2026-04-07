@@ -4,11 +4,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * ExitZoneRequest
- * Auto-generated from Unity C# ExitZoneRequest class
+ * ZoneCheckEverClearedRequest
+ * Auto-generated from Unity C# ZoneCheckEverClearedRequest class
  */
 @Data
 @NoArgsConstructor
-public class ExitZoneRequest {
+public class ZoneCheckEverClearedRequest {
     private String zoneName;
 }
