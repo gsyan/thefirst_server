@@ -1,14 +1,8 @@
 package com.bk.sbs.service;
 
-import com.bk.sbs.dto.ZoneConfigData;
-import com.bk.sbs.dto.CostRemainInfoDto;
-import com.bk.sbs.dto.DestroyZoneStageWaveRequest;
-import com.bk.sbs.dto.DestroyZoneStageWaveResponse;
-import com.bk.sbs.dto.ExitZoneRequest;
-import com.bk.sbs.dto.ExitZoneResponse;
-import com.bk.sbs.dto.ZoneCollectRequest;
-import com.bk.sbs.dto.ZoneCollectResponse;
-import com.bk.sbs.dto.HeartbeatResponse;
+import com.bk.sbs.dto.*;
+import com.bk.sbs.dto.ClearZoneStageRequest;
+import com.bk.sbs.dto.ClearZoneStageResponse;
 import com.bk.sbs.entity.Character;
 import com.bk.sbs.entity.ClearedZone;
 import com.bk.sbs.entity.Fleet;
@@ -64,7 +58,7 @@ public class ZoneService {
      * 케이스2) 미클리어 존: Redis waveCount 누적, 충족 시 DB 클리어 저장 + isZoneCleared = true
      */
     @Transactional
-    public DestroyZoneStageWaveResponse destroyZoneStageWave(Long characterId, DestroyZoneStageWaveRequest request) {
+    public ClearZoneStageResponse clearZoneStage(Long characterId, ClearZoneStageRequest request) {
         Character character = characterRepository.findByIdForUpdate(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.ZONE_DESTROY_WAVE_FAIL_CHARACTER_NOT_FOUND));
 
@@ -85,28 +79,7 @@ public class ZoneService {
         // 케이스1: 이미 클리어된 존 — 보상만 지급
         if (clearedZoneNames.contains(zoneName)) {
             characterRepository.save(character);
-            return DestroyZoneStageWaveResponse.builder()
-                    .rewardInfo(buildRewardInfo(character, killRewards))
-                    .isZoneCleared(false)
-                    .build();
-        }
-
-        // 케이스2: 미클리어 존 — waveIndex 검증 후 카운트 누적
-        long currentCount = redisService.getZoneWaveCount(characterId, zoneName);
-        if (request.getWaveIndex() != (int) currentCount) {
-            // waveIndex=0이면 앱 재시작으로 간주 → Redis 리셋 후 재진행
-            if (request.getWaveIndex() == 0)
-                redisService.deleteZoneWaveCount(characterId, zoneName);
-            else
-                throw new BusinessException(ServerErrorCode.ZONE_DESTROY_WAVE_FAIL_WAVE_INDEX_MISMATCH);
-        }
-
-        long newCount = redisService.incrementZoneWaveCount(characterId, zoneName);
-
-        // 클리어 조건 미달 — 보상만 지급
-        if (newCount < zoneConfig.getZoneClearCount()) {
-            characterRepository.save(character);
-            return DestroyZoneStageWaveResponse.builder()
+            return ClearZoneStageResponse.builder()
                     .rewardInfo(buildRewardInfo(character, killRewards))
                     .isZoneCleared(false)
                     .build();
@@ -122,7 +95,6 @@ public class ZoneService {
         clearedZoneRepository.save(new ClearedZone(characterId, zoneName));
         character.setCollectDateTime(now);
         characterRepository.save(character);
-        redisService.deleteZoneWaveCount(characterId, zoneName);
 
         // Redis 랭킹 갱신
         clearedZoneNames.add(zoneName);
@@ -140,18 +112,12 @@ public class ZoneService {
             killRewards[3] + collectRewards[3]
         };
 
-        return DestroyZoneStageWaveResponse.builder()
+        return ClearZoneStageResponse.builder()
                 .rewardInfo(buildRewardInfo(character, totalRewards))
                 .isZoneCleared(true)
                 .clearedZoneName(zoneName)
                 .collectDateTime(now.toString())
                 .build();
-    }
-
-    /** 존 이탈 — 미클리어 스테이지의 웨이브 카운트 초기화 */
-    public ExitZoneResponse exitZone(Long characterId, ExitZoneRequest request) {
-        redisService.deleteZoneWaveCount(characterId, request.getZoneName());
-        return ExitZoneResponse.builder().build();
     }
 
     @Transactional

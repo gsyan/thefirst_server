@@ -1,7 +1,7 @@
 package com.bk.sbs.controller;
 
-import com.bk.sbs.dto.DestroyZoneStageWaveRequest;
-import com.bk.sbs.dto.DestroyZoneStageWaveResponse;
+import com.bk.sbs.dto.ClearZoneStageRequest;
+import com.bk.sbs.dto.ClearZoneStageResponse;
 import com.bk.sbs.dto.ExitZoneRequest;
 import com.bk.sbs.dto.ExitZoneResponse;
 import com.bk.sbs.dto.ZoneCollectRequest;
@@ -31,22 +31,12 @@ public class ZoneController {
     }
 
     // 웨이브 1개 처치 보고 — 킬 보상 + 클리어 판정
-    @PostMapping("/destroy-wave")
-    public ResponseEntity<ApiResponse<DestroyZoneStageWaveResponse>> destroyZoneStageWave(
-            @RequestBody DestroyZoneStageWaveRequest request,
+    @PostMapping("/clear-stage")
+    public ResponseEntity<ApiResponse<ClearZoneStageResponse>> destroyZoneStageWave(
+            @RequestBody ClearZoneStageRequest request,
             HttpServletRequest httpRequest) {
         Long actualCharacterId = getCharacterIdFromToken(httpRequest);
-        DestroyZoneStageWaveResponse response = zoneService.destroyZoneStageWave(actualCharacterId, request);
-        return ResponseEntity.ok(ApiResponse.success(response));
-    }
-
-    // 존 이탈 — 미클리어 스테이지 웨이브 카운트 초기화
-    @PostMapping("/exit")
-    public ResponseEntity<ApiResponse<ExitZoneResponse>> exitZone(
-            @RequestBody ExitZoneRequest request,
-            HttpServletRequest httpRequest) {
-        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
-        ExitZoneResponse response = zoneService.exitZone(actualCharacterId, request);
+        ClearZoneStageResponse response = zoneService.clearZoneStage(actualCharacterId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 

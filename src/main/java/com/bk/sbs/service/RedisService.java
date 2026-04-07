@@ -344,29 +344,6 @@ public class RedisService {
         return rank != null ? rank + 1 : null;
     }
 
-    // ══════════════════════════════════════════════════════════════════════
-    // Zone 웨이브 카운트 (미클리어 스테이지 진행 추적)
-    // ══════════════════════════════════════════════════════════════════════
-
-    /** 웨이브 카운트 +1, TTL 1분 갱신 후 현재 카운트 반환 (테스트용: 원래 30분) */
-    public long incrementZoneWaveCount(Long characterId, String zoneName) {
-        String key = ZONE_WAVE_PREFIX + characterId + ":" + zoneName;
-        Long count = redisTemplate.opsForValue().increment(key);
-        redisTemplate.expire(key, Duration.ofMinutes(1));
-        return count != null ? count : 1L;
-    }
-
-    /** 웨이브 카운트 조회 (없으면 0) */
-    public long getZoneWaveCount(Long characterId, String zoneName) {
-        String key = ZONE_WAVE_PREFIX + characterId + ":" + zoneName;
-        String val = redisTemplate.opsForValue().get(key);
-        return val != null ? Long.parseLong(val) : 0L;
-    }
-
-    /** 웨이브 카운트 삭제 (클리어 완료 또는 포기 시) */
-    public void deleteZoneWaveCount(Long characterId, String zoneName) {
-        redisTemplate.delete(ZONE_WAVE_PREFIX + characterId + ":" + zoneName);
-    }
 
     // ── 내부 헬퍼 ──────────────────────────────────────────────────────────
 
