@@ -40,8 +40,6 @@ public class ModuleData {
 
     private Float attackCool;
 
-    private Float projectileWidth;
-
     private Float projectileSpeed;
 
     private Integer airCount;
