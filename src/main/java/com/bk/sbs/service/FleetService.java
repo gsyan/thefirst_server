@@ -922,8 +922,11 @@ public class FleetService {
         );
         boolean alreadyAdded = newModuleLevelRecord.isPresent();
 
-        // 4. 신규 잠금해제 시에만 max level 요구 (이미 보유한 서브타입은 레벨 무관하게 교체 가능)
+        // 4. 신규 잠금해제 시에만 max level + 직접 다음 단계 요구 (이미 보유한 서브타입은 레벨 무관하게 교체 가능)
         if (!alreadyAdded) {
+            if (!gameDataService.isDirectNextStep(currentModuleSubType, newModuleSubType)) {
+                throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_NOT_DIRECT_NEXT_STEP);
+            }
             int maxLevel = gameDataService.getMaxModuleLevel(currentModuleType, currentModuleSubType);
             if (currentModule.getModuleLevel() < maxLevel) {
                 throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_CURRENT_MODULE_NOT_MAX_LEVEL);

@@ -168,6 +168,28 @@ public class GameDataService {
         return dataTableModule.getResearchCost(moduleSubType);
     }
 
+    // newSubType이 currentSubType의 직접 다음 단계인지 확인 (prerequisiteIds 기준)
+    public boolean isDirectNextStep(EModuleSubType currentSubType, EModuleSubType newSubType) {
+        List<com.bk.sbs.dto.ModuleResearchData> list = dataTableModule.getResearchDataList();
+        String currentResearchId = null;
+        String newPrerequisiteMatch = null;
+
+        for (com.bk.sbs.dto.ModuleResearchData data : list) {
+            if (currentSubType.equals(data.getModuleSubType())) {
+                currentResearchId = data.getResearchId();
+            }
+        }
+        if (currentResearchId == null) return false;
+
+        for (com.bk.sbs.dto.ModuleResearchData data : list) {
+            if (newSubType.equals(data.getModuleSubType())) {
+                List<String> prereqs = data.getPrerequisiteIds();
+                return prereqs != null && prereqs.contains(currentResearchId);
+            }
+        }
+        return false;
+    }
+
     // tech_level_N 연구 비용 반환 (데이터 없으면 비용 0)
     public CostStructDto getTechLevelResearchCost(String researchId) {
         CostStructDto cost = techLevelResearchCostMap.get(researchId);
