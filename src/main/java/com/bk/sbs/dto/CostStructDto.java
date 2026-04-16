@@ -14,7 +14,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class CostStructDto {
-    private Integer techLevel;
     private Long mineral;
     private Long mineralRare;
     private Long mineralExotic;

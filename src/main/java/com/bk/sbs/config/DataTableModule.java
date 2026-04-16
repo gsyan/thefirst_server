@@ -65,7 +65,7 @@ public class DataTableModule {
      */
     public CostStructDto getResearchCost(EModuleSubType moduleSubType) {
         if (researchDataList == null || moduleSubType == null) {
-            return new CostStructDto(0, 0L, 0L, 0L, 0L);
+            return new CostStructDto(0L, 0L, 0L, 0L);
         }
 
         for (ModuleResearchData data : researchDataList) {
@@ -73,11 +73,11 @@ public class DataTableModule {
                 data.getModuleSubType().equals(moduleSubType)) {
                 return data.getResearchCost() != null ?
                        data.getResearchCost() :
-                       new CostStructDto(0, 0L, 0L, 0L, 0L);
+                       new CostStructDto(0L, 0L, 0L, 0L);
             }
         }
 
-        return new CostStructDto(0, 0L, 0L, 0L, 0L);
+        return new CostStructDto(0L, 0L, 0L, 0L);
     }
 }
 

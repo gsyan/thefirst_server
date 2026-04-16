@@ -204,7 +204,7 @@ public class ZoneService {
                 .build();
     }
 
-    // 기술레벨 기반 오프라인 캡(초) 계산 — 3h + techLevel/2 시간
+    // 기술레벨 기반 오프라인 캡(초) 계산 — DataTableResearch의 stackTime 사용
     private long calcOfflineCapSeconds(Long characterId) {
         List<ModuleResearch> techResearches = moduleResearchRepository
                 .findByCharacterIdAndResearchIdStartingWithAndResearchedTrue(characterId, "tech_level_");
@@ -215,8 +215,7 @@ public class ZoneService {
                 if (level > maxTechLevel) maxTechLevel = level;
             } catch (NumberFormatException ignored) { }
         }
-        long capHours = 3L + (maxTechLevel / 2);
-        return capHours * 3600L;
+        return gameDataService.getStackTimeSeconds(maxTechLevel);
     }
 
     private long[] collectZoneResourcesOnline(Character character, List<String> clearedZoneNames, long elapsedSeconds) {

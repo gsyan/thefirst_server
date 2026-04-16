@@ -28,8 +28,16 @@ public class GameDataService {
     private DataTableConfig dataTableConfig;
     private DataTableModule dataTableModule = new DataTableModule();
     private ZoneConfig zoneConfig = new ZoneConfig();
-    // researchId → 연구 비용 (tech_level_N 등)
-    private Map<String, CostStructDto> techLevelResearchCostMap = new HashMap<>();
+    // researchId → 기술레벨 전체 데이터 (비용, stackTime, shipCount)
+    private static class TechLevelData {
+        CostStructDto cost;
+        double stackTime;
+        int shipCount;
+        TechLevelData(CostStructDto cost, double stackTime, int shipCount) {
+            this.cost = cost; this.stackTime = stackTime; this.shipCount = shipCount;
+        }
+    }
+    private Map<String, TechLevelData> techLevelDataMap = new HashMap<>();
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -67,19 +75,21 @@ public class GameDataService {
                     dataTableModule.setResearchDataList(researchDataList);
                     log.info("DataTableResearch.json loaded successfully from resources/data/ and merged into ModuleDataTable");
                 }
-                // techLevelDataList: researchId → researchCost 맵으로 로드
+                // techLevelDataList: researchId → TechLevelData(cost, stackTime, shipCount)
                 com.fasterxml.jackson.databind.JsonNode techLevelDataListNode = rootNode.get("techLevelDataList");
                 if (techLevelDataListNode != null) {
-                    techLevelResearchCostMap.clear();
+                    techLevelDataMap.clear();
                     for (com.fasterxml.jackson.databind.JsonNode techNode : techLevelDataListNode) {
                         String rId = techNode.path("researchId").asText(null);
                         com.fasterxml.jackson.databind.JsonNode costNode = techNode.path("researchCost");
                         if (rId != null && !costNode.isMissingNode()) {
                             CostStructDto cost = objectMapper.convertValue(costNode, CostStructDto.class);
-                            techLevelResearchCostMap.put(rId, cost);
+                            double stackTime = techNode.path("stackTime").asDouble(3.0);
+                            int shipCount    = techNode.path("shipCount").asInt(1);
+                            techLevelDataMap.put(rId, new TechLevelData(cost, stackTime, shipCount));
                         }
                     }
-                    log.info("techLevelDataList loaded: {} entries", techLevelResearchCostMap.size());
+                    log.info("techLevelDataList loaded: {} entries", techLevelDataMap.size());
                 }
             } else {
                 log.warn("DataTableResearch.json not found in resources/data/, using empty data");
@@ -124,7 +134,7 @@ public class GameDataService {
     public CostStructDto getShipAddCost(int currentShipCount) {
         List<CostStructDto> costs = getDataTableConfig().getAddShipCosts();
         if (costs == null || costs.isEmpty()) {
-            return new CostStructDto(0, 0L, 0L, 0L, 0L);
+            return new CostStructDto(0L, 0L, 0L, 0L);
         }
 
         // 현재 함선 수에 해당하는 비용 반환 (인덱스는 0부터 시작)
@@ -163,7 +173,7 @@ public class GameDataService {
 
     public CostStructDto getModuleResearchCost(EModuleSubType moduleSubType) {
         if (dataTableModule == null) {
-            return new CostStructDto(0, 0L, 0L, 0L, 0L);
+            return new CostStructDto(0L, 0L, 0L, 0L);
         }
         return dataTableModule.getResearchCost(moduleSubType);
     }
@@ -192,8 +202,20 @@ public class GameDataService {
 
     // tech_level_N 연구 비용 반환 (데이터 없으면 비용 0)
     public CostStructDto getTechLevelResearchCost(String researchId) {
-        CostStructDto cost = techLevelResearchCostMap.get(researchId);
-        return cost != null ? cost : new CostStructDto(0, 0L, 0L, 0L, 0L);
+        TechLevelData data = techLevelDataMap.get(researchId);
+        return data != null ? data.cost : new CostStructDto(0L, 0L, 0L, 0L);
+    }
+
+    // 해당 기술레벨의 자원 보관 캡 시간(초) 반환 — stackTime(h) * 3600
+    public long getStackTimeSeconds(int techLevel) {
+        TechLevelData data = techLevelDataMap.get("tech_level_" + techLevel);
+        return (long)((data != null ? data.stackTime : 3.0) * 3600L);
+    }
+
+    // 해당 기술레벨에서 허용되는 최대 함선 수 반환
+    public int getShipCount(int techLevel) {
+        TechLevelData data = techLevelDataMap.get("tech_level_" + techLevel);
+        return data != null ? data.shipCount : 1;
     }
 
     public ZoneConfig getZoneConfig() {

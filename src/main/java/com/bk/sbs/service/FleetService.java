@@ -514,8 +514,9 @@ public class FleetService {
         // 현재 함선 수에 따른 추가 비용 가져오기
         CostStructDto shipAddCost = gameDataService.getShipAddCost(currentShips.size());
 
-        // TechLevel 검증 (module_research 기반)
-        if (getCharacterTechLevel(characterId) < shipAddCost.getTechLevel()) {
+        // 기술레벨 검증 — 현재 기술레벨에서 허용된 최대 함선 수(ship_count) 초과 여부
+        int charTechLevel = getCharacterTechLevel(characterId);
+        if (currentShips.size() >= gameDataService.getShipCount(charTechLevel)) {
             throw new BusinessException(ServerErrorCode.ADD_SHIP_FAIL_INSUFFICIENT_TECH_LEVEL);
         }
 
@@ -640,7 +641,7 @@ public class FleetService {
         }
 
         // 업그레이드 비용 계산 (현재 레벨부터 목표 레벨까지)
-        CostStructDto totalCost = new CostStructDto(0, 0L, 0L, 0L, 0L);
+        CostStructDto totalCost = new CostStructDto(0L, 0L, 0L, 0L);
 
         List<ModuleData> moduleDataList = gameDataService.getModulesByType(moduleType);
         for (int level = request.getCurrentLevel(); level < request.getTargetLevel(); level++) {
@@ -980,7 +981,7 @@ public class FleetService {
         shipModuleRepository.save(currentModule);
 
         // 응답 생성 (actualCost: 최초 추가 시 실차감액, 재추가 시 0)
-        CostStructDto actualCost = alreadyAdded ? new CostStructDto(0, 0L, 0L, 0L, 0L) : addCost;
+        CostStructDto actualCost = alreadyAdded ? new CostStructDto(0L, 0L, 0L, 0L) : addCost;
         CostRemainInfoDto costRemainInfo = new CostRemainInfoDto(
                 0L, actualCost.getMineralRare(), actualCost.getMineralExotic(), actualCost.getMineralDark(),
                 character.getMineral(), character.getMineralRare(),

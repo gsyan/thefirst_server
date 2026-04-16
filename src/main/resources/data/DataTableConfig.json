@@ -3,63 +3,54 @@
   "maxShipsPerFleet": 9,
   "addShipCosts": [
     {
-      "techLevel": 0,
       "mineral": 0,
       "mineralRare": 0,
       "mineralExotic": 0,
       "mineralDark": 0
     },
     {
-      "techLevel": 1,
       "mineral": 5000,
       "mineralRare": 0,
       "mineralExotic": 0,
       "mineralDark": 0
     },
     {
-      "techLevel": 2,
       "mineral": 10000,
       "mineralRare": 0,
       "mineralExotic": 0,
       "mineralDark": 0
     },
     {
-      "techLevel": 4,
       "mineral": 20000,
       "mineralRare": 60000,
       "mineralExotic": 0,
       "mineralDark": 0
     },
     {
-      "techLevel": 6,
       "mineral": 40000,
       "mineralRare": 170000,
       "mineralExotic": 0,
       "mineralDark": 0
     },
     {
-      "techLevel": 8,
       "mineral": 80000,
       "mineralRare": 370000,
       "mineralExotic": 0,
       "mineralDark": 0
     },
     {
-      "techLevel": 10,
       "mineral": 160000,
       "mineralRare": 1400000,
       "mineralExotic": 0,
       "mineralDark": 0
     },
     {
-      "techLevel": 12,
       "mineral": 320000,
       "mineralRare": 2500000,
       "mineralExotic": 0,
       "mineralDark": 0
     },
     {
-      "techLevel": 14,
       "mineral": 640000,
       "mineralRare": 4000000,
       "mineralExotic": 0,
