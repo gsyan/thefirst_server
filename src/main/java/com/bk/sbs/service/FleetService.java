@@ -605,7 +605,7 @@ public class FleetService {
     }
 
     @Transactional
-    public ModuleUpgradeResponse upgradeModule(Long characterId, ModuleUpgradeRequest request) {
+    public ModuleLevelUpResponse levelUpModule(Long characterId, ModuleLevelUpRequest request) {
         // 함선 소유권 확인
         Ship ship = shipRepository.findById(request.getShipId())
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_SHIP_NOT_FOUND));
@@ -719,7 +719,7 @@ public class FleetService {
         );
 
         // 응답 생성
-        ModuleUpgradeResponse response = ModuleUpgradeResponse.builder()
+        ModuleLevelUpResponse response = ModuleLevelUpResponse.builder()
                 .shipId(request.getShipId())
                 .bodyIndex(request.getBodyIndex())
                 .moduleType(moduleType)

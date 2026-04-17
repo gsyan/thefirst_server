@@ -110,13 +110,13 @@ public class FleetController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
-    // 모듈 업그레이드
-    @PostMapping("/upgrade-module")
-    public ResponseEntity<ApiResponse<ModuleUpgradeResponse>> upgradeModule(
-            @RequestBody ModuleUpgradeRequest request,
+    // 모듈 레벨업
+    @PostMapping("/levelup-module")
+    public ResponseEntity<ApiResponse<ModuleLevelUpResponse>> levelUpModule(
+            @RequestBody ModuleLevelUpRequest request,
             HttpServletRequest httpRequest) {
         Long actualCharacterId = getCharacterIdFromToken(httpRequest);
-        ModuleUpgradeResponse response = fleetService.upgradeModule(actualCharacterId, request);
+        ModuleLevelUpResponse response = fleetService.levelUpModule(actualCharacterId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
