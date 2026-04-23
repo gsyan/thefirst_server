@@ -17,10 +17,11 @@ import lombok.NoArgsConstructor;
 public class CharacterInfoDto {
     private Long characterId;
     private String characterName;
-    private Long mineral;
-    private Long mineralRare;
-    private Long mineralExotic;
-    private Long mineralDark;
+    private Integer mineral;
+    private Integer pvpMineral;
+    private String pvpMineralExpiry;
+    private Integer tempMineral;
+    private String tempMineralExpiry;
     private List<String> clearedZones;
     private String collectDateTime;
     private Integer nameChangeCount;

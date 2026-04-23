@@ -25,4 +25,7 @@ public class ModuleBodyInfoDto {
     private List<ModuleInfoDto> missiles;
     private List<ModuleInfoDto> hangers;
     private List<EModuleSubType> unlockedSubTypes;
+    private Integer investedMineral;
+    private Integer investedPvpMineral;
+    private Integer investedTempMineral;
 }

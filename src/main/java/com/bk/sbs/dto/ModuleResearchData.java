@@ -21,7 +21,7 @@ public class ModuleResearchData {
 
     private List<String> prerequisiteIds;
 
-    private CostStructDto researchCost;
+    private Integer mineralCost;
 
     private EModuleType moduleType;
 

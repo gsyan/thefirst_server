@@ -27,30 +27,19 @@ public class Character {
     private Long lastLocation;
 
     @Column(nullable = false)
-    private Long mineral = 0L;
+    private int mineral;
 
-    @Column(nullable = false)
-    private Long mineralRare = 0L;
+    // PvP 정산 배치 지급 재화 — 만료 시 소멸
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int pvpMineral = 0;
 
-    @Column(nullable = false)
-    private Long mineralExotic = 0L;
-    
-    @Column(nullable = false)
-    private Long mineralDark = 0L;
+    private Instant pvpMineralExpiry;
 
-    // 소수점 자원 누적분 (0.0 ~ 0.999...)
-    @Column(nullable = false)
-    private Double mineralFraction = 0.0;
+    // IAP 구매 임시 재화 — 만료 시 소멸
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int tempMineral = 0;
 
-    @Column(nullable = false)
-    private Double mineralRareFraction = 0.0;
-
-    @Column(nullable = false)
-    private Double mineralExoticFraction = 0.0;
-
-    @Column(nullable = false)
-    private Double mineralDarkFraction = 0.0;
-
+    private Instant tempMineralExpiry;
 
     // 이름 변경 가능 횟수 (초기값 2, 0이면 변경 불가)
     @Column(nullable = false, columnDefinition = "INT DEFAULT 2")

@@ -160,6 +160,26 @@ public class FleetController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
+    // 모듈 리셋
+    @PostMapping("/reset-module")
+    public ResponseEntity<ApiResponse<ModuleResetResponse>> resetModule(
+            @RequestBody ModuleResetRequest request,
+            HttpServletRequest httpRequest) {
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        ModuleResetResponse response = fleetService.resetModule(actualCharacterId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    // 함선 리셋 및 제거
+    @PostMapping("/reset-ship")
+    public ResponseEntity<ApiResponse<ShipResetRemoveResponse>> resetAndRemoveShip(
+            @RequestBody ShipResetRemoveRequest request,
+            HttpServletRequest httpRequest) {
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        ShipResetRemoveResponse response = fleetService.resetAndRemoveShip(actualCharacterId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
     // JWT 토큰에서 캐릭터 ID 추출 (비트 마스킹 포함)
     private Long getCharacterIdFromToken(HttpServletRequest request) {
         String token = jwtUtil.getTokenFromRequest(request);

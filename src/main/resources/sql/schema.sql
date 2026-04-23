@@ -10,7 +10,6 @@ DROP TABLE IF EXISTS ship_module_level;
 DROP TABLE IF EXISTS ship_module;
 DROP TABLE IF EXISTS ship;
 DROP TABLE IF EXISTS fleet;
-DROP TABLE IF EXISTS zone_meta;
 DROP TABLE IF EXISTS cleared_zone;
 DROP TABLE IF EXISTS module_research;
 DROP TABLE IF EXISTS pvp_record;
@@ -42,14 +41,11 @@ CREATE TABLE `character` (
     account_id              BIGINT          NOT NULL,
     character_name          VARCHAR(255)    NOT NULL,
     last_location           BIGINT              NULL,
-    mineral                 BIGINT          NOT NULL DEFAULT 0,
-    mineral_rare            BIGINT          NOT NULL DEFAULT 0,
-    mineral_exotic          BIGINT          NOT NULL DEFAULT 0,
-    mineral_dark            BIGINT          NOT NULL DEFAULT 0,
-    mineral_fraction        DOUBLE          NOT NULL DEFAULT 0,
-    mineral_rare_fraction   DOUBLE          NOT NULL DEFAULT 0,
-    mineral_exotic_fraction DOUBLE          NOT NULL DEFAULT 0,
-    mineral_dark_fraction   DOUBLE          NOT NULL DEFAULT 0,
+    mineral                 INT             NOT NULL DEFAULT 0,
+    pvp_mineral             INT             NOT NULL DEFAULT 0,
+    pvp_mineral_expiry      DATETIME(6)         NULL,
+    temp_mineral            INT             NOT NULL DEFAULT 0,
+    temp_mineral_expiry     DATETIME(6)         NULL,
     name_change_count       INT             NOT NULL DEFAULT 2,
     collect_date_time       DATETIME(6)         NULL,
     last_online_at          DATETIME(6)         NULL,
@@ -98,16 +94,19 @@ CREATE TABLE ship (
 -- ship_module
 -- ============================================================
 CREATE TABLE ship_module (
-    id              BIGINT          NOT NULL AUTO_INCREMENT,
-    ship_id         BIGINT          NOT NULL,
-    module_type     VARCHAR(100)    NOT NULL,
-    module_sub_type VARCHAR(100)    NOT NULL,
-    module_level    INT             NOT NULL,
-    body_index      INT             NOT NULL,
-    slot_index      INT             NOT NULL,
-    deleted         TINYINT(1)      NOT NULL DEFAULT 0,
-    created         DATETIME(6)     NOT NULL,
-    modified        DATETIME(6)     NOT NULL,
+    id                      BIGINT          NOT NULL AUTO_INCREMENT,
+    ship_id                 BIGINT          NOT NULL,
+    module_type             VARCHAR(100)    NOT NULL,
+    module_sub_type         VARCHAR(100)    NOT NULL,
+    module_level            INT             NOT NULL,
+    body_index              INT             NOT NULL,
+    slot_index              INT             NOT NULL,
+    invested_mineral        INT             NOT NULL DEFAULT 0,
+    invested_pvp_mineral    INT             NOT NULL DEFAULT 0,
+    invested_temp_mineral   INT             NOT NULL DEFAULT 0,
+    deleted                 TINYINT(1)      NOT NULL DEFAULT 0,
+    created                 DATETIME(6)     NOT NULL,
+    modified                DATETIME(6)     NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT fk_ship_module_ship FOREIGN KEY (ship_id) REFERENCES ship (id),
     INDEX idx_module_ship (ship_id)
@@ -189,26 +188,10 @@ CREATE TABLE cleared_zone (
     character_id    BIGINT          NOT NULL,
     zone_name       VARCHAR(255)    NOT NULL,
     cleared_at      DATETIME(6)     NOT NULL,
-    is_restored     TINYINT(1)      NOT NULL DEFAULT 0,  -- 적 수복 여부 (1=수복됨, 수확/입장 제외)
-    restored_at     DATETIME(6)         NULL,             -- 수복된 시각
     PRIMARY KEY (id),
     UNIQUE KEY uk_cleared_zone (character_id, zone_name),
     INDEX idx_cleared_character (character_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ============================================================
--- zone_meta
--- 캐릭터별 존 탐험 메타데이터 (Character 테이블 오염 방지)
--- ============================================================
-CREATE TABLE zone_meta (
-    id                  BIGINT          NOT NULL AUTO_INCREMENT,
-    character_id        BIGINT          NOT NULL,
-    enemy_restore_time  DATETIME(6)         NULL,  -- 수복 타이머 기준점 (24h마다 수복 발생)
-    PRIMARY KEY (id),
-    UNIQUE KEY uk_zone_meta_character (character_id),
-    CONSTRAINT fk_zone_meta_character FOREIGN KEY (character_id) REFERENCES `character` (id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 
 -- ============================================================
 -- MariaDB Stored Procedure 예시
@@ -223,12 +206,12 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS sp_get_character_resources$$
 CREATE PROCEDURE sp_get_character_resources(
     IN  p_character_id  BIGINT,
-    OUT p_mineral       BIGINT,
-    OUT p_mineral_rare  BIGINT
+    OUT p_mineral       INT,
+    OUT p_pvp_mineral   INT
 )
 BEGIN
-    SELECT mineral, mineral_rare
-    INTO   p_mineral, p_mineral_rare
+    SELECT mineral, pvp_mineral
+    INTO   p_mineral, p_pvp_mineral
     FROM   `character`
     WHERE  id = p_character_id AND deleted = 0;
 END$$

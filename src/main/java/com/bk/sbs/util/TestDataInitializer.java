@@ -153,16 +153,14 @@ public class TestDataInitializer {
         // 3. Character
         List<Object[]> charRows = new ArrayList<>(count);
         for (int i = 0; i < count; i++)
-            charRows.add(new Object[]{accountIds.get(i), "empty_test" + String.format("%04d", i + 1), 5100L, now});
+            charRows.add(new Object[]{accountIds.get(i), "empty_test" + String.format("%04d", i + 1), 2, now});
         jdbc.batchUpdate(
-                "INSERT INTO `character` (account_id, character_name, mineral," +
-                " mineral_rare, mineral_exotic, mineral_dark," +
-                " mineral_fraction, mineral_rare_fraction, mineral_exotic_fraction, mineral_dark_fraction," +
-                " deleted, date_time) VALUES (?, ?, ?, 0, 0, 0, 0.0, 0.0, 0.0, 0.0, false, ?)",
+                "INSERT INTO `character` (account_id, character_name, mineral, deleted, date_time)" +
+                " VALUES (?, ?, ?, false, ?)",
                 charRows, BATCH_SIZE, (ps, row) -> {
-                    ps.setLong(1,  (Long)      row[0]);
-                    ps.setString(2, (String)   row[1]);
-                    ps.setLong(3,  (Long)      row[2]);
+                    ps.setLong(1,   (Long)      row[0]);
+                    ps.setString(2, (String)    row[1]);
+                    ps.setInt(3,    (Integer)   row[2]);
                     ps.setTimestamp(4, (Timestamp) row[3]);
                 });
 

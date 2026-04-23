@@ -2,7 +2,6 @@ package com.bk.sbs.config;
 
 import com.bk.sbs.dto.ModuleData;
 import com.bk.sbs.dto.ModuleResearchData;
-import com.bk.sbs.dto.CostStructDto;
 import com.bk.sbs.enums.EModuleSubType;
 import com.bk.sbs.enums.EModuleType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -63,21 +62,21 @@ public class DataTableModule {
     /**
      * 특정 모듈 서브타입의 연구 비용 조회
      */
-    public CostStructDto getResearchCost(EModuleSubType moduleSubType) {
+    public int getResearchCost(EModuleSubType moduleSubType) {
         if (researchDataList == null || moduleSubType == null) {
-            return new CostStructDto(0L, 0L, 0L, 0L);
+            return 0;
         }
 
         for (ModuleResearchData data : researchDataList) {
             if (data.getModuleSubType() != null &&
                 data.getModuleSubType().equals(moduleSubType)) {
-                return data.getResearchCost() != null ?
-                       data.getResearchCost() :
-                       new CostStructDto(0L, 0L, 0L, 0L);
+                return data.getMineralCost() != null ?
+                       data.getMineralCost() :
+                       0;
             }
         }
 
-        return new CostStructDto(0L, 0L, 0L, 0L);
+        return 0;
     }
 }
 

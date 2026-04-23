@@ -14,12 +14,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class CostRemainInfoDto {
-    private Long mineralCost;
-    private Long mineralRareCost;
-    private Long mineralExoticCost;
-    private Long mineralDarkCost;
-    private Long remainMineral;
-    private Long remainMineralRare;
-    private Long remainMineralExotic;
-    private Long remainMineralDark;
+    private Integer mineralCost;
+    private Integer mineralRemain;
+    private Integer pvpMineralCost;
+    private Integer pvpMineralRemain;
+    private Integer tempMineralCost;
+    private Integer tempMineralRemain;
 }

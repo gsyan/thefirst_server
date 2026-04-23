@@ -46,33 +46,26 @@ public class DevController {
         switch (command.toLowerCase()) {
             case "setmineral":
                 if (params == null || params.isEmpty()) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_SETMINERAL_INVALID_PARAM);
-                Long mineral = parseOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_SETMINERAL_PARSE_PARAM);
+                int mineral = parseIntOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_SETMINERAL_PARSE_PARAM);
                 characterService.updateMineral(characterId, mineral);
                 return ApiResponse.success("Mineral set to: " + mineral + "|mineral:" + mineral);
             case "addmineral":
                 if (params == null || params.isEmpty()) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMIKNERAL_INVALID_PARAM);
-                Long additionalMaterial = parseOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMIKNERAL_PARSE_PARAM);
-                Long newMineral = characterService.addMineral(characterId, additionalMaterial);
+                int additionalMaterial = parseIntOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMIKNERAL_PARSE_PARAM);
+                int newMineral = characterService.addMineral(characterId, additionalMaterial);
                 return ApiResponse.success("Mineral added: " + additionalMaterial + " (total: " + newMineral + ")|mineral:" + newMineral);
 
-            // addmineral/rare/exotic/dark 를 한 번에 처리 (0이면 해당 타입 스킵)
-            // usage: addminerals [mineral] [mineralRare] [mineralExotic] [mineralDark]
-            case "addminerals":
-                if (params == null || params.size() < 4) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMIKNERAL_INVALID_PARAM);
-                Long amtMineral      = parseOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMIKNERAL_PARSE_PARAM);
-                Long amtMineralRare  = parseOrThrow(params.get(1), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMINERALRARE_PARSE_PARAM);
-                Long amtMineralExotic = parseOrThrow(params.get(2), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMINERALEXOTIC_PARSE_PARAM);
-                Long amtMineralDark  = parseOrThrow(params.get(3), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMINERALDARK_PARSE_PARAM);
-                if (amtMineral > 0)       characterService.addMineral(characterId, amtMineral);
-                if (amtMineralRare > 0)   characterService.addMineralRare(characterId, amtMineralRare);
-                if (amtMineralExotic > 0) characterService.addMineralExotic(characterId, amtMineralExotic);
-                if (amtMineralDark > 0)   characterService.addMineralDark(characterId, amtMineralDark);
-                CharacterInfoDto updated = characterService.getCharacterInfoDto(characterId);
-                return ApiResponse.success("Minerals added"
-                    + "|mineral:" + updated.getMineral()
-                    + "|mineralRare:" + updated.getMineralRare()
-                    + "|mineralExotic:" + updated.getMineralExotic()
-                    + "|mineralDark:" + updated.getMineralDark());
+            case "addminerals": {
+                // params: [mineral] [pvpMineral] [tempMineral] — 0이면 해당 타입 스킵
+                if (params == null || params.size() < 3) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMINERALS_INVALID_PARAM);
+                int addM  = parseIntOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMIKNERAL_PARSE_PARAM);
+                int addPm = parseIntOrThrow(params.get(1), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDPVPMINERAL_PARSE_PARAM);
+                int addTm = parseIntOrThrow(params.get(2), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDTEMPMINERAL_PARSE_PARAM);
+                int newM  = addM  > 0 ? characterService.addMineral(characterId, addM)     : characterService.getCharacterInfoDto(characterId).getMineral();
+                int newPm = addPm > 0 ? characterService.addPvpMineral(characterId, addPm) : characterService.getCharacterInfoDto(characterId).getPvpMineral();
+                int newTm = addTm > 0 ? characterService.addTempMineral(characterId, addTm): characterService.getCharacterInfoDto(characterId).getTempMineral();
+                return ApiResponse.success("Minerals added|mineral:" + newM + "|pvpMineral:" + newPm + "|tempMineral:" + newTm);
+            }
 
             case "addtech":
                 if (params == null || params.isEmpty()) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDTECH_INVALID_PARAM);
@@ -86,46 +79,43 @@ public class DevController {
                 result.append("=== Character Status ===\n");
                 result.append("Tech Level: ").append(fleetService.getResearchedIds(characterId).stream().filter(s -> s.startsWith("tech_level_")).findFirst().orElse("1"));
                 result.append("Mineral: ").append(status.getMineral()).append("\n");
-                result.append("Mineral Rare: ").append(status.getMineralRare()).append("\n");
-                result.append("Mineral Exotic: ").append(status.getMineralExotic()).append("\n");
-                result.append("Mineral Dark: ").append(status.getMineralDark()).append("\n");                
                 return ApiResponse.success(result.toString());
 
-            case "addship":
-                // 개발자 명령어: 자원이 부족할 경우 자동으로 충원
-                CharacterInfoDto currentStatus = characterService.getCharacterInfoDto(characterId);
-
-                // 현재 함선 수 확인
-                FleetInfoDto activeFleet = fleetService.getActiveFleet(characterId);
-                int currentShipCount = activeFleet.getShips() != null ? activeFleet.getShips().size() : 0;
-
-                // 함선 추가에 필요한 자원 비용 확인 (GameDataService에서 가져오기)
-                CostStructDto shipAddCost = gameDataService.getShipAddCost(currentShipCount);
-
-                // 자원 부족 시 자동 충원 (모든 미네랄 타입)
-                if (currentStatus.getMineral() < shipAddCost.getMineral()) {
-                    Long updatedMineral = currentStatus.getMineral() + shipAddCost.getMineral() + 5000;
-                    characterService.updateMineral(characterId, updatedMineral);
-                }
-                if (currentStatus.getMineralRare() < shipAddCost.getMineralRare()) {
-                    Long updatedMineralRare = currentStatus.getMineralRare() + shipAddCost.getMineralRare() + 1000;
-                    characterService.updateMineralRare(characterId, updatedMineralRare);
-                }
-                if (currentStatus.getMineralExotic() < shipAddCost.getMineralExotic()) {
-                    Long updatedMineralExotic = currentStatus.getMineralExotic() + shipAddCost.getMineralExotic() + 1000;
-                    characterService.updateMineralExotic(characterId, updatedMineralExotic);
-                }
-                if (currentStatus.getMineralDark() < shipAddCost.getMineralDark()) {
-                    Long updatedMineralDark = currentStatus.getMineralDark() + shipAddCost.getMineralDark() + 1000;
-                    characterService.updateMineralDark(characterId, updatedMineralDark);
-                }
-
-                AddShipRequest addShipRequest = new AddShipRequest();
-                addShipRequest.setFleetId(null); // null이면 현재 활성 함대에 추가
-
-                AddShipResponse addShipResponse = fleetService.addShip(characterId, addShipRequest);
-                String addShipJson = jsonSerializeOrThrow(addShipResponse);
-                return ApiResponse.success(addShipJson);
+//            case "addship":
+//                // 개발자 명령어: 자원이 부족할 경우 자동으로 충원
+//                CharacterInfoDto currentStatus = characterService.getCharacterInfoDto(characterId);
+//
+//                // 현재 함선 수 확인
+//                FleetInfoDto activeFleet = fleetService.getActiveFleet(characterId);
+//                int currentShipCount = activeFleet.getShips() != null ? activeFleet.getShips().size() : 0;
+//
+//                // 함선 추가에 필요한 자원 비용 확인 (GameDataService에서 가져오기)
+//                CostStructDto shipAddCost = gameDataService.getShipAddCost(currentShipCount);
+//
+//                // 자원 부족 시 자동 충원 (모든 미네랄 타입)
+//                if (currentStatus.getMineral() < shipAddCost.getMineral()) {
+//                    Long updatedMineral = currentStatus.getMineral() + shipAddCost.getMineral() + 5000;
+//                    characterService.updateMineral(characterId, updatedMineral);
+//                }
+//                if (currentStatus.getMineralRare() < shipAddCost.getMineralRare()) {
+//                    Long updatedMineralRare = currentStatus.getMineralRare() + shipAddCost.getMineralRare() + 1000;
+//                    characterService.updateMineralRare(characterId, updatedMineralRare);
+//                }
+//                if (currentStatus.getMineralExotic() < shipAddCost.getMineralExotic()) {
+//                    Long updatedMineralExotic = currentStatus.getMineralExotic() + shipAddCost.getMineralExotic() + 1000;
+//                    characterService.updateMineralExotic(characterId, updatedMineralExotic);
+//                }
+//                if (currentStatus.getMineralDark() < shipAddCost.getMineralDark()) {
+//                    Long updatedMineralDark = currentStatus.getMineralDark() + shipAddCost.getMineralDark() + 1000;
+//                    characterService.updateMineralDark(characterId, updatedMineralDark);
+//                }
+//
+//                AddShipRequest addShipRequest = new AddShipRequest();
+//                addShipRequest.setFleetId(null); // null이면 현재 활성 함대에 추가
+//
+//                AddShipResponse addShipResponse = fleetService.addShip(characterId, addShipRequest);
+//                String addShipJson = jsonSerializeOrThrow(addShipResponse);
+//                return ApiResponse.success(addShipJson);
 
             case "changeformation":
                 if (params == null || params.isEmpty()) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_CHANGEFORMATION_INVALID_PARAM);

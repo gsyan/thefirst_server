@@ -4,7 +4,6 @@ import com.bk.sbs.config.DataTableConfig;
 import com.bk.sbs.config.DataTableModule;
 import com.bk.sbs.config.ZoneConfig;
 import com.bk.sbs.dto.ZoneConfigData;
-import com.bk.sbs.dto.CostStructDto;
 import com.bk.sbs.dto.ModuleData;
 import com.bk.sbs.dto.ModuleResearchData;
 import com.bk.sbs.enums.EModuleSubType;
@@ -28,13 +27,12 @@ public class GameDataService {
     private DataTableConfig dataTableConfig;
     private DataTableModule dataTableModule = new DataTableModule();
     private ZoneConfig zoneConfig = new ZoneConfig();
-    // researchId → 기술레벨 전체 데이터 (비용, stackTime, shipCount)
+    // researchId → 기술레벨 전체 데이터 (비용, shipCount)
     private static class TechLevelData {
-        CostStructDto cost;
-        double stackTime;
+        int mineralCost;
         int shipCount;
-        TechLevelData(CostStructDto cost, double stackTime, int shipCount) {
-            this.cost = cost; this.stackTime = stackTime; this.shipCount = shipCount;
+        TechLevelData(int mineralCost, int shipCount) {
+            this.mineralCost = mineralCost; this.shipCount = shipCount;
         }
     }
     private Map<String, TechLevelData> techLevelDataMap = new HashMap<>();
@@ -75,18 +73,17 @@ public class GameDataService {
                     dataTableModule.setResearchDataList(researchDataList);
                     log.info("DataTableResearch.json loaded successfully from resources/data/ and merged into ModuleDataTable");
                 }
-                // techLevelDataList: researchId → TechLevelData(cost, stackTime, shipCount)
+                // techLevelDataList: researchId → TechLevelData(cost, shipCount)
                 com.fasterxml.jackson.databind.JsonNode techLevelDataListNode = rootNode.get("techLevelDataList");
                 if (techLevelDataListNode != null) {
                     techLevelDataMap.clear();
                     for (com.fasterxml.jackson.databind.JsonNode techNode : techLevelDataListNode) {
                         String rId = techNode.path("researchId").asText(null);
-                        com.fasterxml.jackson.databind.JsonNode costNode = techNode.path("researchCost");
+                        com.fasterxml.jackson.databind.JsonNode costNode = techNode.path("mineralCost");
                         if (rId != null && !costNode.isMissingNode()) {
-                            CostStructDto cost = objectMapper.convertValue(costNode, CostStructDto.class);
-                            double stackTime = techNode.path("stackTime").asDouble(3.0);
-                            int shipCount    = techNode.path("shipCount").asInt(1);
-                            techLevelDataMap.put(rId, new TechLevelData(cost, stackTime, shipCount));
+                            int cost = techNode.path("mineralCost").asInt(1);
+                            int shipCount = techNode.path("shipCount").asInt(1);
+                            techLevelDataMap.put(rId, new TechLevelData(cost, shipCount));
                         }
                     }
                     log.info("techLevelDataList loaded: {} entries", techLevelDataMap.size());
@@ -131,19 +128,12 @@ public class GameDataService {
         return getDataTableConfig().getMaxShipsPerFleet();
     }
 
-    public CostStructDto getShipAddCost(int currentShipCount) {
-        List<CostStructDto> costs = getDataTableConfig().getAddShipCosts();
-        if (costs == null || costs.isEmpty()) {
-            return new CostStructDto(0L, 0L, 0L, 0L);
-        }
+    public Integer getShipAddCost() {
+        return getDataTableConfig().getAddShipCost();
+    }
 
-        // 현재 함선 수에 해당하는 비용 반환 (인덱스는 0부터 시작)
-        if (currentShipCount >= 0 && currentShipCount < costs.size()) {
-            return costs.get(currentShipCount);
-        }
-
-        // 범위를 벗어나면 마지막 비용 반환
-        return costs.getLast();
+    public Integer getModuleUnlockPrice() {
+        return getDataTableConfig().getModuleUnlockPrice();
     }
 
     public List<ModuleData> getModulesByType(EModuleType moduleType) {
@@ -171,9 +161,9 @@ public class GameDataService {
                 .orElse(0);
     }
 
-    public CostStructDto getModuleResearchCost(EModuleSubType moduleSubType) {
+    public int getModuleResearchCost(EModuleSubType moduleSubType) {
         if (dataTableModule == null) {
-            return new CostStructDto(0L, 0L, 0L, 0L);
+            return 0;
         }
         return dataTableModule.getResearchCost(moduleSubType);
     }
@@ -201,15 +191,9 @@ public class GameDataService {
     }
 
     // tech_level_N 연구 비용 반환 (데이터 없으면 비용 0)
-    public CostStructDto getTechLevelResearchCost(String researchId) {
+    public int getTechLevelResearchCost(String researchId) {
         TechLevelData data = techLevelDataMap.get(researchId);
-        return data != null ? data.cost : new CostStructDto(0L, 0L, 0L, 0L);
-    }
-
-    // 해당 기술레벨의 자원 보관 캡 시간(초) 반환 — stackTime(h) * 3600
-    public long getStackTimeSeconds(int techLevel) {
-        TechLevelData data = techLevelDataMap.get("tech_level_" + techLevel);
-        return (long)((data != null ? data.stackTime : 3.0) * 3600L);
+        return data != null ? data.mineralCost : 0;
     }
 
     // 해당 기술레벨에서 허용되는 최대 함선 수 반환
@@ -226,7 +210,4 @@ public class GameDataService {
         return getZoneConfig().getZoneByName(zoneName);
     }
 
-    public List<ZoneConfigData> getZoneConfigsByNames(List<String> zoneNames) {
-        return getZoneConfig().getZonesByNames(zoneNames);
-    }
 }

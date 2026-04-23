@@ -1,7 +1,5 @@
 package com.bk.sbs.config;
 
-import com.bk.sbs.dto.CostStructDto;
-import java.util.List;
 import lombok.Data;
 
 /**
@@ -14,7 +12,7 @@ public class DataTableConfig {
 
     private Integer maxShipsPerFleet;
 
-    private List<CostStructDto> addShipCosts;
+    private Integer addShipCost;
 
     private Integer pvpListCount;
 

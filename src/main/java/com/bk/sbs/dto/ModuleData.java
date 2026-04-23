@@ -22,7 +22,7 @@ public class ModuleData {
 
     private Integer moduleLevel;
 
-    private CostStructDto upgradeCost;
+    private Integer mineralCost;
 
     private String description;
 

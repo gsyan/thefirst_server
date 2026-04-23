@@ -4,6 +4,9 @@ import com.bk.sbs.enums.EModuleType;
 import com.bk.sbs.enums.EModuleSubType;
 import com.bk.sbs.entity.ShipModuleLevel;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -22,4 +25,14 @@ public interface ShipModuleLevelRepository extends JpaRepository<ShipModuleLevel
 
     // 함선 전체 레벨 이력 조회 (로드 시 unlockedSubTypes 일괄 빌드용)
     List<ShipModuleLevel> findAllByShipId(Long shipId);
+
+    // 모듈 리셋 시 슬롯 단위 이력 삭제
+    @Modifying
+    @Query("DELETE FROM ShipModuleLevel s WHERE s.ship.id = :shipId AND s.bodyIndex = :bodyIndex AND s.moduleType = :moduleType AND s.slotIndex = :slotIndex")
+    void deleteBySlot(@Param("shipId") Long shipId, @Param("bodyIndex") int bodyIndex, @Param("moduleType") EModuleType moduleType, @Param("slotIndex") int slotIndex);
+
+    // 함선 리셋 시 전체 이력 삭제
+    @Modifying
+    @Query("DELETE FROM ShipModuleLevel s WHERE s.ship.id = :shipId")
+    void deleteByShipId(@Param("shipId") Long shipId);
 }

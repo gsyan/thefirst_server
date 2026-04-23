@@ -37,6 +37,16 @@ public class ShipModule {
     @Column(nullable = false)
     private int slotIndex; // 함선 내에서 모듈의 슬롯 위치
 
+    // 이 슬롯에 투자한 재화 이력 — 리셋 시 100% 환급
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int investedMineral = 0;
+
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int investedPvpMineral = 0;
+
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int investedTempMineral = 0;
+
     @Column(nullable = false)
     private boolean deleted = false;
 
