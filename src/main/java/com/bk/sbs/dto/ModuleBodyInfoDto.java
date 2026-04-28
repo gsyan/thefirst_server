@@ -28,4 +28,5 @@ public class ModuleBodyInfoDto {
     private Integer investedMineral;
     private Integer investedPvpMineral;
     private Integer investedTempMineral;
+    private Float currentHealth;
 }

@@ -47,6 +47,10 @@ public class ShipModule {
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
     private int investedTempMineral = 0;
 
+    // 현재 체력 (절대값). body 모듈 전용. 생성 시 maxHealth로 초기화
+    @Column(nullable = false, columnDefinition = "FLOAT DEFAULT 0")
+    private float currentHealth = 0f;
+
     @Column(nullable = false)
     private boolean deleted = false;
 

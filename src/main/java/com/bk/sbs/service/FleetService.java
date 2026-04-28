@@ -113,6 +113,7 @@ public class FleetService {
         bodyModule.setModuleLevel(bodyData.getModuleLevel());
         bodyModule.setBodyIndex(0);
         bodyModule.setSlotIndex(0);
+        bodyModule.setCurrentHealth(bodyData.getHealth() != null ? bodyData.getHealth() : 0f);
         shipModuleRepository.save(bodyModule);
         saveInitialModuleLevel(defaultShip, EModuleType.body, EModuleSubType.body_t1_m1, bodyData.getModuleLevel(), 0, 0);
 
@@ -468,6 +469,16 @@ public class FleetService {
                     List<EModuleSubType> bodyUnlocked = unlockedMap.getOrDefault(
                             bodyIndex + "_" + EModuleType.body + "_0", java.util.Collections.emptyList());
 
+                    float maxHealth = gameDataService.getModulesByType(EModuleType.body).stream()
+                            .filter(d -> d.getModuleSubType() == bodyModule.getModuleSubType()
+                                    && d.getModuleLevel().equals(bodyModule.getModuleLevel()))
+                            .findFirst()
+                            .map(d -> d.getHealth() != null ? d.getHealth() : 0f)
+                            .orElse(0f);
+                    float normalizedHealth = maxHealth > 0f
+                            ? Math.min(bodyModule.getCurrentHealth(), maxHealth)
+                            : bodyModule.getCurrentHealth();
+
                     return ModuleBodyInfoDto.builder()
                             .moduleType(bodyModule.getModuleType())
                             .moduleSubType(bodyModule.getModuleSubType())
@@ -480,6 +491,7 @@ public class FleetService {
                             .investedMineral(bodyModule.getInvestedMineral())
                             .investedPvpMineral(bodyModule.getInvestedPvpMineral())
                             .investedTempMineral(bodyModule.getInvestedTempMineral())
+                            .currentHealth(normalizedHealth)
                             .build();
                 })
                 .collect(Collectors.toList());
@@ -570,6 +582,7 @@ public class FleetService {
     }
 
     private void createDefaultModules(Ship ship, int bodyInvestedMineral, int beamInvestedMineral) {
+        ModuleData bodyData = gameDataService.getFirstModuleByType(EModuleType.body);
         // Body 모듈
         ShipModule bodyModule = new ShipModule();
         bodyModule.setShip(ship);
@@ -579,6 +592,7 @@ public class FleetService {
         bodyModule.setBodyIndex(0);
         bodyModule.setSlotIndex(0);
         bodyModule.setInvestedMineral(bodyInvestedMineral);
+        bodyModule.setCurrentHealth(bodyData != null && bodyData.getHealth() != null ? bodyData.getHealth() : 0f);
         bodyModule.setDeleted(false);
         bodyModule.setCreated(LocalDateTime.now());
         bodyModule.setModified(LocalDateTime.now());
@@ -1258,5 +1272,26 @@ public class FleetService {
                 .tempMineralCost(costTm)
                 .tempMineralRemain(character.getTempMineral())
                 .build();
+    }
+
+    @Transactional
+    public void saveFleetHealth(Long characterId, FleetHealthSaveRequest request) {
+        if (request.getShips() == null) return;
+
+        for (ShipHealthInfoDto shipHealth : request.getShips()) {
+            Ship ship = shipRepository.findById(shipHealth.getShipId()).orElse(null);
+            if (ship == null || !ship.getFleet().getCharacterId().equals(characterId)) continue;
+            if (shipHealth.getBodies() == null) continue;
+
+            for (BodyHealthEntryDto entry : shipHealth.getBodies()) {
+                Optional<ShipModule> bodyOpt = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
+                        shipHealth.getShipId(), entry.getBodyIndex(), EModuleType.body, 0);
+                if (bodyOpt.isEmpty()) continue;
+
+                ShipModule body = bodyOpt.get();
+                body.setCurrentHealth(entry.getCurrentHealth());
+                shipModuleRepository.save(body);
+            }
+        }
     }
 }

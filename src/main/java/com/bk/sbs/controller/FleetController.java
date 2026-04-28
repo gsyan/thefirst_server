@@ -170,6 +170,16 @@ public class FleetController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
+    // 함대 체력 저장
+    @PostMapping("/save-health")
+    public ResponseEntity<ApiResponse<Void>> saveFleetHealth(
+            @RequestBody FleetHealthSaveRequest request,
+            HttpServletRequest httpRequest) {
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        fleetService.saveFleetHealth(actualCharacterId, request);
+        return ResponseEntity.ok(ApiResponse.success(null));
+    }
+
     // 함선 리셋 및 제거
     @PostMapping("/reset-ship")
     public ResponseEntity<ApiResponse<ShipResetRemoveResponse>> resetAndRemoveShip(

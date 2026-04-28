@@ -104,6 +104,7 @@ CREATE TABLE ship_module (
     invested_mineral        INT             NOT NULL DEFAULT 0,
     invested_pvp_mineral    INT             NOT NULL DEFAULT 0,
     invested_temp_mineral   INT             NOT NULL DEFAULT 0,
+    current_health          FLOAT           NOT NULL DEFAULT 0,
     deleted                 TINYINT(1)      NOT NULL DEFAULT 0,
     created                 DATETIME(6)     NOT NULL,
     modified                DATETIME(6)     NOT NULL,

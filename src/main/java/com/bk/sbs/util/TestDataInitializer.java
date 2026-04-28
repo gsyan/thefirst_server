@@ -2,6 +2,9 @@
 // test.data.count 로 생성 수 제어, pvp/zone base/deviation 으로 점수·존 분포 설정
 package com.bk.sbs.util;
 
+import com.bk.sbs.dto.ModuleData;
+import com.bk.sbs.enums.EModuleType;
+import com.bk.sbs.service.GameDataService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -63,10 +66,12 @@ public class TestDataInitializer {
 
     private final JdbcTemplate jdbc;
     private final PasswordEncoder passwordEncoder;
+    private final GameDataService gameDataService;
 
-    public TestDataInitializer(JdbcTemplate jdbc, PasswordEncoder passwordEncoder) {
+    public TestDataInitializer(JdbcTemplate jdbc, PasswordEncoder passwordEncoder, GameDataService gameDataService) {
         this.jdbc = jdbc;
         this.passwordEncoder = passwordEncoder;
+        this.gameDataService = gameDataService;
     }
 
     @EventListener(ApplicationReadyEvent.class)
@@ -212,20 +217,23 @@ public class TestDataInitializer {
                 Long.class);
 
         // 9. ShipModule (body only)
+        ModuleData bodyData = gameDataService.getFirstModuleByType(EModuleType.body);
+        float bodyMaxHealth = (bodyData != null && bodyData.getHealth() != null) ? bodyData.getHealth() : 0f;
         List<Object[]> moduleRows = new ArrayList<>(count);
         for (Long shipId : shipIds) {
-            moduleRows.add(new Object[]{shipId, "body", "body_t1_m1", 1, now});
+            moduleRows.add(new Object[]{shipId, "body", "body_t1_m1", 1, bodyMaxHealth, now});
         }
         jdbc.batchUpdate(
                 "INSERT INTO ship_module (ship_id, module_type, module_sub_type, module_level," +
-                " body_index, slot_index, deleted, created, modified) VALUES (?, ?, ?, ?, 0, 0, false, ?, ?)",
+                " body_index, slot_index, current_health, deleted, created, modified) VALUES (?, ?, ?, ?, 0, 0, ?, false, ?, ?)",
                 moduleRows, BATCH_SIZE, (ps, row) -> {
                     ps.setLong(1,   (Long)      row[0]);
                     ps.setString(2, (String)    row[1]);
                     ps.setString(3, (String)    row[2]);
                     ps.setInt(4,    (int)        row[3]);
-                    ps.setTimestamp(5, (Timestamp) row[4]);
-                    ps.setTimestamp(6, (Timestamp) row[4]);
+                    ps.setFloat(5,  (float)      row[4]);
+                    ps.setTimestamp(6, (Timestamp) row[5]);
+                    ps.setTimestamp(7, (Timestamp) row[5]);
                 });
 
         // 10. ModuleResearch
