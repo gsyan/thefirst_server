@@ -2,6 +2,7 @@ package com.bk.sbs.service;
 
 import com.bk.sbs.config.DataTableConfig;
 import com.bk.sbs.config.DataTableModule;
+import com.bk.sbs.config.DataTablePvpSeason;
 import com.bk.sbs.config.ZoneConfig;
 import com.bk.sbs.dto.ZoneConfigData;
 import com.bk.sbs.dto.ModuleData;
@@ -26,6 +27,7 @@ import java.util.Map;
 public class GameDataService {
     private DataTableConfig dataTableConfig;
     private DataTableModule dataTableModule = new DataTableModule();
+    private DataTablePvpSeason dataTablePvpSeason = new DataTablePvpSeason();
     private ZoneConfig zoneConfig = new ZoneConfig();
     // researchId → 기술레벨 전체 데이터 (비용, shipCount)
     private static class TechLevelData {
@@ -99,6 +101,15 @@ public class GameDataService {
                 log.info("ZoneConfig.json loaded successfully from resources/data/");
             } else {
                 log.warn("ZoneConfig.json not found in resources/data/, using empty data");
+            }
+
+            ClassPathResource pvpSeasonResource = new ClassPathResource("data/DataTablePvpSeason.json");
+            if (pvpSeasonResource.exists()) {
+                String json = new String(pvpSeasonResource.getInputStream().readAllBytes());
+                dataTablePvpSeason = objectMapper.readValue(json, DataTablePvpSeason.class);
+                log.info("DataTablePvpSeason.json loaded successfully from resources/data/");
+            } else {
+                log.warn("DataTablePvpSeason.json not found in resources/data/, using default tier data");
             }
 
         } catch (Exception e) {
@@ -204,6 +215,10 @@ public class GameDataService {
 
     public ZoneConfig getZoneConfig() {
         return zoneConfig != null ? zoneConfig : new ZoneConfig();
+    }
+
+    public DataTablePvpSeason getDataTablePvpSeason() {
+        return dataTablePvpSeason != null ? dataTablePvpSeason : new DataTablePvpSeason();
     }
 
     public ZoneConfigData getZoneConfigByName(String zoneName) {

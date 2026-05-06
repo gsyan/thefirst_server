@@ -324,6 +324,8 @@ public class PvpService {
         rankInfo.setPvpWins(getIntFromHash(myInfo, "wins"));
         rankInfo.setPvpLosses(getIntFromHash(myInfo, "losses"));
         rankInfo.setPvpListRefreshRemain(refreshRemain);
+        rankInfo.setSeasonName(redisService.getPvpSeasonName());
+        rankInfo.setSeasonEndTime(redisService.getPvpSeasonEnd());
 
         PvpMyRankResponse response = new PvpMyRankResponse();
         response.setMyRankInfo(rankInfo);

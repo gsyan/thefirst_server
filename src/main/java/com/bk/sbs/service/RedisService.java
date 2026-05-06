@@ -29,6 +29,10 @@ public class RedisService {
     private static final String RANKING_UPDATED_PVP      = "ranking:pvp:updated";
     private static final String RANKING_UPDATED_ZONE     = "ranking:zone:updated";
     private static final String ZONE_WAVE_PREFIX         = "zone_wave:"; // zone_wave:{characterId}:{zoneName}
+    private static final String PVP_SEASON_NUMBER        = "pvp:season:number";
+    private static final String PVP_SEASON_NAME          = "pvp:season:name";
+    private static final String PVP_SEASON_START         = "pvp:season:start";
+    private static final String PVP_SEASON_END           = "pvp:season:end";
 
     private final StringRedisTemplate redisTemplate;
     private final ObjectMapper objectMapper;
@@ -317,6 +321,26 @@ public class RedisService {
         if (listKeys != null && listKeys.isEmpty() == false) redisTemplate.delete(listKeys);
 
         clearRankNameData();
+    }
+
+    // ══════════════════════════════════════════════════════════════════════
+    // PVP 시즌 정보
+    // ══════════════════════════════════════════════════════════════════════
+
+    public void setPvpSeasonInfo(int seasonNumber, String seasonName, String startIso, String endIso) {
+        redisTemplate.opsForValue().set(PVP_SEASON_NUMBER, String.valueOf(seasonNumber));
+        redisTemplate.opsForValue().set(PVP_SEASON_NAME, seasonName);
+        redisTemplate.opsForValue().set(PVP_SEASON_START, startIso);
+        redisTemplate.opsForValue().set(PVP_SEASON_END, endIso);
+    }
+
+    public String getPvpSeasonName() { return redisTemplate.opsForValue().get(PVP_SEASON_NAME); }
+    public String getPvpSeasonStart() { return redisTemplate.opsForValue().get(PVP_SEASON_START); }
+    public String getPvpSeasonEnd() { return redisTemplate.opsForValue().get(PVP_SEASON_END); }
+
+    public Integer getPvpSeasonNumber() {
+        String val = redisTemplate.opsForValue().get(PVP_SEASON_NUMBER);
+        return val != null ? Integer.parseInt(val) : null;
     }
 
     public void clearZoneRankingData() {

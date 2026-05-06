@@ -41,6 +41,10 @@ public class Character {
 
     private Instant pvpMineralExpiry;
 
+    // 어느 시즌 보상인지 참조 — 다음 시즌 기간 변경 시 만료일 일괄 업데이트에 사용
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int pvpMineralSeasonRef = 0;
+
     // IAP 구매 임시 재화 — 만료 시 소멸
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
     private int tempMineral = 0;

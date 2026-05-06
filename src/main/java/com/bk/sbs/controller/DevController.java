@@ -6,9 +6,11 @@ import com.bk.sbs.enums.*;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.security.JwtUtil;
+import com.bk.sbs.entity.PvpSeason;
 import com.bk.sbs.service.CharacterService;
 import com.bk.sbs.service.FleetService;
 import com.bk.sbs.service.GameDataService;
+import com.bk.sbs.service.PvpSeasonService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,13 +23,15 @@ public class DevController {
     private final CharacterService characterService;
     private final FleetService fleetService;
     private final GameDataService gameDataService;
+    private final PvpSeasonService pvpSeasonService;
     private final JwtUtil jwtUtil;
     private final ObjectMapper objectMapper;
 
-    public DevController(CharacterService characterService, FleetService fleetService, GameDataService gameDataService, JwtUtil jwtUtil, ObjectMapper objectMapper) {
+    public DevController(CharacterService characterService, FleetService fleetService, GameDataService gameDataService, PvpSeasonService pvpSeasonService, JwtUtil jwtUtil, ObjectMapper objectMapper) {
         this.characterService = characterService;
         this.fleetService = fleetService;
         this.gameDataService = gameDataService;
+        this.pvpSeasonService = pvpSeasonService;
         this.jwtUtil = jwtUtil;
         this.objectMapper = objectMapper;
     }
@@ -144,6 +148,54 @@ public class DevController {
                 ChangeFormationResponse changeFormationResponse = fleetService.changeFormation(characterId, changeFormationRequest);
                 String changeFormationJson = jsonSerializeOrThrow(changeFormationResponse);
                 return ApiResponse.success(changeFormationJson);
+
+            // pvpseason set [시즌번호] [시즌명] [시작ISO] [종료ISO]
+            // 예) pvpseason set 1 "시즌 1" 2026-05-01T00:00:00Z 2026-05-15T00:00:00Z
+            case "pvpseason": {
+                if (params == null || params.size() < 1)
+                    throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_UNKNOWN_COMMAND);
+                String subCmd = params.get(0).toLowerCase();
+
+                if (subCmd.equals("set")) {
+                    // params: [set, seasonNumber, seasonName, startISO, endISO]
+                    if (params.size() < 5)
+                        throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_UNKNOWN_COMMAND);
+                    int seasonNumber = parseIntOrThrow(params.get(1), ServerErrorCode.EXECUTE_COMMAND_FAIL_UNKNOWN_COMMAND);
+                    String seasonName = params.get(2);
+                    java.time.Instant startTime = java.time.Instant.parse(params.get(3));
+                    java.time.Instant endTime   = java.time.Instant.parse(params.get(4));
+                    PvpSeason season = pvpSeasonService.setSeasonManual(seasonNumber, seasonName, startTime, endTime);
+                    return ApiResponse.success("시즌 설정 완료|season:" + season.getSeasonNumber()
+                            + "|name:" + season.getSeasonName()
+                            + "|end:" + season.getEndTime());
+
+                } else if (subCmd.equals("end")) {
+                    // 현재 시즌 즉시 종료 → 보상 지급 + 점수 리셋 + 다음 시즌 자동 시작
+                    return pvpSeasonService.getCurrentSeason()
+                            .map(season -> {
+                                pvpSeasonService.endSeasonAndStartNext(season);
+                                return ApiResponse.success("시즌 " + season.getSeasonNumber() + " 종료 처리 완료");
+                            })
+                            .orElse(ApiResponse.success("진행 중인 시즌 없음"));
+
+                } else if (subCmd.equals("distribute")) {
+                    // 보상만 재지급 (테스트용, rewardDistributed 무시)
+                    return pvpSeasonService.getCurrentSeason()
+                            .map(season -> {
+                                season.setRewardDistributed(false);
+                                pvpSeasonService.distributeSeasonReward(season);
+                                return ApiResponse.success("시즌 " + season.getSeasonNumber() + " 보상 재지급 완료");
+                            })
+                            .orElse(ApiResponse.success("진행 중인 시즌 없음"));
+
+                } else if (subCmd.equals("reset")) {
+                    // 점수만 리셋 (테스트용)
+                    pvpSeasonService.resetSeasonScores();
+                    return ApiResponse.success("시즌 점수 리셋 완료");
+                }
+
+                throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_UNKNOWN_COMMAND);
+            }
 
             default:
                 throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_UNKNOWN_COMMAND);

@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS fleet;
 DROP TABLE IF EXISTS cleared_zone;
 DROP TABLE IF EXISTS module_research;
 DROP TABLE IF EXISTS pvp_record;
+DROP TABLE IF EXISTS pvp_season;
 DROP TABLE IF EXISTS progress;
 DROP TABLE IF EXISTS `character`;
 DROP TABLE IF EXISTS account;
@@ -46,6 +47,7 @@ CREATE TABLE `character` (
     pvp_mineral             INT             NOT NULL DEFAULT 0,
     pvp_mineral_max_got     INT             NOT NULL DEFAULT 0,
     pvp_mineral_expiry      DATETIME(6)         NULL,
+    pvp_mineral_season_ref  INT             NOT NULL DEFAULT 0,
     temp_mineral            INT             NOT NULL DEFAULT 0,
     temp_mineral_max_got    INT             NOT NULL DEFAULT 0,
     temp_mineral_expiry     DATETIME(6)         NULL,
@@ -150,6 +152,18 @@ CREATE TABLE progress (
     PRIMARY KEY (id),
     UNIQUE KEY uk_progress (character_id, category, progress_key),
     INDEX idx_progress_character (character_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- pvp_season
+-- ============================================================
+CREATE TABLE pvp_season (
+    season_number       INT             NOT NULL,
+    season_name         VARCHAR(255)    NOT NULL,
+    start_time          DATETIME(6)         NULL,
+    end_time            DATETIME(6)     NOT NULL,
+    reward_distributed  TINYINT(1)      NOT NULL DEFAULT 0,
+    PRIMARY KEY (season_number)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================

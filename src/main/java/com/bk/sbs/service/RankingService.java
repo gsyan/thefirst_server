@@ -94,6 +94,9 @@ public class RankingService {
         response.setItems(items);
         response.setMyInfo(myInfo);
         response.setLastUpdatedAt(lastUpdatedAt);
+        response.setSeasonName(redisService.getPvpSeasonName());
+        response.setSeasonStartTime(redisService.getPvpSeasonStart());
+        response.setSeasonEndTime(redisService.getPvpSeasonEnd());
         return response;
     }
 

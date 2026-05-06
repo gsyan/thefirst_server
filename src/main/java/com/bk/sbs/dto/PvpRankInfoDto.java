@@ -19,4 +19,6 @@ public class PvpRankInfoDto {
     private Integer pvpLosses;
     private Integer pvpRank;
     private Integer pvpListRefreshRemain;
+    private String seasonName;
+    private String seasonEndTime;
 }
