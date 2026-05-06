@@ -17,5 +17,5 @@ public class ClearZoneStageResponse {
     private CostRemainInfoDto rewardInfo;
     private Boolean isZoneCleared;
     private String clearedZoneName;
-    private String collectDateTime;
+    private Integer mineralMaxGot;
 }

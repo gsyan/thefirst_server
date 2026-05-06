@@ -29,15 +29,24 @@ public class Character {
     @Column(nullable = false)
     private int mineral;
 
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int mineralMaxGot = 0;
+
     // PvP 정산 배치 지급 재화 — 만료 시 소멸
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
     private int pvpMineral = 0;
+
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int pvpMineralMaxGot = 0;
 
     private Instant pvpMineralExpiry;
 
     // IAP 구매 임시 재화 — 만료 시 소멸
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
     private int tempMineral = 0;
+
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int tempMineralMaxGot = 0;
 
     private Instant tempMineralExpiry;
 
