@@ -1236,6 +1236,67 @@ public class FleetService {
                 .build();
     }
 
+    // ── 함대 능력치 요약 (Redis 저장용) ─────────────────────────────────────
+
+    /** FleetInfoDto → Redis 저장용 능력치 요약 JSON (클라의 GetFleetCapabilityProfile에 대응) */
+    public String computeFleetRankStatJson(FleetInfoDto fleetInfo) {
+        if (fleetInfo == null || fleetInfo.getShips() == null) return null;
+
+        int shipCount = fleetInfo.getShips().size();
+        float statHealth = 0f, statAttack = 0f, statAirAttack = 0f;
+        int statAirCount = 0;
+
+        for (ShipInfoDto ship : fleetInfo.getShips()) {
+            if (ship.getBodies() == null) continue;
+            for (ModuleBodyInfoDto body : ship.getBodies()) {
+                ModuleData bodyData = findModuleData(EModuleType.body, body.getModuleSubType(), body.getModuleLevel());
+                if (bodyData != null) statHealth += bodyData.getHealth() != null ? bodyData.getHealth() : 0f;
+
+                if (body.getBeams() != null) {
+                    for (ModuleInfoDto beam : body.getBeams()) {
+                        ModuleData data = findModuleData(EModuleType.beam, beam.getModuleSubType(), beam.getModuleLevel());
+                        if (data != null) {
+                            float atk = data.getAttack() != null ? data.getAttack() : 0f;
+                            int cnt = data.getAttackFireCount() != null ? data.getAttackFireCount() : 1;
+                            statAttack += atk * cnt;
+                        }
+                    }
+                }
+                if (body.getMissiles() != null) {
+                    for (ModuleInfoDto missile : body.getMissiles()) {
+                        ModuleData data = findModuleData(EModuleType.missile, missile.getModuleSubType(), missile.getModuleLevel());
+                        if (data != null) {
+                            float atk = data.getAttack() != null ? data.getAttack() : 0f;
+                            int cnt = data.getAttackFireCount() != null ? data.getAttackFireCount() : 1;
+                            statAttack += atk * cnt;
+                        }
+                    }
+                }
+                if (body.getHangers() != null) {
+                    for (ModuleInfoDto hanger : body.getHangers()) {
+                        ModuleData data = findModuleData(EModuleType.hanger, hanger.getModuleSubType(), hanger.getModuleLevel());
+                        if (data != null) {
+                            statAirCount  += data.getAirCount() != null ? data.getAirCount() : 0;
+                            statAirAttack += data.getAirAttack() != null ? data.getAirAttack() : 0f;
+                        }
+                    }
+                }
+            }
+        }
+
+        return String.format("{\"shipCount\":%d,\"statHealth\":%.4f,\"statAttack\":%.4f,\"statAirCount\":%d,\"statAirAttack\":%.4f}",
+                shipCount, statHealth, statAttack, statAirCount, statAirAttack);
+    }
+
+    private ModuleData findModuleData(EModuleType type, EModuleSubType subType, Integer level) {
+        if (subType == null || level == null) return null;
+        List<ModuleData> list = gameDataService.getModulesByType(type);
+        for (ModuleData data : list) {
+            if (subType.equals(data.getModuleSubType()) && level.equals(data.getModuleLevel())) return data;
+        }
+        return null;
+    }
+
     // 소비 우선순위: M → PM → TM. 반환값: [차감M, 차감PM, 차감TM]
     private int[] deductMinerals(com.bk.sbs.entity.Character character, int cost) {
         int[] deducted = new int[]{0, 0, 0};

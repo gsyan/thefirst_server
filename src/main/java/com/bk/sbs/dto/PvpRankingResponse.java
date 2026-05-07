@@ -19,7 +19,7 @@ public class PvpRankingResponse {
     private List<RankingEntryDto> items;
     private RankingEntryDto myInfo;
     private String lastUpdatedAt;
-    private String seasonName;
+    private Integer seasonNumber;
     private String seasonStartTime;
     private String seasonEndTime;
 }

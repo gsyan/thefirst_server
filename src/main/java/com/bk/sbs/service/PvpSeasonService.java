@@ -7,6 +7,8 @@ import com.bk.sbs.repository.CharacterRepository;
 import com.bk.sbs.repository.PvpRecordRepository;
 import com.bk.sbs.repository.PvpSeasonRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,18 +49,17 @@ public class PvpSeasonService {
     // ── 수동 시즌 설정 (진행 중에도 변경 가능) ─────────────────────────────
 
     @Transactional
-    public PvpSeason setSeasonManual(int seasonNumber, String seasonName, Instant startTime, Instant endTime) {
+    public PvpSeason setSeasonManual(int seasonNumber, Instant startTime, Instant endTime) {
         PvpSeason season = pvpSeasonRepository.findById(seasonNumber)
                 .orElse(new PvpSeason());
 
         season.setSeasonNumber(seasonNumber);
-        season.setSeasonName(seasonName);
         season.setStartTime(startTime);
         season.setEndTime(endTime);
         pvpSeasonRepository.save(season);
 
         // Redis 업데이트
-        redisService.setPvpSeasonInfo(seasonNumber, seasonName, startTime.toString(), endTime.toString());
+        redisService.setPvpSeasonInfo(seasonNumber, startTime.toString(), endTime.toString());
 
         // 이전 시즌(seasonNumber-1) 보상 만료일을 이 시즌 종료일로 일괄 업데이트
         int prevSeasonNumber = seasonNumber - 1;
@@ -69,7 +70,7 @@ public class PvpSeasonService {
             }
         }
 
-        log.info("PVP 시즌 설정 완료: 시즌={} name={} {} ~ {}", seasonNumber, seasonName, startTime, endTime);
+        log.info("PVP 시즌 설정 완료: 시즌={} {} ~ {}", seasonNumber, startTime, endTime);
         return season;
     }
 
@@ -86,13 +87,12 @@ public class PvpSeasonService {
         resetSeasonScores();
 
         int nextSeasonNumber = season.getSeasonNumber() + 1;
-        String nextSeasonName = "시즌 " + nextSeasonNumber;
         Instant nextStart = season.getEndTime();
         int durationDays = gameDataService.getDataTablePvpSeason().getDefaultSeasonDurationDays();
         Instant nextEnd = nextStart.plus(durationDays, ChronoUnit.DAYS);
 
-        setSeasonManual(nextSeasonNumber, nextSeasonName, nextStart, nextEnd);
-        log.info("다음 시즌 자동 시작: {}", nextSeasonName);
+        setSeasonManual(nextSeasonNumber, nextStart, nextEnd);
+        log.info("다음 시즌 자동 시작: 시즌 {}", nextSeasonNumber);
     }
 
     // ── 보상 지급 ──────────────────────────────────────────────────────────
@@ -147,6 +147,41 @@ public class PvpSeasonService {
 
         redisService.snapshotPvpRanking();
         log.info("시즌 점수 리셋 완료: {}건", records.size());
+    }
+
+    // ── 서버 시작 시 시즌 초기화 ──────────────────────────────────────────
+
+    @EventListener(ApplicationReadyEvent.class)
+    @Transactional
+    public void initSeasonOnStartup() {
+        Optional<PvpSeason> currentOpt = getCurrentSeason();
+
+        if (currentOpt.isPresent() == false) {
+            int durationDays = gameDataService.getDataTablePvpSeason().getDefaultSeasonDurationDays();
+            Instant now = Instant.now();
+            Instant end = now.plus(durationDays, ChronoUnit.DAYS);
+            setSeasonManual(1, now, end);
+            log.info("서버 시작: 시즌 정보 없음 → 시즌 1 자동 생성 (종료={})", end);
+            return;
+        }
+
+        PvpSeason season = currentOpt.get();
+
+        // Redis 재시작으로 시즌 정보 유실 시 복구
+        redisService.setPvpSeasonInfo(
+                season.getSeasonNumber(),
+                season.getStartTime().toString(),
+                season.getEndTime().toString()
+        );
+
+        if (season.isRewardDistributed() == false && Instant.now().isAfter(season.getEndTime())) {
+            log.info("서버 시작: 시즌 {} 종료 미처리 감지 → 즉시 종료 처리", season.getSeasonNumber());
+            endSeasonAndStartNext(season);
+            return;
+        }
+
+        log.info("서버 시작: 시즌 {} 이어서 진행 (종료={}, 보상지급={})",
+                season.getSeasonNumber(), season.getEndTime(), season.isRewardDistributed());
     }
 
     // ── 1시간 주기 자동 시즌 종료 체크 ────────────────────────────────────

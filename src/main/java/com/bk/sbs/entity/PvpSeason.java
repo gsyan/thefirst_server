@@ -17,9 +17,6 @@ public class PvpSeason {
     private Integer seasonNumber;
 
     @Column(nullable = false)
-    private String seasonName;
-
-    @Column(nullable = false)
     private Instant startTime;
 
     @Column(nullable = false)

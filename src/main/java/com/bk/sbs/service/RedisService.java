@@ -26,6 +26,7 @@ public class RedisService {
     private static final String BATTLE_PREFIX            = "pvp:battle:";
     private static final String LIST_PREFIX              = "pvp:list:";
     private static final String RANK_NAME_KEY            = "rank:name";
+    private static final String RANK_STAT_KEY            = "rank:stat";
     private static final String RANKING_UPDATED_PVP      = "ranking:pvp:updated";
     private static final String RANKING_UPDATED_ZONE     = "ranking:zone:updated";
     private static final String ZONE_WAVE_PREFIX         = "zone_wave:"; // zone_wave:{characterId}:{zoneName}
@@ -117,8 +118,11 @@ public class RedisService {
     }
 
     public Long getPvpSnapshotRank(Long characterId) {
-        Long rank = redisTemplate.opsForZSet().reverseRank(PVP_RANKING_SNAPSHOT_KEY, characterId.toString());
-        return rank != null ? rank + 1 : null;
+        Double myScore = redisTemplate.opsForZSet().score(PVP_RANKING_SNAPSHOT_KEY, characterId.toString());
+        if (myScore == null) return null;
+        // 내 score보다 높은 사람 수 + 1 = 동점 그룹의 최고 순위
+        Long countAbove = redisTemplate.opsForZSet().count(PVP_RANKING_SNAPSHOT_KEY, myScore + 0.5, Double.MAX_VALUE);
+        return countAbove != null ? countAbove + 1 : 1L;
     }
 
     /** pvp:info Hash에 개인 실시간 score 저장 */
@@ -185,6 +189,31 @@ public class RedisService {
 
     public void clearRankNameData() {
         redisTemplate.delete(RANK_NAME_KEY);
+    }
+
+    // ══════════════════════════════════════════════════════════════════════
+    // 캐릭터 능력치 요약 Hash  (rank:stat → characterId → JSON)
+    // ══════════════════════════════════════════════════════════════════════
+
+    public void setRankStat(Long characterId, String statsJson) {
+        redisTemplate.opsForHash().put(RANK_STAT_KEY, characterId.toString(), statsJson != null ? statsJson : "{}");
+    }
+
+    /** characterId 문자열 컬렉션 → {id → statsJson} 맵 반환 (없으면 null) */
+    public Map<String, String> getRankStatsMulti(Collection<String> characterIdStrs) {
+        List<Object> keys = new ArrayList<>(characterIdStrs);
+        List<Object> values = redisTemplate.opsForHash().multiGet(RANK_STAT_KEY, keys);
+        Map<String, String> result = new HashMap<>();
+        int i = 0;
+        for (Object key : keys) {
+            Object val = values.get(i++);
+            result.put((String) key, val != null ? val.toString() : null);
+        }
+        return result;
+    }
+
+    public void clearRankStatData() {
+        redisTemplate.delete(RANK_STAT_KEY);
     }
 
     // ══════════════════════════════════════════════════════════════════════
@@ -321,20 +350,19 @@ public class RedisService {
         if (listKeys != null && listKeys.isEmpty() == false) redisTemplate.delete(listKeys);
 
         clearRankNameData();
+        clearRankStatData();
     }
 
     // ══════════════════════════════════════════════════════════════════════
     // PVP 시즌 정보
     // ══════════════════════════════════════════════════════════════════════
 
-    public void setPvpSeasonInfo(int seasonNumber, String seasonName, String startIso, String endIso) {
+    public void setPvpSeasonInfo(int seasonNumber, String startIso, String endIso) {
         redisTemplate.opsForValue().set(PVP_SEASON_NUMBER, String.valueOf(seasonNumber));
-        redisTemplate.opsForValue().set(PVP_SEASON_NAME, seasonName);
         redisTemplate.opsForValue().set(PVP_SEASON_START, startIso);
         redisTemplate.opsForValue().set(PVP_SEASON_END, endIso);
     }
 
-    public String getPvpSeasonName() { return redisTemplate.opsForValue().get(PVP_SEASON_NAME); }
     public String getPvpSeasonStart() { return redisTemplate.opsForValue().get(PVP_SEASON_START); }
     public String getPvpSeasonEnd() { return redisTemplate.opsForValue().get(PVP_SEASON_END); }
 
@@ -364,8 +392,10 @@ public class RedisService {
     }
 
     public Long getZoneSnapshotRank(Long characterId) {
-        Long rank = redisTemplate.opsForZSet().reverseRank(ZONE_RANKING_SNAPSHOT_KEY, characterId.toString());
-        return rank != null ? rank + 1 : null;
+        Double myScore = redisTemplate.opsForZSet().score(ZONE_RANKING_SNAPSHOT_KEY, characterId.toString());
+        if (myScore == null) return null;
+        Long countAbove = redisTemplate.opsForZSet().count(ZONE_RANKING_SNAPSHOT_KEY, myScore + 0.5, Double.MAX_VALUE);
+        return countAbove != null ? countAbove + 1 : 1L;
     }
 
 

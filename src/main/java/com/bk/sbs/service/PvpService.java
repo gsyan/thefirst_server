@@ -68,6 +68,10 @@ public class PvpService {
             redisService.initPvpInfo(record.getCharacterId(), config.getPvpListRefreshCount(), record.getScore());
             String name = nameMap.get(record.getCharacterId());
             if (name != null) redisService.setRankName(record.getCharacterId(), name);
+
+            FleetInfoDto fleet = fleetService.getActiveFleet(record.getCharacterId());
+            String statJson = fleetService.computeFleetRankStatJson(fleet);
+            if (statJson != null) redisService.setRankStat(record.getCharacterId(), statJson);
         }
 
         redisService.snapshotPvpRanking();
@@ -76,7 +80,7 @@ public class PvpService {
         log.info("PVP Redis 동기화 완료: {}건", records.size());
     }
 
-    // PVP 랭킹 주기 재동기화 - DB → pvp:ranking 재구축 후 snapshot 갱신
+    // PVP 랭킹 주기 재동기화 - DB → pvp:ranking 재구축 후 snapshot + stat 갱신
     @org.springframework.scheduling.annotation.Scheduled(fixedRateString = "#{${ranking.pvp.sync.rate-minutes:60} * 60000}")
     public void syncPvpRankingFromDb() {
         redisService.clearPvpRankingZset();
@@ -84,6 +88,10 @@ public class PvpService {
         List<PvpRecord> records = pvpRecordRepository.findAll();
         for (PvpRecord record : records) {
             redisService.setPvpScore(record.getCharacterId(), record.getScore());
+
+            FleetInfoDto fleet = fleetService.getActiveFleet(record.getCharacterId());
+            String statJson = fleetService.computeFleetRankStatJson(fleet);
+            if (statJson != null) redisService.setRankStat(record.getCharacterId(), statJson);
         }
 
         redisService.snapshotPvpRanking();
@@ -324,7 +332,7 @@ public class PvpService {
         rankInfo.setPvpWins(getIntFromHash(myInfo, "wins"));
         rankInfo.setPvpLosses(getIntFromHash(myInfo, "losses"));
         rankInfo.setPvpListRefreshRemain(refreshRemain);
-        rankInfo.setSeasonName(redisService.getPvpSeasonName());
+        rankInfo.setSeasonNumber(redisService.getPvpSeasonNumber());
         rankInfo.setSeasonEndTime(redisService.getPvpSeasonEnd());
 
         PvpMyRankResponse response = new PvpMyRankResponse();

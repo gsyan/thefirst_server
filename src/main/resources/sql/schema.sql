@@ -159,7 +159,6 @@ CREATE TABLE progress (
 -- ============================================================
 CREATE TABLE pvp_season (
     season_number       INT             NOT NULL,
-    season_name         VARCHAR(255)    NOT NULL,
     start_time          DATETIME(6)         NULL,
     end_time            DATETIME(6)     NOT NULL,
     reward_distributed  TINYINT(1)      NOT NULL DEFAULT 0,

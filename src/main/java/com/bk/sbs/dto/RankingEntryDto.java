@@ -18,4 +18,9 @@ public class RankingEntryDto {
     private Long characterId;
     private String characterName;
     private String score;
+    private Integer shipCount;
+    private Float statHealth;
+    private Float statAttack;
+    private Integer statAirCount;
+    private Integer statAirAttack;
 }

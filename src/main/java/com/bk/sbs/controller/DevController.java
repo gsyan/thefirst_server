@@ -149,24 +149,22 @@ public class DevController {
                 String changeFormationJson = jsonSerializeOrThrow(changeFormationResponse);
                 return ApiResponse.success(changeFormationJson);
 
-            // pvpseason set [시즌번호] [시즌명] [시작ISO] [종료ISO]
-            // 예) pvpseason set 1 "시즌 1" 2026-05-01T00:00:00Z 2026-05-15T00:00:00Z
+            // pvpseason set [시즌번호] [시작ISO] [종료ISO]
+            // 예) pvpseason set 1 2026-05-01T00:00:00Z 2026-05-15T00:00:00Z
             case "pvpseason": {
                 if (params == null || params.size() < 1)
                     throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_UNKNOWN_COMMAND);
                 String subCmd = params.get(0).toLowerCase();
 
                 if (subCmd.equals("set")) {
-                    // params: [set, seasonNumber, seasonName, startISO, endISO]
-                    if (params.size() < 5)
+                    // params: [set, seasonNumber, startISO, endISO]
+                    if (params.size() < 4)
                         throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_UNKNOWN_COMMAND);
                     int seasonNumber = parseIntOrThrow(params.get(1), ServerErrorCode.EXECUTE_COMMAND_FAIL_UNKNOWN_COMMAND);
-                    String seasonName = params.get(2);
-                    java.time.Instant startTime = java.time.Instant.parse(params.get(3));
-                    java.time.Instant endTime   = java.time.Instant.parse(params.get(4));
-                    PvpSeason season = pvpSeasonService.setSeasonManual(seasonNumber, seasonName, startTime, endTime);
+                    java.time.Instant startTime = java.time.Instant.parse(params.get(2));
+                    java.time.Instant endTime   = java.time.Instant.parse(params.get(3));
+                    PvpSeason season = pvpSeasonService.setSeasonManual(seasonNumber, startTime, endTime);
                     return ApiResponse.success("시즌 설정 완료|season:" + season.getSeasonNumber()
-                            + "|name:" + season.getSeasonName()
                             + "|end:" + season.getEndTime());
 
                 } else if (subCmd.equals("end")) {

@@ -2,6 +2,8 @@ package com.bk.sbs.service;
 
 import com.bk.sbs.dto.*;
 import com.bk.sbs.entity.Character;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.bk.sbs.repository.CharacterRepository;
 import com.bk.sbs.repository.ClearedZoneRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -26,11 +28,17 @@ public class RankingService {
     private final RedisService redisService;
     private final CharacterRepository characterRepository;
     private final ClearedZoneRepository clearedZoneRepository;
+    private final FleetService fleetService;
+    private final ObjectMapper objectMapper;
 
-    public RankingService(RedisService redisService, CharacterRepository characterRepository, ClearedZoneRepository clearedZoneRepository) {
+    public RankingService(RedisService redisService, CharacterRepository characterRepository,
+                          ClearedZoneRepository clearedZoneRepository, FleetService fleetService,
+                          ObjectMapper objectMapper) {
         this.redisService = redisService;
         this.characterRepository = characterRepository;
         this.clearedZoneRepository = clearedZoneRepository;
+        this.fleetService = fleetService;
+        this.objectMapper = objectMapper;
     }
 
     // 서버 시작 시 Zone 랭킹 Redis 초기화 (PvpService @Order(2) 이후)
@@ -52,6 +60,10 @@ public class RankingService {
             if (maxScore > 0) {
                 redisService.setZoneScore(c.getId(), maxScore);
                 redisService.setRankName(c.getId(), c.getCharacterName());
+
+                FleetInfoDto fleet = fleetService.getActiveFleet(c.getId());
+                String statJson = fleetService.computeFleetRankStatJson(fleet);
+                if (statJson != null) redisService.setRankStat(c.getId(), statJson);
             }
         }
 
@@ -67,19 +79,28 @@ public class RankingService {
         long totalCount = redisService.getTotalPvpSnapshotCount();
         LinkedHashMap<Long, Integer> page = redisService.getPvpSnapshotPage(offset, limit);
 
-        // DB 조회 없이 rankName Hash에서 일괄 조회
+        // DB 조회 없이 rankName/rankStat Hash에서 일괄 조회
         Set<String> idStrs = new LinkedHashSet<>();
         for (Long id : page.keySet()) idStrs.add(id.toString());
         Map<String, String> nameMap = redisService.getRankNamesMulti(idStrs);
+        Map<String, String> statMap = redisService.getRankStatsMulti(idStrs);
 
         List<RankingEntryDto> items = new ArrayList<>();
         int idx = 0;
+        int prevScore = Integer.MIN_VALUE;
+        int tieRank = offset + 1;
         for (Map.Entry<Long, Integer> entry : page.entrySet()) {
+            int score = entry.getValue();
+            if (idx == 0 || score != prevScore) {
+                tieRank = offset + idx + 1;
+                prevScore = score;
+            }
             RankingEntryDto dto = new RankingEntryDto();
-            dto.setRank(offset + idx + 1);
+            dto.setRank(tieRank);
             dto.setCharacterId(entry.getKey());
             dto.setCharacterName(nameMap.getOrDefault(entry.getKey().toString(), "Unknown"));
-            dto.setScore(String.valueOf(entry.getValue()));
+            dto.setScore(String.valueOf(score));
+            applyStatJson(dto, statMap.get(entry.getKey().toString()));
             items.add(dto);
             idx++;
         }
@@ -94,7 +115,7 @@ public class RankingService {
         response.setItems(items);
         response.setMyInfo(myInfo);
         response.setLastUpdatedAt(lastUpdatedAt);
-        response.setSeasonName(redisService.getPvpSeasonName());
+        response.setSeasonNumber(redisService.getPvpSeasonNumber());
         response.setSeasonStartTime(redisService.getPvpSeasonStart());
         response.setSeasonEndTime(redisService.getPvpSeasonEnd());
         return response;
@@ -106,23 +127,30 @@ public class RankingService {
         long totalCount = redisService.getTotalZoneSnapshotCount();
         LinkedHashMap<Long, Integer> page = redisService.getZoneSnapshotPage(offset, limit);
 
-        // DB 조회 없이 rankName Hash에서 일괄 조회
+        // DB 조회 없이 rankName/rankStat Hash에서 일괄 조회
         Set<String> idStrs = new LinkedHashSet<>();
         for (Long id : page.keySet()) idStrs.add(id.toString());
         Map<String, String> nameMap = redisService.getRankNamesMulti(idStrs);
+        Map<String, String> statMap = redisService.getRankStatsMulti(idStrs);
 
         List<RankingEntryDto> items = new ArrayList<>();
         int idx = 0;
+        int prevScore = Integer.MIN_VALUE;
+        int tieRank = offset + 1;
         for (Map.Entry<Long, Integer> entry : page.entrySet()) {
-            Integer score = entry.getValue();
-            int chapter = (int) (score / 1000);
-            int stage   = (int) (score % 1000);
-
+            int score = entry.getValue();
+            int chapter = score / 1000;
+            int stage   = score % 1000;
+            if (idx == 0 || score != prevScore) {
+                tieRank = offset + idx + 1;
+                prevScore = score;
+            }
             RankingEntryDto dto = new RankingEntryDto();
-            dto.setRank(offset + idx + 1);
+            dto.setRank(tieRank);
             dto.setCharacterId(entry.getKey());
             dto.setCharacterName(nameMap.getOrDefault(entry.getKey().toString(), "Unknown"));
             dto.setScore(chapter + "-" + stage);
+            applyStatJson(dto, statMap.get(entry.getKey().toString()));
             items.add(dto);
             idx++;
         }
@@ -173,6 +201,25 @@ public class RankingService {
         dto.setCharacterName(name);
         dto.setScore(rawScore > 0 ? chapter + "-" + stage : "-");
         return dto;
+    }
+
+    private void applyStatJson(RankingEntryDto dto, String statJson) {
+        if (statJson == null) return;
+        try {
+            Map<String, Object> map = objectMapper.readValue(statJson, new TypeReference<Map<String, Object>>() {});
+            Object sc = map.get("shipCount");
+            Object sh = map.get("statHealth");
+            Object sa = map.get("statAttack");
+            Object ac = map.get("statAirCount");
+            Object aa = map.get("statAirAttack");
+            if (sc != null) dto.setShipCount(((Number) sc).intValue());
+            if (sh != null) dto.setStatHealth(((Number) sh).floatValue());
+            if (sa != null) dto.setStatAttack(((Number) sa).floatValue());
+            if (ac != null) dto.setStatAirCount(((Number) ac).intValue());
+            if (aa != null) dto.setStatAirAttack(((Number) aa).intValue());
+        } catch (Exception e) {
+            log.warn("[RankingService] stat JSON 파싱 실패: {}", statJson);
+        }
     }
 
     // "3-5" → 3005
