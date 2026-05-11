@@ -1,10 +1,6 @@
 {
   "zoneStages": [
     {
-      "zoneName": "Zone-0",
-      "mineralClearReward": 0
-    },
-    {
       "zoneName": "1-1",
       "mineralClearReward": 10
     },
