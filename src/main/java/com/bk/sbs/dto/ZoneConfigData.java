@@ -16,4 +16,6 @@ import lombok.NoArgsConstructor;
 public class ZoneConfigData {
     private String zoneName;
     private Integer mineralClearReward;
+    private Integer techPointClearReward;
+    private Integer modulePointClearReward;
 }

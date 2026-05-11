@@ -43,14 +43,13 @@ CREATE TABLE `character` (
     character_name          VARCHAR(255)    NOT NULL,
     last_location           BIGINT              NULL,
     mineral                 INT             NOT NULL DEFAULT 0,
-    mineral_max_got         INT             NOT NULL DEFAULT 0,
-    pvp_mineral             INT             NOT NULL DEFAULT 0,
-    pvp_mineral_max_got     INT             NOT NULL DEFAULT 0,
-    pvp_mineral_expiry      DATETIME(6)         NULL,
-    pvp_mineral_season_ref  INT             NOT NULL DEFAULT 0,
-    temp_mineral            INT             NOT NULL DEFAULT 0,
-    temp_mineral_max_got    INT             NOT NULL DEFAULT 0,
-    temp_mineral_expiry     DATETIME(6)         NULL,
+    tech_point              INT             NOT NULL DEFAULT 0,
+    module_point            INT             NOT NULL DEFAULT 0,
+    module_point_max_got    INT             NOT NULL DEFAULT 0,
+    pvp_point               INT             NOT NULL DEFAULT 0,
+    pvp_point_max_got       INT             NOT NULL DEFAULT 0,
+    pvp_point_expiry        DATETIME(6)         NULL,
+    pvp_point_season_ref    INT             NOT NULL DEFAULT 0,
     name_change_count       INT             NOT NULL DEFAULT 2,
     collect_date_time       DATETIME(6)         NULL,
     last_online_at          DATETIME(6)         NULL,
@@ -106,9 +105,7 @@ CREATE TABLE ship_module (
     module_level            INT             NOT NULL,
     body_index              INT             NOT NULL,
     slot_index              INT             NOT NULL,
-    invested_mineral        INT             NOT NULL DEFAULT 0,
-    invested_pvp_mineral    INT             NOT NULL DEFAULT 0,
-    invested_temp_mineral   INT             NOT NULL DEFAULT 0,
+    invested_module_point   INT             NOT NULL DEFAULT 0,
     current_health          FLOAT           NOT NULL DEFAULT 0,
     deleted                 TINYINT(1)      NOT NULL DEFAULT 0,
     created                 DATETIME(6)     NOT NULL,
@@ -224,11 +221,11 @@ DROP PROCEDURE IF EXISTS sp_get_character_resources$$
 CREATE PROCEDURE sp_get_character_resources(
     IN  p_character_id  BIGINT,
     OUT p_mineral       INT,
-    OUT p_pvp_mineral   INT
+    OUT p_pvp_point     INT
 )
 BEGIN
-    SELECT mineral, pvp_mineral
-    INTO   p_mineral, p_pvp_mineral
+    SELECT mineral, pvp_point
+    INTO   p_mineral, p_pvp_point
     FROM   `character`
     WHERE  id = p_character_id AND deleted = 0;
 END$$

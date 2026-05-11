@@ -22,7 +22,5 @@ public class ModuleUnlockResponse {
     private EModuleSubType moduleSubType;
     private Integer slotIndex;
     private CostRemainInfoDto costRemainInfo;
-    private Integer investedMineral;
-    private Integer investedPvpMineral;
-    private Integer investedTempMineral;
+    private Integer investedModulePoint;
 }

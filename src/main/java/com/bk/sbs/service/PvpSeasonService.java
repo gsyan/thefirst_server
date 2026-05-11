@@ -64,7 +64,7 @@ public class PvpSeasonService {
         // 이전 시즌(seasonNumber-1) 보상 만료일을 이 시즌 종료일로 일괄 업데이트
         int prevSeasonNumber = seasonNumber - 1;
         if (prevSeasonNumber >= 1) {
-            int updated = pvpSeasonRepository.bulkUpdatePvpMineralExpiry(prevSeasonNumber, endTime);
+            int updated = pvpSeasonRepository.bulkUpdatePvpPointExpiry(prevSeasonNumber, endTime);
             if (updated > 0) {
                 log.info("시즌 {} 종료일 변경 → 시즌 {} 보상 만료일 {}건 업데이트", seasonNumber, prevSeasonNumber, updated);
             }
@@ -115,10 +115,10 @@ public class PvpSeasonService {
             if (reward <= 0) continue;
 
             characterRepository.findById(record.getCharacterId()).ifPresent(character -> {
-                character.setPvpMineral(character.getPvpMineral() + reward);
-                character.setPvpMineralMaxGot(character.getPvpMineralMaxGot() + reward);
-                character.setPvpMineralExpiry(rewardExpiry);
-                character.setPvpMineralSeasonRef(season.getSeasonNumber());
+                character.setPvpPoint(character.getPvpPoint() + reward);
+                character.setPvpPointMaxGot(character.getPvpPointMaxGot() + reward);
+                character.setPvpPointExpiry(rewardExpiry);
+                character.setPvpPointSeasonRef(season.getSeasonNumber());
                 characterRepository.save(character);
             });
             count++;

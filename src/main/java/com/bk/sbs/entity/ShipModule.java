@@ -37,15 +37,9 @@ public class ShipModule {
     @Column(nullable = false)
     private int slotIndex; // 함선 내에서 모듈의 슬롯 위치
 
-    // 이 슬롯에 투자한 재화 이력 — 리셋 시 100% 환급
+    // 이 슬롯에 투자한 modulePoint 이력 — 리셋 시 100% 환급
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int investedMineral = 0;
-
-    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int investedPvpMineral = 0;
-
-    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int investedTempMineral = 0;
+    private int investedModulePoint = 0;
 
     // 현재 체력 (절대값). body 모듈 전용. 생성 시 maxHealth로 초기화
     @Column(nullable = false, columnDefinition = "FLOAT DEFAULT 0")

@@ -22,7 +22,7 @@ public class ModuleData {
 
     private Integer moduleLevel;
 
-    private Integer mineralCost;
+    private Integer modulePointCost;
 
     private String description;
 

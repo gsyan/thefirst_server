@@ -60,15 +60,18 @@ public class DevController {
                 return ApiResponse.success("Mineral added: " + additionalMaterial + " (total: " + newMineral + ")|mineral:" + newMineral);
 
             case "addminerals": {
-                // params: [mineral] [pvpMineral] [tempMineral] — 0이면 해당 타입 스킵
-                if (params == null || params.size() < 3) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMINERALS_INVALID_PARAM);
-                int addM  = parseIntOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMIKNERAL_PARSE_PARAM);
-                int addPm = parseIntOrThrow(params.get(1), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDPVPMINERAL_PARSE_PARAM);
-                int addTm = parseIntOrThrow(params.get(2), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDTEMPMINERAL_PARSE_PARAM);
-                int newM  = addM  > 0 ? characterService.addMineral(characterId, addM)     : characterService.getCharacterInfoDto(characterId).getMineral();
-                int newPm = addPm > 0 ? characterService.addPvpMineral(characterId, addPm) : characterService.getCharacterInfoDto(characterId).getPvpMineral();
-                int newTm = addTm > 0 ? characterService.addTempMineral(characterId, addTm): characterService.getCharacterInfoDto(characterId).getTempMineral();
-                return ApiResponse.success("Minerals added|mineral:" + newM + "|pvpMineral:" + newPm + "|tempMineral:" + newTm);
+                // params: [mineral] [techPoint] [modulePoint] [pvpPoint] — 0이면 해당 타입 스킵
+                if (params == null || params.size() < 4) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMINERALS_INVALID_PARAM);
+                int addM   = parseIntOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMIKNERAL_PARSE_PARAM);
+                int addTp  = parseIntOrThrow(params.get(1), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDPVPMINERAL_PARSE_PARAM);
+                int addMp  = parseIntOrThrow(params.get(2), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDTEMPMINERAL_PARSE_PARAM);
+                int addPvp = parseIntOrThrow(params.get(3), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDPVPMINERAL_PARSE_PARAM);
+                CharacterInfoDto cur = characterService.getCharacterInfoDto(characterId);
+                int newM   = addM   > 0 ? characterService.addMineral(characterId, addM)       : cur.getMineral();
+                int newTp  = addTp  > 0 ? characterService.addTechPoint(characterId, addTp)    : cur.getTechPoint();
+                int newMp  = addMp  > 0 ? characterService.addModulePoint(characterId, addMp)  : cur.getModulePoint();
+                int newPvp = addPvp > 0 ? characterService.addPvpPoint(characterId, addPvp)    : cur.getPvpPoint();
+                return ApiResponse.success("Resources added|mineral:" + newM + "|techPoint:" + newTp + "|modulePoint:" + newMp + "|pvpPoint:" + newPvp);
             }
 
             case "addtech":

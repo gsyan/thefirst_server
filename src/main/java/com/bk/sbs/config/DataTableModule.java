@@ -70,8 +70,8 @@ public class DataTableModule {
         for (ModuleResearchData data : researchDataList) {
             if (data.getModuleSubType() != null &&
                 data.getModuleSubType().equals(moduleSubType)) {
-                return data.getMineralCost() != null ?
-                       data.getMineralCost() :
+                return data.getPointCost() != null ?
+                       data.getPointCost() :
                        0;
             }
         }

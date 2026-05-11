@@ -29,30 +29,29 @@ public class Character {
     @Column(nullable = false)
     private int mineral;
 
+    // 기술레벨 연구 포인트 (스테이지 최초 클리어 보상)
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int mineralMaxGot = 0;
+    private int techPoint = 0;
 
-    // PvP 정산 배치 지급 재화 — 만료 시 소멸
+    // 모듈 레벨업/업그레이드 포인트 (스테이지 최초 클리어 보상)
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int pvpMineral = 0;
+    private int modulePoint = 0;
 
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int pvpMineralMaxGot = 0;
+    private int modulePointMaxGot = 0;
 
-    private Instant pvpMineralExpiry;
+    // PvP 시즌 보상 포인트 — 만료 시 소멸
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int pvpPoint = 0;
+
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int pvpPointMaxGot = 0;
+
+    private Instant pvpPointExpiry;
 
     // 어느 시즌 보상인지 참조 — 다음 시즌 기간 변경 시 만료일 일괄 업데이트에 사용
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int pvpMineralSeasonRef = 0;
-
-    // IAP 구매 임시 재화 — 만료 시 소멸
-    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int tempMineral = 0;
-
-    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int tempMineralMaxGot = 0;
-
-    private Instant tempMineralExpiry;
+    private int pvpPointSeasonRef = 0;
 
     // 이름 변경 가능 횟수 (초기값 2, 0이면 변경 불가)
     @Column(nullable = false, columnDefinition = "INT DEFAULT 2")

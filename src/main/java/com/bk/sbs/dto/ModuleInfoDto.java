@@ -23,7 +23,5 @@ public class ModuleInfoDto {
     private Integer bodyIndex;
     private Integer slotIndex;
     private List<EModuleSubType> unlockedSubTypes;
-    private Integer investedMineral;
-    private Integer investedPvpMineral;
-    private Integer investedTempMineral;
+    private Integer investedModulePoint;
 }

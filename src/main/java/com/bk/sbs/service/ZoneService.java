@@ -54,7 +54,6 @@ public class ZoneService {
         Instant now = Instant.now();
         int clearRewards = calculateClearReward(zoneConfig);
         character.setMineral(character.getMineral() + clearRewards);
-        character.setMineralMaxGot(character.getMineralMaxGot() + clearRewards);
 
         clearedZoneRepository.save(new ClearedZone(characterId, zoneName));
         characterRepository.save(character);
@@ -69,7 +68,7 @@ public class ZoneService {
                 .rewardInfo(buildRewardInfo(character, clearRewards))
                 .isZoneCleared(true)
                 .clearedZoneName(zoneName)
-                .mineralMaxGot(character.getMineralMaxGot())
+                .mineralReward(clearRewards)
                 .build();
     }
 

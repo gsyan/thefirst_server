@@ -73,8 +73,9 @@ public class CharacterService {
         character.setAccountId(account.getId());
         // 자동 이름 모드: 충돌 없는 UUID 임시 이름으로 저장 → 이후 empty_+id로 교체
         character.setCharacterName(isAutoName ? UUID.randomUUID().toString() : requestedName);
-        character.setMineral(2);        // 기본미네랄 2 지급
-        character.setMineralMaxGot(2);  // 기본 지급분도 누적에 포함
+        character.setModulePoint(2);        // 기본 모듈 포인트 2 지급
+        character.setModulePointMaxGot(2);  // 모듈 포인트 총량 2 반영
+        character.setMineral(100);          // 기본 미네랄 100 지급
         Character savedCharacter = characterRepository.save(character);
 
         // 자동 이름: 저장 후 확정된 id로 empty_+id 설정 (유니크 보장)
@@ -141,13 +142,12 @@ public class CharacterService {
                 .characterId(characterId)
                 .characterName(character.getCharacterName())
                 .mineral(character.getMineral())
-                .mineralMaxGot(character.getMineralMaxGot())
-                .pvpMineral(character.getPvpMineral())
-                .pvpMineralMaxGot(character.getPvpMineralMaxGot())
-                .pvpMineralExpiry(character.getPvpMineralExpiry() != null ? character.getPvpMineralExpiry().toString() : null)
-                .tempMineral(character.getTempMineral())
-                .tempMineralMaxGot(character.getTempMineralMaxGot())
-                .tempMineralExpiry(character.getTempMineralExpiry() != null ? character.getTempMineralExpiry().toString() : null)
+                .techPoint(character.getTechPoint())
+                .modulePoint(character.getModulePoint())
+                .modulePointMaxGot(character.getModulePointMaxGot())
+                .pvpPoint(character.getPvpPoint())
+                .pvpPointMaxGot(character.getPvpPointMaxGot())
+                .pvpPointExpiry(character.getPvpPointExpiry() != null ? character.getPvpPointExpiry().toString() : null)
                 .clearedZones(clearedZoneRepository.findZoneNamesByCharacterId(characterId))
                 .nameChangeCount(character.getNameChangeCount())
                 .build();
@@ -207,19 +207,27 @@ public class CharacterService {
     }
 
     @Transactional
-    public int addPvpMineral(Long characterId, int amount) {
+    public int addTechPoint(Long characterId, int amount) {
         Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_MINERAL_FAIL_CHARACTER_NOT_FOUND));
-        character.setPvpMineral(character.getPvpMineral() + amount);
+        character.setTechPoint(character.getTechPoint() + amount);
         character = characterRepository.save(character);
-        return character.getPvpMineral();
+        return character.getTechPoint();
     }
 
     @Transactional
-    public int addTempMineral(Long characterId, int amount) {
+    public int addModulePoint(Long characterId, int amount) {
         Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_MINERAL_FAIL_CHARACTER_NOT_FOUND));
-        character.setTempMineral(character.getTempMineral() + amount);
+        character.setModulePoint(character.getModulePoint() + amount);
         character = characterRepository.save(character);
-        return character.getTempMineral();
+        return character.getModulePoint();
+    }
+
+    @Transactional
+    public int addPvpPoint(Long characterId, int amount) {
+        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_MINERAL_FAIL_CHARACTER_NOT_FOUND));
+        character.setPvpPoint(character.getPvpPoint() + amount);
+        character = characterRepository.save(character);
+        return character.getPvpPoint();
     }
 
     // 기술레벨 업그레이드: module_research에 tech_level_N 행 삽입 후 현재 기술레벨 반환

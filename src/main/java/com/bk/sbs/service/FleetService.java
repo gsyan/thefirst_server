@@ -425,9 +425,7 @@ public class FleetService {
                                     .unlockedSubTypes(unlockedMap.getOrDefault(
                                             bodyIndex + "_" + EModuleType.beam + "_" + beamModule.getSlotIndex(),
                                             java.util.Collections.emptyList()))
-                                    .investedMineral(beamModule.getInvestedMineral())
-                                    .investedPvpMineral(beamModule.getInvestedPvpMineral())
-                                    .investedTempMineral(beamModule.getInvestedTempMineral())
+                                    .investedModulePoint(beamModule.getInvestedModulePoint())
                                     .build())
                             .collect(Collectors.toList());
 
@@ -442,9 +440,7 @@ public class FleetService {
                                     .unlockedSubTypes(unlockedMap.getOrDefault(
                                             bodyIndex + "_" + EModuleType.missile + "_" + missileModule.getSlotIndex(),
                                             java.util.Collections.emptyList()))
-                                    .investedMineral(missileModule.getInvestedMineral())
-                                    .investedPvpMineral(missileModule.getInvestedPvpMineral())
-                                    .investedTempMineral(missileModule.getInvestedTempMineral())
+                                    .investedModulePoint(missileModule.getInvestedModulePoint())
                                     .build())
                             .collect(Collectors.toList());
 
@@ -459,9 +455,7 @@ public class FleetService {
                                     .unlockedSubTypes(unlockedMap.getOrDefault(
                                             bodyIndex + "_" + EModuleType.hanger + "_" + hangerModule.getSlotIndex(),
                                             java.util.Collections.emptyList()))
-                                    .investedMineral(hangerModule.getInvestedMineral())
-                                    .investedPvpMineral(hangerModule.getInvestedPvpMineral())
-                                    .investedTempMineral(hangerModule.getInvestedTempMineral())
+                                    .investedModulePoint(hangerModule.getInvestedModulePoint())
                                     .build())
                             .collect(Collectors.toList());
 
@@ -488,9 +482,7 @@ public class FleetService {
                             .missiles(missiles)
                             .hangers(hangers)
                             .unlockedSubTypes(bodyUnlocked)
-                            .investedMineral(bodyModule.getInvestedMineral())
-                            .investedPvpMineral(bodyModule.getInvestedPvpMineral())
-                            .investedTempMineral(bodyModule.getInvestedTempMineral())
+                            .investedModulePoint(bodyModule.getInvestedModulePoint())
                             .currentHealth(normalizedHealth)
                             .build();
                 })
@@ -545,12 +537,12 @@ public class FleetService {
         }
 
         // 자원 부족 검사
-        if (character.getMineral() < shipAddCost) {
-            throw new BusinessException(ServerErrorCode.ADD_SHIP_FAIL_INSUFFICIENT_MINERAL);
+        if (character.getModulePoint() < shipAddCost) {
+            throw new BusinessException(ServerErrorCode.ADD_SHIP_FAIL_INSUFFICIENT_MODULE_POINT);
         }
 
         // 자원 차감
-        character.setMineral(character.getMineral() - shipAddCost);
+        int addShipDeducted = deductModulePoint(character, shipAddCost);
         characterRepository.save(character);
 
         // 새 함선 생성
@@ -568,8 +560,8 @@ public class FleetService {
         int bodyInvested = shipAddCost - moduleUnlockPrice;
         createDefaultModules(savedShip, bodyInvested, moduleUnlockPrice);
 
-        // 비용 정보 (모든 미네랄 타입 포함)
-        CostRemainInfoDto costRemainInfo = buildCostRemainInfo(shipAddCost, 0, 0, character);
+        // 비용 정보
+        CostRemainInfoDto costRemainInfo = buildCostRemainInfo(0, 0, addShipDeducted, character);
 
         // 응답 생성
         AddShipResponse response = AddShipResponse.builder()
@@ -591,7 +583,7 @@ public class FleetService {
         bodyModule.setModuleLevel(1);
         bodyModule.setBodyIndex(0);
         bodyModule.setSlotIndex(0);
-        bodyModule.setInvestedMineral(bodyInvestedMineral);
+        bodyModule.setInvestedModulePoint(bodyInvestedMineral);
         bodyModule.setCurrentHealth(bodyData != null && bodyData.getHealth() != null ? bodyData.getHealth() : 0f);
         bodyModule.setDeleted(false);
         bodyModule.setCreated(LocalDateTime.now());
@@ -606,7 +598,7 @@ public class FleetService {
         weaponModule.setModuleLevel(1);
         weaponModule.setBodyIndex(0);
         weaponModule.setSlotIndex(0);
-        weaponModule.setInvestedMineral(beamInvestedMineral);
+        weaponModule.setInvestedModulePoint(beamInvestedMineral);
         weaponModule.setDeleted(false);
         weaponModule.setCreated(LocalDateTime.now());
         weaponModule.setModified(LocalDateTime.now());
@@ -660,23 +652,21 @@ public class FleetService {
                     .findFirst()
                     .orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MODULE_DATA_NOT_FOUND));
 
-            totalCost = totalCost + levelData.getMineralCost();
+            totalCost = totalCost + levelData.getModulePointCost();
         }
 
         // 자원 부족 검사 (업그레이드 진행 전에 먼저 체크)
-        if (character.getMineral() < totalCost) {
+        if (character.getModulePoint() < totalCost) {
             throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_INSUFFICIENT_MINERAL);
         }
 
-        // 자원 차감 (소비 우선순위: M → PM → TM)
-        int[] deducted = deductMinerals(character, totalCost);
+        // modulePoint 차감
+        int deducted = deductModulePoint(character, totalCost);
         characterRepository.save(character);
 
         // 모듈 레벨 업데이트 (능력치는 클라이언트가 DataTable에서 조회)
         module.setModuleLevel(request.getTargetLevel());
-        module.setInvestedMineral(module.getInvestedMineral() + deducted[0]);
-        module.setInvestedPvpMineral(module.getInvestedPvpMineral() + deducted[1]);
-        module.setInvestedTempMineral(module.getInvestedTempMineral() + deducted[2]);
+        module.setInvestedModulePoint(module.getInvestedModulePoint() + deducted);
         module.setModified(LocalDateTime.now());
         shipModuleRepository.save(module);
 
@@ -701,7 +691,7 @@ public class FleetService {
         shipModuleLevelRepository.save(levelRecord);
 
         // 비용 정보
-        CostRemainInfoDto costRemainInfo = buildCostRemainInfo(deducted[0], deducted[1], deducted[2], character);
+        CostRemainInfoDto costRemainInfo = buildCostRemainInfo(0, 0, deducted, character);
 
         // 응답 생성
         ModuleLevelUpResponse response = ModuleLevelUpResponse.builder()
@@ -775,16 +765,15 @@ public class FleetService {
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.UNLOCK_MODULE_FAIL_CHARACTER_NOT_FOUND));
 
         // 모듈 해금 비용
-        int mineralCost = gameDataService.getDataTableConfig().getModuleUnlockPrice();
-
+        int modulePointCost = gameDataService.getDataTableConfig().getModuleUnlockPrice();
 
         // 자원 부족 검사
-        if (character.getMineral() < mineralCost) {
+        if (character.getModulePoint() < modulePointCost) {
             throw new BusinessException(ServerErrorCode.UNLOCK_MODULE_FAIL_INSUFFICIENT_MINERAL);
         }
 
-        // 자원 차감 (소비 우선순위: M → PM → TM)
-        int[] unlockDeducted = deductMinerals(character, mineralCost);
+        // modulePoint 차감
+        int unlockDeducted = deductModulePoint(character, modulePointCost);
         characterRepository.save(character);
 
         // 1. 현재 함선의 Body 모듈 찾기
@@ -827,9 +816,7 @@ public class FleetService {
         newModule.setModuleType(moduleType);
         newModule.setModuleSubType(finalModuleSubType);
         newModule.setModuleLevel(1);
-        newModule.setInvestedMineral(unlockDeducted[0]);
-        newModule.setInvestedPvpMineral(unlockDeducted[1]);
-        newModule.setInvestedTempMineral(unlockDeducted[2]);
+        newModule.setInvestedModulePoint(unlockDeducted);
         newModule.setDeleted(false);
         newModule.setCreated(LocalDateTime.now());
         newModule.setModified(LocalDateTime.now());
@@ -837,7 +824,7 @@ public class FleetService {
         saveInitialModuleLevel(ship, moduleType, finalModuleSubType, 1, request.getBodyIndex(), request.getSlotIndex());
 
         // 비용 정보
-        CostRemainInfoDto costRemainInfo = buildCostRemainInfo(unlockDeducted[0], unlockDeducted[1], unlockDeducted[2], character);
+        CostRemainInfoDto costRemainInfo = buildCostRemainInfo(0, 0, unlockDeducted, character);
 
         // 응답 생성
         return new ModuleUnlockResponse(
@@ -847,9 +834,7 @@ public class FleetService {
                 finalModuleSubType,
                 request.getSlotIndex(),
                 costRemainInfo,
-                unlockDeducted[0],
-                unlockDeducted[1],
-                unlockDeducted[2]
+                unlockDeducted
         );
     }
 
@@ -921,13 +906,12 @@ public class FleetService {
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_SHIP_NOT_FOUND));
 
         int addCost = gameDataService.getModuleResearchCost(newModuleSubType);
-        int[] changeDeducted = new int[]{0, 0, 0};
+        int changeDeducted = 0;
         if (!alreadyAdded) {
-            int totalMineral = character.getMineral() + character.getPvpMineral() + character.getTempMineral();
-            if (totalMineral < addCost) {
+            if (character.getModulePoint() < addCost) {
                 throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_INSUFFICIENT_MINERAL_RARE);
             }
-            changeDeducted = deductMinerals(character, addCost);
+            changeDeducted = deductModulePoint(character, addCost);
             characterRepository.save(character);
         }
 
@@ -958,16 +942,14 @@ public class FleetService {
         currentModule.setModuleSubType(newModuleSubType);
         currentModule.setModuleLevel(newModuleLevel);
         if (!alreadyAdded) {
-            currentModule.setInvestedMineral(currentModule.getInvestedMineral() + changeDeducted[0]);
-            currentModule.setInvestedPvpMineral(currentModule.getInvestedPvpMineral() + changeDeducted[1]);
-            currentModule.setInvestedTempMineral(currentModule.getInvestedTempMineral() + changeDeducted[2]);
+            currentModule.setInvestedModulePoint(currentModule.getInvestedModulePoint() + changeDeducted);
         }
         currentModule.setModified(LocalDateTime.now());
         shipModuleRepository.save(currentModule);
 
         // 응답 생성 (actualCost: 최초 추가 시 실차감액, 재추가 시 0)
         int actualCost = alreadyAdded ? 0 : addCost;
-        CostRemainInfoDto costRemainInfo = buildCostRemainInfo(changeDeducted[0], changeDeducted[1], changeDeducted[2], character);
+        CostRemainInfoDto costRemainInfo = buildCostRemainInfo(0, 0, changeDeducted, character);
 
         // 해당 슬롯에 이력이 있는 모든 서브타입 = 비용 없이 교체 가능한 목록
         List<EModuleSubType> unlockedSubTypes = shipModuleLevelRepository
@@ -1013,12 +995,11 @@ public class FleetService {
         }
 
         // 자원 부족 검사
-        int totalResearchMineral = character.getMineral() + character.getPvpMineral() + character.getTempMineral();
-        if (totalResearchMineral < researchCost)
+        if (character.getTechPoint() < researchCost)
             throw new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_INSUFFICIENT_MINERAL);
 
-        // 자원 차감 (소비 우선순위: M → PM → TM)
-        int[] researchDeducted = deductMinerals(character, researchCost);
+        // techPoint 차감
+        int researchDeducted = deductTechPoint(character, researchCost);
         characterRepository.save(character);
 
         // 기술레벨 연구 저장
@@ -1031,7 +1012,7 @@ public class FleetService {
 
         // 완료된 researchedIds 반환
         List<String> researchedIds = getResearchedIds(characterId);
-        CostRemainInfoDto costRemainInfo = buildCostRemainInfo(researchDeducted[0], researchDeducted[1], researchDeducted[2], character);
+        CostRemainInfoDto costRemainInfo = buildCostRemainInfo(0, researchDeducted, 0, character);
         return new TechLevelResearchResponse(costRemainInfo, researchedIds);
     }
 
@@ -1089,9 +1070,7 @@ public class FleetService {
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.RESET_MODULE_FAIL_CHARACTER_NOT_FOUND));
 
         // 투자 이력 환급
-        character.setMineral(character.getMineral() + module.getInvestedMineral());
-        character.setPvpMineral(character.getPvpMineral() + module.getInvestedPvpMineral());
-        character.setTempMineral(character.getTempMineral() + module.getInvestedTempMineral());
+        character.setModulePoint(character.getModulePoint() + module.getInvestedModulePoint());
         characterRepository.save(character);
 
         // 모듈 soft-delete (언락된 슬롯을 플레이스홀더 상태로 복귀)
@@ -1103,14 +1082,7 @@ public class FleetService {
         shipModuleLevelRepository.deleteBySlot(
                 request.getShipId(), request.getBodyIndex(), request.getModuleType(), request.getSlotIndex());
 
-        CostRemainInfoDto costRemainInfo = CostRemainInfoDto.builder()
-                .mineralCost(0)
-                .mineralRemain(character.getMineral())
-                .pvpMineralCost(0)
-                .pvpMineralRemain(character.getPvpMineral())
-                .tempMineralCost(0)
-                .tempMineralRemain(character.getTempMineral())
-                .build();
+        CostRemainInfoDto costRemainInfo = buildCostRemainInfo(0, 0, 0, character);
 
         return ModuleResetResponse.builder()
                 .shipId(request.getShipId())
@@ -1131,28 +1103,20 @@ public class FleetService {
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.RESET_MODULE_FAIL_CHARACTER_NOT_FOUND));
 
         // 투자 이력 환급
-        character.setMineral(character.getMineral() + body.getInvestedMineral());
-        character.setPvpMineral(character.getPvpMineral() + body.getInvestedPvpMineral());
-        character.setTempMineral(character.getTempMineral() + body.getInvestedTempMineral());
+        character.setModulePoint(character.getModulePoint() + body.getInvestedModulePoint());
         characterRepository.save(character);
 
         // T1 레벨1로 복귀 (삭제 없이 값만 초기화)
         body.setModuleSubType(EModuleSubType.body_t1_m1);
         body.setModuleLevel(1);
-        body.setInvestedMineral(0);
-        body.setInvestedPvpMineral(0);
-        body.setInvestedTempMineral(0);
+        body.setInvestedModulePoint(0);
         body.setModified(LocalDateTime.now());
         shipModuleRepository.save(body);
 
         // 레벨업 이력 전체 삭제
         shipModuleLevelRepository.deleteBySlot(ship.getId(), request.getBodyIndex(), EModuleType.body, 0);
 
-        CostRemainInfoDto costRemainInfo = CostRemainInfoDto.builder()
-                .mineralCost(0).mineralRemain(character.getMineral())
-                .pvpMineralCost(0).pvpMineralRemain(character.getPvpMineral())
-                .tempMineralCost(0).tempMineralRemain(character.getTempMineral())
-                .build();
+        CostRemainInfoDto costRemainInfo = buildCostRemainInfo(0, 0, 0, character);
 
         return ModuleResetResponse.builder()
                 .shipId(ship.getId())
@@ -1183,15 +1147,11 @@ public class FleetService {
 
         // 전 모듈 투자 이력 합산 후 환급
         List<ShipModule> allModules = shipModuleRepository.findByShipIdAndDeletedFalseOrderBySlotIndex(request.getShipId());
-        int refundM = 0, refundPm = 0, refundTm = 0;
+        int refundMp = 0;
         for (ShipModule mod : allModules) {
-            refundM  += mod.getInvestedMineral();
-            refundPm += mod.getInvestedPvpMineral();
-            refundTm += mod.getInvestedTempMineral();
+            refundMp += mod.getInvestedModulePoint();
         }
-        character.setMineral(character.getMineral() + refundM);
-        character.setPvpMineral(character.getPvpMineral() + refundPm);
-        character.setTempMineral(character.getTempMineral() + refundTm);
+        character.setModulePoint(character.getModulePoint() + refundMp);
         characterRepository.save(character);
 
         // 모듈 + ShipModuleLevel soft delete
@@ -1220,14 +1180,7 @@ public class FleetService {
         Fleet updatedFleet = fleetRepository.findByIdAndCharacterIdAndDeletedFalse(fleet.getId(), characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.RESET_SHIP_FAIL_FLEET_NOT_FOUND));
 
-        CostRemainInfoDto costRemainInfo = CostRemainInfoDto.builder()
-                .mineralCost(0)
-                .mineralRemain(character.getMineral())
-                .pvpMineralCost(0)
-                .pvpMineralRemain(character.getPvpMineral())
-                .tempMineralCost(0)
-                .tempMineralRemain(character.getTempMineral())
-                .build();
+        CostRemainInfoDto costRemainInfo = buildCostRemainInfo(0, 0, 0, character);
 
         return ShipResetRemoveResponse.builder()
                 .removedShipId(request.getShipId())
@@ -1297,41 +1250,25 @@ public class FleetService {
         return null;
     }
 
-    // 소비 우선순위: M → PM → TM. 반환값: [차감M, 차감PM, 차감TM]
-    private int[] deductMinerals(com.bk.sbs.entity.Character character, int cost) {
-        int[] deducted = new int[]{0, 0, 0};
-        int remaining = cost;
-
-        int fromM = Math.min(remaining, character.getMineral());
-        character.setMineral(character.getMineral() - fromM);
-        deducted[0] = fromM;
-        remaining -= fromM;
-
-        if (remaining > 0) {
-            int fromPm = Math.min(remaining, character.getPvpMineral());
-            character.setPvpMineral(character.getPvpMineral() - fromPm);
-            deducted[1] = fromPm;
-            remaining -= fromPm;
-        }
-
-        if (remaining > 0) {
-            int fromTm = Math.min(remaining, character.getTempMineral());
-            character.setTempMineral(character.getTempMineral() - fromTm);
-            deducted[2] = fromTm;
-        }
-
-        return deducted;
+    private int deductModulePoint(com.bk.sbs.entity.Character character, int cost) {
+        character.setModulePoint(character.getModulePoint() - cost);
+        return cost;
     }
 
-    // CostRemainInfoDto 빌더 헬퍼 (3종 차감량 + 잔액)
-    private CostRemainInfoDto buildCostRemainInfo(int costM, int costPm, int costTm, com.bk.sbs.entity.Character character) {
+    private int deductTechPoint(com.bk.sbs.entity.Character character, int cost) {
+        character.setTechPoint(character.getTechPoint() - cost);
+        return cost;
+    }
+
+    // CostRemainInfoDto 빌더 헬퍼 (costM=mineral, costTp=techPoint, costMp=modulePoint)
+    private CostRemainInfoDto buildCostRemainInfo(int costM, int costTp, int costMp, com.bk.sbs.entity.Character character) {
         return CostRemainInfoDto.builder()
                 .mineralCost(costM)
                 .mineralRemain(character.getMineral())
-                .pvpMineralCost(costPm)
-                .pvpMineralRemain(character.getPvpMineral())
-                .tempMineralCost(costTm)
-                .tempMineralRemain(character.getTempMineral())
+                .techPointCost(costTp)
+                .techPointRemain(character.getTechPoint())
+                .modulePointCost(costMp)
+                .modulePointRemain(character.getModulePoint())
                 .build();
     }
 

@@ -18,13 +18,12 @@ public class CharacterInfoDto {
     private Long characterId;
     private String characterName;
     private Integer mineral;
-    private Integer mineralMaxGot;
-    private Integer pvpMineral;
-    private Integer pvpMineralMaxGot;
-    private String pvpMineralExpiry;
-    private Integer tempMineral;
-    private Integer tempMineralMaxGot;
-    private String tempMineralExpiry;
+    private Integer techPoint;
+    private Integer modulePoint;
+    private Integer modulePointMaxGot;
+    private Integer pvpPoint;
+    private Integer pvpPointMaxGot;
+    private String pvpPointExpiry;
     private List<String> clearedZones;
     private Integer nameChangeCount;
 }

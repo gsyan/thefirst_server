@@ -16,8 +16,8 @@ import lombok.NoArgsConstructor;
 public class CostRemainInfoDto {
     private Integer mineralCost;
     private Integer mineralRemain;
-    private Integer pvpMineralCost;
-    private Integer pvpMineralRemain;
-    private Integer tempMineralCost;
-    private Integer tempMineralRemain;
+    private Integer techPointCost;
+    private Integer techPointRemain;
+    private Integer modulePointCost;
+    private Integer modulePointRemain;
 }

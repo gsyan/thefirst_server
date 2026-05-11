@@ -16,5 +16,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ModuleChangeCostEntryDto {
     private EModuleSubType moduleSubType;
-    private Integer mineralCost;
+    private Integer modulePointCost;
 }
