@@ -51,9 +51,13 @@ public class ZoneService {
         if (clearedZoneRepository.existsByCharacterIdAndZoneName(characterId, zoneName))
             throw new BusinessException(ServerErrorCode.ZONE_ALREADY_CLEARED);
 
-        Instant now = Instant.now();
-        int clearRewards = calculateClearReward(zoneConfig);
-        character.setMineral(character.getMineral() + clearRewards);
+        int mineralReward     = zoneConfig.getMineralClearReward();
+        int techPointReward   = zoneConfig.getTechPointClearReward();
+        int modulePointReward = zoneConfig.getModulePointClearReward();
+
+        character.setMineral(character.getMineral() + mineralReward);
+        character.setTechPoint(character.getTechPoint() + techPointReward);
+        character.setModulePoint(character.getModulePoint() + modulePointReward);
 
         clearedZoneRepository.save(new ClearedZone(characterId, zoneName));
         characterRepository.save(character);
@@ -65,10 +69,11 @@ public class ZoneService {
         redisService.setRankName(characterId, character.getCharacterName());
 
         return ClearZoneStageResponse.builder()
-                .rewardInfo(buildRewardInfo(character, clearRewards))
                 .isZoneCleared(true)
                 .clearedZoneName(zoneName)
-                .mineralReward(clearRewards)
+                .mineralRemain(character.getMineral())
+                .techPointRemain(character.getTechPoint())
+                .modulePointRemain(character.getModulePoint())
                 .build();
     }
 
@@ -77,17 +82,6 @@ public class ZoneService {
         return (long) p[0] * 1000 + p[1];
     }
 
-
-    private CostRemainInfoDto buildRewardInfo(Character character, int reward) {
-        return CostRemainInfoDto.builder()
-                .mineralCost(-reward)
-                .mineralRemain(character.getMineral())
-                .build();
-    }
-
-    private int calculateClearReward(ZoneConfigData zoneConfig) {
-        return zoneConfig.getMineralClearReward();
-    }
 
     private int[] parseZoneName(String zoneName) {
         if (zoneName == null || zoneName.isEmpty()) return new int[]{0, 0};

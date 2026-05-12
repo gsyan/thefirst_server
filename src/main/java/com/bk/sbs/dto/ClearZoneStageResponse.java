@@ -14,10 +14,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class ClearZoneStageResponse {
-    private CostRemainInfoDto rewardInfo;
     private Boolean isZoneCleared;
     private String clearedZoneName;
-    private Integer mineralReward;
-    private Integer techPointReward;
-    private Integer modulePointReward;
+    private Integer mineralRemain;
+    private Integer techPointRemain;
+    private Integer modulePointRemain;
 }
