@@ -1,6 +1,10 @@
 {
   "zoneStages": [
     {
+      "zoneName": "1-0",
+      "mineralClearReward": 0
+    },
+    {
       "zoneName": "1-1",
       "mineralClearReward": 10
     },
@@ -19,6 +23,10 @@
     {
       "zoneName": "1-5",
       "mineralClearReward": 10
+    },
+    {
+      "zoneName": "2-0",
+      "mineralClearReward": 0
     },
     {
       "zoneName": "2-1",
@@ -41,6 +49,10 @@
       "mineralClearReward": 10
     },
     {
+      "zoneName": "3-0",
+      "mineralClearReward": 0
+    },
+    {
       "zoneName": "3-1",
       "mineralClearReward": 10
     },
@@ -59,6 +71,10 @@
     {
       "zoneName": "3-5",
       "mineralClearReward": 10
+    },
+    {
+      "zoneName": "4-0",
+      "mineralClearReward": 0
     },
     {
       "zoneName": "4-1",
@@ -81,6 +97,10 @@
       "mineralClearReward": 10
     },
     {
+      "zoneName": "5-0",
+      "mineralClearReward": 0
+    },
+    {
       "zoneName": "5-1",
       "mineralClearReward": 10
     },
@@ -99,6 +119,10 @@
     {
       "zoneName": "5-5",
       "mineralClearReward": 10
+    },
+    {
+      "zoneName": "6-0",
+      "mineralClearReward": 0
     },
     {
       "zoneName": "6-1",
@@ -121,6 +145,10 @@
       "mineralClearReward": 10
     },
     {
+      "zoneName": "7-0",
+      "mineralClearReward": 0
+    },
+    {
       "zoneName": "7-1",
       "mineralClearReward": 10
     },
@@ -141,6 +169,10 @@
       "mineralClearReward": 10
     },
     {
+      "zoneName": "8-0",
+      "mineralClearReward": 0
+    },
+    {
       "zoneName": "8-1",
       "mineralClearReward": 10
     },
@@ -159,6 +191,10 @@
     {
       "zoneName": "8-5",
       "mineralClearReward": 10
+    },
+    {
+      "zoneName": "9-0",
+      "mineralClearReward": 0
     },
     {
       "zoneName": "9-1",

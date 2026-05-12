@@ -5,7 +5,7 @@
       "moduleSubType": "body_t1_m1",
       "researchId": "body_t1_m1",
       "prerequisiteIds": [],
-      "mineralCost": 0
+      "pointCost": 0
     },
     {
       "moduleType": "body",
@@ -14,7 +14,7 @@
       "prerequisiteIds": [
         "body_t1_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "body",
@@ -23,7 +23,7 @@
       "prerequisiteIds": [
         "body_t2_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "body",
@@ -32,7 +32,7 @@
       "prerequisiteIds": [
         "body_t3_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "body",
@@ -41,7 +41,7 @@
       "prerequisiteIds": [
         "body_t4_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "body",
@@ -50,7 +50,7 @@
       "prerequisiteIds": [
         "body_t5_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "body",
@@ -59,7 +59,7 @@
       "prerequisiteIds": [
         "body_t6_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "body",
@@ -68,7 +68,7 @@
       "prerequisiteIds": [
         "body_t7_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "body",
@@ -77,7 +77,7 @@
       "prerequisiteIds": [
         "body_t8_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "body",
@@ -86,7 +86,7 @@
       "prerequisiteIds": [
         "body_t9_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "body",
@@ -95,7 +95,7 @@
       "prerequisiteIds": [
         "body_t10_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "body",
@@ -104,7 +104,7 @@
       "prerequisiteIds": [
         "body_t11_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "body",
@@ -113,7 +113,7 @@
       "prerequisiteIds": [
         "body_t12_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "body",
@@ -122,14 +122,14 @@
       "prerequisiteIds": [
         "body_t13_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "beam",
       "moduleSubType": "beam_t1_m1",
       "researchId": "beam_t1_m1",
       "prerequisiteIds": [],
-      "mineralCost": 0
+      "pointCost": 0
     },
     {
       "moduleType": "beam",
@@ -138,7 +138,7 @@
       "prerequisiteIds": [
         "beam_t1_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "beam",
@@ -147,7 +147,7 @@
       "prerequisiteIds": [
         "beam_t2_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "beam",
@@ -156,7 +156,7 @@
       "prerequisiteIds": [
         "beam_t3_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "beam",
@@ -165,7 +165,7 @@
       "prerequisiteIds": [
         "beam_t4_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "beam",
@@ -174,7 +174,7 @@
       "prerequisiteIds": [
         "beam_t5_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "beam",
@@ -183,7 +183,7 @@
       "prerequisiteIds": [
         "beam_t6_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "beam",
@@ -192,7 +192,7 @@
       "prerequisiteIds": [
         "beam_t7_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "beam",
@@ -201,7 +201,7 @@
       "prerequisiteIds": [
         "beam_t8_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "beam",
@@ -210,7 +210,7 @@
       "prerequisiteIds": [
         "beam_t9_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "beam",
@@ -219,7 +219,7 @@
       "prerequisiteIds": [
         "beam_t10_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "beam",
@@ -228,7 +228,7 @@
       "prerequisiteIds": [
         "beam_t11_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "beam",
@@ -237,7 +237,7 @@
       "prerequisiteIds": [
         "beam_t12_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "beam",
@@ -246,14 +246,14 @@
       "prerequisiteIds": [
         "beam_t13_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "missile",
       "moduleSubType": "missile_t1_m1",
       "researchId": "missile_t1_m1",
       "prerequisiteIds": [],
-      "mineralCost": 0
+      "pointCost": 0
     },
     {
       "moduleType": "missile",
@@ -262,7 +262,7 @@
       "prerequisiteIds": [
         "missile_t1_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "missile",
@@ -271,7 +271,7 @@
       "prerequisiteIds": [
         "missile_t2_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "missile",
@@ -280,7 +280,7 @@
       "prerequisiteIds": [
         "missile_t3_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "missile",
@@ -289,7 +289,7 @@
       "prerequisiteIds": [
         "missile_t4_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "missile",
@@ -298,7 +298,7 @@
       "prerequisiteIds": [
         "missile_t5_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "missile",
@@ -307,7 +307,7 @@
       "prerequisiteIds": [
         "missile_t6_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "missile",
@@ -316,7 +316,7 @@
       "prerequisiteIds": [
         "missile_t7_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "missile",
@@ -325,7 +325,7 @@
       "prerequisiteIds": [
         "missile_t8_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "missile",
@@ -334,7 +334,7 @@
       "prerequisiteIds": [
         "missile_t9_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "missile",
@@ -343,7 +343,7 @@
       "prerequisiteIds": [
         "missile_t10_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "missile",
@@ -352,7 +352,7 @@
       "prerequisiteIds": [
         "missile_t11_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "missile",
@@ -361,7 +361,7 @@
       "prerequisiteIds": [
         "missile_t12_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "missile",
@@ -370,14 +370,14 @@
       "prerequisiteIds": [
         "missile_t13_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "hanger",
       "moduleSubType": "hanger_t1_m1",
       "researchId": "hanger_t1_m1",
       "prerequisiteIds": [],
-      "mineralCost": 0
+      "pointCost": 0
     },
     {
       "moduleType": "hanger",
@@ -386,7 +386,7 @@
       "prerequisiteIds": [
         "hanger_t1_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "hanger",
@@ -395,7 +395,7 @@
       "prerequisiteIds": [
         "hanger_t2_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "hanger",
@@ -404,7 +404,7 @@
       "prerequisiteIds": [
         "hanger_t3_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "hanger",
@@ -413,7 +413,7 @@
       "prerequisiteIds": [
         "hanger_t4_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "hanger",
@@ -422,7 +422,7 @@
       "prerequisiteIds": [
         "hanger_t5_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "hanger",
@@ -431,7 +431,7 @@
       "prerequisiteIds": [
         "hanger_t6_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "hanger",
@@ -440,7 +440,7 @@
       "prerequisiteIds": [
         "hanger_t7_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "hanger",
@@ -449,7 +449,7 @@
       "prerequisiteIds": [
         "hanger_t8_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "hanger",
@@ -458,7 +458,7 @@
       "prerequisiteIds": [
         "hanger_t9_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "hanger",
@@ -467,7 +467,7 @@
       "prerequisiteIds": [
         "hanger_t10_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "hanger",
@@ -476,7 +476,7 @@
       "prerequisiteIds": [
         "hanger_t11_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "hanger",
@@ -485,7 +485,7 @@
       "prerequisiteIds": [
         "hanger_t12_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "moduleType": "hanger",
@@ -494,7 +494,7 @@
       "prerequisiteIds": [
         "hanger_t13_m1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     }
   ],
   "techLevelDataList": [
@@ -503,7 +503,7 @@
       "shipCount": 2,
       "researchId": "tech_level_1",
       "prerequisiteIds": [],
-      "mineralCost": 0
+      "pointCost": 0
     },
     {
       "targetTechLevel": 2,
@@ -512,7 +512,7 @@
       "prerequisiteIds": [
         "tech_level_1"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "targetTechLevel": 3,
@@ -521,7 +521,7 @@
       "prerequisiteIds": [
         "tech_level_2"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "targetTechLevel": 4,
@@ -530,7 +530,7 @@
       "prerequisiteIds": [
         "tech_level_3"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "targetTechLevel": 5,
@@ -539,7 +539,7 @@
       "prerequisiteIds": [
         "tech_level_4"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "targetTechLevel": 6,
@@ -548,7 +548,7 @@
       "prerequisiteIds": [
         "tech_level_5"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "targetTechLevel": 7,
@@ -557,7 +557,7 @@
       "prerequisiteIds": [
         "tech_level_6"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "targetTechLevel": 8,
@@ -566,7 +566,7 @@
       "prerequisiteIds": [
         "tech_level_7"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "targetTechLevel": 9,
@@ -575,7 +575,7 @@
       "prerequisiteIds": [
         "tech_level_8"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "targetTechLevel": 10,
@@ -584,7 +584,7 @@
       "prerequisiteIds": [
         "tech_level_9"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "targetTechLevel": 11,
@@ -593,7 +593,7 @@
       "prerequisiteIds": [
         "tech_level_10"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "targetTechLevel": 12,
@@ -602,7 +602,7 @@
       "prerequisiteIds": [
         "tech_level_11"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "targetTechLevel": 13,
@@ -611,7 +611,7 @@
       "prerequisiteIds": [
         "tech_level_12"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     },
     {
       "targetTechLevel": 14,
@@ -620,7 +620,7 @@
       "prerequisiteIds": [
         "tech_level_13"
       ],
-      "mineralCost": 10
+      "pointCost": 10
     }
   ]
 }
