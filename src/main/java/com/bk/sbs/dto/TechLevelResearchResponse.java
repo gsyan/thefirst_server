@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class TechLevelResearchResponse {
-    private CostRemainInfoDto costRemainInfo;
+    private Integer techPointRemain;
     private List<String> researchedIds;
 }

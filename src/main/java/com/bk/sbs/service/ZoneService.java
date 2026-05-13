@@ -58,6 +58,7 @@ public class ZoneService {
         character.setMineral(character.getMineral() + mineralReward);
         character.setTechPoint(character.getTechPoint() + techPointReward);
         character.setModulePoint(character.getModulePoint() + modulePointReward);
+        character.setModulePointMaxGot(character.getModulePointMaxGot() + modulePointReward);
 
         clearedZoneRepository.save(new ClearedZone(characterId, zoneName));
         characterRepository.save(character);
@@ -74,6 +75,7 @@ public class ZoneService {
                 .mineralRemain(character.getMineral())
                 .techPointRemain(character.getTechPoint())
                 .modulePointRemain(character.getModulePoint())
+                .modulePointMaxGot(character.getModulePointMaxGot())
                 .build();
     }
 

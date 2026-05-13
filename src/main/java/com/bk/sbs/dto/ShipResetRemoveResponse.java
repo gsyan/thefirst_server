@@ -15,6 +15,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ShipResetRemoveResponse {
     private Long removedShipId;
-    private CostRemainInfoDto costRemainInfo;
+    private Integer modulePointRemain;
     private FleetInfoDto updatedFleetInfo;
 }

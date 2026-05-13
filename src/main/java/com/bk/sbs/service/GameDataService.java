@@ -81,9 +81,9 @@ public class GameDataService {
                     techLevelDataMap.clear();
                     for (com.fasterxml.jackson.databind.JsonNode techNode : techLevelDataListNode) {
                         String rId = techNode.path("researchId").asText(null);
-                        com.fasterxml.jackson.databind.JsonNode costNode = techNode.path("mineralCost");
+                        com.fasterxml.jackson.databind.JsonNode costNode = techNode.path("pointCost");
                         if (rId != null && !costNode.isMissingNode()) {
-                            int cost = techNode.path("mineralCost").asInt(1);
+                            int cost = techNode.path("pointCost").asInt(1);
                             int shipCount = techNode.path("shipCount").asInt(1);
                             techLevelDataMap.put(rId, new TechLevelData(cost, shipCount));
                         }

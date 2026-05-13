@@ -19,5 +19,5 @@ public class ModuleResetResponse {
     private Integer bodyIndex;
     private EModuleType moduleType;
     private Integer slotIndex;
-    private CostRemainInfoDto costRemainInfo;
+    private Integer modulePointRemain;
 }

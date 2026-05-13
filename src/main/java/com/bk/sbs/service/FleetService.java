@@ -560,13 +560,10 @@ public class FleetService {
         int bodyInvested = shipAddCost - moduleUnlockPrice;
         createDefaultModules(savedShip, bodyInvested, moduleUnlockPrice);
 
-        // 비용 정보
-        CostRemainInfoDto costRemainInfo = buildCostRemainInfo(0, 0, addShipDeducted, character);
-
         // 응답 생성
         AddShipResponse response = AddShipResponse.builder()
                 .newShipInfo(convertShipToShipInfoDto(savedShip))
-                .costRemainInfo(costRemainInfo)
+                .modulePointRemain(character.getModulePoint())
                 .updatedFleetInfo(convertToDetailDto(targetFleet))
                 .build();
 
@@ -690,9 +687,6 @@ public class FleetService {
         levelRecord.setModified(LocalDateTime.now());
         shipModuleLevelRepository.save(levelRecord);
 
-        // 비용 정보
-        CostRemainInfoDto costRemainInfo = buildCostRemainInfo(0, 0, deducted, character);
-
         // 응답 생성
         ModuleLevelUpResponse response = ModuleLevelUpResponse.builder()
                 .shipId(request.getShipId())
@@ -701,7 +695,7 @@ public class FleetService {
                 .moduleSubType(moduleSubType)
                 .slotIndex(module.getSlotIndex())
                 .newLevel(module.getModuleLevel())
-                .costRemainInfo(costRemainInfo)
+                .modulePointRemain(character.getModulePoint())
                 .build();
 
         return response;
@@ -823,9 +817,6 @@ public class FleetService {
         shipModuleRepository.save(newModule);
         saveInitialModuleLevel(ship, moduleType, finalModuleSubType, 1, request.getBodyIndex(), request.getSlotIndex());
 
-        // 비용 정보
-        CostRemainInfoDto costRemainInfo = buildCostRemainInfo(0, 0, unlockDeducted, character);
-
         // 응답 생성
         return new ModuleUnlockResponse(
                 request.getShipId(),
@@ -833,7 +824,7 @@ public class FleetService {
                 moduleType,
                 finalModuleSubType,
                 request.getSlotIndex(),
-                costRemainInfo,
+                character.getModulePoint(),
                 unlockDeducted
         );
     }
@@ -949,7 +940,6 @@ public class FleetService {
 
         // 응답 생성 (actualCost: 최초 추가 시 실차감액, 재추가 시 0)
         int actualCost = alreadyAdded ? 0 : addCost;
-        CostRemainInfoDto costRemainInfo = buildCostRemainInfo(0, 0, changeDeducted, character);
 
         // 해당 슬롯에 이력이 있는 모든 서브타입 = 비용 없이 교체 가능한 목록
         List<EModuleSubType> unlockedSubTypes = shipModuleLevelRepository
@@ -968,7 +958,7 @@ public class FleetService {
                 .moduleSubTypeNew(newModuleSubType)
                 .slotIndex(request.getSlotIndex())
                 .moduleNewLevel(newModuleLevel)
-                .costRemainInfo(costRemainInfo)
+                .modulePointRemain(character.getModulePoint())
                 .newUnlockedSubTypes(unlockedSubTypes)
                 .build();
     }
@@ -1012,8 +1002,10 @@ public class FleetService {
 
         // 완료된 researchedIds 반환
         List<String> researchedIds = getResearchedIds(characterId);
-        CostRemainInfoDto costRemainInfo = buildCostRemainInfo(0, researchDeducted, 0, character);
-        return new TechLevelResearchResponse(costRemainInfo, researchedIds);
+        return TechLevelResearchResponse.builder()
+                .techPointRemain(character.getTechPoint())
+                .researchedIds(researchedIds)
+                .build();
     }
 
     // 캐릭터가 개발한 모든 모듈 목록 조회 (moduleType+subType 쌍)
@@ -1082,14 +1074,12 @@ public class FleetService {
         shipModuleLevelRepository.deleteBySlot(
                 request.getShipId(), request.getBodyIndex(), request.getModuleType(), request.getSlotIndex());
 
-        CostRemainInfoDto costRemainInfo = buildCostRemainInfo(0, 0, 0, character);
-
         return ModuleResetResponse.builder()
                 .shipId(request.getShipId())
                 .bodyIndex(request.getBodyIndex())
                 .moduleType(request.getModuleType())
                 .slotIndex(request.getSlotIndex())
-                .costRemainInfo(costRemainInfo)
+                .modulePointRemain(character.getModulePoint())
                 .build();
     }
 
@@ -1116,14 +1106,12 @@ public class FleetService {
         // 레벨업 이력 전체 삭제
         shipModuleLevelRepository.deleteBySlot(ship.getId(), request.getBodyIndex(), EModuleType.body, 0);
 
-        CostRemainInfoDto costRemainInfo = buildCostRemainInfo(0, 0, 0, character);
-
         return ModuleResetResponse.builder()
                 .shipId(ship.getId())
                 .bodyIndex(request.getBodyIndex())
                 .moduleType(EModuleType.body)
                 .slotIndex(0)
-                .costRemainInfo(costRemainInfo)
+                .modulePointRemain(character.getModulePoint())
                 .build();
     }
 
@@ -1180,11 +1168,9 @@ public class FleetService {
         Fleet updatedFleet = fleetRepository.findByIdAndCharacterIdAndDeletedFalse(fleet.getId(), characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.RESET_SHIP_FAIL_FLEET_NOT_FOUND));
 
-        CostRemainInfoDto costRemainInfo = buildCostRemainInfo(0, 0, 0, character);
-
         return ShipResetRemoveResponse.builder()
                 .removedShipId(request.getShipId())
-                .costRemainInfo(costRemainInfo)
+                .modulePointRemain(character.getModulePoint())
                 .updatedFleetInfo(convertToDetailDto(updatedFleet))
                 .build();
     }
@@ -1260,17 +1246,6 @@ public class FleetService {
         return cost;
     }
 
-    // CostRemainInfoDto 빌더 헬퍼 (costM=mineral, costTp=techPoint, costMp=modulePoint)
-    private CostRemainInfoDto buildCostRemainInfo(int costM, int costTp, int costMp, com.bk.sbs.entity.Character character) {
-        return CostRemainInfoDto.builder()
-                .mineralCost(costM)
-                .mineralRemain(character.getMineral())
-                .techPointCost(costTp)
-                .techPointRemain(character.getTechPoint())
-                .modulePointCost(costMp)
-                .modulePointRemain(character.getModulePoint())
-                .build();
-    }
 
     @Transactional
     public void saveFleetHealth(Long characterId, FleetHealthSaveRequest request) {

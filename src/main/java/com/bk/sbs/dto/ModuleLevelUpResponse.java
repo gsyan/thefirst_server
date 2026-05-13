@@ -22,5 +22,5 @@ public class ModuleLevelUpResponse {
     private EModuleSubType moduleSubType;
     private Integer slotIndex;
     private Integer newLevel;
-    private CostRemainInfoDto costRemainInfo;
+    private Integer modulePointRemain;
 }

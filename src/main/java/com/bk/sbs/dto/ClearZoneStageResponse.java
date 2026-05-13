@@ -19,4 +19,5 @@ public class ClearZoneStageResponse {
     private Integer mineralRemain;
     private Integer techPointRemain;
     private Integer modulePointRemain;
+    private Integer modulePointMaxGot;
 }
