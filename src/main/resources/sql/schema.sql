@@ -198,10 +198,12 @@ CREATE TABLE module_research (
 -- 유니크: character_id + zone_name
 -- ============================================================
 CREATE TABLE cleared_zone (
-    id              BIGINT          NOT NULL AUTO_INCREMENT,
-    character_id    BIGINT          NOT NULL,
-    zone_name       VARCHAR(255)    NOT NULL,
-    cleared_at      DATETIME(6)     NOT NULL,
+    id                   BIGINT       NOT NULL AUTO_INCREMENT,
+    character_id         BIGINT       NOT NULL,
+    zone_name            VARCHAR(255) NOT NULL,
+    cleared_at           DATETIME(6)  NOT NULL,
+    reward_claimed       TINYINT(1)   NOT NULL DEFAULT 0, -- per-run: clearZoneStage→0, claimZoneReward→1
+    first_bonus_claimed  TINYINT(1)   NOT NULL DEFAULT 0, -- 영구: techPoint/modulePoint 최초 지급 후 1, 리셋 없음
     PRIMARY KEY (id),
     UNIQUE KEY uk_cleared_zone (character_id, zone_name),
     INDEX idx_cleared_character (character_id)

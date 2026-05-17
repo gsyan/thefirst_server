@@ -20,6 +20,23 @@ public class ZoneConfig {
                 .orElse(null);
     }
 
+    public int getMaxStageInGroup(int group) {
+        int max = 0;
+        for (ZoneConfigData z : zoneStages) {
+            String name = z.getZoneName();
+            if (name == null) continue;
+            String[] parts = name.split("-");
+            if (parts.length != 2) continue;
+            try {
+                if (Integer.parseInt(parts[0]) == group) {
+                    int stage = Integer.parseInt(parts[1]);
+                    if (stage > max) max = stage;
+                }
+            } catch (NumberFormatException ignored) {}
+        }
+        return max;
+    }
+
     // 이름 목록으로 ZoneConfigData 반환 (순서 무관)
     public List<ZoneConfigData> getZonesByNames(List<String> zoneNames) {
         List<ZoneConfigData> result = new ArrayList<>();

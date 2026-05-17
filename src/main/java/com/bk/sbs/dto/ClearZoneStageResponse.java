@@ -14,10 +14,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class ClearZoneStageResponse {
-    private Boolean isZoneCleared;
+    private Boolean isFirstClear;
     private String clearedZoneName;
-    private Integer mineralRemain;
-    private Integer techPointRemain;
-    private Integer modulePointRemain;
-    private Integer modulePointMaxGot;
 }

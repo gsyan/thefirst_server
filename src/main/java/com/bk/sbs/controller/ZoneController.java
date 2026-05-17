@@ -2,6 +2,8 @@ package com.bk.sbs.controller;
 
 import com.bk.sbs.dto.ClearZoneStageRequest;
 import com.bk.sbs.dto.ClearZoneStageResponse;
+import com.bk.sbs.dto.ClaimZoneRewardRequest;
+import com.bk.sbs.dto.ClaimZoneRewardResponse;
 import com.bk.sbs.dto.HeartbeatRequest;
 import com.bk.sbs.dto.HeartbeatResponse;
 import com.bk.sbs.dto.nogenerated.ApiResponse;
@@ -33,6 +35,15 @@ public class ZoneController {
             HttpServletRequest httpRequest) {
         Long actualCharacterId = getCharacterIdFromToken(httpRequest);
         ClearZoneStageResponse response = zoneService.clearZoneStage(actualCharacterId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    @PostMapping("/claim-reward")
+    public ResponseEntity<ApiResponse<ClaimZoneRewardResponse>> claimZoneReward(
+            @RequestBody ClaimZoneRewardRequest request,
+            HttpServletRequest httpRequest) {
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        ClaimZoneRewardResponse response = zoneService.claimZoneReward(actualCharacterId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 

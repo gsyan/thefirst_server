@@ -29,9 +29,17 @@ public class ClearedZone {
     @Column(nullable = false)
     private Instant clearedAt = Instant.now();
 
+    @Column(nullable = false)
+    private boolean rewardClaimed = false;      // per-run: clearZoneStage→false, claimZoneReward→true
+
+    @Column(nullable = false)
+    private boolean firstBonusClaimed = false;  // 영구: techPoint/modulePoint 최초 지급 후 true, 리셋 없음
+
     public ClearedZone(Long characterId, String zoneName) {
         this.characterId = characterId;
         this.zoneName = zoneName;
         this.clearedAt = Instant.now();
+        this.rewardClaimed = false;
+        this.firstBonusClaimed = false;
     }
 }
