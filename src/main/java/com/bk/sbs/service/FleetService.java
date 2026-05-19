@@ -79,7 +79,7 @@ public class FleetService {
         fleet.setFleetName(fleetName);
         fleet.setDescription(description);
         fleet.setActive(false); // 기본값: 비활성
-        fleet.setFormation(EFormationType.formation_type_linear_horizontal);
+        fleet.setFormation(EFormationType.linear_horizontal);
         
         fleet = fleetRepository.save(fleet);
         
@@ -385,6 +385,7 @@ public class FleetService {
                 .description(fleet.getDescription())
                 .isActive(fleet.isActive())
                 .formation(fleet.getFormation())
+                .tacticOptions(fleet.getTacticOptions())
                 .build();
     }
 
@@ -725,6 +726,27 @@ public class FleetService {
         FleetInfoDto updatedFleet = convertToDetailDto(fleet);
         return ChangeFormationResponse.builder()
                 .updatedFleetInfo(updatedFleet)
+                .build();
+    }
+
+    @Transactional
+    public ChangeTacticOptionsResponse changeTacticOptions(Long characterId, ChangeTacticOptionsRequest request) {
+        Fleet fleet;
+
+        if (request.getFleetId() == null || request.getFleetId() == 0) {
+            fleet = fleetRepository.findByCharacterIdAndIsActiveTrueAndDeletedFalse(characterId)
+                    .orElseThrow(() -> new BusinessException(ServerErrorCode.FLEET_NOT_FOUND));
+        } else {
+            fleet = fleetRepository.findByIdAndCharacterIdAndDeletedFalse(request.getFleetId(), characterId)
+                    .orElseThrow(() -> new BusinessException(ServerErrorCode.FLEET_NOT_FOUND));
+        }
+
+        fleet.setTacticOptions(request.getTacticOptions());
+        fleet.setModified(LocalDateTime.now());
+        fleetRepository.save(fleet);
+
+        return ChangeTacticOptionsResponse.builder()
+                .updatedFleetInfo(convertToDetailDto(fleet))
                 .build();
     }
 

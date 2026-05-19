@@ -182,7 +182,7 @@ public class TestDataInitializer {
         jdbc.batchUpdate(
                 "INSERT INTO fleet (character_id, fleet_name, description, is_active, deleted," +
                 " formation, created, modified) VALUES (?, 'Default Fleet', 'Auto-generated default fleet.'," +
-                " true, false, 'formation_type_linear_horizontal', ?, ?)",
+                " true, false, 'linear_horizontal', ?, ?)",
                 fleetRows, BATCH_SIZE, (ps, row) -> {
                     ps.setLong(1,  (Long)      row[0]);
                     ps.setTimestamp(2, (Timestamp) row[1]);

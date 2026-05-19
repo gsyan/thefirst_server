@@ -45,6 +45,9 @@ dependencies {
 	//runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
 	//runtimeOnly 'com.mysql:mysql-connector-j'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+	// Flyway
+	implementation 'org.flywaydb:flyway-core'
+	runtimeOnly 'org.flywaydb:flyway-mysql'
 	// Redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 

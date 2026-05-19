@@ -21,5 +21,6 @@ public class FleetInfoDto {
     private String description;
     private Boolean isActive;
     private EFormationType formation;
+    private Integer tacticOptions;
     private List<ShipInfoDto> ships;
 }

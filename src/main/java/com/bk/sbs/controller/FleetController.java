@@ -160,6 +160,16 @@ public class FleetController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
+    // 전술 옵션 변경
+    @PostMapping("/change-tactic-options")
+    public ResponseEntity<ApiResponse<ChangeTacticOptionsResponse>> changeTacticOptions(
+            @RequestBody ChangeTacticOptionsRequest request,
+            HttpServletRequest httpRequest) {
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        ChangeTacticOptionsResponse response = fleetService.changeTacticOptions(actualCharacterId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
     // 모듈 리셋
     @PostMapping("/reset-module")
     public ResponseEntity<ApiResponse<ModuleResetResponse>> resetModule(

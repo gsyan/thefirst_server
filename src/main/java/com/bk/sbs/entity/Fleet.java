@@ -34,7 +34,11 @@ public class Fleet {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private EFormationType formation = EFormationType.formation_type_linear_horizontal;
+    private EFormationType formation = EFormationType.linear_horizontal;
+
+    // bit0=전투수리, bit1=미사일, bit2=항공기. 0=전체 OFF
+    @Column(nullable = false)
+    private int tacticOptions = 0;
 
     @Column(nullable = false)
     private LocalDateTime created = LocalDateTime.now();
