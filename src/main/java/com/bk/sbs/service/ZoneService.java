@@ -65,12 +65,19 @@ public class ZoneService {
             }
         }
 
+        Character character = characterRepository.findById(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.ZONE_DESTROY_WAVE_FAIL_CHARACTER_NOT_FOUND));
+
+        // 클라 전투 소모 후 잔액을 서버에 반영 (클라 신뢰)
+        if (request.getMineralRemain() != null && request.getMineralRemain() >= 0) {
+            character.setMineral(request.getMineralRemain());
+            characterRepository.save(character);
+        }
+
         boolean isFirstClear = clearedZoneRepository.existsByCharacterIdAndZoneName(characterId, zoneName) == false;
         if (isFirstClear == true) {
             clearedZoneRepository.save(new ClearedZone(characterId, zoneName)); // rewardClaimed=false, firstBonusClaimed=false
 
-            Character character = characterRepository.findById(characterId)
-                    .orElseThrow(() -> new BusinessException(ServerErrorCode.ZONE_DESTROY_WAVE_FAIL_CHARACTER_NOT_FOUND));
             List<String> allZoneNames = clearedZoneRepository.findZoneNamesByCharacterId(characterId);
             allZoneNames.add(zoneName);
             long maxScore = allZoneNames.stream().mapToLong(this::computeZoneScore).max().orElse(0L);

@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ClearZoneStageRequest {
     private String zoneName;
+    private Integer mineralRemain;
 }

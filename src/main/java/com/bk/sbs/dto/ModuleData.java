@@ -24,6 +24,8 @@ public class ModuleData {
 
     private Integer modulePointCost;
 
+    private Integer mineralCost;
+
     private String description;
 
     private List<ModuleSlotInfoDto> moduleSlots;
