@@ -14,7 +14,7 @@
       "prerequisiteIds": [
         "body_t1_m1"
       ],
-      "pointCost": 10
+      "pointCost": 2
     },
     {
       "moduleType": "body",
@@ -23,7 +23,7 @@
       "prerequisiteIds": [
         "body_t2_m1"
       ],
-      "pointCost": 10
+      "pointCost": 3
     },
     {
       "moduleType": "body",
@@ -32,7 +32,7 @@
       "prerequisiteIds": [
         "body_t3_m1"
       ],
-      "pointCost": 10
+      "pointCost": 4
     },
     {
       "moduleType": "body",
@@ -41,7 +41,7 @@
       "prerequisiteIds": [
         "body_t4_m1"
       ],
-      "pointCost": 10
+      "pointCost": 5
     },
     {
       "moduleType": "body",
@@ -50,7 +50,7 @@
       "prerequisiteIds": [
         "body_t5_m1"
       ],
-      "pointCost": 10
+      "pointCost": 6
     },
     {
       "moduleType": "body",
@@ -59,7 +59,7 @@
       "prerequisiteIds": [
         "body_t6_m1"
       ],
-      "pointCost": 10
+      "pointCost": 7
     },
     {
       "moduleType": "body",
@@ -68,7 +68,7 @@
       "prerequisiteIds": [
         "body_t7_m1"
       ],
-      "pointCost": 10
+      "pointCost": 8
     },
     {
       "moduleType": "body",
@@ -77,7 +77,7 @@
       "prerequisiteIds": [
         "body_t8_m1"
       ],
-      "pointCost": 10
+      "pointCost": 9
     },
     {
       "moduleType": "body",
@@ -95,7 +95,7 @@
       "prerequisiteIds": [
         "body_t10_m1"
       ],
-      "pointCost": 10
+      "pointCost": 11
     },
     {
       "moduleType": "body",
@@ -104,7 +104,7 @@
       "prerequisiteIds": [
         "body_t11_m1"
       ],
-      "pointCost": 10
+      "pointCost": 12
     },
     {
       "moduleType": "body",
@@ -113,7 +113,7 @@
       "prerequisiteIds": [
         "body_t12_m1"
       ],
-      "pointCost": 10
+      "pointCost": 13
     },
     {
       "moduleType": "body",
@@ -122,7 +122,7 @@
       "prerequisiteIds": [
         "body_t13_m1"
       ],
-      "pointCost": 10
+      "pointCost": 14
     },
     {
       "moduleType": "beam",
@@ -138,7 +138,7 @@
       "prerequisiteIds": [
         "beam_t1_m1"
       ],
-      "pointCost": 10
+      "pointCost": 2
     },
     {
       "moduleType": "beam",
@@ -147,7 +147,7 @@
       "prerequisiteIds": [
         "beam_t2_m1"
       ],
-      "pointCost": 10
+      "pointCost": 3
     },
     {
       "moduleType": "beam",
@@ -156,7 +156,7 @@
       "prerequisiteIds": [
         "beam_t3_m1"
       ],
-      "pointCost": 10
+      "pointCost": 4
     },
     {
       "moduleType": "beam",
@@ -165,7 +165,7 @@
       "prerequisiteIds": [
         "beam_t4_m1"
       ],
-      "pointCost": 10
+      "pointCost": 5
     },
     {
       "moduleType": "beam",
@@ -174,7 +174,7 @@
       "prerequisiteIds": [
         "beam_t5_m1"
       ],
-      "pointCost": 10
+      "pointCost": 6
     },
     {
       "moduleType": "beam",
@@ -183,7 +183,7 @@
       "prerequisiteIds": [
         "beam_t6_m1"
       ],
-      "pointCost": 10
+      "pointCost": 7
     },
     {
       "moduleType": "beam",
@@ -192,7 +192,7 @@
       "prerequisiteIds": [
         "beam_t7_m1"
       ],
-      "pointCost": 10
+      "pointCost": 8
     },
     {
       "moduleType": "beam",
@@ -201,7 +201,7 @@
       "prerequisiteIds": [
         "beam_t8_m1"
       ],
-      "pointCost": 10
+      "pointCost": 9
     },
     {
       "moduleType": "beam",
@@ -219,7 +219,7 @@
       "prerequisiteIds": [
         "beam_t10_m1"
       ],
-      "pointCost": 10
+      "pointCost": 11
     },
     {
       "moduleType": "beam",
@@ -228,7 +228,7 @@
       "prerequisiteIds": [
         "beam_t11_m1"
       ],
-      "pointCost": 10
+      "pointCost": 12
     },
     {
       "moduleType": "beam",
@@ -237,7 +237,7 @@
       "prerequisiteIds": [
         "beam_t12_m1"
       ],
-      "pointCost": 10
+      "pointCost": 13
     },
     {
       "moduleType": "beam",
@@ -246,7 +246,7 @@
       "prerequisiteIds": [
         "beam_t13_m1"
       ],
-      "pointCost": 10
+      "pointCost": 14
     },
     {
       "moduleType": "missile",
@@ -262,7 +262,7 @@
       "prerequisiteIds": [
         "missile_t1_m1"
       ],
-      "pointCost": 10
+      "pointCost": 2
     },
     {
       "moduleType": "missile",
@@ -271,7 +271,7 @@
       "prerequisiteIds": [
         "missile_t2_m1"
       ],
-      "pointCost": 10
+      "pointCost": 3
     },
     {
       "moduleType": "missile",
@@ -280,7 +280,7 @@
       "prerequisiteIds": [
         "missile_t3_m1"
       ],
-      "pointCost": 10
+      "pointCost": 4
     },
     {
       "moduleType": "missile",
@@ -289,7 +289,7 @@
       "prerequisiteIds": [
         "missile_t4_m1"
       ],
-      "pointCost": 10
+      "pointCost": 5
     },
     {
       "moduleType": "missile",
@@ -298,7 +298,7 @@
       "prerequisiteIds": [
         "missile_t5_m1"
       ],
-      "pointCost": 10
+      "pointCost": 6
     },
     {
       "moduleType": "missile",
@@ -307,7 +307,7 @@
       "prerequisiteIds": [
         "missile_t6_m1"
       ],
-      "pointCost": 10
+      "pointCost": 7
     },
     {
       "moduleType": "missile",
@@ -316,7 +316,7 @@
       "prerequisiteIds": [
         "missile_t7_m1"
       ],
-      "pointCost": 10
+      "pointCost": 8
     },
     {
       "moduleType": "missile",
@@ -325,7 +325,7 @@
       "prerequisiteIds": [
         "missile_t8_m1"
       ],
-      "pointCost": 10
+      "pointCost": 9
     },
     {
       "moduleType": "missile",
@@ -343,7 +343,7 @@
       "prerequisiteIds": [
         "missile_t10_m1"
       ],
-      "pointCost": 10
+      "pointCost": 11
     },
     {
       "moduleType": "missile",
@@ -352,7 +352,7 @@
       "prerequisiteIds": [
         "missile_t11_m1"
       ],
-      "pointCost": 10
+      "pointCost": 12
     },
     {
       "moduleType": "missile",
@@ -361,7 +361,7 @@
       "prerequisiteIds": [
         "missile_t12_m1"
       ],
-      "pointCost": 10
+      "pointCost": 13
     },
     {
       "moduleType": "missile",
@@ -370,7 +370,7 @@
       "prerequisiteIds": [
         "missile_t13_m1"
       ],
-      "pointCost": 10
+      "pointCost": 14
     },
     {
       "moduleType": "hanger",
@@ -386,7 +386,7 @@
       "prerequisiteIds": [
         "hanger_t1_m1"
       ],
-      "pointCost": 10
+      "pointCost": 2
     },
     {
       "moduleType": "hanger",
@@ -395,7 +395,7 @@
       "prerequisiteIds": [
         "hanger_t2_m1"
       ],
-      "pointCost": 10
+      "pointCost": 3
     },
     {
       "moduleType": "hanger",
@@ -404,7 +404,7 @@
       "prerequisiteIds": [
         "hanger_t3_m1"
       ],
-      "pointCost": 10
+      "pointCost": 4
     },
     {
       "moduleType": "hanger",
@@ -413,7 +413,7 @@
       "prerequisiteIds": [
         "hanger_t4_m1"
       ],
-      "pointCost": 10
+      "pointCost": 5
     },
     {
       "moduleType": "hanger",
@@ -422,7 +422,7 @@
       "prerequisiteIds": [
         "hanger_t5_m1"
       ],
-      "pointCost": 10
+      "pointCost": 6
     },
     {
       "moduleType": "hanger",
@@ -431,7 +431,7 @@
       "prerequisiteIds": [
         "hanger_t6_m1"
       ],
-      "pointCost": 10
+      "pointCost": 7
     },
     {
       "moduleType": "hanger",
@@ -440,7 +440,7 @@
       "prerequisiteIds": [
         "hanger_t7_m1"
       ],
-      "pointCost": 10
+      "pointCost": 8
     },
     {
       "moduleType": "hanger",
@@ -449,7 +449,7 @@
       "prerequisiteIds": [
         "hanger_t8_m1"
       ],
-      "pointCost": 10
+      "pointCost": 9
     },
     {
       "moduleType": "hanger",
@@ -467,7 +467,7 @@
       "prerequisiteIds": [
         "hanger_t10_m1"
       ],
-      "pointCost": 10
+      "pointCost": 11
     },
     {
       "moduleType": "hanger",
@@ -476,7 +476,7 @@
       "prerequisiteIds": [
         "hanger_t11_m1"
       ],
-      "pointCost": 10
+      "pointCost": 12
     },
     {
       "moduleType": "hanger",
@@ -485,7 +485,7 @@
       "prerequisiteIds": [
         "hanger_t12_m1"
       ],
-      "pointCost": 10
+      "pointCost": 13
     },
     {
       "moduleType": "hanger",
@@ -494,7 +494,7 @@
       "prerequisiteIds": [
         "hanger_t13_m1"
       ],
-      "pointCost": 10
+      "pointCost": 14
     }
   ],
   "techLevelDataList": [
