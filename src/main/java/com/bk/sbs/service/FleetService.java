@@ -546,11 +546,18 @@ public class FleetService {
         int addShipDeducted = deductModulePoint(character, shipAddCost);
         characterRepository.save(character);
 
+        // 빠진 positionIndex(삭제된 슬롯) 중 가장 낮은 값 사용
+        java.util.Set<Integer> usedIndexes = currentShips.stream()
+                .map(Ship::getPositionIndex)
+                .collect(java.util.stream.Collectors.toSet());
+        int newPositionIndex = 0;
+        while (usedIndexes.contains(newPositionIndex)) newPositionIndex++;
+
         // 새 함선 생성
         Ship newShip = new Ship();
         newShip.setFleet(targetFleet);
-        newShip.setShipName("Ship_" + (currentShips.size() + 1));
-        newShip.setPositionIndex(currentShips.size());
+        newShip.setShipName("Ship_" + (newPositionIndex + 1));
+        newShip.setPositionIndex(newPositionIndex);
         newShip.setDeleted(false);
         newShip.setCreated(LocalDateTime.now());
         newShip.setModified(LocalDateTime.now());
@@ -1177,15 +1184,7 @@ public class FleetService {
         ship.setModified(LocalDateTime.now());
         shipRepository.save(ship);
 
-        // 남은 함선 positionIndex 재정렬
         Fleet fleet = ship.getFleet();
-        List<Ship> remaining = shipRepository.findByFleetIdAndDeletedFalseOrderByPositionIndex(fleet.getId());
-        for (int i = 0; i < remaining.size(); i++) {
-            Ship s = remaining.get(i);
-            s.setPositionIndex(i);
-            s.setModified(LocalDateTime.now());
-            shipRepository.save(s);
-        }
 
         Fleet updatedFleet = fleetRepository.findByIdAndCharacterIdAndDeletedFalse(fleet.getId(), characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.RESET_SHIP_FAIL_FLEET_NOT_FOUND));

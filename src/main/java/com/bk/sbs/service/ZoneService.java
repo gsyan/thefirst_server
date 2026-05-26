@@ -28,6 +28,9 @@ public class ZoneService {
     @Value("${heartbeat.throttle-seconds:30}")
     private long heartbeatThrottleSeconds;
 
+    @Value("${zone.require-previous-stage-cleared:true}")
+    private boolean requirePreviousStageClearedCheck;
+
     private final CharacterRepository characterRepository;
     private final ClearedZoneRepository clearedZoneRepository;
     private final GameDataService gameDataService;
@@ -52,16 +55,18 @@ public class ZoneService {
         int[] parsed = parseZoneName(zoneName);
         int group = parsed[0];
         int stage = parsed[1];
-        if (stage > 1) {
-            String prevStageName = group + "-" + (stage - 1);
-            if (clearedZoneRepository.existsByCharacterIdAndZoneName(characterId, prevStageName) == false)
-                throw new BusinessException(ServerErrorCode.ZONE_PREVIOUS_STAGE_NOT_CLEARED);
-        } else if (group > 1) {
-            int maxPrevStage = gameDataService.getZoneConfig().getMaxStageInGroup(group - 1);
-            if (maxPrevStage > 0) {
-                String prevStageName = (group - 1) + "-" + maxPrevStage;
+        if (requirePreviousStageClearedCheck == true) {
+            if (stage > 1) {
+                String prevStageName = group + "-" + (stage - 1);
                 if (clearedZoneRepository.existsByCharacterIdAndZoneName(characterId, prevStageName) == false)
                     throw new BusinessException(ServerErrorCode.ZONE_PREVIOUS_STAGE_NOT_CLEARED);
+            } else if (group > 1) {
+                int maxPrevStage = gameDataService.getZoneConfig().getMaxStageInGroup(group - 1);
+                if (maxPrevStage > 0) {
+                    String prevStageName = (group - 1) + "-" + maxPrevStage;
+                    if (clearedZoneRepository.existsByCharacterIdAndZoneName(characterId, prevStageName) == false)
+                        throw new BusinessException(ServerErrorCode.ZONE_PREVIOUS_STAGE_NOT_CLEARED);
+                }
             }
         }
 
