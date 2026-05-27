@@ -988,6 +988,7 @@ public class FleetService {
                 .slotIndex(request.getSlotIndex())
                 .moduleNewLevel(newModuleLevel)
                 .modulePointRemain(character.getModulePoint())
+                .investedModulePoint(currentModule.getInvestedModulePoint())
                 .newUnlockedSubTypes(unlockedSubTypes)
                 .build();
     }

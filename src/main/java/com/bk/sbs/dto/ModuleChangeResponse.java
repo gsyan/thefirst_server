@@ -26,5 +26,6 @@ public class ModuleChangeResponse {
     private Integer slotIndex;
     private Integer moduleNewLevel;
     private Integer modulePointRemain;
+    private Integer investedModulePoint;
     private List<EModuleSubType> newUnlockedSubTypes;
 }
