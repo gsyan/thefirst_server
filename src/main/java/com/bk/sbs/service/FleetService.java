@@ -1122,18 +1122,43 @@ public class FleetService {
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.RESET_MODULE_FAIL_CHARACTER_NOT_FOUND));
 
-        // 투자 이력 환급
-        character.setModulePoint(character.getModulePoint() + body.getInvestedModulePoint());
+        // T1 레벨1 body가 지원하는 슬롯 목록 조회
+        List<ModuleData> bodyModules = gameDataService.getModulesByType(EModuleType.body);
+        List<ModuleSlotInfoDto> t1Slots = bodyModules.stream()
+                .filter(m -> EModuleSubType.body_t1_m1.equals(m.getModuleSubType()) && Integer.valueOf(1).equals(m.getModuleLevel()))
+                .findFirst()
+                .map(ModuleData::getModuleSlots)
+                .orElse(java.util.Collections.emptyList());
+
+        // body에 속한 자식 모듈 전체 조회 (beam/missile/hanger)
+        List<ShipModule> childModules = shipModuleRepository.findByShipIdAndBodyIndexAndDeletedFalse(
+                ship.getId(), request.getBodyIndex());
+
+        // T1에서 지원되지 않는 슬롯의 자식 모듈: 환급 + soft-delete
+        int totalRefund = body.getInvestedModulePoint();
+        for (ShipModule child : childModules) {
+            if (child.getModuleType() == EModuleType.body) continue;
+            boolean supported = t1Slots.stream().anyMatch(s ->
+                    s.getModuleType() == child.getModuleType() && s.getSlotIndex().equals(child.getSlotIndex()));
+            if (!supported) {
+                totalRefund += child.getInvestedModulePoint();
+                child.setDeleted(true);
+                child.setModified(LocalDateTime.now());
+                shipModuleRepository.save(child);
+                shipModuleLevelRepository.deleteBySlot(ship.getId(), child.getBodyIndex(), child.getModuleType(), child.getSlotIndex());
+            }
+        }
+        character.setModulePoint(character.getModulePoint() + totalRefund);
         characterRepository.save(character);
 
-        // T1 레벨1로 복귀 (삭제 없이 값만 초기화)
+        // body T1 레벨1로 복귀 (삭제 없이 값만 초기화)
         body.setModuleSubType(EModuleSubType.body_t1_m1);
         body.setModuleLevel(1);
         body.setInvestedModulePoint(0);
         body.setModified(LocalDateTime.now());
         shipModuleRepository.save(body);
 
-        // 레벨업 이력 전체 삭제
+        // body 레벨업 이력 삭제
         shipModuleLevelRepository.deleteBySlot(ship.getId(), request.getBodyIndex(), EModuleType.body, 0);
 
         return ModuleResetResponse.builder()

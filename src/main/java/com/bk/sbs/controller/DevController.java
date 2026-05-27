@@ -67,11 +67,13 @@ public class DevController {
                 int addMp  = parseIntOrThrow(params.get(2), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDTEMPMINERAL_PARSE_PARAM);
                 int addPvp = parseIntOrThrow(params.get(3), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDPVPMINERAL_PARSE_PARAM);
                 CharacterInfoDto cur = characterService.getCharacterInfoDto(characterId);
-                int newM   = addM   > 0 ? characterService.addMineral(characterId, addM)       : cur.getMineral();
-                int newTp  = addTp  > 0 ? characterService.addTechPoint(characterId, addTp)    : cur.getTechPoint();
-                int newMp  = addMp  > 0 ? characterService.addModulePoint(characterId, addMp)  : cur.getModulePoint();
-                int newPvp = addPvp > 0 ? characterService.addPvpPoint(characterId, addPvp)    : cur.getPvpPoint();
-                return ApiResponse.success("Resources added|mineral:" + newM + "|techPoint:" + newTp + "|modulePoint:" + newMp + "|pvpPoint:" + newPvp);
+                int newM      = addM   > 0 ? characterService.addMineral(characterId, addM)                 : cur.getMineral();
+                int newTp     = addTp  > 0 ? characterService.addTechPoint(characterId, addTp)              : cur.getTechPoint();
+                int newMpMax  = addMp  > 0 ? characterService.addModulePointMaxGot(characterId, addMp)      : cur.getModulePointMaxGot();
+                int newMp     = addMp  > 0 ? characterService.addModulePoint(characterId, addMp)            : cur.getModulePoint();
+                int newPvpMax = addPvp > 0 ? characterService.addPvpPointMaxGot(characterId, addPvp)        : cur.getPvpPointMaxGot();
+                int newPvp    = addPvp > 0 ? characterService.addPvpPoint(characterId, addPvp)              : cur.getPvpPoint();
+                return ApiResponse.success("Resources added|mineral:" + newM + "|techPoint:" + newTp + "|modulePointMaxGot:" + newMpMax + "|modulePoint:" + newMp + "|pvpPointMaxGot:" + newPvpMax + "|pvpPoint:" + newPvp);
             }
 
             case "addtech":

@@ -223,11 +223,27 @@ public class CharacterService {
     }
 
     @Transactional
+    public int addModulePointMaxGot(Long characterId, int amount) {
+        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_MINERAL_FAIL_CHARACTER_NOT_FOUND));
+        character.setModulePointMaxGot(character.getModulePointMaxGot() + amount);
+        character = characterRepository.save(character);
+        return character.getModulePointMaxGot();
+    }
+
+    @Transactional
     public int addPvpPoint(Long characterId, int amount) {
         Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_MINERAL_FAIL_CHARACTER_NOT_FOUND));
         character.setPvpPoint(character.getPvpPoint() + amount);
         character = characterRepository.save(character);
         return character.getPvpPoint();
+    }
+
+    @Transactional
+    public int addPvpPointMaxGot(Long characterId, int amount) {
+        Character character = characterRepository.findByIdForUpdate(characterId).orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_MINERAL_FAIL_CHARACTER_NOT_FOUND));
+        character.setPvpPointMaxGot(character.getPvpPointMaxGot() + amount);
+        character = characterRepository.save(character);
+        return character.getPvpPointMaxGot();
     }
 
     // 기술레벨 업그레이드: module_research에 tech_level_N 행 삽입 후 현재 기술레벨 반환
