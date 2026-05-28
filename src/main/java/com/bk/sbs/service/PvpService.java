@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -101,7 +102,7 @@ public class PvpService {
     }
 
     // PvP 최초 접근 시 Lazy 초기화 (Redis + DB)
-    @Transactional
+    // @Transactional 제거 - initTestData() 미커밋 트랜잭션과 충돌 시 DataIntegrityViolationException 핸들링을 위해
     public PvpRecord getOrCreatePvpRecord(Long characterId) {
         Optional<PvpRecord> existing = pvpRecordRepository.findByCharacterId(characterId);
         if (existing.isPresent()) {
@@ -124,7 +125,19 @@ public class PvpService {
         record.setWins(0);
         record.setLosses(0);
         record.setLastUpdated(LocalDateTime.now());
-        pvpRecordRepository.save(record);
+
+        try {
+            pvpRecordRepository.save(record);
+        } catch (DataIntegrityViolationException e) {
+            // initTestData() 미커밋 트랜잭션 또는 동시 요청으로 이미 INSERT된 경우
+            PvpRecord created = pvpRecordRepository.findByCharacterId(characterId)
+                    .orElseThrow(() -> new IllegalStateException("pvp_record not found after constraint violation", e));
+            if (redisService.getPvpScore(characterId) == null) {
+                redisService.setPvpScore(characterId, created.getScore());
+                redisService.initPvpInfo(characterId, config.getPvpListRefreshCount(), created.getScore());
+            }
+            return created;
+        }
 
         redisService.setPvpScore(characterId, initScore);
         redisService.initPvpInfo(characterId, config.getPvpListRefreshCount(), initScore);
