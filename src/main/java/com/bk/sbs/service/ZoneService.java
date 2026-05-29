@@ -8,10 +8,12 @@ import com.bk.sbs.dto.ClaimZoneRewardRequest;
 import com.bk.sbs.dto.ClaimZoneRewardResponse;
 import com.bk.sbs.entity.Character;
 import com.bk.sbs.entity.ClearedZone;
+import com.bk.sbs.entity.VipSubscription;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.repository.CharacterRepository;
 import com.bk.sbs.repository.ClearedZoneRepository;
+import com.bk.sbs.repository.VipSubscriptionRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,13 +37,16 @@ public class ZoneService {
     private final ClearedZoneRepository clearedZoneRepository;
     private final GameDataService gameDataService;
     private final RedisService redisService;
+    private final VipSubscriptionRepository vipSubscriptionRepository;
 
     public ZoneService(CharacterRepository characterRepository, ClearedZoneRepository clearedZoneRepository,
-                       GameDataService gameDataService, RedisService redisService) {
+                       GameDataService gameDataService, RedisService redisService,
+                       VipSubscriptionRepository vipSubscriptionRepository) {
         this.characterRepository = characterRepository;
         this.clearedZoneRepository = clearedZoneRepository;
         this.gameDataService = gameDataService;
         this.redisService = redisService;
+        this.vipSubscriptionRepository = vipSubscriptionRepository;
     }
 
     // 클리어 기록, rewardClaimed 리셋, 보상은 claimZoneReward에서 별도 처리
@@ -120,7 +125,12 @@ public class ZoneService {
         Character character = characterRepository.findByIdForUpdate(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.ZONE_DESTROY_WAVE_FAIL_CHARACTER_NOT_FOUND));
 
-        int mineralReward = zoneConfig.getMineralClearReward() * (watchedAd ? 2 : 1);
+        boolean isVip = vipSubscriptionRepository.findByCharacterId(characterId)
+                .map(sub -> sub.getVipExpiry() != null && Instant.now().isBefore(sub.getVipExpiry()))
+                .orElse(false);
+        // VIP: *4, 비VIP+광고: *2, 비VIP: *1
+        int multiplier = isVip ? 4 : (watchedAd ? 2 : 1);
+        int mineralReward = zoneConfig.getMineralClearReward() * multiplier;
         character.setMineral(character.getMineral() + mineralReward);
 
         if (clearedZone.isFirstBonusClaimed() == false) {

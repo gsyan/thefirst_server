@@ -236,26 +236,6 @@ public class TestDataInitializer {
                     ps.setTimestamp(7, (Timestamp) row[5]);
                 });
 
-        // 10. ModuleResearch
-        String[][] researches = {
-                {"body", "body_t1_m1"},
-                {"beam", "beam_t1_m1"}, {"missile", "missile_t1_m1"}, {"hanger", "hanger_t1_m1"},
-        };
-        List<Object[]> researchRows = new ArrayList<>(count * researches.length);
-        for (Long charId : charIds)
-            for (String[] r : researches)
-                researchRows.add(new Object[]{charId, r[0], r[1], now});
-        jdbc.batchUpdate(
-                "INSERT INTO module_research (character_id, module_type, module_sub_type," +
-                " researched, created, modified) VALUES (?, ?, ?, true, ?, ?)",
-                researchRows, BATCH_SIZE, (ps, row) -> {
-                    ps.setLong(1,   (Long)      row[0]);
-                    ps.setString(2, (String)    row[1]);
-                    ps.setString(3, (String)    row[2]);
-                    ps.setTimestamp(4, (Timestamp) row[3]);
-                    ps.setTimestamp(5, (Timestamp) row[3]);
-                });
-
         log.info("TestDataInitializer: 기본 더미 데이터 {}개 생성 완료 — accountId {}~{}, characterId {}~{}",
                 count,
                 accountIds.get(0), accountIds.get(accountIds.size() - 1),

@@ -1038,15 +1038,6 @@ public class FleetService {
                 .build();
     }
 
-    // 캐릭터가 개발한 모든 모듈 목록 조회 (moduleType+subType 쌍)
-    public List<List<Integer>> getResearchedModuleTypes(Long characterId) {
-        List<ModuleResearch> researchedList = moduleResearchRepository.findByCharacterIdAndResearchedTrue(characterId);
-        return researchedList.stream()
-                .filter(r -> r.getModuleType() != null && r.getModuleSubType() != null)
-                .map(r -> List.of(r.getModuleType().getValue(), r.getModuleSubType().getValue()))
-                .collect(Collectors.toList());
-    }
-
     // 문자열 기반 완료 연구 ID 목록 조회 (tech_level_N 등)
     public List<String> getResearchedIds(Long characterId) {
         return moduleResearchRepository.findByCharacterIdAndResearchIdIsNotNullAndResearchedTrue(characterId)

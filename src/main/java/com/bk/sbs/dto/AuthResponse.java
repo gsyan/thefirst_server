@@ -19,7 +19,6 @@ public class AuthResponse {
     private String refreshToken;
     private FleetInfoDto activeFleetInfo;
     private CharacterInfoDto characterInfo;
-    private List<List<Integer>> researchedModuleTypes;
     private List<String> researchedIds;
     private Boolean bGoogleLinked;
 }

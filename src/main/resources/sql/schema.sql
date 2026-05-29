@@ -15,6 +15,7 @@ DROP TABLE IF EXISTS module_research;
 DROP TABLE IF EXISTS pvp_record;
 DROP TABLE IF EXISTS pvp_season;
 DROP TABLE IF EXISTS progress;
+DROP TABLE IF EXISTS vip_subscription;
 DROP TABLE IF EXISTS `character`;
 DROP TABLE IF EXISTS account;
 SET FOREIGN_KEY_CHECKS = 1;
@@ -179,19 +180,32 @@ CREATE TABLE pvp_record (
 
 -- ============================================================
 -- module_research
--- 모듈 연구(moduleType+SubType)와 tech_level(researchId) 통합
+-- 문자열 기반 연구 상태 저장 (예: tech_level_N)
 -- ============================================================
 CREATE TABLE module_research (
     id              BIGINT          NOT NULL AUTO_INCREMENT,
     character_id    BIGINT          NOT NULL,
-    module_type     VARCHAR(100)        NULL,
-    module_sub_type VARCHAR(100)        NULL,
     research_id     VARCHAR(255)        NULL,
     researched      TINYINT(1)      NOT NULL DEFAULT 0,
     created         DATETIME(6)     NOT NULL,
     modified        DATETIME(6)     NOT NULL,
     PRIMARY KEY (id),
     INDEX idx_research_character (character_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- vip_subscription  (캐릭터당 1행, UPSERT로 관리)
+-- ============================================================
+CREATE TABLE vip_subscription (
+    id                      BIGINT          NOT NULL AUTO_INCREMENT,
+    character_id            BIGINT          NOT NULL,
+    vip_expiry              DATETIME(6)     NOT NULL,
+    purchase_token          VARCHAR(512)    NOT NULL,
+    platform                VARCHAR(32)     NOT NULL,
+    updated_at              DATETIME(6)     NOT NULL,
+    last_daily_mineral_at   DATETIME(6)         NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_vip_character_id (character_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================

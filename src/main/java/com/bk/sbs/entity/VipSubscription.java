@@ -1,0 +1,47 @@
+//--------------------------------------------------------------------------------------------------
+package com.bk.sbs.entity;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.Instant;
+
+@Entity
+@Table(name = "vip_subscription")
+@Getter
+@Setter
+@NoArgsConstructor
+public class VipSubscription {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true)
+    private Long characterId;
+
+    @Column(nullable = false)
+    private Instant vipExpiry;
+
+    @Column(nullable = false, length = 512)
+    private String purchaseToken;
+
+    @Column(nullable = false, length = 32)
+    private String platform;
+
+    @Column(nullable = false)
+    private Instant updatedAt;
+
+    @Column(nullable = true)
+    private Instant lastDailyMineralAt;
+
+    public VipSubscription(Long characterId, Instant vipExpiry, String purchaseToken, String platform) {
+        this.characterId = characterId;
+        this.vipExpiry = vipExpiry;
+        this.purchaseToken = purchaseToken;
+        this.platform = platform;
+        this.updatedAt = Instant.now();
+    }
+}
