@@ -45,6 +45,9 @@ public class IapService {
     @Value("${vip.daily-mineral:10000}")
     private int dailyMineralAmount;
 
+    @Value("${vip.mineral-reward-multiplier:4}")
+    private int mineralRewardMultiplier;
+
     private final VipSubscriptionRepository vipSubscriptionRepository;
     private final CharacterRepository characterRepository;
     private final ObjectMapper objectMapper;
@@ -96,7 +99,7 @@ public class IapService {
     public VipStatusResponse getVipStatus(Long characterId) {
         Optional<VipSubscription> sub = vipSubscriptionRepository.findByCharacterId(characterId);
         if (sub.isPresent() == false) {
-            return VipStatusResponse.builder().isVip(false).vipExpiry(null).build();
+            return buildStatusResponse(null);
         }
         return buildStatusResponse(sub.get().getVipExpiry());
     }
@@ -146,7 +149,12 @@ public class IapService {
     private VipStatusResponse buildStatusResponse(Instant expiry) {
         boolean isVip = expiry != null && Instant.now().isBefore(expiry);
         String expiryStr = expiry != null ? DateTimeFormatter.ISO_INSTANT.format(expiry) : null;
-        return VipStatusResponse.builder().isVip(isVip).vipExpiry(expiryStr).build();
+        return VipStatusResponse.builder()
+                .isVip(isVip)
+                .vipExpiry(expiryStr)
+                .dailyMineralAmount(dailyMineralAmount)
+                .mineralRewardMultiplier(mineralRewardMultiplier)
+                .build();
     }
 
     // Unity IAP 영수증 JSON → purchaseToken 추출

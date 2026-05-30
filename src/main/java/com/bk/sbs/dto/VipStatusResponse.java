@@ -16,4 +16,6 @@ import lombok.NoArgsConstructor;
 public class VipStatusResponse {
     private Boolean isVip;
     private String vipExpiry;
+    private Integer dailyMineralAmount;
+    private Integer mineralRewardMultiplier;
 }
