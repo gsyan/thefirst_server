@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 사용 안 함
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/h2-console/**", "/api/account/**").permitAll() // H2 콘솔과 인증 관련 엔드포인트 공개
+                        .requestMatchers("/", "/privacy", "/h2-console/**", "/api/account/**").permitAll() // H2 콘솔과 인증 관련 엔드포인트 공개
                         .anyRequest().authenticated() // 나머지 요청은 인증 필요
                 )
                 .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin())) // H2 콘솔을 위해 필요
