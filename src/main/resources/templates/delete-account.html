@@ -1,79 +1,132 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Account Deletion — Fidelity Forge</title>
+    <title>Delete Account — Fidelity Forge</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-            font-family: 'Arial', sans-serif;
-            color: #e0e0e0;
+            background: #0a0c14;
+            background-image:
+                radial-gradient(ellipse at 20% 50%, rgba(30, 60, 120, 0.25) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(60, 20, 100, 0.2) 0%, transparent 50%);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #d0d4e8;
+            padding: 24px 16px;
         }
+
+        .logo-area {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+        .logo-icon { font-size: 40px; display: block; margin-bottom: 8px; }
+        .logo-name {
+            font-size: 1.3em;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #7eb3ff;
+            text-transform: uppercase;
+        }
+
         .card {
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(120,160,255,0.15);
             border-radius: 16px;
-            padding: 48px 40px;
+            padding: 40px 36px;
             width: 100%;
             max-width: 440px;
-            text-align: center;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
         }
-        .icon { font-size: 48px; margin-bottom: 16px; }
-        h1 { font-size: 1.6em; margin-bottom: 8px; color: #ffffff; }
-        .subtitle { color: #a0a0b0; font-size: 0.95em; margin-bottom: 32px; line-height: 1.6; }
-        .warning-box {
-            background: rgba(220, 53, 69, 0.1);
-            border: 1px solid rgba(220, 53, 69, 0.3);
-            border-radius: 8px;
-            padding: 16px;
+
+        h1 {
+            font-size: 1.35em;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        .subtitle {
+            color: #8890a8;
+            font-size: 0.9em;
             margin-bottom: 28px;
-            font-size: 0.88em;
-            color: #f08080;
-            text-align: left;
-            line-height: 1.6;
+            line-height: 1.65;
+            text-align: center;
+        }
+
+        .warning-box {
+            background: rgba(220, 53, 69, 0.08);
+            border: 1px solid rgba(220, 53, 69, 0.28);
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin-bottom: 28px;
+            font-size: 0.86em;
+            color: #e89090;
+            line-height: 1.65;
         }
         .warning-box ul { padding-left: 18px; }
+        .warning-box li { margin-bottom: 4px; }
+
         #step-login, #step-confirm, #step-result { display: none; }
         #step-login.active, #step-confirm.active, #step-result.active { display: block; }
-        .g-btn-wrapper { margin-top: 8px; display: flex; justify-content: center; }
+
+        .g-btn-wrapper {
+            margin-top: 4px;
+            display: flex;
+            justify-content: center;
+        }
+
         .btn {
             width: 100%;
-            padding: 14px;
+            padding: 13px;
             border: none;
             border-radius: 8px;
-            font-size: 1em;
-            font-weight: bold;
+            font-size: 0.95em;
+            font-weight: 700;
             cursor: pointer;
-            transition: opacity 0.2s;
+            transition: opacity 0.2s, transform 0.1s;
+            letter-spacing: 0.3px;
         }
         .btn:hover { opacity: 0.85; }
-        .btn-danger { background: #dc3545; color: #fff; margin-bottom: 12px; }
+        .btn:active { transform: scale(0.98); }
+        .btn-danger {
+            background: linear-gradient(135deg, #c82333, #dc3545);
+            color: #fff;
+            margin-bottom: 12px;
+            box-shadow: 0 4px 16px rgba(220,53,69,0.25);
+        }
         .btn-secondary {
             background: transparent;
-            color: #a0a0b0;
-            border: 1px solid rgba(255,255,255,0.15);
+            color: #8890a8;
+            border: 1px solid rgba(255,255,255,0.12);
         }
+
         .user-info {
-            background: rgba(255,255,255,0.05);
+            background: rgba(126,179,255,0.07);
+            border: 1px solid rgba(126,179,255,0.15);
             border-radius: 8px;
-            padding: 12px 16px;
+            padding: 11px 16px;
             margin-bottom: 24px;
-            font-size: 0.9em;
-            color: #c0c0d0;
+            font-size: 0.88em;
+            color: #a0b0cc;
             word-break: break-all;
+            text-align: center;
         }
-        .result-icon { font-size: 56px; margin-bottom: 16px; }
+
+        .result-icon { font-size: 52px; margin-bottom: 14px; text-align: center; }
+        .result-title { text-align: center; }
+        .result-msg { text-align: center; }
+
         .spinner {
             display: inline-block;
-            width: 24px; height: 24px;
-            border: 3px solid rgba(255,255,255,0.2);
+            width: 18px; height: 18px;
+            border: 2px solid rgba(255,255,255,0.25);
             border-top-color: #fff;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
@@ -81,23 +134,42 @@
             margin-right: 8px;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-        #error-msg { color: #f08080; font-size: 0.88em; margin-top: 16px; min-height: 20px; }
+
+        #error-msg, #error-msg2 {
+            color: #e89090;
+            font-size: 0.84em;
+            margin-top: 14px;
+            min-height: 18px;
+            text-align: center;
+        }
+
+        .footer {
+            margin-top: 28px;
+            font-size: 0.78em;
+            color: #44495e;
+            text-align: center;
+        }
     </style>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
-<div class="card">
-    <div class="icon">🚀</div>
-    <h1>Fidelity Forge</h1>
 
-    <!-- Step 1: Google 로그인 -->
+<div class="logo-area">
+    <span class="logo-icon">🚀</span>
+    <span class="logo-name">Fidelity Forge</span>
+</div>
+
+<div class="card">
+
+    <!-- Step 1: Sign in -->
     <div id="step-login" class="active">
-        <p class="subtitle">계정 삭제를 진행하려면<br>Google 계정으로 로그인하세요.</p>
+        <h1>Delete Account</h1>
+        <p class="subtitle">Sign in with your Google account<br>to proceed with account deletion.</p>
         <div class="warning-box">
             <ul>
-                <li>계정과 모든 게임 데이터가 <strong>영구 삭제</strong>됩니다.</li>
-                <li>삭제 후 복구가 불가능합니다.</li>
-                <li>게스트 계정은 앱 내 로그아웃으로 삭제하세요.</li>
+                <li>Your account and all game data will be <strong>permanently deleted</strong>.</li>
+                <li>This action cannot be undone.</li>
+                <li>Guest accounts can be removed from within the app.</li>
             </ul>
         </div>
         <div class="g-btn-wrapper">
@@ -106,29 +178,33 @@
         <div id="error-msg"></div>
     </div>
 
-    <!-- Step 2: 삭제 확인 -->
+    <!-- Step 2: Confirm deletion -->
     <div id="step-confirm">
-        <p class="subtitle">아래 계정의 모든 데이터를 삭제합니다.</p>
+        <h1>Confirm Deletion</h1>
+        <p class="subtitle">The following account and all associated data will be deleted.</p>
         <div class="user-info" id="user-email-display"></div>
         <div class="warning-box">
             <ul>
-                <li>함대, 함선, 모듈, 연구 데이터</li>
-                <li>클리어 기록, PvP 전적, 진행 상황</li>
-                <li>VIP 구독 정보</li>
+                <li>Fleet, ships, modules, and research data</li>
+                <li>Clear history, PvP records, and progress</li>
+                <li>VIP subscription information</li>
             </ul>
         </div>
-        <button class="btn btn-danger" id="btn-delete">영구 삭제 확인</button>
-        <button class="btn btn-secondary" id="btn-cancel">취소</button>
+        <button class="btn btn-danger" id="btn-delete">Permanently Delete Account</button>
+        <button class="btn btn-secondary" id="btn-cancel">Cancel</button>
         <div id="error-msg2"></div>
     </div>
 
-    <!-- Step 3: 결과 -->
+    <!-- Step 3: Result -->
     <div id="step-result">
         <div class="result-icon" id="result-icon"></div>
-        <h1 id="result-title"></h1>
-        <p class="subtitle" id="result-msg"></p>
+        <h1 id="result-title" class="result-title"></h1>
+        <p class="subtitle result-msg" id="result-msg"></p>
     </div>
+
 </div>
+
+<div class="footer">fidforge.com &nbsp;·&nbsp; Fidelity Forge</div>
 
 <script>
     const API_BASE = 'https://www.fidforge.com/api';
@@ -146,7 +222,6 @@
         if (el) el.textContent = msg;
     }
 
-    // Google Identity Services 초기화
     window.addEventListener('load', () => {
         google.accounts.id.initialize({
             client_id: GOOGLE_CLIENT_ID,
@@ -171,17 +246,16 @@
             });
             const data = await res.json();
             if (data.errorCode !== 0) {
-                setError('error-msg', `로그인 실패 (code: ${data.errorCode})`);
+                setError('error-msg', `Sign-in failed (code: ${data.errorCode})`);
                 return;
             }
             accessToken = data.data.accessToken;
 
-            // JWT payload에서 이메일 표시용 정보 추출 (Google 계정임이 확인됨)
             const payload = JSON.parse(atob(idToken.split('.')[1]));
-            document.getElementById('user-email-display').textContent = payload.email || '(Google 계정)';
+            document.getElementById('user-email-display').textContent = payload.email || '(Google Account)';
             showStep('step-confirm');
         } catch (e) {
-            setError('error-msg', '서버 연결 실패. 잠시 후 다시 시도하세요.');
+            setError('error-msg', 'Unable to connect to server. Please try again later.');
         }
     }
 
@@ -193,7 +267,7 @@
     document.getElementById('btn-delete').addEventListener('click', async () => {
         const btn = document.getElementById('btn-delete');
         btn.disabled = true;
-        btn.innerHTML = '<span class="spinner"></span>삭제 중...';
+        btn.innerHTML = '<span class="spinner"></span>Deleting…';
         setError('error-msg2', '');
 
         try {
@@ -207,17 +281,17 @@
             const data = await res.json();
             if (data.errorCode === 0) {
                 document.getElementById('result-icon').textContent = '✅';
-                document.getElementById('result-title').textContent = '삭제 완료';
-                document.getElementById('result-msg').textContent = '계정과 모든 데이터가 삭제되었습니다.';
+                document.getElementById('result-title').textContent = 'Account Deleted';
+                document.getElementById('result-msg').textContent = 'Your account and all data have been permanently deleted.';
             } else {
                 document.getElementById('result-icon').textContent = '❌';
-                document.getElementById('result-title').textContent = '삭제 실패';
-                document.getElementById('result-msg').textContent = `오류 코드: ${data.errorCode}`;
+                document.getElementById('result-title').textContent = 'Deletion Failed';
+                document.getElementById('result-msg').textContent = `Error code: ${data.errorCode}`;
             }
         } catch (e) {
             document.getElementById('result-icon').textContent = '❌';
-            document.getElementById('result-title').textContent = '오류 발생';
-            document.getElementById('result-msg').textContent = '서버 연결에 실패했습니다. 다시 시도하세요.';
+            document.getElementById('result-title').textContent = 'Connection Error';
+            document.getElementById('result-msg').textContent = 'Failed to connect to server. Please try again.';
         }
         showStep('step-result');
     });

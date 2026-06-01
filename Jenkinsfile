@@ -86,6 +86,7 @@ pipeline {
                     usernameVariable: 'DOCKER_USER',
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
+                    bat 'docker builder prune -f'
                     bat '''
                         powershell -Command "$Env:DOCKER_PASS | docker login -u %DOCKER_USER% --password-stdin"
                     '''
