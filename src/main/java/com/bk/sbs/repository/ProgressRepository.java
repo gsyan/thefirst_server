@@ -16,4 +16,8 @@ public interface ProgressRepository extends JpaRepository<Progress, Long> {
     Optional<Progress> findByCharacterIdAndCategoryAndProgressKey(Long characterId, String category, String progressKey);
 
     boolean existsByCharacterIdAndCategoryAndProgressKey(Long characterId, String category, String progressKey);
+
+    @org.springframework.data.jpa.repository.Modifying
+    @org.springframework.data.jpa.repository.Query("DELETE FROM Progress p WHERE p.characterId = :characterId")
+    void deleteByCharacterId(@org.springframework.data.repository.query.Param("characterId") Long characterId);
 }

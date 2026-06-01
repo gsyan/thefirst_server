@@ -25,4 +25,8 @@ public interface ClearedZoneRepository extends JpaRepository<ClearedZone, Long> 
 
     @Query("SELECT cz.zoneName FROM ClearedZone cz WHERE cz.characterId = :characterId ORDER BY cz.clearedAt ASC")
     List<String> findZoneNamesByCharacterId(@Param("characterId") Long characterId);
+
+    @org.springframework.data.jpa.repository.Modifying
+    @Query("DELETE FROM ClearedZone cz WHERE cz.characterId = :characterId")
+    void deleteByCharacterId(@Param("characterId") Long characterId);
 }

@@ -4,6 +4,7 @@ package com.bk.sbs.config;
 import com.bk.sbs.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -29,8 +30,10 @@ public class SecurityConfig {
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // 세션 사용 안 함
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/privacy", "/h2-console/**", "/api/account/**").permitAll() // H2 콘솔과 인증 관련 엔드포인트 공개
-                        .anyRequest().authenticated() // 나머지 요청은 인증 필요
+                        // DELETE /api/account/delete 는 JWT 인증 필수 (permitAll 보다 먼저 선언)
+                        .requestMatchers(HttpMethod.DELETE, "/api/account/delete").authenticated()
+                        .requestMatchers("/", "/privacy", "/delete-account", "/h2-console/**", "/api/account/**").permitAll()
+                        .anyRequest().authenticated()
                 )
                 .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin())) // H2 콘솔을 위해 필요
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

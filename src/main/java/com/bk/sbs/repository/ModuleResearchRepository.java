@@ -18,4 +18,8 @@ public interface ModuleResearchRepository extends JpaRepository<ModuleResearch, 
 
     // researchId가 null이 아닌 완료된 연구 목록
     List<ModuleResearch> findByCharacterIdAndResearchIdIsNotNullAndResearchedTrue(Long characterId);
+
+    @org.springframework.data.jpa.repository.Modifying
+    @org.springframework.data.jpa.repository.Query("DELETE FROM ModuleResearch m WHERE m.characterId = :characterId")
+    void deleteByCharacterId(@org.springframework.data.repository.query.Param("characterId") Long characterId);
 }

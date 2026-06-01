@@ -21,4 +21,8 @@ public interface ShipRepository extends JpaRepository<Ship, Long> {
     List<Ship> findByFleetIdAndCharacterId(@Param("fleetId") Long fleetId, @Param("characterId") Long characterId);
     
     boolean existsByFleetIdAndPositionIndexAndDeletedFalse(Long fleetId, int positionIndex);
+
+    @org.springframework.data.jpa.repository.Modifying
+    @org.springframework.data.jpa.repository.Query("DELETE FROM Ship s WHERE s.fleet.characterId = :characterId")
+    void deleteByCharacterId(@org.springframework.data.repository.query.Param("characterId") Long characterId);
 }

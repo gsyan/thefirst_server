@@ -31,4 +31,8 @@ public interface CharacterRepository extends JpaRepository<Character, Long> {
     @Modifying
     @Query("UPDATE Character c SET c.lastOnlineAt = :now WHERE c.id = :id AND (c.lastOnlineAt IS NULL OR c.lastOnlineAt < :threshold)")
     int updateLastOnlineAtIfStale(@Param("id") Long id, @Param("now") Instant now, @Param("threshold") Instant threshold);
+
+    @Modifying
+    @Query("DELETE FROM Character c WHERE c.accountId = :accountId")
+    void deleteByAccountId(@Param("accountId") Long accountId);
 }

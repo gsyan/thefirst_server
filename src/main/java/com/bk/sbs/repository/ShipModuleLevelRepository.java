@@ -35,4 +35,8 @@ public interface ShipModuleLevelRepository extends JpaRepository<ShipModuleLevel
     @Modifying
     @Query("DELETE FROM ShipModuleLevel s WHERE s.ship.id = :shipId")
     void deleteByShipId(@Param("shipId") Long shipId);
+
+    @Modifying
+    @Query("DELETE FROM ShipModuleLevel sml WHERE sml.ship.id IN (SELECT s.id FROM Ship s WHERE s.fleet.characterId = :characterId)")
+    void deleteByCharacterId(@Param("characterId") Long characterId);
 }

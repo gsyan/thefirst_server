@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Deletion — Fidelity Forge</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            font-family: 'Arial', sans-serif;
+            color: #e0e0e0;
+        }
+        .card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 48px 40px;
+            width: 100%;
+            max-width: 440px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        .icon { font-size: 48px; margin-bottom: 16px; }
+        h1 { font-size: 1.6em; margin-bottom: 8px; color: #ffffff; }
+        .subtitle { color: #a0a0b0; font-size: 0.95em; margin-bottom: 32px; line-height: 1.6; }
+        .warning-box {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 28px;
+            font-size: 0.88em;
+            color: #f08080;
+            text-align: left;
+            line-height: 1.6;
+        }
+        .warning-box ul { padding-left: 18px; }
+        #step-login, #step-confirm, #step-result { display: none; }
+        #step-login.active, #step-confirm.active, #step-result.active { display: block; }
+        .g-btn-wrapper { margin-top: 8px; display: flex; justify-content: center; }
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.85; }
+        .btn-danger { background: #dc3545; color: #fff; margin-bottom: 12px; }
+        .btn-secondary {
+            background: transparent;
+            color: #a0a0b0;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .user-info {
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 24px;
+            font-size: 0.9em;
+            color: #c0c0d0;
+            word-break: break-all;
+        }
+        .result-icon { font-size: 56px; margin-bottom: 16px; }
+        .spinner {
+            display: inline-block;
+            width: 24px; height: 24px;
+            border: 3px solid rgba(255,255,255,0.2);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        #error-msg { color: #f08080; font-size: 0.88em; margin-top: 16px; min-height: 20px; }
+    </style>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+<div class="card">
+    <div class="icon">🚀</div>
+    <h1>Fidelity Forge</h1>
+
+    <!-- Step 1: Google 로그인 -->
+    <div id="step-login" class="active">
+        <p class="subtitle">계정 삭제를 진행하려면<br>Google 계정으로 로그인하세요.</p>
+        <div class="warning-box">
+            <ul>
+                <li>계정과 모든 게임 데이터가 <strong>영구 삭제</strong>됩니다.</li>
+                <li>삭제 후 복구가 불가능합니다.</li>
+                <li>게스트 계정은 앱 내 로그아웃으로 삭제하세요.</li>
+            </ul>
+        </div>
+        <div class="g-btn-wrapper">
+            <div id="g-signin-btn"></div>
+        </div>
+        <div id="error-msg"></div>
+    </div>
+
+    <!-- Step 2: 삭제 확인 -->
+    <div id="step-confirm">
+        <p class="subtitle">아래 계정의 모든 데이터를 삭제합니다.</p>
+        <div class="user-info" id="user-email-display"></div>
+        <div class="warning-box">
+            <ul>
+                <li>함대, 함선, 모듈, 연구 데이터</li>
+                <li>클리어 기록, PvP 전적, 진행 상황</li>
+                <li>VIP 구독 정보</li>
+            </ul>
+        </div>
+        <button class="btn btn-danger" id="btn-delete">영구 삭제 확인</button>
+        <button class="btn btn-secondary" id="btn-cancel">취소</button>
+        <div id="error-msg2"></div>
+    </div>
+
+    <!-- Step 3: 결과 -->
+    <div id="step-result">
+        <div class="result-icon" id="result-icon"></div>
+        <h1 id="result-title"></h1>
+        <p class="subtitle" id="result-msg"></p>
+    </div>
+</div>
+
+<script>
+    const API_BASE = 'https://www.fidforge.com/api';
+    const GOOGLE_CLIENT_ID = '527468162306-m77vtlkevpa42hf41arcodjmcio5fs85.apps.googleusercontent.com';
+
+    let accessToken = null;
+
+    function showStep(id) {
+        document.querySelectorAll('[id^="step-"]').forEach(el => el.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    function setError(elId, msg) {
+        const el = document.getElementById(elId);
+        if (el) el.textContent = msg;
+    }
+
+    // Google Identity Services 초기화
+    window.addEventListener('load', () => {
+        google.accounts.id.initialize({
+            client_id: GOOGLE_CLIENT_ID,
+            callback: onGoogleSignIn,
+            auto_select: false,
+        });
+        google.accounts.id.renderButton(
+            document.getElementById('g-signin-btn'),
+            { theme: 'filled_blue', size: 'large', text: 'signin_with', shape: 'rectangular', width: 280 }
+        );
+    });
+
+    async function onGoogleSignIn(credentialResponse) {
+        setError('error-msg', '');
+        const idToken = credentialResponse.credential;
+
+        try {
+            const res = await fetch(`${API_BASE}/account/google-login`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ idToken }),
+            });
+            const data = await res.json();
+            if (data.errorCode !== 0) {
+                setError('error-msg', `로그인 실패 (code: ${data.errorCode})`);
+                return;
+            }
+            accessToken = data.data.accessToken;
+
+            // JWT payload에서 이메일 표시용 정보 추출 (Google 계정임이 확인됨)
+            const payload = JSON.parse(atob(idToken.split('.')[1]));
+            document.getElementById('user-email-display').textContent = payload.email || '(Google 계정)';
+            showStep('step-confirm');
+        } catch (e) {
+            setError('error-msg', '서버 연결 실패. 잠시 후 다시 시도하세요.');
+        }
+    }
+
+    document.getElementById('btn-cancel').addEventListener('click', () => {
+        accessToken = null;
+        showStep('step-login');
+    });
+
+    document.getElementById('btn-delete').addEventListener('click', async () => {
+        const btn = document.getElementById('btn-delete');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span>삭제 중...';
+        setError('error-msg2', '');
+
+        try {
+            const res = await fetch(`${API_BASE}/account/delete`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`,
+                },
+            });
+            const data = await res.json();
+            if (data.errorCode === 0) {
+                document.getElementById('result-icon').textContent = '✅';
+                document.getElementById('result-title').textContent = '삭제 완료';
+                document.getElementById('result-msg').textContent = '계정과 모든 데이터가 삭제되었습니다.';
+            } else {
+                document.getElementById('result-icon').textContent = '❌';
+                document.getElementById('result-title').textContent = '삭제 실패';
+                document.getElementById('result-msg').textContent = `오류 코드: ${data.errorCode}`;
+            }
+        } catch (e) {
+            document.getElementById('result-icon').textContent = '❌';
+            document.getElementById('result-title').textContent = '오류 발생';
+            document.getElementById('result-msg').textContent = '서버 연결에 실패했습니다. 다시 시도하세요.';
+        }
+        showStep('step-result');
+    });
+</script>
+</body>
+</html>

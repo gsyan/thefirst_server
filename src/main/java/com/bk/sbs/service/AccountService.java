@@ -7,9 +7,9 @@ import com.bk.sbs.entity.Account;
 import com.bk.sbs.entity.Character;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
-import com.bk.sbs.repository.AccountRepository;
-import com.bk.sbs.repository.CharacterRepository;
+import com.bk.sbs.repository.*;
 import com.bk.sbs.security.JwtUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -46,6 +46,16 @@ public class AccountService {
     private final CharacterRepository characterRepository;
     private final CharacterService characterService;
     private final RestTemplate restTemplate = new RestTemplate();
+
+    @Autowired private VipSubscriptionRepository vipSubscriptionRepository;
+    @Autowired private PvpRecordRepository pvpRecordRepository;
+    @Autowired private ClearedZoneRepository clearedZoneRepository;
+    @Autowired private ModuleResearchRepository moduleResearchRepository;
+    @Autowired private ShipModuleLevelRepository shipModuleLevelRepository;
+    @Autowired private ShipModuleRepository shipModuleRepository;
+    @Autowired private ShipRepository shipRepository;
+    @Autowired private FleetRepository fleetRepository;
+    @Autowired private ProgressRepository progressRepository;
 
     @Value("${google.client-id}")
     private String googleClientId;
@@ -380,6 +390,31 @@ public class AccountService {
                 .accessToken(jwtUtil.createAccessToken(account.getId()))
                 .refreshToken(jwtUtil.createRefreshToken(account.getId()))
                 .build();
+    }
+
+    @Transactional
+    public void deleteAccount() {
+        Long accountId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.REFRESH_TOKEN_FAIL_ACCOUNT_NOT_FOUND));
+
+        List<Character> characters = characterRepository.findByAccountId(accountId);
+        for (Character character : characters) {
+            Long characterId = character.getId();
+            // FK 순서 준수: 말단 테이블부터 삭제
+            vipSubscriptionRepository.deleteByCharacterId(characterId);
+            pvpRecordRepository.deleteByCharacterId(characterId);
+            clearedZoneRepository.deleteByCharacterId(characterId);
+            moduleResearchRepository.deleteByCharacterId(characterId);
+            shipModuleLevelRepository.deleteByCharacterId(characterId);
+            shipModuleRepository.deleteByCharacterId(characterId);
+            shipRepository.deleteByCharacterId(characterId);
+            fleetRepository.deleteByCharacterId(characterId);
+            progressRepository.deleteByCharacterId(characterId);
+        }
+        characterRepository.deleteByAccountId(accountId);
+        accountRepository.delete(account);
+        log.info("Account hard-deleted: accountId={}", accountId);
     }
 
     public boolean validateCharacterOwnership(Long accountId, Long characterId) {

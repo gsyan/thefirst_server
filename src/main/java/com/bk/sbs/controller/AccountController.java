@@ -66,4 +66,10 @@ public class AccountController {
         return ApiResponse.success(response);
     }
 
+    @DeleteMapping("/delete")
+    public ApiResponse<String> deleteAccount() {
+        accountService.deleteAccount();
+        return ApiResponse.success("Account deleted");
+    }
+
 }

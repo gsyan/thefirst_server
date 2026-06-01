@@ -15,4 +15,9 @@ public class HomeController {
     public String privacy() {
         return "privacy";
     }
+
+    @GetMapping("/delete-account")
+    public String deleteAccount() {
+        return "delete-account";
+    }
 }
