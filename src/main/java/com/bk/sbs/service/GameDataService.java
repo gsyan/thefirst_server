@@ -38,6 +38,7 @@ public class GameDataService {
         }
     }
     private Map<String, TechLevelData> techLevelDataMap = new HashMap<>();
+    private int cachedMaxShipCount = 1;
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -88,6 +89,7 @@ public class GameDataService {
                             techLevelDataMap.put(rId, new TechLevelData(cost, shipCount));
                         }
                     }
+                    cachedMaxShipCount = techLevelDataMap.values().stream().mapToInt(d -> d.shipCount).max().orElse(1);
                     log.info("techLevelDataList loaded: {} entries", techLevelDataMap.size());
                 }
             } else {
@@ -136,7 +138,7 @@ public class GameDataService {
     public DataTableConfig getDataTableConfig() { return dataTableConfig != null ? dataTableConfig : new DataTableConfig(); }
 
     public int getMaxShipsPerFleet() {
-        return getDataTableConfig().getMaxShipsPerFleet();
+        return cachedMaxShipCount;
     }
 
     public Integer getShipAddCost() {
