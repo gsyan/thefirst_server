@@ -18,4 +18,5 @@ public class VipStatusResponse {
     private String vipExpiry;
     private Integer dailyMineralAmount;
     private Integer mineralRewardMultiplier;
+    private Integer pendingMineralTotal;
 }

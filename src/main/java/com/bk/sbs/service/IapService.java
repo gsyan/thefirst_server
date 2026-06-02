@@ -24,7 +24,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -33,8 +36,8 @@ import java.util.Optional;
 public class IapService {
 
     private static final String PLAY_API_SCOPE = "https://www.googleapis.com/auth/androidpublisher";
-    private static final String SUBSCRIPTIONS_V2_URL =
-            "https://androidpublisher.googleapis.com/androidpublisher/v3/applications/%s/purchases/subscriptionsv2/tokens/%s";
+    private static final String PRODUCTS_URL =
+            "https://androidpublisher.googleapis.com/androidpublisher/v3/applications/%s/purchases/products/%s/tokens/%s";
 
     @Value("${google.play.package-name}")
     private String packageName;
@@ -74,14 +77,30 @@ public class IapService {
             return getVipStatus(characterId);
         }
 
-        Instant expiry = verifyGooglePlaySubscription(purchaseToken);
-
+        // 활성 VIP 기간 중 재구매 방지
         Optional<VipSubscription> existing = vipSubscriptionRepository.findByCharacterId(characterId);
+        if (existing.isPresent() == true) {
+            VipSubscription current = existing.get();
+            if (current.getVipExpiry() != null && Instant.now().isBefore(current.getVipExpiry())) {
+                log.warn("[IAP] 활성 VIP 기간 중 재구매 시도 characterId={}", characterId);
+                throw new BusinessException(ServerErrorCode.IAP_PURCHASE_FAIL_ALREADY_ACTIVE);
+            }
+        }
+
+        Instant purchaseTime = verifyGooglePlayConsumable(purchaseToken);
+
+        // 구매 월 말일 23:59:59 UTC를 만료 시각으로 설정
+        ZonedDateTime purchaseZdt = purchaseTime.atZone(ZoneOffset.UTC);
+        int purchaseDay = purchaseZdt.getDayOfMonth();
+        Instant expiry = purchaseZdt.with(TemporalAdjusters.lastDayOfMonth())
+                .withHour(23).withMinute(59).withSecond(59).withNano(0).toInstant();
+
         if (existing.isPresent() == true) {
             VipSubscription sub = existing.get();
             sub.setPurchaseToken(purchaseToken);
             sub.setPlatform(request.getPlatform());
             sub.setVipExpiry(expiry);
+            sub.setLastDailyMineralAt(null); // 새 달 구매 시 초기화
             sub.setUpdatedAt(Instant.now());
             vipSubscriptionRepository.save(sub);
         } else {
@@ -90,8 +109,11 @@ public class IapService {
             );
         }
 
-        log.info("[IAP] VIP 구매 완료 characterId={} expiry={}", characterId, expiry);
-        return buildStatusResponse(expiry);
+        // 1일~구매일(최대 28일) 분량
+        int claimableDays = Math.min(purchaseDay, 28);
+        int pendingMineralTotal = claimableDays * dailyMineralAmount;
+        log.info("[IAP] VIP 구매 완료 characterId={} expiry={} pendingMineralTotal={}", characterId, expiry, pendingMineralTotal);
+        return buildStatusResponse(expiry, pendingMineralTotal);
     }
 
     // ── VIP 상태 조회 ────────────────────────────────────────────────────────
@@ -101,7 +123,22 @@ public class IapService {
         if (sub.isPresent() == false) {
             return buildStatusResponse(null);
         }
-        return buildStatusResponse(sub.get().getVipExpiry());
+        VipSubscription vipSub = sub.get();
+
+        int pendingMineralTotal = 0;
+        Instant now = Instant.now();
+        boolean isVip = vipSub.getVipExpiry() != null && now.isBefore(vipSub.getVipExpiry());
+        if (isVip == true) {
+            int todayInMonth = now.atZone(ZoneOffset.UTC).getDayOfMonth();
+            if (todayInMonth <= 28) {
+                Instant last = vipSub.getLastDailyMineralAt();
+                if (last == null || now.isAfter(last.plusSeconds(86400))) {
+                    pendingMineralTotal = dailyMineralAmount;
+                }
+            }
+        }
+
+        return buildStatusResponse(vipSub.getVipExpiry(), pendingMineralTotal);
     }
 
     // ── 일일 미네랄 지급 ─────────────────────────────────────────────────────
@@ -111,11 +148,21 @@ public class IapService {
         VipSubscription sub = vipSubscriptionRepository.findByCharacterId(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.IAP_DAILY_MINERAL_NOT_VIP));
 
-        boolean isVip = sub.getVipExpiry() != null && Instant.now().isBefore(sub.getVipExpiry());
+        Instant now = Instant.now();
+        boolean isVip = sub.getVipExpiry() != null && now.isBefore(sub.getVipExpiry());
         if (isVip == false)
             throw new BusinessException(ServerErrorCode.IAP_DAILY_MINERAL_NOT_VIP);
 
-        Instant now = Instant.now();
+        // 매월 29일 이후는 클레임 불가 (2월 기준 최대 28일 통일)
+        int todayInMonth = now.atZone(ZoneOffset.UTC).getDayOfMonth();
+        if (todayInMonth > 28) {
+            return VipDailyMineralResponse.builder()
+                    .available(false)
+                    .mineralRemain(null)
+                    .nextAvailableAt(null)
+                    .build();
+        }
+
         Instant last = sub.getLastDailyMineralAt();
         boolean available = (last == null || now.isAfter(last.plusSeconds(86400)));
 
@@ -147,6 +194,10 @@ public class IapService {
     // ── 내부 메서드 ──────────────────────────────────────────────────────────
 
     private VipStatusResponse buildStatusResponse(Instant expiry) {
+        return buildStatusResponse(expiry, 0);
+    }
+
+    private VipStatusResponse buildStatusResponse(Instant expiry, int pendingMineralTotal) {
         boolean isVip = expiry != null && Instant.now().isBefore(expiry);
         String expiryStr = expiry != null ? DateTimeFormatter.ISO_INSTANT.format(expiry) : null;
         return VipStatusResponse.builder()
@@ -154,6 +205,7 @@ public class IapService {
                 .vipExpiry(expiryStr)
                 .dailyMineralAmount(dailyMineralAmount)
                 .mineralRewardMultiplier(mineralRewardMultiplier)
+                .pendingMineralTotal(pendingMineralTotal)
                 .build();
     }
 
@@ -178,11 +230,11 @@ public class IapService {
         }
     }
 
-    // Google Play Developer API (subscriptionsv2) 호출 → 만료 시각 반환
-    private Instant verifyGooglePlaySubscription(String purchaseToken) {
+    // Google Play Developer API (purchases.products) 호출 → 구매 시각 반환
+    private Instant verifyGooglePlayConsumable(String purchaseToken) {
         try {
             String accessToken = getGoogleAccessToken();
-            String url = String.format(SUBSCRIPTIONS_V2_URL, packageName, purchaseToken);
+            String url = String.format(PRODUCTS_URL, packageName, vipProductId, purchaseToken);
 
             HttpRequest httpRequest = HttpRequest.newBuilder()
                     .uri(URI.create(url))
@@ -198,15 +250,14 @@ public class IapService {
             }
 
             JsonNode root = objectMapper.readTree(response.body());
-            String state = root.path("subscriptionState").asText();
-            if ("SUBSCRIPTION_STATE_ACTIVE".equals(state) == false && "SUBSCRIPTION_STATE_IN_GRACE_PERIOD".equals(state) == false) {
-                log.warn("[IAP] 구독 비활성 상태: {}", state);
+            int purchaseState = root.path("purchaseState").asInt(-1);
+            if (purchaseState != 0) {
+                log.warn("[IAP] 구매 비정상 상태: {}", purchaseState);
                 throw new BusinessException(ServerErrorCode.IAP_PURCHASE_FAIL_SUBSCRIPTION_NOT_ACTIVE);
             }
 
-            // lineItems[0].expiryTime (RFC 3339)
-            String expiryTimeStr = root.path("lineItems").path(0).path("expiryTime").asText();
-            return Instant.parse(expiryTimeStr);
+            long purchaseTimeMillis = Long.parseLong(root.path("purchaseTimeMillis").asText("0"));
+            return Instant.ofEpochMilli(purchaseTimeMillis);
 
         } catch (BusinessException e) {
             throw e;
