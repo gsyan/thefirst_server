@@ -21,4 +21,5 @@ public class AuthResponse {
     private CharacterInfoDto characterInfo;
     private List<String> researchedIds;
     private Boolean bGoogleLinked;
+    private VipStatusResponse vipStatus;
 }

@@ -10,12 +10,14 @@ import com.bk.sbs.dto.CharacterValidateNameRequest;
 import com.bk.sbs.dto.CharacterResponse;
 import com.bk.sbs.dto.CharacterInfoDto;
 import com.bk.sbs.dto.FleetInfoDto;
+import com.bk.sbs.dto.VipStatusResponse;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.security.JwtUtil;
 import com.bk.sbs.service.AccountService;
 import com.bk.sbs.service.CharacterService;
 import com.bk.sbs.service.FleetService;
+import com.bk.sbs.service.IapService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,12 +31,14 @@ public class CharacterController {
     private final AccountService accountService;
     private final CharacterService characterService;
     private final FleetService fleetService;
+    private final IapService iapService;
     private final JwtUtil jwtUtil;
 
-    public CharacterController(AccountService accountService, CharacterService characterService, FleetService fleetService, JwtUtil jwtUtil) {
+    public CharacterController(AccountService accountService, CharacterService characterService, FleetService fleetService, IapService iapService, JwtUtil jwtUtil) {
         this.accountService = accountService;
         this.characterService = characterService;
         this.fleetService = fleetService;
+        this.iapService = iapService;
         this.jwtUtil = jwtUtil;
     }
 
@@ -77,6 +81,7 @@ public class CharacterController {
         var researchedIds = fleetService.getResearchedIds(actualCharacterId);
 
         boolean bGoogleLinked = accountService.isGoogleLinked(accountId);
+        VipStatusResponse vipStatus = iapService.getVipStatus(actualCharacterId);
 
         AuthResponse response = AuthResponse.builder()
                 .accessToken(newAccessToken)
@@ -85,6 +90,7 @@ public class CharacterController {
                 .characterInfo(characterInfoDto)
                 .researchedIds(researchedIds)
                 .bGoogleLinked(bGoogleLinked)
+                .vipStatus(vipStatus)
                 .build();
         return ApiResponse.success(response);
     }
