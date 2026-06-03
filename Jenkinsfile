@@ -69,6 +69,9 @@ pipeline {
                         echo Copying Firebase service account file...
                         copy "%SERVICE_ACCOUNT_FILE%" src\\main\\resources\\firebase-service-account.json
 
+                        echo Copying Google Play service account file...
+                        copy "C:\\credentials\\google-play-service-account.json" src\\main\\resources\\google-play-service-account.json
+
                         echo Building project...
                         gradlew.bat clean build --no-daemon
                     '''

@@ -38,9 +38,11 @@ out/
 
 ### Firebase ###
 **/firebase-service-account.json
+**/firebase-service-account_old.json
 **/serviceAccountKey.json
 
 ### Google ###
+**/google-play-service-account.json
 tools/google_relate
 
 ### ETC ###

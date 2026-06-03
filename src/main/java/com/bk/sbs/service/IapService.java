@@ -275,7 +275,7 @@ public class IapService {
     }
 
     private String getGoogleAccessToken() throws IOException {
-        ClassPathResource resource = new ClassPathResource("firebase-service-account.json");
+        ClassPathResource resource = new ClassPathResource("google-play-service-account.json");
         GoogleCredentials credentials = GoogleCredentials
                 .fromStream(resource.getInputStream())
                 .createScoped(Collections.singleton(PLAY_API_SCOPE));
