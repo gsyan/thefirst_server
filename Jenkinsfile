@@ -64,16 +64,21 @@ pipeline {
                 expression { return params.SERVER_BUILD }
             }
             steps {
-                withCredentials([file(credentialsId: 'FIREBASE_SERVICE_ACCOUNT', variable: 'SERVICE_ACCOUNT_FILE')]) {
+                withCredentials([
+                    file(credentialsId: 'FIREBASE_SERVICE_ACCOUNT', variable: 'SERVICE_ACCOUNT_FILE'),
+                    file(credentialsId: 'GOOGLE_PLAY_SERVICE_ACCOUNT', variable: 'PLAY_SERVICE_ACCOUNT_FILE')
+                ]) {
                     bat '''
-                        echo Copying Firebase service account file...
+                        echo Copying service account files...
                         copy "%SERVICE_ACCOUNT_FILE%" src\\main\\resources\\firebase-service-account.json
-
-                        echo Copying Google Play service account file...
-                        copy "C:\\credentials\\google-play-service-account.json" src\\main\\resources\\google-play-service-account.json
+                        copy "%PLAY_SERVICE_ACCOUNT_FILE%" src\\main\\resources\\google-play-service-account.json
 
                         echo Building project...
                         gradlew.bat clean build --no-daemon
+
+                        echo Deleting service account files from workspace...
+                        del src\\main\\resources\\firebase-service-account.json
+                        del src\\main\\resources\\google-play-service-account.json
                     '''
                 }
             }
