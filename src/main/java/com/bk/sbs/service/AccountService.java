@@ -51,7 +51,6 @@ public class AccountService {
     @Autowired private PvpRecordRepository pvpRecordRepository;
     @Autowired private ClearedZoneRepository clearedZoneRepository;
     @Autowired private ModuleResearchRepository moduleResearchRepository;
-    @Autowired private ShipModuleLevelRepository shipModuleLevelRepository;
     @Autowired private ShipModuleRepository shipModuleRepository;
     @Autowired private ShipRepository shipRepository;
     @Autowired private FleetRepository fleetRepository;
@@ -406,7 +405,6 @@ public class AccountService {
             pvpRecordRepository.deleteByCharacterId(characterId);
             clearedZoneRepository.deleteByCharacterId(characterId);
             moduleResearchRepository.deleteByCharacterId(characterId);
-            shipModuleLevelRepository.deleteByCharacterId(characterId);
             shipModuleRepository.deleteByCharacterId(characterId);
             shipRepository.deleteByCharacterId(characterId);
             fleetRepository.deleteByCharacterId(characterId);

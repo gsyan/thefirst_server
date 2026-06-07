@@ -25,19 +25,17 @@ public class FleetService {
     private final FleetRepository fleetRepository;
     private final ShipRepository shipRepository;
     private final ShipModuleRepository shipModuleRepository;
-    private final ShipModuleLevelRepository shipModuleLevelRepository;
     private final CharacterRepository characterRepository;
     private final ModuleResearchRepository moduleResearchRepository;
     private final GameDataService gameDataService;
 
     public FleetService(FleetRepository fleetRepository, ShipRepository shipRepository,
-                       ShipModuleRepository shipModuleRepository, ShipModuleLevelRepository shipModuleLevelRepository,
+                       ShipModuleRepository shipModuleRepository,
                        CharacterRepository characterRepository,
                        ModuleResearchRepository moduleResearchRepository, GameDataService gameDataService) {
         this.fleetRepository = fleetRepository;
         this.shipRepository = shipRepository;
         this.shipModuleRepository = shipModuleRepository;
-        this.shipModuleLevelRepository = shipModuleLevelRepository;
         this.characterRepository = characterRepository;
         this.moduleResearchRepository = moduleResearchRepository;
         this.gameDataService = gameDataService;
@@ -115,7 +113,6 @@ public class FleetService {
         bodyModule.setSlotIndex(0);
         bodyModule.setCurrentHealth(bodyData.getHealth() != null ? bodyData.getHealth() : 0f);
         shipModuleRepository.save(bodyModule);
-        saveInitialModuleLevel(defaultShip, EModuleType.body, EModuleSubType.body_t1_m1, bodyData.getModuleLevel(), 0, 0);
 
         // 2. Beam
 //        ShipModule beamModule = new ShipModule();
@@ -149,18 +146,6 @@ public class FleetService {
 
 
         System.out.println("Default ship and modules created: " + defaultShip.getShipName());
-    }
-
-    // 초기 모듈 생성 시 ship_module_level에 ver1 서브타입을 무료 이력으로 등록
-    private void saveInitialModuleLevel(Ship ship, EModuleType moduleType, EModuleSubType moduleSubType, int level, int bodyIndex, int slotIndex) {
-        ShipModuleLevel record = new ShipModuleLevel();
-        record.setShip(ship);
-        record.setBodyIndex(bodyIndex);
-        record.setModuleType(moduleType);
-        record.setSlotIndex(slotIndex);
-        record.setModuleSubType(moduleSubType);
-        record.setLevel(level);
-        shipModuleLevelRepository.save(record);
     }
 
     // 함대 활성화
@@ -402,14 +387,7 @@ public class FleetService {
         return dto;
     }
 
-    private List<ModuleBodyInfoDto> convertToBodyModules(List<ShipModule> modules, List<ShipModuleLevel> allLevels) {
-        // bodyIndex+moduleType+slotIndex → unlockedSubTypes 맵 (한 번만 빌드)
-        java.util.Map<String, List<EModuleSubType>> unlockedMap = new java.util.HashMap<>();
-        for (ShipModuleLevel lvl : allLevels) {
-            String key = lvl.getBodyIndex() + "_" + lvl.getModuleType() + "_" + lvl.getSlotIndex();
-            unlockedMap.computeIfAbsent(key, k -> new java.util.ArrayList<>()).add(lvl.getModuleSubType());
-        }
-
+    private List<ModuleBodyInfoDto> convertToBodyModules(List<ShipModule> modules) {
         return modules.stream()
                 .filter(m -> m.getModuleType() == EModuleType.body)
                 .map(bodyModule -> {
@@ -423,9 +401,6 @@ public class FleetService {
                                     .moduleLevel(beamModule.getModuleLevel())
                                     .bodyIndex(beamModule.getBodyIndex())
                                     .slotIndex(beamModule.getSlotIndex())
-                                    .unlockedSubTypes(unlockedMap.getOrDefault(
-                                            bodyIndex + "_" + EModuleType.beam + "_" + beamModule.getSlotIndex(),
-                                            java.util.Collections.emptyList()))
                                     .investedModulePoint(beamModule.getInvestedModulePoint())
                                     .build())
                             .collect(Collectors.toList());
@@ -438,9 +413,6 @@ public class FleetService {
                                     .moduleLevel(missileModule.getModuleLevel())
                                     .bodyIndex(missileModule.getBodyIndex())
                                     .slotIndex(missileModule.getSlotIndex())
-                                    .unlockedSubTypes(unlockedMap.getOrDefault(
-                                            bodyIndex + "_" + EModuleType.missile + "_" + missileModule.getSlotIndex(),
-                                            java.util.Collections.emptyList()))
                                     .investedModulePoint(missileModule.getInvestedModulePoint())
                                     .build())
                             .collect(Collectors.toList());
@@ -453,16 +425,9 @@ public class FleetService {
                                     .moduleLevel(hangerModule.getModuleLevel())
                                     .bodyIndex(hangerModule.getBodyIndex())
                                     .slotIndex(hangerModule.getSlotIndex())
-                                    .unlockedSubTypes(unlockedMap.getOrDefault(
-                                            bodyIndex + "_" + EModuleType.hanger + "_" + hangerModule.getSlotIndex(),
-                                            java.util.Collections.emptyList()))
                                     .investedModulePoint(hangerModule.getInvestedModulePoint())
                                     .build())
                             .collect(Collectors.toList());
-
-                    // body 자체의 unlockedSubTypes (slotIndex=0 고정)
-                    List<EModuleSubType> bodyUnlocked = unlockedMap.getOrDefault(
-                            bodyIndex + "_" + EModuleType.body + "_0", java.util.Collections.emptyList());
 
                     float maxHealth = gameDataService.getModulesByType(EModuleType.body).stream()
                             .filter(d -> d.getModuleSubType() == bodyModule.getModuleSubType()
@@ -482,7 +447,6 @@ public class FleetService {
                             .beams(beams)
                             .missiles(missiles)
                             .hangers(hangers)
-                            .unlockedSubTypes(bodyUnlocked)
                             .investedModulePoint(bodyModule.getInvestedModulePoint())
                             .currentHealth(normalizedHealth)
                             .build();
@@ -492,8 +456,7 @@ public class FleetService {
 
     private ShipInfoDto convertShipToShipInfoDto(Ship ship) {
         List<ShipModule> modules = shipModuleRepository.findByShipIdAndDeletedFalseOrderBySlotIndex(ship.getId());
-        List<ShipModuleLevel> allLevels = shipModuleLevelRepository.findAllByShipId(ship.getId());
-        List<ModuleBodyInfoDto> bodyDtos = convertToBodyModules(modules, allLevels);
+        List<ModuleBodyInfoDto> bodyDtos = convertToBodyModules(modules);
 
         return ShipInfoDto.builder()
                 .id(ship.getId())
@@ -611,7 +574,7 @@ public class FleetService {
     }
 
     @Transactional
-    public ModuleLevelUpResponse levelUpModule(Long characterId, ModuleLevelUpRequest request) {
+    public ModuleLevelChangeResponse levelUpModule(Long characterId, ModuleLevelChangeRequest request) {
         // 함선 소유권 확인
         Ship ship = shipRepository.findById(request.getShipId())
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_SHIP_NOT_FOUND));
@@ -675,28 +638,8 @@ public class FleetService {
         module.setModified(LocalDateTime.now());
         shipModuleRepository.save(module);
 
-        // ShipModuleLevel에도 레벨 저장
-        ShipModuleLevel levelRecord = shipModuleLevelRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndModuleSubType(
-                request.getShipId(),
-                request.getBodyIndex(),
-                moduleType,
-                request.getSlotIndex(),
-                moduleSubType
-        ).orElseGet(() -> {
-            ShipModuleLevel newRecord = new ShipModuleLevel();
-            newRecord.setShip(ship);
-            newRecord.setBodyIndex(request.getBodyIndex());
-            newRecord.setModuleType(moduleType);
-            newRecord.setSlotIndex(request.getSlotIndex());
-            newRecord.setModuleSubType(moduleSubType);
-            return newRecord;
-        });
-        levelRecord.setLevel(request.getTargetLevel());
-        levelRecord.setModified(LocalDateTime.now());
-        shipModuleLevelRepository.save(levelRecord);
-
         // 응답 생성
-        ModuleLevelUpResponse response = ModuleLevelUpResponse.builder()
+        ModuleLevelChangeResponse response = ModuleLevelChangeResponse.builder()
                 .shipId(request.getShipId())
                 .bodyIndex(request.getBodyIndex())
                 .moduleType(moduleType)
@@ -707,6 +650,108 @@ public class FleetService {
                 .build();
 
         return response;
+    }
+
+    @Transactional
+    public ModuleLevelChangeResponse levelDownModule(Long characterId, ModuleLevelChangeRequest request) {
+        // 함선 소유권 확인
+        Ship ship = shipRepository.findById(request.getShipId())
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_SHIP_NOT_FOUND));
+
+        if (!ship.getFleet().getCharacterId().equals(characterId)) {
+            throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_FLEET_ACCESS_DENIED);
+        }
+
+        EModuleType moduleType = request.getModuleType();
+        EModuleSubType moduleSubType = request.getModuleSubType();
+
+        // 모듈 찾기
+        ShipModule module = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
+                request.getShipId(),
+                request.getBodyIndex(),
+                moduleType,
+                request.getSlotIndex()
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MODULE_NOT_FOUND));
+
+        // 현재 레벨 확인
+        if (module.getModuleLevel() != request.getCurrentLevel()) {
+            throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MODULE_LEVEL_MISMATCH);
+        }
+
+        // 캐릭터 자원 조회 (비관적 락)
+        com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_CHARACTER_NOT_FOUND));
+
+        // targetLevel == 0: Lv.1에서 이전 단계 맥스레벨로 강등
+        if (request.getTargetLevel() == 0) {
+            if (request.getCurrentLevel() != 1) {
+                throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MODULE_LEVEL_MISMATCH);
+            }
+
+            EModuleSubType prevSubType = EModuleSubType.fromValue(moduleSubType.getValue() - 100);
+            if (prevSubType == null) {
+                throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MODULE_LEVEL_MISMATCH);
+            }
+
+            int maxLevel = gameDataService.getMaxModuleLevel(moduleType, prevSubType);
+            // T1 레벨업 비용은 investedModulePoint에 이미 포함 → 리서치 비용만 환급
+            int totalRefund = gameDataService.getModuleResearchCost(moduleSubType);
+            character.setModulePoint(character.getModulePoint() + totalRefund);
+            characterRepository.save(character);
+
+            module.setModuleSubType(prevSubType);
+            module.setModuleLevel(maxLevel);
+            module.setInvestedModulePoint(Math.max(0, module.getInvestedModulePoint() - totalRefund));
+            module.setModified(LocalDateTime.now());
+            shipModuleRepository.save(module);
+
+            return ModuleLevelChangeResponse.builder()
+                    .shipId(request.getShipId())
+                    .bodyIndex(request.getBodyIndex())
+                    .moduleType(moduleType)
+                    .moduleSubType(prevSubType)
+                    .slotIndex(module.getSlotIndex())
+                    .newLevel(maxLevel)
+                    .modulePointRemain(character.getModulePoint())
+                    .investedModulePoint(module.getInvestedModulePoint())
+                    .build();
+        }
+
+        // 일반 레벨다운 검증
+        if (request.getTargetLevel() < 1 || request.getTargetLevel() >= request.getCurrentLevel()) {
+            throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MODULE_LEVEL_MISMATCH);
+        }
+
+        // 환급 금액 계산 (targetLevel ~ currentLevel-1 구간 합산)
+        int totalRefund = 0;
+        List<ModuleData> moduleDataList = gameDataService.getModulesByType(moduleType);
+        for (int level = request.getTargetLevel(); level < request.getCurrentLevel(); level++) {
+            final int currentLevel = level;
+            ModuleData levelData = moduleDataList.stream()
+                    .filter(data -> data.getModuleLevel() == currentLevel)
+                    .findFirst()
+                    .orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MODULE_DATA_NOT_FOUND));
+            totalRefund = totalRefund + levelData.getModulePointCost();
+        }
+
+        character.setModulePoint(character.getModulePoint() + totalRefund);
+        characterRepository.save(character);
+
+        module.setModuleLevel(request.getTargetLevel());
+        module.setInvestedModulePoint(Math.max(0, module.getInvestedModulePoint() - totalRefund));
+        module.setModified(LocalDateTime.now());
+        shipModuleRepository.save(module);
+
+        return ModuleLevelChangeResponse.builder()
+                .shipId(request.getShipId())
+                .bodyIndex(request.getBodyIndex())
+                .moduleType(moduleType)
+                .moduleSubType(moduleSubType)
+                .slotIndex(module.getSlotIndex())
+                .newLevel(module.getModuleLevel())
+                .modulePointRemain(character.getModulePoint())
+                .investedModulePoint(module.getInvestedModulePoint())
+                .build();
     }
 
     @Transactional
@@ -844,7 +889,6 @@ public class FleetService {
         newModule.setCreated(LocalDateTime.now());
         newModule.setModified(LocalDateTime.now());
         shipModuleRepository.save(newModule);
-        saveInitialModuleLevel(ship, moduleType, finalModuleSubType, 1, request.getBodyIndex(), request.getSlotIndex());
 
         // 응답 생성
         return new ModuleUnlockResponse(
@@ -859,7 +903,7 @@ public class FleetService {
     }
 
     @Transactional
-    public ModuleChangeResponse changeModule(Long characterId, ModuleChangeRequest request) {
+    public ModuleGradeChangeResponse gradeUpModule(Long characterId, ModuleGradeChangeRequest request) {
         // 함선 소유권 확인
         Ship ship = shipRepository.findById(request.getShipId())
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_SHIP_NOT_FOUND));
@@ -900,85 +944,34 @@ public class FleetService {
             throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_INSUFFICIENT_TECH_LEVEL);
         }
 
-        // 3. 슬롯 단위 추가 이력 확인 — ShipModuleLevel 레코드 존재 = 이미 추가됨(무료)
-        Optional<ShipModuleLevel> newModuleLevelRecord = shipModuleLevelRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndModuleSubType(
-                request.getShipId(),
-                request.getBodyIndex(),
-                newModuleType,
-                request.getSlotIndex(),
-                newModuleSubType
-        );
-        boolean alreadyAdded = newModuleLevelRecord.isPresent();
-
-        // 4. 신규 잠금해제 시에만 max level + 직접 다음 단계 요구 (이미 보유한 서브타입은 레벨 무관하게 교체 가능)
-        if (!alreadyAdded) {
-            if (!gameDataService.isDirectNextStep(currentModuleSubType, newModuleSubType)) {
-                throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_NOT_DIRECT_NEXT_STEP);
-            }
-            int maxLevel = gameDataService.getMaxModuleLevel(currentModuleType, currentModuleSubType);
-            if (currentModule.getModuleLevel() < maxLevel) {
-                throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_CURRENT_MODULE_NOT_MAX_LEVEL);
-            }
+        // 3. max level + 직접 다음 단계 검증
+        if (!gameDataService.isDirectNextStep(currentModuleSubType, newModuleSubType)) {
+            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_NOT_DIRECT_NEXT_STEP);
+        }
+        int maxLevel = gameDataService.getMaxModuleLevel(currentModuleType, currentModuleSubType);
+        if (currentModule.getModuleLevel() < maxLevel) {
+            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_CURRENT_MODULE_NOT_MAX_LEVEL);
         }
 
-        // 5. 최초 추가 시에만 비용 차감 (비관적 락)
+        // 4. 비용 차감 (비관적 락)
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_SHIP_NOT_FOUND));
 
         int addCost = gameDataService.getModuleResearchCost(newModuleSubType);
-        int changeDeducted = 0;
-        if (!alreadyAdded) {
-            if (character.getModulePoint() < addCost) {
-                throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_INSUFFICIENT_MINERAL_RARE);
-            }
-            changeDeducted = deductModulePoint(character, addCost);
-            characterRepository.save(character);
+        if (character.getModulePoint() < addCost) {
+            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_INSUFFICIENT_MINERAL_RARE);
         }
+        int changeDeducted = deductModulePoint(character, addCost);
+        characterRepository.save(character);
 
-        // 1. 현재 모듈의 레벨을 ShipModuleLevel에 저장
-        ShipModuleLevel currentLevelRecord = shipModuleLevelRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndModuleSubType(
-                request.getShipId(),
-                request.getBodyIndex(),
-                currentModuleType,
-                request.getSlotIndex(),
-                currentModuleSubType
-        ).orElseGet(() -> {
-            ShipModuleLevel newRecord = new ShipModuleLevel();
-            newRecord.setShip(ship);
-            newRecord.setBodyIndex(request.getBodyIndex());
-            newRecord.setModuleType(currentModuleType);
-            newRecord.setSlotIndex(request.getSlotIndex());
-            newRecord.setModuleSubType(currentModuleSubType);
-            return newRecord;
-        });
-        currentLevelRecord.setLevel(currentModule.getModuleLevel());
-        currentLevelRecord.setModified(LocalDateTime.now());
-        shipModuleLevelRepository.save(currentLevelRecord);
-
-        // 2. 새 모듈의 레벨을 ShipModuleLevel에서 조회 (없으면 1)
-        int newModuleLevel = newModuleLevelRecord.map(ShipModuleLevel::getLevel).orElse(1);
-
-        // 3. 모듈 정보 업데이트 (서브타입 + 레벨 변경, 투자 이력은 교체 시 새 슬롯 기준으로 누적)
+        // 5. 모듈 정보 업데이트 (서브타입 레벨 1로 초기화, 투자 이력 누적)
         currentModule.setModuleSubType(newModuleSubType);
-        currentModule.setModuleLevel(newModuleLevel);
-        if (!alreadyAdded) {
-            currentModule.setInvestedModulePoint(currentModule.getInvestedModulePoint() + changeDeducted);
-        }
+        currentModule.setModuleLevel(1);
+        currentModule.setInvestedModulePoint(currentModule.getInvestedModulePoint() + changeDeducted);
         currentModule.setModified(LocalDateTime.now());
         shipModuleRepository.save(currentModule);
 
-        // 응답 생성 (actualCost: 최초 추가 시 실차감액, 재추가 시 0)
-        int actualCost = alreadyAdded ? 0 : addCost;
-
-        // 해당 슬롯에 이력이 있는 모든 서브타입 = 비용 없이 교체 가능한 목록
-        List<EModuleSubType> unlockedSubTypes = shipModuleLevelRepository
-                .findAllByShipIdAndBodyIndexAndModuleTypeAndSlotIndex(
-                        request.getShipId(), request.getBodyIndex(), newModuleType, request.getSlotIndex())
-                .stream()
-                .map(ShipModuleLevel::getModuleSubType)
-                .collect(java.util.stream.Collectors.toList());
-
-        return ModuleChangeResponse.builder()
+        return ModuleGradeChangeResponse.builder()
                 .shipId(request.getShipId())
                 .bodyIndex(request.getBodyIndex())
                 .moduleTypeCurrent(currentModuleType)
@@ -986,10 +979,61 @@ public class FleetService {
                 .moduleTypeNew(newModuleType)
                 .moduleSubTypeNew(newModuleSubType)
                 .slotIndex(request.getSlotIndex())
-                .moduleNewLevel(newModuleLevel)
+                .moduleNewLevel(1)
                 .modulePointRemain(character.getModulePoint())
                 .investedModulePoint(currentModule.getInvestedModulePoint())
-                .newUnlockedSubTypes(unlockedSubTypes)
+                .build();
+    }
+
+    @Transactional
+    public ModuleGradeChangeResponse gradeDownModule(Long characterId, ModuleGradeChangeRequest request) {
+        Ship ship = shipRepository.findById(request.getShipId())
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_SHIP_NOT_FOUND));
+        if (!ship.getFleet().getCharacterId().equals(characterId)) {
+            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_FLEET_ACCESS_DENIED);
+        }
+
+        EModuleType moduleType    = request.getModuleType();
+        EModuleSubType currentSubType = request.getModuleSubTypeCurrent();
+        EModuleSubType newSubType     = request.getModuleSubTypeNew();
+
+        if (newSubType.getValue() >= currentSubType.getValue()) {
+            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_SAME_MODULE);
+        }
+
+        ShipModule currentModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
+                request.getShipId(), request.getBodyIndex(), moduleType, request.getSlotIndex()
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_MODULE_NOT_FOUND));
+
+        com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_SHIP_NOT_FOUND));
+
+        // 현재 서브타입 연구 비용 + 현재 레벨업 비용 + 이전 서브타입 레벨업 비용 전체 환급
+        int currentLevel = currentModule.getModuleLevel();
+        int totalRefund = gameDataService.getModuleResearchCost(currentSubType)
+                + calcLevelRefundUpTo(moduleType, currentSubType, currentLevel)
+                + calcLevelRefund(moduleType, newSubType);
+        character.setModulePoint(character.getModulePoint() + totalRefund);
+        characterRepository.save(character);
+
+        // 이전 서브타입으로 복귀, 레벨 1로 초기화
+        currentModule.setModuleSubType(newSubType);
+        currentModule.setModuleLevel(1);
+        currentModule.setInvestedModulePoint(Math.max(0, currentModule.getInvestedModulePoint() - totalRefund));
+        currentModule.setModified(LocalDateTime.now());
+        shipModuleRepository.save(currentModule);
+
+        return ModuleGradeChangeResponse.builder()
+                .shipId(request.getShipId())
+                .bodyIndex(request.getBodyIndex())
+                .moduleTypeCurrent(moduleType)
+                .moduleSubTypeCurrent(currentSubType)
+                .moduleTypeNew(moduleType)
+                .moduleSubTypeNew(newSubType)
+                .slotIndex(request.getSlotIndex())
+                .moduleNewLevel(1)
+                .modulePointRemain(character.getModulePoint())
+                .investedModulePoint(currentModule.getInvestedModulePoint())
                 .build();
     }
 
@@ -1091,10 +1135,6 @@ public class FleetService {
         module.setModified(LocalDateTime.now());
         shipModuleRepository.save(module);
 
-        // ShipModuleLevel 이력 전체 삭제 (모듈 자체가 soft-delete되므로 초기 레코드도 불필요)
-        shipModuleLevelRepository.deleteBySlot(
-                request.getShipId(), request.getBodyIndex(), request.getModuleType(), request.getSlotIndex());
-
         return ModuleResetResponse.builder()
                 .shipId(request.getShipId())
                 .bodyIndex(request.getBodyIndex())
@@ -1136,7 +1176,6 @@ public class FleetService {
                 child.setDeleted(true);
                 child.setModified(LocalDateTime.now());
                 shipModuleRepository.save(child);
-                shipModuleLevelRepository.deleteBySlot(ship.getId(), child.getBodyIndex(), child.getModuleType(), child.getSlotIndex());
             }
         }
         character.setModulePoint(character.getModulePoint() + totalRefund);
@@ -1148,9 +1187,6 @@ public class FleetService {
         body.setInvestedModulePoint(0);
         body.setModified(LocalDateTime.now());
         shipModuleRepository.save(body);
-
-        // body 레벨업 이력 삭제
-        shipModuleLevelRepository.deleteBySlot(ship.getId(), request.getBodyIndex(), EModuleType.body, 0);
 
         return ModuleResetResponse.builder()
                 .shipId(ship.getId())
@@ -1188,13 +1224,12 @@ public class FleetService {
         character.setModulePoint(character.getModulePoint() + refundMp);
         characterRepository.save(character);
 
-        // 모듈 + ShipModuleLevel soft delete
+        // 모듈 soft delete
         for (ShipModule mod : allModules) {
             mod.setDeleted(true);
             mod.setModified(LocalDateTime.now());
             shipModuleRepository.save(mod);
         }
-        shipModuleLevelRepository.deleteByShipId(request.getShipId());
 
         // 함선 soft delete
         ship.setDeleted(true);
@@ -1277,6 +1312,35 @@ public class FleetService {
     private int deductModulePoint(com.bk.sbs.entity.Character character, int cost) {
         character.setModulePoint(character.getModulePoint() - cost);
         return cost;
+    }
+
+    // 서브타입의 Lv.1~targetLevel-1 레벨업 비용 합산 (moduleLevel=n은 Lv.n→n+1 비용)
+    private int calcLevelRefundUpTo(EModuleType moduleType, EModuleSubType subType, int targetLevel) {
+        List<ModuleData> dataList = gameDataService.getModulesByType(moduleType);
+        int refund = 0;
+        for (int lv = 1; lv < targetLevel; lv++) {
+            final int level = lv;
+            Optional<ModuleData> entry = dataList.stream()
+                    .filter(d -> subType.equals(d.getModuleSubType()) && d.getModuleLevel() == level)
+                    .findFirst();
+            if (entry.isPresent()) refund += entry.get().getModulePointCost();
+        }
+        return refund;
+    }
+
+    // 서브타입의 Lv.1~maxLevel-1 레벨업 비용 합산 (그레이드/레벨 다운 시 환급 계산용)
+    private int calcLevelRefund(EModuleType moduleType, EModuleSubType subType) {
+        int maxLevel = gameDataService.getMaxModuleLevel(moduleType, subType);
+        List<ModuleData> dataList = gameDataService.getModulesByType(moduleType);
+        int refund = 0;
+        for (int lv = 1; lv < maxLevel; lv++) {
+            final int level = lv;
+            Optional<ModuleData> entry = dataList.stream()
+                    .filter(d -> subType.equals(d.getModuleSubType()) && d.getModuleLevel() == level)
+                    .findFirst();
+            if (entry.isPresent()) refund += entry.get().getModulePointCost();
+        }
+        return refund;
     }
 
     private int deductTechPoint(com.bk.sbs.entity.Character character, int cost) {

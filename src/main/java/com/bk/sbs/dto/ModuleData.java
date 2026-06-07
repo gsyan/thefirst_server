@@ -40,6 +40,8 @@ public class ModuleData {
 
     private Float attack;
 
+    private Float splashRadius;
+
     private Float attackCool;
 
     private Float projectileSpeed;

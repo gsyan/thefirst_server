@@ -8,14 +8,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * ModuleLevelUpResponse
- * Auto-generated from Unity C# ModuleLevelUpResponse class
+ * ModuleLevelChangeResponse
+ * Auto-generated from Unity C# ModuleLevelChangeResponse class
  */
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class ModuleLevelUpResponse {
+public class ModuleLevelChangeResponse {
     private Long shipId;
     private Integer bodyIndex;
     private EModuleType moduleType;
@@ -23,4 +23,5 @@ public class ModuleLevelUpResponse {
     private Integer slotIndex;
     private Integer newLevel;
     private Integer modulePointRemain;
+    private Integer investedModulePoint;
 }

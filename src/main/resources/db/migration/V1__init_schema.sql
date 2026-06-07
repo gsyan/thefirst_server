@@ -6,7 +6,6 @@
 -- 초기화 (FK 의존성 역순으로 DROP)
 -- ============================================================
 SET FOREIGN_KEY_CHECKS = 0;
-DROP TABLE IF EXISTS ship_module_level;
 DROP TABLE IF EXISTS ship_module;
 DROP TABLE IF EXISTS ship;
 DROP TABLE IF EXISTS fleet;
@@ -115,26 +114,6 @@ CREATE TABLE ship_module (
     PRIMARY KEY (id),
     CONSTRAINT fk_ship_module_ship FOREIGN KEY (ship_id) REFERENCES ship (id),
     INDEX idx_module_ship (ship_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ============================================================
--- ship_module_level
--- 유니크: ship_id + body_index + module_type + slot_index + module_sub_type
--- (Entity의 @UniqueConstraint camelCase → Hibernate가 snake_case로 변환 적용)
--- ============================================================
-CREATE TABLE ship_module_level (
-    id              BIGINT          NOT NULL AUTO_INCREMENT,
-    ship_id         BIGINT          NOT NULL,
-    body_index      INT             NOT NULL,
-    module_type     VARCHAR(100)    NOT NULL,
-    slot_index      INT             NOT NULL,
-    module_sub_type VARCHAR(100)    NOT NULL,
-    level           INT             NOT NULL DEFAULT 1,
-    created         DATETIME(6)     NOT NULL,
-    modified        DATETIME(6)     NOT NULL,
-    PRIMARY KEY (id),
-    CONSTRAINT fk_sml_ship FOREIGN KEY (ship_id) REFERENCES ship (id),
-    UNIQUE KEY uk_sml (ship_id, body_index, module_type, slot_index, module_sub_type)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================

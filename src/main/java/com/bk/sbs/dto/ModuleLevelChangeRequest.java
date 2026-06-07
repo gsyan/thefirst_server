@@ -6,16 +6,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * ModuleChangeRequest
- * Auto-generated from Unity C# ModuleChangeRequest class
+ * ModuleLevelChangeRequest
+ * Auto-generated from Unity C# ModuleLevelChangeRequest class
  */
 @Data
 @NoArgsConstructor
-public class ModuleChangeRequest {
+public class ModuleLevelChangeRequest {
     private Long shipId;
     private Integer bodyIndex;
     private EModuleType moduleType;
-    private EModuleSubType moduleSubTypeCurrent;
-    private EModuleSubType moduleSubTypeNew;
+    private EModuleSubType moduleSubType;
     private Integer slotIndex;
+    private Integer currentLevel;
+    private Integer targetLevel;
 }

@@ -2,7 +2,6 @@ package com.bk.sbs.dto;
 
 import com.bk.sbs.enums.EModuleSubType;
 import com.bk.sbs.enums.EModuleType;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +21,5 @@ public class ModuleInfoDto {
     private Integer moduleLevel;
     private Integer bodyIndex;
     private Integer slotIndex;
-    private List<EModuleSubType> unlockedSubTypes;
     private Integer investedModulePoint;
 }

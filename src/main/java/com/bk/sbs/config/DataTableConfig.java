@@ -10,8 +10,6 @@ import lombok.Data;
 public class DataTableConfig {
     private String version;
 
-    private Integer maxShipsPerFleet;
-
     private Integer addShipCost;
 
     private Integer pvpListCount;

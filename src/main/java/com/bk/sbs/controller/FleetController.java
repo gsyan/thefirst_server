@@ -112,21 +112,41 @@ public class FleetController {
 
     // 모듈 레벨업
     @PostMapping("/levelup-module")
-    public ResponseEntity<ApiResponse<ModuleLevelUpResponse>> levelUpModule(
-            @RequestBody ModuleLevelUpRequest request,
+    public ResponseEntity<ApiResponse<ModuleLevelChangeResponse>> levelUpModule(
+            @RequestBody ModuleLevelChangeRequest request,
             HttpServletRequest httpRequest) {
         Long actualCharacterId = getCharacterIdFromToken(httpRequest);
-        ModuleLevelUpResponse response = fleetService.levelUpModule(actualCharacterId, request);
+        ModuleLevelChangeResponse response = fleetService.levelUpModule(actualCharacterId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
-    // 모듈 교체
-    @PostMapping("/change-module")
-    public ResponseEntity<ApiResponse<ModuleChangeResponse>> changeModule(
-            @RequestBody ModuleChangeRequest request,
+    // 모듈 레벨다운
+    @PostMapping("/leveldown-module")
+    public ResponseEntity<ApiResponse<ModuleLevelChangeResponse>> levelDownModule(
+            @RequestBody ModuleLevelChangeRequest request,
             HttpServletRequest httpRequest) {
         Long actualCharacterId = getCharacterIdFromToken(httpRequest);
-        ModuleChangeResponse response = fleetService.changeModule(actualCharacterId, request);
+        ModuleLevelChangeResponse response = fleetService.levelDownModule(actualCharacterId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    // 모듈 등급 업
+    @PostMapping("/gradeup-module")
+    public ResponseEntity<ApiResponse<ModuleGradeChangeResponse>> gradeUpModule(
+            @RequestBody ModuleGradeChangeRequest request,
+            HttpServletRequest httpRequest) {
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        ModuleGradeChangeResponse response = fleetService.gradeUpModule(actualCharacterId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    // 모듈 등급 다운
+    @PostMapping("/gradedown-module")
+    public ResponseEntity<ApiResponse<ModuleGradeChangeResponse>> gradeDownModule(
+            @RequestBody ModuleGradeChangeRequest request,
+            HttpServletRequest httpRequest) {
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        ModuleGradeChangeResponse response = fleetService.gradeDownModule(actualCharacterId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 

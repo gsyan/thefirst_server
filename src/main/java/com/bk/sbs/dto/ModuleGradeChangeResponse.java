@@ -2,21 +2,20 @@ package com.bk.sbs.dto;
 
 import com.bk.sbs.enums.EModuleSubType;
 import com.bk.sbs.enums.EModuleType;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * ModuleChangeResponse
- * Auto-generated from Unity C# ModuleChangeResponse class
+ * ModuleGradeChangeResponse
+ * Auto-generated from Unity C# ModuleGradeChangeResponse class
  */
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class ModuleChangeResponse {
+public class ModuleGradeChangeResponse {
     private Long shipId;
     private Integer bodyIndex;
     private EModuleType moduleTypeCurrent;
@@ -27,5 +26,4 @@ public class ModuleChangeResponse {
     private Integer moduleNewLevel;
     private Integer modulePointRemain;
     private Integer investedModulePoint;
-    private List<EModuleSubType> newUnlockedSubTypes;
 }

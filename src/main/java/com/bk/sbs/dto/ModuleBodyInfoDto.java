@@ -24,7 +24,6 @@ public class ModuleBodyInfoDto {
     private List<ModuleInfoDto> beams;
     private List<ModuleInfoDto> missiles;
     private List<ModuleInfoDto> hangers;
-    private List<EModuleSubType> unlockedSubTypes;
     private Integer investedModulePoint;
     private Float currentHealth;
 }
