@@ -30,10 +30,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 @Service
 public class CharacterService {
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CharacterService.class);
+    private static final Pattern NAME_PATTERN = Pattern.compile("^[a-zA-Z0-9\\uAC00-\\uD7A3]{2,16}$");
 
     private final CharacterRepository characterRepository;
     private final AccountRepository accountRepository;
@@ -80,7 +82,7 @@ public class CharacterService {
 
         // 자동 이름: 저장 후 확정된 id로 empty_+id 설정 (유니크 보장)
         if (isAutoName == true) {
-            savedCharacter.setCharacterName("empty_" + savedCharacter.getId());
+            savedCharacter.setCharacterName("commander_" + savedCharacter.getId());
             savedCharacter = characterRepository.save(savedCharacter);
         }
         log.info("createCharacter: accountId={}, characterId={}, name={}", accountId, savedCharacter.getId(), savedCharacter.getCharacterName());
@@ -153,8 +155,10 @@ public class CharacterService {
                 .build();
     }
 
-    // 이름 유효성 검사 (중복·비속어) — validate-name 엔드포인트용
+    // 이름 유효성 검사 (형식·중복·비속어) — validate-name 엔드포인트용
     public boolean validateCharacterName(String name) {
+        if (name == null || NAME_PATTERN.matcher(name).matches() == false)
+            throw new BusinessException(ServerErrorCode.CHARACTER_VALIDATE_NAME_INVALID_FORMAT);
         if (characterRepository.existsByCharacterName(name))
             throw new BusinessException(ServerErrorCode.CHARACTER_VALIDATE_NAME_DUPLICATE);
         if (ProfanityFilter.containsProfanity(name))
@@ -169,6 +173,9 @@ public class CharacterService {
 
         if (character.getNameChangeCount() <= 0)
             throw new BusinessException(ServerErrorCode.CHARACTER_RENAME_FAIL_NO_REMAINING_COUNT);
+
+        if (request.getNewName() == null || NAME_PATTERN.matcher(request.getNewName()).matches() == false)
+            throw new BusinessException(ServerErrorCode.CHARACTER_RENAME_FAIL_INVALID_NAME);
 
         if (characterRepository.existsByCharacterName(request.getNewName()))
             throw new BusinessException(ServerErrorCode.CHARACTER_RENAME_FAIL_NAME_DUPLICATE);

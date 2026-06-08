@@ -158,7 +158,7 @@ public class TestDataInitializer {
         // 3. Character
         List<Object[]> charRows = new ArrayList<>(count);
         for (int i = 0; i < count; i++)
-            charRows.add(new Object[]{accountIds.get(i), "empty_test" + String.format("%04d", i + 1), 2, now});
+            charRows.add(new Object[]{accountIds.get(i), "commander_" + (charAutoInc + i), 2, now});
         jdbc.batchUpdate(
                 "INSERT INTO `character` (account_id, character_name, mineral, deleted, date_time)" +
                 " VALUES (?, ?, ?, false, ?)",
