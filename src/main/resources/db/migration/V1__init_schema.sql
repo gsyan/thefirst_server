@@ -53,6 +53,7 @@ CREATE TABLE `character` (
     name_change_count       INT             NOT NULL DEFAULT 2,
     collect_date_time       DATETIME(6)         NULL,
     last_online_at          DATETIME(6)         NULL,
+    last_login_reward_at    DATETIME(6)         NULL,
     deleted                 TINYINT(1)      NOT NULL DEFAULT 0,
     date_time               DATETIME(6)     NOT NULL,
     PRIMARY KEY (id),
@@ -182,7 +183,6 @@ CREATE TABLE vip_subscription (
     purchase_token          VARCHAR(512)    NOT NULL,
     platform                VARCHAR(32)     NOT NULL,
     updated_at              DATETIME(6)     NOT NULL,
-    last_daily_mineral_at   DATETIME(6)         NULL,
     PRIMARY KEY (id),
     UNIQUE KEY uk_vip_character_id (character_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

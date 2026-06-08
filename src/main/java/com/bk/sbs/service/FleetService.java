@@ -944,24 +944,34 @@ public class FleetService {
             throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_INSUFFICIENT_TECH_LEVEL);
         }
 
-        // 3. max level + 직접 다음 단계 검증
+        // 3. 직접 다음 단계 검증
         if (!gameDataService.isDirectNextStep(currentModuleSubType, newModuleSubType)) {
             throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_NOT_DIRECT_NEXT_STEP);
         }
+
+        // 레벨업 비용 계산 (현재 레벨 → 맥스레벨, 이미 맥스레벨이면 0)
         int maxLevel = gameDataService.getMaxModuleLevel(currentModuleType, currentModuleSubType);
-        if (currentModule.getModuleLevel() < maxLevel) {
-            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_CURRENT_MODULE_NOT_MAX_LEVEL);
+        List<ModuleData> moduleDataList = gameDataService.getModulesByType(currentModuleType);
+        int levelUpCost = 0;
+        for (int lv = currentModule.getModuleLevel(); lv < maxLevel; lv++) {
+            final int lvFinal = lv;
+            ModuleData levelData = moduleDataList.stream()
+                    .filter(d -> d.getModuleSubType() == currentModuleSubType && d.getModuleLevel() == lvFinal)
+                    .findFirst()
+                    .orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_MODULE_NOT_FOUND));
+            levelUpCost += levelData.getModulePointCost();
         }
 
-        // 4. 비용 차감 (비관적 락)
+        // 4. 비용 차감 (레벨업 비용 + 그레이드 업 비용, 비관적 락)
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_SHIP_NOT_FOUND));
 
-        int addCost = gameDataService.getModuleResearchCost(newModuleSubType);
-        if (character.getModulePoint() < addCost) {
+        int gradeUpCost = gameDataService.getModuleResearchCost(newModuleSubType);
+        int totalCost = levelUpCost + gradeUpCost;
+        if (character.getModulePoint() < totalCost) {
             throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_INSUFFICIENT_MINERAL_RARE);
         }
-        int changeDeducted = deductModulePoint(character, addCost);
+        int changeDeducted = deductModulePoint(character, totalCost);
         characterRepository.save(character);
 
         // 5. 모듈 정보 업데이트 (서브타입 레벨 1로 초기화, 투자 이력 누적)

@@ -34,9 +34,6 @@ public class VipSubscription {
     @Column(nullable = false)
     private Instant updatedAt;
 
-    @Column(nullable = true)
-    private Instant lastDailyMineralAt;
-
     public VipSubscription(Long characterId, Instant vipExpiry, String purchaseToken, String platform) {
         this.characterId = characterId;
         this.vipExpiry = vipExpiry;

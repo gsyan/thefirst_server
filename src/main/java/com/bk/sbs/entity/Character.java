@@ -63,6 +63,9 @@ public class Character {
     // 마지막 온라인 시간 (heartbeat로 갱신, 오프라인 보상 계산용, UTC)
     private Instant lastOnlineAt;
 
+    // 마지막 일일 로그인 보상 수령 시각 (무과금+VIP 통합, 24h 쿨다운 판단용, UTC)
+    private Instant lastLoginRewardAt;
+
     @Column(nullable = false)
     private boolean deleted = false;
 

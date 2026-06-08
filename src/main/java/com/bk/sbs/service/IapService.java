@@ -45,8 +45,11 @@ public class IapService {
     @Value("${google.play.vip-product-id}")
     private String vipProductId;
 
+    @Value("${daily-mineral:1000}")
+    private int dailyMineralAmount;         // 전체 유저 공통 일일 보상
+
     @Value("${vip.daily-mineral:10000}")
-    private int dailyMineralAmount;
+    private int vipDailyMineralAmount;      // VIP 추가 보상
 
     @Value("${vip.mineral-reward-multiplier:4}")
     private int mineralRewardMultiplier;
@@ -91,7 +94,6 @@ public class IapService {
 
         // 구매 월 말일 23:59:59 UTC를 만료 시각으로 설정
         ZonedDateTime purchaseZdt = purchaseTime.atZone(ZoneOffset.UTC);
-        int purchaseDay = purchaseZdt.getDayOfMonth();
         Instant expiry = purchaseZdt.with(TemporalAdjusters.lastDayOfMonth())
                 .withHour(23).withMinute(59).withSecond(59).withNano(0).toInstant();
 
@@ -100,7 +102,6 @@ public class IapService {
             sub.setPurchaseToken(purchaseToken);
             sub.setPlatform(request.getPlatform());
             sub.setVipExpiry(expiry);
-            sub.setLastDailyMineralAt(null); // 새 달 구매 시 초기화
             sub.setUpdatedAt(Instant.now());
             vipSubscriptionRepository.save(sub);
         } else {
@@ -109,55 +110,51 @@ public class IapService {
             );
         }
 
-        // 1일~구매일(최대 28일) 분량
-        int claimableDays = Math.min(purchaseDay, 28);
-        int pendingMineralTotal = claimableDays * dailyMineralAmount;
-        log.info("[IAP] VIP 구매 완료 characterId={} expiry={} pendingMineralTotal={}", characterId, expiry, pendingMineralTotal);
-        return buildStatusResponse(expiry, pendingMineralTotal);
+        log.info("[IAP] VIP 구매 완료 characterId={} expiry={}", characterId, expiry);
+        return getVipStatus(characterId);
     }
 
     // ── VIP 상태 조회 ────────────────────────────────────────────────────────
 
     public VipStatusResponse getVipStatus(Long characterId) {
-        Optional<VipSubscription> sub = vipSubscriptionRepository.findByCharacterId(characterId);
-        if (sub.isPresent() == false) {
-            return buildStatusResponse(null);
-        }
-        VipSubscription vipSub = sub.get();
+        Character character = characterRepository.findById(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.IAP_DAILY_MINERAL_CHARACTER_NOT_FOUND));
 
-        int pendingMineralTotal = 0;
+        Optional<VipSubscription> sub = vipSubscriptionRepository.findByCharacterId(characterId);
+        Instant expiry = sub.isPresent() ? sub.get().getVipExpiry() : null;
+
         Instant now = Instant.now();
-        boolean isVip = vipSub.getVipExpiry() != null && now.isBefore(vipSub.getVipExpiry());
-        if (isVip == true) {
-            int todayInMonth = now.atZone(ZoneOffset.UTC).getDayOfMonth();
-            if (todayInMonth <= 28) {
-                Instant last = vipSub.getLastDailyMineralAt();
-                if (last == null) {
-                    // 구매 후 첫 클레임 — 월초부터 오늘까지 catch-up
-                    pendingMineralTotal = Math.min(todayInMonth, 28) * dailyMineralAmount;
-                } else if (now.isAfter(last.plusSeconds(86400))) {
-                    pendingMineralTotal = dailyMineralAmount;
+        boolean isVip = expiry != null && now.isBefore(expiry);
+        int todayInMonth = now.atZone(ZoneOffset.UTC).getDayOfMonth();
+        int pendingMineralTotal = 0;
+
+        if (todayInMonth <= 28) {
+            Instant last = character.getLastLoginRewardAt();
+            boolean canClaim = (last == null || now.isAfter(last.plusSeconds(86400)));
+            if (canClaim == true) {
+                pendingMineralTotal = dailyMineralAmount;
+                if (isVip == true) {
+                    // VIP catch-up: 첫 클레임이면 월초부터 오늘까지, 아니면 1일치
+                    int vipDays = (last == null) ? Math.min(todayInMonth, 28) : 1;
+                    pendingMineralTotal += vipDays * vipDailyMineralAmount;
                 }
             }
         }
 
-        return buildStatusResponse(vipSub.getVipExpiry(), pendingMineralTotal);
+        return buildStatusResponse(expiry, pendingMineralTotal);
     }
 
-    // ── 일일 미네랄 지급 ─────────────────────────────────────────────────────
+    // ── 일일 로그인 보상 지급 (무과금+VIP 통합) ──────────────────────────────
 
     @Transactional
     public VipDailyMineralResponse claimDailyMineral(Long characterId) {
-        VipSubscription sub = vipSubscriptionRepository.findByCharacterId(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.IAP_DAILY_MINERAL_NOT_VIP));
+        Character character = characterRepository.findByIdForUpdate(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.IAP_DAILY_MINERAL_CHARACTER_NOT_FOUND));
 
         Instant now = Instant.now();
-        boolean isVip = sub.getVipExpiry() != null && now.isBefore(sub.getVipExpiry());
-        if (isVip == false)
-            throw new BusinessException(ServerErrorCode.IAP_DAILY_MINERAL_NOT_VIP);
+        int todayInMonth = now.atZone(ZoneOffset.UTC).getDayOfMonth();
 
         // 매월 29일 이후는 클레임 불가 (2월 기준 최대 28일 통일)
-        int todayInMonth = now.atZone(ZoneOffset.UTC).getDayOfMonth();
         if (todayInMonth > 28) {
             return VipDailyMineralResponse.builder()
                     .available(false)
@@ -166,7 +163,7 @@ public class IapService {
                     .build();
         }
 
-        Instant last = sub.getLastDailyMineralAt();
+        Instant last = character.getLastLoginRewardAt();
         boolean available = (last == null || now.isAfter(last.plusSeconds(86400)));
 
         if (available == false) {
@@ -177,19 +174,22 @@ public class IapService {
                     .build();
         }
 
-        // last == null이면 월초부터 오늘까지 catch-up, 아니면 하루치
-        int grantDays = (last == null) ? Math.min(todayInMonth, 28) : 1;
-        int grantedMineral = grantDays * dailyMineralAmount;
+        // 공통 보상: 항상 1일치 (catch-up 없음)
+        int grantedMineral = dailyMineralAmount;
 
-        Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.IAP_DAILY_MINERAL_CHARACTER_NOT_FOUND));
+        // VIP 추가 보상: catch-up 적용
+        Optional<VipSubscription> sub = vipSubscriptionRepository.findByCharacterId(characterId);
+        boolean isVip = sub.isPresent() && sub.get().getVipExpiry() != null && now.isBefore(sub.get().getVipExpiry());
+        if (isVip == true) {
+            int vipDays = (last == null) ? Math.min(todayInMonth, 28) : 1;
+            grantedMineral += vipDays * vipDailyMineralAmount;
+        }
+
         character.setMineral(character.getMineral() + grantedMineral);
+        character.setLastLoginRewardAt(now);
         characterRepository.save(character);
 
-        sub.setLastDailyMineralAt(now);
-        vipSubscriptionRepository.save(sub);
-
-        log.info("[IAP] VIP 일일 미네랄 지급 characterId={} days={} amount={}", characterId, grantDays, grantedMineral);
+        log.info("[IAP] 일일 로그인 보상 characterId={} isVip={} amount={}", characterId, isVip, grantedMineral);
         return VipDailyMineralResponse.builder()
                 .available(true)
                 .grantedMineral(grantedMineral)
@@ -200,17 +200,13 @@ public class IapService {
 
     // ── 내부 메서드 ──────────────────────────────────────────────────────────
 
-    private VipStatusResponse buildStatusResponse(Instant expiry) {
-        return buildStatusResponse(expiry, 0);
-    }
-
     private VipStatusResponse buildStatusResponse(Instant expiry, int pendingMineralTotal) {
         boolean isVip = expiry != null && Instant.now().isBefore(expiry);
         String expiryStr = expiry != null ? DateTimeFormatter.ISO_INSTANT.format(expiry) : null;
         return VipStatusResponse.builder()
                 .isVip(isVip)
                 .vipExpiry(expiryStr)
-                .dailyMineralAmount(dailyMineralAmount)
+                .dailyMineralAmount(vipDailyMineralAmount)
                 .mineralRewardMultiplier(mineralRewardMultiplier)
                 .pendingMineralTotal(pendingMineralTotal)
                 .build();
