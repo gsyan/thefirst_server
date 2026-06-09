@@ -614,9 +614,9 @@ public class FleetService {
 
         List<ModuleData> moduleDataList = gameDataService.getModulesByType(moduleType);
         for (int level = request.getCurrentLevel(); level < request.getTargetLevel(); level++) {
-            final int currentLevel = level;
+            final int nextLevel = level + 1;
             ModuleData levelData = moduleDataList.stream()
-                    .filter(data -> data.getModuleLevel() == currentLevel)
+                    .filter(data -> data.getModuleLevel() == nextLevel)
                     .findFirst()
                     .orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MODULE_DATA_NOT_FOUND));
 
@@ -726,9 +726,9 @@ public class FleetService {
         int totalRefund = 0;
         List<ModuleData> moduleDataList = gameDataService.getModulesByType(moduleType);
         for (int level = request.getTargetLevel(); level < request.getCurrentLevel(); level++) {
-            final int currentLevel = level;
+            final int nextLevel = level + 1;
             ModuleData levelData = moduleDataList.stream()
-                    .filter(data -> data.getModuleLevel() == currentLevel)
+                    .filter(data -> data.getModuleLevel() == nextLevel)
                     .findFirst()
                     .orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MODULE_DATA_NOT_FOUND));
             totalRefund = totalRefund + levelData.getModulePointCost();
@@ -954,9 +954,9 @@ public class FleetService {
         List<ModuleData> moduleDataList = gameDataService.getModulesByType(currentModuleType);
         int levelUpCost = 0;
         for (int lv = currentModule.getModuleLevel(); lv < maxLevel; lv++) {
-            final int lvFinal = lv;
+            final int nextLv = lv + 1;
             ModuleData levelData = moduleDataList.stream()
-                    .filter(d -> d.getModuleSubType() == currentModuleSubType && d.getModuleLevel() == lvFinal)
+                    .filter(d -> d.getModuleSubType() == currentModuleSubType && d.getModuleLevel() == nextLv)
                     .findFirst()
                     .orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_MODULE_NOT_FOUND));
             levelUpCost += levelData.getModulePointCost();
@@ -1329,9 +1329,9 @@ public class FleetService {
         List<ModuleData> dataList = gameDataService.getModulesByType(moduleType);
         int refund = 0;
         for (int lv = 1; lv < targetLevel; lv++) {
-            final int level = lv;
+            final int nextLevel = lv + 1;
             Optional<ModuleData> entry = dataList.stream()
-                    .filter(d -> subType.equals(d.getModuleSubType()) && d.getModuleLevel() == level)
+                    .filter(d -> subType.equals(d.getModuleSubType()) && d.getModuleLevel() == nextLevel)
                     .findFirst();
             if (entry.isPresent()) refund += entry.get().getModulePointCost();
         }
@@ -1344,9 +1344,9 @@ public class FleetService {
         List<ModuleData> dataList = gameDataService.getModulesByType(moduleType);
         int refund = 0;
         for (int lv = 1; lv < maxLevel; lv++) {
-            final int level = lv;
+            final int nextLevel = lv + 1;
             Optional<ModuleData> entry = dataList.stream()
-                    .filter(d -> subType.equals(d.getModuleSubType()) && d.getModuleLevel() == level)
+                    .filter(d -> subType.equals(d.getModuleSubType()) && d.getModuleLevel() == nextLevel)
                     .findFirst();
             if (entry.isPresent()) refund += entry.get().getModulePointCost();
         }

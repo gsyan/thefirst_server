@@ -1,12 +1,6 @@
 {
   "zoneStages": [
     {
-      "zoneName": "1-0",
-      "mineralClearReward": 0,
-      "techPointClearReward": 0,
-      "modulePointClearReward": 0
-    },
-    {
       "zoneName": "1-1",
       "mineralClearReward": 10,
       "techPointClearReward": 1,
@@ -35,12 +29,6 @@
       "mineralClearReward": 14,
       "techPointClearReward": 1,
       "modulePointClearReward": 3
-    },
-    {
-      "zoneName": "2-0",
-      "mineralClearReward": 0,
-      "techPointClearReward": 0,
-      "modulePointClearReward": 0
     },
     {
       "zoneName": "2-1",
@@ -73,12 +61,6 @@
       "modulePointClearReward": 3
     },
     {
-      "zoneName": "3-0",
-      "mineralClearReward": 0,
-      "techPointClearReward": 0,
-      "modulePointClearReward": 0
-    },
-    {
       "zoneName": "3-1",
       "mineralClearReward": 30,
       "techPointClearReward": 1,
@@ -107,12 +89,6 @@
       "mineralClearReward": 34,
       "techPointClearReward": 1,
       "modulePointClearReward": 5
-    },
-    {
-      "zoneName": "4-0",
-      "mineralClearReward": 0,
-      "techPointClearReward": 0,
-      "modulePointClearReward": 0
     },
     {
       "zoneName": "4-1",
@@ -145,12 +121,6 @@
       "modulePointClearReward": 7
     },
     {
-      "zoneName": "5-0",
-      "mineralClearReward": 0,
-      "techPointClearReward": 0,
-      "modulePointClearReward": 0
-    },
-    {
       "zoneName": "5-1",
       "mineralClearReward": 50,
       "techPointClearReward": 1,
@@ -179,12 +149,6 @@
       "mineralClearReward": 54,
       "techPointClearReward": 1,
       "modulePointClearReward": 9
-    },
-    {
-      "zoneName": "6-0",
-      "mineralClearReward": 0,
-      "techPointClearReward": 0,
-      "modulePointClearReward": 0
     },
     {
       "zoneName": "6-1",
@@ -217,12 +181,6 @@
       "modulePointClearReward": 11
     },
     {
-      "zoneName": "7-0",
-      "mineralClearReward": 0,
-      "techPointClearReward": 0,
-      "modulePointClearReward": 0
-    },
-    {
       "zoneName": "7-1",
       "mineralClearReward": 70,
       "techPointClearReward": 1,
@@ -253,12 +211,6 @@
       "modulePointClearReward": 13
     },
     {
-      "zoneName": "8-0",
-      "mineralClearReward": 0,
-      "techPointClearReward": 0,
-      "modulePointClearReward": 0
-    },
-    {
       "zoneName": "8-1",
       "mineralClearReward": 80,
       "techPointClearReward": 1,
@@ -287,12 +239,6 @@
       "mineralClearReward": 84,
       "techPointClearReward": 1,
       "modulePointClearReward": 15
-    },
-    {
-      "zoneName": "9-0",
-      "mineralClearReward": 0,
-      "techPointClearReward": 0,
-      "modulePointClearReward": 0
     },
     {
       "zoneName": "9-1",

@@ -1,6 +1,5 @@
 {
   "version": "0.0.1",
-  "maxShipsPerFleet": 9,
   "addShipCost": 10,
   "pvpListCount": 3,
   "pvpListRefreshCount": 5,
