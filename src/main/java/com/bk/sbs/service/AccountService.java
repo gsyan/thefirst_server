@@ -62,6 +62,9 @@ public class AccountService {
     @Value("${google.use-firebase-auth:false}")
     private boolean useFirebaseAuth;
 
+    @Value("${test.guest-keep-data-on-logout:false}")
+    private boolean guestKeepDataOnLogout;
+
     public AccountService(PasswordEncoder passwordEncoder, JwtUtil jwtUtil,AccountRepository accountRepository, CharacterRepository characterRepository, CharacterService characterService) {
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
@@ -396,6 +399,12 @@ public class AccountService {
         Long accountId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.REFRESH_TOKEN_FAIL_ACCOUNT_NOT_FOUND));
+
+        if (guestKeepDataOnLogout == true) {
+            // 테스트 모드: 데이터 보존, 클라이언트는 GuestId만 지우고 재접속 시 새 계정 생성
+            log.info("Account data preserved (test.guest-keep-data-on-logout=true): accountId={}", accountId);
+            return;
+        }
 
         List<Character> characters = characterRepository.findByAccountId(accountId);
         for (Character character : characters) {

@@ -4,271 +4,271 @@
       "zoneName": "1-1",
       "mineralClearReward": 10,
       "techPointClearReward": 1,
-      "modulePointClearReward": 3
+      "modulePointClearReward": 10
     },
     {
       "zoneName": "1-2",
       "mineralClearReward": 11,
       "techPointClearReward": 1,
-      "modulePointClearReward": 3
+      "modulePointClearReward": 10
     },
     {
       "zoneName": "1-3",
       "mineralClearReward": 12,
       "techPointClearReward": 1,
-      "modulePointClearReward": 3
+      "modulePointClearReward": 10
     },
     {
       "zoneName": "1-4",
       "mineralClearReward": 13,
       "techPointClearReward": 1,
-      "modulePointClearReward": 3
+      "modulePointClearReward": 10
     },
     {
       "zoneName": "1-5",
       "mineralClearReward": 14,
       "techPointClearReward": 1,
-      "modulePointClearReward": 3
+      "modulePointClearReward": 10
     },
     {
       "zoneName": "2-1",
       "mineralClearReward": 20,
       "techPointClearReward": 1,
-      "modulePointClearReward": 3
+      "modulePointClearReward": 11
     },
     {
       "zoneName": "2-2",
       "mineralClearReward": 21,
       "techPointClearReward": 1,
-      "modulePointClearReward": 3
+      "modulePointClearReward": 11
     },
     {
       "zoneName": "2-3",
       "mineralClearReward": 22,
       "techPointClearReward": 1,
-      "modulePointClearReward": 3
+      "modulePointClearReward": 11
     },
     {
       "zoneName": "2-4",
       "mineralClearReward": 23,
       "techPointClearReward": 1,
-      "modulePointClearReward": 3
+      "modulePointClearReward": 11
     },
     {
       "zoneName": "2-5",
       "mineralClearReward": 24,
       "techPointClearReward": 1,
-      "modulePointClearReward": 3
+      "modulePointClearReward": 11
     },
     {
       "zoneName": "3-1",
       "mineralClearReward": 30,
       "techPointClearReward": 1,
-      "modulePointClearReward": 5
+      "modulePointClearReward": 12
     },
     {
       "zoneName": "3-2",
       "mineralClearReward": 31,
       "techPointClearReward": 1,
-      "modulePointClearReward": 5
+      "modulePointClearReward": 12
     },
     {
       "zoneName": "3-3",
       "mineralClearReward": 32,
       "techPointClearReward": 1,
-      "modulePointClearReward": 5
+      "modulePointClearReward": 12
     },
     {
       "zoneName": "3-4",
       "mineralClearReward": 33,
       "techPointClearReward": 1,
-      "modulePointClearReward": 5
+      "modulePointClearReward": 12
     },
     {
       "zoneName": "3-5",
       "mineralClearReward": 34,
       "techPointClearReward": 1,
-      "modulePointClearReward": 5
+      "modulePointClearReward": 12
     },
     {
       "zoneName": "4-1",
       "mineralClearReward": 40,
       "techPointClearReward": 1,
-      "modulePointClearReward": 7
+      "modulePointClearReward": 13
     },
     {
       "zoneName": "4-2",
       "mineralClearReward": 41,
       "techPointClearReward": 1,
-      "modulePointClearReward": 7
+      "modulePointClearReward": 13
     },
     {
       "zoneName": "4-3",
       "mineralClearReward": 42,
       "techPointClearReward": 1,
-      "modulePointClearReward": 7
+      "modulePointClearReward": 13
     },
     {
       "zoneName": "4-4",
       "mineralClearReward": 43,
       "techPointClearReward": 1,
-      "modulePointClearReward": 7
+      "modulePointClearReward": 13
     },
     {
       "zoneName": "4-5",
       "mineralClearReward": 44,
       "techPointClearReward": 1,
-      "modulePointClearReward": 7
+      "modulePointClearReward": 13
     },
     {
       "zoneName": "5-1",
       "mineralClearReward": 50,
       "techPointClearReward": 1,
-      "modulePointClearReward": 9
+      "modulePointClearReward": 14
     },
     {
       "zoneName": "5-2",
       "mineralClearReward": 51,
       "techPointClearReward": 1,
-      "modulePointClearReward": 9
+      "modulePointClearReward": 14
     },
     {
       "zoneName": "5-3",
       "mineralClearReward": 52,
       "techPointClearReward": 1,
-      "modulePointClearReward": 9
+      "modulePointClearReward": 14
     },
     {
       "zoneName": "5-4",
       "mineralClearReward": 53,
       "techPointClearReward": 1,
-      "modulePointClearReward": 9
+      "modulePointClearReward": 14
     },
     {
       "zoneName": "5-5",
       "mineralClearReward": 54,
       "techPointClearReward": 1,
-      "modulePointClearReward": 9
+      "modulePointClearReward": 14
     },
     {
       "zoneName": "6-1",
       "mineralClearReward": 60,
       "techPointClearReward": 1,
-      "modulePointClearReward": 11
+      "modulePointClearReward": 15
     },
     {
       "zoneName": "6-2",
       "mineralClearReward": 61,
       "techPointClearReward": 1,
-      "modulePointClearReward": 11
+      "modulePointClearReward": 15
     },
     {
       "zoneName": "6-3",
       "mineralClearReward": 62,
       "techPointClearReward": 1,
-      "modulePointClearReward": 11
+      "modulePointClearReward": 15
     },
     {
       "zoneName": "6-4",
       "mineralClearReward": 63,
       "techPointClearReward": 1,
-      "modulePointClearReward": 11
+      "modulePointClearReward": 15
     },
     {
       "zoneName": "6-5",
       "mineralClearReward": 64,
       "techPointClearReward": 1,
-      "modulePointClearReward": 11
+      "modulePointClearReward": 15
     },
     {
       "zoneName": "7-1",
       "mineralClearReward": 70,
       "techPointClearReward": 1,
-      "modulePointClearReward": 13
+      "modulePointClearReward": 16
     },
     {
       "zoneName": "7-2",
       "mineralClearReward": 71,
       "techPointClearReward": 1,
-      "modulePointClearReward": 13
+      "modulePointClearReward": 16
     },
     {
       "zoneName": "7-3",
       "mineralClearReward": 72,
       "techPointClearReward": 1,
-      "modulePointClearReward": 13
+      "modulePointClearReward": 16
     },
     {
       "zoneName": "7-4",
       "mineralClearReward": 73,
       "techPointClearReward": 1,
-      "modulePointClearReward": 13
+      "modulePointClearReward": 16
     },
     {
       "zoneName": "7-5",
       "mineralClearReward": 74,
       "techPointClearReward": 1,
-      "modulePointClearReward": 13
+      "modulePointClearReward": 16
     },
     {
       "zoneName": "8-1",
       "mineralClearReward": 80,
       "techPointClearReward": 1,
-      "modulePointClearReward": 15
+      "modulePointClearReward": 17
     },
     {
       "zoneName": "8-2",
       "mineralClearReward": 81,
       "techPointClearReward": 1,
-      "modulePointClearReward": 15
+      "modulePointClearReward": 17
     },
     {
       "zoneName": "8-3",
       "mineralClearReward": 82,
       "techPointClearReward": 1,
-      "modulePointClearReward": 15
+      "modulePointClearReward": 17
     },
     {
       "zoneName": "8-4",
       "mineralClearReward": 83,
       "techPointClearReward": 1,
-      "modulePointClearReward": 15
+      "modulePointClearReward": 17
     },
     {
       "zoneName": "8-5",
       "mineralClearReward": 84,
       "techPointClearReward": 1,
-      "modulePointClearReward": 15
+      "modulePointClearReward": 17
     },
     {
       "zoneName": "9-1",
       "mineralClearReward": 90,
       "techPointClearReward": 1,
-      "modulePointClearReward": 17
+      "modulePointClearReward": 18
     },
     {
       "zoneName": "9-2",
       "mineralClearReward": 91,
       "techPointClearReward": 1,
-      "modulePointClearReward": 17
+      "modulePointClearReward": 18
     },
     {
       "zoneName": "9-3",
       "mineralClearReward": 92,
       "techPointClearReward": 1,
-      "modulePointClearReward": 17
+      "modulePointClearReward": 18
     },
     {
       "zoneName": "9-4",
       "mineralClearReward": 93,
       "techPointClearReward": 1,
-      "modulePointClearReward": 17
+      "modulePointClearReward": 18
     },
     {
       "zoneName": "9-5",
       "mineralClearReward": 94,
       "techPointClearReward": 1,
-      "modulePointClearReward": 17
+      "modulePointClearReward": 18
     }
   ]
 }
