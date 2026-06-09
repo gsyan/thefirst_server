@@ -2,6 +2,12 @@
   <configuration default="false" name="server_prod" type="Application" factoryName="Application">
     <option name="ALTERNATIVE_JRE_PATH" value="C:/Program Files/Amazon Corretto/jdk21.0.8_9" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <envs>
+      <env name="JWT_SECRET" value="your-jwt-secret" />
+      <env name="DB_HOST" value="127.0.0.1" />
+      <env name="DB_USERNAME" value="root" />
+      <env name="DB_PASSWORD" value="your-db-password" />
+    </envs>
     <option name="MAIN_CLASS_NAME" value="com.bk.sbs.SbsApplication" />
     <module name="sbs.main" />
     <option name="PROGRAM_PARAMETERS" value="--spring.profiles.active=prod" />
