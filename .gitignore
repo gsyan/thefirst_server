@@ -50,10 +50,5 @@ tools/memo
 tools/sqlQuery
 /logs
 
-### Secrets — 실제 설정 파일은 커밋하지 않음 (*.example 참고)
-src/main/resources/application.properties
-src/main/resources/application-dev.properties
-src/main/resources/application-prod.properties
-
 ### IntelliJ Run Configurations — 환경변수(비밀키) 포함 가능성
 .run/*.xml

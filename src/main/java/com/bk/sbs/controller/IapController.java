@@ -1,6 +1,6 @@
 package com.bk.sbs.controller;
 
-import com.bk.sbs.dto.VipDailyMineralResponse;
+import com.bk.sbs.dto.DailyClaimResponse;
 import com.bk.sbs.dto.VipPurchaseRequest;
 import com.bk.sbs.dto.VipStatusResponse;
 import com.bk.sbs.dto.nogenerated.ApiResponse;
@@ -42,11 +42,11 @@ public class IapController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
-    // VIP 일일 미네랄 지급 요청
-    @PostMapping("/vip/daily-mineral")
-    public ResponseEntity<ApiResponse<VipDailyMineralResponse>> claimDailyMineral(HttpServletRequest httpRequest) {
+    // 일일 보상 지급 요청
+    @PostMapping("/vip/daily-reward")
+    public ResponseEntity<ApiResponse<DailyClaimResponse>> claimDailyReward(HttpServletRequest httpRequest) {
         Long characterId = getCharacterIdFromToken(httpRequest);
-        VipDailyMineralResponse response = iapService.claimDailyMineral(characterId);
+        DailyClaimResponse response = iapService.claimDailyReward(characterId);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 

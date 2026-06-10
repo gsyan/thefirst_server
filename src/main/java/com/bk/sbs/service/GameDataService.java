@@ -1,12 +1,14 @@
 package com.bk.sbs.service;
 
 import com.bk.sbs.config.DataTableConfig;
+import com.bk.sbs.config.DataTableDailyBonus;
 import com.bk.sbs.config.DataTableModule;
 import com.bk.sbs.config.DataTablePvpSeason;
 import com.bk.sbs.config.ZoneConfig;
 import com.bk.sbs.dto.ZoneConfigData;
 import com.bk.sbs.dto.ModuleData;
 import com.bk.sbs.dto.ModuleResearchData;
+import com.bk.sbs.enums.EDailyBonusTier;
 import com.bk.sbs.enums.EModuleSubType;
 import com.bk.sbs.enums.EModuleType;
 import com.bk.sbs.exception.BusinessException;
@@ -28,6 +30,7 @@ public class GameDataService {
     private DataTableConfig dataTableConfig;
     private DataTableModule dataTableModule = new DataTableModule();
     private DataTablePvpSeason dataTablePvpSeason = new DataTablePvpSeason();
+    private DataTableDailyBonus dataTableDailyBonus = new DataTableDailyBonus();
     private ZoneConfig zoneConfig = new ZoneConfig();
     // researchId → 기술레벨 전체 데이터 (비용, shipCount)
     private static class TechLevelData {
@@ -112,6 +115,17 @@ public class GameDataService {
                 log.info("DataTablePvpSeason.json loaded successfully from resources/data/");
             } else {
                 log.warn("DataTablePvpSeason.json not found in resources/data/, using default tier data");
+            }
+
+            ClassPathResource dailyBonusResource = new ClassPathResource("data/DataTableDailyBonus.json");
+            if (dailyBonusResource.exists()) {
+                String json = new String(dailyBonusResource.getInputStream().readAllBytes());
+                java.util.List<DataTableDailyBonus.DayConfig> days = objectMapper.readValue(json,
+                        objectMapper.getTypeFactory().constructCollectionType(java.util.List.class, DataTableDailyBonus.DayConfig.class));
+                dataTableDailyBonus = new DataTableDailyBonus(days);
+                log.info("DataTableDailyBonus.json loaded successfully: {}일치", days.size());
+            } else {
+                log.warn("DataTableDailyBonus.json not found in resources/data/, using fallback properties value");
             }
 
         } catch (Exception e) {
@@ -231,6 +245,16 @@ public class GameDataService {
 
     public DataTablePvpSeason getDataTablePvpSeason() {
         return dataTablePvpSeason != null ? dataTablePvpSeason : new DataTablePvpSeason();
+    }
+
+    // tier("Normal"/"VIP") 기준 day의 Mineral 보상 반환. 테이블에 없으면 -1
+    public int getDailyMineralForDay(int day, EDailyBonusTier tier) {
+        return dataTableDailyBonus.getMineralForDay(day, tier);
+    }
+
+    // fromDay~toDay 구간 VIP Mineral 합산 (catch-up용)
+    public int getVipMineralCatchup(int fromDay, int toDay) {
+        return dataTableDailyBonus.getVipMineralCatchup(fromDay, toDay);
     }
 
     public ZoneConfigData getZoneConfigByName(String zoneName) {

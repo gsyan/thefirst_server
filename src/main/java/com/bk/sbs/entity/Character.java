@@ -70,6 +70,10 @@ public class Character {
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
     private int claimedDaysMask = 0;
 
+    // VIP 보상 수령 현황 비트마스크 (bit0=1일, bit27=28일)
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int vipClaimedDaysMask = 0;
+
     // claimedDaysMask 기준 달 (yyyyMM, 새 달 판단용)
     private Integer loginRewardMonth;
 

@@ -1,0 +1,422 @@
+[
+  {
+    "day": 1,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 2,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 3,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 4,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 5,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 6,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 7,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 8,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 9,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 10,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 11,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 12,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 13,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 14,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 15,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 16,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 17,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 18,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 19,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 20,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 21,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 22,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 23,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 24,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 25,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 26,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 27,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  },
+  {
+    "day": 28,
+    "rewards": [
+      {
+        "tier": "Normal",
+        "rewardType": "Mineral",
+        "amount": 1000
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "Mineral",
+        "amount": 10000
+      }
+    ]
+  }
+]
