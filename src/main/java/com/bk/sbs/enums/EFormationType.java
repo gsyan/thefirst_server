@@ -8,6 +8,7 @@ public enum EFormationType {
     linear_horizontal,
     x_offensive,
     x_defensive,
-    circle;
+    circle,
+    cross_defensive;
 
 }

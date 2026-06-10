@@ -19,4 +19,6 @@ public class VipStatusResponse {
     private Integer dailyMineralAmount;
     private Integer mineralRewardMultiplier;
     private Integer pendingMineralTotal;
+    private Integer claimedDaysMask;
+    private Integer loginRewardMonth;
 }

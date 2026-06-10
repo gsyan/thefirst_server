@@ -125,8 +125,15 @@ public class IapService {
 
         Instant now = Instant.now();
         boolean isVip = expiry != null && now.isBefore(expiry);
-        int todayInMonth = now.atZone(ZoneOffset.UTC).getDayOfMonth();
+        ZonedDateTime nowUtc = now.atZone(ZoneOffset.UTC);
+        int todayInMonth = nowUtc.getDayOfMonth();
+        int currentMonth = nowUtc.getYear() * 100 + nowUtc.getMonthValue();
         int pendingMineralTotal = 0;
+
+        // 새 달이면 마스크 0으로 간주
+        Integer savedMonth = character.getLoginRewardMonth();
+        boolean isNewMonth = savedMonth == null || savedMonth != currentMonth;
+        int claimedMask = isNewMonth ? 0 : character.getClaimedDaysMask();
 
         if (todayInMonth <= 28) {
             Instant last = character.getLastLoginRewardAt();
@@ -134,14 +141,14 @@ public class IapService {
             if (canClaim == true) {
                 pendingMineralTotal = dailyMineralAmount;
                 if (isVip == true) {
-                    // VIP catch-up: 첫 클레임이면 월초부터 오늘까지, 아니면 1일치
-                    int vipDays = (last == null) ? Math.min(todayInMonth, 28) : 1;
+                    // VIP catch-up: 이번 달 첫 클레임이면 월초부터 오늘까지, 아니면 1일치
+                    int vipDays = isNewMonth ? Math.min(todayInMonth, 28) : 1;
                     pendingMineralTotal += vipDays * vipDailyMineralAmount;
                 }
             }
         }
 
-        return buildStatusResponse(expiry, pendingMineralTotal);
+        return buildStatusResponse(expiry, pendingMineralTotal, claimedMask, currentMonth);
     }
 
     // ── 일일 로그인 보상 지급 (무과금+VIP 통합) ──────────────────────────────
@@ -152,7 +159,9 @@ public class IapService {
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.IAP_DAILY_MINERAL_CHARACTER_NOT_FOUND));
 
         Instant now = Instant.now();
-        int todayInMonth = now.atZone(ZoneOffset.UTC).getDayOfMonth();
+        ZonedDateTime nowUtc = now.atZone(ZoneOffset.UTC);
+        int todayInMonth = nowUtc.getDayOfMonth();
+        int currentMonth = nowUtc.getYear() * 100 + nowUtc.getMonthValue();
 
         // 매월 29일 이후는 클레임 불가 (2월 기준 최대 28일 통일)
         if (todayInMonth > 28) {
@@ -174,6 +183,14 @@ public class IapService {
                     .build();
         }
 
+        // 새 달이면 마스크 초기화
+        Integer savedMonth = character.getLoginRewardMonth();
+        boolean isNewMonth = savedMonth == null || savedMonth != currentMonth;
+        if (isNewMonth == true) {
+            character.setClaimedDaysMask(0);
+            character.setLoginRewardMonth(currentMonth);
+        }
+
         // 공통 보상: 항상 1일치 (catch-up 없음)
         int grantedMineral = dailyMineralAmount;
 
@@ -181,26 +198,33 @@ public class IapService {
         Optional<VipSubscription> sub = vipSubscriptionRepository.findByCharacterId(characterId);
         boolean isVip = sub.isPresent() && sub.get().getVipExpiry() != null && now.isBefore(sub.get().getVipExpiry());
         if (isVip == true) {
-            int vipDays = (last == null) ? Math.min(todayInMonth, 28) : 1;
+            // VIP catch-up: 이번 달 첫 클레임이면 월초부터 오늘까지, 아니면 1일치
+            int vipDays = isNewMonth ? Math.min(todayInMonth, 28) : 1;
             grantedMineral += vipDays * vipDailyMineralAmount;
         }
 
+        // 오늘 날짜 비트 세팅
+        int bit = 1 << (todayInMonth - 1);
+        character.setClaimedDaysMask(character.getClaimedDaysMask() | bit);
         character.setMineral(character.getMineral() + grantedMineral);
         character.setLastLoginRewardAt(now);
         characterRepository.save(character);
 
-        log.info("[IAP] 일일 로그인 보상 characterId={} isVip={} amount={}", characterId, isVip, grantedMineral);
+        log.info("[IAP] 일일 로그인 보상 characterId={} isVip={} amount={} day={} mask={}",
+                characterId, isVip, grantedMineral, todayInMonth, character.getClaimedDaysMask());
         return VipDailyMineralResponse.builder()
                 .available(true)
                 .grantedMineral(grantedMineral)
                 .mineralRemain(character.getMineral())
                 .nextAvailableAt(DateTimeFormatter.ISO_INSTANT.format(now.plusSeconds(86400)))
+                .todayDay(todayInMonth)
+                .claimedDaysMask(character.getClaimedDaysMask())
                 .build();
     }
 
     // ── 내부 메서드 ──────────────────────────────────────────────────────────
 
-    private VipStatusResponse buildStatusResponse(Instant expiry, int pendingMineralTotal) {
+    private VipStatusResponse buildStatusResponse(Instant expiry, int pendingMineralTotal, int claimedDaysMask, int loginRewardMonth) {
         boolean isVip = expiry != null && Instant.now().isBefore(expiry);
         String expiryStr = expiry != null ? DateTimeFormatter.ISO_INSTANT.format(expiry) : null;
         return VipStatusResponse.builder()
@@ -209,6 +233,8 @@ public class IapService {
                 .dailyMineralAmount(vipDailyMineralAmount)
                 .mineralRewardMultiplier(mineralRewardMultiplier)
                 .pendingMineralTotal(pendingMineralTotal)
+                .claimedDaysMask(claimedDaysMask)
+                .loginRewardMonth(loginRewardMonth)
                 .build();
     }
 

@@ -54,6 +54,8 @@ CREATE TABLE `character` (
     collect_date_time       DATETIME(6)         NULL,
     last_online_at          DATETIME(6)         NULL,
     last_login_reward_at    DATETIME(6)         NULL,
+    claimed_days_mask       INT             NOT NULL DEFAULT 0,
+    login_reward_month      INT                 NULL,
     deleted                 TINYINT(1)      NOT NULL DEFAULT 0,
     date_time               DATETIME(6)     NOT NULL,
     PRIMARY KEY (id),

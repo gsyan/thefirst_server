@@ -66,6 +66,13 @@ public class Character {
     // 마지막 일일 로그인 보상 수령 시각 (무과금+VIP 통합, 24h 쿨다운 판단용, UTC)
     private Instant lastLoginRewardAt;
 
+    // 이번 달 수령 현황 비트마스크 (bit0=1일, bit27=28일)
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int claimedDaysMask = 0;
+
+    // claimedDaysMask 기준 달 (yyyyMM, 새 달 판단용)
+    private Integer loginRewardMonth;
+
     @Column(nullable = false)
     private boolean deleted = false;
 

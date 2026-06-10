@@ -18,4 +18,6 @@ public class VipDailyMineralResponse {
     private Integer grantedMineral;
     private Integer mineralRemain;
     private String nextAvailableAt;
+    private Integer todayDay;
+    private Integer claimedDaysMask;
 }
