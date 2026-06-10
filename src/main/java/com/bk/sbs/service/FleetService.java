@@ -535,7 +535,6 @@ public class FleetService {
         AddShipResponse response = AddShipResponse.builder()
                 .newShipInfo(convertShipToShipInfoDto(savedShip))
                 .modulePointRemain(character.getModulePoint())
-                .updatedFleetInfo(convertToDetailDto(targetFleet))
                 .build();
 
         return response;
@@ -769,15 +768,12 @@ public class FleetService {
 
         EFormationType formationType = request.getFormationType();
 
-        // 편대 정보 업데이트
         fleet.setFormation(formationType);
         fleet.setModified(LocalDateTime.now());
         fleetRepository.save(fleet);
 
-        // 업데이트된 함대 정보 반환
-        FleetInfoDto updatedFleet = convertToDetailDto(fleet);
         return ChangeFormationResponse.builder()
-                .updatedFleetInfo(updatedFleet)
+                .formation(formationType)
                 .build();
     }
 
@@ -798,7 +794,7 @@ public class FleetService {
         fleetRepository.save(fleet);
 
         return ChangeTacticOptionsResponse.builder()
-                .updatedFleetInfo(convertToDetailDto(fleet))
+                .tacticOptions(request.getTacticOptions())
                 .build();
     }
 
@@ -1246,15 +1242,9 @@ public class FleetService {
         ship.setModified(LocalDateTime.now());
         shipRepository.save(ship);
 
-        Fleet fleet = ship.getFleet();
-
-        Fleet updatedFleet = fleetRepository.findByIdAndCharacterIdAndDeletedFalse(fleet.getId(), characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.RESET_SHIP_FAIL_FLEET_NOT_FOUND));
-
         return ShipResetRemoveResponse.builder()
                 .removedShipId(request.getShipId())
                 .modulePointRemain(character.getModulePoint())
-                .updatedFleetInfo(convertToDetailDto(updatedFleet))
                 .build();
     }
 

@@ -16,5 +16,4 @@ import lombok.NoArgsConstructor;
 public class AddShipResponse {
     private ShipInfoDto newShipInfo;
     private Integer modulePointRemain;
-    private FleetInfoDto updatedFleetInfo;
 }

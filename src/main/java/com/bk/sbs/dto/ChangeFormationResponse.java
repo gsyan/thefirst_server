@@ -1,5 +1,6 @@
 package com.bk.sbs.dto;
 
+import com.bk.sbs.enums.EFormationType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,5 +15,5 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class ChangeFormationResponse {
-    private FleetInfoDto updatedFleetInfo;
+    private EFormationType formation;
 }

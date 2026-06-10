@@ -16,5 +16,4 @@ import lombok.NoArgsConstructor;
 public class ShipResetRemoveResponse {
     private Long removedShipId;
     private Integer modulePointRemain;
-    private FleetInfoDto updatedFleetInfo;
 }

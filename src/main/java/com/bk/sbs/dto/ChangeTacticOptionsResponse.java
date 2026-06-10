@@ -14,5 +14,5 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class ChangeTacticOptionsResponse {
-    private FleetInfoDto updatedFleetInfo;
+    private Integer tacticOptions;
 }
