@@ -149,6 +149,16 @@ public class GameDataService {
         return getDataTableConfig().getModuleUnlockPrice();
     }
 
+    public int getBattleRepairMineralPerSec() {
+        Integer val = getDataTableConfig().getBattleRepairMineralPerSec();
+        return val != null ? val : 1;
+    }
+
+    public int getInstantRepairBaseSecs() {
+        Integer val = getDataTableConfig().getInstantRepairBaseSecs();
+        return val != null ? val : 60;
+    }
+
     public List<ModuleData> getModulesByType(EModuleType moduleType) {
         return switch (moduleType) {
             case body -> dataTableModule.getBodyModules();

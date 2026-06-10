@@ -22,4 +22,8 @@ public class DataTableConfig {
 
     private Integer moduleUnlockPrice;
 
+    private Integer battleRepairMineralPerSec;
+
+    private Integer instantRepairBaseSecs;
+
 }

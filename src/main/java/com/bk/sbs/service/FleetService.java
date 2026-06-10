@@ -3,6 +3,7 @@ package com.bk.sbs.service;
 import com.bk.sbs.config.DataTableModule;
 import com.bk.sbs.dto.*;
 import com.bk.sbs.entity.*;
+import com.bk.sbs.entity.Character;
 import com.bk.sbs.enums.*;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
@@ -1348,6 +1349,45 @@ public class FleetService {
         return cost;
     }
 
+
+    @Transactional
+    public FleetInstantRepairResponse instantRepairFleet(Long characterId) {
+        Character character = characterRepository.findByIdForUpdate(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.FLEET_INSTANT_REPAIR_FAIL_CHARACTER_NOT_FOUND));
+
+        Fleet fleet = fleetRepository.findByCharacterIdAndIsActiveTrueAndDeletedFalse(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.FLEET_INSTANT_REPAIR_FAIL_FLEET_NOT_FOUND));
+
+        List<Ship> ships = shipRepository.findByFleetIdAndDeletedFalseOrderByPositionIndex(fleet.getId());
+        List<ModuleData> bodyDataList = gameDataService.getModulesByType(EModuleType.body);
+
+        int cost = gameDataService.getBattleRepairMineralPerSec() * gameDataService.getInstantRepairBaseSecs();
+        if (character.getMineral() < cost)
+            throw new BusinessException(ServerErrorCode.FLEET_INSTANT_REPAIR_FAIL_INSUFFICIENT_MINERAL);
+
+        character.setMineral(character.getMineral() - cost);
+        characterRepository.save(character);
+
+        // HP 전체 회복
+        for (Ship ship : ships) {
+            List<ShipModule> modules = shipModuleRepository.findByShipIdAndDeletedFalseOrderBySlotIndex(ship.getId());
+            for (ShipModule m : modules) {
+                if (m.getModuleType() != EModuleType.body) continue;
+                float maxHealth = bodyDataList.stream()
+                        .filter(d -> d.getModuleSubType() == m.getModuleSubType()
+                                && d.getModuleLevel().equals(m.getModuleLevel()))
+                        .findFirst()
+                        .map(d -> d.getHealth() != null ? d.getHealth() : 0f)
+                        .orElse(0f);
+                m.setCurrentHealth(maxHealth);
+                shipModuleRepository.save(m);
+            }
+        }
+
+        FleetInstantRepairResponse response = new FleetInstantRepairResponse();
+        response.setMineralRemain(character.getMineral());
+        return response;
+    }
 
     @Transactional
     public void saveFleetHealth(Long characterId, FleetHealthSaveRequest request) {

@@ -5,5 +5,7 @@
   "pvpListRefreshCount": 5,
   "pvpRankScoreInit": 1000,
   "pvpRankScorePenalty": 1,
-  "moduleUnlockPrice": 1
+  "moduleUnlockPrice": 1,
+  "battleRepairMineralPerSec": 1,
+  "instantRepairBaseSecs": 60
 }

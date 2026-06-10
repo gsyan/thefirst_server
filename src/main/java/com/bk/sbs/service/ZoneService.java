@@ -78,9 +78,12 @@ public class ZoneService {
         Character character = characterRepository.findById(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.ZONE_DESTROY_WAVE_FAIL_CHARACTER_NOT_FOUND));
 
-        // 클라 전투 소모 후 잔액을 서버에 반영 (클라 신뢰)
-        if (request.getMineralRemain() != null && request.getMineralRemain() >= 0) {
-            character.setMineral(request.getMineralRemain());
+        // 클라 전투 소모 후 잔액을 서버에 반영
+        if (request.getMineralRemain() != null) {
+            int mineralRemain = Math.max(0, request.getMineralRemain());
+            if (mineralRemain > character.getMineral())
+                throw new BusinessException(ServerErrorCode.ZONE_CLEAR_FAIL_MINERAL_EXCEED_SERVER);
+            character.setMineral(mineralRemain);
             characterRepository.save(character);
         }
 

@@ -200,6 +200,15 @@ public class FleetController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
+    // 즉시 함대 회복 (미네랄 소모)
+    @PostMapping("/instant-repair")
+    public ResponseEntity<ApiResponse<FleetInstantRepairResponse>> instantRepairFleet(
+            HttpServletRequest httpRequest) {
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        FleetInstantRepairResponse response = fleetService.instantRepairFleet(actualCharacterId);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
     // 함대 체력 저장
     @PostMapping("/save-health")
     public ResponseEntity<ApiResponse<Void>> saveFleetHealth(
