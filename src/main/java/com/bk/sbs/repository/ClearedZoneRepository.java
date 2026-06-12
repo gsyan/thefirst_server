@@ -15,6 +15,8 @@ public interface ClearedZoneRepository extends JpaRepository<ClearedZone, Long> 
 
     java.util.Optional<ClearedZone> findByCharacterIdAndZoneName(Long characterId, String zoneName);
 
+    List<ClearedZone> findByCharacterIdAndRewardClaimedFalse(Long characterId);
+
     @org.springframework.data.jpa.repository.Modifying
     @org.springframework.data.jpa.repository.Query("UPDATE ClearedZone cz SET cz.rewardClaimed = false, cz.clearedAt = CURRENT_TIMESTAMP WHERE cz.characterId = :characterId AND cz.zoneName = :zoneName")
     void resetRewardClaimed(@org.springframework.data.repository.query.Param("characterId") Long characterId,

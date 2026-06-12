@@ -1021,22 +1021,23 @@ public class FleetService {
 
         // 현재 서브타입 연구 비용 + 현재 레벨업 비용 + 이전 서브타입 레벨업 비용 전체 환급
         int currentLevel = currentModule.getModuleLevel();
-        int totalRefund = gameDataService.getModuleResearchCost(currentSubType)
-                + calcLevelRefundUpTo(moduleType, currentSubType, currentLevel)
-                + calcLevelRefund(moduleType, newSubType);
+        int currentGradeUpCost = gameDataService.getModuleResearchCost(currentSubType);
+        int currentGradeLevelupCost = calcLevelRefundUpTo(moduleType, currentSubType, currentLevel);
+        int targetGradeLevelupCost = calcLevelRefund(moduleType, newSubType);
+        int moduleOnlyRefund = currentGradeUpCost + currentGradeLevelupCost + targetGradeLevelupCost;
 
+        int totalRefund = moduleOnlyRefund;
         // body 다운그레이드 시 사라지는 슬롯(빔/미사일/격납고)의 포인트 환급 + 초기화
         if (moduleType == EModuleType.body) {
             totalRefund += refundAndResetLostSlots(request.getShipId(), request.getBodyIndex(), newSubType);
         }
-
         character.setModulePoint(character.getModulePoint() + totalRefund);
         characterRepository.save(character);
 
         // 이전 서브타입으로 복귀, 레벨 1로 초기화
         currentModule.setModuleSubType(newSubType);
         currentModule.setModuleLevel(1);
-        currentModule.setInvestedModulePoint(Math.max(0, currentModule.getInvestedModulePoint() - totalRefund));
+        currentModule.setInvestedModulePoint(Math.max(0, currentModule.getInvestedModulePoint() - moduleOnlyRefund));
         currentModule.setModified(LocalDateTime.now());
         shipModuleRepository.save(currentModule);
 
@@ -1070,7 +1071,6 @@ public class FleetService {
         int refund = 0;
         for (ShipModule module : allModules) {
             if (module.getModuleType() == EModuleType.body) continue;
-            if (module.getModuleSubType() == EModuleSubType.none) continue; // 이미 placeholder
 
             String key = module.getModuleType().name() + "_" + module.getSlotIndex();
             if (!supportedKeys.contains(key)) {
@@ -1431,7 +1431,9 @@ public class FleetService {
 
     @Transactional
     public void saveFleetHealth(Long characterId, FleetHealthSaveRequest request) {
-        if (request.getShips() == null) return;
+        if (request.getShips() == null) {
+            return;
+        }
 
         for (ShipHealthInfoDto shipHealth : request.getShips()) {
             Ship ship = shipRepository.findById(shipHealth.getShipId()).orElse(null);

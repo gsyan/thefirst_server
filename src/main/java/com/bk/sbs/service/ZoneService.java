@@ -157,6 +157,59 @@ public class ZoneService {
                 .build();
     }
 
+    // 재접속 시 DB에 rewardClaimed=false 남은 존 일괄 지급, mineral은 *1 고정
+    @Transactional
+    public PendingStageRewardResponse claimPendingStageRewards(Long characterId) {
+        List<ClearedZone> pending = clearedZoneRepository.findByCharacterIdAndRewardClaimedFalse(characterId);
+
+        if (pending.isEmpty()) {
+            return PendingStageRewardResponse.builder()
+                    .mineralGained(0).techPointGained(0).modulePointGained(0)
+                    .mineralRemain(0).techPointRemain(0).modulePointRemain(0).modulePointMaxGot(0)
+                    .build();
+        }
+
+        Character character = characterRepository.findByIdForUpdate(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.ZONE_DESTROY_WAVE_FAIL_CHARACTER_NOT_FOUND));
+
+        int mineralGained = 0;
+        int techPointGained = 0;
+        int modulePointGained = 0;
+
+        for (ClearedZone zone : pending) {
+            ZoneConfigData zoneConfig = gameDataService.getZoneConfigByName(zone.getZoneName());
+            if (zoneConfig == null) continue;
+
+            mineralGained += zoneConfig.getMineralClearReward();
+
+            if (zone.isFirstBonusClaimed() == false) {
+                techPointGained += zoneConfig.getTechPointClearReward();
+                modulePointGained += zoneConfig.getModulePointClearReward();
+                zone.setFirstBonusClaimed(true);
+            }
+
+            zone.setRewardClaimed(true);
+        }
+
+        character.setMineral(character.getMineral() + mineralGained);
+        character.setTechPoint(character.getTechPoint() + techPointGained);
+        character.setModulePoint(character.getModulePoint() + modulePointGained);
+        character.setModulePointMaxGot(character.getModulePointMaxGot() + modulePointGained);
+
+        clearedZoneRepository.saveAll(pending);
+        characterRepository.save(character);
+
+        return PendingStageRewardResponse.builder()
+                .mineralGained(mineralGained)
+                .techPointGained(techPointGained)
+                .modulePointGained(modulePointGained)
+                .mineralRemain(character.getMineral())
+                .techPointRemain(character.getTechPoint())
+                .modulePointRemain(character.getModulePoint())
+                .modulePointMaxGot(character.getModulePointMaxGot())
+                .build();
+    }
+
     private long computeZoneScore(String zoneName) {
         int[] p = parseZoneName(zoneName);
         return (long) p[0] * 1000 + p[1];

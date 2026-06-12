@@ -8,6 +8,8 @@ import com.bk.sbs.dto.GetStageEnemiesRequest;
 import com.bk.sbs.dto.GetStageEnemiesResponse;
 import com.bk.sbs.dto.HeartbeatRequest;
 import com.bk.sbs.dto.HeartbeatResponse;
+import com.bk.sbs.dto.PendingStageRewardRequest;
+import com.bk.sbs.dto.PendingStageRewardResponse;
 import com.bk.sbs.dto.nogenerated.ApiResponse;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
@@ -55,6 +57,15 @@ public class ZoneController {
             HttpServletRequest httpRequest) {
         Long actualCharacterId = getCharacterIdFromToken(httpRequest);
         ClaimZoneRewardResponse response = zoneService.claimZoneReward(actualCharacterId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    @PostMapping("/claim-pending-rewards")
+    public ResponseEntity<ApiResponse<PendingStageRewardResponse>> claimPendingStageRewards(
+            @RequestBody PendingStageRewardRequest request,
+            HttpServletRequest httpRequest) {
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        PendingStageRewardResponse response = zoneService.claimPendingStageRewards(actualCharacterId);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
