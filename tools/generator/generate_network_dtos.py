@@ -78,7 +78,7 @@ def extract_all_classes(csharp_content):
 def extract_fields(class_body):
     """클래스 body에서 public 필드 추출"""
     fields = []
-    field_pattern = r'public\s+((?:\w+(?:<\w+>)?(?:\[\]){0,2}\??))\s+(@?\w+);'
+    field_pattern = r'public\s+((?:\w+(?:<\w+>)?(?:\[\]){0,2}\??))\s+(@?\w+)(?:\s*=\s*[^;]+)?;'
 
     for line in class_body.split('\n'):
         stripped = line.strip()

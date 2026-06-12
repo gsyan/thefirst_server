@@ -205,6 +205,15 @@ public class GameDataService {
         return dataTableModule.getResearchCost(moduleSubType);
     }
 
+    // 특정 body subtype의 level 1 moduleSlots 반환 (다운그레이드 시 사라지는 슬롯 판별용)
+    public List<com.bk.sbs.dto.ModuleSlotInfoDto> getBodyModuleSlots(EModuleSubType bodySubType) {
+        return getModulesByType(EModuleType.body).stream()
+                .filter(m -> bodySubType.equals(m.getModuleSubType()) && m.getModuleLevel() == 1)
+                .findFirst()
+                .map(ModuleData::getModuleSlots)
+                .orElse(java.util.Collections.emptyList());
+    }
+
     // newSubType이 currentSubType의 직접 다음 단계인지 확인 (prerequisiteIds 기준)
     public boolean isDirectNextStep(EModuleSubType currentSubType, EModuleSubType newSubType) {
         List<com.bk.sbs.dto.ModuleResearchData> list = dataTableModule.getResearchDataList();

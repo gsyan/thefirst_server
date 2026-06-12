@@ -4,6 +4,8 @@ import com.bk.sbs.dto.ClearZoneStageRequest;
 import com.bk.sbs.dto.ClearZoneStageResponse;
 import com.bk.sbs.dto.ClaimZoneRewardRequest;
 import com.bk.sbs.dto.ClaimZoneRewardResponse;
+import com.bk.sbs.dto.GetStageEnemiesRequest;
+import com.bk.sbs.dto.GetStageEnemiesResponse;
 import com.bk.sbs.dto.HeartbeatRequest;
 import com.bk.sbs.dto.HeartbeatResponse;
 import com.bk.sbs.dto.nogenerated.ApiResponse;
@@ -26,6 +28,15 @@ public class ZoneController {
     public ZoneController(ZoneService zoneService, JwtUtil jwtUtil) {
         this.zoneService = zoneService;
         this.jwtUtil = jwtUtil;
+    }
+
+    @PostMapping("/get-stage-enemies")
+    public ResponseEntity<ApiResponse<GetStageEnemiesResponse>> getStageEnemies(
+            @RequestBody GetStageEnemiesRequest request,
+            HttpServletRequest httpRequest) {
+        getCharacterIdFromToken(httpRequest);
+        GetStageEnemiesResponse response = zoneService.getStageEnemies(request);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     // 웨이브 1개 처치 보고 — 킬 보상 + 클리어 판정

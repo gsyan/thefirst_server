@@ -173,6 +173,18 @@ public class ZoneService {
         }
     }
 
+    public GetStageEnemiesResponse getStageEnemies(GetStageEnemiesRequest request) {
+        String zoneName = request.getZoneName();
+        ZoneConfigData zoneConfig = gameDataService.getZoneConfigByName(zoneName);
+        if (zoneConfig == null)
+            throw new BusinessException(ServerErrorCode.ZONE_DESTROY_WAVE_FAIL_ZONE_NOT_FOUND);
+
+        return GetStageEnemiesResponse.builder()
+                .zoneName(zoneName)
+                .enemyFleet(zoneConfig.getEnemyFleet())
+                .build();
+    }
+
     @Transactional
     public HeartbeatResponse heartbeat(Long characterId) {
         Instant now = Instant.now();

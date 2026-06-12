@@ -115,15 +115,19 @@ public class FleetService {
         bodyModule.setCurrentHealth(bodyData.getHealth() != null ? bodyData.getHealth() : 0f);
         shipModuleRepository.save(bodyModule);
 
-        // 2. Beam
-//        ShipModule beamModule = new ShipModule();
-//        beamModule.setShip(defaultShip);
-//        beamModule.setModuleType(EModuleType.beam);
-//        beamModule.setModuleSubType(EModuleSubType.beam_t1_std);
-//        beamModule.setModuleLevel(beamData.getModuleLevel());
-//        beamModule.setBodyIndex(0);
-//        beamModule.setSlotIndex(0);
-//        shipModuleRepository.save(beamModule);
+        // 2. Beam (addShip과 동일하게 moduleUnlockPrice=1 투입)
+        ShipModule beamModule = new ShipModule();
+        beamModule.setShip(defaultShip);
+        beamModule.setModuleType(EModuleType.beam);
+        beamModule.setModuleSubType(EModuleSubType.beam_t1_m1);
+        beamModule.setModuleLevel(beamData.getModuleLevel());
+        beamModule.setBodyIndex(0);
+        beamModule.setSlotIndex(0);
+        beamModule.setInvestedModulePoint(1);
+        beamModule.setDeleted(false);
+        beamModule.setCreated(LocalDateTime.now());
+        beamModule.setModified(LocalDateTime.now());
+        shipModuleRepository.save(beamModule);
 
 //        // Missile
 //        ShipModule missileModule = new ShipModule();
@@ -1020,6 +1024,12 @@ public class FleetService {
         int totalRefund = gameDataService.getModuleResearchCost(currentSubType)
                 + calcLevelRefundUpTo(moduleType, currentSubType, currentLevel)
                 + calcLevelRefund(moduleType, newSubType);
+
+        // body 다운그레이드 시 사라지는 슬롯(빔/미사일/격납고)의 포인트 환급 + 초기화
+        if (moduleType == EModuleType.body) {
+            totalRefund += refundAndResetLostSlots(request.getShipId(), request.getBodyIndex(), newSubType);
+        }
+
         character.setModulePoint(character.getModulePoint() + totalRefund);
         characterRepository.save(character);
 
@@ -1042,6 +1052,36 @@ public class FleetService {
                 .modulePointRemain(character.getModulePoint())
                 .investedModulePoint(currentModule.getInvestedModulePoint())
                 .build();
+    }
+
+    // body 다운그레이드 시 새 body가 지원하지 않는 슬롯의 포인트 환급 + 초기화
+    private int refundAndResetLostSlots(Long shipId, int bodyIndex, EModuleSubType newBodySubType) {
+        List<ModuleSlotInfoDto> newBodySlots = gameDataService.getBodyModuleSlots(newBodySubType);
+
+        // 새 body가 지원하는 슬롯 키 집합 (moduleType_slotIndex)
+        java.util.Set<String> supportedKeys = new java.util.HashSet<>();
+        if (newBodySlots != null) {
+            for (ModuleSlotInfoDto slot : newBodySlots) {
+                supportedKeys.add(slot.getModuleType().name() + "_" + slot.getSlotIndex());
+            }
+        }
+
+        List<ShipModule> allModules = shipModuleRepository.findByShipIdAndBodyIndexAndDeletedFalse(shipId, bodyIndex);
+        int refund = 0;
+        for (ShipModule module : allModules) {
+            if (module.getModuleType() == EModuleType.body) continue;
+            if (module.getModuleSubType() == EModuleSubType.none) continue; // 이미 placeholder
+
+            String key = module.getModuleType().name() + "_" + module.getSlotIndex();
+            if (!supportedKeys.contains(key)) {
+                refund += module.getInvestedModulePoint();
+                module.setDeleted(true);
+                module.setInvestedModulePoint(0);
+                module.setModified(LocalDateTime.now());
+                shipModuleRepository.save(module);
+            }
+        }
+        return refund;
     }
 
     // tech_level_N 문자열 기반 연구 처리: 비용 차감 후 DB 저장, researchedIds 반환

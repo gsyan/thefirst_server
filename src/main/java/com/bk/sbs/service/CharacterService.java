@@ -75,8 +75,8 @@ public class CharacterService {
         character.setAccountId(account.getId());
         // 자동 이름 모드: 충돌 없는 UUID 임시 이름으로 저장 → 이후 empty_+id로 교체
         character.setCharacterName(isAutoName ? UUID.randomUUID().toString() : requestedName);
-        character.setModulePoint(2);        // 기본 모듈 포인트 2 지급
-        character.setModulePointMaxGot(2);  // 모듈 포인트 총량 2 반영
+        character.setModulePoint(0);        // 기본 beam unlock 1포인트 기함에 투입, 잔여 0
+        character.setModulePointMaxGot(1);  // 모듈 포인트 총 획득량 1 (beam unlock 반영)
         character.setMineral(100);          // 기본 미네랄 100 지급
         Character savedCharacter = characterRepository.save(character);
 

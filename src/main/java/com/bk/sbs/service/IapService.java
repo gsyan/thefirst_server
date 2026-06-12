@@ -25,6 +25,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -151,13 +152,20 @@ public class IapService {
                     .build();
         }
 
+        // 다음날 UTC 00:00
+        Instant nextMidnightUtc = nowUtc.withHour(0).withMinute(0).withSecond(0).withNano(0).plusDays(1).toInstant();
+
         Instant last = character.getLastLoginRewardAt();
-        boolean available = (last == null || now.isAfter(last.plusSeconds(86400)));
+        ZonedDateTime lastUtc = (last != null) ? last.atZone(ZoneOffset.UTC) : null;
+        boolean available = (lastUtc == null
+                || lastUtc.getYear() != nowUtc.getYear()
+                || lastUtc.getMonthValue() != nowUtc.getMonthValue()
+                || lastUtc.getDayOfMonth() != nowUtc.getDayOfMonth());
 
         if (available == false) {
             return DailyClaimResponse.builder()
                     .available(false)
-                    .nextAvailableAt(DateTimeFormatter.ISO_INSTANT.format(last.plusSeconds(86400)))
+                    .nextAvailableAt(DateTimeFormatter.ISO_INSTANT.format(nextMidnightUtc))
                     .todayDay(todayInMonth)
                     .claimedDaysMask(currentMask)
                     .vipClaimedDaysMask(currentVipMask)
@@ -200,7 +208,7 @@ public class IapService {
                 .available(true)
                 .grantedMineral(grantedMineral)
                 .mineralRemain(character.getMineral())
-                .nextAvailableAt(DateTimeFormatter.ISO_INSTANT.format(now.plusSeconds(86400)))
+                .nextAvailableAt(DateTimeFormatter.ISO_INSTANT.format(nextMidnightUtc))
                 .todayDay(todayInMonth)
                 .claimedDaysMask(character.getClaimedDaysMask())
                 .vipClaimedDaysMask(character.getVipClaimedDaysMask())

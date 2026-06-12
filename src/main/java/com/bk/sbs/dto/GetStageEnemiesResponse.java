@@ -6,17 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * ZoneConfigData
- * Auto-generated from Unity C# ZoneStageConfig class (server-required fields only)
+ * GetStageEnemiesResponse
+ * Auto-generated from Unity C# GetStageEnemiesResponse class
  */
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class ZoneConfigData {
+public class GetStageEnemiesResponse {
     private String zoneName;
     private FleetInfoDto enemyFleet;
-    private Integer mineralClearReward;
-    private Integer techPointClearReward;
-    private Integer modulePointClearReward;
 }

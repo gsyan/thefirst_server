@@ -32,6 +32,23 @@ def open_file_location(file_path):
         print(f"Failed to open file location: {e}")
 
 
+def cs_type_to_java(cs_type):
+    """C# 타입 → Java 타입 변환 (primitive + complex)"""
+    if cs_type in CS_TO_JAVA_TYPE:
+        return CS_TO_JAVA_TYPE[cs_type]
+    # List<T>
+    list_match = re.match(r'List<(\w+)>', cs_type)
+    if list_match:
+        return f'List<{cs_type_to_java(list_match.group(1))}>'
+    # enum (E 접두사)
+    if cs_type.startswith('E'):
+        return cs_type
+    # Request/Response는 그대로
+    if cs_type.endswith('Request') or cs_type.endswith('Response'):
+        return cs_type
+    # 그 외 복합 타입 → Dto suffix
+    return f'{cs_type}Dto'
+
 def parse_server_fields_from_csharp(cs_file_path, class_name):
     """C# 소스에서 class_name 클래스의 // [server] 마커가 붙은 public 필드를 추출"""
     with open(cs_file_path, 'r', encoding='utf-8') as f:
@@ -45,16 +62,16 @@ def parse_server_fields_from_csharp(cs_file_path, class_name):
 
     class_body = match.group(1)
 
-    # public <type> <name> ... // [server] 패턴 추출
+    # public <type> <name> ... // [server] — 모든 타입 처리
     field_pattern = re.compile(
-        r'public\s+(' + '|'.join(CS_TO_JAVA_TYPE.keys()) + r')\s+(\w+)[^;]*;\s*//\s*\[server\]',
+        r'public\s+([\w<>]+)\s+(\w+)[^;]*;\s*//\s*\[server\]',
         re.MULTILINE
     )
 
     fields = []
     for m in field_pattern.finditer(class_body):
         cs_type, field_name = m.group(1), m.group(2)
-        java_type = CS_TO_JAVA_TYPE[cs_type]
+        java_type = cs_type_to_java(cs_type)
         fields.append({'name': field_name, 'type': java_type})
 
     return fields
