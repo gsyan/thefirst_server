@@ -1,0 +1,88 @@
+// Oracle Cloud 배포 파이프라인
+// DB_CREATE / SERVER_RUN 을 독립적으로 선택 실행 가능
+pipeline {
+    agent any
+
+    parameters {
+        booleanParam(name: 'DB_CREATE', defaultValue: false, description: 'GameDB DROP+CREATE+schema.sql (오라클 서버)')
+        booleanParam(name: 'SERVER_RUN', defaultValue: true,  description: '오라클 서버에서 docker compose pull & restart')
+    }
+
+    environment {
+        IMAGE_NAME  = 'gsyan/sbs'
+        DEPLOY_HOST = '168.110.100.27'
+        DEPLOY_DIR  = '~/app'
+        DB_USER     = 'bk'
+        DB_PASS     = '12121212'
+        DB_NAME     = 'GameDB'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('DB 재생성') {
+            when {
+                expression { return params.DB_CREATE }
+            }
+            steps {
+                withCredentials([sshUserPrivateKey(
+                    credentialsId: 'DEPLOY_ORACLE',
+                    keyFileVariable: 'SSH_KEY',
+                    usernameVariable: 'SSH_USER'
+                )]) {
+                    bat """
+                        icacls "${SSH_KEY}" /inheritance:r
+                        icacls "${SSH_KEY}" /grant:r "NT AUTHORITY\\SYSTEM:(R)"
+                        icacls "${SSH_KEY}" /grant:r "BUILTIN\\Administrators:(R)"
+
+                        echo [1/4] 서버 컨테이너 중지...
+                        ssh -o StrictHostKeyChecking=no -i "${SSH_KEY}" ${SSH_USER}@${DEPLOY_HOST} "cd ${DEPLOY_DIR} && docker compose stop sbs-app && docker compose ps sbs-app"
+
+                        echo [2/4] DB DROP and CREATE...
+                        ssh -o StrictHostKeyChecking=no -i "${SSH_KEY}" ${SSH_USER}@${DEPLOY_HOST} "docker exec mariadb-server mariadb -u ${DB_USER} -p${DB_PASS} -e 'DROP DATABASE IF EXISTS ${DB_NAME}; CREATE DATABASE ${DB_NAME} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;'"
+
+                        echo [3/4] schema.sql 전송 및 실행...
+                        scp -o StrictHostKeyChecking=no -i "${SSH_KEY}" src\\main\\resources\\sql\\schema.sql ${SSH_USER}@${DEPLOY_HOST}:/tmp/schema.sql
+                        ssh -o StrictHostKeyChecking=no -i "${SSH_KEY}" ${SSH_USER}@${DEPLOY_HOST} "docker exec -i mariadb-server mariadb -u ${DB_USER} -p${DB_PASS} ${DB_NAME} < /tmp/schema.sql && rm /tmp/schema.sql"
+
+                        echo [4/4] Redis FLUSHALL...
+                        ssh -o StrictHostKeyChecking=no -i "${SSH_KEY}" ${SSH_USER}@${DEPLOY_HOST} "docker exec redis-server redis-cli FLUSHALL"
+
+                        echo DB 재생성 완료! 서버는 중지 상태. SERVER_RUN 으로 재시작 필요.
+                    """
+                }
+            }
+        }
+
+        stage('서버 재시작') {
+            when {
+                expression { return params.SERVER_RUN }
+            }
+            steps {
+                withCredentials([sshUserPrivateKey(
+                    credentialsId: 'DEPLOY_ORACLE',
+                    keyFileVariable: 'SSH_KEY',
+                    usernameVariable: 'SSH_USER'
+                )]) {
+                    bat """
+                        icacls "${SSH_KEY}" /inheritance:r
+                        icacls "${SSH_KEY}" /grant:r "NT AUTHORITY\\SYSTEM:(R)"
+                        icacls "${SSH_KEY}" /grant:r "BUILTIN\\Administrators:(R)"
+
+                        ssh -o StrictHostKeyChecking=no -i "${SSH_KEY}" ${SSH_USER}@${DEPLOY_HOST} "cd ${DEPLOY_DIR} && docker compose pull sbs-app && docker compose up -d --remove-orphans && echo '오라클 배포 성공!'"
+                    """
+                }
+            }
+        }
+    }
+
+    post {
+        failure {
+            echo '배포 실패. 각 스테이지 로그 확인'
+        }
+    }
+}
