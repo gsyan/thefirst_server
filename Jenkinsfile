@@ -44,11 +44,11 @@ pipeline {
                         ssh -o StrictHostKeyChecking=no -i "${SSH_KEY}" ${SSH_USER}@${DEPLOY_HOST} "cd ${DEPLOY_DIR} && docker compose stop sbs-app && docker compose ps sbs-app"
 
                         echo [2/4] DB DROP and CREATE...
-                        ssh -o StrictHostKeyChecking=no -i "${SSH_KEY}" ${SSH_USER}@${DEPLOY_HOST} "mysql -u ${DB_USER} -p${DB_PASS} -e 'DROP DATABASE IF EXISTS ${DB_NAME}; CREATE DATABASE ${DB_NAME} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;'"
+                        ssh -o StrictHostKeyChecking=no -i "${SSH_KEY}" ${SSH_USER}@${DEPLOY_HOST} "docker exec mariadb-server mariadb -u ${DB_USER} -p${DB_PASS} -e 'DROP DATABASE IF EXISTS ${DB_NAME}; CREATE DATABASE ${DB_NAME} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;'"
 
                         echo [3/4] schema.sql 전송 및 실행...
                         scp -o StrictHostKeyChecking=no -i "${SSH_KEY}" src\\main\\resources\\sql\\schema.sql ${SSH_USER}@${DEPLOY_HOST}:/tmp/schema.sql
-                        ssh -o StrictHostKeyChecking=no -i "${SSH_KEY}" ${SSH_USER}@${DEPLOY_HOST} "mysql -u ${DB_USER} -p${DB_PASS} ${DB_NAME} < /tmp/schema.sql && rm /tmp/schema.sql"
+                        ssh -o StrictHostKeyChecking=no -i "${SSH_KEY}" ${SSH_USER}@${DEPLOY_HOST} "docker exec -i mariadb-server mariadb -u ${DB_USER} -p${DB_PASS} ${DB_NAME} < /tmp/schema.sql && rm /tmp/schema.sql"
 
                         echo [4/4] Redis FLUSHALL...
                         ssh -o StrictHostKeyChecking=no -i "${SSH_KEY}" ${SSH_USER}@${DEPLOY_HOST} "docker exec redis-server redis-cli FLUSHALL"
