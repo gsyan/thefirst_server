@@ -407,6 +407,9 @@ public class FleetService {
                                     .bodyIndex(beamModule.getBodyIndex())
                                     .slotIndex(beamModule.getSlotIndex())
                                     .investedModulePoint(beamModule.getInvestedModulePoint())
+                                    .modulePointSubType(beamModule.getModulePointSubType())
+                                    .modulePointLevel(beamModule.getModulePointLevel())
+                                    .investedMineral(beamModule.getInvestedMineral())
                                     .build())
                             .collect(Collectors.toList());
 
@@ -419,6 +422,9 @@ public class FleetService {
                                     .bodyIndex(missileModule.getBodyIndex())
                                     .slotIndex(missileModule.getSlotIndex())
                                     .investedModulePoint(missileModule.getInvestedModulePoint())
+                                    .modulePointSubType(missileModule.getModulePointSubType())
+                                    .modulePointLevel(missileModule.getModulePointLevel())
+                                    .investedMineral(missileModule.getInvestedMineral())
                                     .build())
                             .collect(Collectors.toList());
 
@@ -431,6 +437,9 @@ public class FleetService {
                                     .bodyIndex(hangerModule.getBodyIndex())
                                     .slotIndex(hangerModule.getSlotIndex())
                                     .investedModulePoint(hangerModule.getInvestedModulePoint())
+                                    .modulePointSubType(hangerModule.getModulePointSubType())
+                                    .modulePointLevel(hangerModule.getModulePointLevel())
+                                    .investedMineral(hangerModule.getInvestedMineral())
                                     .build())
                             .collect(Collectors.toList());
 
@@ -453,6 +462,9 @@ public class FleetService {
                             .missiles(missiles)
                             .hangers(hangers)
                             .investedModulePoint(bodyModule.getInvestedModulePoint())
+                            .modulePointSubType(bodyModule.getModulePointSubType())
+                            .modulePointLevel(bodyModule.getModulePointLevel())
+                            .investedMineral(bodyModule.getInvestedMineral())
                             .currentHealth(normalizedHealth)
                             .build();
                 })
@@ -603,6 +615,11 @@ public class FleetService {
             throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MODULE_LEVEL_MISMATCH);
         }
 
+        // 미네랄 투입 시 모듈포인트 추가 투자 불가
+        if (module.getInvestedMineral() > 0) {
+            throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MINERAL_INVESTED);
+        }
+
         // 캐릭터 자원 조회 (비관적 락)
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_CHARACTER_NOT_FOUND));
@@ -639,6 +656,9 @@ public class FleetService {
         // 모듈 레벨 업데이트 (능력치는 클라이언트가 DataTable에서 조회)
         module.setModuleLevel(request.getTargetLevel());
         module.setInvestedModulePoint(module.getInvestedModulePoint() + deducted);
+        // 모듈포인트 기준값 동기화
+        module.setModulePointSubType(module.getModuleSubType());
+        module.setModulePointLevel(module.getModuleLevel());
         module.setModified(LocalDateTime.now());
         shipModuleRepository.save(module);
 
@@ -682,6 +702,11 @@ public class FleetService {
             throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MODULE_LEVEL_MISMATCH);
         }
 
+        // 미네랄 투입 시 모듈포인트 기준 조정 불가
+        if (module.getInvestedMineral() > 0) {
+            throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MINERAL_INVESTED);
+        }
+
         // 캐릭터 자원 조회 (비관적 락)
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_CHARACTER_NOT_FOUND));
@@ -706,6 +731,9 @@ public class FleetService {
             module.setModuleSubType(prevSubType);
             module.setModuleLevel(maxLevel);
             module.setInvestedModulePoint(Math.max(0, module.getInvestedModulePoint() - totalRefund));
+            // 모듈포인트 기준값 동기화
+            module.setModulePointSubType(prevSubType);
+            module.setModulePointLevel(maxLevel);
             module.setModified(LocalDateTime.now());
             shipModuleRepository.save(module);
 
@@ -743,6 +771,9 @@ public class FleetService {
 
         module.setModuleLevel(request.getTargetLevel());
         module.setInvestedModulePoint(Math.max(0, module.getInvestedModulePoint() - totalRefund));
+        // 모듈포인트 기준값 동기화
+        module.setModulePointSubType(module.getModuleSubType());
+        module.setModulePointLevel(module.getModuleLevel());
         module.setModified(LocalDateTime.now());
         shipModuleRepository.save(module);
 
@@ -886,6 +917,9 @@ public class FleetService {
         newModule.setModuleSubType(finalModuleSubType);
         newModule.setModuleLevel(1);
         newModule.setInvestedModulePoint(unlockDeducted);
+        // 모듈포인트 기준값 초기화
+        newModule.setModulePointSubType(finalModuleSubType);
+        newModule.setModulePointLevel(1);
         newModule.setDeleted(false);
         newModule.setCreated(LocalDateTime.now());
         newModule.setModified(LocalDateTime.now());
@@ -939,6 +973,11 @@ public class FleetService {
                 request.getSlotIndex()
         ).orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_MODULE_NOT_FOUND));
 
+        // 미네랄 투입 시 모듈포인트 기준 등급업 불가
+        if (currentModule.getInvestedMineral() > 0) {
+            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_MINERAL_INVESTED);
+        }
+
         // 4. 비용 차감 (레벨업 비용 + 그레이드 업 비용, 비관적 락)
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_SHIP_NOT_FOUND));
@@ -979,6 +1018,9 @@ public class FleetService {
         currentModule.setModuleSubType(newModuleSubType);
         currentModule.setModuleLevel(1);
         currentModule.setInvestedModulePoint(currentModule.getInvestedModulePoint() + changeDeducted);
+        // 모듈포인트 기준값 동기화
+        currentModule.setModulePointSubType(newModuleSubType);
+        currentModule.setModulePointLevel(1);
         currentModule.setModified(LocalDateTime.now());
         shipModuleRepository.save(currentModule);
 
@@ -1016,6 +1058,11 @@ public class FleetService {
                 request.getShipId(), request.getBodyIndex(), moduleType, request.getSlotIndex()
         ).orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_MODULE_NOT_FOUND));
 
+        // 미네랄 투입 시 모듈포인트 기준 등급다운 불가
+        if (currentModule.getInvestedMineral() > 0) {
+            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_MINERAL_INVESTED);
+        }
+
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_SHIP_NOT_FOUND));
 
@@ -1038,6 +1085,9 @@ public class FleetService {
         currentModule.setModuleSubType(newSubType);
         currentModule.setModuleLevel(1);
         currentModule.setInvestedModulePoint(Math.max(0, currentModule.getInvestedModulePoint() - moduleOnlyRefund));
+        // 모듈포인트 기준값 동기화
+        currentModule.setModulePointSubType(newSubType);
+        currentModule.setModulePointLevel(1);
         currentModule.setModified(LocalDateTime.now());
         shipModuleRepository.save(currentModule);
 
@@ -1328,11 +1378,524 @@ public class FleetService {
         return refund;
     }
 
+    // ─────────────────────────────────────────────────────────────────────────
+    // 전투 승리 시 미네랄 초기화 — modulePointSubType/Level 기준값으로 복원, 미네랄 소멸
+    // ─────────────────────────────────────────────────────────────────────────
+    @Transactional
+    public int resetMineralModules(Long characterId) {
+        Fleet fleet = fleetRepository.findByCharacterIdAndIsActiveTrueAndDeletedFalse(characterId)
+                .orElse(null);
+        if (fleet == null) return 0;
+
+        List<Ship> ships = shipRepository.findByFleetIdAndDeletedFalseOrderByPositionIndex(fleet.getId());
+        int totalRefund = 0;
+        for (Ship ship : ships) {
+            List<ShipModule> modules = shipModuleRepository.findByShipIdAndDeletedFalseOrderBySlotIndex(ship.getId());
+            for (ShipModule module : modules) {
+                if (module.getInvestedMineral() <= 0) continue;
+
+                totalRefund = totalRefund + module.getInvestedMineral();
+
+                EModuleSubType baseline = module.getModulePointSubType();
+                boolean mineralOnlyUnlocked = (baseline == null || baseline == EModuleSubType.none);
+                if (mineralOnlyUnlocked) {
+                    // 미네랄로만 언락된 슬롯 — soft-delete
+                    module.setDeleted(true);
+                } else {
+                    // 모듈포인트 기준값으로 복원
+                    module.setModuleSubType(baseline);
+                    module.setModuleLevel(module.getModulePointLevel());
+                }
+                module.setInvestedMineral(0);
+                module.setModified(LocalDateTime.now());
+                shipModuleRepository.save(module);
+            }
+        }
+        return totalRefund;
+    }
+
     private int deductTechPoint(com.bk.sbs.entity.Character character, int cost) {
         character.setTechPoint(character.getTechPoint() - cost);
         return cost;
     }
 
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // 미네랄 모듈 강화 API (미네랄 소모, 전투 승리 시 자동 초기화)
+    // modulePointSubType/Level은 변경하지 않음 — 모듈포인트 기준값 보존
+    // ─────────────────────────────────────────────────────────────────────────
+
+    @Transactional
+    public MineralModuleUnlockResponse mineralUnlockModule(Long characterId, MineralModuleUnlockRequest request) {
+        Ship ship = shipRepository.findById(request.getShipId())
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_SHIP_NOT_FOUND));
+
+        if (ship.getFleet().getCharacterId().equals(characterId) == false) {
+            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_FLEET_ACCESS_DENIED);
+        }
+
+        EModuleType moduleType = request.getModuleType();
+
+        Optional<ShipModule> existingModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
+                request.getShipId(), request.getBodyIndex(), moduleType, request.getSlotIndex()
+        );
+        if (existingModule.isPresent()) {
+            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_ALREADY_UNLOCKED);
+        }
+
+        // body 모듈 찾기 + 슬롯 유효성 확인
+        ShipModule bodyModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
+                request.getShipId(), request.getBodyIndex(), EModuleType.body, 0
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_BODY_MODULE_NOT_FOUND));
+
+        List<ModuleData> bodyDataList = gameDataService.getModulesByType(EModuleType.body);
+        ModuleData bodyData = bodyDataList.stream()
+                .filter(d -> d.getModuleSubType() == bodyModule.getModuleSubType()
+                        && d.getModuleLevel().equals(bodyModule.getModuleLevel()))
+                .findFirst()
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_BODY_DATA_NOT_FOUND));
+
+        ModuleSlotInfoDto slotInfo = bodyData.getModuleSlots().stream()
+                .filter(s -> s.getModuleType() == moduleType && s.getSlotIndex().equals(request.getSlotIndex()))
+                .findFirst()
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_SLOT_INDEX_OUT_OF_BOUNDS));
+
+        if (slotInfo.getModuleType() != moduleType) {
+            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_INVALID_MODULE_TYPE);
+        }
+
+        com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_CHARACTER_NOT_FOUND));
+
+        int unlockCost = gameDataService.getDataTableConfig().getModuleUnlockPrice();
+        if (character.getMineral() < unlockCost) {
+            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_INSUFFICIENT_MINERAL);
+        }
+
+        character.setMineral(character.getMineral() - unlockCost);
+        characterRepository.save(character);
+
+        int defaultSubTypeValue = moduleType.getValue() * 10000 + 101;
+        EModuleSubType finalModuleSubType = EModuleSubType.fromValue(defaultSubTypeValue);
+
+        ShipModule newModule = new ShipModule();
+        newModule.setShip(ship);
+        newModule.setBodyIndex(request.getBodyIndex());
+        newModule.setSlotIndex(request.getSlotIndex());
+        newModule.setModuleType(moduleType);
+        newModule.setModuleSubType(finalModuleSubType);
+        newModule.setModuleLevel(1);
+        newModule.setInvestedMineral(unlockCost);
+        // modulePointSubType/Level은 none/0 유지 (모듈포인트 기준 없음)
+        newModule.setDeleted(false);
+        newModule.setCreated(LocalDateTime.now());
+        newModule.setModified(LocalDateTime.now());
+        shipModuleRepository.save(newModule);
+
+        return MineralModuleUnlockResponse.builder()
+                .shipId(request.getShipId())
+                .bodyIndex(request.getBodyIndex())
+                .moduleType(moduleType)
+                .moduleSubType(finalModuleSubType)
+                .slotIndex(request.getSlotIndex())
+                .mineralRemain(character.getMineral())
+                .investedMineral(newModule.getInvestedMineral())
+                .build();
+    }
+
+    @Transactional
+    public MineralModuleLevelChangeResponse mineralLevelUpModule(Long characterId, MineralModuleLevelChangeRequest request) {
+        Ship ship = shipRepository.findById(request.getShipId())
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_SHIP_NOT_FOUND));
+
+        if (ship.getFleet().getCharacterId().equals(characterId) == false) {
+            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_FLEET_ACCESS_DENIED);
+        }
+
+        EModuleType moduleType = request.getModuleType();
+        EModuleSubType moduleSubType = request.getModuleSubType();
+
+        ShipModule module = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
+                request.getShipId(), request.getBodyIndex(), moduleType, request.getSlotIndex()
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_MODULE_NOT_FOUND));
+
+        if (module.getModuleLevel() != request.getCurrentLevel()) {
+            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_LEVEL_MISMATCH);
+        }
+
+        // 미네랄 비용 계산 (mineralCost 사용)
+        int totalCost = 0;
+        List<ModuleData> moduleDataList = gameDataService.getModulesByType(moduleType);
+        for (int level = request.getCurrentLevel(); level < request.getTargetLevel(); level++) {
+            final int nextLevel = level + 1;
+            ModuleData levelData = moduleDataList.stream()
+                    .filter(d -> d.getModuleSubType() == moduleSubType && d.getModuleLevel() == nextLevel)
+                    .findFirst()
+                    .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_MODULE_DATA_NOT_FOUND));
+            int stepCost = levelData.getMineralCost() != null ? levelData.getMineralCost() : 0;
+            totalCost = totalCost + stepCost;
+        }
+
+        com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_CHARACTER_NOT_FOUND));
+
+        if (character.getMineral() < totalCost) {
+            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_INSUFFICIENT_MINERAL);
+        }
+
+        character.setMineral(character.getMineral() - totalCost);
+        characterRepository.save(character);
+
+        module.setModuleLevel(request.getTargetLevel());
+        module.setInvestedMineral(module.getInvestedMineral() + totalCost);
+        module.setModified(LocalDateTime.now());
+        shipModuleRepository.save(module);
+
+        return MineralModuleLevelChangeResponse.builder()
+                .shipId(request.getShipId())
+                .bodyIndex(request.getBodyIndex())
+                .moduleType(moduleType)
+                .moduleSubType(moduleSubType)
+                .slotIndex(module.getSlotIndex())
+                .newLevel(module.getModuleLevel())
+                .mineralRemain(character.getMineral())
+                .investedMineral(module.getInvestedMineral())
+                .build();
+    }
+
+    @Transactional
+    public MineralModuleLevelChangeResponse mineralLevelDownModule(Long characterId, MineralModuleLevelChangeRequest request) {
+        Ship ship = shipRepository.findById(request.getShipId())
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_SHIP_NOT_FOUND));
+
+        if (ship.getFleet().getCharacterId().equals(characterId) == false) {
+            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_FLEET_ACCESS_DENIED);
+        }
+
+        EModuleType moduleType = request.getModuleType();
+        EModuleSubType moduleSubType = request.getModuleSubType();
+
+        ShipModule module = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
+                request.getShipId(), request.getBodyIndex(), moduleType, request.getSlotIndex()
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_MODULE_NOT_FOUND));
+
+        if (module.getModuleLevel() != request.getCurrentLevel()) {
+            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_LEVEL_MISMATCH);
+        }
+
+        if (request.getTargetLevel() < 1 || request.getTargetLevel() >= request.getCurrentLevel()) {
+            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_LEVEL_MISMATCH);
+        }
+
+        // 모듈포인트 기준 레벨 아래로 다운 불가
+        int baselineLevel = module.getModulePointLevel();
+        if (request.getTargetLevel() < baselineLevel) {
+            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_BELOW_POINT_BASELINE);
+        }
+
+        // 환급 계산 (mineralCost 사용)
+        int totalRefund = 0;
+        List<ModuleData> moduleDataList = gameDataService.getModulesByType(moduleType);
+        for (int level = request.getTargetLevel(); level < request.getCurrentLevel(); level++) {
+            final int nextLevel = level + 1;
+            ModuleData levelData = moduleDataList.stream()
+                    .filter(d -> d.getModuleSubType() == moduleSubType && d.getModuleLevel() == nextLevel)
+                    .findFirst()
+                    .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_MODULE_DATA_NOT_FOUND));
+            int stepRefund = levelData.getMineralCost() != null ? levelData.getMineralCost() : 0;
+            totalRefund = totalRefund + stepRefund;
+        }
+
+        com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_CHARACTER_NOT_FOUND));
+
+        character.setMineral(character.getMineral() + totalRefund);
+        characterRepository.save(character);
+
+        module.setModuleLevel(request.getTargetLevel());
+        module.setInvestedMineral(Math.max(0, module.getInvestedMineral() - totalRefund));
+        module.setModified(LocalDateTime.now());
+        shipModuleRepository.save(module);
+
+        return MineralModuleLevelChangeResponse.builder()
+                .shipId(request.getShipId())
+                .bodyIndex(request.getBodyIndex())
+                .moduleType(moduleType)
+                .moduleSubType(moduleSubType)
+                .slotIndex(module.getSlotIndex())
+                .newLevel(module.getModuleLevel())
+                .mineralRemain(character.getMineral())
+                .investedMineral(module.getInvestedMineral())
+                .build();
+    }
+
+    @Transactional
+    public MineralModuleGradeChangeResponse mineralGradeUpModule(Long characterId, MineralModuleGradeChangeRequest request) {
+        Ship ship = shipRepository.findById(request.getShipId())
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_SHIP_NOT_FOUND));
+
+        if (ship.getFleet().getCharacterId().equals(characterId) == false) {
+            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_FLEET_ACCESS_DENIED);
+        }
+
+        EModuleType moduleType = request.getModuleType();
+        EModuleSubType currentSubType = request.getModuleSubTypeCurrent();
+        EModuleSubType newSubType = request.getModuleSubTypeNew();
+
+        if (currentSubType == newSubType) {
+            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_SAME_MODULE);
+        }
+
+        ShipModule currentModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
+                request.getShipId(), request.getBodyIndex(), moduleType, request.getSlotIndex()
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_MODULE_NOT_FOUND));
+
+        if (gameDataService.isDirectNextStep(currentSubType, newSubType) == false) {
+            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_NOT_DIRECT_NEXT_STEP);
+        }
+
+        com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_CHARACTER_NOT_FOUND));
+
+        // 기술레벨 검증
+        int requiredTechTier = (newSubType.getValue() / 100) % 100;
+        if (character.getTechLevel() < requiredTechTier) {
+            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_INSUFFICIENT_TECH_LEVEL);
+        }
+
+        // 비용: 현재 레벨→맥스레벨 mineralCost 합산 + 연구비(pointCost)를 미네랄로
+        int maxLevel = gameDataService.getMaxModuleLevel(moduleType, currentSubType);
+        List<ModuleData> moduleDataList = gameDataService.getModulesByType(moduleType);
+        int levelUpCost = 0;
+        for (int lv = currentModule.getModuleLevel(); lv < maxLevel; lv++) {
+            final int nextLv = lv + 1;
+            ModuleData levelData = moduleDataList.stream()
+                    .filter(d -> d.getModuleSubType() == currentSubType && d.getModuleLevel() == nextLv)
+                    .findFirst()
+                    .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_MODULE_DATA_NOT_FOUND));
+            int stepCost = levelData.getMineralCost() != null ? levelData.getMineralCost() : 0;
+            levelUpCost = levelUpCost + stepCost;
+        }
+
+        // 연구비는 pointCost와 동일한 값을 미네랄로 소모
+        int gradeUpCost = gameDataService.getModuleResearchCost(newSubType);
+        int totalCost = levelUpCost + gradeUpCost;
+
+        if (character.getMineral() < totalCost) {
+            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_INSUFFICIENT_MINERAL);
+        }
+
+        character.setMineral(character.getMineral() - totalCost);
+        characterRepository.save(character);
+
+        currentModule.setModuleSubType(newSubType);
+        currentModule.setModuleLevel(1);
+        currentModule.setInvestedMineral(currentModule.getInvestedMineral() + totalCost);
+        // modulePointSubType/Level 변경 없음 — 모듈포인트 기준값 보존
+        currentModule.setModified(LocalDateTime.now());
+        shipModuleRepository.save(currentModule);
+
+        return MineralModuleGradeChangeResponse.builder()
+                .shipId(request.getShipId())
+                .bodyIndex(request.getBodyIndex())
+                .moduleTypeCurrent(moduleType)
+                .moduleSubTypeCurrent(currentSubType)
+                .moduleTypeNew(moduleType)
+                .moduleSubTypeNew(newSubType)
+                .slotIndex(request.getSlotIndex())
+                .moduleNewLevel(1)
+                .mineralRemain(character.getMineral())
+                .investedMineral(currentModule.getInvestedMineral())
+                .build();
+    }
+
+    @Transactional
+    public MineralModuleGradeChangeResponse mineralGradeDownModule(Long characterId, MineralModuleGradeChangeRequest request) {
+        Ship ship = shipRepository.findById(request.getShipId())
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_SHIP_NOT_FOUND));
+
+        if (ship.getFleet().getCharacterId().equals(characterId) == false) {
+            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_FLEET_ACCESS_DENIED);
+        }
+
+        EModuleType moduleType = request.getModuleType();
+        EModuleSubType currentSubType = request.getModuleSubTypeCurrent();
+        EModuleSubType newSubType = request.getModuleSubTypeNew();
+
+        if (newSubType.getValue() >= currentSubType.getValue()) {
+            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_SAME_MODULE);
+        }
+
+        ShipModule currentModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
+                request.getShipId(), request.getBodyIndex(), moduleType, request.getSlotIndex()
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_MODULE_NOT_FOUND));
+
+        // 모듈포인트 기준 등급 아래로 다운 불가
+        EModuleSubType baselineSubType = currentModule.getModulePointSubType();
+        if (baselineSubType != null && baselineSubType != EModuleSubType.none
+                && newSubType.getValue() < baselineSubType.getValue()) {
+            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_BELOW_POINT_BASELINE);
+        }
+
+        com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_CHARACTER_NOT_FOUND));
+
+        // 환급: 현재 등급 연구비 + 현재 레벨업 비용 + 이전 등급 최대레벨업 비용
+        int currentGradeUpCost = gameDataService.getModuleResearchCost(currentSubType);
+        int currentGradeLevelupCost = calcMineralLevelRefundUpTo(moduleType, currentSubType, currentModule.getModuleLevel());
+        int targetGradeLevelupCost = calcMineralLevelRefund(moduleType, newSubType);
+        int moduleOnlyRefund = currentGradeUpCost + currentGradeLevelupCost + targetGradeLevelupCost;
+
+        int totalRefund = moduleOnlyRefund;
+        // body 다운그레이드 시 사라지는 슬롯의 미네랄 환급
+        if (moduleType == EModuleType.body) {
+            totalRefund = totalRefund + mineralRefundAndResetLostSlots(request.getShipId(), request.getBodyIndex(), newSubType, character);
+        }
+
+        character.setMineral(character.getMineral() + totalRefund);
+        characterRepository.save(character);
+
+        currentModule.setModuleSubType(newSubType);
+        currentModule.setModuleLevel(1);
+        currentModule.setInvestedMineral(Math.max(0, currentModule.getInvestedMineral() - moduleOnlyRefund));
+        // modulePointSubType/Level 변경 없음 — 모듈포인트 기준값 보존
+        currentModule.setModified(LocalDateTime.now());
+        shipModuleRepository.save(currentModule);
+
+        return MineralModuleGradeChangeResponse.builder()
+                .shipId(request.getShipId())
+                .bodyIndex(request.getBodyIndex())
+                .moduleTypeCurrent(moduleType)
+                .moduleSubTypeCurrent(currentSubType)
+                .moduleTypeNew(moduleType)
+                .moduleSubTypeNew(newSubType)
+                .slotIndex(request.getSlotIndex())
+                .moduleNewLevel(1)
+                .mineralRemain(character.getMineral())
+                .investedMineral(currentModule.getInvestedMineral())
+                .build();
+    }
+
+    @Transactional
+    public MineralModuleResetResponse mineralResetModule(Long characterId, MineralModuleResetRequest request) {
+        Ship ship = shipRepository.findById(request.getShipId())
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_SHIP_NOT_FOUND));
+
+        if (ship.getFleet().getCharacterId().equals(characterId) == false) {
+            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_FLEET_ACCESS_DENIED);
+        }
+
+        ShipModule currentModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
+                request.getShipId(), request.getBodyIndex(), request.getModuleType(), request.getSlotIndex()
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_MODULE_NOT_FOUND));
+
+        if (currentModule.getInvestedMineral() <= 0) {
+            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_NO_MINERAL_INVESTED);
+        }
+
+        com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_CHARACTER_NOT_FOUND));
+
+        int refund = currentModule.getInvestedMineral();
+        character.setMineral(character.getMineral() + refund);
+        characterRepository.save(character);
+
+        EModuleSubType baselineSubType = currentModule.getModulePointSubType();
+        boolean isModuleRemoved = (baselineSubType == null || baselineSubType == EModuleSubType.none);
+
+        EModuleSubType resultSubType;
+        int resultLevel;
+        if (isModuleRemoved == true) {
+            // 미네랄로만 언락된 모듈 → 완전 삭제
+            currentModule.setDeleted(true);
+            currentModule.setInvestedMineral(0);
+            currentModule.setModified(LocalDateTime.now());
+            shipModuleRepository.save(currentModule);
+            resultSubType = EModuleSubType.none;
+            resultLevel = 0;
+        } else {
+            // 모듈포인트 기준값으로 복원
+            currentModule.setModuleSubType(baselineSubType);
+            currentModule.setModuleLevel(1);
+            currentModule.setInvestedMineral(0);
+            currentModule.setModified(LocalDateTime.now());
+            shipModuleRepository.save(currentModule);
+            resultSubType = baselineSubType;
+            resultLevel = 1;
+        }
+
+        return MineralModuleResetResponse.builder()
+                .shipId(request.getShipId())
+                .bodyIndex(request.getBodyIndex())
+                .moduleType(request.getModuleType())
+                .moduleSubType(resultSubType)
+                .slotIndex(request.getSlotIndex())
+                .moduleNewLevel(resultLevel)
+                .isModuleRemoved(isModuleRemoved)
+                .mineralRemain(character.getMineral())
+                .investedMineral(0)
+                .build();
+    }
+
+    // body 미네랄 다운그레이드 시 새 body가 지원하지 않는 슬롯의 미네랄 환급 + 초기화
+    private int mineralRefundAndResetLostSlots(Long shipId, int bodyIndex,
+                                               EModuleSubType newBodySubType,
+                                               com.bk.sbs.entity.Character character) {
+        List<ModuleSlotInfoDto> newBodySlots = gameDataService.getBodyModuleSlots(newBodySubType);
+
+        java.util.Set<String> supportedKeys = new java.util.HashSet<>();
+        if (newBodySlots != null) {
+            for (ModuleSlotInfoDto slot : newBodySlots) {
+                supportedKeys.add(slot.getModuleType().name() + "_" + slot.getSlotIndex());
+            }
+        }
+
+        List<ShipModule> allModules = shipModuleRepository.findByShipIdAndBodyIndexAndDeletedFalse(shipId, bodyIndex);
+        int mineralRefund = 0;
+        int modulePointRefund = 0;
+        for (ShipModule module : allModules) {
+            if (module.getModuleType() == EModuleType.body) continue;
+
+            String key = module.getModuleType().name() + "_" + module.getSlotIndex();
+            if (supportedKeys.contains(key) == false) {
+                mineralRefund = mineralRefund + module.getInvestedMineral();
+                modulePointRefund = modulePointRefund + module.getInvestedModulePoint();
+                module.setDeleted(true);
+                module.setInvestedMineral(0);
+                module.setInvestedModulePoint(0);
+                module.setModified(LocalDateTime.now());
+                shipModuleRepository.save(module);
+            }
+        }
+        // 모듈포인트 환급도 함께 처리
+        if (modulePointRefund > 0) {
+            character.setModulePoint(character.getModulePoint() + modulePointRefund);
+        }
+        return mineralRefund;
+    }
+
+    // 미네랄 비용 기준: Lv.1~targetLevel-1 구간 mineralCost 합산
+    private int calcMineralLevelRefundUpTo(EModuleType moduleType, EModuleSubType subType, int targetLevel) {
+        List<ModuleData> dataList = gameDataService.getModulesByType(moduleType);
+        int refund = 0;
+        for (int lv = 1; lv < targetLevel; lv++) {
+            final int nextLevel = lv + 1;
+            Optional<ModuleData> entry = dataList.stream()
+                    .filter(d -> subType.equals(d.getModuleSubType()) && d.getModuleLevel() == nextLevel)
+                    .findFirst();
+            if (entry.isPresent()) {
+                int cost = entry.get().getMineralCost() != null ? entry.get().getMineralCost() : 0;
+                refund = refund + cost;
+            }
+        }
+        return refund;
+    }
+
+    // 미네랄 비용 기준: Lv.1~maxLevel-1 구간 mineralCost 합산
+    private int calcMineralLevelRefund(EModuleType moduleType, EModuleSubType subType) {
+        int maxLevel = gameDataService.getMaxModuleLevel(moduleType, subType);
+        return calcMineralLevelRefundUpTo(moduleType, subType, maxLevel);
+    }
 
     @Transactional
     public FleetInstantRepairResponse instantRepairFleet(Long characterId) {

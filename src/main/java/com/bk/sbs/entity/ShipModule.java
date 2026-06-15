@@ -41,6 +41,18 @@ public class ShipModule {
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
     private int investedModulePoint = 0;
 
+    // 모듈포인트 기준값 — 미네랄 초기화 시 이 값으로 복귀
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "VARCHAR(50) DEFAULT 'none'")
+    private EModuleSubType modulePointSubType = EModuleSubType.none;
+
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int modulePointLevel = 0;
+
+    // 투자한 미네랄 이력 — 전투 승리 시 소모 + 초기화, 그 전까지 환급 가능
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int investedMineral = 0;
+
     // 현재 체력 (절대값). body 모듈 전용. 생성 시 maxHealth로 초기화
     @Column(nullable = false, columnDefinition = "FLOAT DEFAULT 0")
     private float currentHealth = 0f;

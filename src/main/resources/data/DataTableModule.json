@@ -8548,7 +8548,7 @@
         "moduleSubType": "beam_t1_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -8633,7 +8633,7 @@
         "moduleSubType": "beam_t1_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -8718,7 +8718,7 @@
         "moduleSubType": "beam_t1_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -8803,7 +8803,7 @@
         "moduleSubType": "beam_t1_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -8888,7 +8888,7 @@
         "moduleSubType": "beam_t1_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -8973,7 +8973,7 @@
         "moduleSubType": "beam_t1_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -9058,7 +9058,7 @@
         "moduleSubType": "beam_t1_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -9143,7 +9143,7 @@
         "moduleSubType": "beam_t1_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -9228,7 +9228,7 @@
         "moduleSubType": "beam_t1_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -9313,7 +9313,7 @@
         "moduleSubType": "beam_t1_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -9398,7 +9398,7 @@
         "moduleSubType": "beam_t2_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -9483,7 +9483,7 @@
         "moduleSubType": "beam_t2_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -9568,7 +9568,7 @@
         "moduleSubType": "beam_t2_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -9653,7 +9653,7 @@
         "moduleSubType": "beam_t2_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -9738,7 +9738,7 @@
         "moduleSubType": "beam_t2_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -9823,7 +9823,7 @@
         "moduleSubType": "beam_t2_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -9908,7 +9908,7 @@
         "moduleSubType": "beam_t2_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -9993,7 +9993,7 @@
         "moduleSubType": "beam_t2_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -10078,7 +10078,7 @@
         "moduleSubType": "beam_t2_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -10163,7 +10163,7 @@
         "moduleSubType": "beam_t2_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -10248,7 +10248,7 @@
         "moduleSubType": "beam_t3_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -10333,7 +10333,7 @@
         "moduleSubType": "beam_t3_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -10418,7 +10418,7 @@
         "moduleSubType": "beam_t3_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -10503,7 +10503,7 @@
         "moduleSubType": "beam_t3_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -10588,7 +10588,7 @@
         "moduleSubType": "beam_t3_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -10673,7 +10673,7 @@
         "moduleSubType": "beam_t3_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -10758,7 +10758,7 @@
         "moduleSubType": "beam_t3_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -10843,7 +10843,7 @@
         "moduleSubType": "beam_t3_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -10928,7 +10928,7 @@
         "moduleSubType": "beam_t3_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -11013,7 +11013,7 @@
         "moduleSubType": "beam_t3_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -11098,7 +11098,7 @@
         "moduleSubType": "beam_t4_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -11183,7 +11183,7 @@
         "moduleSubType": "beam_t4_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -11268,7 +11268,7 @@
         "moduleSubType": "beam_t4_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -11353,7 +11353,7 @@
         "moduleSubType": "beam_t4_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -11438,7 +11438,7 @@
         "moduleSubType": "beam_t4_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -11523,7 +11523,7 @@
         "moduleSubType": "beam_t4_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -11608,7 +11608,7 @@
         "moduleSubType": "beam_t4_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -11693,7 +11693,7 @@
         "moduleSubType": "beam_t4_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -11778,7 +11778,7 @@
         "moduleSubType": "beam_t4_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -11863,7 +11863,7 @@
         "moduleSubType": "beam_t4_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -11948,7 +11948,7 @@
         "moduleSubType": "beam_t5_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -12033,7 +12033,7 @@
         "moduleSubType": "beam_t5_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -12118,7 +12118,7 @@
         "moduleSubType": "beam_t5_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -12203,7 +12203,7 @@
         "moduleSubType": "beam_t5_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -12288,7 +12288,7 @@
         "moduleSubType": "beam_t5_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -12373,7 +12373,7 @@
         "moduleSubType": "beam_t5_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -12458,7 +12458,7 @@
         "moduleSubType": "beam_t5_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -12543,7 +12543,7 @@
         "moduleSubType": "beam_t5_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -12628,7 +12628,7 @@
         "moduleSubType": "beam_t5_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -12713,7 +12713,7 @@
         "moduleSubType": "beam_t5_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -12798,7 +12798,7 @@
         "moduleSubType": "beam_t6_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -12883,7 +12883,7 @@
         "moduleSubType": "beam_t6_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -12968,7 +12968,7 @@
         "moduleSubType": "beam_t6_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -13053,7 +13053,7 @@
         "moduleSubType": "beam_t6_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -13138,7 +13138,7 @@
         "moduleSubType": "beam_t6_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -13223,7 +13223,7 @@
         "moduleSubType": "beam_t6_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -13308,7 +13308,7 @@
         "moduleSubType": "beam_t6_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -13393,7 +13393,7 @@
         "moduleSubType": "beam_t6_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -13478,7 +13478,7 @@
         "moduleSubType": "beam_t6_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -13563,7 +13563,7 @@
         "moduleSubType": "beam_t6_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -13648,7 +13648,7 @@
         "moduleSubType": "beam_t7_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -13733,7 +13733,7 @@
         "moduleSubType": "beam_t7_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -13818,7 +13818,7 @@
         "moduleSubType": "beam_t7_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -13903,7 +13903,7 @@
         "moduleSubType": "beam_t7_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -13988,7 +13988,7 @@
         "moduleSubType": "beam_t7_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -14073,7 +14073,7 @@
         "moduleSubType": "beam_t7_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -14158,7 +14158,7 @@
         "moduleSubType": "beam_t7_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -14243,7 +14243,7 @@
         "moduleSubType": "beam_t7_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -14328,7 +14328,7 @@
         "moduleSubType": "beam_t7_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -14413,7 +14413,7 @@
         "moduleSubType": "beam_t7_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -14498,7 +14498,7 @@
         "moduleSubType": "beam_t8_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -14583,7 +14583,7 @@
         "moduleSubType": "beam_t8_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -14668,7 +14668,7 @@
         "moduleSubType": "beam_t8_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -14753,7 +14753,7 @@
         "moduleSubType": "beam_t8_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -14838,7 +14838,7 @@
         "moduleSubType": "beam_t8_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -14923,7 +14923,7 @@
         "moduleSubType": "beam_t8_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -15008,7 +15008,7 @@
         "moduleSubType": "beam_t8_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -15093,7 +15093,7 @@
         "moduleSubType": "beam_t8_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -15178,7 +15178,7 @@
         "moduleSubType": "beam_t8_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -15263,7 +15263,7 @@
         "moduleSubType": "beam_t8_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -15348,7 +15348,7 @@
         "moduleSubType": "beam_t9_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -15433,7 +15433,7 @@
         "moduleSubType": "beam_t9_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -15518,7 +15518,7 @@
         "moduleSubType": "beam_t9_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -15603,7 +15603,7 @@
         "moduleSubType": "beam_t9_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -15688,7 +15688,7 @@
         "moduleSubType": "beam_t9_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -15773,7 +15773,7 @@
         "moduleSubType": "beam_t9_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -15858,7 +15858,7 @@
         "moduleSubType": "beam_t9_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -15943,7 +15943,7 @@
         "moduleSubType": "beam_t9_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -16028,7 +16028,7 @@
         "moduleSubType": "beam_t9_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -16113,7 +16113,7 @@
         "moduleSubType": "beam_t9_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -16198,7 +16198,7 @@
         "moduleSubType": "beam_t10_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -16283,7 +16283,7 @@
         "moduleSubType": "beam_t10_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -16368,7 +16368,7 @@
         "moduleSubType": "beam_t10_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -16453,7 +16453,7 @@
         "moduleSubType": "beam_t10_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -16538,7 +16538,7 @@
         "moduleSubType": "beam_t10_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -16623,7 +16623,7 @@
         "moduleSubType": "beam_t10_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -16708,7 +16708,7 @@
         "moduleSubType": "beam_t10_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -16793,7 +16793,7 @@
         "moduleSubType": "beam_t10_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -16878,7 +16878,7 @@
         "moduleSubType": "beam_t10_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -16963,7 +16963,7 @@
         "moduleSubType": "beam_t10_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -17048,7 +17048,7 @@
         "moduleSubType": "beam_t11_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -17133,7 +17133,7 @@
         "moduleSubType": "beam_t11_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -17218,7 +17218,7 @@
         "moduleSubType": "beam_t11_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -17303,7 +17303,7 @@
         "moduleSubType": "beam_t11_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -17388,7 +17388,7 @@
         "moduleSubType": "beam_t11_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -17473,7 +17473,7 @@
         "moduleSubType": "beam_t11_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -17558,7 +17558,7 @@
         "moduleSubType": "beam_t11_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -17643,7 +17643,7 @@
         "moduleSubType": "beam_t11_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -17728,7 +17728,7 @@
         "moduleSubType": "beam_t11_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -17813,7 +17813,7 @@
         "moduleSubType": "beam_t11_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -17898,7 +17898,7 @@
         "moduleSubType": "beam_t12_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -17983,7 +17983,7 @@
         "moduleSubType": "beam_t12_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -18068,7 +18068,7 @@
         "moduleSubType": "beam_t12_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -18153,7 +18153,7 @@
         "moduleSubType": "beam_t12_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -18238,7 +18238,7 @@
         "moduleSubType": "beam_t12_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -18323,7 +18323,7 @@
         "moduleSubType": "beam_t12_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -18408,7 +18408,7 @@
         "moduleSubType": "beam_t12_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -18493,7 +18493,7 @@
         "moduleSubType": "beam_t12_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -18578,7 +18578,7 @@
         "moduleSubType": "beam_t12_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -18663,7 +18663,7 @@
         "moduleSubType": "beam_t12_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -18748,7 +18748,7 @@
         "moduleSubType": "beam_t13_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -18833,7 +18833,7 @@
         "moduleSubType": "beam_t13_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -18918,7 +18918,7 @@
         "moduleSubType": "beam_t13_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -19003,7 +19003,7 @@
         "moduleSubType": "beam_t13_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -19088,7 +19088,7 @@
         "moduleSubType": "beam_t13_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -19173,7 +19173,7 @@
         "moduleSubType": "beam_t13_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -19258,7 +19258,7 @@
         "moduleSubType": "beam_t13_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -19343,7 +19343,7 @@
         "moduleSubType": "beam_t13_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -19428,7 +19428,7 @@
         "moduleSubType": "beam_t13_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -19513,7 +19513,7 @@
         "moduleSubType": "beam_t13_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -19598,7 +19598,7 @@
         "moduleSubType": "beam_t14_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -19683,7 +19683,7 @@
         "moduleSubType": "beam_t14_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -19768,7 +19768,7 @@
         "moduleSubType": "beam_t14_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -19853,7 +19853,7 @@
         "moduleSubType": "beam_t14_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -19938,7 +19938,7 @@
         "moduleSubType": "beam_t14_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -20023,7 +20023,7 @@
         "moduleSubType": "beam_t14_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -20108,7 +20108,7 @@
         "moduleSubType": "beam_t14_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -20193,7 +20193,7 @@
         "moduleSubType": "beam_t14_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -20278,7 +20278,7 @@
         "moduleSubType": "beam_t14_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -20363,7 +20363,7 @@
         "moduleSubType": "beam_t14_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 0,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -20450,7 +20450,7 @@
         "moduleSubType": "missile_t1_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -20535,7 +20535,7 @@
         "moduleSubType": "missile_t1_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -20620,7 +20620,7 @@
         "moduleSubType": "missile_t1_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -20705,7 +20705,7 @@
         "moduleSubType": "missile_t1_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -20790,7 +20790,7 @@
         "moduleSubType": "missile_t1_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -20875,7 +20875,7 @@
         "moduleSubType": "missile_t1_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -20960,7 +20960,7 @@
         "moduleSubType": "missile_t1_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -21045,7 +21045,7 @@
         "moduleSubType": "missile_t1_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -21130,7 +21130,7 @@
         "moduleSubType": "missile_t1_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -21215,7 +21215,7 @@
         "moduleSubType": "missile_t1_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -21300,7 +21300,7 @@
         "moduleSubType": "missile_t2_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -21385,7 +21385,7 @@
         "moduleSubType": "missile_t2_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -21470,7 +21470,7 @@
         "moduleSubType": "missile_t2_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -21555,7 +21555,7 @@
         "moduleSubType": "missile_t2_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -21640,7 +21640,7 @@
         "moduleSubType": "missile_t2_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -21725,7 +21725,7 @@
         "moduleSubType": "missile_t2_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -21810,7 +21810,7 @@
         "moduleSubType": "missile_t2_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -21895,7 +21895,7 @@
         "moduleSubType": "missile_t2_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -21980,7 +21980,7 @@
         "moduleSubType": "missile_t2_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -22065,7 +22065,7 @@
         "moduleSubType": "missile_t2_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -22150,7 +22150,7 @@
         "moduleSubType": "missile_t3_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -22235,7 +22235,7 @@
         "moduleSubType": "missile_t3_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -22320,7 +22320,7 @@
         "moduleSubType": "missile_t3_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -22405,7 +22405,7 @@
         "moduleSubType": "missile_t3_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -22490,7 +22490,7 @@
         "moduleSubType": "missile_t3_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -22575,7 +22575,7 @@
         "moduleSubType": "missile_t3_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -22660,7 +22660,7 @@
         "moduleSubType": "missile_t3_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -22745,7 +22745,7 @@
         "moduleSubType": "missile_t3_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -22830,7 +22830,7 @@
         "moduleSubType": "missile_t3_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -22915,7 +22915,7 @@
         "moduleSubType": "missile_t3_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -23000,7 +23000,7 @@
         "moduleSubType": "missile_t4_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -23085,7 +23085,7 @@
         "moduleSubType": "missile_t4_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -23170,7 +23170,7 @@
         "moduleSubType": "missile_t4_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -23255,7 +23255,7 @@
         "moduleSubType": "missile_t4_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -23340,7 +23340,7 @@
         "moduleSubType": "missile_t4_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -23425,7 +23425,7 @@
         "moduleSubType": "missile_t4_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -23510,7 +23510,7 @@
         "moduleSubType": "missile_t4_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -23595,7 +23595,7 @@
         "moduleSubType": "missile_t4_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -23680,7 +23680,7 @@
         "moduleSubType": "missile_t4_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -23765,7 +23765,7 @@
         "moduleSubType": "missile_t4_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -23850,7 +23850,7 @@
         "moduleSubType": "missile_t5_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -23935,7 +23935,7 @@
         "moduleSubType": "missile_t5_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -24020,7 +24020,7 @@
         "moduleSubType": "missile_t5_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -24105,7 +24105,7 @@
         "moduleSubType": "missile_t5_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -24190,7 +24190,7 @@
         "moduleSubType": "missile_t5_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -24275,7 +24275,7 @@
         "moduleSubType": "missile_t5_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -24360,7 +24360,7 @@
         "moduleSubType": "missile_t5_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -24445,7 +24445,7 @@
         "moduleSubType": "missile_t5_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -24530,7 +24530,7 @@
         "moduleSubType": "missile_t5_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -24615,7 +24615,7 @@
         "moduleSubType": "missile_t5_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -24700,7 +24700,7 @@
         "moduleSubType": "missile_t6_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -24785,7 +24785,7 @@
         "moduleSubType": "missile_t6_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -24870,7 +24870,7 @@
         "moduleSubType": "missile_t6_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -24955,7 +24955,7 @@
         "moduleSubType": "missile_t6_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -25040,7 +25040,7 @@
         "moduleSubType": "missile_t6_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -25125,7 +25125,7 @@
         "moduleSubType": "missile_t6_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -25210,7 +25210,7 @@
         "moduleSubType": "missile_t6_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -25295,7 +25295,7 @@
         "moduleSubType": "missile_t6_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -25380,7 +25380,7 @@
         "moduleSubType": "missile_t6_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -25465,7 +25465,7 @@
         "moduleSubType": "missile_t6_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -25550,7 +25550,7 @@
         "moduleSubType": "missile_t7_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -25635,7 +25635,7 @@
         "moduleSubType": "missile_t7_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -25720,7 +25720,7 @@
         "moduleSubType": "missile_t7_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -25805,7 +25805,7 @@
         "moduleSubType": "missile_t7_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -25890,7 +25890,7 @@
         "moduleSubType": "missile_t7_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -25975,7 +25975,7 @@
         "moduleSubType": "missile_t7_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -26060,7 +26060,7 @@
         "moduleSubType": "missile_t7_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -26145,7 +26145,7 @@
         "moduleSubType": "missile_t7_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -26230,7 +26230,7 @@
         "moduleSubType": "missile_t7_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -26315,7 +26315,7 @@
         "moduleSubType": "missile_t7_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -26400,7 +26400,7 @@
         "moduleSubType": "missile_t8_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -26485,7 +26485,7 @@
         "moduleSubType": "missile_t8_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -26570,7 +26570,7 @@
         "moduleSubType": "missile_t8_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -26655,7 +26655,7 @@
         "moduleSubType": "missile_t8_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -26740,7 +26740,7 @@
         "moduleSubType": "missile_t8_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -26825,7 +26825,7 @@
         "moduleSubType": "missile_t8_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -26910,7 +26910,7 @@
         "moduleSubType": "missile_t8_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -26995,7 +26995,7 @@
         "moduleSubType": "missile_t8_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -27080,7 +27080,7 @@
         "moduleSubType": "missile_t8_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -27165,7 +27165,7 @@
         "moduleSubType": "missile_t8_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -27250,7 +27250,7 @@
         "moduleSubType": "missile_t9_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -27335,7 +27335,7 @@
         "moduleSubType": "missile_t9_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -27420,7 +27420,7 @@
         "moduleSubType": "missile_t9_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -27505,7 +27505,7 @@
         "moduleSubType": "missile_t9_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -27590,7 +27590,7 @@
         "moduleSubType": "missile_t9_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -27675,7 +27675,7 @@
         "moduleSubType": "missile_t9_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -27760,7 +27760,7 @@
         "moduleSubType": "missile_t9_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -27845,7 +27845,7 @@
         "moduleSubType": "missile_t9_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -27930,7 +27930,7 @@
         "moduleSubType": "missile_t9_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -28015,7 +28015,7 @@
         "moduleSubType": "missile_t9_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -28100,7 +28100,7 @@
         "moduleSubType": "missile_t10_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -28185,7 +28185,7 @@
         "moduleSubType": "missile_t10_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -28270,7 +28270,7 @@
         "moduleSubType": "missile_t10_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -28355,7 +28355,7 @@
         "moduleSubType": "missile_t10_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -28440,7 +28440,7 @@
         "moduleSubType": "missile_t10_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -28525,7 +28525,7 @@
         "moduleSubType": "missile_t10_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -28610,7 +28610,7 @@
         "moduleSubType": "missile_t10_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -28695,7 +28695,7 @@
         "moduleSubType": "missile_t10_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -28780,7 +28780,7 @@
         "moduleSubType": "missile_t10_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -28865,7 +28865,7 @@
         "moduleSubType": "missile_t10_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -28950,7 +28950,7 @@
         "moduleSubType": "missile_t11_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -29035,7 +29035,7 @@
         "moduleSubType": "missile_t11_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -29120,7 +29120,7 @@
         "moduleSubType": "missile_t11_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -29205,7 +29205,7 @@
         "moduleSubType": "missile_t11_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -29290,7 +29290,7 @@
         "moduleSubType": "missile_t11_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -29375,7 +29375,7 @@
         "moduleSubType": "missile_t11_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -29460,7 +29460,7 @@
         "moduleSubType": "missile_t11_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -29545,7 +29545,7 @@
         "moduleSubType": "missile_t11_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -29630,7 +29630,7 @@
         "moduleSubType": "missile_t11_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -29715,7 +29715,7 @@
         "moduleSubType": "missile_t11_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -29800,7 +29800,7 @@
         "moduleSubType": "missile_t12_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -29885,7 +29885,7 @@
         "moduleSubType": "missile_t12_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -29970,7 +29970,7 @@
         "moduleSubType": "missile_t12_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -30055,7 +30055,7 @@
         "moduleSubType": "missile_t12_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -30140,7 +30140,7 @@
         "moduleSubType": "missile_t12_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -30225,7 +30225,7 @@
         "moduleSubType": "missile_t12_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -30310,7 +30310,7 @@
         "moduleSubType": "missile_t12_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -30395,7 +30395,7 @@
         "moduleSubType": "missile_t12_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -30480,7 +30480,7 @@
         "moduleSubType": "missile_t12_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -30565,7 +30565,7 @@
         "moduleSubType": "missile_t12_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -30650,7 +30650,7 @@
         "moduleSubType": "missile_t13_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -30735,7 +30735,7 @@
         "moduleSubType": "missile_t13_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -30820,7 +30820,7 @@
         "moduleSubType": "missile_t13_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -30905,7 +30905,7 @@
         "moduleSubType": "missile_t13_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -30990,7 +30990,7 @@
         "moduleSubType": "missile_t13_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -31075,7 +31075,7 @@
         "moduleSubType": "missile_t13_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -31160,7 +31160,7 @@
         "moduleSubType": "missile_t13_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -31245,7 +31245,7 @@
         "moduleSubType": "missile_t13_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -31330,7 +31330,7 @@
         "moduleSubType": "missile_t13_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -31415,7 +31415,7 @@
         "moduleSubType": "missile_t13_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -31500,7 +31500,7 @@
         "moduleSubType": "missile_t14_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -31585,7 +31585,7 @@
         "moduleSubType": "missile_t14_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -31670,7 +31670,7 @@
         "moduleSubType": "missile_t14_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -31755,7 +31755,7 @@
         "moduleSubType": "missile_t14_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -31840,7 +31840,7 @@
         "moduleSubType": "missile_t14_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -31925,7 +31925,7 @@
         "moduleSubType": "missile_t14_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -32010,7 +32010,7 @@
         "moduleSubType": "missile_t14_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -32095,7 +32095,7 @@
         "moduleSubType": "missile_t14_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -32180,7 +32180,7 @@
         "moduleSubType": "missile_t14_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -32265,7 +32265,7 @@
         "moduleSubType": "missile_t14_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 5,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -32352,7 +32352,7 @@
         "moduleSubType": "hanger_t1_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -32437,7 +32437,7 @@
         "moduleSubType": "hanger_t1_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -32522,7 +32522,7 @@
         "moduleSubType": "hanger_t1_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -32607,7 +32607,7 @@
         "moduleSubType": "hanger_t1_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -32692,7 +32692,7 @@
         "moduleSubType": "hanger_t1_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -32777,7 +32777,7 @@
         "moduleSubType": "hanger_t1_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -32862,7 +32862,7 @@
         "moduleSubType": "hanger_t1_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -32947,7 +32947,7 @@
         "moduleSubType": "hanger_t1_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -33032,7 +33032,7 @@
         "moduleSubType": "hanger_t1_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -33117,7 +33117,7 @@
         "moduleSubType": "hanger_t1_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -33202,7 +33202,7 @@
         "moduleSubType": "hanger_t2_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -33287,7 +33287,7 @@
         "moduleSubType": "hanger_t2_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -33372,7 +33372,7 @@
         "moduleSubType": "hanger_t2_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -33457,7 +33457,7 @@
         "moduleSubType": "hanger_t2_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -33542,7 +33542,7 @@
         "moduleSubType": "hanger_t2_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -33627,7 +33627,7 @@
         "moduleSubType": "hanger_t2_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -33712,7 +33712,7 @@
         "moduleSubType": "hanger_t2_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -33797,7 +33797,7 @@
         "moduleSubType": "hanger_t2_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -33882,7 +33882,7 @@
         "moduleSubType": "hanger_t2_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -33967,7 +33967,7 @@
         "moduleSubType": "hanger_t2_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -34052,7 +34052,7 @@
         "moduleSubType": "hanger_t3_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -34137,7 +34137,7 @@
         "moduleSubType": "hanger_t3_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -34222,7 +34222,7 @@
         "moduleSubType": "hanger_t3_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -34307,7 +34307,7 @@
         "moduleSubType": "hanger_t3_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -34392,7 +34392,7 @@
         "moduleSubType": "hanger_t3_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -34477,7 +34477,7 @@
         "moduleSubType": "hanger_t3_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -34562,7 +34562,7 @@
         "moduleSubType": "hanger_t3_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -34647,7 +34647,7 @@
         "moduleSubType": "hanger_t3_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -34732,7 +34732,7 @@
         "moduleSubType": "hanger_t3_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -34817,7 +34817,7 @@
         "moduleSubType": "hanger_t3_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -34902,7 +34902,7 @@
         "moduleSubType": "hanger_t4_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -34987,7 +34987,7 @@
         "moduleSubType": "hanger_t4_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -35072,7 +35072,7 @@
         "moduleSubType": "hanger_t4_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -35157,7 +35157,7 @@
         "moduleSubType": "hanger_t4_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -35242,7 +35242,7 @@
         "moduleSubType": "hanger_t4_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -35327,7 +35327,7 @@
         "moduleSubType": "hanger_t4_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -35412,7 +35412,7 @@
         "moduleSubType": "hanger_t4_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -35497,7 +35497,7 @@
         "moduleSubType": "hanger_t4_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -35582,7 +35582,7 @@
         "moduleSubType": "hanger_t4_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -35667,7 +35667,7 @@
         "moduleSubType": "hanger_t4_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -35752,7 +35752,7 @@
         "moduleSubType": "hanger_t5_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -35837,7 +35837,7 @@
         "moduleSubType": "hanger_t5_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -35922,7 +35922,7 @@
         "moduleSubType": "hanger_t5_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -36007,7 +36007,7 @@
         "moduleSubType": "hanger_t5_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -36092,7 +36092,7 @@
         "moduleSubType": "hanger_t5_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -36177,7 +36177,7 @@
         "moduleSubType": "hanger_t5_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -36262,7 +36262,7 @@
         "moduleSubType": "hanger_t5_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -36347,7 +36347,7 @@
         "moduleSubType": "hanger_t5_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -36432,7 +36432,7 @@
         "moduleSubType": "hanger_t5_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -36517,7 +36517,7 @@
         "moduleSubType": "hanger_t5_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -36602,7 +36602,7 @@
         "moduleSubType": "hanger_t6_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -36687,7 +36687,7 @@
         "moduleSubType": "hanger_t6_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -36772,7 +36772,7 @@
         "moduleSubType": "hanger_t6_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -36857,7 +36857,7 @@
         "moduleSubType": "hanger_t6_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -36942,7 +36942,7 @@
         "moduleSubType": "hanger_t6_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -37027,7 +37027,7 @@
         "moduleSubType": "hanger_t6_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -37112,7 +37112,7 @@
         "moduleSubType": "hanger_t6_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -37197,7 +37197,7 @@
         "moduleSubType": "hanger_t6_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -37282,7 +37282,7 @@
         "moduleSubType": "hanger_t6_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -37367,7 +37367,7 @@
         "moduleSubType": "hanger_t6_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -37452,7 +37452,7 @@
         "moduleSubType": "hanger_t7_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -37537,7 +37537,7 @@
         "moduleSubType": "hanger_t7_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -37622,7 +37622,7 @@
         "moduleSubType": "hanger_t7_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -37707,7 +37707,7 @@
         "moduleSubType": "hanger_t7_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -37792,7 +37792,7 @@
         "moduleSubType": "hanger_t7_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -37877,7 +37877,7 @@
         "moduleSubType": "hanger_t7_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -37962,7 +37962,7 @@
         "moduleSubType": "hanger_t7_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -38047,7 +38047,7 @@
         "moduleSubType": "hanger_t7_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -38132,7 +38132,7 @@
         "moduleSubType": "hanger_t7_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -38217,7 +38217,7 @@
         "moduleSubType": "hanger_t7_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -38302,7 +38302,7 @@
         "moduleSubType": "hanger_t8_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -38387,7 +38387,7 @@
         "moduleSubType": "hanger_t8_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -38472,7 +38472,7 @@
         "moduleSubType": "hanger_t8_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -38557,7 +38557,7 @@
         "moduleSubType": "hanger_t8_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -38642,7 +38642,7 @@
         "moduleSubType": "hanger_t8_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -38727,7 +38727,7 @@
         "moduleSubType": "hanger_t8_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -38812,7 +38812,7 @@
         "moduleSubType": "hanger_t8_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -38897,7 +38897,7 @@
         "moduleSubType": "hanger_t8_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -38982,7 +38982,7 @@
         "moduleSubType": "hanger_t8_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -39067,7 +39067,7 @@
         "moduleSubType": "hanger_t8_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -39152,7 +39152,7 @@
         "moduleSubType": "hanger_t9_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -39237,7 +39237,7 @@
         "moduleSubType": "hanger_t9_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -39322,7 +39322,7 @@
         "moduleSubType": "hanger_t9_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -39407,7 +39407,7 @@
         "moduleSubType": "hanger_t9_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -39492,7 +39492,7 @@
         "moduleSubType": "hanger_t9_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -39577,7 +39577,7 @@
         "moduleSubType": "hanger_t9_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -39662,7 +39662,7 @@
         "moduleSubType": "hanger_t9_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -39747,7 +39747,7 @@
         "moduleSubType": "hanger_t9_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -39832,7 +39832,7 @@
         "moduleSubType": "hanger_t9_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -39917,7 +39917,7 @@
         "moduleSubType": "hanger_t9_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -40002,7 +40002,7 @@
         "moduleSubType": "hanger_t10_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -40087,7 +40087,7 @@
         "moduleSubType": "hanger_t10_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -40172,7 +40172,7 @@
         "moduleSubType": "hanger_t10_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -40257,7 +40257,7 @@
         "moduleSubType": "hanger_t10_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -40342,7 +40342,7 @@
         "moduleSubType": "hanger_t10_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -40427,7 +40427,7 @@
         "moduleSubType": "hanger_t10_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -40512,7 +40512,7 @@
         "moduleSubType": "hanger_t10_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -40597,7 +40597,7 @@
         "moduleSubType": "hanger_t10_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -40682,7 +40682,7 @@
         "moduleSubType": "hanger_t10_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -40767,7 +40767,7 @@
         "moduleSubType": "hanger_t10_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -40852,7 +40852,7 @@
         "moduleSubType": "hanger_t11_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -40937,7 +40937,7 @@
         "moduleSubType": "hanger_t11_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -41022,7 +41022,7 @@
         "moduleSubType": "hanger_t11_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -41107,7 +41107,7 @@
         "moduleSubType": "hanger_t11_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -41192,7 +41192,7 @@
         "moduleSubType": "hanger_t11_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -41277,7 +41277,7 @@
         "moduleSubType": "hanger_t11_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -41362,7 +41362,7 @@
         "moduleSubType": "hanger_t11_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -41447,7 +41447,7 @@
         "moduleSubType": "hanger_t11_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -41532,7 +41532,7 @@
         "moduleSubType": "hanger_t11_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -41617,7 +41617,7 @@
         "moduleSubType": "hanger_t11_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -41702,7 +41702,7 @@
         "moduleSubType": "hanger_t12_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -41787,7 +41787,7 @@
         "moduleSubType": "hanger_t12_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -41872,7 +41872,7 @@
         "moduleSubType": "hanger_t12_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -41957,7 +41957,7 @@
         "moduleSubType": "hanger_t12_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -42042,7 +42042,7 @@
         "moduleSubType": "hanger_t12_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -42127,7 +42127,7 @@
         "moduleSubType": "hanger_t12_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -42212,7 +42212,7 @@
         "moduleSubType": "hanger_t12_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -42297,7 +42297,7 @@
         "moduleSubType": "hanger_t12_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -42382,7 +42382,7 @@
         "moduleSubType": "hanger_t12_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -42467,7 +42467,7 @@
         "moduleSubType": "hanger_t12_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -42552,7 +42552,7 @@
         "moduleSubType": "hanger_t13_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -42637,7 +42637,7 @@
         "moduleSubType": "hanger_t13_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -42722,7 +42722,7 @@
         "moduleSubType": "hanger_t13_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -42807,7 +42807,7 @@
         "moduleSubType": "hanger_t13_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -42892,7 +42892,7 @@
         "moduleSubType": "hanger_t13_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -42977,7 +42977,7 @@
         "moduleSubType": "hanger_t13_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -43062,7 +43062,7 @@
         "moduleSubType": "hanger_t13_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -43147,7 +43147,7 @@
         "moduleSubType": "hanger_t13_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -43232,7 +43232,7 @@
         "moduleSubType": "hanger_t13_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -43317,7 +43317,7 @@
         "moduleSubType": "hanger_t13_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -43402,7 +43402,7 @@
         "moduleSubType": "hanger_t14_m1",
         "moduleLevel": 1,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -43487,7 +43487,7 @@
         "moduleSubType": "hanger_t14_m1",
         "moduleLevel": 2,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -43572,7 +43572,7 @@
         "moduleSubType": "hanger_t14_m1",
         "moduleLevel": 3,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -43657,7 +43657,7 @@
         "moduleSubType": "hanger_t14_m1",
         "moduleLevel": 4,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -43742,7 +43742,7 @@
         "moduleSubType": "hanger_t14_m1",
         "moduleLevel": 5,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -43827,7 +43827,7 @@
         "moduleSubType": "hanger_t14_m1",
         "moduleLevel": 6,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -43912,7 +43912,7 @@
         "moduleSubType": "hanger_t14_m1",
         "moduleLevel": 7,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -43997,7 +43997,7 @@
         "moduleSubType": "hanger_t14_m1",
         "moduleLevel": 8,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -44082,7 +44082,7 @@
         "moduleSubType": "hanger_t14_m1",
         "moduleLevel": 9,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -44167,7 +44167,7 @@
         "moduleSubType": "hanger_t14_m1",
         "moduleLevel": 10,
         "modulePointCost": 1,
-        "mineralCost": 10,
+        "mineralCost": 1,
         "description": "",
         "moduleSlots": [
           {

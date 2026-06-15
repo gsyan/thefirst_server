@@ -38,15 +38,18 @@ public class ZoneService {
     private final GameDataService gameDataService;
     private final RedisService redisService;
     private final VipSubscriptionRepository vipSubscriptionRepository;
+    private final FleetService fleetService;
 
     public ZoneService(CharacterRepository characterRepository, ClearedZoneRepository clearedZoneRepository,
                        GameDataService gameDataService, RedisService redisService,
-                       VipSubscriptionRepository vipSubscriptionRepository) {
+                       VipSubscriptionRepository vipSubscriptionRepository,
+                       FleetService fleetService) {
         this.characterRepository = characterRepository;
         this.clearedZoneRepository = clearedZoneRepository;
         this.gameDataService = gameDataService;
         this.redisService = redisService;
         this.vipSubscriptionRepository = vipSubscriptionRepository;
+        this.fleetService = fleetService;
     }
 
     // 클리어 기록, rewardClaimed 리셋, 보상은 claimZoneReward에서 별도 처리
@@ -75,7 +78,7 @@ public class ZoneService {
             }
         }
 
-        Character character = characterRepository.findById(characterId)
+        Character character = characterRepository.findByIdForUpdate(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.ZONE_DESTROY_WAVE_FAIL_CHARACTER_NOT_FOUND));
 
         // 클라 전투 소모 후 잔액을 서버에 반영
@@ -84,8 +87,11 @@ public class ZoneService {
             if (mineralRemain > character.getMineral())
                 throw new BusinessException(ServerErrorCode.ZONE_CLEAR_FAIL_MINERAL_EXCEED_SERVER);
             character.setMineral(mineralRemain);
-            characterRepository.save(character);
         }
+
+        // 미네랄 강화 초기화 — modulePointSubType/Level 기준값으로 복원, 투자 미네랄 소멸
+        fleetService.resetMineralModules(characterId);
+        characterRepository.save(character);
 
         boolean isFirstClear = clearedZoneRepository.existsByCharacterIdAndZoneName(characterId, zoneName) == false;
         if (isFirstClear == true) {
@@ -100,9 +106,13 @@ public class ZoneService {
             clearedZoneRepository.resetRewardClaimed(characterId, zoneName); // 재도전: rewardClaimed=false 리셋
         }
 
+        FleetInfoDto updatedFleetInfo = fleetService.getActiveFleet(characterId);
+
         return ClearZoneStageResponse.builder()
                 .isFirstClear(isFirstClear)
                 .clearedZoneName(isFirstClear ? zoneName : null)
+                .updatedFleetInfo(updatedFleetInfo)
+                .mineralRemain(character.getMineral())
                 .build();
     }
 

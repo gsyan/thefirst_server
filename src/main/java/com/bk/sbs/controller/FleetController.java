@@ -209,6 +209,66 @@ public class FleetController {
         return ResponseEntity.ok(ApiResponse.success(null));
     }
 
+    // 미네랄 모듈 해금
+    @PostMapping("/mineral-unlock-module")
+    public ResponseEntity<ApiResponse<MineralModuleUnlockResponse>> mineralUnlockModule(
+            @RequestBody MineralModuleUnlockRequest request,
+            HttpServletRequest httpRequest) {
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        MineralModuleUnlockResponse response = fleetService.mineralUnlockModule(actualCharacterId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    // 미네랄 모듈 레벨업
+    @PostMapping("/mineral-levelup-module")
+    public ResponseEntity<ApiResponse<MineralModuleLevelChangeResponse>> mineralLevelUpModule(
+            @RequestBody MineralModuleLevelChangeRequest request,
+            HttpServletRequest httpRequest) {
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        MineralModuleLevelChangeResponse response = fleetService.mineralLevelUpModule(actualCharacterId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    // 미네랄 모듈 레벨다운
+    @PostMapping("/mineral-leveldown-module")
+    public ResponseEntity<ApiResponse<MineralModuleLevelChangeResponse>> mineralLevelDownModule(
+            @RequestBody MineralModuleLevelChangeRequest request,
+            HttpServletRequest httpRequest) {
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        MineralModuleLevelChangeResponse response = fleetService.mineralLevelDownModule(actualCharacterId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    // 미네랄 모듈 등급업
+    @PostMapping("/mineral-gradeup-module")
+    public ResponseEntity<ApiResponse<MineralModuleGradeChangeResponse>> mineralGradeUpModule(
+            @RequestBody MineralModuleGradeChangeRequest request,
+            HttpServletRequest httpRequest) {
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        MineralModuleGradeChangeResponse response = fleetService.mineralGradeUpModule(actualCharacterId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    // 미네랄 모듈 등급다운
+    @PostMapping("/mineral-gradedown-module")
+    public ResponseEntity<ApiResponse<MineralModuleGradeChangeResponse>> mineralGradeDownModule(
+            @RequestBody MineralModuleGradeChangeRequest request,
+            HttpServletRequest httpRequest) {
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        MineralModuleGradeChangeResponse response = fleetService.mineralGradeDownModule(actualCharacterId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    // 미네랄 모듈 리셋 (전체 미네랄 환급)
+    @PostMapping("/mineral-reset-module")
+    public ResponseEntity<ApiResponse<MineralModuleResetResponse>> mineralResetModule(
+            @RequestBody MineralModuleResetRequest request,
+            HttpServletRequest httpRequest) {
+        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
+        MineralModuleResetResponse response = fleetService.mineralResetModule(actualCharacterId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
     // 함선 리셋 및 제거
     @PostMapping("/reset-ship")
     public ResponseEntity<ApiResponse<ShipResetRemoveResponse>> resetAndRemoveShip(

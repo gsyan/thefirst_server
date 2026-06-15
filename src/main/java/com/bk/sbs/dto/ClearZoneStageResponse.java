@@ -16,4 +16,6 @@ import lombok.NoArgsConstructor;
 public class ClearZoneStageResponse {
     private Boolean isFirstClear;
     private String clearedZoneName;
+    private FleetInfoDto updatedFleetInfo;
+    private Integer mineralRemain;
 }

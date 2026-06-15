@@ -8,21 +8,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * ModuleInfoDto
- * Auto-generated from Unity C# ModuleInfo class
+ * MineralModuleResetResponse
+ * Auto-generated from Unity C# MineralModuleResetResponse class
  */
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class ModuleInfoDto {
+public class MineralModuleResetResponse {
+    private Long shipId;
+    private Integer bodyIndex;
     private EModuleType moduleType;
     private EModuleSubType moduleSubType;
-    private Integer moduleLevel;
-    private Integer bodyIndex;
     private Integer slotIndex;
-    private Integer investedModulePoint;
-    private EModuleSubType modulePointSubType;
-    private Integer modulePointLevel;
+    private Integer moduleNewLevel;
+    private Boolean isModuleRemoved;
+    private Integer mineralRemain;
     private Integer investedMineral;
 }
