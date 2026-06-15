@@ -11,14 +11,12 @@ import com.bk.sbs.dto.ShipInfoDto;
 import com.bk.sbs.dto.ZoneConfigData;
 import com.bk.sbs.entity.Account;
 import com.bk.sbs.entity.Character;
-import com.bk.sbs.entity.ModuleResearch;
 import com.bk.sbs.enums.*;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.repository.AccountRepository;
 import com.bk.sbs.repository.CharacterRepository;
 import com.bk.sbs.repository.ClearedZoneRepository;
-import com.bk.sbs.repository.ModuleResearchRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,7 +24,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.UUID;
@@ -40,7 +37,6 @@ public class CharacterService {
     private final CharacterRepository characterRepository;
     private final AccountRepository accountRepository;
     private final FleetService fleetService;
-    private final ModuleResearchRepository moduleResearchRepository;
     private final ClearedZoneRepository clearedZoneRepository;
     private final StringRedisTemplate redisTemplate;
     private final GameDataService gameDataService;
@@ -48,11 +44,10 @@ public class CharacterService {
 @Value("${worldid}")
     private int worldId;
 
-    public CharacterService(CharacterRepository characterRepository, AccountRepository accountRepository, FleetService fleetService, ModuleResearchRepository moduleResearchRepository, ClearedZoneRepository clearedZoneRepository, StringRedisTemplate redisTemplate, GameDataService gameDataService) {
+    public CharacterService(CharacterRepository characterRepository, AccountRepository accountRepository, FleetService fleetService, ClearedZoneRepository clearedZoneRepository, StringRedisTemplate redisTemplate, GameDataService gameDataService) {
         this.characterRepository = characterRepository;
         this.accountRepository = accountRepository;
         this.fleetService = fleetService;
-        this.moduleResearchRepository = moduleResearchRepository;
         this.clearedZoneRepository = clearedZoneRepository;
         this.redisTemplate = redisTemplate;
         this.gameDataService = gameDataService;
@@ -92,9 +87,6 @@ public class CharacterService {
         fleetService.createFleet(savedCharacter.getId(), "Default Fleet", "Auto-generated default fleet.");
         fleetService.activateFirstFleet(savedCharacter.getId());
 
-        // 기본 기술레벨 1 초기화
-        initializeDefaultTechLevel(savedCharacter.getId());
-
 //        // Redis에 캐릭터 생성 로그 남기기 (테스트용)
 //        try {
 //            String logKey = "log:character:create:" + savedCharacter.getId();
@@ -111,18 +103,6 @@ public class CharacterService {
                 .characterId(((long) worldId << 56) | savedCharacter.getId())
                 .characterName(savedCharacter.getCharacterName())
                 .build();
-    }
-
-    // 신규 캐릭터 기본 기술레벨 1 완료 처리
-    private void initializeDefaultTechLevel(Long characterId) {
-        LocalDateTime now = LocalDateTime.now();
-        ModuleResearch techLevel1 = new ModuleResearch();
-        techLevel1.setCharacterId(characterId);
-        techLevel1.setResearchId("tech_level_1");
-        techLevel1.setResearched(true);
-        techLevel1.setCreated(now);
-        techLevel1.setModified(now);
-        moduleResearchRepository.save(techLevel1);
     }
 
     // 접속 시 lastOnlineAt 갱신 — collectDateTime은 ZoneService에서 캡 적용
@@ -144,6 +124,7 @@ public class CharacterService {
                 .characterId(characterId)
                 .characterName(character.getCharacterName())
                 .mineral(character.getMineral())
+                .techLevel(character.getTechLevel())
                 .techPoint(character.getTechPoint())
                 .modulePoint(character.getModulePoint())
                 .modulePointMaxGot(character.getModulePointMaxGot())
@@ -251,23 +232,6 @@ public class CharacterService {
         character.setPvpPointMaxGot(character.getPvpPointMaxGot() + amount);
         character = characterRepository.save(character);
         return character.getPvpPointMaxGot();
-    }
-
-    // 기술레벨 업그레이드: module_research에 tech_level_N 행 삽입 후 현재 기술레벨 반환
-    @Transactional
-    public Integer addTechLevelResearch(Long characterId, Integer targetLevel) {
-        String researchId = "tech_level_" + targetLevel;
-        ModuleResearch existing = moduleResearchRepository.findByCharacterIdAndResearchId(characterId, researchId)
-                .orElse(null);
-        if (existing != null && existing.isResearched()) return targetLevel;
-
-        ModuleResearch research = existing != null ? existing : new ModuleResearch();
-        research.setCharacterId(characterId);
-        research.setResearchId(researchId);
-        research.setResearched(true);
-        research.setModified(LocalDateTime.now());
-        moduleResearchRepository.save(research);
-        return targetLevel;
     }
 
 }

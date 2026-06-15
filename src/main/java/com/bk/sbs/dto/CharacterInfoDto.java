@@ -18,6 +18,7 @@ public class CharacterInfoDto {
     private Long characterId;
     private String characterName;
     private Integer mineral;
+    private Integer techLevel;
     private Integer techPoint;
     private Integer modulePoint;
     private Integer modulePointMaxGot;

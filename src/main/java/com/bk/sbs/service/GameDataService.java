@@ -34,13 +34,13 @@ public class GameDataService {
     private ZoneConfig zoneConfig = new ZoneConfig();
     // researchId → 기술레벨 전체 데이터 (비용, shipCount)
     private static class TechLevelData {
-        int mineralCost;
+        int requiredTechPoint;
         int shipCount;
-        TechLevelData(int mineralCost, int shipCount) {
-            this.mineralCost = mineralCost; this.shipCount = shipCount;
+        TechLevelData(int requiredTechPoint, int shipCount) {
+            this.requiredTechPoint = requiredTechPoint; this.shipCount = shipCount;
         }
     }
-    private Map<String, TechLevelData> techLevelDataMap = new HashMap<>();
+    private Map<Integer, TechLevelData> techLevelDataMap = new HashMap<>();
     private int cachedMaxShipCount = 1;
     @Autowired
     private ObjectMapper objectMapper;
@@ -69,34 +69,35 @@ public class GameDataService {
             ClassPathResource researchDataTableResource = new ClassPathResource("data/DataTableResearch.json");
             if (researchDataTableResource.exists()) {
                 String json = new String(researchDataTableResource.getInputStream().readAllBytes());
-                com.fasterxml.jackson.databind.JsonNode rootNode = objectMapper.readTree(json);
-                com.fasterxml.jackson.databind.JsonNode researchDataListNode = rootNode.get("researchDataList");
-                if (researchDataListNode != null) {
-                    List<ModuleResearchData> researchDataList = objectMapper.convertValue(
-                        researchDataListNode,
-                        objectMapper.getTypeFactory().constructCollectionType(List.class, ModuleResearchData.class)
-                    );
-                    dataTableModule.setResearchDataList(researchDataList);
-                    log.info("DataTableResearch.json loaded successfully from resources/data/ and merged into ModuleDataTable");
-                }
-                // techLevelDataList: researchId → TechLevelData(cost, shipCount)
-                com.fasterxml.jackson.databind.JsonNode techLevelDataListNode = rootNode.get("techLevelDataList");
-                if (techLevelDataListNode != null) {
-                    techLevelDataMap.clear();
-                    for (com.fasterxml.jackson.databind.JsonNode techNode : techLevelDataListNode) {
-                        String rId = techNode.path("researchId").asText(null);
-                        com.fasterxml.jackson.databind.JsonNode costNode = techNode.path("pointCost");
-                        if (rId != null && !costNode.isMissingNode()) {
-                            int cost = techNode.path("pointCost").asInt(1);
-                            int shipCount = techNode.path("shipCount").asInt(1);
-                            techLevelDataMap.put(rId, new TechLevelData(cost, shipCount));
-                        }
-                    }
-                    cachedMaxShipCount = techLevelDataMap.values().stream().mapToInt(d -> d.shipCount).max().orElse(1);
-                    log.info("techLevelDataList loaded: {} entries", techLevelDataMap.size());
-                }
+                List<ModuleResearchData> researchDataList = objectMapper.convertValue(
+                    objectMapper.readTree(json),
+                    objectMapper.getTypeFactory().constructCollectionType(List.class, ModuleResearchData.class)
+                );
+                dataTableModule.setResearchDataList(researchDataList);
+                log.info("DataTableResearch.json loaded: {} entries", researchDataList.size());
             } else {
                 log.warn("DataTableResearch.json not found in resources/data/, using empty data");
+            }
+
+            ClassPathResource techLevelResource = new ClassPathResource("data/DataTableTechLevel.json");
+            if (techLevelResource.exists()) {
+                String json = new String(techLevelResource.getInputStream().readAllBytes());
+                com.fasterxml.jackson.databind.JsonNode arrayNode = objectMapper.readTree(json);
+                techLevelDataMap.clear();
+                for (com.fasterxml.jackson.databind.JsonNode techNode : arrayNode) {
+                    com.fasterxml.jackson.databind.JsonNode levelNode = techNode.path("targetTechLevel");
+                    com.fasterxml.jackson.databind.JsonNode pointNode = techNode.path("requiredTechPoint");
+                    if (levelNode.isMissingNode() == false && pointNode.isMissingNode() == false) {
+                        int techLevel    = levelNode.asInt();
+                        int requiredPoint = pointNode.asInt(0);
+                        int shipCount    = techNode.path("shipCount").asInt(1);
+                        techLevelDataMap.put(techLevel, new TechLevelData(requiredPoint, shipCount));
+                    }
+                }
+                cachedMaxShipCount = techLevelDataMap.values().stream().mapToInt(d -> d.shipCount).max().orElse(1);
+                log.info("DataTableTechLevel.json loaded: {} entries", techLevelDataMap.size());
+            } else {
+                log.warn("DataTableTechLevel.json not found in resources/data/, using empty data");
             }
 
             ClassPathResource zoneConfigResource = new ClassPathResource("data/DataTableZone.json");
@@ -236,15 +237,15 @@ public class GameDataService {
         return false;
     }
 
-    // tech_level_N 연구 비용 반환 (데이터 없으면 비용 0)
-    public int getTechLevelResearchCost(String researchId) {
-        TechLevelData data = techLevelDataMap.get(researchId);
-        return data != null ? data.mineralCost : 0;
+    // 레벨업 기준 누적 포인트 반환 (차감 없음, 서버 자동 판정 기준)
+    public int getTechLevelRequiredPoint(int techLevel) {
+        TechLevelData data = techLevelDataMap.get(techLevel);
+        return data != null ? data.requiredTechPoint : 0;
     }
 
     // 해당 기술레벨에서 허용되는 최대 함선 수 반환
     public int getShipCount(int techLevel) {
-        TechLevelData data = techLevelDataMap.get("tech_level_" + techLevel);
+        TechLevelData data = techLevelDataMap.get(techLevel);
         return data != null ? data.shipCount : 1;
     }
 

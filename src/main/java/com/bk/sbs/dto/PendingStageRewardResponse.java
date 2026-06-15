@@ -18,6 +18,7 @@ public class PendingStageRewardResponse {
     private Integer techPointGained;
     private Integer modulePointGained;
     private Integer mineralRemain;
+    private Integer techLevel;
     private Integer techPointRemain;
     private Integer modulePointRemain;
     private Integer modulePointMaxGot;

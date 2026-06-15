@@ -11,6 +11,7 @@ import com.bk.sbs.service.CharacterService;
 import com.bk.sbs.service.FleetService;
 import com.bk.sbs.service.GameDataService;
 import com.bk.sbs.service.PvpSeasonService;
+import com.bk.sbs.service.ZoneService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,14 +25,16 @@ public class DevController {
     private final FleetService fleetService;
     private final GameDataService gameDataService;
     private final PvpSeasonService pvpSeasonService;
+    private final ZoneService zoneService;
     private final JwtUtil jwtUtil;
     private final ObjectMapper objectMapper;
 
-    public DevController(CharacterService characterService, FleetService fleetService, GameDataService gameDataService, PvpSeasonService pvpSeasonService, JwtUtil jwtUtil, ObjectMapper objectMapper) {
+    public DevController(CharacterService characterService, FleetService fleetService, GameDataService gameDataService, PvpSeasonService pvpSeasonService, ZoneService zoneService, JwtUtil jwtUtil, ObjectMapper objectMapper) {
         this.characterService = characterService;
         this.fleetService = fleetService;
         this.gameDataService = gameDataService;
         this.pvpSeasonService = pvpSeasonService;
+        this.zoneService = zoneService;
         this.jwtUtil = jwtUtil;
         this.objectMapper = objectMapper;
     }
@@ -73,14 +76,9 @@ public class DevController {
                 int newMp     = addMp  > 0 ? characterService.addModulePoint(characterId, addMp)            : cur.getModulePoint();
                 int newPvpMax = addPvp > 0 ? characterService.addPvpPointMaxGot(characterId, addPvp)        : cur.getPvpPointMaxGot();
                 int newPvp    = addPvp > 0 ? characterService.addPvpPoint(characterId, addPvp)              : cur.getPvpPoint();
-                return ApiResponse.success("Resources added|mineral:" + newM + "|techPoint:" + newTp + "|modulePointMaxGot:" + newMpMax + "|modulePoint:" + newMp + "|pvpPointMaxGot:" + newPvpMax + "|pvpPoint:" + newPvp);
+                int newTechLevel = addTp > 0 ? zoneService.recalcAndSaveTechLevel(characterId) : cur.getTechLevel();
+                return ApiResponse.success("Resources added|mineral:" + newM + "|techPoint:" + newTp + "|modulePointMaxGot:" + newMpMax + "|modulePoint:" + newMp + "|pvpPointMaxGot:" + newPvpMax + "|pvpPoint:" + newPvp + "|techLevel:" + newTechLevel);
             }
-
-            case "addtech":
-                if (params == null || params.isEmpty()) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDTECH_INVALID_PARAM);
-                Integer targetTechLevel = parseIntOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDTECH_PARSE_PARAM);
-                Integer newTechLevel = characterService.addTechLevelResearch(characterId, targetTechLevel);
-                return ApiResponse.success("Technology set to: " + newTechLevel + "|tech:" + newTechLevel);
 
             case "getstatus":
                 CharacterInfoDto status = characterService.getCharacterInfoDto(characterId);

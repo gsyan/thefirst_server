@@ -1,0 +1,72 @@
+[
+  {
+    "targetTechLevel": 1,
+    "requiredTechPoint": 0,
+    "shipCount": 1
+  },
+  {
+    "targetTechLevel": 2,
+    "requiredTechPoint": 2,
+    "shipCount": 1
+  },
+  {
+    "targetTechLevel": 3,
+    "requiredTechPoint": 5,
+    "shipCount": 1
+  },
+  {
+    "targetTechLevel": 4,
+    "requiredTechPoint": 15,
+    "shipCount": 1
+  },
+  {
+    "targetTechLevel": 5,
+    "requiredTechPoint": 25,
+    "shipCount": 2
+  },
+  {
+    "targetTechLevel": 6,
+    "requiredTechPoint": 35,
+    "shipCount": 2
+  },
+  {
+    "targetTechLevel": 7,
+    "requiredTechPoint": 45,
+    "shipCount": 2
+  },
+  {
+    "targetTechLevel": 8,
+    "requiredTechPoint": 55,
+    "shipCount": 2
+  },
+  {
+    "targetTechLevel": 9,
+    "requiredTechPoint": 65,
+    "shipCount": 2
+  },
+  {
+    "targetTechLevel": 10,
+    "requiredTechPoint": 75,
+    "shipCount": 3
+  },
+  {
+    "targetTechLevel": 11,
+    "requiredTechPoint": 85,
+    "shipCount": 3
+  },
+  {
+    "targetTechLevel": 12,
+    "requiredTechPoint": 95,
+    "shipCount": 3
+  },
+  {
+    "targetTechLevel": 13,
+    "requiredTechPoint": 105,
+    "shipCount": 3
+  },
+  {
+    "targetTechLevel": 14,
+    "requiredTechPoint": 115,
+    "shipCount": 3
+  }
+]

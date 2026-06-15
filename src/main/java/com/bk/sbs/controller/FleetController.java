@@ -160,16 +160,6 @@ public class FleetController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
-    // 기술레벨 연구
-    @PostMapping("/research-tech-level")
-    public ResponseEntity<ApiResponse<TechLevelResearchResponse>> researchTechLevel(
-            @RequestBody TechLevelResearchRequest request,
-            HttpServletRequest httpRequest) {
-        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
-        TechLevelResearchResponse response = fleetService.researchTechLevel(actualCharacterId, request);
-        return ResponseEntity.ok(ApiResponse.success(response));
-    }
-
     // 편대 변경
     @PostMapping("/change-formation")
     public ResponseEntity<ApiResponse<ChangeFormationResponse>> changeFormation(

@@ -43,6 +43,7 @@ CREATE TABLE `character` (
     character_name          VARCHAR(255)    NOT NULL,
     last_location           BIGINT              NULL,
     mineral                 INT             NOT NULL DEFAULT 0,
+    tech_level              INT             NOT NULL DEFAULT 1,
     tech_point              INT             NOT NULL DEFAULT 0,
     module_point            INT             NOT NULL DEFAULT 0,
     module_point_max_got    INT             NOT NULL DEFAULT 0,
@@ -163,7 +164,7 @@ CREATE TABLE pvp_record (
 
 -- ============================================================
 -- module_research
--- 문자열 기반 연구 상태 저장 (예: tech_level_N)
+-- 문자열 기반 모듈 연구 상태 저장
 -- ============================================================
 CREATE TABLE module_research (
     id              BIGINT          NOT NULL AUTO_INCREMENT,

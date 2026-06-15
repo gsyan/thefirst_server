@@ -500,7 +500,7 @@ public class FleetService {
         int shipAddCost = gameDataService.getShipAddCost();
 
         // 기술레벨 검증 — 현재 기술레벨에서 허용된 최대 함선 수(ship_count) 초과 여부
-        int charTechLevel = getCharacterTechLevel(characterId);
+        int charTechLevel = character.getTechLevel();
         if (currentShips.size() >= gameDataService.getShipCount(charTechLevel)) {
             throw new BusinessException(ServerErrorCode.ADD_SHIP_FAIL_INSUFFICIENT_TECH_LEVEL);
         }
@@ -609,7 +609,7 @@ public class FleetService {
 
         // 기술레벨 검증 — 서브타입 인코딩에서 파싱: (value/100)%100
         int requiredTechTier = (moduleSubType.getValue() / 100) % 100;
-        if (getCharacterTechLevel(characterId) < requiredTechTier) {
+        if (character.getTechLevel() < requiredTechTier) {
             throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_INSUFFICIENT_TECH_LEVEL);
         }
 
@@ -939,9 +939,13 @@ public class FleetService {
                 request.getSlotIndex()
         ).orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_MODULE_NOT_FOUND));
 
-        // 기술레벨 검증 — 서브타입 인코딩에서 파싱: (value/10000)%100
+        // 4. 비용 차감 (레벨업 비용 + 그레이드 업 비용, 비관적 락)
+        com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_SHIP_NOT_FOUND));
+
+        // 기술레벨 검증 — 서브타입 인코딩에서 파싱: (value/100)%100
         int requiredTechTier = (newModuleSubType.getValue() / 100) % 100;
-        if (getCharacterTechLevel(characterId) < requiredTechTier) {
+        if (character.getTechLevel() < requiredTechTier) {
             throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_INSUFFICIENT_TECH_LEVEL);
         }
 
@@ -962,10 +966,6 @@ public class FleetService {
                     .orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_MODULE_NOT_FOUND));
             levelUpCost += levelData.getModulePointCost();
         }
-
-        // 4. 비용 차감 (레벨업 비용 + 그레이드 업 비용, 비관적 락)
-        com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_SHIP_NOT_FOUND));
 
         int gradeUpCost = gameDataService.getModuleResearchCost(newModuleSubType);
         int totalCost = levelUpCost + gradeUpCost;
@@ -1084,68 +1084,12 @@ public class FleetService {
         return refund;
     }
 
-    // tech_level_N 문자열 기반 연구 처리: 비용 차감 후 DB 저장, researchedIds 반환
-    @Transactional
-    public TechLevelResearchResponse researchTechLevel(Long characterId, TechLevelResearchRequest request) {
-        String researchId = request.getResearchId();
-        // 이미 연구 완료 체크
-        ModuleResearch existing = moduleResearchRepository.findByCharacterIdAndResearchId(characterId, researchId).orElse(null);
-        if (existing != null && existing.isResearched()) {
-            throw new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_ALREADY_RESEARCHED);
-        }
-
-        // 캐릭터 자원 조회 (비관적 락)
-        com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_CHARACTER_NOT_FOUND));
-
-        // 비용 조회 및 선행 기술레벨 검증 (순차 업그레이드만 허용)
-        int researchCost = gameDataService.getTechLevelResearchCost(researchId);
-        int targetLevel = Integer.parseInt(researchId.substring("tech_level_".length()));
-        if (getCharacterTechLevel(characterId) < targetLevel - 1) {
-            throw new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_INSUFFICIENT_TECH_LEVEL);
-        }
-
-        // 자원 부족 검사
-        if (character.getTechPoint() < researchCost)
-            throw new BusinessException(ServerErrorCode.RESEARCH_MODULE_FAIL_INSUFFICIENT_MINERAL);
-
-        // techPoint 차감
-        int researchDeducted = deductTechPoint(character, researchCost);
-        characterRepository.save(character);
-
-        // 기술레벨 연구 저장
-        ModuleResearch research = existing != null ? existing : new ModuleResearch();
-        research.setCharacterId(characterId);
-        research.setResearchId(researchId);
-        research.setResearched(true);
-        research.setModified(LocalDateTime.now());
-        moduleResearchRepository.save(research);
-
-        // 완료된 researchedIds 반환
-        List<String> researchedIds = getResearchedIds(characterId);
-        return TechLevelResearchResponse.builder()
-                .techPointRemain(character.getTechPoint())
-                .researchedIds(researchedIds)
-                .build();
-    }
-
     // 문자열 기반 완료 연구 ID 목록 조회 (tech_level_N 등)
     public List<String> getResearchedIds(Long characterId) {
         return moduleResearchRepository.findByCharacterIdAndResearchIdIsNotNullAndResearchedTrue(characterId)
                 .stream()
                 .map(ModuleResearch::getResearchId)
                 .collect(Collectors.toList());
-    }
-
-    // module_research에서 기술레벨 파생 (tech_level_N 중 최댓값, 기본값 1)
-    private int getCharacterTechLevel(Long characterId) {
-        return moduleResearchRepository
-                .findByCharacterIdAndResearchIdStartingWithAndResearchedTrue(characterId, "tech_level_")
-                .stream()
-                .map(r -> r.getResearchId().substring("tech_level_".length()))
-                .mapToInt(s -> { try { return Integer.parseInt(s); } catch (NumberFormatException e) { return 0; } })
-                .max()
-                .orElse(1);
     }
 
     // ─────────────────────────────────────────────────────────────────────────

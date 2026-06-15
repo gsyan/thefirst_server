@@ -29,6 +29,10 @@ public class Character {
     @Column(nullable = false)
     private int mineral;
 
+    // 기술 레벨 (techPoint 누적 기준 자동 레벨업, 기본값 1)
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 1")
+    private int techLevel = 1;
+
     // 기술레벨 연구 포인트 (스테이지 최초 클리어 보상)
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
     private int techPoint = 0;

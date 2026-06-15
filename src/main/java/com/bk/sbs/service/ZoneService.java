@@ -143,6 +143,8 @@ public class ZoneService {
             clearedZone.setFirstBonusClaimed(true);
         }
 
+        autoLevelUpIfNeeded(character);
+
         clearedZone.setRewardClaimed(true);
         clearedZoneRepository.save(clearedZone);
         characterRepository.save(character);
@@ -154,6 +156,7 @@ public class ZoneService {
                 .techPointRemain(character.getTechPoint())
                 .modulePointRemain(character.getModulePoint())
                 .modulePointMaxGot(character.getModulePointMaxGot())
+                .techLevel(character.getTechLevel())
                 .build();
     }
 
@@ -196,6 +199,8 @@ public class ZoneService {
         character.setModulePoint(character.getModulePoint() + modulePointGained);
         character.setModulePointMaxGot(character.getModulePointMaxGot() + modulePointGained);
 
+        autoLevelUpIfNeeded(character);
+
         clearedZoneRepository.saveAll(pending);
         characterRepository.save(character);
 
@@ -207,12 +212,37 @@ public class ZoneService {
                 .techPointRemain(character.getTechPoint())
                 .modulePointRemain(character.getModulePoint())
                 .modulePointMaxGot(character.getModulePointMaxGot())
+                .techLevel(character.getTechLevel())
                 .build();
     }
 
     private long computeZoneScore(String zoneName) {
         int[] p = parseZoneName(zoneName);
         return (long) p[0] * 1000 + p[1];
+    }
+
+    // dev 커맨드용: characterId로 레벨업 재계산 후 저장, 결과 techLevel 반환
+    @Transactional
+    public int recalcAndSaveTechLevel(Long characterId) {
+        Character character = characterRepository.findByIdForUpdate(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_MINERAL_FAIL_CHARACTER_NOT_FOUND));
+        autoLevelUpIfNeeded(character);
+        characterRepository.save(character);
+        return character.getTechLevel();
+    }
+
+    // techPoint 누적 기준으로 레벨업 조건 판정 후 자동 승급
+    private void autoLevelUpIfNeeded(Character character) {
+        int currentLevel = character.getTechLevel();
+        int accumulatedPoint = character.getTechPoint();
+        int nextLevel = currentLevel + 1;
+        int requiredPoint = gameDataService.getTechLevelRequiredPoint(nextLevel);
+        while (requiredPoint > 0 && accumulatedPoint >= requiredPoint) {
+            currentLevel = nextLevel;
+            nextLevel = currentLevel + 1;
+            requiredPoint = gameDataService.getTechLevelRequiredPoint(nextLevel);
+        }
+        character.setTechLevel(currentLevel);
     }
 
     private int[] parseZoneName(String zoneName) {

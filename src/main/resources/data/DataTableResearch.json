@@ -1,626 +1,498 @@
-{
-  "researchDataList": [
-    {
-      "moduleType": "body",
-      "moduleSubType": "body_t1_m1",
-      "researchId": "body_t1_m1",
-      "prerequisiteIds": [],
-      "pointCost": 0
-    },
-    {
-      "moduleType": "body",
-      "moduleSubType": "body_t2_m1",
-      "researchId": "body_t2_m1",
-      "prerequisiteIds": [
-        "body_t1_m1"
-      ],
-      "pointCost": 2
-    },
-    {
-      "moduleType": "body",
-      "moduleSubType": "body_t3_m1",
-      "researchId": "body_t3_m1",
-      "prerequisiteIds": [
-        "body_t2_m1"
-      ],
-      "pointCost": 3
-    },
-    {
-      "moduleType": "body",
-      "moduleSubType": "body_t4_m1",
-      "researchId": "body_t4_m1",
-      "prerequisiteIds": [
-        "body_t3_m1"
-      ],
-      "pointCost": 4
-    },
-    {
-      "moduleType": "body",
-      "moduleSubType": "body_t5_m1",
-      "researchId": "body_t5_m1",
-      "prerequisiteIds": [
-        "body_t4_m1"
-      ],
-      "pointCost": 5
-    },
-    {
-      "moduleType": "body",
-      "moduleSubType": "body_t6_m1",
-      "researchId": "body_t6_m1",
-      "prerequisiteIds": [
-        "body_t5_m1"
-      ],
-      "pointCost": 6
-    },
-    {
-      "moduleType": "body",
-      "moduleSubType": "body_t7_m1",
-      "researchId": "body_t7_m1",
-      "prerequisiteIds": [
-        "body_t6_m1"
-      ],
-      "pointCost": 7
-    },
-    {
-      "moduleType": "body",
-      "moduleSubType": "body_t8_m1",
-      "researchId": "body_t8_m1",
-      "prerequisiteIds": [
-        "body_t7_m1"
-      ],
-      "pointCost": 8
-    },
-    {
-      "moduleType": "body",
-      "moduleSubType": "body_t9_m1",
-      "researchId": "body_t9_m1",
-      "prerequisiteIds": [
-        "body_t8_m1"
-      ],
-      "pointCost": 9
-    },
-    {
-      "moduleType": "body",
-      "moduleSubType": "body_t10_m1",
-      "researchId": "body_t10_m1",
-      "prerequisiteIds": [
-        "body_t9_m1"
-      ],
-      "pointCost": 10
-    },
-    {
-      "moduleType": "body",
-      "moduleSubType": "body_t11_m1",
-      "researchId": "body_t11_m1",
-      "prerequisiteIds": [
-        "body_t10_m1"
-      ],
-      "pointCost": 11
-    },
-    {
-      "moduleType": "body",
-      "moduleSubType": "body_t12_m1",
-      "researchId": "body_t12_m1",
-      "prerequisiteIds": [
-        "body_t11_m1"
-      ],
-      "pointCost": 12
-    },
-    {
-      "moduleType": "body",
-      "moduleSubType": "body_t13_m1",
-      "researchId": "body_t13_m1",
-      "prerequisiteIds": [
-        "body_t12_m1"
-      ],
-      "pointCost": 13
-    },
-    {
-      "moduleType": "body",
-      "moduleSubType": "body_t14_m1",
-      "researchId": "body_t14_m1",
-      "prerequisiteIds": [
-        "body_t13_m1"
-      ],
-      "pointCost": 14
-    },
-    {
-      "moduleType": "beam",
-      "moduleSubType": "beam_t1_m1",
-      "researchId": "beam_t1_m1",
-      "prerequisiteIds": [],
-      "pointCost": 0
-    },
-    {
-      "moduleType": "beam",
-      "moduleSubType": "beam_t2_m1",
-      "researchId": "beam_t2_m1",
-      "prerequisiteIds": [
-        "beam_t1_m1"
-      ],
-      "pointCost": 2
-    },
-    {
-      "moduleType": "beam",
-      "moduleSubType": "beam_t3_m1",
-      "researchId": "beam_t3_m1",
-      "prerequisiteIds": [
-        "beam_t2_m1"
-      ],
-      "pointCost": 3
-    },
-    {
-      "moduleType": "beam",
-      "moduleSubType": "beam_t4_m1",
-      "researchId": "beam_t4_m1",
-      "prerequisiteIds": [
-        "beam_t3_m1"
-      ],
-      "pointCost": 4
-    },
-    {
-      "moduleType": "beam",
-      "moduleSubType": "beam_t5_m1",
-      "researchId": "beam_t5_m1",
-      "prerequisiteIds": [
-        "beam_t4_m1"
-      ],
-      "pointCost": 5
-    },
-    {
-      "moduleType": "beam",
-      "moduleSubType": "beam_t6_m1",
-      "researchId": "beam_t6_m1",
-      "prerequisiteIds": [
-        "beam_t5_m1"
-      ],
-      "pointCost": 6
-    },
-    {
-      "moduleType": "beam",
-      "moduleSubType": "beam_t7_m1",
-      "researchId": "beam_t7_m1",
-      "prerequisiteIds": [
-        "beam_t6_m1"
-      ],
-      "pointCost": 7
-    },
-    {
-      "moduleType": "beam",
-      "moduleSubType": "beam_t8_m1",
-      "researchId": "beam_t8_m1",
-      "prerequisiteIds": [
-        "beam_t7_m1"
-      ],
-      "pointCost": 8
-    },
-    {
-      "moduleType": "beam",
-      "moduleSubType": "beam_t9_m1",
-      "researchId": "beam_t9_m1",
-      "prerequisiteIds": [
-        "beam_t8_m1"
-      ],
-      "pointCost": 9
-    },
-    {
-      "moduleType": "beam",
-      "moduleSubType": "beam_t10_m1",
-      "researchId": "beam_t10_m1",
-      "prerequisiteIds": [
-        "beam_t9_m1"
-      ],
-      "pointCost": 10
-    },
-    {
-      "moduleType": "beam",
-      "moduleSubType": "beam_t11_m1",
-      "researchId": "beam_t11_m1",
-      "prerequisiteIds": [
-        "beam_t10_m1"
-      ],
-      "pointCost": 11
-    },
-    {
-      "moduleType": "beam",
-      "moduleSubType": "beam_t12_m1",
-      "researchId": "beam_t12_m1",
-      "prerequisiteIds": [
-        "beam_t11_m1"
-      ],
-      "pointCost": 12
-    },
-    {
-      "moduleType": "beam",
-      "moduleSubType": "beam_t13_m1",
-      "researchId": "beam_t13_m1",
-      "prerequisiteIds": [
-        "beam_t12_m1"
-      ],
-      "pointCost": 13
-    },
-    {
-      "moduleType": "beam",
-      "moduleSubType": "beam_t14_m1",
-      "researchId": "beam_t14_m1",
-      "prerequisiteIds": [
-        "beam_t13_m1"
-      ],
-      "pointCost": 14
-    },
-    {
-      "moduleType": "missile",
-      "moduleSubType": "missile_t1_m1",
-      "researchId": "missile_t1_m1",
-      "prerequisiteIds": [],
-      "pointCost": 0
-    },
-    {
-      "moduleType": "missile",
-      "moduleSubType": "missile_t2_m1",
-      "researchId": "missile_t2_m1",
-      "prerequisiteIds": [
-        "missile_t1_m1"
-      ],
-      "pointCost": 2
-    },
-    {
-      "moduleType": "missile",
-      "moduleSubType": "missile_t3_m1",
-      "researchId": "missile_t3_m1",
-      "prerequisiteIds": [
-        "missile_t2_m1"
-      ],
-      "pointCost": 3
-    },
-    {
-      "moduleType": "missile",
-      "moduleSubType": "missile_t4_m1",
-      "researchId": "missile_t4_m1",
-      "prerequisiteIds": [
-        "missile_t3_m1"
-      ],
-      "pointCost": 4
-    },
-    {
-      "moduleType": "missile",
-      "moduleSubType": "missile_t5_m1",
-      "researchId": "missile_t5_m1",
-      "prerequisiteIds": [
-        "missile_t4_m1"
-      ],
-      "pointCost": 5
-    },
-    {
-      "moduleType": "missile",
-      "moduleSubType": "missile_t6_m1",
-      "researchId": "missile_t6_m1",
-      "prerequisiteIds": [
-        "missile_t5_m1"
-      ],
-      "pointCost": 6
-    },
-    {
-      "moduleType": "missile",
-      "moduleSubType": "missile_t7_m1",
-      "researchId": "missile_t7_m1",
-      "prerequisiteIds": [
-        "missile_t6_m1"
-      ],
-      "pointCost": 7
-    },
-    {
-      "moduleType": "missile",
-      "moduleSubType": "missile_t8_m1",
-      "researchId": "missile_t8_m1",
-      "prerequisiteIds": [
-        "missile_t7_m1"
-      ],
-      "pointCost": 8
-    },
-    {
-      "moduleType": "missile",
-      "moduleSubType": "missile_t9_m1",
-      "researchId": "missile_t9_m1",
-      "prerequisiteIds": [
-        "missile_t8_m1"
-      ],
-      "pointCost": 9
-    },
-    {
-      "moduleType": "missile",
-      "moduleSubType": "missile_t10_m1",
-      "researchId": "missile_t10_m1",
-      "prerequisiteIds": [
-        "missile_t9_m1"
-      ],
-      "pointCost": 10
-    },
-    {
-      "moduleType": "missile",
-      "moduleSubType": "missile_t11_m1",
-      "researchId": "missile_t11_m1",
-      "prerequisiteIds": [
-        "missile_t10_m1"
-      ],
-      "pointCost": 11
-    },
-    {
-      "moduleType": "missile",
-      "moduleSubType": "missile_t12_m1",
-      "researchId": "missile_t12_m1",
-      "prerequisiteIds": [
-        "missile_t11_m1"
-      ],
-      "pointCost": 12
-    },
-    {
-      "moduleType": "missile",
-      "moduleSubType": "missile_t13_m1",
-      "researchId": "missile_t13_m1",
-      "prerequisiteIds": [
-        "missile_t12_m1"
-      ],
-      "pointCost": 13
-    },
-    {
-      "moduleType": "missile",
-      "moduleSubType": "missile_t14_m1",
-      "researchId": "missile_t14_m1",
-      "prerequisiteIds": [
-        "missile_t13_m1"
-      ],
-      "pointCost": 14
-    },
-    {
-      "moduleType": "hanger",
-      "moduleSubType": "hanger_t1_m1",
-      "researchId": "hanger_t1_m1",
-      "prerequisiteIds": [],
-      "pointCost": 0
-    },
-    {
-      "moduleType": "hanger",
-      "moduleSubType": "hanger_t2_m1",
-      "researchId": "hanger_t2_m1",
-      "prerequisiteIds": [
-        "hanger_t1_m1"
-      ],
-      "pointCost": 2
-    },
-    {
-      "moduleType": "hanger",
-      "moduleSubType": "hanger_t3_m1",
-      "researchId": "hanger_t3_m1",
-      "prerequisiteIds": [
-        "hanger_t2_m1"
-      ],
-      "pointCost": 3
-    },
-    {
-      "moduleType": "hanger",
-      "moduleSubType": "hanger_t4_m1",
-      "researchId": "hanger_t4_m1",
-      "prerequisiteIds": [
-        "hanger_t3_m1"
-      ],
-      "pointCost": 4
-    },
-    {
-      "moduleType": "hanger",
-      "moduleSubType": "hanger_t5_m1",
-      "researchId": "hanger_t5_m1",
-      "prerequisiteIds": [
-        "hanger_t4_m1"
-      ],
-      "pointCost": 5
-    },
-    {
-      "moduleType": "hanger",
-      "moduleSubType": "hanger_t6_m1",
-      "researchId": "hanger_t6_m1",
-      "prerequisiteIds": [
-        "hanger_t5_m1"
-      ],
-      "pointCost": 6
-    },
-    {
-      "moduleType": "hanger",
-      "moduleSubType": "hanger_t7_m1",
-      "researchId": "hanger_t7_m1",
-      "prerequisiteIds": [
-        "hanger_t6_m1"
-      ],
-      "pointCost": 7
-    },
-    {
-      "moduleType": "hanger",
-      "moduleSubType": "hanger_t8_m1",
-      "researchId": "hanger_t8_m1",
-      "prerequisiteIds": [
-        "hanger_t7_m1"
-      ],
-      "pointCost": 8
-    },
-    {
-      "moduleType": "hanger",
-      "moduleSubType": "hanger_t9_m1",
-      "researchId": "hanger_t9_m1",
-      "prerequisiteIds": [
-        "hanger_t8_m1"
-      ],
-      "pointCost": 9
-    },
-    {
-      "moduleType": "hanger",
-      "moduleSubType": "hanger_t10_m1",
-      "researchId": "hanger_t10_m1",
-      "prerequisiteIds": [
-        "hanger_t9_m1"
-      ],
-      "pointCost": 10
-    },
-    {
-      "moduleType": "hanger",
-      "moduleSubType": "hanger_t11_m1",
-      "researchId": "hanger_t11_m1",
-      "prerequisiteIds": [
-        "hanger_t10_m1"
-      ],
-      "pointCost": 11
-    },
-    {
-      "moduleType": "hanger",
-      "moduleSubType": "hanger_t12_m1",
-      "researchId": "hanger_t12_m1",
-      "prerequisiteIds": [
-        "hanger_t11_m1"
-      ],
-      "pointCost": 12
-    },
-    {
-      "moduleType": "hanger",
-      "moduleSubType": "hanger_t13_m1",
-      "researchId": "hanger_t13_m1",
-      "prerequisiteIds": [
-        "hanger_t12_m1"
-      ],
-      "pointCost": 13
-    },
-    {
-      "moduleType": "hanger",
-      "moduleSubType": "hanger_t14_m1",
-      "researchId": "hanger_t14_m1",
-      "prerequisiteIds": [
-        "hanger_t13_m1"
-      ],
-      "pointCost": 14
-    }
-  ],
-  "techLevelDataList": [
-    {
-      "targetTechLevel": 1,
-      "shipCount": 1,
-      "researchId": "tech_level_1",
-      "prerequisiteIds": [],
-      "pointCost": 0
-    },
-    {
-      "targetTechLevel": 2,
-      "shipCount": 1,
-      "researchId": "tech_level_2",
-      "prerequisiteIds": [
-        "tech_level_1"
-      ],
-      "pointCost": 2
-    },
-    {
-      "targetTechLevel": 3,
-      "shipCount": 1,
-      "researchId": "tech_level_3",
-      "prerequisiteIds": [
-        "tech_level_2"
-      ],
-      "pointCost": 3
-    },
-    {
-      "targetTechLevel": 4,
-      "shipCount": 1,
-      "researchId": "tech_level_4",
-      "prerequisiteIds": [
-        "tech_level_3"
-      ],
-      "pointCost": 5
-    },
-    {
-      "targetTechLevel": 5,
-      "shipCount": 2,
-      "researchId": "tech_level_5",
-      "prerequisiteIds": [
-        "tech_level_4"
-      ],
-      "pointCost": 5
-    },
-    {
-      "targetTechLevel": 6,
-      "shipCount": 2,
-      "researchId": "tech_level_6",
-      "prerequisiteIds": [
-        "tech_level_5"
-      ],
-      "pointCost": 5
-    },
-    {
-      "targetTechLevel": 7,
-      "shipCount": 2,
-      "researchId": "tech_level_7",
-      "prerequisiteIds": [
-        "tech_level_6"
-      ],
-      "pointCost": 5
-    },
-    {
-      "targetTechLevel": 8,
-      "shipCount": 2,
-      "researchId": "tech_level_8",
-      "prerequisiteIds": [
-        "tech_level_7"
-      ],
-      "pointCost": 5
-    },
-    {
-      "targetTechLevel": 9,
-      "shipCount": 2,
-      "researchId": "tech_level_9",
-      "prerequisiteIds": [
-        "tech_level_8"
-      ],
-      "pointCost": 5
-    },
-    {
-      "targetTechLevel": 10,
-      "shipCount": 3,
-      "researchId": "tech_level_10",
-      "prerequisiteIds": [
-        "tech_level_9"
-      ],
-      "pointCost": 5
-    },
-    {
-      "targetTechLevel": 11,
-      "shipCount": 3,
-      "researchId": "tech_level_11",
-      "prerequisiteIds": [
-        "tech_level_10"
-      ],
-      "pointCost": 5
-    },
-    {
-      "targetTechLevel": 12,
-      "shipCount": 3,
-      "researchId": "tech_level_12",
-      "prerequisiteIds": [
-        "tech_level_11"
-      ],
-      "pointCost": 5
-    },
-    {
-      "targetTechLevel": 13,
-      "shipCount": 3,
-      "researchId": "tech_level_13",
-      "prerequisiteIds": [
-        "tech_level_12"
-      ],
-      "pointCost": 5
-    },
-    {
-      "targetTechLevel": 14,
-      "shipCount": 3,
-      "researchId": "tech_level_14",
-      "prerequisiteIds": [
-        "tech_level_13"
-      ],
-      "pointCost": 5
-    }
-  ]
-}
+[
+  {
+    "moduleType": "body",
+    "moduleSubType": "body_t1_m1",
+    "pointCost": 0,
+    "researchId": "body_t1_m1",
+    "prerequisiteIds": []
+  },
+  {
+    "moduleType": "body",
+    "moduleSubType": "body_t2_m1",
+    "pointCost": 2,
+    "researchId": "body_t2_m1",
+    "prerequisiteIds": [
+      "body_t1_m1"
+    ]
+  },
+  {
+    "moduleType": "body",
+    "moduleSubType": "body_t3_m1",
+    "pointCost": 3,
+    "researchId": "body_t3_m1",
+    "prerequisiteIds": [
+      "body_t2_m1"
+    ]
+  },
+  {
+    "moduleType": "body",
+    "moduleSubType": "body_t4_m1",
+    "pointCost": 4,
+    "researchId": "body_t4_m1",
+    "prerequisiteIds": [
+      "body_t3_m1"
+    ]
+  },
+  {
+    "moduleType": "body",
+    "moduleSubType": "body_t5_m1",
+    "pointCost": 5,
+    "researchId": "body_t5_m1",
+    "prerequisiteIds": [
+      "body_t4_m1"
+    ]
+  },
+  {
+    "moduleType": "body",
+    "moduleSubType": "body_t6_m1",
+    "pointCost": 6,
+    "researchId": "body_t6_m1",
+    "prerequisiteIds": [
+      "body_t5_m1"
+    ]
+  },
+  {
+    "moduleType": "body",
+    "moduleSubType": "body_t7_m1",
+    "pointCost": 7,
+    "researchId": "body_t7_m1",
+    "prerequisiteIds": [
+      "body_t6_m1"
+    ]
+  },
+  {
+    "moduleType": "body",
+    "moduleSubType": "body_t8_m1",
+    "pointCost": 8,
+    "researchId": "body_t8_m1",
+    "prerequisiteIds": [
+      "body_t7_m1"
+    ]
+  },
+  {
+    "moduleType": "body",
+    "moduleSubType": "body_t9_m1",
+    "pointCost": 9,
+    "researchId": "body_t9_m1",
+    "prerequisiteIds": [
+      "body_t8_m1"
+    ]
+  },
+  {
+    "moduleType": "body",
+    "moduleSubType": "body_t10_m1",
+    "pointCost": 10,
+    "researchId": "body_t10_m1",
+    "prerequisiteIds": [
+      "body_t9_m1"
+    ]
+  },
+  {
+    "moduleType": "body",
+    "moduleSubType": "body_t11_m1",
+    "pointCost": 11,
+    "researchId": "body_t11_m1",
+    "prerequisiteIds": [
+      "body_t10_m1"
+    ]
+  },
+  {
+    "moduleType": "body",
+    "moduleSubType": "body_t12_m1",
+    "pointCost": 12,
+    "researchId": "body_t12_m1",
+    "prerequisiteIds": [
+      "body_t11_m1"
+    ]
+  },
+  {
+    "moduleType": "body",
+    "moduleSubType": "body_t13_m1",
+    "pointCost": 13,
+    "researchId": "body_t13_m1",
+    "prerequisiteIds": [
+      "body_t12_m1"
+    ]
+  },
+  {
+    "moduleType": "body",
+    "moduleSubType": "body_t14_m1",
+    "pointCost": 14,
+    "researchId": "body_t14_m1",
+    "prerequisiteIds": [
+      "body_t13_m1"
+    ]
+  },
+  {
+    "moduleType": "beam",
+    "moduleSubType": "beam_t1_m1",
+    "pointCost": 0,
+    "researchId": "beam_t1_m1",
+    "prerequisiteIds": []
+  },
+  {
+    "moduleType": "beam",
+    "moduleSubType": "beam_t2_m1",
+    "pointCost": 2,
+    "researchId": "beam_t2_m1",
+    "prerequisiteIds": [
+      "beam_t1_m1"
+    ]
+  },
+  {
+    "moduleType": "beam",
+    "moduleSubType": "beam_t3_m1",
+    "pointCost": 3,
+    "researchId": "beam_t3_m1",
+    "prerequisiteIds": [
+      "beam_t2_m1"
+    ]
+  },
+  {
+    "moduleType": "beam",
+    "moduleSubType": "beam_t4_m1",
+    "pointCost": 4,
+    "researchId": "beam_t4_m1",
+    "prerequisiteIds": [
+      "beam_t3_m1"
+    ]
+  },
+  {
+    "moduleType": "beam",
+    "moduleSubType": "beam_t5_m1",
+    "pointCost": 5,
+    "researchId": "beam_t5_m1",
+    "prerequisiteIds": [
+      "beam_t4_m1"
+    ]
+  },
+  {
+    "moduleType": "beam",
+    "moduleSubType": "beam_t6_m1",
+    "pointCost": 6,
+    "researchId": "beam_t6_m1",
+    "prerequisiteIds": [
+      "beam_t5_m1"
+    ]
+  },
+  {
+    "moduleType": "beam",
+    "moduleSubType": "beam_t7_m1",
+    "pointCost": 7,
+    "researchId": "beam_t7_m1",
+    "prerequisiteIds": [
+      "beam_t6_m1"
+    ]
+  },
+  {
+    "moduleType": "beam",
+    "moduleSubType": "beam_t8_m1",
+    "pointCost": 8,
+    "researchId": "beam_t8_m1",
+    "prerequisiteIds": [
+      "beam_t7_m1"
+    ]
+  },
+  {
+    "moduleType": "beam",
+    "moduleSubType": "beam_t9_m1",
+    "pointCost": 9,
+    "researchId": "beam_t9_m1",
+    "prerequisiteIds": [
+      "beam_t8_m1"
+    ]
+  },
+  {
+    "moduleType": "beam",
+    "moduleSubType": "beam_t10_m1",
+    "pointCost": 10,
+    "researchId": "beam_t10_m1",
+    "prerequisiteIds": [
+      "beam_t9_m1"
+    ]
+  },
+  {
+    "moduleType": "beam",
+    "moduleSubType": "beam_t11_m1",
+    "pointCost": 11,
+    "researchId": "beam_t11_m1",
+    "prerequisiteIds": [
+      "beam_t10_m1"
+    ]
+  },
+  {
+    "moduleType": "beam",
+    "moduleSubType": "beam_t12_m1",
+    "pointCost": 12,
+    "researchId": "beam_t12_m1",
+    "prerequisiteIds": [
+      "beam_t11_m1"
+    ]
+  },
+  {
+    "moduleType": "beam",
+    "moduleSubType": "beam_t13_m1",
+    "pointCost": 13,
+    "researchId": "beam_t13_m1",
+    "prerequisiteIds": [
+      "beam_t12_m1"
+    ]
+  },
+  {
+    "moduleType": "beam",
+    "moduleSubType": "beam_t14_m1",
+    "pointCost": 14,
+    "researchId": "beam_t14_m1",
+    "prerequisiteIds": [
+      "beam_t13_m1"
+    ]
+  },
+  {
+    "moduleType": "missile",
+    "moduleSubType": "missile_t1_m1",
+    "pointCost": 0,
+    "researchId": "missile_t1_m1",
+    "prerequisiteIds": []
+  },
+  {
+    "moduleType": "missile",
+    "moduleSubType": "missile_t2_m1",
+    "pointCost": 2,
+    "researchId": "missile_t2_m1",
+    "prerequisiteIds": [
+      "missile_t1_m1"
+    ]
+  },
+  {
+    "moduleType": "missile",
+    "moduleSubType": "missile_t3_m1",
+    "pointCost": 3,
+    "researchId": "missile_t3_m1",
+    "prerequisiteIds": [
+      "missile_t2_m1"
+    ]
+  },
+  {
+    "moduleType": "missile",
+    "moduleSubType": "missile_t4_m1",
+    "pointCost": 4,
+    "researchId": "missile_t4_m1",
+    "prerequisiteIds": [
+      "missile_t3_m1"
+    ]
+  },
+  {
+    "moduleType": "missile",
+    "moduleSubType": "missile_t5_m1",
+    "pointCost": 5,
+    "researchId": "missile_t5_m1",
+    "prerequisiteIds": [
+      "missile_t4_m1"
+    ]
+  },
+  {
+    "moduleType": "missile",
+    "moduleSubType": "missile_t6_m1",
+    "pointCost": 6,
+    "researchId": "missile_t6_m1",
+    "prerequisiteIds": [
+      "missile_t5_m1"
+    ]
+  },
+  {
+    "moduleType": "missile",
+    "moduleSubType": "missile_t7_m1",
+    "pointCost": 7,
+    "researchId": "missile_t7_m1",
+    "prerequisiteIds": [
+      "missile_t6_m1"
+    ]
+  },
+  {
+    "moduleType": "missile",
+    "moduleSubType": "missile_t8_m1",
+    "pointCost": 8,
+    "researchId": "missile_t8_m1",
+    "prerequisiteIds": [
+      "missile_t7_m1"
+    ]
+  },
+  {
+    "moduleType": "missile",
+    "moduleSubType": "missile_t9_m1",
+    "pointCost": 9,
+    "researchId": "missile_t9_m1",
+    "prerequisiteIds": [
+      "missile_t8_m1"
+    ]
+  },
+  {
+    "moduleType": "missile",
+    "moduleSubType": "missile_t10_m1",
+    "pointCost": 10,
+    "researchId": "missile_t10_m1",
+    "prerequisiteIds": [
+      "missile_t9_m1"
+    ]
+  },
+  {
+    "moduleType": "missile",
+    "moduleSubType": "missile_t11_m1",
+    "pointCost": 11,
+    "researchId": "missile_t11_m1",
+    "prerequisiteIds": [
+      "missile_t10_m1"
+    ]
+  },
+  {
+    "moduleType": "missile",
+    "moduleSubType": "missile_t12_m1",
+    "pointCost": 12,
+    "researchId": "missile_t12_m1",
+    "prerequisiteIds": [
+      "missile_t11_m1"
+    ]
+  },
+  {
+    "moduleType": "missile",
+    "moduleSubType": "missile_t13_m1",
+    "pointCost": 13,
+    "researchId": "missile_t13_m1",
+    "prerequisiteIds": [
+      "missile_t12_m1"
+    ]
+  },
+  {
+    "moduleType": "missile",
+    "moduleSubType": "missile_t14_m1",
+    "pointCost": 14,
+    "researchId": "missile_t14_m1",
+    "prerequisiteIds": [
+      "missile_t13_m1"
+    ]
+  },
+  {
+    "moduleType": "hanger",
+    "moduleSubType": "hanger_t1_m1",
+    "pointCost": 0,
+    "researchId": "hanger_t1_m1",
+    "prerequisiteIds": []
+  },
+  {
+    "moduleType": "hanger",
+    "moduleSubType": "hanger_t2_m1",
+    "pointCost": 2,
+    "researchId": "hanger_t2_m1",
+    "prerequisiteIds": [
+      "hanger_t1_m1"
+    ]
+  },
+  {
+    "moduleType": "hanger",
+    "moduleSubType": "hanger_t3_m1",
+    "pointCost": 3,
+    "researchId": "hanger_t3_m1",
+    "prerequisiteIds": [
+      "hanger_t2_m1"
+    ]
+  },
+  {
+    "moduleType": "hanger",
+    "moduleSubType": "hanger_t4_m1",
+    "pointCost": 4,
+    "researchId": "hanger_t4_m1",
+    "prerequisiteIds": [
+      "hanger_t3_m1"
+    ]
+  },
+  {
+    "moduleType": "hanger",
+    "moduleSubType": "hanger_t5_m1",
+    "pointCost": 5,
+    "researchId": "hanger_t5_m1",
+    "prerequisiteIds": [
+      "hanger_t4_m1"
+    ]
+  },
+  {
+    "moduleType": "hanger",
+    "moduleSubType": "hanger_t6_m1",
+    "pointCost": 6,
+    "researchId": "hanger_t6_m1",
+    "prerequisiteIds": [
+      "hanger_t5_m1"
+    ]
+  },
+  {
+    "moduleType": "hanger",
+    "moduleSubType": "hanger_t7_m1",
+    "pointCost": 7,
+    "researchId": "hanger_t7_m1",
+    "prerequisiteIds": [
+      "hanger_t6_m1"
+    ]
+  },
+  {
+    "moduleType": "hanger",
+    "moduleSubType": "hanger_t8_m1",
+    "pointCost": 8,
+    "researchId": "hanger_t8_m1",
+    "prerequisiteIds": [
+      "hanger_t7_m1"
+    ]
+  },
+  {
+    "moduleType": "hanger",
+    "moduleSubType": "hanger_t9_m1",
+    "pointCost": 9,
+    "researchId": "hanger_t9_m1",
+    "prerequisiteIds": [
+      "hanger_t8_m1"
+    ]
+  },
+  {
+    "moduleType": "hanger",
+    "moduleSubType": "hanger_t10_m1",
+    "pointCost": 10,
+    "researchId": "hanger_t10_m1",
+    "prerequisiteIds": [
+      "hanger_t9_m1"
+    ]
+  },
+  {
+    "moduleType": "hanger",
+    "moduleSubType": "hanger_t11_m1",
+    "pointCost": 11,
+    "researchId": "hanger_t11_m1",
+    "prerequisiteIds": [
+      "hanger_t10_m1"
+    ]
+  },
+  {
+    "moduleType": "hanger",
+    "moduleSubType": "hanger_t12_m1",
+    "pointCost": 12,
+    "researchId": "hanger_t12_m1",
+    "prerequisiteIds": [
+      "hanger_t11_m1"
+    ]
+  },
+  {
+    "moduleType": "hanger",
+    "moduleSubType": "hanger_t13_m1",
+    "pointCost": 13,
+    "researchId": "hanger_t13_m1",
+    "prerequisiteIds": [
+      "hanger_t12_m1"
+    ]
+  },
+  {
+    "moduleType": "hanger",
+    "moduleSubType": "hanger_t14_m1",
+    "pointCost": 14,
+    "researchId": "hanger_t14_m1",
+    "prerequisiteIds": [
+      "hanger_t13_m1"
+    ]
+  }
+]
