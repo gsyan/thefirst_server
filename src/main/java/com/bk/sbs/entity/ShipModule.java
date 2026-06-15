@@ -43,7 +43,7 @@ public class ShipModule {
 
     // 모듈포인트 기준값 — 미네랄 초기화 시 이 값으로 복귀
     @Enumerated(EnumType.STRING)
-    @Column(columnDefinition = "VARCHAR(50) DEFAULT 'none'")
+    @Column(columnDefinition = "VARCHAR(100) DEFAULT 'none'")
     private EModuleSubType modulePointSubType = EModuleSubType.none;
 
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
