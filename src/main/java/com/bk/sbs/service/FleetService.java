@@ -407,8 +407,6 @@ public class FleetService {
                                     .bodyIndex(beamModule.getBodyIndex())
                                     .slotIndex(beamModule.getSlotIndex())
                                     .investedModulePoint(beamModule.getInvestedModulePoint())
-                                    .modulePointSubType(beamModule.getModulePointSubType())
-                                    .modulePointLevel(beamModule.getModulePointLevel())
                                     .investedMineral(beamModule.getInvestedMineral())
                                     .build())
                             .collect(Collectors.toList());
@@ -422,8 +420,6 @@ public class FleetService {
                                     .bodyIndex(missileModule.getBodyIndex())
                                     .slotIndex(missileModule.getSlotIndex())
                                     .investedModulePoint(missileModule.getInvestedModulePoint())
-                                    .modulePointSubType(missileModule.getModulePointSubType())
-                                    .modulePointLevel(missileModule.getModulePointLevel())
                                     .investedMineral(missileModule.getInvestedMineral())
                                     .build())
                             .collect(Collectors.toList());
@@ -437,8 +433,6 @@ public class FleetService {
                                     .bodyIndex(hangerModule.getBodyIndex())
                                     .slotIndex(hangerModule.getSlotIndex())
                                     .investedModulePoint(hangerModule.getInvestedModulePoint())
-                                    .modulePointSubType(hangerModule.getModulePointSubType())
-                                    .modulePointLevel(hangerModule.getModulePointLevel())
                                     .investedMineral(hangerModule.getInvestedMineral())
                                     .build())
                             .collect(Collectors.toList());
@@ -462,8 +456,6 @@ public class FleetService {
                             .missiles(missiles)
                             .hangers(hangers)
                             .investedModulePoint(bodyModule.getInvestedModulePoint())
-                            .modulePointSubType(bodyModule.getModulePointSubType())
-                            .modulePointLevel(bodyModule.getModulePointLevel())
                             .investedMineral(bodyModule.getInvestedMineral())
                             .currentHealth(normalizedHealth)
                             .build();
@@ -656,9 +648,6 @@ public class FleetService {
         // 모듈 레벨 업데이트 (능력치는 클라이언트가 DataTable에서 조회)
         module.setModuleLevel(request.getTargetLevel());
         module.setInvestedModulePoint(module.getInvestedModulePoint() + deducted);
-        // 모듈포인트 기준값 동기화
-        module.setModulePointSubType(module.getModuleSubType());
-        module.setModulePointLevel(module.getModuleLevel());
         module.setModified(LocalDateTime.now());
         shipModuleRepository.save(module);
 
@@ -731,9 +720,6 @@ public class FleetService {
             module.setModuleSubType(prevSubType);
             module.setModuleLevel(maxLevel);
             module.setInvestedModulePoint(Math.max(0, module.getInvestedModulePoint() - totalRefund));
-            // 모듈포인트 기준값 동기화
-            module.setModulePointSubType(prevSubType);
-            module.setModulePointLevel(maxLevel);
             module.setModified(LocalDateTime.now());
             shipModuleRepository.save(module);
 
@@ -771,9 +757,6 @@ public class FleetService {
 
         module.setModuleLevel(request.getTargetLevel());
         module.setInvestedModulePoint(Math.max(0, module.getInvestedModulePoint() - totalRefund));
-        // 모듈포인트 기준값 동기화
-        module.setModulePointSubType(module.getModuleSubType());
-        module.setModulePointLevel(module.getModuleLevel());
         module.setModified(LocalDateTime.now());
         shipModuleRepository.save(module);
 
@@ -917,9 +900,6 @@ public class FleetService {
         newModule.setModuleSubType(finalModuleSubType);
         newModule.setModuleLevel(1);
         newModule.setInvestedModulePoint(unlockDeducted);
-        // 모듈포인트 기준값 초기화
-        newModule.setModulePointSubType(finalModuleSubType);
-        newModule.setModulePointLevel(1);
         newModule.setDeleted(false);
         newModule.setCreated(LocalDateTime.now());
         newModule.setModified(LocalDateTime.now());
@@ -1018,9 +998,6 @@ public class FleetService {
         currentModule.setModuleSubType(newModuleSubType);
         currentModule.setModuleLevel(1);
         currentModule.setInvestedModulePoint(currentModule.getInvestedModulePoint() + changeDeducted);
-        // 모듈포인트 기준값 동기화
-        currentModule.setModulePointSubType(newModuleSubType);
-        currentModule.setModulePointLevel(1);
         currentModule.setModified(LocalDateTime.now());
         shipModuleRepository.save(currentModule);
 
@@ -1073,21 +1050,17 @@ public class FleetService {
         int targetGradeLevelupCost = calcLevelRefund(moduleType, newSubType);
         int moduleOnlyRefund = currentGradeUpCost + currentGradeLevelupCost + targetGradeLevelupCost;
 
-        int totalRefund = moduleOnlyRefund;
-        // body 다운그레이드 시 사라지는 슬롯(빔/미사일/격납고)의 포인트 환급 + 초기화
+        // body 다운그레이드 시 사라지는 슬롯(빔/미사일/격납고)의 포인트+미네랄 환급 + 초기화
         if (moduleType == EModuleType.body) {
-            totalRefund += refundAndResetLostSlots(request.getShipId(), request.getBodyIndex(), newSubType);
+            refundAndResetLostSlots(request.getShipId(), request.getBodyIndex(), newSubType, character);
         }
-        character.setModulePoint(character.getModulePoint() + totalRefund);
+        character.setModulePoint(character.getModulePoint() + moduleOnlyRefund);
         characterRepository.save(character);
 
         // 이전 서브타입으로 복귀, 레벨 1로 초기화
         currentModule.setModuleSubType(newSubType);
         currentModule.setModuleLevel(1);
         currentModule.setInvestedModulePoint(Math.max(0, currentModule.getInvestedModulePoint() - moduleOnlyRefund));
-        // 모듈포인트 기준값 동기화
-        currentModule.setModulePointSubType(newSubType);
-        currentModule.setModulePointLevel(1);
         currentModule.setModified(LocalDateTime.now());
         shipModuleRepository.save(currentModule);
 
@@ -1106,10 +1079,12 @@ public class FleetService {
     }
 
     // body 다운그레이드 시 새 body가 지원하지 않는 슬롯의 포인트 환급 + 초기화
-    private int refundAndResetLostSlots(Long shipId, int bodyIndex, EModuleSubType newBodySubType) {
+    // body 등급 하락 시 사라지는 슬롯의 modulePoint+mineral 환급 및 soft-delete (두 계열 공통)
+    private void refundAndResetLostSlots(Long shipId, int bodyIndex,
+                                          EModuleSubType newBodySubType,
+                                          com.bk.sbs.entity.Character character) {
         List<ModuleSlotInfoDto> newBodySlots = gameDataService.getBodyModuleSlots(newBodySubType);
 
-        // 새 body가 지원하는 슬롯 키 집합 (moduleType_slotIndex)
         java.util.Set<String> supportedKeys = new java.util.HashSet<>();
         if (newBodySlots != null) {
             for (ModuleSlotInfoDto slot : newBodySlots) {
@@ -1118,20 +1093,20 @@ public class FleetService {
         }
 
         List<ShipModule> allModules = shipModuleRepository.findByShipIdAndBodyIndexAndDeletedFalse(shipId, bodyIndex);
-        int refund = 0;
         for (ShipModule module : allModules) {
             if (module.getModuleType() == EModuleType.body) continue;
 
             String key = module.getModuleType().name() + "_" + module.getSlotIndex();
             if (!supportedKeys.contains(key)) {
-                refund += module.getInvestedModulePoint();
+                character.setModulePoint(character.getModulePoint() + module.getInvestedModulePoint());
+                character.setMineral(character.getMineral() + module.getInvestedMineral());
                 module.setDeleted(true);
                 module.setInvestedModulePoint(0);
+                module.setInvestedMineral(0);
                 module.setModified(LocalDateTime.now());
                 shipModuleRepository.save(module);
             }
         }
-        return refund;
     }
 
     // 문자열 기반 완료 연구 ID 목록 조회 (tech_level_N 등)
@@ -1194,32 +1169,9 @@ public class FleetService {
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.RESET_MODULE_FAIL_CHARACTER_NOT_FOUND));
 
-        // T1 레벨1 body가 지원하는 슬롯 목록 조회
-        List<ModuleData> bodyModules = gameDataService.getModulesByType(EModuleType.body);
-        List<ModuleSlotInfoDto> t1Slots = bodyModules.stream()
-                .filter(m -> EModuleSubType.body_t1_m1.equals(m.getModuleSubType()) && Integer.valueOf(1).equals(m.getModuleLevel()))
-                .findFirst()
-                .map(ModuleData::getModuleSlots)
-                .orElse(java.util.Collections.emptyList());
-
-        // body에 속한 자식 모듈 전체 조회 (beam/missile/hanger)
-        List<ShipModule> childModules = shipModuleRepository.findByShipIdAndBodyIndexAndDeletedFalse(
-                ship.getId(), request.getBodyIndex());
-
-        // T1에서 지원되지 않는 슬롯의 자식 모듈: 환급 + soft-delete
-        int totalRefund = body.getInvestedModulePoint();
-        for (ShipModule child : childModules) {
-            if (child.getModuleType() == EModuleType.body) continue;
-            boolean supported = t1Slots.stream().anyMatch(s ->
-                    s.getModuleType() == child.getModuleType() && s.getSlotIndex().equals(child.getSlotIndex()));
-            if (!supported) {
-                totalRefund += child.getInvestedModulePoint();
-                child.setDeleted(true);
-                child.setModified(LocalDateTime.now());
-                shipModuleRepository.save(child);
-            }
-        }
-        character.setModulePoint(character.getModulePoint() + totalRefund);
+        int bodyModulePointRefund = body.getInvestedModulePoint();
+        refundAndResetLostSlots(ship.getId(), request.getBodyIndex(), EModuleSubType.body_t1_m1, character);
+        character.setModulePoint(character.getModulePoint() + bodyModulePointRefund);
         characterRepository.save(character);
 
         // body T1 레벨1로 복귀 (삭제 없이 값만 초기화)
@@ -1378,8 +1330,58 @@ public class FleetService {
         return refund;
     }
 
+    // investedModulePoint → (subTypeValue, level) 역산
+    // unlock(1) → T1 레벨업 → T2 그레이드업 → T2 레벨업 → ... 순서로 차감
+    // 반환: int[]{subTypeValue, level}, null이면 모듈포인트 투자 없음
+    private int[] calcModulePointBaseline(EModuleType moduleType, int investedModulePoint) {
+        if (investedModulePoint <= 0) {
+            return null;
+        }
+
+        int unlockCost = gameDataService.getModuleUnlockPrice();
+        int remaining  = investedModulePoint - unlockCost;
+
+        List<ModuleData> dataList     = gameDataService.getModulesByType(moduleType);
+        EModuleSubType currentSubType = gameDataService.getFirstModuleByType(moduleType).getModuleSubType();
+
+        while (currentSubType != EModuleSubType.none) {
+            int maxLevel = gameDataService.getMaxModuleLevel(moduleType, currentSubType);
+            if (maxLevel <= 0) break;
+
+            final EModuleSubType subForFilter = currentSubType;
+            for (int lv = 1; lv < maxLevel; lv++) {
+                final int nextLv    = lv + 1;
+                int       levelCost = dataList.stream()
+                        .filter(d -> subForFilter.equals(d.getModuleSubType()) && d.getModuleLevel() == nextLv)
+                        .mapToInt(d -> d.getModulePointCost() != null ? d.getModulePointCost() : 0)
+                        .findFirst()
+                        .orElse(0);
+
+                if (remaining < levelCost) {
+                    return new int[]{currentSubType.getValue(), lv};
+                }
+                remaining -= levelCost;
+            }
+
+            // 최대레벨 도달 → 다음 그레이드
+            EModuleSubType nextSubType = EModuleSubType.fromValue(currentSubType.getValue() + 100);
+            if (nextSubType == EModuleSubType.none) {
+                return new int[]{currentSubType.getValue(), maxLevel};
+            }
+
+            int gradeUpCost = gameDataService.getModuleResearchCost(nextSubType);
+            if (remaining < gradeUpCost) {
+                return new int[]{currentSubType.getValue(), maxLevel};
+            }
+            remaining    -= gradeUpCost;
+            currentSubType = nextSubType;
+        }
+
+        return null;
+    }
+
     // ─────────────────────────────────────────────────────────────────────────
-    // 전투 승리 시 미네랄 초기화 — modulePointSubType/Level 기준값으로 복원, 미네랄 소멸
+    // 전투 승리 시 미네랄 초기화 — investedModulePoint 역산으로 복원, 미네랄 소멸
     // ─────────────────────────────────────────────────────────────────────────
     @Transactional
     public int resetMineralModules(Long characterId) {
@@ -1396,15 +1398,17 @@ public class FleetService {
 
                 totalRefund = totalRefund + module.getInvestedMineral();
 
-                EModuleSubType baseline = module.getModulePointSubType();
-                boolean mineralOnlyUnlocked = (baseline == null || baseline == EModuleSubType.none);
+                int[] baselineCalc = calcModulePointBaseline(module.getModuleType(), module.getInvestedModulePoint());
+                boolean mineralOnlyUnlocked = (baselineCalc == null);
                 if (mineralOnlyUnlocked) {
                     // 미네랄로만 언락된 슬롯 — soft-delete
                     module.setDeleted(true);
                 } else {
-                    // 모듈포인트 기준값으로 복원
-                    module.setModuleSubType(baseline);
-                    module.setModuleLevel(module.getModulePointLevel());
+                    // 역산 기준값으로 복원
+                    EModuleSubType baselineSubType = EModuleSubType.fromValue(baselineCalc[0]);
+                    int baselineLevel = baselineCalc[1];
+                    module.setModuleSubType(baselineSubType);
+                    module.setModuleLevel(baselineLevel);
                 }
                 module.setInvestedMineral(0);
                 module.setModified(LocalDateTime.now());
@@ -1422,7 +1426,6 @@ public class FleetService {
 
     // ─────────────────────────────────────────────────────────────────────────
     // 미네랄 모듈 강화 API (미네랄 소모, 전투 승리 시 자동 초기화)
-    // modulePointSubType/Level은 변경하지 않음 — 모듈포인트 기준값 보존
     // ─────────────────────────────────────────────────────────────────────────
 
     @Transactional
@@ -1486,7 +1489,6 @@ public class FleetService {
         newModule.setModuleSubType(finalModuleSubType);
         newModule.setModuleLevel(1);
         newModule.setInvestedMineral(unlockCost);
-        // modulePointSubType/Level은 none/0 유지 (모듈포인트 기준 없음)
         newModule.setDeleted(false);
         newModule.setCreated(LocalDateTime.now());
         newModule.setModified(LocalDateTime.now());
@@ -1587,8 +1589,9 @@ public class FleetService {
             throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_LEVEL_MISMATCH);
         }
 
-        // 모듈포인트 기준 레벨 아래로 다운 불가
-        int baselineLevel = module.getModulePointLevel();
+        // 모듈포인트 기준 레벨 아래로 다운 불가 (역산)
+        int[] baselineCalc = calcModulePointBaseline(moduleType, module.getInvestedModulePoint());
+        int baselineLevel = (baselineCalc != null) ? baselineCalc[1] : 1;
         if (request.getTargetLevel() < baselineLevel) {
             throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_BELOW_POINT_BASELINE);
         }
@@ -1691,7 +1694,6 @@ public class FleetService {
         currentModule.setModuleSubType(newSubType);
         currentModule.setModuleLevel(1);
         currentModule.setInvestedMineral(currentModule.getInvestedMineral() + totalCost);
-        // modulePointSubType/Level 변경 없음 — 모듈포인트 기준값 보존
         currentModule.setModified(LocalDateTime.now());
         shipModuleRepository.save(currentModule);
 
@@ -1730,10 +1732,9 @@ public class FleetService {
                 request.getShipId(), request.getBodyIndex(), moduleType, request.getSlotIndex()
         ).orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_MODULE_NOT_FOUND));
 
-        // 모듈포인트 기준 등급 아래로 다운 불가
-        EModuleSubType baselineSubType = currentModule.getModulePointSubType();
-        if (baselineSubType != null && baselineSubType != EModuleSubType.none
-                && newSubType.getValue() < baselineSubType.getValue()) {
+        // 모듈포인트 기준 등급 아래로 다운 불가 (investedModulePoint 역산)
+        int[] baseline = calcModulePointBaseline(moduleType, currentModule.getInvestedModulePoint());
+        if (baseline != null && newSubType.getValue() < baseline[0]) {
             throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_BELOW_POINT_BASELINE);
         }
 
@@ -1746,19 +1747,22 @@ public class FleetService {
         int targetGradeLevelupCost = calcMineralLevelRefund(moduleType, newSubType);
         int moduleOnlyRefund = currentGradeUpCost + currentGradeLevelupCost + targetGradeLevelupCost;
 
-        int totalRefund = moduleOnlyRefund;
-        // body 다운그레이드 시 사라지는 슬롯의 미네랄 환급
+        // body 다운그레이드 시 사라지는 슬롯의 미네랄+모듈포인트 환급
         if (moduleType == EModuleType.body) {
-            totalRefund = totalRefund + mineralRefundAndResetLostSlots(request.getShipId(), request.getBodyIndex(), newSubType, character);
+            refundAndResetLostSlots(request.getShipId(), request.getBodyIndex(), newSubType, character);
         }
 
-        character.setMineral(character.getMineral() + totalRefund);
+        character.setMineral(character.getMineral() + moduleOnlyRefund);
         characterRepository.save(character);
 
+        // baseline과 newSubType이 같으면 모듈포인트가 이미 그 서브타입까지 투자됨 → baseline 레벨로 복귀
+        int resultLevel = 1;
+        if (baseline != null && baseline[0] == newSubType.getValue()) {
+            resultLevel = baseline[1];
+        }
         currentModule.setModuleSubType(newSubType);
-        currentModule.setModuleLevel(1);
+        currentModule.setModuleLevel(resultLevel);
         currentModule.setInvestedMineral(Math.max(0, currentModule.getInvestedMineral() - moduleOnlyRefund));
-        // modulePointSubType/Level 변경 없음 — 모듈포인트 기준값 보존
         currentModule.setModified(LocalDateTime.now());
         shipModuleRepository.save(currentModule);
 
@@ -1770,9 +1774,10 @@ public class FleetService {
                 .moduleTypeNew(moduleType)
                 .moduleSubTypeNew(newSubType)
                 .slotIndex(request.getSlotIndex())
-                .moduleNewLevel(1)
+                .moduleNewLevel(resultLevel)
                 .mineralRemain(character.getMineral())
                 .investedMineral(currentModule.getInvestedMineral())
+                .shipRemoved(false)
                 .build();
     }
 
@@ -1783,6 +1788,11 @@ public class FleetService {
 
         if (ship.getFleet().getCharacterId().equals(characterId) == false) {
             throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_FLEET_ACCESS_DENIED);
+        }
+
+        // body 타입은 기함/비기함에 따라 별도 처리
+        if (request.getModuleType() == EModuleType.body) {
+            return mineralResetBodyModule(ship, characterId, request);
         }
 
         ShipModule currentModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
@@ -1800,28 +1810,31 @@ public class FleetService {
         character.setMineral(character.getMineral() + refund);
         characterRepository.save(character);
 
-        EModuleSubType baselineSubType = currentModule.getModulePointSubType();
-        boolean isModuleRemoved = (baselineSubType == null || baselineSubType == EModuleSubType.none);
+        // investedModulePoint 역산으로 기준 서브타입/레벨 결정
+        int[] baseline      = calcModulePointBaseline(request.getModuleType(), currentModule.getInvestedModulePoint());
+        boolean isModuleRemoved = (baseline == null);
 
         EModuleSubType resultSubType;
         int resultLevel;
         if (isModuleRemoved == true) {
-            // 미네랄로만 언락된 모듈 → 완전 삭제
+            // 모듈포인트 투자 없음(미네랄로만 언락) → 완전 삭제
             currentModule.setDeleted(true);
             currentModule.setInvestedMineral(0);
             currentModule.setModified(LocalDateTime.now());
             shipModuleRepository.save(currentModule);
             resultSubType = EModuleSubType.none;
-            resultLevel = 0;
+            resultLevel   = 0;
         } else {
             // 모듈포인트 기준값으로 복원
+            EModuleSubType baselineSubType = EModuleSubType.fromValue(baseline[0]);
+            int            baselineLevel   = baseline[1];
             currentModule.setModuleSubType(baselineSubType);
-            currentModule.setModuleLevel(1);
+            currentModule.setModuleLevel(baselineLevel);
             currentModule.setInvestedMineral(0);
             currentModule.setModified(LocalDateTime.now());
             shipModuleRepository.save(currentModule);
             resultSubType = baselineSubType;
-            resultLevel = 1;
+            resultLevel   = baselineLevel;
         }
 
         return MineralModuleResetResponse.builder()
@@ -1834,44 +1847,93 @@ public class FleetService {
                 .isModuleRemoved(isModuleRemoved)
                 .mineralRemain(character.getMineral())
                 .investedMineral(0)
+                .shipRemoved(false)
                 .build();
     }
 
-    // body 미네랄 다운그레이드 시 새 body가 지원하지 않는 슬롯의 미네랄 환급 + 초기화
-    private int mineralRefundAndResetLostSlots(Long shipId, int bodyIndex,
-                                               EModuleSubType newBodySubType,
-                                               com.bk.sbs.entity.Character character) {
-        List<ModuleSlotInfoDto> newBodySlots = gameDataService.getBodyModuleSlots(newBodySubType);
+    // body 미네랄 리셋 — 기함/비기함 공통: 미네랄 투자분만 환급하고 baseline으로 복귀
+    // add ship은 모듈포인트 영역이므로 미네랄 리셋으로 함선을 삭제하지 않음
+    private MineralModuleResetResponse mineralResetBodyModule(Ship ship, Long characterId, MineralModuleResetRequest request) {
+        com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_CHARACTER_NOT_FOUND));
 
-        java.util.Set<String> supportedKeys = new java.util.HashSet<>();
-        if (newBodySlots != null) {
-            for (ModuleSlotInfoDto slot : newBodySlots) {
-                supportedKeys.add(slot.getModuleType().name() + "_" + slot.getSlotIndex());
-            }
+        // 미네랄 환급, 기준값으로 복귀 (함체는 삭제하지 않음)
+        ShipModule bodyModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
+                ship.getId(), request.getBodyIndex(), EModuleType.body, 0
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_MODULE_NOT_FOUND));
+
+        if (bodyModule.getInvestedMineral() <= 0) {
+            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_NO_MINERAL_INVESTED);
         }
 
-        List<ShipModule> allModules = shipModuleRepository.findByShipIdAndBodyIndexAndDeletedFalse(shipId, bodyIndex);
+        int refund = bodyModule.getInvestedMineral();
+        character.setMineral(character.getMineral() + refund);
+
+        int[] baseline = calcModulePointBaseline(EModuleType.body, bodyModule.getInvestedModulePoint());
+        EModuleSubType resultSubType;
+        int resultLevel;
+        if (baseline != null) {
+            resultSubType = EModuleSubType.fromValue(baseline[0]);
+            resultLevel   = baseline[1];
+        } else {
+            // 모듈포인트 투자 없음 → 최소 등급/레벨로 복귀
+            resultSubType = EModuleSubType.body_t1_m1;
+            resultLevel   = 1;
+        }
+
+        // body 등급 하락 시 사라지는 슬롯의 미네랄/모듈포인트 환급
+        refundAndResetLostSlots(ship.getId(), request.getBodyIndex(), resultSubType, character);
+        characterRepository.save(character);
+
+        bodyModule.setModuleSubType(resultSubType);
+        bodyModule.setModuleLevel(resultLevel);
+        bodyModule.setInvestedMineral(0);
+        bodyModule.setModified(LocalDateTime.now());
+        shipModuleRepository.save(bodyModule);
+
+        return MineralModuleResetResponse.builder()
+                .shipId(ship.getId())
+                .bodyIndex(request.getBodyIndex())
+                .moduleType(EModuleType.body)
+                .moduleSubType(resultSubType)
+                .slotIndex(0)
+                .moduleNewLevel(resultLevel)
+                .isModuleRemoved(false)
+                .mineralRemain(character.getMineral())
+                .investedMineral(0)
+                .shipRemoved(false)
+                .build();
+    }
+
+
+    // 함선 전체 모듈의 미네랄 합산 반환 (모듈은 삭제하지 않음 — 호출부에서 mineralRemoveShip과 함께 사용)
+    private int mineralRefundAllModules(Long shipId, com.bk.sbs.entity.Character character) {
+        List<ShipModule> allModules = shipModuleRepository.findByShipIdAndDeletedFalseOrderBySlotIndex(shipId);
         int mineralRefund = 0;
         int modulePointRefund = 0;
-        for (ShipModule module : allModules) {
-            if (module.getModuleType() == EModuleType.body) continue;
-
-            String key = module.getModuleType().name() + "_" + module.getSlotIndex();
-            if (supportedKeys.contains(key) == false) {
-                mineralRefund = mineralRefund + module.getInvestedMineral();
-                modulePointRefund = modulePointRefund + module.getInvestedModulePoint();
-                module.setDeleted(true);
-                module.setInvestedMineral(0);
-                module.setInvestedModulePoint(0);
-                module.setModified(LocalDateTime.now());
-                shipModuleRepository.save(module);
-            }
+        for (ShipModule mod : allModules) {
+            mineralRefund = mineralRefund + mod.getInvestedMineral();
+            modulePointRefund = modulePointRefund + mod.getInvestedModulePoint();
         }
-        // 모듈포인트 환급도 함께 처리
         if (modulePointRefund > 0) {
             character.setModulePoint(character.getModulePoint() + modulePointRefund);
         }
         return mineralRefund;
+    }
+
+    // 함선 soft-delete (모든 모듈 포함)
+    private void mineralRemoveShip(Ship ship) {
+        List<ShipModule> allModules = shipModuleRepository.findByShipIdAndDeletedFalseOrderBySlotIndex(ship.getId());
+        for (ShipModule mod : allModules) {
+            mod.setDeleted(true);
+            mod.setInvestedMineral(0);
+            mod.setInvestedModulePoint(0);
+            mod.setModified(LocalDateTime.now());
+            shipModuleRepository.save(mod);
+        }
+        ship.setDeleted(true);
+        ship.setModified(LocalDateTime.now());
+        shipRepository.save(ship);
     }
 
     // 미네랄 비용 기준: Lv.1~targetLevel-1 구간 mineralCost 합산

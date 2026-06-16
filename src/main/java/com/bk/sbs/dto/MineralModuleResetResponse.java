@@ -25,4 +25,6 @@ public class MineralModuleResetResponse {
     private Boolean isModuleRemoved;
     private Integer mineralRemain;
     private Integer investedMineral;
+    private Boolean shipRemoved;
+    private Long removedShipId;
 }

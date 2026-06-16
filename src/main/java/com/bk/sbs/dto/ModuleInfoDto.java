@@ -22,7 +22,5 @@ public class ModuleInfoDto {
     private Integer bodyIndex;
     private Integer slotIndex;
     private Integer investedModulePoint;
-    private EModuleSubType modulePointSubType;
-    private Integer modulePointLevel;
     private Integer investedMineral;
 }

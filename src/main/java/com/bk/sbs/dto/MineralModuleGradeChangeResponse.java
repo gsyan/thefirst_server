@@ -26,4 +26,6 @@ public class MineralModuleGradeChangeResponse {
     private Integer moduleNewLevel;
     private Integer mineralRemain;
     private Integer investedMineral;
+    private Boolean shipRemoved;
+    private Long removedShipId;
 }

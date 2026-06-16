@@ -26,7 +26,5 @@ public class ModuleBodyInfoDto {
     private List<ModuleInfoDto> hangers;
     private Integer investedModulePoint;
     private Float currentHealth;
-    private EModuleSubType modulePointSubType;
-    private Integer modulePointLevel;
     private Integer investedMineral;
 }
