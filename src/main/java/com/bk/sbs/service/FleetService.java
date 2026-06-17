@@ -518,7 +518,7 @@ public class FleetService {
         int addShipDeducted = deductModulePoint(character, shipAddCost);
         characterRepository.save(character);
 
-        // 빠진 positionIndex(삭제된 슬롯) 중 가장 낮은 값 사용
+        // 빠진 함대 positionIndex(삭제된 슬롯) 중 가장 낮은 값 사용
         java.util.Set<Integer> usedIndexes = currentShips.stream()
                 .map(Ship::getPositionIndex)
                 .collect(java.util.stream.Collectors.toSet());
@@ -582,45 +582,127 @@ public class FleetService {
     }
 
     @Transactional
-    public ModuleLevelChangeResponse levelUpModule(Long characterId, ModuleLevelChangeRequest request) {
-        // 함선 소유권 확인
+    public ModuleUnlockResponse moduleUnlock(Long characterId, ModuleUnlockRequest request) {
         Ship ship = shipRepository.findById(request.getShipId())
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_SHIP_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_UNLOCK_FAIL_SHIP_NOT_FOUND));
+        if (ship.getFleet().getCharacterId().equals(characterId) == false) {
+            throw new BusinessException(ServerErrorCode.MODULE_UNLOCK_FAIL_FLEET_ACCESS_DENIED);
+        }
 
-        if (!ship.getFleet().getCharacterId().equals(characterId)) {
-            throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_FLEET_ACCESS_DENIED);
+        EModuleType moduleType = request.getModuleType();
+
+        // 현재 슬롯 확인
+        Optional<ShipModule> existingModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
+                request.getShipId(),
+                request.getBodyIndex(),
+                moduleType,
+                request.getSlotIndex()
+        );
+
+        // 이미 모듈이 존재하면 Placeholder가 아님
+        if (existingModule.isPresent()) {
+            throw new BusinessException(ServerErrorCode.MODULE_UNLOCK_FAIL_ALREADY_UNLOCKED); // 이미 해금된 모듈
+        }
+
+        com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_UNLOCK_FAIL_CHARACTER_NOT_FOUND));
+
+        // 모듈 해금 비용
+        int modulePointCost = gameDataService.getDataTableConfig().getModuleUnlockPrice();
+
+        // 자원 부족 검사
+        if (character.getModulePoint() < modulePointCost) {
+            throw new BusinessException(ServerErrorCode.MODULE_UNLOCK_FAIL_INSUFFICIENT_MINERAL);
+        }
+
+        // modulePoint 차감
+        int unlockDeducted = deductModulePoint(character, modulePointCost);
+        characterRepository.save(character);
+
+        // 1. 현재 함선의 Body 모듈 찾기
+        ShipModule bodyModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
+                request.getShipId(),
+                request.getBodyIndex(),
+                EModuleType.body,
+                0 // Body는 항상 slotIndex 0
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_UNLOCK_FAIL_BODY_MODULE_NOT_FOUND));
+
+        // 2. Body 모듈의 데이터 가져오기
+        List<ModuleData> bodyModuleDataList = gameDataService.getModulesByType(EModuleType.body);
+        ModuleData bodyData = bodyModuleDataList.stream()
+                .filter(data -> data.getModuleLevel() == bodyModule.getModuleLevel() &&
+                        data.getModuleSubType() == bodyModule.getModuleSubType())
+                .findFirst()
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_UNLOCK_FAIL_BODY_DATA_NOT_FOUND));
+
+        // 3. 요청된 슬롯 인덱스의 유효성 검사 및 슬롯 정보 확인
+        ModuleSlotInfoDto slotInfo = bodyData.getModuleSlots().stream()
+                .filter(s -> s.getModuleType() == moduleType && s.getSlotIndex().equals(request.getSlotIndex()))
+                .findFirst()
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_UNLOCK_FAIL_SLOT_INDEX_OUT_OF_BOUNDS));
+
+        // 4. 모듈 타입 검증
+        if (slotInfo.getModuleType() != moduleType) {
+            throw new BusinessException(ServerErrorCode.MODULE_UNLOCK_FAIL_INVALID_MODULE_TYPE);
+        }
+
+        // 기본 subType 결정
+        int defaultSubTypeValue = moduleType.getValue() * 10000 + 101; // 7자리 인코딩: t1(01) m1(01)
+        EModuleSubType finalModuleSubType = EModuleSubType.fromValue(defaultSubTypeValue);
+
+
+        // 새로운 모듈 레코드 생성
+        ShipModule newModule = new ShipModule();
+        newModule.setShip(ship);
+        newModule.setBodyIndex(request.getBodyIndex());
+        newModule.setSlotIndex(request.getSlotIndex());
+        newModule.setModuleType(moduleType);
+        newModule.setModuleSubType(finalModuleSubType);
+        newModule.setModuleLevel(1);
+        newModule.setInvestedModulePoint(unlockDeducted);
+        newModule.setDeleted(false);
+        newModule.setCreated(LocalDateTime.now());
+        newModule.setModified(LocalDateTime.now());
+        shipModuleRepository.save(newModule);
+
+        // 응답 생성
+        return new ModuleUnlockResponse(
+                request.getShipId(),
+                request.getBodyIndex(),
+                moduleType,
+                finalModuleSubType,
+                request.getSlotIndex(),
+                character.getModulePoint(),
+                unlockDeducted
+        );
+    }
+
+    @Transactional
+    public ModuleLevelChangeResponse moduleLevelUp(Long characterId, ModuleLevelChangeRequest request) {
+        Ship ship = shipRepository.findById(request.getShipId())
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_LEVELUP_FAIL_SHIP_NOT_FOUND));
+        if (ship.getFleet().getCharacterId().equals(characterId) == false) {
+            throw new BusinessException(ServerErrorCode.MODULE_LEVELUP_FAIL_FLEET_ACCESS_DENIED);
         }
 
         EModuleType moduleType = request.getModuleType();
         EModuleSubType moduleSubType = request.getModuleSubType();
 
-        // 모듈 찾기
         ShipModule module = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
-                request.getShipId(),
-                request.getBodyIndex(),
-                moduleType,
-                request.getSlotIndex()
-        ).orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MODULE_NOT_FOUND));
+                request.getShipId(), request.getBodyIndex(), moduleType, request.getSlotIndex()
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_LEVELUP_FAIL_MODULE_NOT_FOUND));
 
-        // 현재 레벨 확인
         if (module.getModuleLevel() != request.getCurrentLevel()) {
-            throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MODULE_LEVEL_MISMATCH);
+            throw new BusinessException(ServerErrorCode.MODULE_LEVELUP_FAIL_LEVEL_MISMATCH);
         }
 
         // 미네랄 투입 시 모듈포인트 추가 투자 불가
         if (module.getInvestedMineral() > 0) {
-            throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MINERAL_INVESTED);
+            throw new BusinessException(ServerErrorCode.MODULE_LEVELUP_FAIL_MINERAL_INVESTED);
         }
 
-        // 캐릭터 자원 조회 (비관적 락)
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_CHARACTER_NOT_FOUND));
-
-        // 기술레벨 검증 — 서브타입 인코딩에서 파싱: (value/100)%100
-        int requiredTechTier = (moduleSubType.getValue() / 100) % 100;
-        if (character.getTechLevel() < requiredTechTier) {
-            throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_INSUFFICIENT_TECH_LEVEL);
-        }
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_LEVELUP_FAIL_CHARACTER_NOT_FOUND));
 
         // 업그레이드 비용 계산 (현재 레벨부터 목표 레벨까지)
         int totalCost = 0;
@@ -631,14 +713,14 @@ public class FleetService {
             ModuleData levelData = moduleDataList.stream()
                     .filter(data -> data.getModuleLevel() == nextLevel)
                     .findFirst()
-                    .orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MODULE_DATA_NOT_FOUND));
+                    .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_LEVELUP_FAIL_MODULE_DATA_NOT_FOUND));
 
             totalCost = totalCost + levelData.getModulePointCost();
         }
 
         // 자원 부족 검사 (업그레이드 진행 전에 먼저 체크)
         if (character.getModulePoint() < totalCost) {
-            throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_INSUFFICIENT_MINERAL);
+            throw new BusinessException(ServerErrorCode.MODULE_LEVELUP_FAIL_INSUFFICIENT_MINERAL);
         }
 
         // modulePoint 차감
@@ -666,49 +748,41 @@ public class FleetService {
     }
 
     @Transactional
-    public ModuleLevelChangeResponse levelDownModule(Long characterId, ModuleLevelChangeRequest request) {
-        // 함선 소유권 확인
+    public ModuleLevelChangeResponse moduleLevelDown(Long characterId, ModuleLevelChangeRequest request) {
         Ship ship = shipRepository.findById(request.getShipId())
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_SHIP_NOT_FOUND));
-
-        if (!ship.getFleet().getCharacterId().equals(characterId)) {
-            throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_FLEET_ACCESS_DENIED);
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_FAIL_SHIP_NOT_FOUND));
+        if (ship.getFleet().getCharacterId().equals(characterId) == false) {
+            throw new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_FAIL_FLEET_ACCESS_DENIED);
         }
 
         EModuleType moduleType = request.getModuleType();
         EModuleSubType moduleSubType = request.getModuleSubType();
 
-        // 모듈 찾기
         ShipModule module = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
-                request.getShipId(),
-                request.getBodyIndex(),
-                moduleType,
-                request.getSlotIndex()
-        ).orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MODULE_NOT_FOUND));
+                request.getShipId(), request.getBodyIndex(), moduleType, request.getSlotIndex()
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_FAIL_MODULE_NOT_FOUND));
 
-        // 현재 레벨 확인
         if (module.getModuleLevel() != request.getCurrentLevel()) {
-            throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MODULE_LEVEL_MISMATCH);
+            throw new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_FAIL_LEVEL_MISMATCH);
         }
 
         // 미네랄 투입 시 모듈포인트 기준 조정 불가
         if (module.getInvestedMineral() > 0) {
-            throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MINERAL_INVESTED);
+            throw new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_FAIL_MINERAL_INVESTED);
         }
 
-        // 캐릭터 자원 조회 (비관적 락)
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_CHARACTER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_FAIL_CHARACTER_NOT_FOUND));
 
         // targetLevel == 0: Lv.1에서 이전 단계 맥스레벨로 강등
         if (request.getTargetLevel() == 0) {
             if (request.getCurrentLevel() != 1) {
-                throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MODULE_LEVEL_MISMATCH);
+                throw new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_FAIL_LEVEL_MISMATCH);
             }
 
             EModuleSubType prevSubType = EModuleSubType.fromValue(moduleSubType.getValue() - 100);
             if (prevSubType == null) {
-                throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MODULE_LEVEL_MISMATCH);
+                throw new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_FAIL_LEVEL_MISMATCH);
             }
 
             int maxLevel = gameDataService.getMaxModuleLevel(moduleType, prevSubType);
@@ -737,7 +811,7 @@ public class FleetService {
 
         // 일반 레벨다운 검증
         if (request.getTargetLevel() < 1 || request.getTargetLevel() >= request.getCurrentLevel()) {
-            throw new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MODULE_LEVEL_MISMATCH);
+            throw new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_FAIL_LEVEL_MISMATCH);
         }
 
         // 환급 금액 계산 (targetLevel ~ currentLevel-1 구간 합산)
@@ -748,7 +822,7 @@ public class FleetService {
             ModuleData levelData = moduleDataList.stream()
                     .filter(data -> data.getModuleLevel() == nextLevel)
                     .findFirst()
-                    .orElseThrow(() -> new BusinessException(ServerErrorCode.UPGRADE_MODULE_FAIL_MODULE_DATA_NOT_FOUND));
+                    .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_FAIL_MODULE_DATA_NOT_FOUND));
             totalRefund = totalRefund + levelData.getModulePointCost();
         }
 
@@ -818,159 +892,50 @@ public class FleetService {
     }
 
     @Transactional
-    public ModuleUnlockResponse unlockModule(Long characterId, ModuleUnlockRequest request) {
-        // 함선 소유권 확인
-        Ship ship = shipRepository.findById(request.getShipId())
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.UNLOCK_MODULE_FAIL_SHIP_NOT_FOUND));
-
-        if (!ship.getFleet().getCharacterId().equals(characterId)) {
-            throw new BusinessException(ServerErrorCode.UNLOCK_MODULE_FAIL_FLEET_ACCESS_DENIED);
+    public ModuleGradeChangeResponse moduleGradeUp(Long characterId, ModuleGradeChangeRequest request) {
+        Ship gradeUpShip = shipRepository.findById(request.getShipId())
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_GRADEUP_FAIL_SHIP_NOT_FOUND));
+        if (gradeUpShip.getFleet().getCharacterId().equals(characterId) == false) {
+            throw new BusinessException(ServerErrorCode.MODULE_GRADEUP_FAIL_FLEET_ACCESS_DENIED);
         }
 
-        // 요청에서 모듈 타입 정보 추출
-        EModuleType moduleType = request.getModuleType();
-
-        // 현재 슬롯 확인
-        Optional<ShipModule> existingModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
-                request.getShipId(),
-                request.getBodyIndex(),
-                moduleType,
-                request.getSlotIndex()
-        );
-
-        // 이미 모듈이 존재하면 Placeholder가 아님
-        if (existingModule.isPresent()) {
-            throw new BusinessException(ServerErrorCode.UNLOCK_MODULE_FAIL_ALREADY_UNLOCKED); // 이미 해금된 모듈
-        }
-
-        // 캐릭터 자원 조회 (비관적 락)
-        com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.UNLOCK_MODULE_FAIL_CHARACTER_NOT_FOUND));
-
-        // 모듈 해금 비용
-        int modulePointCost = gameDataService.getDataTableConfig().getModuleUnlockPrice();
-
-        // 자원 부족 검사
-        if (character.getModulePoint() < modulePointCost) {
-            throw new BusinessException(ServerErrorCode.UNLOCK_MODULE_FAIL_INSUFFICIENT_MINERAL);
-        }
-
-        // modulePoint 차감
-        int unlockDeducted = deductModulePoint(character, modulePointCost);
-        characterRepository.save(character);
-
-        // 1. 현재 함선의 Body 모듈 찾기
-        ShipModule bodyModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
-                request.getShipId(),
-                request.getBodyIndex(),
-                EModuleType.body,
-                0 // Body는 항상 slotIndex 0
-        ).orElseThrow(() -> new BusinessException(ServerErrorCode.UNLOCK_MODULE_FAIL_BODY_MODULE_NOT_FOUND));
-
-        // 2. Body 모듈의 데이터 가져오기
-        List<ModuleData> bodyModuleDataList = gameDataService.getModulesByType(EModuleType.body);
-        ModuleData bodyData = bodyModuleDataList.stream()
-                .filter(data -> data.getModuleLevel() == bodyModule.getModuleLevel() &&
-                        data.getModuleSubType() == bodyModule.getModuleSubType())
-                .findFirst()
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.UNLOCK_MODULE_FAIL_BODY_DATA_NOT_FOUND));
-
-        // 3. 요청된 슬롯 인덱스의 유효성 검사 및 슬롯 정보 확인
-        ModuleSlotInfoDto slotInfo = bodyData.getModuleSlots().stream()
-                .filter(s -> s.getModuleType() == moduleType && s.getSlotIndex().equals(request.getSlotIndex()))
-                .findFirst()
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.UNLOCK_MODULE_FAIL_SLOT_INDEX_OUT_OF_BOUNDS));
-
-        // 4. 모듈 타입 검증
-        if (slotInfo.getModuleType() != moduleType) {
-            throw new BusinessException(ServerErrorCode.UNLOCK_MODULE_FAIL_INVALID_MODULE_TYPE);
-        }
-
-        // 기본 subType 결정
-        int defaultSubTypeValue = moduleType.getValue() * 10000 + 101; // 7자리 인코딩: t1(01) m1(01)
-        EModuleSubType finalModuleSubType = EModuleSubType.fromValue(defaultSubTypeValue);
-
-
-        // 새로운 모듈 레코드 생성
-        ShipModule newModule = new ShipModule();
-        newModule.setShip(ship);
-        newModule.setBodyIndex(request.getBodyIndex());
-        newModule.setSlotIndex(request.getSlotIndex());
-        newModule.setModuleType(moduleType);
-        newModule.setModuleSubType(finalModuleSubType);
-        newModule.setModuleLevel(1);
-        newModule.setInvestedModulePoint(unlockDeducted);
-        newModule.setDeleted(false);
-        newModule.setCreated(LocalDateTime.now());
-        newModule.setModified(LocalDateTime.now());
-        shipModuleRepository.save(newModule);
-
-        // 응답 생성
-        return new ModuleUnlockResponse(
-                request.getShipId(),
-                request.getBodyIndex(),
-                moduleType,
-                finalModuleSubType,
-                request.getSlotIndex(),
-                character.getModulePoint(),
-                unlockDeducted
-        );
-    }
-
-    @Transactional
-    public ModuleGradeChangeResponse gradeUpModule(Long characterId, ModuleGradeChangeRequest request) {
-        // 함선 소유권 확인
-        Ship ship = shipRepository.findById(request.getShipId())
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_SHIP_NOT_FOUND));
-
-        if (!ship.getFleet().getCharacterId().equals(characterId)) {
-            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_FLEET_ACCESS_DENIED);
-        }
-
-        // 현재 모듈 타입 정보 추출
         EModuleType currentModuleType = request.getModuleType();
         EModuleSubType currentModuleSubType = request.getModuleSubTypeCurrent();
 
-        // 새 모듈 타입 정보 추출
         EModuleType newModuleType = request.getModuleType();
         EModuleSubType newModuleSubType = request.getModuleSubTypeNew();
 
         // 1. 같은 모듈인지 확인 (완전히 동일한 모듈로 변경 불가)
         if (currentModuleType == newModuleType &&  currentModuleSubType == newModuleSubType) {
-            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_SAME_MODULE);
+            throw new BusinessException(ServerErrorCode.MODULE_GRADEUP_FAIL_SAME_MODULE);
         }
 
         // 2. 모듈 타입이 다르면 에러
         if (currentModuleType != newModuleType) {
-            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_NOT_MATCH_MODULE_TYPE);
+            throw new BusinessException(ServerErrorCode.MODULE_GRADEUP_FAIL_NOT_MATCH_MODULE_TYPE);
         }
 
-        // 현재 장착된 모듈 찾기
         ShipModule currentModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
-                request.getShipId(),
-                request.getBodyIndex(),
-                currentModuleType,
-                request.getSlotIndex()
-        ).orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_MODULE_NOT_FOUND));
+                request.getShipId(), request.getBodyIndex(), currentModuleType, request.getSlotIndex()
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_GRADEUP_FAIL_MODULE_NOT_FOUND));
 
         // 미네랄 투입 시 모듈포인트 기준 등급업 불가
         if (currentModule.getInvestedMineral() > 0) {
-            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_MINERAL_INVESTED);
+            throw new BusinessException(ServerErrorCode.MODULE_GRADEUP_FAIL_MINERAL_INVESTED);
         }
 
-        // 4. 비용 차감 (레벨업 비용 + 그레이드 업 비용, 비관적 락)
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_SHIP_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_GRADEUP_FAIL_CHARACTER_NOT_FOUND));
 
         // 기술레벨 검증 — 서브타입 인코딩에서 파싱: (value/100)%100
         int requiredTechTier = (newModuleSubType.getValue() / 100) % 100;
         if (character.getTechLevel() < requiredTechTier) {
-            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_INSUFFICIENT_TECH_LEVEL);
+            throw new BusinessException(ServerErrorCode.MODULE_GRADEUP_FAIL_INSUFFICIENT_TECH_LEVEL);
         }
 
         // 3. 직접 다음 단계 검증
         if (!gameDataService.isDirectNextStep(currentModuleSubType, newModuleSubType)) {
-            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_NOT_DIRECT_NEXT_STEP);
+            throw new BusinessException(ServerErrorCode.MODULE_GRADEUP_FAIL_NOT_DIRECT_NEXT_STEP);
         }
 
         // 레벨업 비용 계산 (현재 레벨 → 맥스레벨, 이미 맥스레벨이면 0)
@@ -982,14 +947,14 @@ public class FleetService {
             ModuleData levelData = moduleDataList.stream()
                     .filter(d -> d.getModuleSubType() == currentModuleSubType && d.getModuleLevel() == nextLv)
                     .findFirst()
-                    .orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_MODULE_NOT_FOUND));
+                    .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_GRADEUP_FAIL_MODULE_NOT_FOUND));
             levelUpCost += levelData.getModulePointCost();
         }
 
         int gradeUpCost = gameDataService.getModuleResearchCost(newModuleSubType);
         int totalCost = levelUpCost + gradeUpCost;
         if (character.getModulePoint() < totalCost) {
-            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_INSUFFICIENT_MINERAL_RARE);
+            throw new BusinessException(ServerErrorCode.MODULE_GRADEUP_FAIL_INSUFFICIENT_MINERAL);
         }
         int changeDeducted = deductModulePoint(character, totalCost);
         characterRepository.save(character);
@@ -1016,32 +981,32 @@ public class FleetService {
     }
 
     @Transactional
-    public ModuleGradeChangeResponse gradeDownModule(Long characterId, ModuleGradeChangeRequest request) {
-        Ship ship = shipRepository.findById(request.getShipId())
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_SHIP_NOT_FOUND));
-        if (!ship.getFleet().getCharacterId().equals(characterId)) {
-            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_FLEET_ACCESS_DENIED);
+    public ModuleGradeChangeResponse moduleGradeDown(Long characterId, ModuleGradeChangeRequest request) {
+        Ship gradeDownShip = shipRepository.findById(request.getShipId())
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_GRADEDOWN_FAIL_SHIP_NOT_FOUND));
+        if (gradeDownShip.getFleet().getCharacterId().equals(characterId) == false) {
+            throw new BusinessException(ServerErrorCode.MODULE_GRADEDOWN_FAIL_FLEET_ACCESS_DENIED);
         }
 
-        EModuleType moduleType    = request.getModuleType();
+        EModuleType moduleType = request.getModuleType();
         EModuleSubType currentSubType = request.getModuleSubTypeCurrent();
-        EModuleSubType newSubType     = request.getModuleSubTypeNew();
+        EModuleSubType newSubType = request.getModuleSubTypeNew();
 
         if (newSubType.getValue() >= currentSubType.getValue()) {
-            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_SAME_MODULE);
+            throw new BusinessException(ServerErrorCode.MODULE_GRADEUP_FAIL_SAME_MODULE);
         }
 
         ShipModule currentModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
                 request.getShipId(), request.getBodyIndex(), moduleType, request.getSlotIndex()
-        ).orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_MODULE_NOT_FOUND));
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_GRADEDOWN_FAIL_MODULE_NOT_FOUND));
 
         // 미네랄 투입 시 모듈포인트 기준 등급다운 불가
         if (currentModule.getInvestedMineral() > 0) {
-            throw new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_MINERAL_INVESTED);
+            throw new BusinessException(ServerErrorCode.MODULE_GRADEDOWN_FAIL_MINERAL_INVESTED);
         }
 
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.CHANGE_MODULE_FAIL_SHIP_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_GRADEDOWN_FAIL_CHARACTER_NOT_FOUND));
 
         // 현재 서브타입 연구 비용 + 현재 레벨업 비용 + 이전 서브타입 레벨업 비용 전체 환급
         int currentLevel = currentModule.getModuleLevel();
@@ -1109,6 +1074,8 @@ public class FleetService {
         }
     }
 
+
+
     // 문자열 기반 완료 연구 ID 목록 조회 (tech_level_N 등)
     public List<String> getResearchedIds(Long characterId) {
         return moduleResearchRepository.findByCharacterIdAndResearchIdIsNotNullAndResearchedTrue(characterId)
@@ -1123,24 +1090,24 @@ public class FleetService {
     @Transactional
     public ModuleResetResponse resetModule(Long characterId, ModuleResetRequest request) {
         Ship ship = shipRepository.findById(request.getShipId())
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.RESET_MODULE_FAIL_SHIP_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_RESET_FAIL_SHIP_NOT_FOUND));
 
-        if (!ship.getFleet().getCharacterId().equals(characterId))
-            throw new BusinessException(ServerErrorCode.RESET_MODULE_FAIL_FLEET_ACCESS_DENIED);
+        if (ship.getFleet().getCharacterId().equals(characterId) == false)
+            throw new BusinessException(ServerErrorCode.MODULE_RESET_FAIL_FLEET_ACCESS_DENIED);
 
         if (request.getModuleType() == EModuleType.body) {
             // 기함(positionIndex==0) body 리셋만 허용 — T1 레벨1로 되돌리기
             if (ship.getPositionIndex() != 0)
-                throw new BusinessException(ServerErrorCode.RESET_MODULE_FAIL_BODY_FORBIDDEN);
+                throw new BusinessException(ServerErrorCode.MODULE_RESET_FAIL_BODY_FORBIDDEN);
             return resetFlagshipBody(ship, characterId, request);
         }
 
         ShipModule module = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
                 request.getShipId(), request.getBodyIndex(), request.getModuleType(), request.getSlotIndex()
-        ).orElseThrow(() -> new BusinessException(ServerErrorCode.RESET_MODULE_FAIL_MODULE_NOT_FOUND));
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_RESET_FAIL_MODULE_NOT_FOUND));
 
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.RESET_MODULE_FAIL_CHARACTER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_RESET_FAIL_CHARACTER_NOT_FOUND));
 
         // 투자 이력 환급
         character.setModulePoint(character.getModulePoint() + module.getInvestedModulePoint());
@@ -1164,10 +1131,10 @@ public class FleetService {
     private ModuleResetResponse resetFlagshipBody(Ship ship, Long characterId, ModuleResetRequest request) {
         ShipModule body = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
                 ship.getId(), request.getBodyIndex(), EModuleType.body, 0
-        ).orElseThrow(() -> new BusinessException(ServerErrorCode.RESET_MODULE_FAIL_MODULE_NOT_FOUND));
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_RESET_FAIL_MODULE_NOT_FOUND));
 
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.RESET_MODULE_FAIL_CHARACTER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_RESET_FAIL_CHARACTER_NOT_FOUND));
 
         int bodyModulePointRefund = body.getInvestedModulePoint();
         refundAndResetLostSlots(ship.getId(), request.getBodyIndex(), EModuleSubType.body_t1_m1, character);
@@ -1429,12 +1396,11 @@ public class FleetService {
     // ─────────────────────────────────────────────────────────────────────────
 
     @Transactional
-    public MineralModuleUnlockResponse mineralUnlockModule(Long characterId, MineralModuleUnlockRequest request) {
+    public MineralModuleUnlockResponse moduleUnlockMineral(Long characterId, MineralModuleUnlockRequest request) {
         Ship ship = shipRepository.findById(request.getShipId())
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_SHIP_NOT_FOUND));
-
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_UNLOCK_MINERAL_FAIL_SHIP_NOT_FOUND));
         if (ship.getFleet().getCharacterId().equals(characterId) == false) {
-            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_FLEET_ACCESS_DENIED);
+            throw new BusinessException(ServerErrorCode.MODULE_UNLOCK_MINERAL_FAIL_FLEET_ACCESS_DENIED);
         }
 
         EModuleType moduleType = request.getModuleType();
@@ -1443,36 +1409,36 @@ public class FleetService {
                 request.getShipId(), request.getBodyIndex(), moduleType, request.getSlotIndex()
         );
         if (existingModule.isPresent()) {
-            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_ALREADY_UNLOCKED);
+            throw new BusinessException(ServerErrorCode.MODULE_UNLOCK_MINERAL_FAIL_ALREADY_UNLOCKED);
         }
 
         // body 모듈 찾기 + 슬롯 유효성 확인
         ShipModule bodyModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
                 request.getShipId(), request.getBodyIndex(), EModuleType.body, 0
-        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_BODY_MODULE_NOT_FOUND));
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_UNLOCK_MINERAL_FAIL_BODY_MODULE_NOT_FOUND));
 
         List<ModuleData> bodyDataList = gameDataService.getModulesByType(EModuleType.body);
         ModuleData bodyData = bodyDataList.stream()
                 .filter(d -> d.getModuleSubType() == bodyModule.getModuleSubType()
                         && d.getModuleLevel().equals(bodyModule.getModuleLevel()))
                 .findFirst()
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_BODY_DATA_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_UNLOCK_MINERAL_FAIL_BODY_DATA_NOT_FOUND));
 
         ModuleSlotInfoDto slotInfo = bodyData.getModuleSlots().stream()
                 .filter(s -> s.getModuleType() == moduleType && s.getSlotIndex().equals(request.getSlotIndex()))
                 .findFirst()
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_SLOT_INDEX_OUT_OF_BOUNDS));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_UNLOCK_MINERAL_FAIL_SLOT_INDEX_OUT_OF_BOUNDS));
 
         if (slotInfo.getModuleType() != moduleType) {
-            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_INVALID_MODULE_TYPE);
+            throw new BusinessException(ServerErrorCode.MODULE_UNLOCK_MINERAL_FAIL_INVALID_MODULE_TYPE);
         }
 
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_CHARACTER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_UNLOCK_MINERAL_FAIL_CHARACTER_NOT_FOUND));
 
         int unlockCost = gameDataService.getDataTableConfig().getModuleUnlockPrice();
         if (character.getMineral() < unlockCost) {
-            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_INSUFFICIENT_MINERAL);
+            throw new BusinessException(ServerErrorCode.MODULE_UNLOCK_MINERAL_FAIL_INSUFFICIENT_MINERAL);
         }
 
         character.setMineral(character.getMineral() - unlockCost);
@@ -1506,12 +1472,11 @@ public class FleetService {
     }
 
     @Transactional
-    public MineralModuleLevelChangeResponse mineralLevelUpModule(Long characterId, MineralModuleLevelChangeRequest request) {
-        Ship ship = shipRepository.findById(request.getShipId())
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_SHIP_NOT_FOUND));
-
-        if (ship.getFleet().getCharacterId().equals(characterId) == false) {
-            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_FLEET_ACCESS_DENIED);
+    public MineralModuleLevelChangeResponse moduleLevelUpMineral(Long characterId, MineralModuleLevelChangeRequest request) {
+        Ship mineralLvUpShip = shipRepository.findById(request.getShipId())
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_LEVELUP_MINERAL_FAIL_SHIP_NOT_FOUND));
+        if (mineralLvUpShip.getFleet().getCharacterId().equals(characterId) == false) {
+            throw new BusinessException(ServerErrorCode.MODULE_LEVELUP_MINERAL_FAIL_FLEET_ACCESS_DENIED);
         }
 
         EModuleType moduleType = request.getModuleType();
@@ -1519,10 +1484,10 @@ public class FleetService {
 
         ShipModule module = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
                 request.getShipId(), request.getBodyIndex(), moduleType, request.getSlotIndex()
-        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_MODULE_NOT_FOUND));
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_LEVELUP_MINERAL_FAIL_MODULE_NOT_FOUND));
 
         if (module.getModuleLevel() != request.getCurrentLevel()) {
-            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_LEVEL_MISMATCH);
+            throw new BusinessException(ServerErrorCode.MODULE_LEVELUP_MINERAL_FAIL_LEVEL_MISMATCH);
         }
 
         // 미네랄 비용 계산 (mineralCost 사용)
@@ -1533,16 +1498,16 @@ public class FleetService {
             ModuleData levelData = moduleDataList.stream()
                     .filter(d -> d.getModuleSubType() == moduleSubType && d.getModuleLevel() == nextLevel)
                     .findFirst()
-                    .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_MODULE_DATA_NOT_FOUND));
+                    .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_LEVELUP_MINERAL_FAIL_MODULE_DATA_NOT_FOUND));
             int stepCost = levelData.getMineralCost() != null ? levelData.getMineralCost() : 0;
             totalCost = totalCost + stepCost;
         }
 
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_CHARACTER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_LEVELUP_MINERAL_FAIL_CHARACTER_NOT_FOUND));
 
         if (character.getMineral() < totalCost) {
-            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_INSUFFICIENT_MINERAL);
+            throw new BusinessException(ServerErrorCode.MODULE_LEVELUP_MINERAL_FAIL_INSUFFICIENT_MINERAL);
         }
 
         character.setMineral(character.getMineral() - totalCost);
@@ -1566,12 +1531,11 @@ public class FleetService {
     }
 
     @Transactional
-    public MineralModuleLevelChangeResponse mineralLevelDownModule(Long characterId, MineralModuleLevelChangeRequest request) {
-        Ship ship = shipRepository.findById(request.getShipId())
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_SHIP_NOT_FOUND));
-
-        if (ship.getFleet().getCharacterId().equals(characterId) == false) {
-            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_FLEET_ACCESS_DENIED);
+    public MineralModuleLevelChangeResponse moduleLevelDownMineral(Long characterId, MineralModuleLevelChangeRequest request) {
+        Ship mineralLvDownShip = shipRepository.findById(request.getShipId())
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_MINERAL_FAIL_SHIP_NOT_FOUND));
+        if (mineralLvDownShip.getFleet().getCharacterId().equals(characterId) == false) {
+            throw new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_MINERAL_FAIL_FLEET_ACCESS_DENIED);
         }
 
         EModuleType moduleType = request.getModuleType();
@@ -1579,21 +1543,21 @@ public class FleetService {
 
         ShipModule module = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
                 request.getShipId(), request.getBodyIndex(), moduleType, request.getSlotIndex()
-        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_MODULE_NOT_FOUND));
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_MINERAL_FAIL_MODULE_NOT_FOUND));
 
         if (module.getModuleLevel() != request.getCurrentLevel()) {
-            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_LEVEL_MISMATCH);
+            throw new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_MINERAL_FAIL_LEVEL_MISMATCH);
         }
 
         if (request.getTargetLevel() < 1 || request.getTargetLevel() >= request.getCurrentLevel()) {
-            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_LEVEL_MISMATCH);
+            throw new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_MINERAL_FAIL_LEVEL_MISMATCH);
         }
 
         // 모듈포인트 기준 레벨 아래로 다운 불가 (역산)
         int[] baselineCalc = calcModulePointBaseline(moduleType, module.getInvestedModulePoint());
         int baselineLevel = (baselineCalc != null) ? baselineCalc[1] : 1;
         if (request.getTargetLevel() < baselineLevel) {
-            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_BELOW_POINT_BASELINE);
+            throw new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_MINERAL_FAIL_BELOW_POINT_BASELINE);
         }
 
         // 환급 계산 (mineralCost 사용)
@@ -1604,13 +1568,13 @@ public class FleetService {
             ModuleData levelData = moduleDataList.stream()
                     .filter(d -> d.getModuleSubType() == moduleSubType && d.getModuleLevel() == nextLevel)
                     .findFirst()
-                    .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_MODULE_DATA_NOT_FOUND));
+                    .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_MINERAL_FAIL_MODULE_DATA_NOT_FOUND));
             int stepRefund = levelData.getMineralCost() != null ? levelData.getMineralCost() : 0;
             totalRefund = totalRefund + stepRefund;
         }
 
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_CHARACTER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_MINERAL_FAIL_CHARACTER_NOT_FOUND));
 
         character.setMineral(character.getMineral() + totalRefund);
         characterRepository.save(character);
@@ -1633,12 +1597,11 @@ public class FleetService {
     }
 
     @Transactional
-    public MineralModuleGradeChangeResponse mineralGradeUpModule(Long characterId, MineralModuleGradeChangeRequest request) {
-        Ship ship = shipRepository.findById(request.getShipId())
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_SHIP_NOT_FOUND));
-
-        if (ship.getFleet().getCharacterId().equals(characterId) == false) {
-            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_FLEET_ACCESS_DENIED);
+    public MineralModuleGradeChangeResponse moduleGradeUpMineral(Long characterId, MineralModuleGradeChangeRequest request) {
+        Ship mineralGradeUpShip = shipRepository.findById(request.getShipId())
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_GRADEUP_MINERAL_FAIL_SHIP_NOT_FOUND));
+        if (mineralGradeUpShip.getFleet().getCharacterId().equals(characterId) == false) {
+            throw new BusinessException(ServerErrorCode.MODULE_GRADEUP_MINERAL_FAIL_FLEET_ACCESS_DENIED);
         }
 
         EModuleType moduleType = request.getModuleType();
@@ -1646,24 +1609,24 @@ public class FleetService {
         EModuleSubType newSubType = request.getModuleSubTypeNew();
 
         if (currentSubType == newSubType) {
-            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_SAME_MODULE);
+            throw new BusinessException(ServerErrorCode.MODULE_GRADEUP_MINERAL_FAIL_SAME_MODULE);
         }
 
         ShipModule currentModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
                 request.getShipId(), request.getBodyIndex(), moduleType, request.getSlotIndex()
-        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_MODULE_NOT_FOUND));
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_GRADEUP_MINERAL_FAIL_MODULE_NOT_FOUND));
 
         if (gameDataService.isDirectNextStep(currentSubType, newSubType) == false) {
-            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_NOT_DIRECT_NEXT_STEP);
+            throw new BusinessException(ServerErrorCode.MODULE_GRADEUP_MINERAL_FAIL_NOT_DIRECT_NEXT_STEP);
         }
 
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_CHARACTER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_GRADEUP_MINERAL_FAIL_CHARACTER_NOT_FOUND));
 
         // 기술레벨 검증
         int requiredTechTier = (newSubType.getValue() / 100) % 100;
         if (character.getTechLevel() < requiredTechTier) {
-            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_INSUFFICIENT_TECH_LEVEL);
+            throw new BusinessException(ServerErrorCode.MODULE_GRADEUP_MINERAL_FAIL_INSUFFICIENT_TECH_LEVEL);
         }
 
         // 비용: 현재 레벨→맥스레벨 mineralCost 합산 + 연구비(pointCost)를 미네랄로
@@ -1675,7 +1638,7 @@ public class FleetService {
             ModuleData levelData = moduleDataList.stream()
                     .filter(d -> d.getModuleSubType() == currentSubType && d.getModuleLevel() == nextLv)
                     .findFirst()
-                    .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_MODULE_DATA_NOT_FOUND));
+                    .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_GRADEUP_MINERAL_FAIL_MODULE_DATA_NOT_FOUND));
             int stepCost = levelData.getMineralCost() != null ? levelData.getMineralCost() : 0;
             levelUpCost = levelUpCost + stepCost;
         }
@@ -1685,7 +1648,7 @@ public class FleetService {
         int totalCost = levelUpCost + gradeUpCost;
 
         if (character.getMineral() < totalCost) {
-            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_INSUFFICIENT_MINERAL);
+            throw new BusinessException(ServerErrorCode.MODULE_GRADEUP_MINERAL_FAIL_INSUFFICIENT_MINERAL);
         }
 
         character.setMineral(character.getMineral() - totalCost);
@@ -1712,12 +1675,11 @@ public class FleetService {
     }
 
     @Transactional
-    public MineralModuleGradeChangeResponse mineralGradeDownModule(Long characterId, MineralModuleGradeChangeRequest request) {
-        Ship ship = shipRepository.findById(request.getShipId())
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_SHIP_NOT_FOUND));
-
-        if (ship.getFleet().getCharacterId().equals(characterId) == false) {
-            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_FLEET_ACCESS_DENIED);
+    public MineralModuleGradeChangeResponse moduleGradeDownMineral(Long characterId, MineralModuleGradeChangeRequest request) {
+        Ship mineralGradeDownShip = shipRepository.findById(request.getShipId())
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_GRADEDOWN_MINERAL_FAIL_SHIP_NOT_FOUND));
+        if (mineralGradeDownShip.getFleet().getCharacterId().equals(characterId) == false) {
+            throw new BusinessException(ServerErrorCode.MODULE_GRADEDOWN_MINERAL_FAIL_FLEET_ACCESS_DENIED);
         }
 
         EModuleType moduleType = request.getModuleType();
@@ -1725,21 +1687,21 @@ public class FleetService {
         EModuleSubType newSubType = request.getModuleSubTypeNew();
 
         if (newSubType.getValue() >= currentSubType.getValue()) {
-            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_SAME_MODULE);
+            throw new BusinessException(ServerErrorCode.MODULE_GRADEDOWN_MINERAL_FAIL_SAME_MODULE);
         }
 
         ShipModule currentModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
                 request.getShipId(), request.getBodyIndex(), moduleType, request.getSlotIndex()
-        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_MODULE_NOT_FOUND));
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_GRADEDOWN_MINERAL_FAIL_MODULE_NOT_FOUND));
 
         // 모듈포인트 기준 등급 아래로 다운 불가 (investedModulePoint 역산)
         int[] baseline = calcModulePointBaseline(moduleType, currentModule.getInvestedModulePoint());
         if (baseline != null && newSubType.getValue() < baseline[0]) {
-            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_BELOW_POINT_BASELINE);
+            throw new BusinessException(ServerErrorCode.MODULE_GRADEDOWN_MINERAL_FAIL_BELOW_POINT_BASELINE);
         }
 
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_CHARACTER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_GRADEDOWN_MINERAL_FAIL_CHARACTER_NOT_FOUND));
 
         // 환급: 현재 등급 연구비 + 현재 레벨업 비용 + 이전 등급 최대레벨업 비용
         int currentGradeUpCost = gameDataService.getModuleResearchCost(currentSubType);
@@ -1784,10 +1746,10 @@ public class FleetService {
     @Transactional
     public MineralModuleResetResponse mineralResetModule(Long characterId, MineralModuleResetRequest request) {
         Ship ship = shipRepository.findById(request.getShipId())
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_SHIP_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_RESET_MINERAL_FAIL_SHIP_NOT_FOUND));
 
         if (ship.getFleet().getCharacterId().equals(characterId) == false) {
-            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_FLEET_ACCESS_DENIED);
+            throw new BusinessException(ServerErrorCode.MODULE_RESET_MINERAL_FAIL_FLEET_ACCESS_DENIED);
         }
 
         // body 타입은 기함/비기함에 따라 별도 처리
@@ -1797,14 +1759,14 @@ public class FleetService {
 
         ShipModule currentModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
                 request.getShipId(), request.getBodyIndex(), request.getModuleType(), request.getSlotIndex()
-        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_MODULE_NOT_FOUND));
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_RESET_MINERAL_FAIL_MODULE_NOT_FOUND));
 
         if (currentModule.getInvestedMineral() <= 0) {
-            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_NO_MINERAL_INVESTED);
+            throw new BusinessException(ServerErrorCode.MODULE_RESET_MINERAL_FAIL_NO_MINERAL_INVESTED);
         }
 
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_CHARACTER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_RESET_MINERAL_FAIL_CHARACTER_NOT_FOUND));
 
         int refund = currentModule.getInvestedMineral();
         character.setMineral(character.getMineral() + refund);
@@ -1855,15 +1817,15 @@ public class FleetService {
     // add ship은 모듈포인트 영역이므로 미네랄 리셋으로 함선을 삭제하지 않음
     private MineralModuleResetResponse mineralResetBodyModule(Ship ship, Long characterId, MineralModuleResetRequest request) {
         com.bk.sbs.entity.Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_CHARACTER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_RESET_MINERAL_FAIL_CHARACTER_NOT_FOUND));
 
         // 미네랄 환급, 기준값으로 복귀 (함체는 삭제하지 않음)
         ShipModule bodyModule = shipModuleRepository.findByShipIdAndBodyIndexAndModuleTypeAndSlotIndexAndDeletedFalse(
                 ship.getId(), request.getBodyIndex(), EModuleType.body, 0
-        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_MODULE_NOT_FOUND));
+        ).orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_RESET_MINERAL_FAIL_MODULE_NOT_FOUND));
 
         if (bodyModule.getInvestedMineral() <= 0) {
-            throw new BusinessException(ServerErrorCode.MINERAL_MODULE_FAIL_NO_MINERAL_INVESTED);
+            throw new BusinessException(ServerErrorCode.MODULE_RESET_FAIL_NO_MINERAL_INVESTED);
         }
 
         int refund = bodyModule.getInvestedMineral();
