@@ -16,6 +16,5 @@ public class ModuleGradeChangeRequest {
     private Integer bodyIndex;
     private EModuleType moduleType;
     private EModuleSubType moduleSubTypeCurrent;
-    private EModuleSubType moduleSubTypeNew;
     private Integer slotIndex;
 }

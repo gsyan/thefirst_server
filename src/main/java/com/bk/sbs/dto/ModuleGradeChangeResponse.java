@@ -24,6 +24,9 @@ public class ModuleGradeChangeResponse {
     private EModuleSubType moduleSubTypeNew;
     private Integer slotIndex;
     private Integer moduleNewLevel;
-    private Integer modulePointRemain;
-    private Integer investedModulePoint;
+    private Integer pointRemain;
+    private Integer investedPoint;
+    private Boolean isModuleRemoved;
+    private Boolean isShipRemoved;
+    private Long removedShipId;
 }

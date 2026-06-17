@@ -211,61 +211,61 @@ public class FleetController {
 
     // 미네랄 모듈 해금
     @PostMapping("/module-unlock-mineral")
-    public ResponseEntity<ApiResponse<MineralModuleUnlockResponse>> moduleUnlockMineral(
-            @RequestBody MineralModuleUnlockRequest request,
+    public ResponseEntity<ApiResponse<ModuleUnlockResponse>> moduleUnlockMineral(
+            @RequestBody ModuleUnlockRequest request,
             HttpServletRequest httpRequest) {
         Long actualCharacterId = getCharacterIdFromToken(httpRequest);
-        MineralModuleUnlockResponse response = fleetService.moduleUnlockMineral(actualCharacterId, request);
+        ModuleUnlockResponse response = fleetService.moduleUnlockMineral(actualCharacterId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     // 미네랄 모듈 레벨업
     @PostMapping("/module-levelup-mineral")
-    public ResponseEntity<ApiResponse<MineralModuleLevelChangeResponse>> moduleLevelUpMineral(
-            @RequestBody MineralModuleLevelChangeRequest request,
+    public ResponseEntity<ApiResponse<ModuleLevelChangeResponse>> moduleLevelUpMineral(
+            @RequestBody ModuleLevelChangeRequest request,
             HttpServletRequest httpRequest) {
         Long actualCharacterId = getCharacterIdFromToken(httpRequest);
-        MineralModuleLevelChangeResponse response = fleetService.moduleLevelUpMineral(actualCharacterId, request);
+        ModuleLevelChangeResponse response = fleetService.moduleLevelUpMineral(actualCharacterId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     // 미네랄 모듈 레벨다운
     @PostMapping("/module-leveldown-mineral")
-    public ResponseEntity<ApiResponse<MineralModuleLevelChangeResponse>> moduleLevelDownMineral(
-            @RequestBody MineralModuleLevelChangeRequest request,
+    public ResponseEntity<ApiResponse<ModuleLevelChangeResponse>> moduleLevelDownMineral(
+            @RequestBody ModuleLevelChangeRequest request,
             HttpServletRequest httpRequest) {
         Long actualCharacterId = getCharacterIdFromToken(httpRequest);
-        MineralModuleLevelChangeResponse response = fleetService.moduleLevelDownMineral(actualCharacterId, request);
+        ModuleLevelChangeResponse response = fleetService.moduleLevelDownMineral(actualCharacterId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     // 미네랄 모듈 등급업
     @PostMapping("/module-gradeup-mineral")
-    public ResponseEntity<ApiResponse<MineralModuleGradeChangeResponse>> moduleGradeUpMineral(
-            @RequestBody MineralModuleGradeChangeRequest request,
+    public ResponseEntity<ApiResponse<ModuleGradeChangeResponse>> moduleGradeUpMineral(
+            @RequestBody ModuleGradeChangeRequest request,
             HttpServletRequest httpRequest) {
         Long actualCharacterId = getCharacterIdFromToken(httpRequest);
-        MineralModuleGradeChangeResponse response = fleetService.moduleGradeUpMineral(actualCharacterId, request);
+        ModuleGradeChangeResponse response = fleetService.moduleGradeUpMineral(actualCharacterId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     // 미네랄 모듈 등급다운
     @PostMapping("/module-gradedown-mineral")
-    public ResponseEntity<ApiResponse<MineralModuleGradeChangeResponse>> moduleGradeDownMineral(
-            @RequestBody MineralModuleGradeChangeRequest request,
+    public ResponseEntity<ApiResponse<ModuleGradeChangeResponse>> moduleGradeDownMineral(
+            @RequestBody ModuleGradeChangeRequest request,
             HttpServletRequest httpRequest) {
         Long actualCharacterId = getCharacterIdFromToken(httpRequest);
-        MineralModuleGradeChangeResponse response = fleetService.moduleGradeDownMineral(actualCharacterId, request);
+        ModuleGradeChangeResponse response = fleetService.moduleGradeDownMineral(actualCharacterId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     // 미네랄 모듈 리셋 (전체 미네랄 환급)
     @PostMapping("/mineral-reset-module")
-    public ResponseEntity<ApiResponse<MineralModuleResetResponse>> mineralResetModule(
-            @RequestBody MineralModuleResetRequest request,
+    public ResponseEntity<ApiResponse<ModuleResetResponse>> mineralResetModule(
+            @RequestBody ModuleResetRequest request,
             HttpServletRequest httpRequest) {
         Long actualCharacterId = getCharacterIdFromToken(httpRequest);
-        MineralModuleResetResponse response = fleetService.mineralResetModule(actualCharacterId, request);
+        ModuleResetResponse response = fleetService.mineralResetModule(actualCharacterId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 

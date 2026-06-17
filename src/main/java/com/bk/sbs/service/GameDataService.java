@@ -237,6 +237,48 @@ public class GameDataService {
         return false;
     }
 
+    // currentSubType의 직접 다음 단계 반환 (없으면 null)
+    public EModuleSubType getNextSubType(EModuleSubType currentSubType) {
+        List<com.bk.sbs.dto.ModuleResearchData> list = dataTableModule.getResearchDataList();
+        String currentResearchId = null;
+        for (com.bk.sbs.dto.ModuleResearchData data : list) {
+            if (currentSubType.equals(data.getModuleSubType())) {
+                currentResearchId = data.getResearchId();
+                break;
+            }
+        }
+        if (currentResearchId == null) return null;
+
+        for (com.bk.sbs.dto.ModuleResearchData data : list) {
+            List<String> prereqs = data.getPrerequisiteIds();
+            if (prereqs != null && prereqs.contains(currentResearchId)) {
+                return data.getModuleSubType();
+            }
+        }
+        return null;
+    }
+
+    // currentSubType의 직접 이전 단계 반환 (없으면 null)
+    public EModuleSubType getPrevSubType(EModuleSubType currentSubType) {
+        List<com.bk.sbs.dto.ModuleResearchData> list = dataTableModule.getResearchDataList();
+        List<String> currentPrereqs = null;
+        for (com.bk.sbs.dto.ModuleResearchData data : list) {
+            if (currentSubType.equals(data.getModuleSubType())) {
+                currentPrereqs = data.getPrerequisiteIds();
+                break;
+            }
+        }
+        if (currentPrereqs == null || currentPrereqs.isEmpty()) return null;
+
+        String prereqId = currentPrereqs.get(0);
+        for (com.bk.sbs.dto.ModuleResearchData data : list) {
+            if (prereqId.equals(data.getResearchId())) {
+                return data.getModuleSubType();
+            }
+        }
+        return null;
+    }
+
     // 레벨업 기준 누적 포인트 반환 (차감 없음, 서버 자동 판정 기준)
     public int getTechLevelRequiredPoint(int techLevel) {
         TechLevelData data = techLevelDataMap.get(techLevel);

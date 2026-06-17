@@ -21,6 +21,6 @@ public class ModuleUnlockResponse {
     private EModuleType moduleType;
     private EModuleSubType moduleSubType;
     private Integer slotIndex;
-    private Integer modulePointRemain;
-    private Integer investedModulePoint;
+    private Integer pointRemain;
+    private Integer investedPoint;
 }

@@ -21,9 +21,9 @@ public class ModuleResearchData {
 
     private List<String> prerequisiteIds;
 
-    private Integer pointCost;
-
     private EModuleType moduleType;
 
     private EModuleSubType moduleSubType;
+
+    private Integer pointCost;
 }
