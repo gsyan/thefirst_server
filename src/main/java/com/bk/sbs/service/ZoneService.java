@@ -90,7 +90,7 @@ public class ZoneService {
         }
 
         // 미네랄 강화 초기화 — modulePointSubType/Level 기준값으로 복원, 투자 미네랄 소멸
-        fleetService.resetMineralModules(characterId);
+        int mineralRefund = fleetService.resetMineralModules(characterId);
         characterRepository.save(character);
 
         boolean isFirstClear = clearedZoneRepository.existsByCharacterIdAndZoneName(characterId, zoneName) == false;
@@ -106,7 +106,7 @@ public class ZoneService {
             clearedZoneRepository.resetRewardClaimed(characterId, zoneName); // 재도전: rewardClaimed=false 리셋
         }
 
-        FleetInfoDto updatedFleetInfo = fleetService.getActiveFleet(characterId);
+        FleetInfoDto updatedFleetInfo = mineralRefund > 0 ? fleetService.getActiveFleet(characterId) : null;
 
         return ClearZoneStageResponse.builder()
                 .isFirstClear(isFirstClear)
