@@ -95,11 +95,22 @@ pipeline {
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
                     bat 'docker builder prune -f'
-                    bat '''
-                        powershell -Command "$Env:DOCKER_PASS | docker login -u %DOCKER_USER% --password-stdin"
-                    '''
+                    // Docker Hub 연결 타임아웃 대비 최대 3회 재시도
+                    retry(3) {
+                        bat '''
+                            powershell -Command "$Env:DOCKER_PASS | docker login -u %DOCKER_USER% --password-stdin"
+                        '''
+                    }
                     bat "docker build --platform linux/arm64/v8 -t ${IMAGE_NAME}:latest ."
                     bat "docker push ${IMAGE_NAME}:latest"
+                    // Push 완료 후 gsyan/sbs 이미지 최신 4개만 유지, 나머지 삭제
+                    bat '''
+                        powershell -Command "$ids = docker images gsyan/sbs --format \"{{.ID}}\"; $toDelete = $ids | Select-Object -Skip 4; foreach ($id in $toDelete) { docker rmi $id -f }"
+                    '''
+                    // 빌드 히스토리 최신 4개만 유지, 나머지 삭제
+                    bat '''
+                        powershell -Command "$refs = docker buildx history ls --format \"{{.Ref}}\"; $toDelete = $refs | Select-Object -Skip 4; foreach ($ref in $toDelete) { docker buildx history rm $ref }"
+                    '''
                 }
             }
         }
