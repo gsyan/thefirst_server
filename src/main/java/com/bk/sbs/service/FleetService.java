@@ -1608,6 +1608,34 @@ public class FleetService {
     }
 
     // ─────────────────────────────────────────────────────────────────────────
+    // 플리트 전체 investedMineral 합계 반환
+    // ─────────────────────────────────────────────────────────────────────────
+    public int getTotalInvestedMineral(Long characterId) {
+        Fleet fleet = fleetRepository.findByCharacterIdAndIsActiveTrueAndDeletedFalse(characterId)
+                .orElse(null);
+        if (fleet == null) return 0;
+
+        List<Ship> ships = shipRepository.findByFleetIdAndDeletedFalseOrderByPositionIndex(fleet.getId());
+        int total = 0;
+        for (Ship ship : ships) {
+            List<ShipModule> modules = shipModuleRepository.findByShipIdAndDeletedFalseOrderBySlotIndex(ship.getId());
+            for (ShipModule module : modules) {
+                total = total + module.getInvestedMineral();
+            }
+        }
+        return total;
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // 미네랄만 차감 (서브타입/레벨/investedMineral 유지) — 세팅 재투입용
+    // ─────────────────────────────────────────────────────────────────────────
+    @Transactional
+    public void deductMineralOnly(com.bk.sbs.entity.Character character, int amount) {
+        int deducted = Math.max(0, character.getMineral() - amount);
+        character.setMineral(deducted);
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
     // 전투 승리 시 미네랄 초기화 — investedModulePoint 역산으로 복원, 미네랄 소멸
     // ─────────────────────────────────────────────────────────────────────────
     @Transactional

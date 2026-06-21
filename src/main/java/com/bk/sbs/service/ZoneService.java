@@ -89,8 +89,6 @@ public class ZoneService {
             character.setMineral(mineralRemain);
         }
 
-        // 미네랄 강화 초기화 — modulePointSubType/Level 기준값으로 복원, 투자 미네랄 소멸
-        int mineralRefund = fleetService.resetMineralModules(characterId);
         characterRepository.save(character);
 
         boolean isFirstClear = clearedZoneRepository.existsByCharacterIdAndZoneName(characterId, zoneName) == false;
@@ -106,12 +104,9 @@ public class ZoneService {
             clearedZoneRepository.resetRewardClaimed(characterId, zoneName); // 재도전: rewardClaimed=false 리셋
         }
 
-        FleetInfoDto updatedFleetInfo = mineralRefund > 0 ? fleetService.getActiveFleet(characterId) : null;
-
         return ClearZoneStageResponse.builder()
                 .isFirstClear(isFirstClear)
                 .clearedZoneName(isFirstClear ? zoneName : null)
-                .updatedFleetInfo(updatedFleetInfo)
                 .mineralRemain(character.getMineral())
                 .build();
     }
@@ -155,6 +150,20 @@ public class ZoneService {
 
         autoLevelUpIfNeeded(character);
 
+        // 보상 지급 후 미네랄 세팅 재투입 — 부족 시 초기화
+        int totalInvested = fleetService.getTotalInvestedMineral(characterId);
+        boolean mineralSettingReset = false;
+        FleetInfoDto updatedFleetInfo = null;
+        if (totalInvested > 0) {
+            if (character.getMineral() >= totalInvested) {
+                fleetService.deductMineralOnly(character, totalInvested);
+            } else {
+                fleetService.resetMineralModules(characterId);
+                mineralSettingReset = true;
+                updatedFleetInfo = fleetService.getActiveFleet(characterId);
+            }
+        }
+
         clearedZone.setRewardClaimed(true);
         clearedZoneRepository.save(clearedZone);
         characterRepository.save(character);
@@ -167,6 +176,8 @@ public class ZoneService {
                 .modulePointRemain(character.getModulePoint())
                 .modulePointMaxGot(character.getModulePointMaxGot())
                 .techLevel(character.getTechLevel())
+                .mineralSettingReset(mineralSettingReset)
+                .updatedFleetInfo(updatedFleetInfo)
                 .build();
     }
 
@@ -211,6 +222,20 @@ public class ZoneService {
 
         autoLevelUpIfNeeded(character);
 
+        // 보상 지급 후 미네랄 세팅 재투입 — 부족 시 초기화
+        int totalInvested = fleetService.getTotalInvestedMineral(characterId);
+        boolean mineralSettingReset = false;
+        FleetInfoDto updatedFleetInfo = null;
+        if (totalInvested > 0) {
+            if (character.getMineral() >= totalInvested) {
+                fleetService.deductMineralOnly(character, totalInvested);
+            } else {
+                fleetService.resetMineralModules(characterId);
+                mineralSettingReset = true;
+                updatedFleetInfo = fleetService.getActiveFleet(characterId);
+            }
+        }
+
         clearedZoneRepository.saveAll(pending);
         characterRepository.save(character);
 
@@ -223,6 +248,8 @@ public class ZoneService {
                 .modulePointRemain(character.getModulePoint())
                 .modulePointMaxGot(character.getModulePointMaxGot())
                 .techLevel(character.getTechLevel())
+                .mineralSettingReset(mineralSettingReset)
+                .updatedFleetInfo(updatedFleetInfo)
                 .build();
     }
 

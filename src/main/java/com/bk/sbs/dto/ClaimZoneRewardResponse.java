@@ -21,4 +21,6 @@ public class ClaimZoneRewardResponse {
     private Integer techPointRemain;
     private Integer modulePointRemain;
     private Integer modulePointMaxGot;
+    private Boolean mineralSettingReset;
+    private FleetInfoDto updatedFleetInfo;
 }

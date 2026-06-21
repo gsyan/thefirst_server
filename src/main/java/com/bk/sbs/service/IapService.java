@@ -186,8 +186,9 @@ public class IapService {
         Optional<VipSubscription> sub = vipSubscriptionRepository.findByCharacterId(characterId);
         boolean isVip = sub.isPresent() && sub.get().getVipExpiry() != null && now.isBefore(sub.get().getVipExpiry());
         if (isVip == true) {
-            // VIP catch-up: 이번 달 첫 클레임이면 월초부터 오늘까지, 아니면 오늘 1일치
-            int vipMineral = isNewMonth
+            // VIP catch-up: 이번 달 VIP 보상 첫 클레임이면 월초~오늘 일괄 지급 (당월 중간 구매 포함)
+            boolean isFirstVipClaimThisMonth = currentVipMask == 0;
+            int vipMineral = isFirstVipClaimThisMonth
                     ? gameDataService.getVipMineralCatchup(1, todayInMonth)
                     : gameDataService.getDailyMineralForDay(todayInMonth, EDailyBonusTier.VIP);
             grantedMineral += Math.max(0, vipMineral);
