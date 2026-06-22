@@ -18,7 +18,7 @@ public class AuthResponse {
     private String accessToken;
     private String refreshToken;
     private FleetInfoDto activeFleetInfo;
-    private CharacterInfoDto characterInfo;
+    private CommanderInfoDto commanderInfo;
     private List<String> researchedIds;
     private Boolean bGoogleLinked;
     private VipStatusResponse vipStatus;

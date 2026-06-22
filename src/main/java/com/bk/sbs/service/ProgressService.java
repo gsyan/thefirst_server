@@ -23,17 +23,17 @@ public class ProgressService {
     }
 
     @Transactional
-    public ProgressInfoDto saveProgress(Long characterId, ProgressSaveRequest request) {
+    public ProgressInfoDto saveProgress(Long commanderId, ProgressSaveRequest request) {
         // 이미 존재하는 경우 무시 (중복 저장 방지)
-        if (progressRepository.existsByCharacterIdAndCategoryAndProgressKey(
-                characterId, request.getCategory(), request.getKey())) {
-            Progress existing = progressRepository.findByCharacterIdAndCategoryAndProgressKey(
-                    characterId, request.getCategory(), request.getKey()).get();
+        if (progressRepository.existsByCommanderIdAndCategoryAndProgressKey(
+                commanderId, request.getCategory(), request.getKey())) {
+            Progress existing = progressRepository.findByCommanderIdAndCategoryAndProgressKey(
+                    commanderId, request.getCategory(), request.getKey()).get();
             return toDto(existing);
         }
 
         Progress progress = new Progress();
-        progress.setCharacterId(characterId);
+        progress.setCommanderId(commanderId);
         progress.setCategory(request.getCategory());
         progress.setProgressKey(request.getKey());
         progress.setCompletedDateTime(Instant.now());
@@ -43,8 +43,8 @@ public class ProgressService {
     }
 
     @Transactional(readOnly = true)
-    public ProgressListResponse getProgressList(Long characterId, String category) {
-        List<Progress> progressList = progressRepository.findByCharacterIdAndCategory(characterId, category);
+    public ProgressListResponse getProgressList(Long commanderId, String category) {
+        List<Progress> progressList = progressRepository.findByCommanderIdAndCategory(commanderId, category);
 
         List<ProgressInfoDto> dtoList = progressList.stream()
                 .map(this::toDto)
@@ -63,3 +63,6 @@ public class ProgressService {
                 .build();
     }
 }
+
+
+

@@ -6,14 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * CharacterResponse
- * Auto-generated from Unity C# CharacterResponse class
+ * CommanderRenameResponse
+ * Auto-generated from Unity C# CommanderRenameResponse class
  */
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class CharacterResponse {
-    private Long characterId;
-    private String characterName;
+public class CommanderRenameResponse {
+    private String commanderName;
+    private Integer nameChangeCount;
 }

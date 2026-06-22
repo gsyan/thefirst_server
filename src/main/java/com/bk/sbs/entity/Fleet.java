@@ -18,7 +18,7 @@ public class Fleet {
     private Long id;
 
     @Column(nullable = false)
-    private Long characterId;
+    private Long commanderId;
 
     @Column(nullable = false)
     private String fleetName;
@@ -49,3 +49,4 @@ public class Fleet {
     @OneToMany(mappedBy = "fleet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Ship> ships;
 }
+

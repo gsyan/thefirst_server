@@ -9,10 +9,10 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "`character`")    // character 는 마리아 DB 의 예약어라 이렇게 처리
+@Table(name = "commander")
 @Getter
 @Setter
-public class Character {
+public class Commander {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +22,7 @@ public class Character {
     private Long accountId;
 
     @Column(nullable = false, unique = true)
-    private String characterName;
+    private String commanderName;
 
     private Long lastLocation;
 
@@ -66,9 +66,6 @@ public class Character {
 
     // 마지막 온라인 시간 (heartbeat로 갱신, 오프라인 보상 계산용, UTC)
     private Instant lastOnlineAt;
-
-    // 마지막 일일 로그인 보상 수령 시각 (무과금+VIP 통합, 24h 쿨다운 판단용, UTC)
-    private Instant lastLoginRewardAt;
 
     // 이번 달 수령 현황 비트마스크 (bit0=1일, bit27=28일)
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")

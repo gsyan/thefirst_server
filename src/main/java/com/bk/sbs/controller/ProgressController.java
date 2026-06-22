@@ -31,8 +31,8 @@ public class ProgressController {
     public ResponseEntity<ApiResponse<ProgressInfoDto>> saveProgress(
             @RequestBody ProgressSaveRequest request,
             HttpServletRequest httpRequest) {
-        Long characterId = getCharacterIdFromToken(httpRequest);
-        ProgressInfoDto response = progressService.saveProgress(characterId, request);
+        Long commanderId = getCommanderIdFromToken(httpRequest);
+        ProgressInfoDto response = progressService.saveProgress(commanderId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
@@ -41,19 +41,22 @@ public class ProgressController {
     public ResponseEntity<ApiResponse<ProgressListResponse>> getProgressList(
             @PathVariable String category,
             HttpServletRequest httpRequest) {
-        Long characterId = getCharacterIdFromToken(httpRequest);
-        ProgressListResponse response = progressService.getProgressList(characterId, category);
+        Long commanderId = getCommanderIdFromToken(httpRequest);
+        ProgressListResponse response = progressService.getProgressList(commanderId, category);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
-    private Long getCharacterIdFromToken(HttpServletRequest request) {
+    private Long getCommanderIdFromToken(HttpServletRequest request) {
         String token = jwtUtil.getTokenFromRequest(request);
         if (token == null) throw new BusinessException(ServerErrorCode.PROGRESS_CONTROLLER_FAIL_INVALID_TOKEN);
-        if (!jwtUtil.hasCharacterId(token)) throw new BusinessException(ServerErrorCode.PROGRESS_CONTROLLER_FAIL_JWT_HAS_CHARACTERID);
+        if (!jwtUtil.hasCommanderId(token)) throw new BusinessException(ServerErrorCode.PROGRESS_CONTROLLER_FAIL_JWT_HAS_COMMANDERID);
 
-        Long characterId = jwtUtil.getCharacterIdFromToken(token);
-        if (characterId == null) throw new BusinessException(ServerErrorCode.PROGRESS_CONTROLLER_FAIL_JWT_GET_CHARACTERID);
+        Long commanderId = jwtUtil.getCommanderIdFromToken(token);
+        if (commanderId == null) throw new BusinessException(ServerErrorCode.PROGRESS_CONTROLLER_FAIL_JWT_GET_COMMANDERID);
 
-        return characterId & 0x00FFFFFFFFFFFFFFL;
+        return commanderId & 0x00FFFFFFFFFFFFFFL;
     }
 }
+
+
+

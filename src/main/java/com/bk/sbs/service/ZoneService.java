@@ -6,12 +6,12 @@ import com.bk.sbs.dto.ClearZoneStageRequest;
 import com.bk.sbs.dto.ClearZoneStageResponse;
 import com.bk.sbs.dto.ClaimZoneRewardRequest;
 import com.bk.sbs.dto.ClaimZoneRewardResponse;
-import com.bk.sbs.entity.Character;
+import com.bk.sbs.entity.Commander;
 import com.bk.sbs.entity.ClearedZone;
 import com.bk.sbs.entity.VipSubscription;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
-import com.bk.sbs.repository.CharacterRepository;
+import com.bk.sbs.repository.CommanderRepository;
 import com.bk.sbs.repository.ClearedZoneRepository;
 import com.bk.sbs.repository.VipSubscriptionRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,18 +33,18 @@ public class ZoneService {
     @Value("${zone.require-previous-stage-cleared:true}")
     private boolean requirePreviousStageClearedCheck;
 
-    private final CharacterRepository characterRepository;
+    private final CommanderRepository commanderRepository;
     private final ClearedZoneRepository clearedZoneRepository;
     private final GameDataService gameDataService;
     private final RedisService redisService;
     private final VipSubscriptionRepository vipSubscriptionRepository;
     private final FleetService fleetService;
 
-    public ZoneService(CharacterRepository characterRepository, ClearedZoneRepository clearedZoneRepository,
+    public ZoneService(CommanderRepository commanderRepository, ClearedZoneRepository clearedZoneRepository,
                        GameDataService gameDataService, RedisService redisService,
                        VipSubscriptionRepository vipSubscriptionRepository,
                        FleetService fleetService) {
-        this.characterRepository = characterRepository;
+        this.commanderRepository = commanderRepository;
         this.clearedZoneRepository = clearedZoneRepository;
         this.gameDataService = gameDataService;
         this.redisService = redisService;
@@ -54,7 +54,7 @@ public class ZoneService {
 
     // 클리어 기록, rewardClaimed 리셋, 보상은 claimZoneReward에서 별도 처리
     @Transactional
-    public ClearZoneStageResponse clearZoneStage(Long characterId, ClearZoneStageRequest request) {
+    public ClearZoneStageResponse clearZoneStage(Long commanderId, ClearZoneStageRequest request) {
         String zoneName = request.getZoneName();
         ZoneConfigData zoneConfig = gameDataService.getZoneConfigByName(zoneName);
         if (zoneConfig == null)
@@ -66,55 +66,55 @@ public class ZoneService {
         if (requirePreviousStageClearedCheck == true) {
             if (stage > 1) {
                 String prevStageName = group + "-" + (stage - 1);
-                if (clearedZoneRepository.existsByCharacterIdAndZoneName(characterId, prevStageName) == false)
+                if (clearedZoneRepository.existsByCommanderIdAndZoneName(commanderId, prevStageName) == false)
                     throw new BusinessException(ServerErrorCode.ZONE_PREVIOUS_STAGE_NOT_CLEARED);
             } else if (group > 1) {
                 int maxPrevStage = gameDataService.getZoneConfig().getMaxStageInGroup(group - 1);
                 if (maxPrevStage > 0) {
                     String prevStageName = (group - 1) + "-" + maxPrevStage;
-                    if (clearedZoneRepository.existsByCharacterIdAndZoneName(characterId, prevStageName) == false)
+                    if (clearedZoneRepository.existsByCommanderIdAndZoneName(commanderId, prevStageName) == false)
                         throw new BusinessException(ServerErrorCode.ZONE_PREVIOUS_STAGE_NOT_CLEARED);
                 }
             }
         }
 
-        Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.ZONE_DESTROY_WAVE_FAIL_CHARACTER_NOT_FOUND));
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.ZONE_DESTROY_WAVE_FAIL_COMMANDER_NOT_FOUND));
 
         // 클라 전투 소모 후 잔액을 서버에 반영
         if (request.getMineralRemain() != null) {
             int mineralRemain = Math.max(0, request.getMineralRemain());
-            if (mineralRemain > character.getMineral())
+            if (mineralRemain > commander.getMineral())
                 throw new BusinessException(ServerErrorCode.ZONE_CLEAR_FAIL_MINERAL_EXCEED_SERVER);
-            character.setMineral(mineralRemain);
+            commander.setMineral(mineralRemain);
         }
 
-        characterRepository.save(character);
+        commanderRepository.save(commander);
 
-        boolean isFirstClear = clearedZoneRepository.existsByCharacterIdAndZoneName(characterId, zoneName) == false;
+        boolean isFirstClear = clearedZoneRepository.existsByCommanderIdAndZoneName(commanderId, zoneName) == false;
         if (isFirstClear == true) {
-            clearedZoneRepository.save(new ClearedZone(characterId, zoneName)); // rewardClaimed=false, firstBonusClaimed=false
+            clearedZoneRepository.save(new ClearedZone(commanderId, zoneName)); // rewardClaimed=false, firstBonusClaimed=false
 
-            List<String> allZoneNames = clearedZoneRepository.findZoneNamesByCharacterId(characterId);
+            List<String> allZoneNames = clearedZoneRepository.findZoneNamesByCommanderId(commanderId);
             allZoneNames.add(zoneName);
             long maxScore = allZoneNames.stream().mapToLong(this::computeZoneScore).max().orElse(0L);
-            redisService.setZoneScore(characterId, maxScore);
-            redisService.setRankName(characterId, character.getCharacterName());
+            redisService.setZoneScore(commanderId, maxScore);
+            redisService.setRankName(commanderId, commander.getCommanderName());
         } else {
-            clearedZoneRepository.resetRewardClaimed(characterId, zoneName); // 재도전: rewardClaimed=false 리셋
+            clearedZoneRepository.resetRewardClaimed(commanderId, zoneName); // 재도전: rewardClaimed=false 리셋
         }
 
         return ClearZoneStageResponse.builder()
                 .isFirstClear(isFirstClear)
                 .clearedZoneName(isFirstClear ? zoneName : null)
-                .mineralRemain(character.getMineral())
+                .mineralRemain(commander.getMineral())
                 .build();
     }
 
     // 보상 지급 — rewardClaimed==true면 중복 요청으로 차단
     // mineral은 매 클리어, techPoint/modulePoint는 firstBonusClaimed==false 일 때만
     @Transactional
-    public ClaimZoneRewardResponse claimZoneReward(Long characterId, ClaimZoneRewardRequest request) {
+    public ClaimZoneRewardResponse claimZoneReward(Long commanderId, ClaimZoneRewardRequest request) {
         String zoneName = request.getZoneName();
         boolean watchedAd = request.getWatchedAd() != null && request.getWatchedAd();
 
@@ -122,7 +122,7 @@ public class ZoneService {
         if (zoneConfig == null)
             throw new BusinessException(ServerErrorCode.ZONE_DESTROY_WAVE_FAIL_ZONE_NOT_FOUND);
 
-        Optional<ClearedZone> clearedZoneOpt = clearedZoneRepository.findByCharacterIdAndZoneName(characterId, zoneName);
+        Optional<ClearedZone> clearedZoneOpt = clearedZoneRepository.findByCommanderIdAndZoneName(commanderId, zoneName);
         if (clearedZoneOpt.isPresent() == false)
             throw new BusinessException(ServerErrorCode.ZONE_NOT_CLEARED);
 
@@ -130,52 +130,52 @@ public class ZoneService {
         if (clearedZone.isRewardClaimed() == true)
             throw new BusinessException(ServerErrorCode.ZONE_REWARD_ALREADY_CLAIMED);
 
-        Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.ZONE_DESTROY_WAVE_FAIL_CHARACTER_NOT_FOUND));
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.ZONE_DESTROY_WAVE_FAIL_COMMANDER_NOT_FOUND));
 
-        boolean isVip = vipSubscriptionRepository.findByCharacterId(characterId)
+        boolean isVip = vipSubscriptionRepository.findByCommanderId(commanderId)
                 .map(sub -> sub.getVipExpiry() != null && Instant.now().isBefore(sub.getVipExpiry()))
                 .orElse(false);
         // VIP: *4, 비VIP+광고: *2, 비VIP: *1
         int multiplier = isVip ? 4 : (watchedAd ? 2 : 1);
         int mineralReward = zoneConfig.getMineralClearReward() * multiplier;
-        character.setMineral(character.getMineral() + mineralReward);
+        commander.setMineral(commander.getMineral() + mineralReward);
 
         if (clearedZone.isFirstBonusClaimed() == false) {
-            character.setTechPoint(character.getTechPoint() + zoneConfig.getTechPointClearReward());
-            character.setModulePoint(character.getModulePoint() + zoneConfig.getModulePointClearReward());
-            character.setModulePointMaxGot(character.getModulePointMaxGot() + zoneConfig.getModulePointClearReward());
+            commander.setTechPoint(commander.getTechPoint() + zoneConfig.getTechPointClearReward());
+            commander.setModulePoint(commander.getModulePoint() + zoneConfig.getModulePointClearReward());
+            commander.setModulePointMaxGot(commander.getModulePointMaxGot() + zoneConfig.getModulePointClearReward());
             clearedZone.setFirstBonusClaimed(true);
         }
 
-        autoLevelUpIfNeeded(character);
+        autoLevelUpIfNeeded(commander);
 
         // 보상 지급 후 미네랄 세팅 재투입 — 부족 시 초기화
-        int totalInvested = fleetService.getTotalInvestedMineral(characterId);
+        int totalInvested = fleetService.getTotalInvestedMineral(commanderId);
         boolean mineralSettingReset = false;
         FleetInfoDto updatedFleetInfo = null;
         if (totalInvested > 0) {
-            if (character.getMineral() >= totalInvested) {
-                fleetService.deductMineralOnly(character, totalInvested);
+            if (commander.getMineral() >= totalInvested) {
+                fleetService.deductMineralOnly(commander, totalInvested);
             } else {
-                fleetService.resetMineralModules(characterId);
+                fleetService.resetMineralModules(commanderId);
                 mineralSettingReset = true;
-                updatedFleetInfo = fleetService.getActiveFleet(characterId);
+                updatedFleetInfo = fleetService.getActiveFleet(commanderId);
             }
         }
 
         clearedZone.setRewardClaimed(true);
         clearedZoneRepository.save(clearedZone);
-        characterRepository.save(character);
+        commanderRepository.save(commander);
 
         return ClaimZoneRewardResponse.builder()
                 .zoneName(zoneName)
                 .watchedAd(watchedAd)
-                .mineralRemain(character.getMineral())
-                .techPointRemain(character.getTechPoint())
-                .modulePointRemain(character.getModulePoint())
-                .modulePointMaxGot(character.getModulePointMaxGot())
-                .techLevel(character.getTechLevel())
+                .mineralRemain(commander.getMineral())
+                .techPointRemain(commander.getTechPoint())
+                .modulePointRemain(commander.getModulePoint())
+                .modulePointMaxGot(commander.getModulePointMaxGot())
+                .techLevel(commander.getTechLevel())
                 .mineralSettingReset(mineralSettingReset)
                 .updatedFleetInfo(updatedFleetInfo)
                 .build();
@@ -183,8 +183,8 @@ public class ZoneService {
 
     // 재접속 시 DB에 rewardClaimed=false 남은 존 일괄 지급, mineral은 *1 고정
     @Transactional
-    public PendingStageRewardResponse claimPendingStageRewards(Long characterId) {
-        List<ClearedZone> pending = clearedZoneRepository.findByCharacterIdAndRewardClaimedFalse(characterId);
+    public PendingStageRewardResponse claimPendingStageRewards(Long commanderId) {
+        List<ClearedZone> pending = clearedZoneRepository.findByCommanderIdAndRewardClaimedFalse(commanderId);
 
         if (pending.isEmpty()) {
             return PendingStageRewardResponse.builder()
@@ -193,8 +193,8 @@ public class ZoneService {
                     .build();
         }
 
-        Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.ZONE_DESTROY_WAVE_FAIL_CHARACTER_NOT_FOUND));
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.ZONE_DESTROY_WAVE_FAIL_COMMANDER_NOT_FOUND));
 
         int mineralGained = 0;
         int techPointGained = 0;
@@ -215,39 +215,39 @@ public class ZoneService {
             zone.setRewardClaimed(true);
         }
 
-        character.setMineral(character.getMineral() + mineralGained);
-        character.setTechPoint(character.getTechPoint() + techPointGained);
-        character.setModulePoint(character.getModulePoint() + modulePointGained);
-        character.setModulePointMaxGot(character.getModulePointMaxGot() + modulePointGained);
+        commander.setMineral(commander.getMineral() + mineralGained);
+        commander.setTechPoint(commander.getTechPoint() + techPointGained);
+        commander.setModulePoint(commander.getModulePoint() + modulePointGained);
+        commander.setModulePointMaxGot(commander.getModulePointMaxGot() + modulePointGained);
 
-        autoLevelUpIfNeeded(character);
+        autoLevelUpIfNeeded(commander);
 
         // 보상 지급 후 미네랄 세팅 재투입 — 부족 시 초기화
-        int totalInvested = fleetService.getTotalInvestedMineral(characterId);
+        int totalInvested = fleetService.getTotalInvestedMineral(commanderId);
         boolean mineralSettingReset = false;
         FleetInfoDto updatedFleetInfo = null;
         if (totalInvested > 0) {
-            if (character.getMineral() >= totalInvested) {
-                fleetService.deductMineralOnly(character, totalInvested);
+            if (commander.getMineral() >= totalInvested) {
+                fleetService.deductMineralOnly(commander, totalInvested);
             } else {
-                fleetService.resetMineralModules(characterId);
+                fleetService.resetMineralModules(commanderId);
                 mineralSettingReset = true;
-                updatedFleetInfo = fleetService.getActiveFleet(characterId);
+                updatedFleetInfo = fleetService.getActiveFleet(commanderId);
             }
         }
 
         clearedZoneRepository.saveAll(pending);
-        characterRepository.save(character);
+        commanderRepository.save(commander);
 
         return PendingStageRewardResponse.builder()
                 .mineralGained(mineralGained)
                 .techPointGained(techPointGained)
                 .modulePointGained(modulePointGained)
-                .mineralRemain(character.getMineral())
-                .techPointRemain(character.getTechPoint())
-                .modulePointRemain(character.getModulePoint())
-                .modulePointMaxGot(character.getModulePointMaxGot())
-                .techLevel(character.getTechLevel())
+                .mineralRemain(commander.getMineral())
+                .techPointRemain(commander.getTechPoint())
+                .modulePointRemain(commander.getModulePoint())
+                .modulePointMaxGot(commander.getModulePointMaxGot())
+                .techLevel(commander.getTechLevel())
                 .mineralSettingReset(mineralSettingReset)
                 .updatedFleetInfo(updatedFleetInfo)
                 .build();
@@ -258,20 +258,20 @@ public class ZoneService {
         return (long) p[0] * 1000 + p[1];
     }
 
-    // dev 커맨드용: characterId로 레벨업 재계산 후 저장, 결과 techLevel 반환
+    // dev 커맨드용: commanderId로 레벨업 재계산 후 저장, 결과 techLevel 반환
     @Transactional
-    public int recalcAndSaveTechLevel(Long characterId) {
-        Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_MINERAL_FAIL_CHARACTER_NOT_FOUND));
-        autoLevelUpIfNeeded(character);
-        characterRepository.save(character);
-        return character.getTechLevel();
+    public int recalcAndSaveTechLevel(Long commanderId) {
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_MINERAL_FAIL_COMMANDER_NOT_FOUND));
+        autoLevelUpIfNeeded(commander);
+        commanderRepository.save(commander);
+        return commander.getTechLevel();
     }
 
     // techPoint 누적 기준으로 레벨업 조건 판정 후 자동 승급
-    private void autoLevelUpIfNeeded(Character character) {
-        int currentLevel = character.getTechLevel();
-        int accumulatedPoint = character.getTechPoint();
+    private void autoLevelUpIfNeeded(Commander commander) {
+        int currentLevel = commander.getTechLevel();
+        int accumulatedPoint = commander.getTechPoint();
         int nextLevel = currentLevel + 1;
         int requiredPoint = gameDataService.getTechLevelRequiredPoint(nextLevel);
         while (requiredPoint > 0 && accumulatedPoint >= requiredPoint) {
@@ -279,7 +279,7 @@ public class ZoneService {
             nextLevel = currentLevel + 1;
             requiredPoint = gameDataService.getTechLevelRequiredPoint(nextLevel);
         }
-        character.setTechLevel(currentLevel);
+        commander.setTechLevel(currentLevel);
     }
 
     private int[] parseZoneName(String zoneName) {
@@ -306,9 +306,16 @@ public class ZoneService {
     }
 
     @Transactional
-    public HeartbeatResponse heartbeat(Long characterId) {
+    public HeartbeatResponse heartbeat(Long commanderId) {
         Instant now = Instant.now();
-        characterRepository.updateLastOnlineAtIfStale(characterId, now, now.minusSeconds(heartbeatThrottleSeconds));
+        commanderRepository.updateLastOnlineAtIfStale(commanderId, now, now.minusSeconds(heartbeatThrottleSeconds));
         return HeartbeatResponse.builder().build();
     }
 }
+
+
+
+
+
+
+

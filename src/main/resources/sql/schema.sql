@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS pvp_record;
 DROP TABLE IF EXISTS pvp_season;
 DROP TABLE IF EXISTS progress;
 DROP TABLE IF EXISTS vip_subscription;
-DROP TABLE IF EXISTS `character`;
+DROP TABLE IF EXISTS commander;
 DROP TABLE IF EXISTS account;
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -35,12 +35,12 @@ CREATE TABLE account (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
--- character  (MariaDB 예약어 — 백틱 필수)
+-- commander
 -- ============================================================
-CREATE TABLE `character` (
+CREATE TABLE commander (
     id                      BIGINT          NOT NULL AUTO_INCREMENT,
     account_id              BIGINT          NOT NULL,
-    character_name          VARCHAR(255)    NOT NULL,
+    commander_name          VARCHAR(255)    NOT NULL,
     last_location           BIGINT              NULL,
     mineral                 INT             NOT NULL DEFAULT 0,
     tech_level              INT             NOT NULL DEFAULT 1,
@@ -54,15 +54,14 @@ CREATE TABLE `character` (
     name_change_count       INT             NOT NULL DEFAULT 2,
     collect_date_time       DATETIME(6)         NULL,
     last_online_at          DATETIME(6)         NULL,
-    last_login_reward_at    DATETIME(6)         NULL,
     claimed_days_mask       INT             NOT NULL DEFAULT 0,
     vip_claimed_days_mask   INT             NOT NULL DEFAULT 0,
     login_reward_month      INT                 NULL,
     deleted                 TINYINT(1)      NOT NULL DEFAULT 0,
     date_time               DATETIME(6)     NOT NULL,
     PRIMARY KEY (id),
-    UNIQUE KEY uk_character_name (character_name),
-    INDEX idx_character_account (account_id)
+    UNIQUE KEY uk_commander_name (commander_name),
+    INDEX idx_commander_account (account_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
@@ -70,7 +69,7 @@ CREATE TABLE `character` (
 -- ============================================================
 CREATE TABLE fleet (
     id              BIGINT          NOT NULL AUTO_INCREMENT,
-    character_id    BIGINT          NOT NULL,
+    commander_id    BIGINT          NOT NULL,
     fleet_name      VARCHAR(255)    NOT NULL,
     description     TEXT                NULL,
     is_active       TINYINT(1)      NOT NULL DEFAULT 1,
@@ -80,7 +79,7 @@ CREATE TABLE fleet (
     created         DATETIME(6)     NOT NULL,
     modified        DATETIME(6)     NOT NULL,
     PRIMARY KEY (id),
-    INDEX idx_fleet_character (character_id)
+    INDEX idx_fleet_commander (commander_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
@@ -124,18 +123,18 @@ CREATE TABLE ship_module (
 
 -- ============================================================
 -- progress
--- 유니크: character_id + category + progress_key
+-- 유니크: commander_id + category + progress_key
 -- ============================================================
 CREATE TABLE progress (
     id                      BIGINT          NOT NULL AUTO_INCREMENT,
-    character_id            BIGINT          NOT NULL,
+    commander_id            BIGINT          NOT NULL,
     category                VARCHAR(50)     NOT NULL,
     progress_key            VARCHAR(100)    NOT NULL,
     value                   INT                 NULL,
     completed_date_time     DATETIME(6)     NOT NULL,
     PRIMARY KEY (id),
-    UNIQUE KEY uk_progress (character_id, category, progress_key),
-    INDEX idx_progress_character (character_id)
+    UNIQUE KEY uk_progress (commander_id, category, progress_key),
+    INDEX idx_progress_commander (commander_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
@@ -154,13 +153,13 @@ CREATE TABLE pvp_season (
 -- ============================================================
 CREATE TABLE pvp_record (
     id              BIGINT          NOT NULL AUTO_INCREMENT,
-    character_id    BIGINT          NOT NULL,
+    commander_id    BIGINT          NOT NULL,
     score           INT             NOT NULL DEFAULT 1000,
     wins            INT             NOT NULL DEFAULT 0,
     losses          INT             NOT NULL DEFAULT 0,
     last_updated    DATETIME(6)     NOT NULL,
     PRIMARY KEY (id),
-    UNIQUE KEY uk_pvp_character (character_id)
+    UNIQUE KEY uk_pvp_commander (commander_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
@@ -169,13 +168,13 @@ CREATE TABLE pvp_record (
 -- ============================================================
 CREATE TABLE module_research (
     id              BIGINT          NOT NULL AUTO_INCREMENT,
-    character_id    BIGINT          NOT NULL,
+    commander_id    BIGINT          NOT NULL,
     research_id     VARCHAR(255)        NULL,
     researched      TINYINT(1)      NOT NULL DEFAULT 0,
     created         DATETIME(6)     NOT NULL,
     modified        DATETIME(6)     NOT NULL,
     PRIMARY KEY (id),
-    INDEX idx_research_character (character_id)
+    INDEX idx_research_commander (commander_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
@@ -183,29 +182,29 @@ CREATE TABLE module_research (
 -- ============================================================
 CREATE TABLE vip_subscription (
     id                      BIGINT          NOT NULL AUTO_INCREMENT,
-    character_id            BIGINT          NOT NULL,
+    commander_id            BIGINT          NOT NULL,
     vip_expiry              DATETIME(6)     NOT NULL,
     purchase_token          VARCHAR(512)    NOT NULL,
     platform                VARCHAR(32)     NOT NULL,
     updated_at              DATETIME(6)     NOT NULL,
     PRIMARY KEY (id),
-    UNIQUE KEY uk_vip_character_id (character_id)
+    UNIQUE KEY uk_vip_commander_id (commander_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
 -- cleared_zone
--- 유니크: character_id + zone_name
+-- 유니크: commander_id + zone_name
 -- ============================================================
 CREATE TABLE cleared_zone (
     id                   BIGINT       NOT NULL AUTO_INCREMENT,
-    character_id         BIGINT       NOT NULL,
+    commander_id         BIGINT       NOT NULL,
     zone_name            VARCHAR(255) NOT NULL,
     cleared_at           DATETIME(6)  NOT NULL,
     reward_claimed       TINYINT(1)   NOT NULL DEFAULT 0, -- per-run: clearZoneStage→0, claimZoneReward→1
     first_bonus_claimed  TINYINT(1)   NOT NULL DEFAULT 0, -- 영구: techPoint/modulePoint 최초 지급 후 1, 리셋 없음
     PRIMARY KEY (id),
-    UNIQUE KEY uk_cleared_zone (character_id, zone_name),
-    INDEX idx_cleared_character (character_id)
+    UNIQUE KEY uk_cleared_zone (commander_id, zone_name),
+    INDEX idx_cleared_commander (commander_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
@@ -217,18 +216,20 @@ CREATE TABLE cleared_zone (
 
 DELIMITER $$
 
--- 캐릭터의 자원 현황 조회 예시 SP
-DROP PROCEDURE IF EXISTS sp_get_character_resources$$
-CREATE PROCEDURE sp_get_character_resources(
-    IN  p_character_id  BIGINT,
+-- 커맨더의 자원 현황 조회 예시 SP
+DROP PROCEDURE IF EXISTS sp_get_commander_resources$$
+CREATE PROCEDURE sp_get_commander_resources(
+    IN  p_commander_id  BIGINT,
     OUT p_mineral       INT,
     OUT p_pvp_point     INT
 )
 BEGIN
     SELECT mineral, pvp_point
     INTO   p_mineral, p_pvp_point
-    FROM   `character`
-    WHERE  id = p_character_id AND deleted = 0;
+    FROM   commander
+    WHERE  id = p_commander_id AND deleted = 0;
 END$$
 
 DELIMITER ;
+
+

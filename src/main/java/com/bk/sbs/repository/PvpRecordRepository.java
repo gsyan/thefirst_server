@@ -8,9 +8,11 @@ import java.util.Optional;
 
 @Repository
 public interface PvpRecordRepository extends JpaRepository<PvpRecord, Long> {
-    Optional<PvpRecord> findByCharacterId(Long characterId);
+    Optional<PvpRecord> findByCommanderId(Long commanderId);
 
     @org.springframework.data.jpa.repository.Modifying
-    @org.springframework.data.jpa.repository.Query("DELETE FROM PvpRecord p WHERE p.characterId = :characterId")
-    void deleteByCharacterId(@org.springframework.data.repository.query.Param("characterId") Long characterId);
+    @org.springframework.data.jpa.repository.Query("DELETE FROM PvpRecord p WHERE p.commanderId = :commanderId")
+    void deleteByCommanderId(@org.springframework.data.repository.query.Param("commanderId") Long commanderId);
 }
+
+

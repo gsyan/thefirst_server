@@ -20,7 +20,7 @@ public class VipSubscription {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private Long characterId;
+    private Long commanderId;
 
     @Column(nullable = false)
     private Instant vipExpiry;
@@ -34,11 +34,12 @@ public class VipSubscription {
     @Column(nullable = false)
     private Instant updatedAt;
 
-    public VipSubscription(Long characterId, Instant vipExpiry, String purchaseToken, String platform) {
-        this.characterId = characterId;
+    public VipSubscription(Long commanderId, Instant vipExpiry, String purchaseToken, String platform) {
+        this.commanderId = commanderId;
         this.vipExpiry = vipExpiry;
         this.purchaseToken = purchaseToken;
         this.platform = platform;
         this.updatedAt = Instant.now();
     }
 }
+

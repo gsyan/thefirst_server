@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class PvpBattleStartRequest {
-    private Long opponentCharacterId;
+    private Long opponentCommanderId;
 }

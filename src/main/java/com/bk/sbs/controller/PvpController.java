@@ -28,8 +28,8 @@ public class PvpController {
     public ResponseEntity<ApiResponse<PvpListResponse>> getOpponentList(
             @RequestBody PvpListRequest request,
             HttpServletRequest httpRequest) {
-        Long characterId = getCharacterIdFromToken(httpRequest);
-        PvpListResponse response = pvpService.getOpponentList(characterId);
+        Long commanderId = getCommanderIdFromToken(httpRequest);
+        PvpListResponse response = pvpService.getOpponentList(commanderId);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
@@ -38,8 +38,8 @@ public class PvpController {
     public ResponseEntity<ApiResponse<PvpRefreshResponse>> refreshOpponentList(
             @RequestBody PvpRefreshRequest request,
             HttpServletRequest httpRequest) {
-        Long characterId = getCharacterIdFromToken(httpRequest);
-        PvpRefreshResponse response = pvpService.refreshOpponentList(characterId);
+        Long commanderId = getCommanderIdFromToken(httpRequest);
+        PvpRefreshResponse response = pvpService.refreshOpponentList(commanderId);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
@@ -48,8 +48,8 @@ public class PvpController {
     public ResponseEntity<ApiResponse<PvpBattleStartResponse>> startBattle(
             @RequestBody PvpBattleStartRequest request,
             HttpServletRequest httpRequest) {
-        Long characterId = getCharacterIdFromToken(httpRequest);
-        PvpBattleStartResponse response = pvpService.startBattle(characterId, request.getOpponentCharacterId());
+        Long commanderId = getCommanderIdFromToken(httpRequest);
+        PvpBattleStartResponse response = pvpService.startBattle(commanderId, request.getOpponentCommanderId());
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
@@ -58,22 +58,25 @@ public class PvpController {
     public ResponseEntity<ApiResponse<PvpBattleResultResponse>> reportBattleResult(
             @RequestBody PvpBattleResultRequest request,
             HttpServletRequest httpRequest) {
-        Long characterId = getCharacterIdFromToken(httpRequest);
+        Long commanderId = getCommanderIdFromToken(httpRequest);
         PvpBattleResultResponse response = pvpService.reportBattleResult(
-                characterId, request.getBattleToken(), request.getIsVictory());
+                commanderId, request.getBattleToken(), request.getIsVictory());
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     // 랭킹 관련 엔드포인트는 RankingController(/api/ranking)로 이전
 
-    private Long getCharacterIdFromToken(HttpServletRequest request) {
+    private Long getCommanderIdFromToken(HttpServletRequest request) {
         String token = jwtUtil.getTokenFromRequest(request);
         if (token == null) throw new BusinessException(ServerErrorCode.PVP_CONTROLLER_FAIL_INVALID_TOKEN);
-        if (jwtUtil.hasCharacterId(token) == false) throw new BusinessException(ServerErrorCode.PVP_CONTROLLER_FAIL_JWT_HAS_CHARACTERID);
+        if (jwtUtil.hasCommanderId(token) == false) throw new BusinessException(ServerErrorCode.PVP_CONTROLLER_FAIL_JWT_HAS_COMMANDERID);
 
-        Long characterId = jwtUtil.getCharacterIdFromToken(token);
-        if (characterId == null) throw new BusinessException(ServerErrorCode.PVP_CONTROLLER_FAIL_JWT_GET_CHARACTERID);
+        Long commanderId = jwtUtil.getCommanderIdFromToken(token);
+        if (commanderId == null) throw new BusinessException(ServerErrorCode.PVP_CONTROLLER_FAIL_JWT_GET_COMMANDERID);
 
-        return characterId & 0x00FFFFFFFFFFFFFFL;
+        return commanderId & 0x00FFFFFFFFFFFFFFL;
     }
 }
+
+
+

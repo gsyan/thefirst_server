@@ -4,11 +4,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * CharacterRenameRequest
- * Auto-generated from Unity C# CharacterRenameRequest class
+ * CommanderRenameRequest
+ * Auto-generated from Unity C# CommanderRenameRequest class
  */
 @Data
 @NoArgsConstructor
-public class CharacterRenameRequest {
+public class CommanderRenameRequest {
     private String newName;
 }

@@ -7,7 +7,7 @@ import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.security.JwtUtil;
 import com.bk.sbs.entity.PvpSeason;
-import com.bk.sbs.service.CharacterService;
+import com.bk.sbs.service.CommanderService;
 import com.bk.sbs.service.FleetService;
 import com.bk.sbs.service.GameDataService;
 import com.bk.sbs.service.PvpSeasonService;
@@ -21,7 +21,7 @@ import java.util.List;
 @RequestMapping("/api/dev")
 public class DevController {
 
-    private final CharacterService characterService;
+    private final CommanderService CommanderService;
     private final FleetService fleetService;
     private final GameDataService gameDataService;
     private final PvpSeasonService pvpSeasonService;
@@ -29,8 +29,8 @@ public class DevController {
     private final JwtUtil jwtUtil;
     private final ObjectMapper objectMapper;
 
-    public DevController(CharacterService characterService, FleetService fleetService, GameDataService gameDataService, PvpSeasonService pvpSeasonService, ZoneService zoneService, JwtUtil jwtUtil, ObjectMapper objectMapper) {
-        this.characterService = characterService;
+    public DevController(CommanderService CommanderService, FleetService fleetService, GameDataService gameDataService, PvpSeasonService pvpSeasonService, ZoneService zoneService, JwtUtil jwtUtil, ObjectMapper objectMapper) {
+        this.CommanderService = CommanderService;
         this.fleetService = fleetService;
         this.gameDataService = gameDataService;
         this.pvpSeasonService = pvpSeasonService;
@@ -43,23 +43,23 @@ public class DevController {
     public ApiResponse<String> executeCommand(@RequestBody DevCommandRequest request, HttpServletRequest httpRequest) {
         String token = jwtUtil.getTokenFromRequest(httpRequest);
         if (token == null) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_NULL_TOKEN);
-        Long characterId = jwtUtil.getCharacterIdFromToken(token);
-        if (characterId == null) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_NULL_CHARACTERID);
-        Long actualCharacterId = characterId & 0x00FFFFFFFFFFFFFFL;
-        return executeDevCommand(request.getCommand(), request.getParams(), actualCharacterId);
+        Long commanderId = jwtUtil.getCommanderIdFromToken(token);
+        if (commanderId == null) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_NULL_COMMANDERID);
+        Long actualCommanderId = commanderId & 0x00FFFFFFFFFFFFFFL;
+        return executeDevCommand(request.getCommand(), request.getParams(), actualCommanderId);
     }
 
-    private ApiResponse<String> executeDevCommand(String command, List<String> params, Long characterId) {
+    private ApiResponse<String> executeDevCommand(String command, List<String> params, Long commanderId) {
         switch (command.toLowerCase()) {
             case "setmineral":
                 if (params == null || params.isEmpty()) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_SETMINERAL_INVALID_PARAM);
                 int mineral = parseIntOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_SETMINERAL_PARSE_PARAM);
-                characterService.updateMineral(characterId, mineral);
+                CommanderService.updateMineral(commanderId, mineral);
                 return ApiResponse.success("Mineral set to: " + mineral + "|mineral:" + mineral);
             case "addmineral":
                 if (params == null || params.isEmpty()) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMIKNERAL_INVALID_PARAM);
                 int additionalMaterial = parseIntOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMIKNERAL_PARSE_PARAM);
-                int newMineral = characterService.addMineral(characterId, additionalMaterial);
+                int newMineral = CommanderService.addMineral(commanderId, additionalMaterial);
                 return ApiResponse.success("Mineral added: " + additionalMaterial + " (total: " + newMineral + ")|mineral:" + newMineral);
 
             case "addminerals": {
@@ -69,31 +69,31 @@ public class DevController {
                 int addTp  = parseIntOrThrow(params.get(1), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDPVPMINERAL_PARSE_PARAM);
                 int addMp  = parseIntOrThrow(params.get(2), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDTEMPMINERAL_PARSE_PARAM);
                 int addPvp = parseIntOrThrow(params.get(3), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDPVPMINERAL_PARSE_PARAM);
-                CharacterInfoDto cur = characterService.getCharacterInfoDto(characterId);
-                int newM      = addM   > 0 ? characterService.addMineral(characterId, addM)                 : cur.getMineral();
-                int newTp     = addTp  > 0 ? characterService.addTechPoint(characterId, addTp)              : cur.getTechPoint();
-                int newMpMax  = addMp  > 0 ? characterService.addModulePointMaxGot(characterId, addMp)      : cur.getModulePointMaxGot();
-                int newMp     = addMp  > 0 ? characterService.addModulePoint(characterId, addMp)            : cur.getModulePoint();
-                int newPvpMax = addPvp > 0 ? characterService.addPvpPointMaxGot(characterId, addPvp)        : cur.getPvpPointMaxGot();
-                int newPvp    = addPvp > 0 ? characterService.addPvpPoint(characterId, addPvp)              : cur.getPvpPoint();
-                int newTechLevel = addTp > 0 ? zoneService.recalcAndSaveTechLevel(characterId) : cur.getTechLevel();
+                CommanderInfoDto cur = CommanderService.getCommanderInfoDto(commanderId);
+                int newM      = addM   > 0 ? CommanderService.addMineral(commanderId, addM)                 : cur.getMineral();
+                int newTp     = addTp  > 0 ? CommanderService.addTechPoint(commanderId, addTp)              : cur.getTechPoint();
+                int newMpMax  = addMp  > 0 ? CommanderService.addModulePointMaxGot(commanderId, addMp)      : cur.getModulePointMaxGot();
+                int newMp     = addMp  > 0 ? CommanderService.addModulePoint(commanderId, addMp)            : cur.getModulePoint();
+                int newPvpMax = addPvp > 0 ? CommanderService.addPvpPointMaxGot(commanderId, addPvp)        : cur.getPvpPointMaxGot();
+                int newPvp    = addPvp > 0 ? CommanderService.addPvpPoint(commanderId, addPvp)              : cur.getPvpPoint();
+                int newTechLevel = addTp > 0 ? zoneService.recalcAndSaveTechLevel(commanderId) : cur.getTechLevel();
                 return ApiResponse.success("Resources added|mineral:" + newM + "|techPoint:" + newTp + "|modulePointMaxGot:" + newMpMax + "|modulePoint:" + newMp + "|pvpPointMaxGot:" + newPvpMax + "|pvpPoint:" + newPvp + "|techLevel:" + newTechLevel);
             }
 
             case "getstatus":
-                CharacterInfoDto status = characterService.getCharacterInfoDto(characterId);
+                CommanderInfoDto status = CommanderService.getCommanderInfoDto(commanderId);
                 StringBuilder result = new StringBuilder();
-                result.append("=== Character Status ===\n");
-                result.append("Tech Level: ").append(fleetService.getResearchedIds(characterId).stream().filter(s -> s.startsWith("tech_level_")).findFirst().orElse("1"));
+                result.append("=== Commander Status ===\n");
+                result.append("Tech Level: ").append(fleetService.getResearchedIds(commanderId).stream().filter(s -> s.startsWith("tech_level_")).findFirst().orElse("1"));
                 result.append("Mineral: ").append(status.getMineral()).append("\n");
                 return ApiResponse.success(result.toString());
 
 //            case "addship":
 //                // 개발자 명령어: 자원이 부족할 경우 자동으로 충원
-//                CharacterInfoDto currentStatus = characterService.getCharacterInfoDto(characterId);
+//                CommanderInfoDto currentStatus = CommanderService.getCommanderInfoDto(commanderId);
 //
 //                // 현재 함선 수 확인
-//                FleetInfoDto activeFleet = fleetService.getActiveFleet(characterId);
+//                FleetInfoDto activeFleet = fleetService.getActiveFleet(commanderId);
 //                int currentShipCount = activeFleet.getShips() != null ? activeFleet.getShips().size() : 0;
 //
 //                // 함선 추가에 필요한 자원 비용 확인 (GameDataService에서 가져오기)
@@ -102,25 +102,25 @@ public class DevController {
 //                // 자원 부족 시 자동 충원 (모든 미네랄 타입)
 //                if (currentStatus.getMineral() < shipAddCost.getMineral()) {
 //                    Long updatedMineral = currentStatus.getMineral() + shipAddCost.getMineral() + 5000;
-//                    characterService.updateMineral(characterId, updatedMineral);
+//                    CommanderService.updateMineral(commanderId, updatedMineral);
 //                }
 //                if (currentStatus.getMineralRare() < shipAddCost.getMineralRare()) {
 //                    Long updatedMineralRare = currentStatus.getMineralRare() + shipAddCost.getMineralRare() + 1000;
-//                    characterService.updateMineralRare(characterId, updatedMineralRare);
+//                    CommanderService.updateMineralRare(commanderId, updatedMineralRare);
 //                }
 //                if (currentStatus.getMineralExotic() < shipAddCost.getMineralExotic()) {
 //                    Long updatedMineralExotic = currentStatus.getMineralExotic() + shipAddCost.getMineralExotic() + 1000;
-//                    characterService.updateMineralExotic(characterId, updatedMineralExotic);
+//                    CommanderService.updateMineralExotic(commanderId, updatedMineralExotic);
 //                }
 //                if (currentStatus.getMineralDark() < shipAddCost.getMineralDark()) {
 //                    Long updatedMineralDark = currentStatus.getMineralDark() + shipAddCost.getMineralDark() + 1000;
-//                    characterService.updateMineralDark(characterId, updatedMineralDark);
+//                    CommanderService.updateMineralDark(commanderId, updatedMineralDark);
 //                }
 //
 //                AddShipRequest addShipRequest = new AddShipRequest();
 //                addShipRequest.setFleetId(null); // null이면 현재 활성 함대에 추가
 //
-//                AddShipResponse addShipResponse = fleetService.addShip(characterId, addShipRequest);
+//                AddShipResponse addShipResponse = fleetService.addShip(commanderId, addShipRequest);
 //                String addShipJson = jsonSerializeOrThrow(addShipResponse);
 //                return ApiResponse.success(addShipJson);
 
@@ -148,7 +148,7 @@ public class DevController {
                 changeFormationRequest.setFleetId(null);
                 changeFormationRequest.setFormationType(formationType);
 
-                ChangeFormationResponse changeFormationResponse = fleetService.changeFormation(characterId, changeFormationRequest);
+                ChangeFormationResponse changeFormationResponse = fleetService.changeFormation(commanderId, changeFormationRequest);
                 String changeFormationJson = jsonSerializeOrThrow(changeFormationResponse);
                 return ApiResponse.success(changeFormationJson);
 
@@ -228,3 +228,7 @@ public class DevController {
     }
 
 }
+
+
+
+

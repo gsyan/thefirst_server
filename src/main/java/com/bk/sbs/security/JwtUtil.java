@@ -39,20 +39,20 @@ public class JwtUtil {
         return createToken(accountId, null, refreshTokenValidity);
     }
 
-    // 캐릭터 선택 후 characterId까지 포함된 토큰 생성
-    public String createAccessTokenWithCharacter(Long accountId, Long characterId) {
-        return createToken(accountId, characterId, accessTokenValidity);
+    // 캐릭터 선택 후 commanderId까지 포함된 토큰 생성
+    public String createAccessTokenWithCommander(Long accountId, Long commanderId) {
+        return createToken(accountId, commanderId, accessTokenValidity);
     }
 
-    public String createRefreshTokenWithCharacter(Long accountId, Long characterId) {
-        return createToken(accountId, characterId, refreshTokenValidity);
+    public String createRefreshTokenWithCommander(Long accountId, Long commanderId) {
+        return createToken(accountId, commanderId, refreshTokenValidity);
     }
 
     // subject = accountId (불변값), email 제거
-    private String createToken(Long accountId, Long characterId, long validity) {
+    private String createToken(Long accountId, Long commanderId, long validity) {
         Claims claims = Jwts.claims().setSubject(accountId.toString());
-        if (characterId != null) {
-            claims.put("characterId", characterId);
+        if (commanderId != null) {
+            claims.put("commanderId", commanderId);
         }
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + validity * 1000);
@@ -70,14 +70,14 @@ public class JwtUtil {
         return Long.parseLong(getClaimsFromToken(token).getSubject());
     }
 
-    public Long getCharacterIdFromToken(String token) {
+    public Long getCommanderIdFromToken(String token) {
         Claims claims = getClaimsFromToken(token);
-        return claims.get("characterId", Long.class);
+        return claims.get("commanderId", Long.class);
     }
 
-    public boolean hasCharacterId(String token) {
+    public boolean hasCommanderId(String token) {
         Claims claims = getClaimsFromToken(token);
-        return claims.get("characterId") != null;
+        return claims.get("commanderId") != null;
     }
 
     public String getTokenFromRequest(HttpServletRequest request) {
@@ -108,3 +108,5 @@ public class JwtUtil {
         }
     }
 }
+
+

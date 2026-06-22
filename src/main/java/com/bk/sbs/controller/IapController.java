@@ -29,33 +29,44 @@ public class IapController {
     public ResponseEntity<ApiResponse<VipStatusResponse>> purchaseVip(
             @RequestBody VipPurchaseRequest request,
             HttpServletRequest httpRequest) {
-        Long characterId = getCharacterIdFromToken(httpRequest);
-        VipStatusResponse response = iapService.purchaseVip(characterId, request);
+        Long commanderId = getCommanderIdFromToken(httpRequest);
+        VipStatusResponse response = iapService.purchaseVip(commanderId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     // 현재 VIP 상태 조회
     @GetMapping("/vip/status")
     public ResponseEntity<ApiResponse<VipStatusResponse>> getVipStatus(HttpServletRequest httpRequest) {
-        Long characterId = getCharacterIdFromToken(httpRequest);
-        VipStatusResponse response = iapService.getVipStatus(characterId);
+        Long commanderId = getCommanderIdFromToken(httpRequest);
+        VipStatusResponse response = iapService.getVipStatus(commanderId);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    // 에디터 전용: 영수증 없이 VIP 강제 세팅
+    @PostMapping("/debug/vip/force")
+    public ResponseEntity<ApiResponse<VipStatusResponse>> debugForceVip(HttpServletRequest httpRequest) {
+        Long commanderId = getCommanderIdFromToken(httpRequest);
+        VipStatusResponse response = iapService.debugForceVip(commanderId);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     // 일일 보상 지급 요청
     @PostMapping("/vip/daily-reward")
     public ResponseEntity<ApiResponse<DailyClaimResponse>> claimDailyReward(HttpServletRequest httpRequest) {
-        Long characterId = getCharacterIdFromToken(httpRequest);
-        DailyClaimResponse response = iapService.claimDailyReward(characterId);
+        Long commanderId = getCommanderIdFromToken(httpRequest);
+        DailyClaimResponse response = iapService.claimDailyReward(commanderId);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
-    private Long getCharacterIdFromToken(HttpServletRequest request) {
+    private Long getCommanderIdFromToken(HttpServletRequest request) {
         String token = jwtUtil.getTokenFromRequest(request);
         if (token == null) throw new BusinessException(ServerErrorCode.IAP_CONTROLLER_FAIL_INVALID_TOKEN);
-        if (jwtUtil.hasCharacterId(token) == false) throw new BusinessException(ServerErrorCode.IAP_CONTROLLER_FAIL_JWT_HAS_CHARACTERID);
-        Long characterId = jwtUtil.getCharacterIdFromToken(token);
-        if (characterId == null) throw new BusinessException(ServerErrorCode.IAP_CONTROLLER_FAIL_JWT_GET_CHARACTERID);
-        return characterId & 0x00FFFFFFFFFFFFFFL;
+        if (jwtUtil.hasCommanderId(token) == false) throw new BusinessException(ServerErrorCode.IAP_CONTROLLER_FAIL_JWT_HAS_COMMANDERID);
+        Long commanderId = jwtUtil.getCommanderIdFromToken(token);
+        if (commanderId == null) throw new BusinessException(ServerErrorCode.IAP_CONTROLLER_FAIL_JWT_GET_COMMANDERID);
+        return commanderId & 0x00FFFFFFFFFFFFFFL;
     }
 }
+
+
+

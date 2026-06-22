@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RankingEntryDto {
     private Integer rank;
-    private Long characterId;
-    private String characterName;
+    private Long commanderId;
+    private String commanderName;
     private String score;
     private Integer shipCount;
     private Float statHealth;

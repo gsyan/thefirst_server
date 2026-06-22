@@ -18,7 +18,7 @@ public class PvpRecord {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private Long characterId;
+    private Long commanderId;
 
     @Column(nullable = false)
     private Integer score = 1000;
@@ -32,3 +32,4 @@ public class PvpRecord {
     @Column(nullable = false)
     private LocalDateTime lastUpdated = LocalDateTime.now();
 }
+

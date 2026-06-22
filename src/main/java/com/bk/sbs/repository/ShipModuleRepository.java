@@ -29,6 +29,8 @@ public interface ShipModuleRepository extends JpaRepository<ShipModule, Long> {
     List<ShipModule> findByShipIdAndBodyIndexAndDeletedFalse(Long shipId, int bodyIndex);
 
     @org.springframework.data.jpa.repository.Modifying
-    @Query("DELETE FROM ShipModule sm WHERE sm.ship.id IN (SELECT s.id FROM Ship s WHERE s.fleet.characterId = :characterId)")
-    void deleteByCharacterId(@Param("characterId") Long characterId);
+    @Query("DELETE FROM ShipModule sm WHERE sm.ship.id IN (SELECT s.id FROM Ship s WHERE s.fleet.commanderId = :commanderId)")
+    void deleteByCommanderId(@Param("commanderId") Long commanderId);
 }
+
+

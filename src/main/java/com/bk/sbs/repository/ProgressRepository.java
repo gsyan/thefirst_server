@@ -11,13 +11,15 @@ import java.util.Optional;
 @Repository
 public interface ProgressRepository extends JpaRepository<Progress, Long> {
 
-    List<Progress> findByCharacterIdAndCategory(Long characterId, String category);
+    List<Progress> findByCommanderIdAndCategory(Long commanderId, String category);
 
-    Optional<Progress> findByCharacterIdAndCategoryAndProgressKey(Long characterId, String category, String progressKey);
+    Optional<Progress> findByCommanderIdAndCategoryAndProgressKey(Long commanderId, String category, String progressKey);
 
-    boolean existsByCharacterIdAndCategoryAndProgressKey(Long characterId, String category, String progressKey);
+    boolean existsByCommanderIdAndCategoryAndProgressKey(Long commanderId, String category, String progressKey);
 
     @org.springframework.data.jpa.repository.Modifying
-    @org.springframework.data.jpa.repository.Query("DELETE FROM Progress p WHERE p.characterId = :characterId")
-    void deleteByCharacterId(@org.springframework.data.repository.query.Param("characterId") Long characterId);
+    @org.springframework.data.jpa.repository.Query("DELETE FROM Progress p WHERE p.commanderId = :commanderId")
+    void deleteByCommanderId(@org.springframework.data.repository.query.Param("commanderId") Long commanderId);
 }
+
+

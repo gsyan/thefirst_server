@@ -17,7 +17,7 @@ public class ModuleResearch {
     private Long id;
 
     @Column(nullable = false)
-    private Long characterId;
+    private Long commanderId;
 
     @Column(nullable = true)
     private String researchId; // 문자열 기반 연구 ID (예: tech_level_2)
@@ -31,3 +31,4 @@ public class ModuleResearch {
     @Column(nullable = false)
     private LocalDateTime modified = LocalDateTime.now();
 }
+

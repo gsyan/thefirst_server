@@ -17,12 +17,15 @@ public interface ShipRepository extends JpaRepository<Ship, Long> {
     
     Optional<Ship> findByIdAndDeletedFalse(Long id);
 
-    @Query("SELECT s FROM Ship s WHERE s.fleet.id = :fleetId AND s.fleet.characterId = :characterId AND s.deleted = false ORDER BY s.positionIndex")
-    List<Ship> findByFleetIdAndCharacterId(@Param("fleetId") Long fleetId, @Param("characterId") Long characterId);
+    @Query("SELECT s FROM Ship s WHERE s.fleet.id = :fleetId AND s.fleet.commanderId = :commanderId AND s.deleted = false ORDER BY s.positionIndex")
+    List<Ship> findByFleetIdAndCommanderId(@Param("fleetId") Long fleetId, @Param("commanderId") Long commanderId);
     
     boolean existsByFleetIdAndPositionIndexAndDeletedFalse(Long fleetId, int positionIndex);
 
     @org.springframework.data.jpa.repository.Modifying
-    @org.springframework.data.jpa.repository.Query("DELETE FROM Ship s WHERE s.fleet.characterId = :characterId")
-    void deleteByCharacterId(@org.springframework.data.repository.query.Param("characterId") Long characterId);
+    @org.springframework.data.jpa.repository.Query("DELETE FROM Ship s WHERE s.fleet.commanderId = :commanderId")
+    void deleteByCommanderId(@org.springframework.data.repository.query.Param("commanderId") Long commanderId);
 }
+
+
+

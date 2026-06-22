@@ -7,16 +7,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * CharacterInfoDto
- * Auto-generated from Unity C# CharacterInfo class
+ * CommanderInfoDto
+ * Auto-generated from Unity C# CommanderInfo class
  */
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class CharacterInfoDto {
-    private Long characterId;
-    private String characterName;
+public class CommanderInfoDto {
+    private Long commanderId;
+    private String commanderName;
     private Integer mineral;
     private Integer techLevel;
     private Integer techPoint;

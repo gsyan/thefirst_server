@@ -1,10 +1,10 @@
 package com.bk.sbs.service;
 
 import com.bk.sbs.dto.*;
-import com.bk.sbs.entity.Character;
+import com.bk.sbs.entity.Commander;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.bk.sbs.repository.CharacterRepository;
+import com.bk.sbs.repository.CommanderRepository;
 import com.bk.sbs.repository.ClearedZoneRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,16 +26,16 @@ public class RankingService {
     private long zoneSyncRateMinutes;
 
     private final RedisService redisService;
-    private final CharacterRepository characterRepository;
+    private final CommanderRepository commanderRepository;
     private final ClearedZoneRepository clearedZoneRepository;
     private final FleetService fleetService;
     private final ObjectMapper objectMapper;
 
-    public RankingService(RedisService redisService, CharacterRepository characterRepository,
+    public RankingService(RedisService redisService, CommanderRepository commanderRepository,
                           ClearedZoneRepository clearedZoneRepository, FleetService fleetService,
                           ObjectMapper objectMapper) {
         this.redisService = redisService;
-        this.characterRepository = characterRepository;
+        this.commanderRepository = commanderRepository;
         this.clearedZoneRepository = clearedZoneRepository;
         this.fleetService = fleetService;
         this.objectMapper = objectMapper;
@@ -53,13 +53,13 @@ public class RankingService {
     public void syncZoneRankingFromDb() {
         redisService.clearZoneRankingData();
 
-        List<Character> characters = characterRepository.findAllWithClearedZone();
-        for (Character c : characters) {
-            List<String> zoneNames = clearedZoneRepository.findZoneNamesByCharacterId(c.getId());
+        List<Commander> commanders = commanderRepository.findAllWithClearedZone();
+        for (Commander c : commanders) {
+            List<String> zoneNames = clearedZoneRepository.findZoneNamesByCommanderId(c.getId());
             long maxScore = zoneNames.stream().mapToLong(this::computeZoneScore).max().orElse(0L);
             if (maxScore > 0) {
                 redisService.setZoneScore(c.getId(), maxScore);
-                redisService.setRankName(c.getId(), c.getCharacterName());
+                redisService.setRankName(c.getId(), c.getCommanderName());
 
                 FleetInfoDto fleet = fleetService.getActiveFleet(c.getId());
                 String statJson = fleetService.computeFleetRankStatJson(fleet);
@@ -70,12 +70,12 @@ public class RankingService {
         redisService.snapshotZoneRanking();
         String nextUpdatedAt = Instant.now().plusSeconds(zoneSyncRateMinutes * 60).toString();
         redisService.setZoneRankingUpdatedAt(nextUpdatedAt);
-        log.info("Zone 랭킹 Redis 동기화 완료: {}건", characters.size());
+        log.info("Zone 랭킹 Redis 동기화 완료: {}건", commanders.size());
     }
 
     // ── PVP 랭킹 ───────────────────────────────────────────────────────────
 
-    public PvpRankingResponse getPvpRanking(int offset, int limit, Long characterId) {
+    public PvpRankingResponse getPvpRanking(int offset, int limit, Long commanderId) {
         long totalCount = redisService.getTotalPvpSnapshotCount();
         LinkedHashMap<Long, Integer> page = redisService.getPvpSnapshotPage(offset, limit);
 
@@ -97,8 +97,8 @@ public class RankingService {
             }
             RankingEntryDto dto = new RankingEntryDto();
             dto.setRank(tieRank);
-            dto.setCharacterId(entry.getKey());
-            dto.setCharacterName(nameMap.getOrDefault(entry.getKey().toString(), "Unknown"));
+            dto.setCommanderId(entry.getKey());
+            dto.setCommanderName(nameMap.getOrDefault(entry.getKey().toString(), "Unknown"));
             dto.setScore(String.valueOf(score));
             applyStatJson(dto, statMap.get(entry.getKey().toString()));
             items.add(dto);
@@ -106,7 +106,7 @@ public class RankingService {
         }
 
         // 내 정보 계산 (rankName Hash + pvp:info 개인 score)
-        RankingEntryDto myInfo = buildMyPvpInfo(characterId);
+        RankingEntryDto myInfo = buildMyPvpInfo(commanderId);
 
         String lastUpdatedAt = redisService.getPvpRankingUpdatedAt();
 
@@ -123,7 +123,7 @@ public class RankingService {
 
     // ── Zone 랭킹 ──────────────────────────────────────────────────────────
 
-    public ZoneRankingResponse getZoneRanking(int offset, int limit, Long characterId) {
+    public ZoneRankingResponse getZoneRanking(int offset, int limit, Long commanderId) {
         long totalCount = redisService.getTotalZoneSnapshotCount();
         LinkedHashMap<Long, Integer> page = redisService.getZoneSnapshotPage(offset, limit);
 
@@ -147,8 +147,8 @@ public class RankingService {
             }
             RankingEntryDto dto = new RankingEntryDto();
             dto.setRank(tieRank);
-            dto.setCharacterId(entry.getKey());
-            dto.setCharacterName(nameMap.getOrDefault(entry.getKey().toString(), "Unknown"));
+            dto.setCommanderId(entry.getKey());
+            dto.setCommanderName(nameMap.getOrDefault(entry.getKey().toString(), "Unknown"));
             dto.setScore(chapter + "-" + stage);
             applyStatJson(dto, statMap.get(entry.getKey().toString()));
             items.add(dto);
@@ -156,7 +156,7 @@ public class RankingService {
         }
 
         // 내 정보 계산
-        RankingEntryDto myInfo = buildMyZoneInfo(characterId);
+        RankingEntryDto myInfo = buildMyZoneInfo(commanderId);
 
         String lastUpdatedAt = redisService.getZoneRankingUpdatedAt();
 
@@ -170,26 +170,26 @@ public class RankingService {
 
     // ── 내부 헬퍼 ──────────────────────────────────────────────────────────
 
-    private RankingEntryDto buildMyPvpInfo(Long characterId) {
-        Long rank = redisService.getPvpSnapshotRank(characterId);
-        Double scoreD = redisService.getPvpScore(characterId);
+    private RankingEntryDto buildMyPvpInfo(Long commanderId) {
+        Long rank = redisService.getPvpSnapshotRank(commanderId);
+        Double scoreD = redisService.getPvpScore(commanderId);
         int score = scoreD != null ? scoreD.intValue() : 0;
-        String name = redisService.getRankNamesMulti(Collections.singleton(characterId.toString()))
-                .getOrDefault(characterId.toString(), "Unknown");
+        String name = redisService.getRankNamesMulti(Collections.singleton(commanderId.toString()))
+                .getOrDefault(commanderId.toString(), "Unknown");
 
         RankingEntryDto dto = new RankingEntryDto();
         dto.setRank(rank != null ? rank.intValue() : 0);
-        dto.setCharacterId(characterId);
-        dto.setCharacterName(name);
+        dto.setCommanderId(commanderId);
+        dto.setCommanderName(name);
         dto.setScore(String.valueOf(score));
         return dto;
     }
 
-    private RankingEntryDto buildMyZoneInfo(Long characterId) {
-        Long rank = redisService.getZoneSnapshotRank(characterId);
-        Double scoreD = redisService.getZoneScore(characterId);
-        String name = redisService.getRankNamesMulti(Collections.singleton(characterId.toString()))
-                .getOrDefault(characterId.toString(), "Unknown");
+    private RankingEntryDto buildMyZoneInfo(Long commanderId) {
+        Long rank = redisService.getZoneSnapshotRank(commanderId);
+        Double scoreD = redisService.getZoneScore(commanderId);
+        String name = redisService.getRankNamesMulti(Collections.singleton(commanderId.toString()))
+                .getOrDefault(commanderId.toString(), "Unknown");
 
         int rawScore = scoreD != null ? scoreD.intValue() : 0;
         int chapter = (int) (rawScore / 1000);
@@ -197,8 +197,8 @@ public class RankingService {
 
         RankingEntryDto dto = new RankingEntryDto();
         dto.setRank(rank != null ? rank.intValue() : 0);
-        dto.setCharacterId(characterId);
-        dto.setCharacterName(name);
+        dto.setCommanderId(commanderId);
+        dto.setCommanderName(name);
         dto.setScore(rawScore > 0 ? chapter + "-" + stage : "-");
         return dto;
     }
@@ -235,3 +235,8 @@ public class RankingService {
         }
     }
 }
+
+
+
+
+

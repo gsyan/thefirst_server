@@ -4,7 +4,7 @@ package com.bk.sbs.service;
 import com.bk.sbs.dto.nogenerated.ApiResponse;
 import com.bk.sbs.dto.*;
 import com.bk.sbs.entity.Account;
-import com.bk.sbs.entity.Character;
+import com.bk.sbs.entity.Commander;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.repository.*;
@@ -43,8 +43,8 @@ public class AccountService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final AccountRepository accountRepository;
-    private final CharacterRepository characterRepository;
-    private final CharacterService characterService;
+    private final CommanderRepository commanderRepository;
+    private final CommanderService commanderService;
     private final RestTemplate restTemplate = new RestTemplate();
 
     @Autowired private VipSubscriptionRepository vipSubscriptionRepository;
@@ -65,12 +65,12 @@ public class AccountService {
     @Value("${test.guest-keep-data-on-logout:false}")
     private boolean guestKeepDataOnLogout;
 
-    public AccountService(PasswordEncoder passwordEncoder, JwtUtil jwtUtil,AccountRepository accountRepository, CharacterRepository characterRepository, CharacterService characterService) {
+    public AccountService(PasswordEncoder passwordEncoder, JwtUtil jwtUtil, AccountRepository accountRepository, CommanderRepository commanderRepository, CommanderService commanderService) {
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
         this.accountRepository = accountRepository;
-        this.characterRepository = characterRepository;
-        this.characterService = characterService;
+        this.commanderRepository = commanderRepository;
+        this.commanderService = commanderService;
     }
 
     @Transactional
@@ -118,22 +118,22 @@ public class AccountService {
         }
 
         // 7. 계정 생성 + 기본 캐릭터 자동 생성
-        createAccountWithDefaultCharacter(email, password);
+        createAccountWithDefaultCommander(email, password);
 
         return "Account created successfully";
     }
 
-    // 계정 생성 + 기본 캐릭터 생성 (공통 로직)
-    private Account createAccountWithDefaultCharacter(String email, String password) {
+    // 계정 생성 + 기본 커맨더 생성 (공통 로직)
+    private Account createAccountWithDefaultCommander(String email, String password) {
         // 1. 계정 생성
         Account account = new Account();
         account.setEmail(email.toLowerCase());
         account.setPassword(passwordEncoder.encode(password));
         Account savedAccount = accountRepository.save(account);
 
-        log.info("createAccountWithDefaultCharacter: accountId={}, email={}", savedAccount.getId(), savedAccount.getEmail());
-        // 2. 기본 캐릭터 자동 생성 (이름은 null → CharacterService에서 "empty"로 설정)
-        CharacterCreateRequest characterRequest = new CharacterCreateRequest();
+        log.info("createAccountWithDefaultCommander: accountId={}, email={}", savedAccount.getId(), savedAccount.getEmail());
+        // 2. 기본 커맨더 자동 생성 (이름은 null → CommanderService에서 commander_+id로 설정)
+        CommanderCreateRequest commanderRequest = new CommanderCreateRequest();
 
         // SecurityContext에 accountId로 임시 인증 설정
         org.springframework.security.authentication.UsernamePasswordAuthenticationToken authentication =
@@ -142,7 +142,7 @@ public class AccountService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         try {
-            characterService.createCharacter(characterRequest);
+            commanderService.createCommander(commanderRequest);
         } finally {
             SecurityContextHolder.clearContext();
         }
@@ -210,10 +210,10 @@ public class AccountService {
 
         // 4. 토큰에서 accountId 추출 (구 email subject 토큰이면 파싱 실패)
         Long accountId;
-        Long characterId;
+        Long commanderId;
         try {
             accountId = jwtUtil.getAccountIdFromSubject(refreshToken);
-            characterId = jwtUtil.getCharacterIdFromToken(refreshToken);
+            commanderId = jwtUtil.getCommanderIdFromToken(refreshToken);
         } catch (Exception e) {
             throw new BusinessException(ServerErrorCode.REFRESH_TOKEN_FAIL_INVALID_TOKEN2);
         }
@@ -232,9 +232,9 @@ public class AccountService {
                 .bGoogleLinked(bGoogleLinked)
                 .build();
 
-        if (characterId != null) {
-            response.setAccessToken(jwtUtil.createAccessTokenWithCharacter(account.getId(), characterId));
-            response.setRefreshToken(jwtUtil.createRefreshTokenWithCharacter(account.getId(), characterId));
+        if (commanderId != null) {
+            response.setAccessToken(jwtUtil.createAccessTokenWithCommander(account.getId(), commanderId));
+            response.setRefreshToken(jwtUtil.createRefreshTokenWithCommander(account.getId(), commanderId));
         }
 
         return response;
@@ -284,7 +284,7 @@ public class AccountService {
 
         // googleId로 조회 → 없으면 신규 생성 (email은 googlelink_uid 형식으로 저장)
         Account account = accountRepository.findByGoogleId(uid).orElseGet(() ->
-            createAccountWithDefaultCharacter("googlelink_" + uid, uid)
+            createAccountWithDefaultCommander("googlelink_" + uid, uid)
         );
 
         if (account.getGoogleId() == null) {
@@ -385,7 +385,7 @@ public class AccountService {
         Account account = accountRepository.findByEmail(guestEmail)
                 .orElseGet(() -> {
                     log.info("Creating new guest account with guestId: {}", request.getGuestId());
-                    return createAccountWithDefaultCharacter(guestEmail, request.getGuestId());
+                    return createAccountWithDefaultCommander(guestEmail, request.getGuestId());
                 });
 
         return AuthResponse.builder()
@@ -406,44 +406,47 @@ public class AccountService {
             return;
         }
 
-        List<Character> characters = characterRepository.findByAccountId(accountId);
-        for (Character character : characters) {
-            Long characterId = character.getId();
+        List<Commander> commanders = commanderRepository.findByAccountId(accountId);
+        for (Commander commander : commanders) {
+            Long commanderId = commander.getId();
             // FK 순서 준수: 말단 테이블부터 삭제
-            vipSubscriptionRepository.deleteByCharacterId(characterId);
-            pvpRecordRepository.deleteByCharacterId(characterId);
-            clearedZoneRepository.deleteByCharacterId(characterId);
-            moduleResearchRepository.deleteByCharacterId(characterId);
-            shipModuleRepository.deleteByCharacterId(characterId);
-            shipRepository.deleteByCharacterId(characterId);
-            fleetRepository.deleteByCharacterId(characterId);
-            progressRepository.deleteByCharacterId(characterId);
+            vipSubscriptionRepository.deleteByCommanderId(commanderId);
+            pvpRecordRepository.deleteByCommanderId(commanderId);
+            clearedZoneRepository.deleteByCommanderId(commanderId);
+            moduleResearchRepository.deleteByCommanderId(commanderId);
+            shipModuleRepository.deleteByCommanderId(commanderId);
+            shipRepository.deleteByCommanderId(commanderId);
+            fleetRepository.deleteByCommanderId(commanderId);
+            progressRepository.deleteByCommanderId(commanderId);
         }
-        characterRepository.deleteByAccountId(accountId);
+        commanderRepository.deleteByAccountId(accountId);
         accountRepository.delete(account);
         log.info("Account hard-deleted: accountId={}", accountId);
     }
 
-    public boolean validateCharacterOwnership(Long accountId, Long characterId) {
-        return characterRepository.findById(characterId)
-                .map(character -> character.getAccountId().equals(accountId) && !character.isDeleted())
+    public boolean validateCommanderOwnership(Long accountId, Long commanderId) {
+        return commanderRepository.findById(commanderId)
+                .map(commander -> commander.getAccountId().equals(accountId) && !commander.isDeleted())
                 .orElse(false);
     }
 
-    public ApiResponse<List<CharacterResponse>> getAllCharacters() {
+    public ApiResponse<List<CommanderResponse>> getAllCommanders() {
         Long accountId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
         Account account = accountRepository.findById(accountId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.GET_ALL_CHARACTERS_FAIL_ACCOUNT_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.GET_ALL_COMMANDERS_FAIL_ACCOUNT_NOT_FOUND));
 
-        List<Character> characters = characterRepository.findByAccountId(account.getId());
-        List<CharacterResponse> characterResponses = characters.stream()
-                .map(character -> CharacterResponse.builder()
-                        .characterId(((long) 1 << 56) | character.getId())
-                        .characterName(character.getCharacterName())
+        List<Commander> commanders = commanderRepository.findByAccountId(account.getId());
+        List<CommanderResponse> commanderResponses = commanders.stream()
+                .map(commander -> CommanderResponse.builder()
+                        .commanderId(((long) 1 << 56) | commander.getId())
+                        .commanderName(commander.getCommanderName())
                         .build())
                 .collect(Collectors.toList());
 
-        return ApiResponse.success(characterResponses);
+        return ApiResponse.success(commanderResponses);
     }
 
 }
+
+
+

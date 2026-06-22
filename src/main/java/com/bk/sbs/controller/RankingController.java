@@ -30,8 +30,8 @@ public class RankingController {
     public ResponseEntity<ApiResponse<PvpRankingResponse>> getPvpRanking(
             @RequestBody PvpRankingRequest request,
             HttpServletRequest httpRequest) {
-        Long characterId = getCharacterIdFromToken(httpRequest);
-        PvpRankingResponse response = rankingService.getPvpRanking(request.getOffset(), request.getLimit(), characterId);
+        Long commanderId = getCommanderIdFromToken(httpRequest);
+        PvpRankingResponse response = rankingService.getPvpRanking(request.getOffset(), request.getLimit(), commanderId);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
@@ -40,8 +40,8 @@ public class RankingController {
     public ResponseEntity<ApiResponse<PvpMyRankResponse>> getMyPvpRank(
             @RequestBody PvpMyRankRequest request,
             HttpServletRequest httpRequest) {
-        Long characterId = getCharacterIdFromToken(httpRequest);
-        PvpMyRankResponse response = pvpService.getMyRank(characterId);
+        Long commanderId = getCommanderIdFromToken(httpRequest);
+        PvpMyRankResponse response = pvpService.getMyRank(commanderId);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
@@ -50,19 +50,22 @@ public class RankingController {
     public ResponseEntity<ApiResponse<ZoneRankingResponse>> getZoneRanking(
             @RequestBody ZoneRankingRequest request,
             HttpServletRequest httpRequest) {
-        Long characterId = getCharacterIdFromToken(httpRequest);
-        ZoneRankingResponse response = rankingService.getZoneRanking(request.getOffset(), request.getLimit(), characterId);
+        Long commanderId = getCommanderIdFromToken(httpRequest);
+        ZoneRankingResponse response = rankingService.getZoneRanking(request.getOffset(), request.getLimit(), commanderId);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
-    private Long getCharacterIdFromToken(HttpServletRequest request) {
+    private Long getCommanderIdFromToken(HttpServletRequest request) {
         String token = jwtUtil.getTokenFromRequest(request);
         if (token == null) throw new BusinessException(ServerErrorCode.PVP_CONTROLLER_FAIL_INVALID_TOKEN);
-        if (jwtUtil.hasCharacterId(token) == false) throw new BusinessException(ServerErrorCode.PVP_CONTROLLER_FAIL_JWT_HAS_CHARACTERID);
+        if (jwtUtil.hasCommanderId(token) == false) throw new BusinessException(ServerErrorCode.PVP_CONTROLLER_FAIL_JWT_HAS_COMMANDERID);
 
-        Long characterId = jwtUtil.getCharacterIdFromToken(token);
-        if (characterId == null) throw new BusinessException(ServerErrorCode.PVP_CONTROLLER_FAIL_JWT_GET_CHARACTERID);
+        Long commanderId = jwtUtil.getCommanderIdFromToken(token);
+        if (commanderId == null) throw new BusinessException(ServerErrorCode.PVP_CONTROLLER_FAIL_JWT_GET_COMMANDERID);
 
-        return characterId & 0x00FFFFFFFFFFFFFFL;
+        return commanderId & 0x00FFFFFFFFFFFFFFL;
     }
 }
+
+
+

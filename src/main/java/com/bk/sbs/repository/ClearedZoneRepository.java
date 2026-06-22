@@ -9,26 +9,28 @@ import java.util.List;
 
 public interface ClearedZoneRepository extends JpaRepository<ClearedZone, Long> {
 
-    List<ClearedZone> findByCharacterId(Long characterId);
+    List<ClearedZone> findByCommanderId(Long commanderId);
 
-    boolean existsByCharacterIdAndZoneName(Long characterId, String zoneName);
+    boolean existsByCommanderIdAndZoneName(Long commanderId, String zoneName);
 
-    java.util.Optional<ClearedZone> findByCharacterIdAndZoneName(Long characterId, String zoneName);
+    java.util.Optional<ClearedZone> findByCommanderIdAndZoneName(Long commanderId, String zoneName);
 
-    List<ClearedZone> findByCharacterIdAndRewardClaimedFalse(Long characterId);
+    List<ClearedZone> findByCommanderIdAndRewardClaimedFalse(Long commanderId);
 
     @org.springframework.data.jpa.repository.Modifying
-    @org.springframework.data.jpa.repository.Query("UPDATE ClearedZone cz SET cz.rewardClaimed = false, cz.clearedAt = CURRENT_TIMESTAMP WHERE cz.characterId = :characterId AND cz.zoneName = :zoneName")
-    void resetRewardClaimed(@org.springframework.data.repository.query.Param("characterId") Long characterId,
+    @org.springframework.data.jpa.repository.Query("UPDATE ClearedZone cz SET cz.rewardClaimed = false, cz.clearedAt = CURRENT_TIMESTAMP WHERE cz.commanderId = :commanderId AND cz.zoneName = :zoneName")
+    void resetRewardClaimed(@org.springframework.data.repository.query.Param("commanderId") Long commanderId,
                             @org.springframework.data.repository.query.Param("zoneName") String zoneName);
 
-    @Query("SELECT DISTINCT cz.characterId FROM ClearedZone cz")
-    List<Long> findAllCharacterIdsWithAnyCleared();
+    @Query("SELECT DISTINCT cz.commanderId FROM ClearedZone cz")
+    List<Long> findAllCommanderIdsWithAnyCleared();
 
-    @Query("SELECT cz.zoneName FROM ClearedZone cz WHERE cz.characterId = :characterId ORDER BY cz.clearedAt ASC")
-    List<String> findZoneNamesByCharacterId(@Param("characterId") Long characterId);
+    @Query("SELECT cz.zoneName FROM ClearedZone cz WHERE cz.commanderId = :commanderId ORDER BY cz.clearedAt ASC")
+    List<String> findZoneNamesByCommanderId(@Param("commanderId") Long commanderId);
 
     @org.springframework.data.jpa.repository.Modifying
-    @Query("DELETE FROM ClearedZone cz WHERE cz.characterId = :characterId")
-    void deleteByCharacterId(@Param("characterId") Long characterId);
+    @Query("DELETE FROM ClearedZone cz WHERE cz.commanderId = :commanderId")
+    void deleteByCommanderId(@Param("commanderId") Long commanderId);
 }
+
+

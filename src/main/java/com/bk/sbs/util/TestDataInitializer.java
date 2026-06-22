@@ -113,7 +113,7 @@ public class TestDataInitializer {
         return max == Integer.MAX_VALUE ? requested : Math.min(requested, max);
     }
 
-    // ── 기본 데이터 (account / character / fleet / ship / module_research) ──────
+    // ── 기본 데이터 (account / commander / fleet / ship / module_research) ──────
 
     private List<Long> ensureBaseData(int count) {
         Integer exists = jdbc.queryForObject(
@@ -121,18 +121,18 @@ public class TestDataInitializer {
         if (exists != null && exists > 0) {
             log.info("TestDataInitializer: 기본 더미 데이터 이미 존재");
             return jdbc.queryForList(
-                    "SELECT c.id FROM `character` c JOIN account a ON a.id = c.account_id" +
+                    "SELECT c.id FROM commander c JOIN account a ON a.id = c.account_id" +
                     " WHERE a.email LIKE 'guest\\_test%' ORDER BY c.id",
                     Long.class);
         }
 
         Long charAutoInc = jdbc.queryForObject(
-                "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_NAME = 'character' AND TABLE_SCHEMA = DATABASE()",
+                "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_NAME = 'commander' AND TABLE_SCHEMA = DATABASE()",
                 Long.class);
         Long accAutoInc = jdbc.queryForObject(
                 "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_NAME = 'account' AND TABLE_SCHEMA = DATABASE()",
                 Long.class);
-        log.info("TestDataInitializer: 기본 더미 데이터 {}개 생성 시작 — account AUTO_INCREMENT={}, character AUTO_INCREMENT={}",
+        log.info("TestDataInitializer: 기본 더미 데이터 {}개 생성 시작 — account AUTO_INCREMENT={}, commander AUTO_INCREMENT={}",
                 count, accAutoInc, charAutoInc);
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
         String encodedPw = passwordEncoder.encode("testpassword1");
@@ -155,12 +155,12 @@ public class TestDataInitializer {
                 "SELECT id FROM account WHERE email LIKE 'guest\\_test%' ORDER BY id",
                 Long.class);
 
-        // 3. Character
+        // 3. Commander
         List<Object[]> charRows = new ArrayList<>(count);
         for (int i = 0; i < count; i++)
             charRows.add(new Object[]{accountIds.get(i), "commander_" + (charAutoInc + i), 2, now});
         jdbc.batchUpdate(
-                "INSERT INTO `character` (account_id, character_name, mineral, deleted, date_time)" +
+                "INSERT INTO commander (account_id, commander_name, mineral, deleted, date_time)" +
                 " VALUES (?, ?, ?, false, ?)",
                 charRows, BATCH_SIZE, (ps, row) -> {
                     ps.setLong(1,   (Long)      row[0]);
@@ -169,9 +169,9 @@ public class TestDataInitializer {
                     ps.setTimestamp(4, (Timestamp) row[3]);
                 });
 
-        // 4. Character ID 목록
+        // 4. Commander ID 목록
         List<Long> charIds = jdbc.queryForList(
-                "SELECT c.id FROM `character` c JOIN account a ON a.id = c.account_id" +
+                "SELECT c.id FROM commander c JOIN account a ON a.id = c.account_id" +
                 " WHERE a.email LIKE 'guest\\_test%' ORDER BY c.id",
                 Long.class);
 
@@ -180,7 +180,7 @@ public class TestDataInitializer {
         for (Long charId : charIds)
             fleetRows.add(new Object[]{charId, now});
         jdbc.batchUpdate(
-                "INSERT INTO fleet (character_id, fleet_name, description, is_active, deleted," +
+                "INSERT INTO fleet (commander_id, fleet_name, description, is_active, deleted," +
                 " formation, created, modified) VALUES (?, 'Default Fleet', 'Auto-generated default fleet.'," +
                 " true, false, 'linear_horizontal', ?, ?)",
                 fleetRows, BATCH_SIZE, (ps, row) -> {
@@ -191,7 +191,7 @@ public class TestDataInitializer {
 
         // 6. Fleet ID 목록
         List<Long> fleetIds = jdbc.queryForList(
-                "SELECT f.id FROM fleet f JOIN `character` c ON c.id = f.character_id" +
+                "SELECT f.id FROM fleet f JOIN commander c ON c.id = f.commander_id" +
                 " JOIN account a ON a.id = c.account_id WHERE a.email LIKE 'guest\\_test%' ORDER BY f.id",
                 Long.class);
 
@@ -212,7 +212,7 @@ public class TestDataInitializer {
         // 8. Ship ID 목록
         List<Long> shipIds = jdbc.queryForList(
                 "SELECT s.id FROM ship s JOIN fleet f ON f.id = s.fleet_id" +
-                " JOIN `character` c ON c.id = f.character_id" +
+                " JOIN commander c ON c.id = f.commander_id" +
                 " JOIN account a ON a.id = c.account_id WHERE a.email LIKE 'guest\\_test%' ORDER BY s.id",
                 Long.class);
 
@@ -236,7 +236,7 @@ public class TestDataInitializer {
                     ps.setTimestamp(7, (Timestamp) row[5]);
                 });
 
-        log.info("TestDataInitializer: 기본 더미 데이터 {}개 생성 완료 — accountId {}~{}, characterId {}~{}",
+        log.info("TestDataInitializer: 기본 더미 데이터 {}개 생성 완료 — accountId {}~{}, commanderId {}~{}",
                 count,
                 accountIds.get(0), accountIds.get(accountIds.size() - 1),
                 charIds.get(0), charIds.get(charIds.size() - 1));
@@ -247,7 +247,7 @@ public class TestDataInitializer {
 
     private void ensurePvpData(List<Long> charIds) {
         Integer exists = jdbc.queryForObject(
-                "SELECT COUNT(*) FROM pvp_record WHERE character_id = ?",
+                "SELECT COUNT(*) FROM pvp_record WHERE commander_id = ?",
                 Integer.class, charIds.get(0));
         if (exists != null && exists > 0) {
             log.info("TestDataInitializer: PVP 더미 데이터 이미 존재, 스킵");
@@ -260,7 +260,7 @@ public class TestDataInitializer {
         for (int i = 0; i < total; i++)
             pvpRows.add(new Object[]{charIds.get(i), calcPvpScore(i), now});
         jdbc.batchUpdate(
-                "INSERT INTO pvp_record (character_id, score, wins, losses, last_updated)" +
+                "INSERT INTO pvp_record (commander_id, score, wins, losses, last_updated)" +
                 " VALUES (?, ?, 0, 0, ?)",
                 pvpRows, BATCH_SIZE, (ps, row) -> {
                     ps.setLong(1,  (Long)      row[0]);
@@ -274,7 +274,7 @@ public class TestDataInitializer {
 
     private void ensureZoneData(List<Long> charIds) {
         Integer exists = jdbc.queryForObject(
-                "SELECT COUNT(*) FROM cleared_zone WHERE character_id = ?",
+                "SELECT COUNT(*) FROM cleared_zone WHERE commander_id = ?",
                 Integer.class, charIds.get(0));
         if (exists != null && exists > 0) {
             log.info("TestDataInitializer: Zone 더미 데이터 이미 존재, 스킵");
@@ -287,7 +287,7 @@ public class TestDataInitializer {
         for (int i = 0; i < total; i++)
             zoneRows.add(new Object[]{charIds.get(i), calcZoneName(i), now});
         jdbc.batchUpdate(
-                "INSERT INTO cleared_zone (character_id, zone_name, cleared_at) VALUES (?, ?, ?)",
+                "INSERT INTO cleared_zone (commander_id, zone_name, cleared_at) VALUES (?, ?, ?)",
                 zoneRows, BATCH_SIZE, (ps, row) -> {
                     ps.setLong(1,   (Long)      row[0]);
                     ps.setString(2, (String)    row[1]);
@@ -326,3 +326,6 @@ public class TestDataInitializer {
 
     private String buildEmail(int seq) { return "guest_test" + String.format("%04d", seq); }
 }
+
+
+

@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class PvpOpponentInfoDto {
-    private Long characterId;
-    private String characterName;
+    private Long commanderId;
+    private String commanderName;
     private Integer pvpScore;
     private Integer rank;
     private FleetInfoDto fleetInfo;

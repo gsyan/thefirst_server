@@ -16,6 +16,7 @@ public interface PvpSeasonRepository extends JpaRepository<PvpSeason, Integer> {
     // 특정 시즌 번호의 보상 만료일(pvpPointExpiry)을 일괄 업데이트
     // pvpPointSeasonRef == seasonNumber 인 캐릭터 전체 적용
     @Modifying
-    @Query("UPDATE Character c SET c.pvpPointExpiry = :newExpiry WHERE c.pvpPointSeasonRef = :seasonNumber")
+    @Query("UPDATE Commander c SET c.pvpPointExpiry = :newExpiry WHERE c.pvpPointSeasonRef = :seasonNumber")
     int bulkUpdatePvpPointExpiry(@Param("seasonNumber") int seasonNumber, @Param("newExpiry") Instant newExpiry);
 }
+

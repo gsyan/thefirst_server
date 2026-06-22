@@ -36,7 +36,7 @@ public class ZoneController {
     public ResponseEntity<ApiResponse<GetStageEnemiesResponse>> getStageEnemies(
             @RequestBody GetStageEnemiesRequest request,
             HttpServletRequest httpRequest) {
-        getCharacterIdFromToken(httpRequest);
+        getCommanderIdFromToken(httpRequest);
         GetStageEnemiesResponse response = zoneService.getStageEnemies(request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
@@ -46,8 +46,8 @@ public class ZoneController {
     public ResponseEntity<ApiResponse<ClearZoneStageResponse>> destroyZoneStageWave(
             @RequestBody ClearZoneStageRequest request,
             HttpServletRequest httpRequest) {
-        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
-        ClearZoneStageResponse response = zoneService.clearZoneStage(actualCharacterId, request);
+        Long actualCommanderId = getCommanderIdFromToken(httpRequest);
+        ClearZoneStageResponse response = zoneService.clearZoneStage(actualCommanderId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
@@ -55,8 +55,8 @@ public class ZoneController {
     public ResponseEntity<ApiResponse<ClaimZoneRewardResponse>> claimZoneReward(
             @RequestBody ClaimZoneRewardRequest request,
             HttpServletRequest httpRequest) {
-        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
-        ClaimZoneRewardResponse response = zoneService.claimZoneReward(actualCharacterId, request);
+        Long actualCommanderId = getCommanderIdFromToken(httpRequest);
+        ClaimZoneRewardResponse response = zoneService.claimZoneReward(actualCommanderId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
@@ -64,8 +64,8 @@ public class ZoneController {
     public ResponseEntity<ApiResponse<PendingStageRewardResponse>> claimPendingStageRewards(
             @RequestBody PendingStageRewardRequest request,
             HttpServletRequest httpRequest) {
-        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
-        PendingStageRewardResponse response = zoneService.claimPendingStageRewards(actualCharacterId);
+        Long actualCommanderId = getCommanderIdFromToken(httpRequest);
+        PendingStageRewardResponse response = zoneService.claimPendingStageRewards(actualCommanderId);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
@@ -74,21 +74,25 @@ public class ZoneController {
     public ResponseEntity<ApiResponse<HeartbeatResponse>> heartbeat(
             @RequestBody HeartbeatRequest request,
             HttpServletRequest httpRequest) {
-        Long actualCharacterId = getCharacterIdFromToken(httpRequest);
-        HeartbeatResponse response = zoneService.heartbeat(actualCharacterId);
+        Long actualCommanderId = getCommanderIdFromToken(httpRequest);
+        HeartbeatResponse response = zoneService.heartbeat(actualCommanderId);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     // JWT 토큰에서 캐릭터 ID 추출 (비트 마스킹 포함)
-    private Long getCharacterIdFromToken(HttpServletRequest request) {
+    private Long getCommanderIdFromToken(HttpServletRequest request) {
         String token = jwtUtil.getTokenFromRequest(request);
         if (token == null) throw new BusinessException(ServerErrorCode.ZONE_CONTROLLER_FAIL_INVALID_TOKEN);
-        if (jwtUtil.hasCharacterId(token) == false) throw new BusinessException(ServerErrorCode.ZONE_CONTROLLER_FAIL_JWT_HAS_CHARACTERID);
+        if (jwtUtil.hasCommanderId(token) == false) throw new BusinessException(ServerErrorCode.ZONE_CONTROLLER_FAIL_JWT_HAS_COMMANDERID);
 
-        Long characterId = jwtUtil.getCharacterIdFromToken(token);
-        if (characterId == null) throw new BusinessException(ServerErrorCode.ZONE_CONTROLLER_FAIL_JWT_GET_CHARACTERID);
+        Long commanderId = jwtUtil.getCommanderIdFromToken(token);
+        if (commanderId == null) throw new BusinessException(ServerErrorCode.ZONE_CONTROLLER_FAIL_JWT_GET_COMMANDERID);
 
-        // characterId에서 실제 character ID 추출 (하위 56비트)
-        return characterId & 0x00FFFFFFFFFFFFFFL;
+        // commanderId에서 실제 Commander ID 추출 (하위 56비트)
+        return commanderId & 0x00FFFFFFFFFFFFFFL;
     }
 }
+
+
+
+

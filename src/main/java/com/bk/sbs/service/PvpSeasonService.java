@@ -3,7 +3,7 @@ package com.bk.sbs.service;
 import com.bk.sbs.config.DataTablePvpSeason;
 import com.bk.sbs.entity.PvpRecord;
 import com.bk.sbs.entity.PvpSeason;
-import com.bk.sbs.repository.CharacterRepository;
+import com.bk.sbs.repository.CommanderRepository;
 import com.bk.sbs.repository.PvpRecordRepository;
 import com.bk.sbs.repository.PvpSeasonRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -24,18 +24,18 @@ public class PvpSeasonService {
 
     private final PvpSeasonRepository pvpSeasonRepository;
     private final PvpRecordRepository pvpRecordRepository;
-    private final CharacterRepository characterRepository;
+    private final CommanderRepository commanderRepository;
     private final RedisService redisService;
     private final GameDataService gameDataService;
 
     public PvpSeasonService(PvpSeasonRepository pvpSeasonRepository,
                             PvpRecordRepository pvpRecordRepository,
-                            CharacterRepository characterRepository,
+                            CommanderRepository commanderRepository,
                             RedisService redisService,
                             GameDataService gameDataService) {
         this.pvpSeasonRepository = pvpSeasonRepository;
         this.pvpRecordRepository = pvpRecordRepository;
-        this.characterRepository = characterRepository;
+        this.commanderRepository = commanderRepository;
         this.redisService = redisService;
         this.gameDataService = gameDataService;
     }
@@ -114,12 +114,12 @@ public class PvpSeasonService {
             int reward = pvpSeasonTable.getSeasonReward(record.getScore());
             if (reward <= 0) continue;
 
-            characterRepository.findById(record.getCharacterId()).ifPresent(character -> {
-                character.setPvpPoint(character.getPvpPoint() + reward);
-                character.setPvpPointMaxGot(character.getPvpPointMaxGot() + reward);
-                character.setPvpPointExpiry(rewardExpiry);
-                character.setPvpPointSeasonRef(season.getSeasonNumber());
-                characterRepository.save(character);
+            commanderRepository.findById(record.getCommanderId()).ifPresent(commander -> {
+                commander.setPvpPoint(commander.getPvpPoint() + reward);
+                commander.setPvpPointMaxGot(commander.getPvpPointMaxGot() + reward);
+                commander.setPvpPointExpiry(rewardExpiry);
+                commander.setPvpPointSeasonRef(season.getSeasonNumber());
+                commanderRepository.save(commander);
             });
             count++;
         }
@@ -142,7 +142,7 @@ public class PvpSeasonService {
             record.setWins(0);
             record.setLosses(0);
             pvpRecordRepository.save(record);
-            redisService.setPvpScore(record.getCharacterId(), resetScore);
+            redisService.setPvpScore(record.getCommanderId(), resetScore);
         }
 
         redisService.snapshotPvpRanking();
@@ -199,3 +199,7 @@ public class PvpSeasonService {
         endSeasonAndStartNext(season);
     }
 }
+
+
+
+

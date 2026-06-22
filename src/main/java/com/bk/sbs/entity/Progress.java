@@ -8,7 +8,7 @@ import lombok.Setter;
 import java.time.Instant;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"characterId", "category", "progressKey"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"commanderId", "category", "progressKey"}))
 @Getter
 @Setter
 public class Progress {
@@ -18,7 +18,7 @@ public class Progress {
     private Long id;
 
     @Column(nullable = false)
-    private Long characterId;
+    private Long commanderId;
 
     @Column(nullable = false, length = 50)
     private String category;
@@ -31,3 +31,4 @@ public class Progress {
     @Column(nullable = false)
     private Instant completedDateTime;
 }
+

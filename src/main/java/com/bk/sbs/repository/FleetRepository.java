@@ -13,18 +13,21 @@ import java.util.Optional;
 @Repository
 public interface FleetRepository extends JpaRepository<Fleet, Long> {
     
-    List<Fleet> findByCharacterIdAndDeletedFalse(Long characterId);
+    List<Fleet> findByCommanderIdAndDeletedFalse(Long commanderId);
     
-    Optional<Fleet> findByIdAndCharacterIdAndDeletedFalse(Long id, Long characterId);
+    Optional<Fleet> findByIdAndCommanderIdAndDeletedFalse(Long id, Long commanderId);
     
-    Optional<Fleet> findByCharacterIdAndIsActiveTrueAndDeletedFalse(Long characterId);
+    Optional<Fleet> findByCommanderIdAndIsActiveTrueAndDeletedFalse(Long commanderId);
     
-    @Query("SELECT f FROM Fleet f WHERE f.characterId = :characterId AND f.deleted = false ORDER BY f.isActive DESC, f.modified DESC")
-    List<Fleet> findByCharacterIdOrderByActiveAndModified(@Param("characterId") Long characterId);
+    @Query("SELECT f FROM Fleet f WHERE f.commanderId = :commanderId AND f.deleted = false ORDER BY f.isActive DESC, f.modified DESC")
+    List<Fleet> findByCommanderIdOrderByActiveAndModified(@Param("commanderId") Long commanderId);
     
-    boolean existsByCharacterIdAndFleetNameAndDeletedFalse(Long characterId, String fleetName);
+    boolean existsByCommanderIdAndFleetNameAndDeletedFalse(Long commanderId, String fleetName);
 
     @org.springframework.data.jpa.repository.Modifying
-    @org.springframework.data.jpa.repository.Query("DELETE FROM Fleet f WHERE f.characterId = :characterId")
-    void deleteByCharacterId(@org.springframework.data.repository.query.Param("characterId") Long characterId);
+    @org.springframework.data.jpa.repository.Query("DELETE FROM Fleet f WHERE f.commanderId = :commanderId")
+    void deleteByCommanderId(@org.springframework.data.repository.query.Param("commanderId") Long commanderId);
 }
+
+
+

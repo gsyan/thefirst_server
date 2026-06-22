@@ -4,9 +4,9 @@ import com.bk.sbs.dto.DailyClaimResponse;
 import com.bk.sbs.enums.EDailyBonusTier;
 import com.bk.sbs.dto.VipPurchaseRequest;
 import com.bk.sbs.dto.VipStatusResponse;
-import com.bk.sbs.entity.Character;
+import com.bk.sbs.entity.Commander;
 import com.bk.sbs.entity.VipSubscription;
-import com.bk.sbs.repository.CharacterRepository;
+import com.bk.sbs.repository.CommanderRepository;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.repository.VipSubscriptionRepository;
@@ -51,17 +51,17 @@ public class IapService {
     private int mineralRewardMultiplier;
 
     private final VipSubscriptionRepository vipSubscriptionRepository;
-    private final CharacterRepository characterRepository;
+    private final CommanderRepository commanderRepository;
     private final ObjectMapper objectMapper;
     private final GameDataService gameDataService;
     private final HttpClient httpClient;
 
     public IapService(VipSubscriptionRepository vipSubscriptionRepository,
-                      CharacterRepository characterRepository,
+                      CommanderRepository commanderRepository,
                       ObjectMapper objectMapper,
                       GameDataService gameDataService) {
         this.vipSubscriptionRepository = vipSubscriptionRepository;
-        this.characterRepository = characterRepository;
+        this.commanderRepository = commanderRepository;
         this.objectMapper = objectMapper;
         this.gameDataService = gameDataService;
         this.httpClient = HttpClient.newHttpClient();
@@ -70,21 +70,21 @@ public class IapService {
     // ── 구매 처리 ───────────────────────────────────────────────────────────
 
     @Transactional
-    public VipStatusResponse purchaseVip(Long characterId, VipPurchaseRequest request) {
+    public VipStatusResponse purchaseVip(Long commanderId, VipPurchaseRequest request) {
         String purchaseToken = extractPurchaseToken(request.getReceipt());
 
         // 동일 토큰 중복 처리 방지
         if (vipSubscriptionRepository.existsByPurchaseToken(purchaseToken) == true) {
             log.warn("[IAP] 이미 처리된 purchaseToken: {}", purchaseToken);
-            return getVipStatus(characterId);
+            return getVipStatus(commanderId);
         }
 
         // 활성 VIP 기간 중 재구매 방지
-        Optional<VipSubscription> existing = vipSubscriptionRepository.findByCharacterId(characterId);
+        Optional<VipSubscription> existing = vipSubscriptionRepository.findByCommanderId(commanderId);
         if (existing.isPresent() == true) {
             VipSubscription current = existing.get();
             if (current.getVipExpiry() != null && Instant.now().isBefore(current.getVipExpiry())) {
-                log.warn("[IAP] 활성 VIP 기간 중 재구매 시도 characterId={}", characterId);
+                log.warn("[IAP] 활성 VIP 기간 중 재구매 시도 commanderId={}", commanderId);
                 throw new BusinessException(ServerErrorCode.IAP_PURCHASE_FAIL_ALREADY_ACTIVE);
             }
         }
@@ -105,18 +105,43 @@ public class IapService {
             vipSubscriptionRepository.save(sub);
         } else {
             vipSubscriptionRepository.save(
-                    new VipSubscription(characterId, expiry, purchaseToken, request.getPlatform())
+                    new VipSubscription(commanderId, expiry, purchaseToken, request.getPlatform())
             );
         }
 
-        log.info("[IAP] VIP 구매 완료 characterId={} expiry={}", characterId, expiry);
-        return getVipStatus(characterId);
+        log.info("[IAP] VIP 구매 완료 commanderId={} expiry={}", commanderId, expiry);
+        return getVipStatus(commanderId);
+    }
+
+    // ── 에디터 전용: VIP 강제 세팅 (영수증 검증 없이 이번 달 말일로 세팅) ──────
+
+    @Transactional
+    public VipStatusResponse debugForceVip(Long commanderId) {
+        Instant now = Instant.now();
+        ZonedDateTime nowZdt = now.atZone(ZoneOffset.UTC);
+        Instant expiry = nowZdt.with(TemporalAdjusters.lastDayOfMonth())
+                .withHour(23).withMinute(59).withSecond(59).withNano(0).toInstant();
+
+        Optional<VipSubscription> existing = vipSubscriptionRepository.findByCommanderId(commanderId);
+        if (existing.isPresent() == true) {
+            VipSubscription sub = existing.get();
+            sub.setVipExpiry(expiry);
+            sub.setUpdatedAt(now);
+            vipSubscriptionRepository.save(sub);
+        } else {
+            vipSubscriptionRepository.save(
+                    new VipSubscription(commanderId, expiry, "debug-editor", "Editor")
+            );
+        }
+
+        log.info("[IAP][DEBUG] 에디터 VIP 강제 세팅 commanderId={} expiry={}", commanderId, expiry);
+        return getVipStatus(commanderId);
     }
 
     // ── VIP 상태 조회 ────────────────────────────────────────────────────────
 
-    public VipStatusResponse getVipStatus(Long characterId) {
-        Optional<VipSubscription> sub = vipSubscriptionRepository.findByCharacterId(characterId);
+    public VipStatusResponse getVipStatus(Long commanderId) {
+        Optional<VipSubscription> sub = vipSubscriptionRepository.findByCommanderId(commanderId);
         Instant expiry = sub.isPresent() ? sub.get().getVipExpiry() : null;
         return buildStatusResponse(expiry);
     }
@@ -124,96 +149,90 @@ public class IapService {
     // ── 일일 로그인 보상 지급 (무과금+VIP 통합) ──────────────────────────────
 
     @Transactional
-    public DailyClaimResponse claimDailyReward(Long characterId) {
-        Character character = characterRepository.findByIdForUpdate(characterId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.IAP_DAILY_MINERAL_CHARACTER_NOT_FOUND));
+    public DailyClaimResponse claimDailyReward(Long commanderId) {
+        // 1) 케릭터 확보
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.IAP_DAILY_MINERAL_COMMANDER_NOT_FOUND));
 
+        // 2) 오늘 날짜 계산, UTC 날짜, 월
         Instant now = Instant.now();
         ZonedDateTime nowUtc = now.atZone(ZoneOffset.UTC);
-        int todayInMonth = nowUtc.getDayOfMonth();
         int currentMonth = nowUtc.getYear() * 100 + nowUtc.getMonthValue();
+        int todayInMonth = nowUtc.getDayOfMonth();
 
-        Integer savedMonth = character.getLoginRewardMonth();
+        // 3) 새로운 달(month) 되었다면 마스크 클리어, loginRewardMonth 업데이트
+        Integer savedMonth = commander.getLoginRewardMonth();
         boolean isNewMonth = savedMonth == null || savedMonth != currentMonth;
-        int currentMask = isNewMonth ? 0 : character.getClaimedDaysMask();
-        int currentRewardMonth = isNewMonth ? currentMonth : (savedMonth != null ? savedMonth : currentMonth);
-
-        int currentVipMask = isNewMonth ? 0 : character.getVipClaimedDaysMask();
-
-        // 테이블에 오늘 날짜 Normal 보상이 없으면 클레임 불가
-        int tableMineral = gameDataService.getDailyMineralForDay(todayInMonth, EDailyBonusTier.Normal);
-        if (tableMineral < 0) {
-            return DailyClaimResponse.builder()
-                    .available(false)
-                    .todayDay(todayInMonth)
-                    .claimedDaysMask(currentMask)
-                    .vipClaimedDaysMask(currentVipMask)
-                    .loginRewardMonth(currentRewardMonth)
-                    .build();
-        }
-
-        // 다음날 UTC 00:00
-        Instant nextMidnightUtc = nowUtc.withHour(0).withMinute(0).withSecond(0).withNano(0).plusDays(1).toInstant();
-
-        Instant last = character.getLastLoginRewardAt();
-        ZonedDateTime lastUtc = (last != null) ? last.atZone(ZoneOffset.UTC) : null;
-        boolean available = (lastUtc == null
-                || lastUtc.getYear() != nowUtc.getYear()
-                || lastUtc.getMonthValue() != nowUtc.getMonthValue()
-                || lastUtc.getDayOfMonth() != nowUtc.getDayOfMonth());
-
-        if (available == false) {
-            return DailyClaimResponse.builder()
-                    .available(false)
-                    .nextAvailableAt(DateTimeFormatter.ISO_INSTANT.format(nextMidnightUtc))
-                    .todayDay(todayInMonth)
-                    .claimedDaysMask(currentMask)
-                    .vipClaimedDaysMask(currentVipMask)
-                    .loginRewardMonth(currentRewardMonth)
-                    .build();
-        }
-
-        // 새 달이면 마스크 초기화
+        boolean needsSave  = false;
         if (isNewMonth == true) {
-            character.setClaimedDaysMask(0);
-            character.setVipClaimedDaysMask(0);
-            character.setLoginRewardMonth(currentMonth);
+            commander.setClaimedDaysMask(0);
+            commander.setVipClaimedDaysMask(0);
+            commander.setLoginRewardMonth(currentMonth);
+            needsSave = true;
+        }
+        // 4) 정보 취합
+        int currentMask      = commander.getClaimedDaysMask();
+        int currentVipMask   = commander.getVipClaimedDaysMask();
+        int loginRewardMonth = commander.getLoginRewardMonth();
+        // 다음 받을 시간
+        Instant nextMidnightUtc = nowUtc.withHour(0).withMinute(0).withSecond(0).withNano(0).plusDays(1).toInstant();
+        String nextAvailableAt = DateTimeFormatter.ISO_INSTANT.format(nextMidnightUtc);
+        // 일반, vip 이미 받았나?
+        int todayBit = 1 << (todayInMonth - 1);
+        boolean normalAlreadyClaimed = (currentMask & todayBit) != 0;
+        boolean vipAlreadyClaimed    = (currentVipMask & todayBit) != 0;
+        boolean allAlreadyClaimed = normalAlreadyClaimed == true && vipAlreadyClaimed == true;
+        // 응답 기본값 (클레임 불가 케이스)
+        boolean available      = false;
+        int grantedMineral     = 0;
+        Integer mineralRemain  = null;
+        // 일반 오늘 받을 미네랄( vip도 일반과 같이 28일 이후는 없기 때문에, 일반 보상만 확인해도됨 )
+        int tableMineral = gameDataService.getDailyMineralForDay(todayInMonth, EDailyBonusTier.Normal);
+        boolean tableEmpty = tableMineral < 0;
+        
+        // 5) 받을게 있고 아직 받지 않은 상황
+        if (tableEmpty == false && allAlreadyClaimed == false) {
+            // 5-1) 일반 보상 처리
+            if (normalAlreadyClaimed == false) {
+                grantedMineral += tableMineral; // 일반 보상 추가
+                commander.setClaimedDaysMask(currentMask | todayBit); // 마스크 비트 세팅
+            }
+            // 5-2) VIP 추가 보상: catch-up 적용
+            Optional<VipSubscription> sub = vipSubscriptionRepository.findByCommanderId(commanderId);
+            boolean isVip = sub.isPresent() && sub.get().getVipExpiry() != null && now.isBefore(sub.get().getVipExpiry());
+            if (isVip == true && vipAlreadyClaimed == false) {
+                // VIP catch-up: 이번 달 VIP 보상 첫 클레임이면 월초~오늘 일괄 지급 (당월 중간 구매 포함)
+                int vipMineral = currentVipMask == 0
+                        ? gameDataService.getVipMineralCatchup(1, todayInMonth)
+                        : gameDataService.getDailyMineralForDay(todayInMonth, EDailyBonusTier.VIP);
+                grantedMineral += Math.max(0, vipMineral); // vip 보상 추가
+                // catch-up 첫 클레임이면 1~오늘 전체 비트 세팅, 아니면 오늘 비트만
+                int vipBitToSet = currentVipMask == 0 ? (1 << todayInMonth) - 1 : todayBit;
+                commander.setVipClaimedDaysMask(currentVipMask | vipBitToSet);  // 마스크 비트 세팅
+            }
+
+            commander.setMineral(commander.getMineral() + grantedMineral);
+            needsSave = true;
+
+            available     = true;
+            mineralRemain = commander.getMineral();
+
+            log.info("[IAP] 일일 로그인 보상 commanderId={} isVip={} amount={} day={} mask={} vipMask={}",
+                    commanderId, isVip, grantedMineral, todayInMonth, commander.getClaimedDaysMask(), commander.getVipClaimedDaysMask());
         }
 
-        int grantedMineral = tableMineral;
+        if (needsSave == true)
+            commanderRepository.save(commander);
 
-        // VIP 추가 보상: catch-up 적용
-        Optional<VipSubscription> sub = vipSubscriptionRepository.findByCharacterId(characterId);
-        boolean isVip = sub.isPresent() && sub.get().getVipExpiry() != null && now.isBefore(sub.get().getVipExpiry());
-        if (isVip == true) {
-            // VIP catch-up: 이번 달 VIP 보상 첫 클레임이면 월초~오늘 일괄 지급 (당월 중간 구매 포함)
-            boolean isFirstVipClaimThisMonth = currentVipMask == 0;
-            int vipMineral = isFirstVipClaimThisMonth
-                    ? gameDataService.getVipMineralCatchup(1, todayInMonth)
-                    : gameDataService.getDailyMineralForDay(todayInMonth, EDailyBonusTier.VIP);
-            grantedMineral += Math.max(0, vipMineral);
-        }
-
-        // 오늘 날짜 비트 세팅
-        int bit = 1 << (todayInMonth - 1);
-        character.setClaimedDaysMask(character.getClaimedDaysMask() | bit);
-        if (isVip == true)
-            character.setVipClaimedDaysMask(character.getVipClaimedDaysMask() | bit);
-        character.setMineral(character.getMineral() + grantedMineral);
-        character.setLastLoginRewardAt(now);
-        characterRepository.save(character);
-
-        log.info("[IAP] 일일 로그인 보상 characterId={} isVip={} amount={} day={} mask={} vipMask={}",
-                characterId, isVip, grantedMineral, todayInMonth, character.getClaimedDaysMask(), character.getVipClaimedDaysMask());
         return DailyClaimResponse.builder()
-                .available(true)
+                .available(available)
                 .grantedMineral(grantedMineral)
-                .mineralRemain(character.getMineral())
-                .nextAvailableAt(DateTimeFormatter.ISO_INSTANT.format(nextMidnightUtc))
+                .mineralRemain(mineralRemain)
+                .nextAvailableAt(tableEmpty ? null : nextAvailableAt)
                 .todayDay(todayInMonth)
-                .claimedDaysMask(character.getClaimedDaysMask())
-                .vipClaimedDaysMask(character.getVipClaimedDaysMask())
-                .loginRewardMonth(currentMonth)
+                .claimedDaysMask(commander.getClaimedDaysMask())
+                .vipClaimedDaysMask(commander.getVipClaimedDaysMask())
+                .loginRewardMonth(loginRewardMonth)
                 .build();
     }
 
@@ -296,3 +315,9 @@ public class IapService {
         return credentials.getAccessToken().getTokenValue();
     }
 }
+
+
+
+
+
+

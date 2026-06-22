@@ -7,10 +7,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface VipSubscriptionRepository extends JpaRepository<VipSubscription, Long> {
-    Optional<VipSubscription> findByCharacterId(Long characterId);
+    Optional<VipSubscription> findByCommanderId(Long commanderId);
     boolean existsByPurchaseToken(String purchaseToken);
 
     @org.springframework.data.jpa.repository.Modifying
-    @org.springframework.data.jpa.repository.Query("DELETE FROM VipSubscription v WHERE v.characterId = :characterId")
-    void deleteByCharacterId(@org.springframework.data.repository.query.Param("characterId") Long characterId);
+    @org.springframework.data.jpa.repository.Query("DELETE FROM VipSubscription v WHERE v.commanderId = :commanderId")
+    void deleteByCommanderId(@org.springframework.data.repository.query.Param("commanderId") Long commanderId);
 }
+
+
