@@ -207,6 +207,16 @@ CREATE TABLE cleared_zone (
     INDEX idx_cleared_commander (commander_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- app_config: 운영 설정값 저장 (버전 체크 등)
+CREATE TABLE app_config (
+    id           BIGINT       NOT NULL AUTO_INCREMENT,
+    config_key   VARCHAR(64)  NOT NULL,
+    config_value VARCHAR(256) NOT NULL,
+    description  VARCHAR(256),
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_app_config_key (config_key)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- ============================================================
 -- MariaDB Stored Procedure 예시
 -- MSSQL의 SP와 거의 동일한 문법
