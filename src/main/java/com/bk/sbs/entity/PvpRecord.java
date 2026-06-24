@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 // PvP 전적 DB 백업 (Redis와 동기화, Redis 장애 시 복원용)
 @Entity
@@ -30,6 +30,6 @@ public class PvpRecord {
     private Integer losses = 0;
 
     @Column(nullable = false)
-    private LocalDateTime lastUpdated = LocalDateTime.now();
+    private Instant lastUpdated = Instant.now();
 }
 

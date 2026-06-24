@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -125,8 +125,8 @@ public class FleetService {
         beamModule.setSlotIndex(0);
         beamModule.setInvestedModulePoint(1);
         beamModule.setDeleted(false);
-        beamModule.setCreated(LocalDateTime.now());
-        beamModule.setModified(LocalDateTime.now());
+        beamModule.setCreated(Instant.now());
+        beamModule.setModified(Instant.now());
         shipModuleRepository.save(beamModule);
 
 //        // Missile
@@ -160,7 +160,7 @@ public class FleetService {
         fleetRepository.findByCommanderIdAndIsActiveTrueAndDeletedFalse(commanderId)
                 .ifPresent(activeFleet -> {
                     activeFleet.setActive(false);
-                    activeFleet.setModified(LocalDateTime.now());
+                    activeFleet.setModified(Instant.now());
                     fleetRepository.save(activeFleet);
                 });
 
@@ -169,7 +169,7 @@ public class FleetService {
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.FLEET_NOT_FOUND));
         
         fleet.setActive(true);
-        fleet.setModified(LocalDateTime.now());
+        fleet.setModified(Instant.now());
         fleetRepository.save(fleet);
     }
 
@@ -180,7 +180,7 @@ public class FleetService {
         if (!fleets.isEmpty()) {
             Fleet firstFleet = fleets.get(0);
             firstFleet.setActive(true);
-            firstFleet.setModified(LocalDateTime.now());
+            firstFleet.setModified(Instant.now());
             fleetRepository.save(firstFleet);
         }
     }
@@ -243,7 +243,7 @@ public class FleetService {
 //            fleetRepository.findByCommanderIdAndIsActiveTrueAndDeletedFalse(commanderId)
 //                    .ifPresent(activeFleet -> {
 //                        activeFleet.setActive(false);
-//                        activeFleet.setModified(LocalDateTime.now());
+//                        activeFleet.setModified(Instant.now());
 //                        fleetRepository.save(activeFleet);
 //                    });
 //        }
@@ -292,7 +292,7 @@ public class FleetService {
 //        // 함대 정보 업데이트
 //        fleet.setFleetName(request.getFleetName());
 //        fleet.setDescription(request.getDescription());
-//        fleet.setModified(LocalDateTime.now());
+//        fleet.setModified(Instant.now());
 //
 //        // 활성 상태 변경
 //        if (request.isActive() && !fleet.isActive()) {
@@ -307,11 +307,11 @@ public class FleetService {
 //            List<ShipModule> modules = shipModuleRepository.findByShipIdAndDeletedFalseOrderBySlotIndex(ship.getId());
 //            for (ShipModule module : modules) {
 //                module.setDeleted(true);
-//                module.setModified(LocalDateTime.now());
+//                module.setModified(Instant.now());
 //                shipModuleRepository.save(module);
 //            }
 //            ship.setDeleted(true);
-//            ship.setModified(LocalDateTime.now());
+//            ship.setModified(Instant.now());
 //            shipRepository.save(ship);
 //        }
 //
@@ -354,16 +354,16 @@ public class FleetService {
             List<ShipModule> modules = shipModuleRepository.findByShipIdAndDeletedFalseOrderBySlotIndex(ship.getId());
             for (ShipModule module : modules) {
                 module.setDeleted(true);
-                module.setModified(LocalDateTime.now());
+                module.setModified(Instant.now());
                 shipModuleRepository.save(module);
             }
             ship.setDeleted(true);
-            ship.setModified(LocalDateTime.now());
+            ship.setModified(Instant.now());
             shipRepository.save(ship);
         }
 
         fleet.setDeleted(true);
-        fleet.setModified(LocalDateTime.now());
+        fleet.setModified(Instant.now());
         fleetRepository.save(fleet);
     }
 
@@ -531,8 +531,8 @@ public class FleetService {
         newShip.setShipName("Ship_" + (newPositionIndex + 1));
         newShip.setPositionIndex(newPositionIndex);
         newShip.setDeleted(false);
-        newShip.setCreated(LocalDateTime.now());
-        newShip.setModified(LocalDateTime.now());
+        newShip.setCreated(Instant.now());
+        newShip.setModified(Instant.now());
         Ship savedShip = shipRepository.save(newShip);
 
         // 기본 모듈들 생성 (Body, Weapon) — 비용 분배: beam = moduleUnlockPrice, body = 나머지
@@ -562,8 +562,8 @@ public class FleetService {
         bodyModule.setInvestedModulePoint(bodyInvestedMineral);
         bodyModule.setCurrentHealth(bodyData != null && bodyData.getHealth() != null ? bodyData.getHealth() : 0f);
         bodyModule.setDeleted(false);
-        bodyModule.setCreated(LocalDateTime.now());
-        bodyModule.setModified(LocalDateTime.now());
+        bodyModule.setCreated(Instant.now());
+        bodyModule.setModified(Instant.now());
         shipModuleRepository.save(bodyModule);
 
         // Beam 모듈
@@ -576,8 +576,8 @@ public class FleetService {
         weaponModule.setSlotIndex(0);
         weaponModule.setInvestedModulePoint(beamInvestedMineral);
         weaponModule.setDeleted(false);
-        weaponModule.setCreated(LocalDateTime.now());
-        weaponModule.setModified(LocalDateTime.now());
+        weaponModule.setCreated(Instant.now());
+        weaponModule.setModified(Instant.now());
         shipModuleRepository.save(weaponModule);
     }
 
@@ -661,8 +661,8 @@ public class FleetService {
         newModule.setModuleLevel(1);
         newModule.setInvestedModulePoint(unlockDeducted);
         newModule.setDeleted(false);
-        newModule.setCreated(LocalDateTime.now());
-        newModule.setModified(LocalDateTime.now());
+        newModule.setCreated(Instant.now());
+        newModule.setModified(Instant.now());
         shipModuleRepository.save(newModule);
 
         // 응답 생성
@@ -730,7 +730,7 @@ public class FleetService {
         // 모듈 레벨 업데이트 (능력치는 클라이언트가 DataTable에서 조회)
         module.setModuleLevel(request.getTargetLevel());
         module.setInvestedModulePoint(module.getInvestedModulePoint() + deducted);
-        module.setModified(LocalDateTime.now());
+        module.setModified(Instant.now());
         shipModuleRepository.save(module);
 
         // 응답 생성
@@ -794,7 +794,7 @@ public class FleetService {
             module.setModuleSubType(prevSubType);
             module.setModuleLevel(maxLevel);
             module.setInvestedModulePoint(Math.max(0, module.getInvestedModulePoint() - totalRefund));
-            module.setModified(LocalDateTime.now());
+            module.setModified(Instant.now());
             shipModuleRepository.save(module);
 
             return ModuleLevelChangeResponse.builder()
@@ -831,7 +831,7 @@ public class FleetService {
 
         module.setModuleLevel(request.getTargetLevel());
         module.setInvestedModulePoint(Math.max(0, module.getInvestedModulePoint() - totalRefund));
-        module.setModified(LocalDateTime.now());
+        module.setModified(Instant.now());
         shipModuleRepository.save(module);
 
         return ModuleLevelChangeResponse.builder()
@@ -911,7 +911,7 @@ public class FleetService {
         currentModule.setModuleSubType(newModuleSubType);
         currentModule.setModuleLevel(1);
         currentModule.setInvestedModulePoint(currentModule.getInvestedModulePoint() + changeDeducted);
-        currentModule.setModified(LocalDateTime.now());
+        currentModule.setModified(Instant.now());
         shipModuleRepository.save(currentModule);
 
         return ModuleGradeChangeResponse.builder()
@@ -984,7 +984,7 @@ public class FleetService {
         currentModule.setModuleSubType(newSubType);
         currentModule.setModuleLevel(1);
         currentModule.setInvestedMineral(currentModule.getInvestedMineral() + totalCost);
-        currentModule.setModified(LocalDateTime.now());
+        currentModule.setModified(Instant.now());
         shipModuleRepository.save(currentModule);
 
         return ModuleGradeChangeResponse.builder()
@@ -1049,7 +1049,7 @@ public class FleetService {
         currentModule.setModuleSubType(newSubType);
         currentModule.setModuleLevel(1);
         currentModule.setInvestedModulePoint(Math.max(0, currentModule.getInvestedModulePoint() - moduleOnlyRefund));
-        currentModule.setModified(LocalDateTime.now());
+        currentModule.setModified(Instant.now());
         shipModuleRepository.save(currentModule);
 
         return ModuleGradeChangeResponse.builder()
@@ -1142,7 +1142,7 @@ public class FleetService {
         currentModule.setModuleSubType(prevSubType);
         currentModule.setModuleLevel(resultLevel);
         currentModule.setInvestedMineral(Math.max(0, currentModule.getInvestedMineral() - moduleOnlyRefund));
-        currentModule.setModified(LocalDateTime.now());
+        currentModule.setModified(Instant.now());
         shipModuleRepository.save(currentModule);
 
         return ModuleGradeChangeResponse.builder()
@@ -1188,11 +1188,11 @@ public class FleetService {
 
             for (ShipModule mod : allModules) {
                 mod.setDeleted(true);
-                mod.setModified(LocalDateTime.now());
+                mod.setModified(Instant.now());
                 shipModuleRepository.save(mod);
             }
             ship.setDeleted(true);
-            ship.setModified(LocalDateTime.now());
+            ship.setModified(Instant.now());
             shipRepository.save(ship);
 
             return ModuleGradeChangeResponse.builder()
@@ -1218,7 +1218,7 @@ public class FleetService {
             currentModule.setModuleSubType(EModuleSubType.body_t1_m1);
             currentModule.setModuleLevel(1);
             currentModule.setInvestedModulePoint(0);
-            currentModule.setModified(LocalDateTime.now());
+            currentModule.setModified(Instant.now());
             shipModuleRepository.save(currentModule);
 
             return ModuleGradeChangeResponse.builder()
@@ -1241,7 +1241,7 @@ public class FleetService {
         commanderRepository.save(commander);
 
         currentModule.setDeleted(true);
-        currentModule.setModified(LocalDateTime.now());
+        currentModule.setModified(Instant.now());
         shipModuleRepository.save(currentModule);
 
         return ModuleGradeChangeResponse.builder()
@@ -1274,7 +1274,7 @@ public class FleetService {
         EFormationType formationType = request.getFormationType();
 
         fleet.setFormation(formationType);
-        fleet.setModified(LocalDateTime.now());
+        fleet.setModified(Instant.now());
         fleetRepository.save(fleet);
 
         return ChangeFormationResponse.builder()
@@ -1295,7 +1295,7 @@ public class FleetService {
         }
 
         fleet.setTacticOptions(request.getTacticOptions());
-        fleet.setModified(LocalDateTime.now());
+        fleet.setModified(Instant.now());
         fleetRepository.save(fleet);
 
         return ChangeTacticOptionsResponse.builder()
@@ -1328,7 +1328,7 @@ public class FleetService {
                 module.setDeleted(true);
                 module.setInvestedModulePoint(0);
                 module.setInvestedMineral(0);
-                module.setModified(LocalDateTime.now());
+                module.setModified(Instant.now());
                 shipModuleRepository.save(module);
             }
         }
@@ -1374,7 +1374,7 @@ public class FleetService {
 
         // 모듈 soft-delete (언락된 슬롯을 플레이스홀더 상태로 복귀)
         module.setDeleted(true);
-        module.setModified(LocalDateTime.now());
+        module.setModified(Instant.now());
         shipModuleRepository.save(module);
 
         return ModuleResetResponse.builder()
@@ -1404,7 +1404,7 @@ public class FleetService {
         body.setModuleSubType(EModuleSubType.body_t1_m1);
         body.setModuleLevel(1);
         body.setInvestedModulePoint(0);
-        body.setModified(LocalDateTime.now());
+        body.setModified(Instant.now());
         shipModuleRepository.save(body);
 
         return ModuleResetResponse.builder()
@@ -1446,13 +1446,13 @@ public class FleetService {
         // 모듈 soft delete
         for (ShipModule mod : allModules) {
             mod.setDeleted(true);
-            mod.setModified(LocalDateTime.now());
+            mod.setModified(Instant.now());
             shipModuleRepository.save(mod);
         }
 
         // 함선 soft delete
         ship.setDeleted(true);
-        ship.setModified(LocalDateTime.now());
+        ship.setModified(Instant.now());
         shipRepository.save(ship);
 
         return ShipResetRemoveResponse.builder()
@@ -1672,7 +1672,7 @@ public class FleetService {
                     module.setModuleLevel(baselineLevel);
                 }
                 module.setInvestedMineral(0);
-                module.setModified(LocalDateTime.now());
+                module.setModified(Instant.now());
                 shipModuleRepository.save(module);
             }
         }
@@ -1750,8 +1750,8 @@ public class FleetService {
         newModule.setModuleLevel(1);
         newModule.setInvestedMineral(unlockCost);
         newModule.setDeleted(false);
-        newModule.setCreated(LocalDateTime.now());
-        newModule.setModified(LocalDateTime.now());
+        newModule.setCreated(Instant.now());
+        newModule.setModified(Instant.now());
         shipModuleRepository.save(newModule);
 
         return ModuleUnlockResponse.builder()
@@ -1809,7 +1809,7 @@ public class FleetService {
 
         module.setModuleLevel(request.getTargetLevel());
         module.setInvestedMineral(module.getInvestedMineral() + totalCost);
-        module.setModified(LocalDateTime.now());
+        module.setModified(Instant.now());
         shipModuleRepository.save(module);
 
         return ModuleLevelChangeResponse.builder()
@@ -1875,7 +1875,7 @@ public class FleetService {
 
         module.setModuleLevel(request.getTargetLevel());
         module.setInvestedMineral(Math.max(0, module.getInvestedMineral() - totalRefund));
-        module.setModified(LocalDateTime.now());
+        module.setModified(Instant.now());
         shipModuleRepository.save(module);
 
         return ModuleLevelChangeResponse.builder()
@@ -1933,7 +1933,7 @@ public class FleetService {
             // 모듈포인트 투자 없음(미네랄로만 언락) → 완전 삭제
             currentModule.setDeleted(true);
             currentModule.setInvestedMineral(0);
-            currentModule.setModified(LocalDateTime.now());
+            currentModule.setModified(Instant.now());
             shipModuleRepository.save(currentModule);
             resultSubType = EModuleSubType.none;
             resultLevel   = 0;
@@ -1944,7 +1944,7 @@ public class FleetService {
             currentModule.setModuleSubType(baselineSubType);
             currentModule.setModuleLevel(baselineLevel);
             currentModule.setInvestedMineral(0);
-            currentModule.setModified(LocalDateTime.now());
+            currentModule.setModified(Instant.now());
             shipModuleRepository.save(currentModule);
             resultSubType = baselineSubType;
             resultLevel   = baselineLevel;
@@ -2001,7 +2001,7 @@ public class FleetService {
         bodyModule.setModuleSubType(resultSubType);
         bodyModule.setModuleLevel(resultLevel);
         bodyModule.setInvestedMineral(0);
-        bodyModule.setModified(LocalDateTime.now());
+        bodyModule.setModified(Instant.now());
         shipModuleRepository.save(bodyModule);
 
         return ModuleResetResponse.builder()
@@ -2041,11 +2041,11 @@ public class FleetService {
             mod.setDeleted(true);
             mod.setInvestedMineral(0);
             mod.setInvestedModulePoint(0);
-            mod.setModified(LocalDateTime.now());
+            mod.setModified(Instant.now());
             shipModuleRepository.save(mod);
         }
         ship.setDeleted(true);
-        ship.setModified(LocalDateTime.now());
+        ship.setModified(Instant.now());
         shipRepository.save(ship);
     }
 

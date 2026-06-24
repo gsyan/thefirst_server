@@ -18,7 +18,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.*;
 
 @Service
@@ -124,7 +124,7 @@ public class PvpService {
         record.setScore(initScore);
         record.setWins(0);
         record.setLosses(0);
-        record.setLastUpdated(LocalDateTime.now());
+        record.setLastUpdated(Instant.now());
 
         try {
             pvpRecordRepository.save(record);
@@ -387,7 +387,7 @@ public class PvpService {
             record.setScore(record.getScore() + scoreChange);
             if (isWin) record.setWins(record.getWins() + 1);
             else record.setLosses(record.getLosses() + 1);
-            record.setLastUpdated(LocalDateTime.now());
+            record.setLastUpdated(Instant.now());
             pvpRecordRepository.save(record);
         });
     }

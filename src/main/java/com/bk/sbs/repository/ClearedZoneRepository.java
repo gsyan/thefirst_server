@@ -18,7 +18,7 @@ public interface ClearedZoneRepository extends JpaRepository<ClearedZone, Long> 
     List<ClearedZone> findByCommanderIdAndRewardClaimedFalse(Long commanderId);
 
     @org.springframework.data.jpa.repository.Modifying
-    @org.springframework.data.jpa.repository.Query("UPDATE ClearedZone cz SET cz.rewardClaimed = false, cz.clearedAt = CURRENT_TIMESTAMP WHERE cz.commanderId = :commanderId AND cz.zoneName = :zoneName")
+    @org.springframework.data.jpa.repository.Query(value = "UPDATE cleared_zone SET reward_claimed = false, cleared_at = UTC_TIMESTAMP(6) WHERE commander_id = :commanderId AND zone_name = :zoneName", nativeQuery = true)
     void resetRewardClaimed(@org.springframework.data.repository.query.Param("commanderId") Long commanderId,
                             @org.springframework.data.repository.query.Param("zoneName") String zoneName);
 

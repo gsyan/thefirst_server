@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 @Getter
@@ -53,8 +53,8 @@ public class ShipModule {
     private boolean deleted = false;
 
     @Column(nullable = false)
-    private LocalDateTime created = LocalDateTime.now();
+    private Instant created = Instant.now();
 
     @Column(nullable = false)
-    private LocalDateTime modified = LocalDateTime.now();
+    private Instant modified = Instant.now();
 }

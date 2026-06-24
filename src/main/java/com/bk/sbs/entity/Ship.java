@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 @Entity
@@ -33,10 +33,10 @@ public class Ship {
     private boolean deleted = false;
 
     @Column(nullable = false)
-    private LocalDateTime created = LocalDateTime.now();
+    private Instant created = Instant.now();
 
     @Column(nullable = false)
-    private LocalDateTime modified = LocalDateTime.now();
+    private Instant modified = Instant.now();
 
     @OneToMany(mappedBy = "ship", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ShipModule> modules;

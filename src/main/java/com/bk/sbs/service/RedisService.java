@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -257,14 +258,14 @@ public class RedisService {
         redisTemplate.opsForHash().put(key, "wins", "0");
         redisTemplate.opsForHash().put(key, "losses", "0");
         redisTemplate.opsForHash().put(key, "refreshRemain", String.valueOf(refreshCount));
-        redisTemplate.opsForHash().put(key, "lastRefreshDate", LocalDate.now().toString());
+        redisTemplate.opsForHash().put(key, "lastRefreshDate", LocalDate.now(ZoneOffset.UTC).toString());
         redisTemplate.opsForHash().put(key, "score", String.valueOf(score));
     }
 
     public int getRefreshRemain(Long commanderId, int maxRefresh) {
         String key = PVP_INFO_PREFIX + commanderId;
         String lastDate = (String) redisTemplate.opsForHash().get(key, "lastRefreshDate");
-        String today = LocalDate.now().toString();
+        String today = LocalDate.now(ZoneOffset.UTC).toString();
 
         if (lastDate == null || lastDate.equals(today) == false) {
             redisTemplate.opsForHash().put(key, "refreshRemain", String.valueOf(maxRefresh));

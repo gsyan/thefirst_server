@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "commander")
@@ -82,5 +81,5 @@ public class Commander {
     private boolean deleted = false;
 
     @Column(nullable = false)
-    private LocalDateTime dateTime = LocalDateTime.now();
+    private Instant dateTime = Instant.now();
 }

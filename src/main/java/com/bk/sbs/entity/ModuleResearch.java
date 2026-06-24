@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 // 캐릭터별 문자열 기반 연구 상태 저장 (예: tech_level_N)
 @Entity
@@ -26,9 +26,9 @@ public class ModuleResearch {
     private boolean researched = false;
 
     @Column(nullable = false)
-    private LocalDateTime created = LocalDateTime.now();
+    private Instant created = Instant.now();
 
     @Column(nullable = false)
-    private LocalDateTime modified = LocalDateTime.now();
+    private Instant modified = Instant.now();
 }
 

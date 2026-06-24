@@ -164,8 +164,9 @@ public class ZoneService {
             }
         }
 
+
         clearedZone.setRewardClaimed(true);
-        clearedZoneRepository.save(clearedZone);
+        clearedZoneRepository.save(clearedZone);// 리워드 받았다는 DB 저장
         commanderRepository.save(commander);
 
         return ClaimZoneRewardResponse.builder()

@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Entity
 @Getter
@@ -29,5 +29,5 @@ public class Account {
     private boolean deleted = false;
 
     @Column(nullable = false)
-    private LocalDateTime dateTime = LocalDateTime.now();
+    private Instant dateTime = Instant.now();
 }
