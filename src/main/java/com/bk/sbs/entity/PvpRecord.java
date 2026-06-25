@@ -31,5 +31,8 @@ public class PvpRecord {
 
     @Column(nullable = false)
     private Instant lastUpdated = Instant.now();
+
+    @Column(nullable = false)
+    private Integer lastRewardedSeason = 0;
 }
 

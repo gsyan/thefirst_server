@@ -46,6 +46,8 @@ public class ModuleData {
 
     private Float projectileSpeed;
 
+    private Float silenceTime;
+
     private Integer airCount;
 
     private Float airMaintenanceTime;
@@ -67,4 +69,6 @@ public class ModuleData {
     private Float airDetectRadius;
 
     private Float airAvoidRadius;
+
+    private Float airAdditionalDelay;
 }

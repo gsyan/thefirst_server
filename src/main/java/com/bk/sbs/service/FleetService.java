@@ -2072,6 +2072,56 @@ public class FleetService {
         return calcMineralLevelRefundUpTo(moduleType, subType, maxLevel);
     }
 
+    // investedMineral 역산: 미네랄 투입이 없었을 때의 기준 레벨 반환
+    private int calcMineralBaselineLevel(EModuleType moduleType, EModuleSubType subType, int investedMineral, int currentLevel) {
+        if (investedMineral <= 0) return currentLevel;
+        List<ModuleData> dataList = gameDataService.getModulesByType(moduleType);
+        int remaining = investedMineral;
+        int baselineLevel = currentLevel;
+        for (int lv = currentLevel; lv > 1; lv--) {
+            final int thisLevel = lv;
+            int stepCost = dataList.stream()
+                    .filter(d -> subType.equals(d.getModuleSubType()) && d.getModuleLevel() == thisLevel)
+                    .mapToInt(d -> d.getMineralCost() != null ? d.getMineralCost() : 0)
+                    .findFirst()
+                    .orElse(0);
+            if (stepCost <= 0) break;
+            remaining = remaining - stepCost;
+            baselineLevel = lv - 1;
+            if (remaining <= 0) break;
+        }
+        return baselineLevel;
+    }
+
+    // PVP 상대 함대 전달 시 미네랄 레벨업 분을 제거한 FleetInfoDto 반환
+    public FleetInfoDto stripMineralLevels(FleetInfoDto fleet) {
+        if (fleet == null || fleet.getShips() == null) return fleet;
+        for (ShipInfoDto ship : fleet.getShips()) {
+            if (ship.getBodies() == null) continue;
+            for (ModuleBodyInfoDto body : ship.getBodies()) {
+                int bodyInvestedMineral = body.getInvestedMineral() != null ? body.getInvestedMineral() : 0;
+                int bodyBaselineLevel = calcMineralBaselineLevel(EModuleType.body, body.getModuleSubType(), bodyInvestedMineral, body.getModuleLevel());
+                body.setModuleLevel(bodyBaselineLevel);
+                body.setInvestedMineral(0);
+
+                stripMineralLevelsFromModuleList(body.getBeams(),    EModuleType.beam);
+                stripMineralLevelsFromModuleList(body.getMissiles(), EModuleType.missile);
+                stripMineralLevelsFromModuleList(body.getHangers(),  EModuleType.hanger);
+            }
+        }
+        return fleet;
+    }
+
+    private void stripMineralLevelsFromModuleList(List<ModuleInfoDto> modules, EModuleType moduleType) {
+        if (modules == null) return;
+        for (ModuleInfoDto module : modules) {
+            int investedMineral = module.getInvestedMineral() != null ? module.getInvestedMineral() : 0;
+            int baselineLevel = calcMineralBaselineLevel(moduleType, module.getModuleSubType(), investedMineral, module.getModuleLevel());
+            module.setModuleLevel(baselineLevel);
+            module.setInvestedMineral(0);
+        }
+    }
+
     @Transactional
     public FleetInstantRepairResponse instantRepairFleet(Long commanderId) {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)

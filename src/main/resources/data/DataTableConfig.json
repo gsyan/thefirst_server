@@ -6,6 +6,13 @@
   "pvpRankScoreInit": 1000,
   "pvpRankScorePenalty": 1,
   "moduleUnlockPrice": 1,
-  "battleRepairMineralPerSec": 1,
-  "instantRepairBaseSecs": 60
+  "repairBoostMineralPerSec": 1,
+  "repairBoostMultiplier": 2.0,
+  "instantRepairBaseSecs": 60,
+  "missileTacticMineralPerSec": 1,
+  "missileTacticDamageMultiplier": 2.0,
+  "missileTacticExplosionMultiplier": 2.0,
+  "aircraftTacticMineralPerSec": 1,
+  "aircraftTacticDamageMultiplier": 2.0,
+  "aircraftTacticAmmoMultiplier": 2.0
 }

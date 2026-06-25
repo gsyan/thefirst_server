@@ -152,12 +152,13 @@ CREATE TABLE pvp_season (
 -- pvp_record  (Redis 동기화용 백업)
 -- ============================================================
 CREATE TABLE pvp_record (
-    id              BIGINT          NOT NULL AUTO_INCREMENT,
-    commander_id    BIGINT          NOT NULL,
-    score           INT             NOT NULL DEFAULT 1000,
-    wins            INT             NOT NULL DEFAULT 0,
-    losses          INT             NOT NULL DEFAULT 0,
-    last_updated    DATETIME(6)     NOT NULL,
+    id                      BIGINT          NOT NULL AUTO_INCREMENT,
+    commander_id            BIGINT          NOT NULL,
+    score                   INT             NOT NULL DEFAULT 1000,
+    wins                    INT             NOT NULL DEFAULT 0,
+    losses                  INT             NOT NULL DEFAULT 0,
+    last_updated            DATETIME(6)     NOT NULL,
+    last_rewarded_season    INT             NOT NULL DEFAULT 0,
     PRIMARY KEY (id),
     UNIQUE KEY uk_pvp_commander (commander_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

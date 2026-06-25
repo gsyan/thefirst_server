@@ -22,8 +22,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 100.0,
-        "repair": 1.0,
+        "health": 1000.0,
+        "repair": 10.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -63,8 +63,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 110.0,
-        "repair": 1.1,
+        "health": 1100.0,
+        "repair": 11.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -104,8 +104,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 120.0,
-        "repair": 1.2,
+        "health": 1200.0,
+        "repair": 12.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -145,8 +145,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 130.0,
-        "repair": 1.3,
+        "health": 1300.0,
+        "repair": 13.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -186,8 +186,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 140.0,
-        "repair": 1.4,
+        "health": 1400.0,
+        "repair": 14.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -227,8 +227,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 150.0,
-        "repair": 1.5,
+        "health": 1500.0,
+        "repair": 15.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -268,8 +268,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 160.0,
-        "repair": 1.6,
+        "health": 1600.0,
+        "repair": 16.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -309,8 +309,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 170.0,
-        "repair": 1.7,
+        "health": 1700.0,
+        "repair": 17.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -350,8 +350,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 180.0,
-        "repair": 1.8,
+        "health": 1800.0,
+        "repair": 18.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -391,8 +391,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 190.0,
-        "repair": 1.9,
+        "health": 1900.0,
+        "repair": 19.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -436,8 +436,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 200.0,
-        "repair": 2.0,
+        "health": 2000.0,
+        "repair": 20.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -481,8 +481,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 210.0,
-        "repair": 2.1,
+        "health": 2100.0,
+        "repair": 21.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -526,8 +526,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 220.0,
-        "repair": 2.2,
+        "health": 2200.0,
+        "repair": 22.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -571,8 +571,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 230.0,
-        "repair": 2.3,
+        "health": 2300.0,
+        "repair": 23.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -616,8 +616,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 240.0,
-        "repair": 2.4,
+        "health": 2400.0,
+        "repair": 24.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -661,8 +661,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 250.0,
-        "repair": 2.5,
+        "health": 2500.0,
+        "repair": 25.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -706,8 +706,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 260.0,
-        "repair": 2.6,
+        "health": 2600.0,
+        "repair": 26.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -751,8 +751,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 270.0,
-        "repair": 2.7,
+        "health": 2700.0,
+        "repair": 27.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -796,8 +796,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 280.0,
-        "repair": 2.8,
+        "health": 2800.0,
+        "repair": 28.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -841,8 +841,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 290.0,
-        "repair": 2.9,
+        "health": 2900.0,
+        "repair": 29.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -886,8 +886,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 300.0,
-        "repair": 3.0,
+        "health": 3000.0,
+        "repair": 30.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -931,8 +931,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 310.0,
-        "repair": 3.1,
+        "health": 3100.0,
+        "repair": 31.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -976,8 +976,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 320.0,
-        "repair": 3.2,
+        "health": 3200.0,
+        "repair": 32.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -1021,8 +1021,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 330.0,
-        "repair": 3.3,
+        "health": 3300.0,
+        "repair": 33.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -1066,8 +1066,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 340.0,
-        "repair": 3.4,
+        "health": 3400.0,
+        "repair": 34.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -1111,8 +1111,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 350.0,
-        "repair": 3.5,
+        "health": 3500.0,
+        "repair": 35.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -1156,8 +1156,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 360.0,
-        "repair": 3.6,
+        "health": 3600.0,
+        "repair": 36.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -1201,8 +1201,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 370.0,
-        "repair": 3.7,
+        "health": 3700.0,
+        "repair": 37.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -1246,8 +1246,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 380.0,
-        "repair": 3.8,
+        "health": 3800.0,
+        "repair": 38.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -1291,8 +1291,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 390.0,
-        "repair": 3.9,
+        "health": 3900.0,
+        "repair": 39.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -1340,8 +1340,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 400.0,
-        "repair": 4.0,
+        "health": 4000.0,
+        "repair": 40.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -1389,8 +1389,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 410.0,
-        "repair": 4.1,
+        "health": 4100.0,
+        "repair": 41.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -1438,8 +1438,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 420.0,
-        "repair": 4.2,
+        "health": 4200.0,
+        "repair": 42.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -1487,8 +1487,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 430.0,
-        "repair": 4.3,
+        "health": 4300.0,
+        "repair": 43.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -1536,8 +1536,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 440.0,
-        "repair": 4.4,
+        "health": 4400.0,
+        "repair": 44.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -1585,8 +1585,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 450.0,
-        "repair": 4.5,
+        "health": 4500.0,
+        "repair": 45.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -1634,8 +1634,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 460.0,
-        "repair": 4.6,
+        "health": 4600.0,
+        "repair": 46.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -1683,8 +1683,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 470.0,
-        "repair": 4.7,
+        "health": 4700.0,
+        "repair": 47.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -1732,8 +1732,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 480.0,
-        "repair": 4.8,
+        "health": 4800.0,
+        "repair": 48.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -1781,8 +1781,8 @@
             "slotIndex": 0
           }
         ],
-        "health": 490.0,
-        "repair": 4.9,
+        "health": 4900.0,
+        "repair": 49.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -1834,8 +1834,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 500.0,
-        "repair": 5.0,
+        "health": 5000.0,
+        "repair": 50.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -1887,8 +1887,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 510.0,
-        "repair": 5.1,
+        "health": 5100.0,
+        "repair": 51.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -1940,8 +1940,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 520.0,
-        "repair": 5.2,
+        "health": 5200.0,
+        "repair": 52.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -1993,8 +1993,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 530.0,
-        "repair": 5.3,
+        "health": 5300.0,
+        "repair": 53.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -2046,8 +2046,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 540.0,
-        "repair": 5.4,
+        "health": 5400.0,
+        "repair": 54.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -2099,8 +2099,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 550.0,
-        "repair": 5.5,
+        "health": 5500.0,
+        "repair": 55.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -2152,8 +2152,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 560.0,
-        "repair": 5.6,
+        "health": 5600.0,
+        "repair": 56.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -2205,8 +2205,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 570.0,
-        "repair": 5.7,
+        "health": 5700.0,
+        "repair": 57.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -2258,8 +2258,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 580.0,
-        "repair": 5.8,
+        "health": 5800.0,
+        "repair": 58.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -2311,8 +2311,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 590.0,
-        "repair": 5.9,
+        "health": 5900.0,
+        "repair": 59.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -2364,8 +2364,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 600.0,
-        "repair": 6.0,
+        "health": 6000.0,
+        "repair": 60.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -2417,8 +2417,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 610.0,
-        "repair": 6.1,
+        "health": 6100.0,
+        "repair": 61.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -2470,8 +2470,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 620.0,
-        "repair": 6.2,
+        "health": 6200.0,
+        "repair": 62.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -2523,8 +2523,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 630.0,
-        "repair": 6.3,
+        "health": 6300.0,
+        "repair": 63.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -2576,8 +2576,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 640.0,
-        "repair": 6.4,
+        "health": 6400.0,
+        "repair": 64.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -2629,8 +2629,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 650.0,
-        "repair": 6.5,
+        "health": 6500.0,
+        "repair": 65.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -2682,8 +2682,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 660.0,
-        "repair": 6.6,
+        "health": 6600.0,
+        "repair": 66.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -2735,8 +2735,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 670.0,
-        "repair": 6.7,
+        "health": 6700.0,
+        "repair": 67.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -2788,8 +2788,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 680.0,
-        "repair": 6.8,
+        "health": 6800.0,
+        "repair": 68.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -2841,8 +2841,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 690.0,
-        "repair": 6.9,
+        "health": 6900.0,
+        "repair": 69.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -2898,8 +2898,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 700.0,
-        "repair": 7.0,
+        "health": 7000.0,
+        "repair": 70.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -2955,8 +2955,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 710.0,
-        "repair": 7.1,
+        "health": 7100.0,
+        "repair": 71.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -3012,8 +3012,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 720.0,
-        "repair": 7.2,
+        "health": 7200.0,
+        "repair": 72.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -3069,8 +3069,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 730.0,
-        "repair": 7.3,
+        "health": 7300.0,
+        "repair": 73.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -3126,8 +3126,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 740.0,
-        "repair": 7.4,
+        "health": 7400.0,
+        "repair": 74.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -3183,8 +3183,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 750.0,
-        "repair": 7.5,
+        "health": 7500.0,
+        "repair": 75.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -3240,8 +3240,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 760.0,
-        "repair": 7.6,
+        "health": 7600.0,
+        "repair": 76.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -3297,8 +3297,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 770.0,
-        "repair": 7.7,
+        "health": 7700.0,
+        "repair": 77.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -3354,8 +3354,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 780.0,
-        "repair": 7.8,
+        "health": 7800.0,
+        "repair": 78.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -3411,8 +3411,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 790.0,
-        "repair": 7.9,
+        "health": 7900.0,
+        "repair": 79.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -3472,8 +3472,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 800.0,
-        "repair": 8.0,
+        "health": 8000.0,
+        "repair": 80.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -3533,8 +3533,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 810.0,
-        "repair": 8.1,
+        "health": 8100.0,
+        "repair": 81.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -3594,8 +3594,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 820.0,
-        "repair": 8.2,
+        "health": 8200.0,
+        "repair": 82.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -3655,8 +3655,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 830.0,
-        "repair": 8.3,
+        "health": 8300.0,
+        "repair": 83.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -3716,8 +3716,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 840.0,
-        "repair": 8.4,
+        "health": 8400.0,
+        "repair": 84.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -3777,8 +3777,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 850.0,
-        "repair": 8.5,
+        "health": 8500.0,
+        "repair": 85.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -3838,8 +3838,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 860.0,
-        "repair": 8.6,
+        "health": 8600.0,
+        "repair": 86.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -3899,8 +3899,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 870.0,
-        "repair": 8.7,
+        "health": 8700.0,
+        "repair": 87.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -3960,8 +3960,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 880.0,
-        "repair": 8.8,
+        "health": 8800.0,
+        "repair": 88.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -4021,8 +4021,8 @@
             "slotIndex": 1
           }
         ],
-        "health": 890.0,
-        "repair": 8.9,
+        "health": 8900.0,
+        "repair": 89.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -4086,8 +4086,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 900.0,
-        "repair": 9.0,
+        "health": 9000.0,
+        "repair": 90.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -4151,8 +4151,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 910.0,
-        "repair": 9.1,
+        "health": 9100.0,
+        "repair": 91.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -4216,8 +4216,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 920.0,
-        "repair": 9.2,
+        "health": 9200.0,
+        "repair": 92.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -4281,8 +4281,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 930.0,
-        "repair": 9.3,
+        "health": 9300.0,
+        "repair": 93.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -4346,8 +4346,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 940.0,
-        "repair": 9.4,
+        "health": 9400.0,
+        "repair": 94.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -4411,8 +4411,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 950.0,
-        "repair": 9.5,
+        "health": 9500.0,
+        "repair": 95.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -4476,8 +4476,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 960.0,
-        "repair": 9.6,
+        "health": 9600.0,
+        "repair": 96.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -4541,8 +4541,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 970.0,
-        "repair": 9.7,
+        "health": 9700.0,
+        "repair": 97.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -4606,8 +4606,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 980.0,
-        "repair": 9.8,
+        "health": 9800.0,
+        "repair": 98.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -4671,8 +4671,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 990.0,
-        "repair": 9.9,
+        "health": 9900.0,
+        "repair": 99.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -4740,8 +4740,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 1000.0,
-        "repair": 10.0,
+        "health": 10000.0,
+        "repair": 100.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -4809,8 +4809,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 1010.0,
-        "repair": 10.1,
+        "health": 10100.0,
+        "repair": 101.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -4878,8 +4878,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 1020.0,
-        "repair": 10.2,
+        "health": 10200.0,
+        "repair": 102.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -4947,8 +4947,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 1030.0,
-        "repair": 10.3,
+        "health": 10300.0,
+        "repair": 103.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -5016,8 +5016,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 1040.0,
-        "repair": 10.4,
+        "health": 10400.0,
+        "repair": 104.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -5085,8 +5085,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 1050.0,
-        "repair": 10.5,
+        "health": 10500.0,
+        "repair": 105.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -5154,8 +5154,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 1060.0,
-        "repair": 10.6,
+        "health": 10600.0,
+        "repair": 106.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -5223,8 +5223,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 1070.0,
-        "repair": 10.7,
+        "health": 10700.0,
+        "repair": 107.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -5292,8 +5292,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 1080.0,
-        "repair": 10.8,
+        "health": 10800.0,
+        "repair": 108.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -5361,8 +5361,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 1090.0,
-        "repair": 10.9,
+        "health": 10900.0,
+        "repair": 109.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -5434,8 +5434,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 1100.0,
-        "repair": 11.0,
+        "health": 11000.0,
+        "repair": 110.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -5507,8 +5507,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 1110.0,
-        "repair": 11.1,
+        "health": 11100.0,
+        "repair": 111.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -5580,8 +5580,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 1120.0,
-        "repair": 11.2,
+        "health": 11200.0,
+        "repair": 112.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -5653,8 +5653,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 1130.0,
-        "repair": 11.3,
+        "health": 11300.0,
+        "repair": 113.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -5726,8 +5726,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 1140.0,
-        "repair": 11.4,
+        "health": 11400.0,
+        "repair": 114.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -5799,8 +5799,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 1150.0,
-        "repair": 11.5,
+        "health": 11500.0,
+        "repair": 115.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -5872,8 +5872,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 1160.0,
-        "repair": 11.6,
+        "health": 11600.0,
+        "repair": 116.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -5945,8 +5945,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 1170.0,
-        "repair": 11.7,
+        "health": 11700.0,
+        "repair": 117.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -6018,8 +6018,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 1180.0,
-        "repair": 11.8,
+        "health": 11800.0,
+        "repair": 118.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -6091,8 +6091,8 @@
             "slotIndex": 2
           }
         ],
-        "health": 1190.0,
-        "repair": 11.9,
+        "health": 11900.0,
+        "repair": 119.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -6168,8 +6168,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1200.0,
-        "repair": 12.0,
+        "health": 12000.0,
+        "repair": 120.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -6245,8 +6245,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1210.0,
-        "repair": 12.1,
+        "health": 12100.0,
+        "repair": 121.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -6322,8 +6322,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1220.0,
-        "repair": 12.2,
+        "health": 12200.0,
+        "repair": 122.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -6399,8 +6399,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1230.0,
-        "repair": 12.3,
+        "health": 12300.0,
+        "repair": 123.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -6476,8 +6476,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1240.0,
-        "repair": 12.4,
+        "health": 12400.0,
+        "repair": 124.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -6553,8 +6553,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1250.0,
-        "repair": 12.5,
+        "health": 12500.0,
+        "repair": 125.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -6630,8 +6630,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1260.0,
-        "repair": 12.6,
+        "health": 12600.0,
+        "repair": 126.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -6707,8 +6707,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1270.0,
-        "repair": 12.7,
+        "health": 12700.0,
+        "repair": 127.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -6784,8 +6784,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1280.0,
-        "repair": 12.8,
+        "health": 12800.0,
+        "repair": 128.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -6861,8 +6861,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1290.0,
-        "repair": 12.9,
+        "health": 12900.0,
+        "repair": 129.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -6942,8 +6942,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1300.0,
-        "repair": 13.0,
+        "health": 13000.0,
+        "repair": 130.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -7023,8 +7023,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1310.0,
-        "repair": 13.1,
+        "health": 13100.0,
+        "repair": 131.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -7104,8 +7104,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1320.0,
-        "repair": 13.2,
+        "health": 13200.0,
+        "repair": 132.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -7185,8 +7185,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1330.0,
-        "repair": 13.3,
+        "health": 13300.0,
+        "repair": 133.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -7266,8 +7266,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1340.0,
-        "repair": 13.4,
+        "health": 13400.0,
+        "repair": 134.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -7347,8 +7347,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1350.0,
-        "repair": 13.5,
+        "health": 13500.0,
+        "repair": 135.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -7428,8 +7428,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1360.0,
-        "repair": 13.6,
+        "health": 13600.0,
+        "repair": 136.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -7509,8 +7509,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1370.0,
-        "repair": 13.7,
+        "health": 13700.0,
+        "repair": 137.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -7590,8 +7590,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1380.0,
-        "repair": 13.8,
+        "health": 13800.0,
+        "repair": 138.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -7671,8 +7671,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1390.0,
-        "repair": 13.9,
+        "health": 13900.0,
+        "repair": 139.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -7756,8 +7756,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1400.0,
-        "repair": 14.0,
+        "health": 14000.0,
+        "repair": 140.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -7841,8 +7841,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1410.0,
-        "repair": 14.1,
+        "health": 14100.0,
+        "repair": 141.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -7926,8 +7926,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1420.0,
-        "repair": 14.2,
+        "health": 14200.0,
+        "repair": 142.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -8011,8 +8011,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1430.0,
-        "repair": 14.3,
+        "health": 14300.0,
+        "repair": 143.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -8096,8 +8096,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1440.0,
-        "repair": 14.4,
+        "health": 14400.0,
+        "repair": 144.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -8181,8 +8181,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1450.0,
-        "repair": 14.5,
+        "health": 14500.0,
+        "repair": 145.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -8266,8 +8266,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1460.0,
-        "repair": 14.6,
+        "health": 14600.0,
+        "repair": 146.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -8351,8 +8351,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1470.0,
-        "repair": 14.7,
+        "health": 14700.0,
+        "repair": 147.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -8436,8 +8436,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1480.0,
-        "repair": 14.8,
+        "health": 14800.0,
+        "repair": 148.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,
@@ -8521,8 +8521,8 @@
             "slotIndex": 3
           }
         ],
-        "health": 1490.0,
-        "repair": 14.9,
+        "health": 14900.0,
+        "repair": 149.0,
         "speed": 1.0,
         "attackFireCount": 0,
         "attack": 0.0,

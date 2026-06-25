@@ -1,6 +1,7 @@
 package com.bk.sbs.service;
 
 import com.bk.sbs.config.DataTablePvpSeason;
+import com.bk.sbs.entity.Commander;
 import com.bk.sbs.entity.PvpRecord;
 import com.bk.sbs.entity.PvpSeason;
 import com.bk.sbs.repository.CommanderRepository;
@@ -14,6 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
@@ -61,15 +65,6 @@ public class PvpSeasonService {
         // Redis 업데이트
         redisService.setPvpSeasonInfo(seasonNumber, startTime.toString(), endTime.toString());
 
-        // 이전 시즌(seasonNumber-1) 보상 만료일을 이 시즌 종료일로 일괄 업데이트
-        int prevSeasonNumber = seasonNumber - 1;
-        if (prevSeasonNumber >= 1) {
-            int updated = pvpSeasonRepository.bulkUpdatePvpPointExpiry(prevSeasonNumber, endTime);
-            if (updated > 0) {
-                log.info("시즌 {} 종료일 변경 → 시즌 {} 보상 만료일 {}건 업데이트", seasonNumber, prevSeasonNumber, updated);
-            }
-        }
-
         log.info("PVP 시즌 설정 완료: 시즌={} {} ~ {}", seasonNumber, startTime, endTime);
         return season;
     }
@@ -87,9 +82,11 @@ public class PvpSeasonService {
         resetSeasonScores();
 
         int nextSeasonNumber = season.getSeasonNumber() + 1;
-        Instant nextStart = season.getEndTime();
-        int durationDays = gameDataService.getDataTablePvpSeason().getDefaultSeasonDurationDays();
-        Instant nextEnd = nextStart.plus(durationDays, ChronoUnit.DAYS);
+        // 현재 시즌 종료월 기준 다음 달 1일~28일
+        YearMonth currentEndMonth = YearMonth.from(season.getEndTime().atZone(ZoneOffset.UTC));
+        YearMonth nextMonth = currentEndMonth.plusMonths(1);
+        Instant nextStart = calcMonthlySeasonStart(nextMonth);
+        Instant nextEnd = calcMonthlySeasonEnd(nextMonth);
 
         setSeasonManual(nextSeasonNumber, nextStart, nextEnd);
         log.info("다음 시즌 자동 시작: 시즌 {}", nextSeasonNumber);
@@ -99,34 +96,50 @@ public class PvpSeasonService {
 
     @Transactional
     public void distributeSeasonReward(PvpSeason season) {
-        DataTablePvpSeason pvpSeasonTable = gameDataService.getDataTablePvpSeason();
-
-        // 다음 시즌 종료일 = 보상 만료일
-        int nextSeasonNumber = season.getSeasonNumber() + 1;
-        Optional<PvpSeason> nextSeasonOpt = pvpSeasonRepository.findById(nextSeasonNumber);
-        Instant rewardExpiry = nextSeasonOpt.map(PvpSeason::getEndTime)
-                .orElse(season.getEndTime().plus(
-                        pvpSeasonTable.getDefaultSeasonDurationDays(), ChronoUnit.DAYS));
-
-        List<PvpRecord> records = pvpRecordRepository.findAll();
-        int count = 0;
-        for (PvpRecord record : records) {
-            int reward = pvpSeasonTable.getSeasonReward(record.getScore());
-            if (reward <= 0) continue;
-
-            commanderRepository.findById(record.getCommanderId()).ifPresent(commander -> {
-                commander.setPvpPoint(commander.getPvpPoint() + reward);
-                commander.setPvpPointMaxGot(commander.getPvpPointMaxGot() + reward);
-                commander.setPvpPointExpiry(rewardExpiry);
-                commander.setPvpPointSeasonRef(season.getSeasonNumber());
-                commanderRepository.save(commander);
-            });
-            count++;
-        }
-
+        // 접속 시 개별 지급 방식 — 여기서는 종료 마킹만 처리
         season.setRewardDistributed(true);
         pvpSeasonRepository.save(season);
-        log.info("시즌 {} 보상 지급 완료: {}명, 만료일={}", season.getSeasonNumber(), count, rewardExpiry);
+        log.info("시즌 {} 종료 마킹 완료 (보상은 접속 시 개별 지급)", season.getSeasonNumber());
+    }
+
+    // ── 접속 시 미수령 시즌 보상 지급 ────────────────────────────────────
+
+    @Transactional
+    public int claimPendingSeasonReward(long commanderId) {
+        Optional<PvpSeason> seasonOpt = pvpSeasonRepository.findTopByOrderBySeasonNumberDesc();
+        if (seasonOpt.isPresent() == false) return 0;
+
+        PvpSeason season = seasonOpt.get();
+        if (season.isRewardDistributed() == false) return 0;
+
+        Optional<PvpRecord> recordOpt = pvpRecordRepository.findByCommanderId(commanderId);
+        if (recordOpt.isPresent() == false) return 0;
+
+        PvpRecord record = recordOpt.get();
+        if (record.getLastRewardedSeason() >= season.getSeasonNumber()) return 0;
+
+        DataTablePvpSeason pvpSeasonTable = gameDataService.getDataTablePvpSeason();
+        int reward = pvpSeasonTable.getSeasonReward(record.getScore());
+
+        // 보상 수령 처리 (reward <= 0 이어도 lastRewardedSeason은 갱신)
+        if (reward > 0) {
+            YearMonth currentEndMonth = YearMonth.from(season.getEndTime().atZone(ZoneOffset.UTC));
+            Instant rewardExpiry = calcMonthlySeasonEnd(currentEndMonth.plusMonths(1));
+
+            Commander commander = commanderRepository.findById(commanderId).orElse(null);
+            if (commander == null) return 0;
+
+            commander.setPvpPoint(commander.getPvpPoint() + reward);
+            commander.setPvpPointMaxGot(commander.getPvpPointMaxGot() + reward);
+            commander.setPvpPointExpiry(rewardExpiry);
+            commander.setPvpPointSeasonRef(season.getSeasonNumber());
+            commanderRepository.save(commander);
+        }
+
+        record.setLastRewardedSeason(season.getSeasonNumber());
+        pvpRecordRepository.save(record);
+        log.info("시즌 {} 보상 지급: commanderId={}, reward={}", season.getSeasonNumber(), commanderId, reward);
+        return reward;
     }
 
     // ── 티어 기반 점수 리셋 ────────────────────────────────────────────────
@@ -157,11 +170,12 @@ public class PvpSeasonService {
         Optional<PvpSeason> currentOpt = getCurrentSeason();
 
         if (currentOpt.isPresent() == false) {
-            int durationDays = gameDataService.getDataTablePvpSeason().getDefaultSeasonDurationDays();
-            Instant now = Instant.now();
-            Instant end = now.plus(durationDays, ChronoUnit.DAYS);
-            setSeasonManual(1, now, end);
-            log.info("서버 시작: 시즌 정보 없음 → 시즌 1 자동 생성 (종료={})", end);
+            // 이번 달 1일~28일 UTC 기준 시즌 1 생성
+            YearMonth thisMonth = YearMonth.now(ZoneOffset.UTC);
+            Instant start = calcMonthlySeasonStart(thisMonth);
+            Instant end = calcMonthlySeasonEnd(thisMonth);
+            setSeasonManual(1, start, end);
+            log.info("서버 시작: 시즌 정보 없음 → 시즌 1 자동 생성 ({}~{})", start, end);
             return;
         }
 
@@ -184,8 +198,20 @@ public class PvpSeasonService {
                 season.getSeasonNumber(), season.getEndTime(), season.isRewardDistributed());
     }
 
-    // ── 1시간 주기 자동 시즌 종료 체크 ────────────────────────────────────
+    // ── 월별 시즌 날짜 계산 헬퍼 ──────────────────────────────────────────
+    // 매달 1일 00:00 UTC
+    private Instant calcMonthlySeasonStart(YearMonth month) {
+        LocalDate firstDay = month.atDay(1);
+        return firstDay.atStartOfDay(ZoneOffset.UTC).toInstant();
+    }
 
+    // 매달 29일 00:00 UTC (28→29일 자정에 정산)
+    private Instant calcMonthlySeasonEnd(YearMonth month) {
+        LocalDate day29 = month.atDay(29);
+        return day29.atStartOfDay(ZoneOffset.UTC).toInstant();
+    }
+
+    // ── 1시간 주기 자동 시즌 종료 체크 ────────────────────────────────────
     @Scheduled(fixedRate = 3_600_000)
     public void autoCheckSeasonEnd() {
         Optional<PvpSeason> currentOpt = getCurrentSeason();

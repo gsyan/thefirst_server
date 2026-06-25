@@ -6,6 +6,7 @@ import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.security.JwtUtil;
 import com.bk.sbs.service.PvpService;
+import com.bk.sbs.service.PvpSeasonService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,10 +17,12 @@ import jakarta.servlet.http.HttpServletRequest;
 public class PvpController {
 
     private final PvpService pvpService;
+    private final PvpSeasonService pvpSeasonService;
     private final JwtUtil jwtUtil;
 
-    public PvpController(PvpService pvpService, JwtUtil jwtUtil) {
+    public PvpController(PvpService pvpService, PvpSeasonService pvpSeasonService, JwtUtil jwtUtil) {
         this.pvpService = pvpService;
+        this.pvpSeasonService = pvpSeasonService;
         this.jwtUtil = jwtUtil;
     }
 
@@ -62,6 +65,14 @@ public class PvpController {
         PvpBattleResultResponse response = pvpService.reportBattleResult(
                 commanderId, request.getBattleToken(), request.getIsVictory());
         return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    // 시즌 보상 수령
+    @PostMapping("/pvp-season/claim-reward")
+    public ResponseEntity<ApiResponse<PvpClaimSeasonRewardResponse>> claimSeasonReward(HttpServletRequest httpRequest) {
+        Long commanderId = getCommanderIdFromToken(httpRequest);
+        int reward = pvpSeasonService.claimPendingSeasonReward(commanderId);
+        return ResponseEntity.ok(ApiResponse.success(new PvpClaimSeasonRewardResponse(reward)));
     }
 
     // 랭킹 관련 엔드포인트는 RankingController(/api/ranking)로 이전

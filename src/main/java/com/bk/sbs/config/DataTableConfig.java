@@ -22,8 +22,22 @@ public class DataTableConfig {
 
     private Integer moduleUnlockPrice;
 
-    private Integer battleRepairMineralPerSec;
+    private Integer repairBoostMineralPerSec;
+
+    private Float repairBoostMultiplier;
 
     private Integer instantRepairBaseSecs;
+
+    private Integer missileTacticMineralPerSec;
+
+    private Float missileTacticDamageMultiplier;
+
+    private Float missileTacticExplosionMultiplier;
+
+    private Integer aircraftTacticMineralPerSec;
+
+    private Float aircraftTacticDamageMultiplier;
+
+    private Float aircraftTacticAmmoMultiplier;
 
 }

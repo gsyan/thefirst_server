@@ -18,6 +18,7 @@ import com.bk.sbs.service.AccountService;
 import com.bk.sbs.service.CommanderService;
 import com.bk.sbs.service.FleetService;
 import com.bk.sbs.service.IapService;
+import com.bk.sbs.service.PvpSeasonService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,13 +32,15 @@ public class CommanderController {
     private final CommanderService commanderService;
     private final FleetService fleetService;
     private final IapService iapService;
+    private final PvpSeasonService pvpSeasonService;
     private final JwtUtil jwtUtil;
 
-    public CommanderController(AccountService accountService, CommanderService commanderService, FleetService fleetService, IapService iapService, JwtUtil jwtUtil) {
+    public CommanderController(AccountService accountService, CommanderService commanderService, FleetService fleetService, IapService iapService, PvpSeasonService pvpSeasonService, JwtUtil jwtUtil) {
         this.accountService = accountService;
         this.commanderService = commanderService;
         this.fleetService = fleetService;
         this.iapService = iapService;
+        this.pvpSeasonService = pvpSeasonService;
         this.jwtUtil = jwtUtil;
     }
 

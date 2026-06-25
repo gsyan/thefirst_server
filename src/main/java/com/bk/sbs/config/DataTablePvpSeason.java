@@ -11,7 +11,6 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DataTablePvpSeason {
 
-    private int defaultSeasonDurationDays = 14;
     private List<TierEntry> tiers = new ArrayList<>();
 
     @Data
