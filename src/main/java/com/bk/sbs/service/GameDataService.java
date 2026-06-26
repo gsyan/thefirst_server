@@ -165,7 +165,7 @@ public class GameDataService {
     }
 
     public int getBattleRepairMineralPerSec() {
-        Integer val = getDataTableConfig().getBattleRepairMineralPerSec();
+        Integer val = getDataTableConfig().getRepairBoostMineralPerSec();
         return val != null ? val : 1;
     }
 
