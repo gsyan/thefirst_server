@@ -21078,7 +21078,7 @@
         "splashRadius": 0.0,
         "attackCool": 3.0,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.1,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -21165,7 +21165,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.99,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.1,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -21252,7 +21252,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.98,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.1,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -21339,7 +21339,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.97,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.1,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -21426,7 +21426,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.96,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.1,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -21513,7 +21513,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.95,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.1,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -21600,7 +21600,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.94,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.1,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -21687,7 +21687,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.93,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.1,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -21774,7 +21774,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.92,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.1,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -21861,7 +21861,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.91,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.1,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -21948,7 +21948,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.9,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.2,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -22035,7 +22035,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.89,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.2,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -22122,7 +22122,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.88,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.2,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -22209,7 +22209,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.87,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.2,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -22296,7 +22296,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.86,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.2,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -22383,7 +22383,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.85,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.2,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -22470,7 +22470,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.84,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.2,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -22557,7 +22557,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.83,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.2,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -22644,7 +22644,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.82,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.2,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -22731,7 +22731,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.81,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.2,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -22818,7 +22818,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.8,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.3,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -22905,7 +22905,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.79,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.3,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -22992,7 +22992,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.78,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.3,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -23079,7 +23079,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.77,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.3,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -23166,7 +23166,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.76,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.3,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -23253,7 +23253,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.75,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.3,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -23340,7 +23340,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.74,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.3,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -23427,7 +23427,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.73,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.3,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -23514,7 +23514,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.72,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.3,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -23601,7 +23601,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.71,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.3,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -23688,7 +23688,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.7,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.4,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -23775,7 +23775,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.69,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.4,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -23862,7 +23862,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.68,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.4,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -23949,7 +23949,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.67,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.4,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -24036,7 +24036,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.66,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.4,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -24123,7 +24123,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.65,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.4,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -24210,7 +24210,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.64,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.4,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -24297,7 +24297,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.63,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.4,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -24384,7 +24384,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.62,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.4,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -24471,7 +24471,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.61,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.4,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -24558,7 +24558,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.6,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.5,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -24645,7 +24645,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.59,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.5,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -24732,7 +24732,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.58,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.5,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -24819,7 +24819,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.57,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.5,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -24906,7 +24906,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.56,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.5,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -24993,7 +24993,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.55,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.5,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -25080,7 +25080,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.54,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.5,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -25167,7 +25167,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.53,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.5,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -25254,7 +25254,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.52,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.5,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -25341,7 +25341,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.51,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.5,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -25428,7 +25428,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.5,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.6,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -25515,7 +25515,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.49,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.6,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -25602,7 +25602,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.48,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.6,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -25689,7 +25689,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.47,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.6,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -25776,7 +25776,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.46,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.6,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -25863,7 +25863,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.45,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.6,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -25950,7 +25950,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.44,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.6,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -26037,7 +26037,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.43,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.6,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -26124,7 +26124,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.42,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.6,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -26211,7 +26211,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.41,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.6,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -26298,7 +26298,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.4,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.7,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -26385,7 +26385,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.39,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.7,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -26472,7 +26472,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.38,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.7,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -26559,7 +26559,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.37,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.7,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -26646,7 +26646,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.36,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.7,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -26733,7 +26733,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.35,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.7,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -26820,7 +26820,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.34,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.7,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -26907,7 +26907,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.33,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.7,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -26994,7 +26994,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.32,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.7,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -27081,7 +27081,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.31,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.7,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -27168,7 +27168,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.3,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.8,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -27255,7 +27255,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.29,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.8,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -27342,7 +27342,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.28,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.8,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -27429,7 +27429,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.27,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.8,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -27516,7 +27516,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.26,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.8,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -27603,7 +27603,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.25,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.8,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -27690,7 +27690,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.24,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.8,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -27777,7 +27777,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.23,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.8,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -27864,7 +27864,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.22,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.8,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -27951,7 +27951,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.21,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.8,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -28038,7 +28038,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.2,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.9,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -28125,7 +28125,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.19,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.9,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -28212,7 +28212,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.18,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.9,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -28299,7 +28299,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.17,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.9,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -28386,7 +28386,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.16,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.9,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -28473,7 +28473,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.15,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.9,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -28560,7 +28560,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.14,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.9,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -28647,7 +28647,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.13,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.9,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -28734,7 +28734,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.12,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.9,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -28821,7 +28821,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.11,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 0.9,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -29778,7 +29778,7 @@
         "splashRadius": 0.0,
         "attackCool": 2.0,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.1,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -29865,7 +29865,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.99,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.1,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -29952,7 +29952,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.98,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.1,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -30039,7 +30039,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.97,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.1,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -30126,7 +30126,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.96,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.1,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -30213,7 +30213,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.95,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.1,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -30300,7 +30300,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.94,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.1,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -30387,7 +30387,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.93,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.1,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -30474,7 +30474,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.92,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.1,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -30561,7 +30561,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.91,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.1,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -30648,7 +30648,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.9,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.2,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -30735,7 +30735,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.89,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.2,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -30822,7 +30822,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.88,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.2,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -30909,7 +30909,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.87,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.2,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -30996,7 +30996,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.86,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.2,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -31083,7 +31083,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.85,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.2,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -31170,7 +31170,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.84,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.2,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -31257,7 +31257,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.83,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.2,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -31344,7 +31344,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.82,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.2,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -31431,7 +31431,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.81,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.2,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -31518,7 +31518,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.8,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.3,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -31605,7 +31605,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.79,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.3,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -31692,7 +31692,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.78,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.3,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -31779,7 +31779,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.77,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.3,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -31866,7 +31866,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.76,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.3,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -31953,7 +31953,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.75,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.3,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -32040,7 +32040,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.74,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.3,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -32127,7 +32127,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.73,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.3,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -32214,7 +32214,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.72,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.3,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -32301,7 +32301,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.71,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.3,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -32388,7 +32388,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.7,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.4,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -32475,7 +32475,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.69,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.4,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -32562,7 +32562,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.68,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.4,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -32649,7 +32649,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.67,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.4,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -32736,7 +32736,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.66,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.4,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -32823,7 +32823,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.65,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.4,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -32910,7 +32910,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.64,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.4,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -32997,7 +32997,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.63,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.4,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -33084,7 +33084,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.62,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.4,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -33171,7 +33171,7 @@
         "splashRadius": 0.0,
         "attackCool": 1.61,
         "projectileSpeed": 10.0,
-        "silenceTime": 1.0,
+        "silenceTime": 1.4,
         "airCount": 0,
         "airMaintenanceTime": 0.0,
         "airLaunchDist": 0.0,
@@ -33272,7 +33272,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.1
       },
       {
         "moduleName": "hanger_t1_m1 Lv.2",
@@ -33359,7 +33359,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.1
       },
       {
         "moduleName": "hanger_t1_m1 Lv.3",
@@ -33446,7 +33446,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.1
       },
       {
         "moduleName": "hanger_t1_m1 Lv.4",
@@ -33533,7 +33533,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.1
       },
       {
         "moduleName": "hanger_t1_m1 Lv.5",
@@ -33620,7 +33620,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.1
       },
       {
         "moduleName": "hanger_t1_m1 Lv.6",
@@ -33707,7 +33707,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.1
       },
       {
         "moduleName": "hanger_t1_m1 Lv.7",
@@ -33794,7 +33794,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.1
       },
       {
         "moduleName": "hanger_t1_m1 Lv.8",
@@ -33881,7 +33881,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.1
       },
       {
         "moduleName": "hanger_t1_m1 Lv.9",
@@ -33968,7 +33968,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.1
       },
       {
         "moduleName": "hanger_t1_m1 Lv.10",
@@ -34055,7 +34055,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.1
       },
       {
         "moduleName": "hanger_t2_m1 Lv.1",
@@ -34142,7 +34142,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.11
       },
       {
         "moduleName": "hanger_t2_m1 Lv.2",
@@ -34229,7 +34229,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.11
       },
       {
         "moduleName": "hanger_t2_m1 Lv.3",
@@ -34316,7 +34316,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.11
       },
       {
         "moduleName": "hanger_t2_m1 Lv.4",
@@ -34403,7 +34403,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.11
       },
       {
         "moduleName": "hanger_t2_m1 Lv.5",
@@ -34490,7 +34490,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.11
       },
       {
         "moduleName": "hanger_t2_m1 Lv.6",
@@ -34577,7 +34577,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.11
       },
       {
         "moduleName": "hanger_t2_m1 Lv.7",
@@ -34664,7 +34664,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.11
       },
       {
         "moduleName": "hanger_t2_m1 Lv.8",
@@ -34751,7 +34751,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.11
       },
       {
         "moduleName": "hanger_t2_m1 Lv.9",
@@ -34838,7 +34838,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.11
       },
       {
         "moduleName": "hanger_t2_m1 Lv.10",
@@ -34925,7 +34925,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.11
       },
       {
         "moduleName": "hanger_t3_m1 Lv.1",
@@ -35012,7 +35012,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.12
       },
       {
         "moduleName": "hanger_t3_m1 Lv.2",
@@ -35099,7 +35099,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.12
       },
       {
         "moduleName": "hanger_t3_m1 Lv.3",
@@ -35186,7 +35186,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.12
       },
       {
         "moduleName": "hanger_t3_m1 Lv.4",
@@ -35273,7 +35273,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.12
       },
       {
         "moduleName": "hanger_t3_m1 Lv.5",
@@ -35360,7 +35360,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.12
       },
       {
         "moduleName": "hanger_t3_m1 Lv.6",
@@ -35447,7 +35447,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.12
       },
       {
         "moduleName": "hanger_t3_m1 Lv.7",
@@ -35534,7 +35534,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.12
       },
       {
         "moduleName": "hanger_t3_m1 Lv.8",
@@ -35621,7 +35621,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.12
       },
       {
         "moduleName": "hanger_t3_m1 Lv.9",
@@ -35708,7 +35708,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.12
       },
       {
         "moduleName": "hanger_t3_m1 Lv.10",
@@ -35795,7 +35795,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.12
       },
       {
         "moduleName": "hanger_t4_m1 Lv.1",
@@ -35882,7 +35882,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.13
       },
       {
         "moduleName": "hanger_t4_m1 Lv.2",
@@ -35969,7 +35969,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.13
       },
       {
         "moduleName": "hanger_t4_m1 Lv.3",
@@ -36056,7 +36056,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.13
       },
       {
         "moduleName": "hanger_t4_m1 Lv.4",
@@ -36143,7 +36143,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.13
       },
       {
         "moduleName": "hanger_t4_m1 Lv.5",
@@ -36230,7 +36230,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.13
       },
       {
         "moduleName": "hanger_t4_m1 Lv.6",
@@ -36317,7 +36317,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.13
       },
       {
         "moduleName": "hanger_t4_m1 Lv.7",
@@ -36404,7 +36404,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.13
       },
       {
         "moduleName": "hanger_t4_m1 Lv.8",
@@ -36491,7 +36491,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.13
       },
       {
         "moduleName": "hanger_t4_m1 Lv.9",
@@ -36578,7 +36578,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.13
       },
       {
         "moduleName": "hanger_t4_m1 Lv.10",
@@ -36665,7 +36665,7 @@
         "airAmmo": 10,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.13
       },
       {
         "moduleName": "hanger_t5_m1 Lv.1",
@@ -36752,7 +36752,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.14
       },
       {
         "moduleName": "hanger_t5_m1 Lv.2",
@@ -36839,7 +36839,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.14
       },
       {
         "moduleName": "hanger_t5_m1 Lv.3",
@@ -36926,7 +36926,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.14
       },
       {
         "moduleName": "hanger_t5_m1 Lv.4",
@@ -37013,7 +37013,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.14
       },
       {
         "moduleName": "hanger_t5_m1 Lv.5",
@@ -37100,7 +37100,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.14
       },
       {
         "moduleName": "hanger_t5_m1 Lv.6",
@@ -37187,7 +37187,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.14
       },
       {
         "moduleName": "hanger_t5_m1 Lv.7",
@@ -37274,7 +37274,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.14
       },
       {
         "moduleName": "hanger_t5_m1 Lv.8",
@@ -37361,7 +37361,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.14
       },
       {
         "moduleName": "hanger_t5_m1 Lv.9",
@@ -37448,7 +37448,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.14
       },
       {
         "moduleName": "hanger_t5_m1 Lv.10",
@@ -37535,7 +37535,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.14
       },
       {
         "moduleName": "hanger_t6_m1 Lv.1",
@@ -37622,7 +37622,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.15
       },
       {
         "moduleName": "hanger_t6_m1 Lv.2",
@@ -37709,7 +37709,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.15
       },
       {
         "moduleName": "hanger_t6_m1 Lv.3",
@@ -37796,7 +37796,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.15
       },
       {
         "moduleName": "hanger_t6_m1 Lv.4",
@@ -37883,7 +37883,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.15
       },
       {
         "moduleName": "hanger_t6_m1 Lv.5",
@@ -37970,7 +37970,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.15
       },
       {
         "moduleName": "hanger_t6_m1 Lv.6",
@@ -38057,7 +38057,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.15
       },
       {
         "moduleName": "hanger_t6_m1 Lv.7",
@@ -38144,7 +38144,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.15
       },
       {
         "moduleName": "hanger_t6_m1 Lv.8",
@@ -38231,7 +38231,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.15
       },
       {
         "moduleName": "hanger_t6_m1 Lv.9",
@@ -38318,7 +38318,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.15
       },
       {
         "moduleName": "hanger_t6_m1 Lv.10",
@@ -38405,7 +38405,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.15
       },
       {
         "moduleName": "hanger_t7_m1 Lv.1",
@@ -38492,7 +38492,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.16
       },
       {
         "moduleName": "hanger_t7_m1 Lv.2",
@@ -38579,7 +38579,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.16
       },
       {
         "moduleName": "hanger_t7_m1 Lv.3",
@@ -38666,7 +38666,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.16
       },
       {
         "moduleName": "hanger_t7_m1 Lv.4",
@@ -38753,7 +38753,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.16
       },
       {
         "moduleName": "hanger_t7_m1 Lv.5",
@@ -38840,7 +38840,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.16
       },
       {
         "moduleName": "hanger_t7_m1 Lv.6",
@@ -38927,7 +38927,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.16
       },
       {
         "moduleName": "hanger_t7_m1 Lv.7",
@@ -39014,7 +39014,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.16
       },
       {
         "moduleName": "hanger_t7_m1 Lv.8",
@@ -39101,7 +39101,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.16
       },
       {
         "moduleName": "hanger_t7_m1 Lv.9",
@@ -39188,7 +39188,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.16
       },
       {
         "moduleName": "hanger_t7_m1 Lv.10",
@@ -39275,7 +39275,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.16
       },
       {
         "moduleName": "hanger_t8_m1 Lv.1",
@@ -39362,7 +39362,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.17
       },
       {
         "moduleName": "hanger_t8_m1 Lv.2",
@@ -39449,7 +39449,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.17
       },
       {
         "moduleName": "hanger_t8_m1 Lv.3",
@@ -39536,7 +39536,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.17
       },
       {
         "moduleName": "hanger_t8_m1 Lv.4",
@@ -39623,7 +39623,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.17
       },
       {
         "moduleName": "hanger_t8_m1 Lv.5",
@@ -39710,7 +39710,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.17
       },
       {
         "moduleName": "hanger_t8_m1 Lv.6",
@@ -39797,7 +39797,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.17
       },
       {
         "moduleName": "hanger_t8_m1 Lv.7",
@@ -39884,7 +39884,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.17
       },
       {
         "moduleName": "hanger_t8_m1 Lv.8",
@@ -39971,7 +39971,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.17
       },
       {
         "moduleName": "hanger_t8_m1 Lv.9",
@@ -40058,7 +40058,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.17
       },
       {
         "moduleName": "hanger_t8_m1 Lv.10",
@@ -40145,7 +40145,7 @@
         "airAmmo": 11,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.17
       },
       {
         "moduleName": "hanger_t9_m1 Lv.1",
@@ -40232,7 +40232,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.18
       },
       {
         "moduleName": "hanger_t9_m1 Lv.2",
@@ -40319,7 +40319,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.18
       },
       {
         "moduleName": "hanger_t9_m1 Lv.3",
@@ -40406,7 +40406,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.18
       },
       {
         "moduleName": "hanger_t9_m1 Lv.4",
@@ -40493,7 +40493,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.18
       },
       {
         "moduleName": "hanger_t9_m1 Lv.5",
@@ -40580,7 +40580,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.18
       },
       {
         "moduleName": "hanger_t9_m1 Lv.6",
@@ -40667,7 +40667,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.18
       },
       {
         "moduleName": "hanger_t9_m1 Lv.7",
@@ -40754,7 +40754,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.18
       },
       {
         "moduleName": "hanger_t9_m1 Lv.8",
@@ -40841,7 +40841,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.18
       },
       {
         "moduleName": "hanger_t9_m1 Lv.9",
@@ -40928,7 +40928,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.18
       },
       {
         "moduleName": "hanger_t9_m1 Lv.10",
@@ -41015,7 +41015,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.18
       },
       {
         "moduleName": "hanger_t10_m1 Lv.1",
@@ -41102,7 +41102,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.19
       },
       {
         "moduleName": "hanger_t10_m1 Lv.2",
@@ -41189,7 +41189,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.19
       },
       {
         "moduleName": "hanger_t10_m1 Lv.3",
@@ -41276,7 +41276,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.19
       },
       {
         "moduleName": "hanger_t10_m1 Lv.4",
@@ -41363,7 +41363,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.19
       },
       {
         "moduleName": "hanger_t10_m1 Lv.5",
@@ -41450,7 +41450,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.19
       },
       {
         "moduleName": "hanger_t10_m1 Lv.6",
@@ -41537,7 +41537,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.19
       },
       {
         "moduleName": "hanger_t10_m1 Lv.7",
@@ -41624,7 +41624,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.19
       },
       {
         "moduleName": "hanger_t10_m1 Lv.8",
@@ -41711,7 +41711,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.19
       },
       {
         "moduleName": "hanger_t10_m1 Lv.9",
@@ -41798,7 +41798,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.19
       },
       {
         "moduleName": "hanger_t10_m1 Lv.10",
@@ -41885,7 +41885,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.19
       },
       {
         "moduleName": "hanger_t11_m1 Lv.1",
@@ -41972,7 +41972,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.2
       },
       {
         "moduleName": "hanger_t11_m1 Lv.2",
@@ -42059,7 +42059,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.2
       },
       {
         "moduleName": "hanger_t11_m1 Lv.3",
@@ -42146,7 +42146,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.2
       },
       {
         "moduleName": "hanger_t11_m1 Lv.4",
@@ -42233,7 +42233,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.2
       },
       {
         "moduleName": "hanger_t11_m1 Lv.5",
@@ -42320,7 +42320,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.2
       },
       {
         "moduleName": "hanger_t11_m1 Lv.6",
@@ -42407,7 +42407,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.2
       },
       {
         "moduleName": "hanger_t11_m1 Lv.7",
@@ -42494,7 +42494,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.2
       },
       {
         "moduleName": "hanger_t11_m1 Lv.8",
@@ -42581,7 +42581,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.2
       },
       {
         "moduleName": "hanger_t11_m1 Lv.9",
@@ -42668,7 +42668,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.2
       },
       {
         "moduleName": "hanger_t11_m1 Lv.10",
@@ -42755,7 +42755,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.2
       },
       {
         "moduleName": "hanger_t12_m1 Lv.1",
@@ -42842,7 +42842,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.21
       },
       {
         "moduleName": "hanger_t12_m1 Lv.2",
@@ -42929,7 +42929,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.21
       },
       {
         "moduleName": "hanger_t12_m1 Lv.3",
@@ -43016,7 +43016,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.21
       },
       {
         "moduleName": "hanger_t12_m1 Lv.4",
@@ -43103,7 +43103,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.21
       },
       {
         "moduleName": "hanger_t12_m1 Lv.5",
@@ -43190,7 +43190,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.21
       },
       {
         "moduleName": "hanger_t12_m1 Lv.6",
@@ -43277,7 +43277,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.21
       },
       {
         "moduleName": "hanger_t12_m1 Lv.7",
@@ -43364,7 +43364,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.21
       },
       {
         "moduleName": "hanger_t12_m1 Lv.8",
@@ -43451,7 +43451,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.21
       },
       {
         "moduleName": "hanger_t12_m1 Lv.9",
@@ -43538,7 +43538,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.21
       },
       {
         "moduleName": "hanger_t12_m1 Lv.10",
@@ -43625,7 +43625,7 @@
         "airAmmo": 12,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.21
       },
       {
         "moduleName": "hanger_t13_m1 Lv.1",
@@ -43712,7 +43712,7 @@
         "airAmmo": 13,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.22
       },
       {
         "moduleName": "hanger_t13_m1 Lv.2",
@@ -43799,7 +43799,7 @@
         "airAmmo": 13,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.22
       },
       {
         "moduleName": "hanger_t13_m1 Lv.3",
@@ -43886,7 +43886,7 @@
         "airAmmo": 13,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.22
       },
       {
         "moduleName": "hanger_t13_m1 Lv.4",
@@ -43973,7 +43973,7 @@
         "airAmmo": 13,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.22
       },
       {
         "moduleName": "hanger_t13_m1 Lv.5",
@@ -44060,7 +44060,7 @@
         "airAmmo": 13,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.22
       },
       {
         "moduleName": "hanger_t13_m1 Lv.6",
@@ -44147,7 +44147,7 @@
         "airAmmo": 13,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.22
       },
       {
         "moduleName": "hanger_t13_m1 Lv.7",
@@ -44234,7 +44234,7 @@
         "airAmmo": 13,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.22
       },
       {
         "moduleName": "hanger_t13_m1 Lv.8",
@@ -44321,7 +44321,7 @@
         "airAmmo": 13,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.22
       },
       {
         "moduleName": "hanger_t13_m1 Lv.9",
@@ -44408,7 +44408,7 @@
         "airAmmo": 13,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.22
       },
       {
         "moduleName": "hanger_t13_m1 Lv.10",
@@ -44495,7 +44495,7 @@
         "airAmmo": 13,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.22
       },
       {
         "moduleName": "hanger_t14_m1 Lv.1",
@@ -44582,7 +44582,7 @@
         "airAmmo": 13,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.23
       },
       {
         "moduleName": "hanger_t14_m1 Lv.2",
@@ -44669,7 +44669,7 @@
         "airAmmo": 13,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.23
       },
       {
         "moduleName": "hanger_t14_m1 Lv.3",
@@ -44756,7 +44756,7 @@
         "airAmmo": 13,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.23
       },
       {
         "moduleName": "hanger_t14_m1 Lv.4",
@@ -44843,7 +44843,7 @@
         "airAmmo": 13,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.23
       },
       {
         "moduleName": "hanger_t14_m1 Lv.5",
@@ -44930,7 +44930,7 @@
         "airAmmo": 13,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.23
       },
       {
         "moduleName": "hanger_t14_m1 Lv.6",
@@ -45017,7 +45017,7 @@
         "airAmmo": 13,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.23
       },
       {
         "moduleName": "hanger_t14_m1 Lv.7",
@@ -45104,7 +45104,7 @@
         "airAmmo": 13,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.23
       },
       {
         "moduleName": "hanger_t14_m1 Lv.8",
@@ -45191,7 +45191,7 @@
         "airAmmo": 13,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.23
       },
       {
         "moduleName": "hanger_t14_m1 Lv.9",
@@ -45278,7 +45278,7 @@
         "airAmmo": 13,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.23
       },
       {
         "moduleName": "hanger_t14_m1 Lv.10",
@@ -45365,7 +45365,7 @@
         "airAmmo": 13,
         "airDetectRadius": 10.0,
         "airAvoidRadius": 2.0,
-        "airAdditionalDelay": 0.5
+        "airAdditionalDelay": 0.23
       }
     ]
   }
