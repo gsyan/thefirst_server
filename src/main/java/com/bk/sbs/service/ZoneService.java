@@ -302,7 +302,7 @@ public class ZoneService {
 
         return GetStageEnemiesResponse.builder()
                 .zoneName(zoneName)
-                .enemyFleet(zoneConfig.getEnemyFleet())
+                .enemyFleets(zoneConfig.getEnemyFleets())
                 .build();
     }
 

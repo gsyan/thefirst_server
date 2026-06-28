@@ -86,7 +86,11 @@ def generate_zone_config_dto(cs_source_path, output_dir, package_name):
 
     java_class_name = "ZoneConfigData"
 
+    needs_list = any('List<' in f['type'] for f in server_fields)
+
     java_code  = f"package {package_name};\n\n"
+    if needs_list:
+        java_code += "import java.util.List;\n"
     java_code += "import lombok.AllArgsConstructor;\n"
     java_code += "import lombok.Builder;\n"
     java_code += "import lombok.Data;\n"

@@ -1,5 +1,6 @@
 package com.bk.sbs.dto;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,5 +16,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class GetStageEnemiesResponse {
     private String zoneName;
-    private FleetInfoDto enemyFleet;
+    private List<StageEnemyFleetSpawnConfigDto> enemyFleets;
 }

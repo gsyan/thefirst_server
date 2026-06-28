@@ -1,5 +1,6 @@
 package com.bk.sbs.dto;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ZoneConfigData {
     private String zoneName;
-    private FleetInfoDto enemyFleet;
+    private List<StageEnemyFleetSpawnConfigDto> enemyFleets;
     private Integer mineralClearReward;
     private Integer techPointClearReward;
     private Integer modulePointClearReward;

@@ -176,8 +176,10 @@ def generate_all_dtos(csharp_file_path, output_dir, package_name):
     return generated_files
 
 if __name__ == "__main__":
-    csharp_file_path = r"../../../thefirst_client_unity/Assets/Scripts/System/Network/NetworkDTOs.cs"
     output_dir = r"../../src/main/java/com/bk/sbs/dto"
     package_name = "com.bk.sbs.dto"
 
-    generate_all_dtos(csharp_file_path, output_dir, package_name)
+    generate_all_dtos(
+        r"../../../thefirst_client_unity/Assets/Scripts/System/Network/NetworkDTOs.cs",
+        output_dir, package_name
+    )
