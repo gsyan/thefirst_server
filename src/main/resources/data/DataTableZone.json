@@ -26,7 +26,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -87,7 +87,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -148,7 +148,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -209,7 +209,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -270,7 +270,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -331,7 +331,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -392,7 +392,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -453,7 +453,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -514,7 +514,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -585,7 +585,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -666,7 +666,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -727,7 +727,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -788,7 +788,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -849,7 +849,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -910,7 +910,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -971,7 +971,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -1032,7 +1032,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -1093,7 +1093,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -1154,7 +1154,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -1225,7 +1225,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -1306,7 +1306,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -1359,7 +1359,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -1420,7 +1420,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -1473,7 +1473,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -1534,7 +1534,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -1587,7 +1587,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -1648,7 +1648,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -1701,7 +1701,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -1762,7 +1762,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -1815,7 +1815,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -1876,7 +1876,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -1929,7 +1929,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -1990,7 +1990,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -2043,7 +2043,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -2104,7 +2104,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -2157,7 +2157,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -2218,7 +2218,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -2281,7 +2281,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -2352,7 +2352,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -2425,7 +2425,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -2506,7 +2506,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -2550,7 +2550,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -2603,7 +2603,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -2647,7 +2647,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -2708,7 +2708,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -2752,7 +2752,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -2805,7 +2805,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -2849,7 +2849,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -2910,7 +2910,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -2954,7 +2954,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -3007,7 +3007,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -3051,7 +3051,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -3112,7 +3112,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -3156,7 +3156,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -3209,7 +3209,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -3253,7 +3253,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -3314,7 +3314,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -3358,7 +3358,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -3411,7 +3411,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -3455,7 +3455,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -3516,7 +3516,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -3560,7 +3560,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -3613,7 +3613,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -3657,7 +3657,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -3718,7 +3718,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -3762,7 +3762,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -3815,7 +3815,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -3859,7 +3859,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -3920,7 +3920,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -3964,7 +3964,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -4017,7 +4017,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -4061,7 +4061,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -4122,7 +4122,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -4176,7 +4176,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -4239,7 +4239,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -4293,7 +4293,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -4364,7 +4364,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -4428,7 +4428,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -4501,7 +4501,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -4565,7 +4565,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -4646,7 +4646,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -4690,7 +4690,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -4752,7 +4752,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -4796,7 +4796,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -4866,7 +4866,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -4910,7 +4910,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -4972,7 +4972,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -5016,7 +5016,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -5086,7 +5086,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -5130,7 +5130,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -5192,7 +5192,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -5236,7 +5236,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -5306,7 +5306,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -5350,7 +5350,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -5412,7 +5412,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -5456,7 +5456,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -5526,7 +5526,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -5570,7 +5570,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -5632,7 +5632,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -5676,7 +5676,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -5746,7 +5746,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -5790,7 +5790,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -5852,7 +5852,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -5896,7 +5896,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -5966,7 +5966,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -6010,7 +6010,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -6072,7 +6072,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -6116,7 +6116,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -6186,7 +6186,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -6230,7 +6230,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -6292,7 +6292,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -6336,7 +6336,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -6406,7 +6406,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -6460,7 +6460,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -6532,7 +6532,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -6586,7 +6586,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -6666,7 +6666,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -6730,7 +6730,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -6812,7 +6812,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -6876,7 +6876,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -6966,7 +6966,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -7010,7 +7010,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -7072,7 +7072,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -7116,7 +7116,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -7178,7 +7178,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -7222,7 +7222,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -7292,7 +7292,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -7336,7 +7336,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -7398,7 +7398,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -7442,7 +7442,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -7504,7 +7504,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -7548,7 +7548,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -7618,7 +7618,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -7662,7 +7662,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -7724,7 +7724,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -7768,7 +7768,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -7830,7 +7830,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -7874,7 +7874,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -7944,7 +7944,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -7988,7 +7988,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -8050,7 +8050,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -8094,7 +8094,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -8156,7 +8156,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -8200,7 +8200,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -8270,7 +8270,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -8314,7 +8314,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -8376,7 +8376,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -8420,7 +8420,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -8482,7 +8482,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -8526,7 +8526,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -8596,7 +8596,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -8640,7 +8640,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -8702,7 +8702,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -8746,7 +8746,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -8808,7 +8808,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -8852,7 +8852,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -8922,7 +8922,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -8966,7 +8966,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -9028,7 +9028,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -9072,7 +9072,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -9134,7 +9134,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -9178,7 +9178,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -9248,7 +9248,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -9292,7 +9292,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -9354,7 +9354,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -9398,7 +9398,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -9460,7 +9460,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -9504,7 +9504,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -9574,7 +9574,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -9637,7 +9637,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -9709,7 +9709,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -9772,7 +9772,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -9844,7 +9844,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -9907,7 +9907,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -9987,7 +9987,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -10060,7 +10060,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -10142,7 +10142,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -10215,7 +10215,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -10297,7 +10297,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -10370,7 +10370,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -10460,7 +10460,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -10504,7 +10504,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -10548,7 +10548,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -10601,7 +10601,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -10645,7 +10645,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -10689,7 +10689,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -10742,7 +10742,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -10786,7 +10786,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -10830,7 +10830,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -10891,7 +10891,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -10935,7 +10935,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -10979,7 +10979,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -11032,7 +11032,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -11076,7 +11076,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -11120,7 +11120,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -11173,7 +11173,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -11217,7 +11217,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -11261,7 +11261,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -11322,7 +11322,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -11366,7 +11366,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -11410,7 +11410,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -11463,7 +11463,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -11507,7 +11507,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -11551,7 +11551,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -11604,7 +11604,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -11648,7 +11648,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -11692,7 +11692,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -11753,7 +11753,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -11797,7 +11797,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -11841,7 +11841,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -11894,7 +11894,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -11938,7 +11938,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -11982,7 +11982,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -12035,7 +12035,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -12079,7 +12079,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -12123,7 +12123,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -12184,7 +12184,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -12228,7 +12228,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -12272,7 +12272,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -12325,7 +12325,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -12369,7 +12369,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -12413,7 +12413,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -12466,7 +12466,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -12510,7 +12510,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -12554,7 +12554,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -12615,7 +12615,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -12659,7 +12659,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -12703,7 +12703,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -12756,7 +12756,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -12800,7 +12800,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -12844,7 +12844,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -12897,7 +12897,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -12941,7 +12941,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -12985,7 +12985,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -13046,7 +13046,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -13090,7 +13090,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -13134,7 +13134,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -13187,7 +13187,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -13231,7 +13231,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -13275,7 +13275,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -13328,7 +13328,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -13372,7 +13372,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -13416,7 +13416,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -13477,7 +13477,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -13521,7 +13521,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -13565,7 +13565,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -13618,7 +13618,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -13662,7 +13662,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -13706,7 +13706,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -13759,7 +13759,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -13803,7 +13803,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -13847,7 +13847,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -13908,7 +13908,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -13971,7 +13971,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -14025,7 +14025,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -14088,7 +14088,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -14151,7 +14151,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -14205,7 +14205,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -14268,7 +14268,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -14331,7 +14331,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -14385,7 +14385,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -14456,7 +14456,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -14538,7 +14538,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -14602,7 +14602,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -14675,7 +14675,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -14757,7 +14757,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -14821,7 +14821,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -14894,7 +14894,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -14976,7 +14976,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -15040,7 +15040,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -15121,7 +15121,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -15165,7 +15165,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -15209,7 +15209,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -15271,7 +15271,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -15315,7 +15315,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -15359,7 +15359,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -15421,7 +15421,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -15465,7 +15465,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -15509,7 +15509,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -15579,7 +15579,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -15623,7 +15623,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -15667,7 +15667,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -15729,7 +15729,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -15773,7 +15773,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -15817,7 +15817,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -15879,7 +15879,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -15923,7 +15923,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -15967,7 +15967,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -16037,7 +16037,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -16081,7 +16081,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -16125,7 +16125,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -16187,7 +16187,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -16231,7 +16231,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -16275,7 +16275,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -16337,7 +16337,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -16381,7 +16381,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -16425,7 +16425,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -16495,7 +16495,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -16539,7 +16539,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -16583,7 +16583,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -16645,7 +16645,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -16689,7 +16689,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -16733,7 +16733,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -16795,7 +16795,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -16839,7 +16839,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -16883,7 +16883,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -16953,7 +16953,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -16997,7 +16997,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -17041,7 +17041,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -17103,7 +17103,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -17147,7 +17147,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -17191,7 +17191,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -17253,7 +17253,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -17297,7 +17297,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -17341,7 +17341,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -17411,7 +17411,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -17455,7 +17455,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -17499,7 +17499,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -17561,7 +17561,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -17605,7 +17605,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -17649,7 +17649,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -17711,7 +17711,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -17755,7 +17755,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -17799,7 +17799,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -17869,7 +17869,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -17913,7 +17913,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -17957,7 +17957,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -18019,7 +18019,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -18063,7 +18063,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -18107,7 +18107,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -18169,7 +18169,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -18213,7 +18213,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -18257,7 +18257,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -18327,7 +18327,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -18371,7 +18371,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -18415,7 +18415,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -18477,7 +18477,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -18521,7 +18521,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -18565,7 +18565,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -18627,7 +18627,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -18671,7 +18671,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -18715,7 +18715,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -18785,7 +18785,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -18848,7 +18848,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -18911,7 +18911,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -18983,7 +18983,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -19046,7 +19046,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -19109,7 +19109,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -19181,7 +19181,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -19244,7 +19244,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -19307,7 +19307,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -19387,7 +19387,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -19469,7 +19469,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -19542,7 +19542,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -19624,7 +19624,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -19706,7 +19706,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -19779,7 +19779,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -19861,7 +19861,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -19943,7 +19943,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -20016,7 +20016,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -20106,7 +20106,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -20159,7 +20159,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -20203,7 +20203,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -20265,7 +20265,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -20318,7 +20318,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -20362,7 +20362,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -20424,7 +20424,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -20477,7 +20477,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -20521,7 +20521,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -20583,7 +20583,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -20636,7 +20636,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -20680,7 +20680,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -20750,7 +20750,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -20803,7 +20803,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -20847,7 +20847,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -20909,7 +20909,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -20962,7 +20962,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -21006,7 +21006,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -21068,7 +21068,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -21121,7 +21121,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -21165,7 +21165,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -21227,7 +21227,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -21280,7 +21280,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -21324,7 +21324,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -21394,7 +21394,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -21447,7 +21447,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -21491,7 +21491,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -21553,7 +21553,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -21606,7 +21606,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -21650,7 +21650,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -21712,7 +21712,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -21765,7 +21765,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -21809,7 +21809,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -21871,7 +21871,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -21924,7 +21924,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -21968,7 +21968,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -22038,7 +22038,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -22091,7 +22091,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -22135,7 +22135,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -22197,7 +22197,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -22250,7 +22250,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -22294,7 +22294,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -22356,7 +22356,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -22409,7 +22409,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -22453,7 +22453,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -22515,7 +22515,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -22568,7 +22568,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -22612,7 +22612,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -22682,7 +22682,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -22735,7 +22735,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -22779,7 +22779,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -22841,7 +22841,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -22894,7 +22894,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -22938,7 +22938,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -23000,7 +23000,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -23053,7 +23053,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -23097,7 +23097,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -23159,7 +23159,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -23212,7 +23212,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -23256,7 +23256,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -23326,7 +23326,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -23379,7 +23379,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -23423,7 +23423,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -23485,7 +23485,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -23538,7 +23538,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -23582,7 +23582,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -23644,7 +23644,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -23697,7 +23697,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -23741,7 +23741,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -23803,7 +23803,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -23856,7 +23856,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -23900,7 +23900,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -23970,7 +23970,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -24023,7 +24023,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -24067,7 +24067,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -24129,7 +24129,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -24182,7 +24182,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -24226,7 +24226,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -24288,7 +24288,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -24341,7 +24341,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -24385,7 +24385,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -24447,7 +24447,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -24500,7 +24500,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -24544,7 +24544,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -24614,7 +24614,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -24667,7 +24667,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -24711,7 +24711,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -24773,7 +24773,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -24826,7 +24826,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -24870,7 +24870,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -24932,7 +24932,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -24957,7 +24957,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -24982,7 +24982,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -25025,7 +25025,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -25050,7 +25050,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -25075,7 +25075,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -25126,7 +25126,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -25170,7 +25170,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -25214,7 +25214,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -25276,7 +25276,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -25320,7 +25320,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -25364,7 +25364,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -25426,7 +25426,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -25470,7 +25470,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -25514,7 +25514,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -25576,7 +25576,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -25620,7 +25620,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -25664,7 +25664,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -25734,7 +25734,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -25797,7 +25797,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -25860,7 +25860,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -25932,7 +25932,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -25995,7 +25995,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -26058,7 +26058,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -26130,7 +26130,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -26193,7 +26193,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -26256,7 +26256,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -26328,7 +26328,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_0",
                 "positionIndex": 0,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -26391,7 +26391,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_1",
                 "positionIndex": 1,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
@@ -26454,7 +26454,7 @@
                 "fleetId": 0,
                 "shipName": "EnemyShip_2",
                 "positionIndex": 2,
-                "description": null,
+                "description": "",
                 "bodies": [
                   {
                     "moduleType": 1,
