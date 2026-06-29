@@ -195,6 +195,16 @@ public class PvpService {
     public PvpBattleStartResponse startBattle(Long commanderId, Long opponentCommanderId) {
         getOrCreatePvpRecord(commanderId);
 
+        Integer minTechLevel = gameDataService.getDataTableConfig().getPvpMinTechLevel();
+        if (minTechLevel != null && minTechLevel > 0) {
+            int myTechLevel = commanderRepository.findById(commanderId)
+                    .map(com.bk.sbs.entity.Commander::getTechLevel)
+                    .orElse(0);
+            if (myTechLevel < minTechLevel) {
+                throw new BusinessException(ServerErrorCode.PVP_TECH_LEVEL_TOO_LOW);
+            }
+        }
+
         FleetInfoDto opponentFleet = fleetService.getActiveFleet(opponentCommanderId);
         if (opponentFleet == null) {
             throw new BusinessException(ServerErrorCode.PVP_OPPONENT_FLEET_NOT_FOUND);

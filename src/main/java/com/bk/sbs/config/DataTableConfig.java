@@ -12,6 +12,8 @@ public class DataTableConfig {
 
     private Integer addShipCost;
 
+    private Integer pvpMinTechLevel;
+
     private Integer pvpListCount;
 
     private Integer pvpListRefreshCount;
