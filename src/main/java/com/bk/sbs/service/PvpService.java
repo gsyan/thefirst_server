@@ -195,13 +195,13 @@ public class PvpService {
     public PvpBattleStartResponse startBattle(Long commanderId, Long opponentCommanderId) {
         getOrCreatePvpRecord(commanderId);
 
-        Integer minTechLevel = gameDataService.getDataTableConfig().getPvpMinTechLevel();
-        if (minTechLevel != null && minTechLevel > 0) {
-            int myTechLevel = commanderRepository.findById(commanderId)
-                    .map(com.bk.sbs.entity.Commander::getTechLevel)
+        Integer minCommanderLevel = gameDataService.getDataTableConfig().getPvpMinCommanderLevel();
+        if (minCommanderLevel != null && minCommanderLevel > 0) {
+            int myCommanderLevel = commanderRepository.findById(commanderId)
+                    .map(com.bk.sbs.entity.Commander::getCommanderLevel)
                     .orElse(0);
-            if (myTechLevel < minTechLevel) {
-                throw new BusinessException(ServerErrorCode.PVP_TECH_LEVEL_TOO_LOW);
+            if (myCommanderLevel < minCommanderLevel) {
+                throw new BusinessException(ServerErrorCode.PVP_COMMANDER_LEVEL_TOO_LOW);
             }
         }
 

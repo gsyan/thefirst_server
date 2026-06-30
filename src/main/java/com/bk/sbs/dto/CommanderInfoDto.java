@@ -18,8 +18,8 @@ public class CommanderInfoDto {
     private Long commanderId;
     private String commanderName;
     private Integer mineral;
-    private Integer techLevel;
-    private Integer techPoint;
+    private Integer commanderLevel;
+    private Integer exp;
     private Integer modulePoint;
     private Integer modulePointMaxGot;
     private Integer pvpPoint;

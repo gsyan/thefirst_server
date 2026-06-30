@@ -18,6 +18,6 @@ public class ZoneConfigData {
     private String zoneName;
     private List<StageEnemyFleetSpawnConfigDto> enemyFleets;
     private Integer mineralClearReward;
-    private Integer techPointClearReward;
+    private Integer expClearReward;
     private Integer modulePointClearReward;
 }

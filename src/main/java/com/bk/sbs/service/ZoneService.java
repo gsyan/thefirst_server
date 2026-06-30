@@ -112,7 +112,7 @@ public class ZoneService {
     }
 
     // 보상 지급 — rewardClaimed==true면 중복 요청으로 차단
-    // mineral은 매 클리어, techPoint/modulePoint는 firstBonusClaimed==false 일 때만
+    // mineral/exp는 매 클리어, modulePoint(현재 데이터상 0)는 firstBonusClaimed==false 일 때만
     @Transactional
     public ClaimZoneRewardResponse claimZoneReward(Long commanderId, ClaimZoneRewardRequest request) {
         String zoneName = request.getZoneName();
@@ -140,9 +140,9 @@ public class ZoneService {
         int multiplier = isVip ? 4 : (watchedAd ? 2 : 1);
         int mineralReward = zoneConfig.getMineralClearReward() * multiplier;
         commander.setMineral(commander.getMineral() + mineralReward);
+        commander.setExp(commander.getExp() + zoneConfig.getExpClearReward());
 
         if (clearedZone.isFirstBonusClaimed() == false) {
-            commander.setTechPoint(commander.getTechPoint() + zoneConfig.getTechPointClearReward());
             commander.setModulePoint(commander.getModulePoint() + zoneConfig.getModulePointClearReward());
             commander.setModulePointMaxGot(commander.getModulePointMaxGot() + zoneConfig.getModulePointClearReward());
             clearedZone.setFirstBonusClaimed(true);
@@ -173,10 +173,10 @@ public class ZoneService {
                 .zoneName(zoneName)
                 .watchedAd(watchedAd)
                 .mineralRemain(commander.getMineral())
-                .techPointRemain(commander.getTechPoint())
+                .totalExp(commander.getExp())
                 .modulePointRemain(commander.getModulePoint())
                 .modulePointMaxGot(commander.getModulePointMaxGot())
-                .techLevel(commander.getTechLevel())
+                .commanderLevel(commander.getCommanderLevel())
                 .mineralSettingReset(mineralSettingReset)
                 .updatedFleetInfo(updatedFleetInfo)
                 .build();
@@ -189,8 +189,8 @@ public class ZoneService {
 
         if (pending.isEmpty()) {
             return PendingStageRewardResponse.builder()
-                    .mineralGained(0).techPointGained(0).modulePointGained(0)
-                    .mineralRemain(0).techPointRemain(0).modulePointRemain(0).modulePointMaxGot(0)
+                    .mineralGained(0).expGained(0).modulePointGained(0)
+                    .mineralRemain(0).totalExp(0).modulePointRemain(0).modulePointMaxGot(0)
                     .build();
         }
 
@@ -198,7 +198,7 @@ public class ZoneService {
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.ZONE_DESTROY_WAVE_FAIL_COMMANDER_NOT_FOUND));
 
         int mineralGained = 0;
-        int techPointGained = 0;
+        int expGained = 0;
         int modulePointGained = 0;
 
         for (ClearedZone zone : pending) {
@@ -206,9 +206,9 @@ public class ZoneService {
             if (zoneConfig == null) continue;
 
             mineralGained += zoneConfig.getMineralClearReward();
+            expGained += zoneConfig.getExpClearReward();
 
             if (zone.isFirstBonusClaimed() == false) {
-                techPointGained += zoneConfig.getTechPointClearReward();
                 modulePointGained += zoneConfig.getModulePointClearReward();
                 zone.setFirstBonusClaimed(true);
             }
@@ -217,7 +217,7 @@ public class ZoneService {
         }
 
         commander.setMineral(commander.getMineral() + mineralGained);
-        commander.setTechPoint(commander.getTechPoint() + techPointGained);
+        commander.setExp(commander.getExp() + expGained);
         commander.setModulePoint(commander.getModulePoint() + modulePointGained);
         commander.setModulePointMaxGot(commander.getModulePointMaxGot() + modulePointGained);
 
@@ -242,13 +242,13 @@ public class ZoneService {
 
         return PendingStageRewardResponse.builder()
                 .mineralGained(mineralGained)
-                .techPointGained(techPointGained)
+                .expGained(expGained)
                 .modulePointGained(modulePointGained)
                 .mineralRemain(commander.getMineral())
-                .techPointRemain(commander.getTechPoint())
+                .totalExp(commander.getExp())
                 .modulePointRemain(commander.getModulePoint())
                 .modulePointMaxGot(commander.getModulePointMaxGot())
-                .techLevel(commander.getTechLevel())
+                .commanderLevel(commander.getCommanderLevel())
                 .mineralSettingReset(mineralSettingReset)
                 .updatedFleetInfo(updatedFleetInfo)
                 .build();
@@ -259,28 +259,39 @@ public class ZoneService {
         return (long) p[0] * 1000 + p[1];
     }
 
-    // dev 커맨드용: commanderId로 레벨업 재계산 후 저장, 결과 techLevel 반환
+    // dev 치트용: 다음 레벨에 필요한 exp만큼만 채워서 정확히 1레벨 증가, 결과 commanderLevel 반환
     @Transactional
-    public int recalcAndSaveTechLevel(Long commanderId) {
+    public int addOneCommanderLevel(Long commanderId) {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_MINERAL_FAIL_COMMANDER_NOT_FOUND));
+
+        int requiredExp = gameDataService.getCommanderLevelRequiredExp(commander.getCommanderLevel() + 1);
+        if (requiredExp > 0 && commander.getExp() < requiredExp)
+            commander.setExp(requiredExp);
+
         autoLevelUpIfNeeded(commander);
         commanderRepository.save(commander);
-        return commander.getTechLevel();
+        return commander.getCommanderLevel();
     }
 
-    // techPoint 누적 기준으로 레벨업 조건 판정 후 자동 승급
+    // exp 누적 기준으로 레벨업 조건 판정 후 자동 승급, 레벨업한 만큼 모듈포인트 지급
     private void autoLevelUpIfNeeded(Commander commander) {
-        int currentLevel = commander.getTechLevel();
-        int accumulatedPoint = commander.getTechPoint();
+        int currentLevel = commander.getCommanderLevel();
+        int accumulatedExp = commander.getExp();
+        int modulePointReward = 0;
         int nextLevel = currentLevel + 1;
-        int requiredPoint = gameDataService.getTechLevelRequiredPoint(nextLevel);
-        while (requiredPoint > 0 && accumulatedPoint >= requiredPoint) {
+        int requiredExp = gameDataService.getCommanderLevelRequiredExp(nextLevel);
+        while (requiredExp > 0 && accumulatedExp >= requiredExp) {
             currentLevel = nextLevel;
+            modulePointReward += gameDataService.getModulePointReward(currentLevel);
             nextLevel = currentLevel + 1;
-            requiredPoint = gameDataService.getTechLevelRequiredPoint(nextLevel);
+            requiredExp = gameDataService.getCommanderLevelRequiredExp(nextLevel);
         }
-        commander.setTechLevel(currentLevel);
+        commander.setCommanderLevel(currentLevel);
+        if (modulePointReward > 0) {
+            commander.setModulePoint(commander.getModulePoint() + modulePointReward);
+            commander.setModulePointMaxGot(commander.getModulePointMaxGot() + modulePointReward);
+        }
     }
 
     private int[] parseZoneName(String zoneName) {

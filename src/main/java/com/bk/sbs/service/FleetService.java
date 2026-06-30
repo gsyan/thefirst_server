@@ -503,10 +503,10 @@ public class FleetService {
         // 현재 함선 수에 따른 추가 비용 가져오기
         int shipAddCost = gameDataService.getShipAddCost();
 
-        // 기술레벨 검증 — 현재 기술레벨에서 허용된 최대 함선 수(ship_count) 초과 여부
-        int charTechLevel = commander.getTechLevel();
-        if (currentShips.size() >= gameDataService.getShipCount(charTechLevel)) {
-            throw new BusinessException(ServerErrorCode.ADD_SHIP_FAIL_INSUFFICIENT_TECH_LEVEL);
+        // 커맨더 레벨 검증 — 현재 레벨에서 허용된 최대 함선 수(ship_count) 초과 여부
+        int charCommanderLevel = commander.getCommanderLevel();
+        if (currentShips.size() >= gameDataService.getShipCount(charCommanderLevel)) {
+            throw new BusinessException(ServerErrorCode.ADD_SHIP_FAIL_INSUFFICIENT_COMMANDER_LEVEL);
         }
 
         // 자원 부족 검사
@@ -859,7 +859,7 @@ public class FleetService {
 
         EModuleType newModuleType = request.getModuleType();
         EModuleSubType newModuleSubType = gameDataService.getNextSubType(currentModuleSubType);
-        if (newModuleSubType == null) {
+        if (newModuleSubType == EModuleSubType.none) {
             throw new BusinessException(ServerErrorCode.MODULE_GRADEUP_FAIL_NOT_DIRECT_NEXT_STEP);
         }
 
@@ -875,10 +875,11 @@ public class FleetService {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_GRADEUP_FAIL_COMMANDER_NOT_FOUND));
 
-        // 기술레벨 검증 — 서브타입 인코딩에서 파싱: (value/100)%100
+        // 서브타입 등급 검증 — 서브타입 인코딩에서 파싱: (value/100)%100, 커맨더 레벨이 아닌 subtypeLevel 기준
         int requiredTechTier = (newModuleSubType.getValue() / 100) % 100;
-        if (commander.getTechLevel() < requiredTechTier) {
-            throw new BusinessException(ServerErrorCode.MODULE_GRADEUP_FAIL_INSUFFICIENT_TECH_LEVEL);
+        int subtypeLevel = gameDataService.getSubtypeLevel(commander.getCommanderLevel());
+        if (subtypeLevel < requiredTechTier) {
+            throw new BusinessException(ServerErrorCode.MODULE_GRADEUP_FAIL_INSUFFICIENT_COMMANDER_LEVEL);
         }
 
         // 3. 직접 다음 단계 검증
@@ -939,7 +940,7 @@ public class FleetService {
         EModuleType moduleType = request.getModuleType();
         EModuleSubType currentSubType = request.getModuleSubTypeCurrent();
         EModuleSubType newSubType = gameDataService.getNextSubType(currentSubType);
-        if (newSubType == null) {
+        if (newSubType == EModuleSubType.none) {
             throw new BusinessException(ServerErrorCode.MODULE_GRADEUP_MINERAL_FAIL_NOT_DIRECT_NEXT_STEP);
         }
 
@@ -950,10 +951,11 @@ public class FleetService {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_GRADEUP_MINERAL_FAIL_COMMANDER_NOT_FOUND));
 
-        // 기술레벨 검증
+        // 서브타입 등급 검증 — 커맨더 레벨이 아닌 subtypeLevel 기준
         int requiredTechTier = (newSubType.getValue() / 100) % 100;
-        if (commander.getTechLevel() < requiredTechTier) {
-            throw new BusinessException(ServerErrorCode.MODULE_GRADEUP_MINERAL_FAIL_INSUFFICIENT_TECH_LEVEL);
+        int subtypeLevel = gameDataService.getSubtypeLevel(commander.getCommanderLevel());
+        if (subtypeLevel < requiredTechTier) {
+            throw new BusinessException(ServerErrorCode.MODULE_GRADEUP_MINERAL_FAIL_INSUFFICIENT_COMMANDER_LEVEL);
         }
 
         // 비용: 현재 레벨→맥스레벨 mineralCost 합산 + 연구비(pointCost)를 미네랄로
@@ -1027,7 +1029,7 @@ public class FleetService {
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_GRADEDOWN_FAIL_COMMANDER_NOT_FOUND));
 
         // T1 최저등급에서 다운 → 리셋 처리
-        if (newSubType == null) {
+        if (newSubType == EModuleSubType.none) {
             return moduleGradeDownToReset(gradeDownShip, currentModule, moduleType, currentSubType, request, commander);
         }
 
@@ -1120,10 +1122,15 @@ public class FleetService {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_GRADEDOWN_MINERAL_FAIL_COMMANDER_NOT_FOUND));
 
-        // 환급: 현재 등급 연구비 + 현재 레벨업 비용 + 이전 등급 최대레벨업 비용
+        // 환급: 현재 등급 연구비 + 현재 레벨업 비용 + 이전 등급에서 미네랄로 투입된 레벨업 비용
+        // prevSubType이 baseline(모듈포인트로 도달한 등급)과 같다면, baseline 레벨까지는 미네랄 투입분이 아니므로 환급 대상에서 제외
         int currentGradeUpCost = gameDataService.getModuleResearchCost(currentSubType);
         int currentGradeLevelupCost = calcMineralLevelRefundUpTo(moduleType, currentSubType, currentModule.getModuleLevel());
         int targetGradeLevelupCost = calcMineralLevelRefund(moduleType, prevSubType);
+        if (baseline != null && baseline[0] == prevSubType.getValue()) {
+            int baselineLevelupCost = calcMineralLevelRefundUpTo(moduleType, prevSubType, baseline[1]);
+            targetGradeLevelupCost = targetGradeLevelupCost - baselineLevelupCost;
+        }
         int moduleOnlyRefund = currentGradeUpCost + currentGradeLevelupCost + targetGradeLevelupCost;
 
         // body 다운그레이드 시 사라지는 슬롯의 미네랄+모듈포인트 환급
@@ -1679,12 +1686,6 @@ public class FleetService {
         return totalRefund;
     }
 
-    private int deductTechPoint(Commander commander, int cost) {
-        commander.setTechPoint(commander.getTechPoint() - cost);
-        return cost;
-    }
-
-
     // ─────────────────────────────────────────────────────────────────────────
     // 미네랄 모듈 강화 API (미네랄 소모, 전투 승리 시 자동 초기화)
     // ─────────────────────────────────────────────────────────────────────────
@@ -1847,9 +1848,12 @@ public class FleetService {
             throw new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_MINERAL_FAIL_LEVEL_MISMATCH);
         }
 
-        // 모듈포인트 기준 레벨 아래로 다운 불가 (역산)
+        // 모듈포인트 기준 레벨 아래로 다운 불가 (역산) — baseline의 subType이 현재 subType과 같을 때만 적용
         int[] baselineCalc = calcModulePointBaseline(moduleType, module.getInvestedModulePoint());
-        int baselineLevel = (baselineCalc != null) ? baselineCalc[1] : 1;
+        int baselineLevel = 1;
+        if (baselineCalc != null && baselineCalc[0] == moduleSubType.getValue()) {
+            baselineLevel = baselineCalc[1];
+        }
         if (request.getTargetLevel() < baselineLevel) {
             throw new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_MINERAL_FAIL_BELOW_POINT_BASELINE);
         }

@@ -15,10 +15,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class StageEnemyFleetSpawnConfigDto {
     private Integer fleetIndex;
-    private Float term;
-    private Float distance;
-    private Float rotX;
-    private Float rotY;
-    private Float rotZ;
+    private Integer positionIndex;
     private FleetInfoDto fleetInfo;
 }

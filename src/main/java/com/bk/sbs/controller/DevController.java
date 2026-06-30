@@ -63,21 +63,21 @@ public class DevController {
                 return ApiResponse.success("Mineral added: " + additionalMaterial + " (total: " + newMineral + ")|mineral:" + newMineral);
 
             case "addminerals": {
-                // params: [mineral] [techPoint] [modulePoint] [pvpPoint] — 0이면 해당 타입 스킵
+                // params: [mineral] [levelUp] [modulePoint] [pvpPoint] — 0이면 해당 타입 스킵, levelUp>0이면 정확히 1레벨만 증가
                 if (params == null || params.size() < 4) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMINERALS_INVALID_PARAM);
-                int addM   = parseIntOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMIKNERAL_PARSE_PARAM);
-                int addTp  = parseIntOrThrow(params.get(1), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDPVPMINERAL_PARSE_PARAM);
-                int addMp  = parseIntOrThrow(params.get(2), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDTEMPMINERAL_PARSE_PARAM);
-                int addPvp = parseIntOrThrow(params.get(3), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDPVPMINERAL_PARSE_PARAM);
+                int addM      = parseIntOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMIKNERAL_PARSE_PARAM);
+                int addLevel  = parseIntOrThrow(params.get(1), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDPVPMINERAL_PARSE_PARAM);
+                int addMp     = parseIntOrThrow(params.get(2), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDTEMPMINERAL_PARSE_PARAM);
+                int addPvp    = parseIntOrThrow(params.get(3), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDPVPMINERAL_PARSE_PARAM);
                 CommanderInfoDto cur = CommanderService.getCommanderInfoDto(commanderId);
-                int newM      = addM   > 0 ? CommanderService.addMineral(commanderId, addM)                 : cur.getMineral();
-                int newTp     = addTp  > 0 ? CommanderService.addTechPoint(commanderId, addTp)              : cur.getTechPoint();
-                int newMpMax  = addMp  > 0 ? CommanderService.addModulePointMaxGot(commanderId, addMp)      : cur.getModulePointMaxGot();
-                int newMp     = addMp  > 0 ? CommanderService.addModulePoint(commanderId, addMp)            : cur.getModulePoint();
-                int newPvpMax = addPvp > 0 ? CommanderService.addPvpPointMaxGot(commanderId, addPvp)        : cur.getPvpPointMaxGot();
-                int newPvp    = addPvp > 0 ? CommanderService.addPvpPoint(commanderId, addPvp)              : cur.getPvpPoint();
-                int newTechLevel = addTp > 0 ? zoneService.recalcAndSaveTechLevel(commanderId) : cur.getTechLevel();
-                return ApiResponse.success("Resources added|mineral:" + newM + "|techPoint:" + newTp + "|modulePointMaxGot:" + newMpMax + "|modulePoint:" + newMp + "|pvpPointMaxGot:" + newPvpMax + "|pvpPoint:" + newPvp + "|techLevel:" + newTechLevel);
+                int newM      = addM     > 0 ? CommanderService.addMineral(commanderId, addM)               : cur.getMineral();
+                int newMpMax  = addMp    > 0 ? CommanderService.addModulePointMaxGot(commanderId, addMp)    : cur.getModulePointMaxGot();
+                int newMp     = addMp    > 0 ? CommanderService.addModulePoint(commanderId, addMp)          : cur.getModulePoint();
+                int newPvpMax = addPvp   > 0 ? CommanderService.addPvpPointMaxGot(commanderId, addPvp)      : cur.getPvpPointMaxGot();
+                int newPvp    = addPvp   > 0 ? CommanderService.addPvpPoint(commanderId, addPvp)            : cur.getPvpPoint();
+                int newCommanderLevel = addLevel > 0 ? zoneService.addOneCommanderLevel(commanderId) : cur.getCommanderLevel();
+                int newExp    = addLevel > 0 ? CommanderService.getCommanderInfoDto(commanderId).getExp()  : cur.getExp();
+                return ApiResponse.success("Resources added|mineral:" + newM + "|exp:" + newExp + "|modulePointMaxGot:" + newMpMax + "|modulePoint:" + newMp + "|pvpPointMaxGot:" + newPvpMax + "|pvpPoint:" + newPvp + "|commanderLevel:" + newCommanderLevel);
             }
 
             case "getstatus":

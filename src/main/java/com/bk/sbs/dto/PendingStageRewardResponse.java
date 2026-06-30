@@ -15,11 +15,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PendingStageRewardResponse {
     private Integer mineralGained;
-    private Integer techPointGained;
+    private Integer expGained;
     private Integer modulePointGained;
     private Integer mineralRemain;
-    private Integer techLevel;
-    private Integer techPointRemain;
+    private Integer commanderLevel;
+    private Integer totalExp;
     private Integer modulePointRemain;
     private Integer modulePointMaxGot;
     private Boolean mineralSettingReset;

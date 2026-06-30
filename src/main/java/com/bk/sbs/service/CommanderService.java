@@ -113,8 +113,8 @@ public class CommanderService {
                 .commanderId(commanderId)
                 .commanderName(commander.getCommanderName())
                 .mineral(commander.getMineral())
-                .techLevel(commander.getTechLevel())
-                .techPoint(commander.getTechPoint())
+                .commanderLevel(commander.getCommanderLevel())
+                .exp(commander.getExp())
                 .modulePoint(commander.getModulePoint())
                 .modulePointMaxGot(commander.getModulePointMaxGot())
                 .pvpPoint(commander.getPvpPoint())
@@ -184,11 +184,11 @@ public class CommanderService {
     }
 
     @Transactional
-    public int addTechPoint(Long commanderId, int amount) {
+    public int addExp(Long commanderId, int amount) {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId).orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_MINERAL_FAIL_COMMANDER_NOT_FOUND));
-        commander.setTechPoint(commander.getTechPoint() + amount);
+        commander.setExp(commander.getExp() + amount);
         commander = commanderRepository.save(commander);
-        return commander.getTechPoint();
+        return commander.getExp();
     }
 
     @Transactional

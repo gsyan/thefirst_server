@@ -7,7 +7,6 @@ import com.bk.sbs.config.DataTablePvpSeason;
 import com.bk.sbs.config.ZoneConfig;
 import com.bk.sbs.dto.ZoneConfigData;
 import com.bk.sbs.dto.ModuleData;
-import com.bk.sbs.dto.ModuleResearchData;
 import com.bk.sbs.enums.EDailyBonusTier;
 import com.bk.sbs.enums.EModuleSubType;
 import com.bk.sbs.enums.EModuleType;
@@ -32,15 +31,19 @@ public class GameDataService {
     private DataTablePvpSeason dataTablePvpSeason = new DataTablePvpSeason();
     private DataTableDailyBonus dataTableDailyBonus = new DataTableDailyBonus();
     private ZoneConfig zoneConfig = new ZoneConfig();
-    // researchId → 기술레벨 전체 데이터 (비용, shipCount)
-    private static class TechLevelData {
-        int requiredTechPoint;
+    // 커맨더 레벨 전체 데이터 (요구 exp, shipCount, 레벨업 보상 modulePoint, 모듈 서브타입 등급 상한)
+    private static class CommanderLevelData {
+        int requireExp;
+        int modulePointReward;
         int shipCount;
-        TechLevelData(int requiredTechPoint, int shipCount) {
-            this.requiredTechPoint = requiredTechPoint; this.shipCount = shipCount;
+        int subtypeLevel;
+        CommanderLevelData(int requireExp, int modulePointReward, int shipCount, int subtypeLevel) {
+            this.requireExp = requireExp; this.modulePointReward = modulePointReward;
+            this.shipCount = shipCount; this.subtypeLevel = subtypeLevel;
         }
     }
-    private Map<Integer, TechLevelData> techLevelDataMap = new HashMap<>();
+    private Map<Integer, CommanderLevelData> commanderLevelDataMap = new HashMap<>();
+    private Map<Integer, Long> upgradeCostByTier = new HashMap<>();
     private int cachedMaxShipCount = 1;
     @Autowired
     private ObjectMapper objectMapper;
@@ -66,38 +69,45 @@ public class GameDataService {
                 log.warn("No game data files found in resources/data/, using empty data");
             }
 
-            ClassPathResource researchDataTableResource = new ClassPathResource("data/DataTableResearch.json");
-            if (researchDataTableResource.exists()) {
-                String json = new String(researchDataTableResource.getInputStream().readAllBytes());
-                List<ModuleResearchData> researchDataList = objectMapper.convertValue(
-                    objectMapper.readTree(json),
-                    objectMapper.getTypeFactory().constructCollectionType(List.class, ModuleResearchData.class)
-                );
-                dataTableModule.setResearchDataList(researchDataList);
-                log.info("DataTableResearch.json loaded: {} entries", researchDataList.size());
-            } else {
-                log.warn("DataTableResearch.json not found in resources/data/, using empty data");
-            }
-
-            ClassPathResource techLevelResource = new ClassPathResource("data/DataTableTechLevel.json");
-            if (techLevelResource.exists()) {
-                String json = new String(techLevelResource.getInputStream().readAllBytes());
+            ClassPathResource upgradeCostResource = new ClassPathResource("data/DataTableUpgradeCost.json");
+            if (upgradeCostResource.exists()) {
+                String json = new String(upgradeCostResource.getInputStream().readAllBytes());
                 com.fasterxml.jackson.databind.JsonNode arrayNode = objectMapper.readTree(json);
-                techLevelDataMap.clear();
-                for (com.fasterxml.jackson.databind.JsonNode techNode : arrayNode) {
-                    com.fasterxml.jackson.databind.JsonNode levelNode = techNode.path("targetTechLevel");
-                    com.fasterxml.jackson.databind.JsonNode pointNode = techNode.path("requiredTechPoint");
-                    if (levelNode.isMissingNode() == false && pointNode.isMissingNode() == false) {
-                        int techLevel    = levelNode.asInt();
-                        int requiredPoint = pointNode.asInt(0);
-                        int shipCount    = techNode.path("shipCount").asInt(1);
-                        techLevelDataMap.put(techLevel, new TechLevelData(requiredPoint, shipCount));
+                upgradeCostByTier.clear();
+                for (com.fasterxml.jackson.databind.JsonNode node : arrayNode) {
+                    com.fasterxml.jackson.databind.JsonNode gradeNode = node.path("subtypeGrade");
+                    if (gradeNode.isMissingNode() == false) {
+                        int grade = gradeNode.asInt();
+                        long cost = node.path("modulePointCost").asLong(0);
+                        upgradeCostByTier.put(grade, cost);
                     }
                 }
-                cachedMaxShipCount = techLevelDataMap.values().stream().mapToInt(d -> d.shipCount).max().orElse(1);
-                log.info("DataTableTechLevel.json loaded: {} entries", techLevelDataMap.size());
+                log.info("DataTableUpgradeCost.json loaded: {} entries", upgradeCostByTier.size());
             } else {
-                log.warn("DataTableTechLevel.json not found in resources/data/, using empty data");
+                log.warn("DataTableUpgradeCost.json not found in resources/data/, using empty data");
+            }
+
+            ClassPathResource commanderLevelResource = new ClassPathResource("data/DataTableCommanderLevel.json");
+            if (commanderLevelResource.exists()) {
+                String json = new String(commanderLevelResource.getInputStream().readAllBytes());
+                com.fasterxml.jackson.databind.JsonNode arrayNode = objectMapper.readTree(json);
+                commanderLevelDataMap.clear();
+                for (com.fasterxml.jackson.databind.JsonNode levelNode : arrayNode) {
+                    com.fasterxml.jackson.databind.JsonNode commanderLevelNode = levelNode.path("commanderLevel");
+                    com.fasterxml.jackson.databind.JsonNode expNode = levelNode.path("requireExp");
+                    if (commanderLevelNode.isMissingNode() == false && expNode.isMissingNode() == false) {
+                        int commanderLevel    = commanderLevelNode.asInt();
+                        int requireExp        = expNode.asInt(0);
+                        int modulePointReward = levelNode.path("modulePointReward").asInt(0);
+                        int shipCount         = levelNode.path("shipCount").asInt(1);
+                        int subtypeLevel      = levelNode.path("subtypeLevel").asInt(1);
+                        commanderLevelDataMap.put(commanderLevel, new CommanderLevelData(requireExp, modulePointReward, shipCount, subtypeLevel));
+                    }
+                }
+                cachedMaxShipCount = commanderLevelDataMap.values().stream().mapToInt(d -> d.shipCount).max().orElse(1);
+                log.info("DataTableCommanderLevel.json loaded: {} entries", commanderLevelDataMap.size());
+            } else {
+                log.warn("DataTableCommanderLevel.json not found in resources/data/, using empty data");
             }
 
             ClassPathResource zoneConfigResource = new ClassPathResource("data/DataTableZone.json");
@@ -199,11 +209,12 @@ public class GameDataService {
                 .orElse(0);
     }
 
+    // 서브타입 등급(tier)별 등급업 비용 — prerequisites 체인 없이 (value/100)%100로 산출한 tier 기준 조회
     public int getModuleResearchCost(EModuleSubType moduleSubType) {
-        if (dataTableModule == null) {
-            return 0;
-        }
-        return dataTableModule.getResearchCost(moduleSubType);
+        if (moduleSubType == null) return 0;
+        int tier = (moduleSubType.getValue() / 100) % 100;
+        Long cost = upgradeCostByTier.get(tier);
+        return cost != null ? cost.intValue() : 0;
     }
 
     // 특정 body subtype의 level 1 moduleSlots 반환 (다운그레이드 시 사라지는 슬롯 판별용)
@@ -215,80 +226,46 @@ public class GameDataService {
                 .orElse(java.util.Collections.emptyList());
     }
 
-    // newSubType이 currentSubType의 직접 다음 단계인지 확인 (prerequisiteIds 기준)
+    // newSubType이 currentSubType의 직접 다음 단계인지 확인 — prerequisites 체인 없이 인코딩 산술(+100)로 판정
     public boolean isDirectNextStep(EModuleSubType currentSubType, EModuleSubType newSubType) {
-        List<com.bk.sbs.dto.ModuleResearchData> list = dataTableModule.getResearchDataList();
-        String currentResearchId = null;
-        String newPrerequisiteMatch = null;
-
-        for (com.bk.sbs.dto.ModuleResearchData data : list) {
-            if (currentSubType.equals(data.getModuleSubType())) {
-                currentResearchId = data.getResearchId();
-            }
-        }
-        if (currentResearchId == null) return false;
-
-        for (com.bk.sbs.dto.ModuleResearchData data : list) {
-            if (newSubType.equals(data.getModuleSubType())) {
-                List<String> prereqs = data.getPrerequisiteIds();
-                return prereqs != null && prereqs.contains(currentResearchId);
-            }
-        }
-        return false;
+        return newSubType == getNextSubType(currentSubType);
     }
 
-    // currentSubType의 직접 다음 단계 반환 (없으면 null)
+    // currentSubType의 직접 다음 단계 반환 (없으면 none)
     public EModuleSubType getNextSubType(EModuleSubType currentSubType) {
-        List<com.bk.sbs.dto.ModuleResearchData> list = dataTableModule.getResearchDataList();
-        String currentResearchId = null;
-        for (com.bk.sbs.dto.ModuleResearchData data : list) {
-            if (currentSubType.equals(data.getModuleSubType())) {
-                currentResearchId = data.getResearchId();
-                break;
-            }
-        }
-        if (currentResearchId == null) return null;
-
-        for (com.bk.sbs.dto.ModuleResearchData data : list) {
-            List<String> prereqs = data.getPrerequisiteIds();
-            if (prereqs != null && prereqs.contains(currentResearchId)) {
-                return data.getModuleSubType();
-            }
-        }
-        return null;
+        if (currentSubType == null) return EModuleSubType.none;
+        EModuleSubType next = EModuleSubType.fromValue(currentSubType.getValue() + 100);
+        return next;
     }
 
-    // currentSubType의 직접 이전 단계 반환 (없으면 null)
+    // currentSubType의 직접 이전 단계 반환 (없으면 none)
     public EModuleSubType getPrevSubType(EModuleSubType currentSubType) {
-        List<com.bk.sbs.dto.ModuleResearchData> list = dataTableModule.getResearchDataList();
-        List<String> currentPrereqs = null;
-        for (com.bk.sbs.dto.ModuleResearchData data : list) {
-            if (currentSubType.equals(data.getModuleSubType())) {
-                currentPrereqs = data.getPrerequisiteIds();
-                break;
-            }
-        }
-        if (currentPrereqs == null || currentPrereqs.isEmpty()) return null;
-
-        String prereqId = currentPrereqs.get(0);
-        for (com.bk.sbs.dto.ModuleResearchData data : list) {
-            if (prereqId.equals(data.getResearchId())) {
-                return data.getModuleSubType();
-            }
-        }
-        return null;
+        if (currentSubType == null) return EModuleSubType.none;
+        return EModuleSubType.fromValue(currentSubType.getValue() - 100);
     }
 
-    // 레벨업 기준 누적 포인트 반환 (차감 없음, 서버 자동 판정 기준)
-    public int getTechLevelRequiredPoint(int techLevel) {
-        TechLevelData data = techLevelDataMap.get(techLevel);
-        return data != null ? data.requiredTechPoint : 0;
+    // 레벨업 기준 누적 exp 반환 (차감 없음, 서버 자동 판정 기준)
+    public int getCommanderLevelRequiredExp(int commanderLevel) {
+        CommanderLevelData data = commanderLevelDataMap.get(commanderLevel);
+        return data != null ? data.requireExp : 0;
     }
 
-    // 해당 기술레벨에서 허용되는 최대 함선 수 반환
-    public int getShipCount(int techLevel) {
-        TechLevelData data = techLevelDataMap.get(techLevel);
+    // 해당 커맨더 레벨에서 허용되는 최대 함선 수 반환
+    public int getShipCount(int commanderLevel) {
+        CommanderLevelData data = commanderLevelDataMap.get(commanderLevel);
         return data != null ? data.shipCount : 1;
+    }
+
+    // 해당 레벨 도달 시 지급되는 모듈포인트 보상
+    public int getModulePointReward(int commanderLevel) {
+        CommanderLevelData data = commanderLevelDataMap.get(commanderLevel);
+        return data != null ? data.modulePointReward : 0;
+    }
+
+    // 해당 커맨더 레벨에서 허용되는 모듈 서브타입 등급 상한
+    public int getSubtypeLevel(int commanderLevel) {
+        CommanderLevelData data = commanderLevelDataMap.get(commanderLevel);
+        return data != null ? data.subtypeLevel : 1;
     }
 
     public ZoneConfig getZoneConfig() {

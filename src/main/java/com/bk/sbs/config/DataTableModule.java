@@ -1,8 +1,6 @@
 package com.bk.sbs.config;
 
 import com.bk.sbs.dto.ModuleData;
-import com.bk.sbs.dto.ModuleResearchData;
-import com.bk.sbs.enums.EModuleSubType;
 import com.bk.sbs.enums.EModuleType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,7 +15,6 @@ public class DataTableModule {
     private volatile List<ModuleData> beamModules = new ArrayList<>();
     private volatile List<ModuleData> missileModules = new ArrayList<>();
     private volatile List<ModuleData> hangerModules = new ArrayList<>();
-    private volatile List<ModuleResearchData> researchDataList = new ArrayList<>();
 
     /**
      * JSON의 "modules" 맵을 파싱하여 각 타입별 리스트에 분배
@@ -51,33 +48,6 @@ public class DataTableModule {
         return Collections.unmodifiableList(hangerModules);
     }
 
-    public List<ModuleResearchData> getResearchDataList() {
-        return Collections.unmodifiableList(researchDataList);
-    }
-
-    public void setResearchDataList(List<ModuleResearchData> researchDataList) {
-        this.researchDataList = researchDataList != null ? new ArrayList<>(researchDataList) : new ArrayList<>();
-    }
-
-    /**
-     * 특정 모듈 서브타입의 연구 비용 조회
-     */
-    public int getResearchCost(EModuleSubType moduleSubType) {
-        if (researchDataList == null || moduleSubType == null) {
-            return 0;
-        }
-
-        for (ModuleResearchData data : researchDataList) {
-            if (data.getModuleSubType() != null &&
-                data.getModuleSubType().equals(moduleSubType)) {
-                return data.getPointCost() != null ?
-                       data.getPointCost() :
-                       0;
-            }
-        }
-
-        return 0;
-    }
 }
 
 

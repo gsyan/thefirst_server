@@ -1,7 +1,7 @@
 {
   "version": "0.0.1",
   "addShipCost": 10,
-  "pvpMinTechLevel": 2,
+  "pvpMinCommanderLevel": 2,
   "pvpListCount": 3,
   "pvpListRefreshCount": 5,
   "pvpRankScoreInit": 1000,
