@@ -10,7 +10,7 @@
   {
     "commanderLevel": 2,
     "requireExpBaseStage": "1-4",
-    "requireExp": 0,
+    "requireExp": 46,
     "modulePointReward": 2,
     "shipCount": 1,
     "subtypeLevel": 1
@@ -18,15 +18,15 @@
   {
     "commanderLevel": 3,
     "requireExpBaseStage": "1-9",
-    "requireExp": 0,
+    "requireExp": 126,
     "modulePointReward": 3,
     "shipCount": 1,
-    "subtypeLevel": 1
+    "subtypeLevel": 2
   },
   {
     "commanderLevel": 4,
     "requireExpBaseStage": "2-4",
-    "requireExp": 0,
+    "requireExp": 231,
     "modulePointReward": 4,
     "shipCount": 1,
     "subtypeLevel": 2
@@ -34,7 +34,7 @@
   {
     "commanderLevel": 5,
     "requireExpBaseStage": "2-10",
-    "requireExp": 0,
+    "requireExp": 390,
     "modulePointReward": 5,
     "shipCount": 1,
     "subtypeLevel": 2
@@ -42,7 +42,7 @@
   {
     "commanderLevel": 6,
     "requireExpBaseStage": "3-7",
-    "requireExp": 0,
+    "requireExp": 621,
     "modulePointReward": 6,
     "shipCount": 2,
     "subtypeLevel": 3
@@ -50,7 +50,7 @@
   {
     "commanderLevel": 7,
     "requireExpBaseStage": "4-4",
-    "requireExp": 0,
+    "requireExp": 901,
     "modulePointReward": 7,
     "shipCount": 2,
     "subtypeLevel": 3
@@ -58,7 +58,7 @@
   {
     "commanderLevel": 8,
     "requireExpBaseStage": "5-2",
-    "requireExp": 0,
+    "requireExp": 1281,
     "modulePointReward": 8,
     "shipCount": 2,
     "subtypeLevel": 4
@@ -66,7 +66,7 @@
   {
     "commanderLevel": 9,
     "requireExpBaseStage": "6-1",
-    "requireExp": 0,
+    "requireExp": 1785,
     "modulePointReward": 9,
     "shipCount": 2,
     "subtypeLevel": 4
@@ -74,7 +74,7 @@
   {
     "commanderLevel": 10,
     "requireExpBaseStage": "7-1",
-    "requireExp": 0,
+    "requireExp": 2440,
     "modulePointReward": 10,
     "shipCount": 2,
     "subtypeLevel": 5
@@ -82,7 +82,7 @@
   {
     "commanderLevel": 11,
     "requireExpBaseStage": "8-1",
-    "requireExp": 0,
+    "requireExp": 3195,
     "modulePointReward": 11,
     "shipCount": 2,
     "subtypeLevel": 5
@@ -90,7 +90,7 @@
   {
     "commanderLevel": 12,
     "requireExpBaseStage": "9-2",
-    "requireExp": 0,
+    "requireExp": 4141,
     "modulePointReward": 12,
     "shipCount": 3,
     "subtypeLevel": 6
@@ -98,7 +98,7 @@
   {
     "commanderLevel": 13,
     "requireExpBaseStage": "10-3",
-    "requireExp": 0,
+    "requireExp": 5211,
     "modulePointReward": 13,
     "shipCount": 3,
     "subtypeLevel": 6
@@ -106,7 +106,7 @@
   {
     "commanderLevel": 14,
     "requireExpBaseStage": "11-5",
-    "requireExp": 0,
+    "requireExp": 6615,
     "modulePointReward": 14,
     "shipCount": 3,
     "subtypeLevel": 6
@@ -114,7 +114,7 @@
   {
     "commanderLevel": 15,
     "requireExpBaseStage": "12-8",
-    "requireExp": 0,
+    "requireExp": 8461,
     "modulePointReward": 15,
     "shipCount": 3,
     "subtypeLevel": 6
@@ -122,7 +122,7 @@
   {
     "commanderLevel": 16,
     "requireExpBaseStage": "14-2",
-    "requireExp": 0,
+    "requireExp": 10827,
     "modulePointReward": 16,
     "shipCount": 3,
     "subtypeLevel": 7
@@ -130,7 +130,7 @@
   {
     "commanderLevel": 17,
     "requireExpBaseStage": "15-6",
-    "requireExp": 0,
+    "requireExp": 13585,
     "modulePointReward": 17,
     "shipCount": 3,
     "subtypeLevel": 7
@@ -138,7 +138,7 @@
   {
     "commanderLevel": 18,
     "requireExpBaseStage": "17-1",
-    "requireExp": 0,
+    "requireExp": 16975,
     "modulePointReward": 18,
     "shipCount": 3,
     "subtypeLevel": 7
@@ -146,7 +146,7 @@
   {
     "commanderLevel": 19,
     "requireExpBaseStage": "18-7",
-    "requireExp": 0,
+    "requireExp": 21087,
     "modulePointReward": 19,
     "shipCount": 3,
     "subtypeLevel": 7
@@ -154,7 +154,7 @@
   {
     "commanderLevel": 20,
     "requireExpBaseStage": "20-3",
-    "requireExp": 0,
+    "requireExp": 25711,
     "modulePointReward": 20,
     "shipCount": 3,
     "subtypeLevel": 8
@@ -162,7 +162,7 @@
   {
     "commanderLevel": 21,
     "requireExpBaseStage": "21-10",
-    "requireExp": 0,
+    "requireExp": 31330,
     "modulePointReward": 21,
     "shipCount": 3,
     "subtypeLevel": 8
@@ -170,7 +170,7 @@
   {
     "commanderLevel": 22,
     "requireExpBaseStage": "23-8",
-    "requireExp": 0,
+    "requireExp": 38269,
     "modulePointReward": 22,
     "shipCount": 3,
     "subtypeLevel": 8
@@ -178,7 +178,7 @@
   {
     "commanderLevel": 23,
     "requireExpBaseStage": "25-6",
-    "requireExp": 0,
+    "requireExp": 46180,
     "modulePointReward": 23,
     "shipCount": 3,
     "subtypeLevel": 8
@@ -186,7 +186,7 @@
   {
     "commanderLevel": 24,
     "requireExpBaseStage": "27-5",
-    "requireExp": 0,
+    "requireExp": 55585,
     "modulePointReward": 24,
     "shipCount": 3,
     "subtypeLevel": 9
@@ -194,7 +194,7 @@
   {
     "commanderLevel": 25,
     "requireExpBaseStage": "29-5",
-    "requireExp": 0,
+    "requireExp": 66655,
     "modulePointReward": 25,
     "shipCount": 4,
     "subtypeLevel": 9
@@ -202,7 +202,7 @@
   {
     "commanderLevel": 26,
     "requireExpBaseStage": "31-5",
-    "requireExp": 0,
+    "requireExp": 78985,
     "modulePointReward": 26,
     "shipCount": 4,
     "subtypeLevel": 9
@@ -210,7 +210,7 @@
   {
     "commanderLevel": 27,
     "requireExpBaseStage": "33-6",
-    "requireExp": 0,
+    "requireExp": 93685,
     "modulePointReward": 27,
     "shipCount": 4,
     "subtypeLevel": 9
@@ -218,7 +218,7 @@
   {
     "commanderLevel": 28,
     "requireExpBaseStage": "35-8",
-    "requireExp": 0,
+    "requireExp": 110977,
     "modulePointReward": 28,
     "shipCount": 4,
     "subtypeLevel": 10
@@ -226,7 +226,7 @@
   {
     "commanderLevel": 29,
     "requireExpBaseStage": "37-10",
-    "requireExp": 0,
+    "requireExp": 130205,
     "modulePointReward": 29,
     "shipCount": 4,
     "subtypeLevel": 10
@@ -234,7 +234,7 @@
   {
     "commanderLevel": 30,
     "requireExpBaseStage": "40-4",
-    "requireExp": 0,
+    "requireExp": 153389,
     "modulePointReward": 30,
     "shipCount": 4,
     "subtypeLevel": 10
@@ -242,7 +242,7 @@
   {
     "commanderLevel": 31,
     "requireExpBaseStage": "42-7",
-    "requireExp": 0,
+    "requireExp": 178075,
     "modulePointReward": 31,
     "shipCount": 4,
     "subtypeLevel": 10
@@ -250,7 +250,7 @@
   {
     "commanderLevel": 32,
     "requireExpBaseStage": "45-2",
-    "requireExp": 0,
+    "requireExp": 207950,
     "modulePointReward": 32,
     "shipCount": 4,
     "subtypeLevel": 11
@@ -258,7 +258,7 @@
   {
     "commanderLevel": 33,
     "requireExpBaseStage": "47-7",
-    "requireExp": 0,
+    "requireExp": 240950,
     "modulePointReward": 33,
     "shipCount": 4,
     "subtypeLevel": 11
@@ -266,7 +266,7 @@
   {
     "commanderLevel": 34,
     "requireExpBaseStage": "50-3",
-    "requireExp": 0,
+    "requireExp": 278585,
     "modulePointReward": 34,
     "shipCount": 4,
     "subtypeLevel": 11
@@ -274,7 +274,7 @@
   {
     "commanderLevel": 35,
     "requireExpBaseStage": "52-10",
-    "requireExp": 0,
+    "requireExp": 321635,
     "modulePointReward": 35,
     "shipCount": 4,
     "subtypeLevel": 11
@@ -282,7 +282,7 @@
   {
     "commanderLevel": 36,
     "requireExpBaseStage": "55-7",
-    "requireExp": 0,
+    "requireExp": 369101,
     "modulePointReward": 36,
     "shipCount": 4,
     "subtypeLevel": 12
@@ -290,7 +290,7 @@
   {
     "commanderLevel": 37,
     "requireExpBaseStage": "58-5",
-    "requireExp": 0,
+    "requireExp": 422945,
     "modulePointReward": 37,
     "shipCount": 4,
     "subtypeLevel": 12
@@ -298,7 +298,7 @@
   {
     "commanderLevel": 38,
     "requireExpBaseStage": "61-3",
-    "requireExp": 0,
+    "requireExp": 481526,
     "modulePointReward": 38,
     "shipCount": 4,
     "subtypeLevel": 12
@@ -306,7 +306,7 @@
   {
     "commanderLevel": 39,
     "requireExpBaseStage": "64-3",
-    "requireExp": 0,
+    "requireExp": 550301,
     "modulePointReward": 39,
     "shipCount": 4,
     "subtypeLevel": 12
@@ -314,7 +314,7 @@
   {
     "commanderLevel": 40,
     "requireExpBaseStage": "67-3",
-    "requireExp": 0,
+    "requireExp": 625376,
     "modulePointReward": 40,
     "shipCount": 4,
     "subtypeLevel": 13
@@ -322,7 +322,7 @@
   {
     "commanderLevel": 41,
     "requireExpBaseStage": "70-3",
-    "requireExp": 0,
+    "requireExp": 706751,
     "modulePointReward": 41,
     "shipCount": 5,
     "subtypeLevel": 13
@@ -330,7 +330,7 @@
   {
     "commanderLevel": 42,
     "requireExpBaseStage": "73-5",
-    "requireExp": 0,
+    "requireExp": 801045,
     "modulePointReward": 42,
     "shipCount": 5,
     "subtypeLevel": 13
@@ -338,7 +338,7 @@
   {
     "commanderLevel": 43,
     "requireExpBaseStage": "76-7",
-    "requireExp": 0,
+    "requireExp": 903573,
     "modulePointReward": 43,
     "shipCount": 5,
     "subtypeLevel": 13
@@ -346,7 +346,7 @@
   {
     "commanderLevel": 44,
     "requireExpBaseStage": "79-9",
-    "requireExp": 0,
+    "requireExp": 1014293,
     "modulePointReward": 44,
     "shipCount": 5,
     "subtypeLevel": 14
@@ -354,7 +354,7 @@
   {
     "commanderLevel": 45,
     "requireExpBaseStage": "83-3",
-    "requireExp": 0,
+    "requireExp": 1141392,
     "modulePointReward": 45,
     "shipCount": 5,
     "subtypeLevel": 14
@@ -362,7 +362,7 @@
   {
     "commanderLevel": 46,
     "requireExpBaseStage": "86-7",
-    "requireExp": 0,
+    "requireExp": 1278939,
     "modulePointReward": 46,
     "shipCount": 5,
     "subtypeLevel": 14
@@ -370,7 +370,7 @@
   {
     "commanderLevel": 47,
     "requireExpBaseStage": "90-2",
-    "requireExp": 0,
+    "requireExp": 1431399,
     "modulePointReward": 47,
     "shipCount": 5,
     "subtypeLevel": 14
@@ -378,7 +378,7 @@
   {
     "commanderLevel": 48,
     "requireExpBaseStage": "93-7",
-    "requireExp": 0,
+    "requireExp": 1595505,
     "modulePointReward": 48,
     "shipCount": 5,
     "subtypeLevel": 14
@@ -386,7 +386,7 @@
   {
     "commanderLevel": 49,
     "requireExpBaseStage": "97-3",
-    "requireExp": 0,
+    "requireExp": 1777125,
     "modulePointReward": 49,
     "shipCount": 5,
     "subtypeLevel": 14
@@ -394,7 +394,7 @@
   {
     "commanderLevel": 50,
     "requireExpBaseStage": "100-10",
-    "requireExp": 0,
+    "requireExp": 1977295,
     "modulePointReward": 50,
     "shipCount": 5,
     "subtypeLevel": 14

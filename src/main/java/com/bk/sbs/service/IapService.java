@@ -181,7 +181,6 @@ public class IapService {
         int todayBit = 1 << (todayInMonth - 1);
         boolean normalAlreadyClaimed = (currentMask & todayBit) != 0;
         boolean vipAlreadyClaimed    = (currentVipMask & todayBit) != 0;
-        boolean allAlreadyClaimed = normalAlreadyClaimed == true && vipAlreadyClaimed == true;
         // 응답 기본값 (클레임 불가 케이스)
         boolean available      = false;
         int grantedMineral     = 0;
@@ -189,9 +188,9 @@ public class IapService {
         // 일반 오늘 받을 미네랄( vip도 일반과 같이 28일 이후는 없기 때문에, 일반 보상만 확인해도됨 )
         int tableMineral = gameDataService.getDailyMineralForDay(todayInMonth, EDailyBonusTier.Normal);
         boolean tableEmpty = tableMineral < 0;
-        
-        // 5) 받을게 있고 아직 받지 않은 상황
-        if (tableEmpty == false && allAlreadyClaimed == false) {
+
+        // 5) 받을게 있는 상황 ( 일반/vip 각각 이미 받았는지는 내부에서 개별적으로 가드 )
+        if (tableEmpty == false) {
             // 5-1) 일반 보상 처리
             if (normalAlreadyClaimed == false) {
                 grantedMineral += tableMineral; // 일반 보상 추가
@@ -211,14 +210,17 @@ public class IapService {
                 commander.setVipClaimedDaysMask(currentVipMask | vipBitToSet);  // 마스크 비트 세팅
             }
 
-            commander.setMineral(commander.getMineral() + grantedMineral);
-            needsSave = true;
+            // 실제로 지급된 미네랄이 있을 때만 available 처리 (이미 다 받은 논-VIP 재호출 시 grantedMineral=0)
+            if (grantedMineral > 0) {
+                commander.setMineral(commander.getMineral() + grantedMineral);
+                needsSave = true;
 
-            available     = true;
-            mineralRemain = commander.getMineral();
+                available     = true;
+                mineralRemain = commander.getMineral();
 
-            log.info("[IAP] 일일 로그인 보상 commanderId={} isVip={} amount={} day={} mask={} vipMask={}",
-                    commanderId, isVip, grantedMineral, todayInMonth, commander.getClaimedDaysMask(), commander.getVipClaimedDaysMask());
+                log.info("[IAP] 일일 로그인 보상 commanderId={} isVip={} amount={} day={} mask={} vipMask={}",
+                        commanderId, isVip, grantedMineral, todayInMonth, commander.getClaimedDaysMask(), commander.getVipClaimedDaysMask());
+            }
         }
 
         if (needsSave == true)
