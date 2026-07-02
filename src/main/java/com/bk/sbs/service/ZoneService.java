@@ -274,6 +274,24 @@ public class ZoneService {
         return commander.getCommanderLevel();
     }
 
+    // 코드 입력 등으로 목표 레벨까지 즉시 설정, 이미 그 이상이면 무시 (낮추지 않음)
+    @Transactional
+    public int setCommanderLevelAtLeast(Long commanderId, int targetLevel) {
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.REDEEM_CODE_FAIL_COMMANDER_NOT_FOUND));
+
+        if (commander.getCommanderLevel() >= targetLevel)
+            return commander.getCommanderLevel();
+
+        int requiredExp = gameDataService.getCommanderLevelRequiredExp(targetLevel);
+        if (requiredExp > 0 && commander.getExp() < requiredExp)
+            commander.setExp(requiredExp);
+
+        autoLevelUpIfNeeded(commander);
+        commanderRepository.save(commander);
+        return commander.getCommanderLevel();
+    }
+
     // exp 누적 기준으로 레벨업 조건 판정 후 자동 승급, 레벨업한 만큼 모듈포인트 지급
     private void autoLevelUpIfNeeded(Commander commander) {
         int currentLevel = commander.getCommanderLevel();

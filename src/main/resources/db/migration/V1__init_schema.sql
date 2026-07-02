@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS ship_module;
 DROP TABLE IF EXISTS ship;
 DROP TABLE IF EXISTS fleet;
 DROP TABLE IF EXISTS cleared_zone;
+DROP TABLE IF EXISTS redeem_code_usage;
 DROP TABLE IF EXISTS module_research;
 DROP TABLE IF EXISTS pvp_record;
 DROP TABLE IF EXISTS pvp_season;
@@ -216,6 +217,19 @@ CREATE TABLE app_config (
     description  VARCHAR(256),
     PRIMARY KEY (id),
     UNIQUE KEY uq_app_config_key (config_key)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- redeem_code_usage
+-- 유니크: commander_id + code (동일 커맨더의 동일 코드 중복 사용 방지)
+-- ============================================================
+CREATE TABLE redeem_code_usage (
+    id            BIGINT       NOT NULL AUTO_INCREMENT,
+    commander_id  BIGINT       NOT NULL,
+    code          VARCHAR(64)  NOT NULL,
+    used_at       DATETIME(6)  NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_redeem_code_usage (commander_id, code)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================

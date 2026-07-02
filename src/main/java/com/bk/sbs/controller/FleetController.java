@@ -269,6 +269,16 @@ public class FleetController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
+    // 함대 전체 투자 미네랄 한방 환급
+    @PostMapping("/reset-all-invested-mineral")
+    public ResponseEntity<ApiResponse<FleetResetAllInvestedMineralResponse>> resetAllInvestedMineral(
+            @RequestBody FleetResetAllInvestedMineralRequest request,
+            HttpServletRequest httpRequest) {
+        Long actualCommanderId = getCommanderIdFromToken(httpRequest);
+        FleetResetAllInvestedMineralResponse response = fleetService.resetAllInvestedMineral(actualCommanderId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
     // 함선 리셋 및 제거
     @PostMapping("/reset-ship")
     public ResponseEntity<ApiResponse<ShipResetRemoveResponse>> resetAndRemoveShip(

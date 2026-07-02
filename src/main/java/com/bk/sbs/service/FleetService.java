@@ -1634,6 +1634,66 @@ public class FleetService {
     }
 
     // ─────────────────────────────────────────────────────────────────────────
+    // 함대 전체 투자 미네랄 한방 환급 — 모든 함선의 모든 모듈을 baseline으로 복원하고 investedMineral 전액 환급
+    // ─────────────────────────────────────────────────────────────────────────
+    @Transactional
+    public FleetResetAllInvestedMineralResponse resetAllInvestedMineral(Long commanderId, FleetResetAllInvestedMineralRequest request) {
+        Fleet fleet = fleetRepository.findByCommanderIdAndIsActiveTrueAndDeletedFalse(commanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.FLEET_RESET_ALL_INVESTED_MINERAL_FAIL_FLEET_NOT_FOUND));
+
+        if (fleet.getId().equals(request.getFleetId()) == false) {
+            throw new BusinessException(ServerErrorCode.FLEET_RESET_ALL_INVESTED_MINERAL_FAIL_FLEET_ACCESS_DENIED);
+        }
+
+        List<Ship> ships = shipRepository.findByFleetIdAndDeletedFalseOrderByPositionIndex(fleet.getId());
+        int totalRefund = 0;
+        for (Ship ship : ships) {
+            List<ShipModule> modules = shipModuleRepository.findByShipIdAndDeletedFalseOrderBySlotIndex(ship.getId());
+            for (ShipModule module : modules) {
+                if (module.getInvestedMineral() <= 0) continue;
+
+                totalRefund = totalRefund + module.getInvestedMineral();
+
+                int[] baselineCalc = calcModulePointBaseline(module.getModuleType(), module.getInvestedModulePoint());
+                boolean mineralOnlyUnlocked = (baselineCalc == null);
+                if (mineralOnlyUnlocked) {
+                    if (module.getModuleType() == EModuleType.body) {
+                        // body는 investedModulePoint=0이 기함의 정상 초기값 — 삭제 대신 T1 Lv1로 복원
+                        module.setModuleSubType(EModuleSubType.body_t1_m1);
+                        module.setModuleLevel(1);
+                    } else {
+                        // 미네랄로만 언락된 슬롯 — soft-delete
+                        module.setDeleted(true);
+                    }
+                } else {
+                    EModuleSubType baselineSubType = EModuleSubType.fromValue(baselineCalc[0]);
+                    int baselineLevel = baselineCalc[1];
+                    module.setModuleSubType(baselineSubType);
+                    module.setModuleLevel(baselineLevel);
+                }
+                module.setInvestedMineral(0);
+                module.setModified(Instant.now());
+                shipModuleRepository.save(module);
+            }
+        }
+
+        if (totalRefund <= 0) {
+            throw new BusinessException(ServerErrorCode.FLEET_RESET_ALL_INVESTED_MINERAL_FAIL_NO_MINERAL_INVESTED);
+        }
+
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.FLEET_RESET_ALL_INVESTED_MINERAL_FAIL_COMMANDER_NOT_FOUND));
+        commander.setMineral(commander.getMineral() + totalRefund);
+        commanderRepository.save(commander);
+
+        return FleetResetAllInvestedMineralResponse.builder()
+                .mineralRemain(commander.getMineral())
+                .totalRefundedMineral(totalRefund)
+                .updatedFleetInfo(getActiveFleet(commanderId))
+                .build();
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
     // 미네랄만 차감 (서브타입/레벨/investedMineral 유지) — 세팅 재투입용
     // ─────────────────────────────────────────────────────────────────────────
     @Transactional
