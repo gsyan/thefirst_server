@@ -11,6 +11,7 @@ import com.bk.sbs.dto.CommanderResponse;
 import com.bk.sbs.dto.CommanderInfoDto;
 import com.bk.sbs.dto.FleetInfoDto;
 import com.bk.sbs.dto.VipStatusResponse;
+import com.bk.sbs.dto.ProgressListResponse;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.security.JwtUtil;
@@ -19,6 +20,7 @@ import com.bk.sbs.service.CommanderService;
 import com.bk.sbs.service.FleetService;
 import com.bk.sbs.service.IapService;
 import com.bk.sbs.service.PvpSeasonService;
+import com.bk.sbs.service.ProgressService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,14 +35,16 @@ public class CommanderController {
     private final FleetService fleetService;
     private final IapService iapService;
     private final PvpSeasonService pvpSeasonService;
+    private final ProgressService progressService;
     private final JwtUtil jwtUtil;
 
-    public CommanderController(AccountService accountService, CommanderService commanderService, FleetService fleetService, IapService iapService, PvpSeasonService pvpSeasonService, JwtUtil jwtUtil) {
+    public CommanderController(AccountService accountService, CommanderService commanderService, FleetService fleetService, IapService iapService, PvpSeasonService pvpSeasonService, ProgressService progressService, JwtUtil jwtUtil) {
         this.accountService = accountService;
         this.commanderService = commanderService;
         this.fleetService = fleetService;
         this.iapService = iapService;
         this.pvpSeasonService = pvpSeasonService;
+        this.progressService = progressService;
         this.jwtUtil = jwtUtil;
     }
 
@@ -76,20 +80,20 @@ public class CommanderController {
         // 커맨더 상태 정보 조회
         CommanderInfoDto commanderInfoDto = commanderService.getCommanderInfoDto(actualCommanderId);
 
-        // 문자열 기반 연구 ID 조회
-        var researchedIds = fleetService.getResearchedIds(actualCommanderId);
-
         boolean bGoogleLinked = accountService.isGoogleLinked(accountId);
         VipStatusResponse vipStatus = iapService.getVipStatus(actualCommanderId);
+
+        // 튜토리얼 진행도 — SpaceScene 진입 전에 미리 확보해서 지크프리트 함대 여부를 바로 판단할 수 있게 함
+        ProgressListResponse progressListResponse = progressService.getProgressList(actualCommanderId, "tutorial");
 
         AuthResponse response = AuthResponse.builder()
                 .accessToken(newAccessToken)
                 .refreshToken(newRefreshToken)
                 .activeFleetInfo(activeFleet)
                 .commanderInfo(commanderInfoDto)
-                .researchedIds(researchedIds)
                 .bGoogleLinked(bGoogleLinked)
                 .vipStatus(vipStatus)
+                .progressList(progressListResponse.getProgressList())
                 .build();
         return ApiResponse.success(response);
     }

@@ -19,7 +19,7 @@ public class AuthResponse {
     private String refreshToken;
     private FleetInfoDto activeFleetInfo;
     private CommanderInfoDto commanderInfo;
-    private List<String> researchedIds;
     private Boolean bGoogleLinked;
     private VipStatusResponse vipStatus;
+    private List<ProgressInfoDto> progressList;
 }

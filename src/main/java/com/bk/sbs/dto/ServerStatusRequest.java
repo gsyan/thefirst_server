@@ -4,11 +4,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * VersionCheckRequest
- * Auto-generated from Unity C# VersionCheckRequest class
+ * ServerStatusRequest
+ * Auto-generated from Unity C# ServerStatusRequest class
  */
 @Data
 @NoArgsConstructor
-public class VersionCheckRequest {
+public class ServerStatusRequest {
     private Integer versionCode;
 }

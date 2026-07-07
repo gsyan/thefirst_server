@@ -84,7 +84,6 @@ public class DevController {
                 CommanderInfoDto status = CommanderService.getCommanderInfoDto(commanderId);
                 StringBuilder result = new StringBuilder();
                 result.append("=== Commander Status ===\n");
-                result.append("Tech Level: ").append(fleetService.getResearchedIds(commanderId).stream().filter(s -> s.startsWith("tech_level_")).findFirst().orElse("1"));
                 result.append("Mineral: ").append(status.getMineral()).append("\n");
                 return ApiResponse.success(result.toString());
 

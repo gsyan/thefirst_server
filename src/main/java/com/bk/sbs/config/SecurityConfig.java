@@ -32,7 +32,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // DELETE /api/account/delete 는 JWT 인증 필수 (permitAll 보다 먼저 선언)
                         .requestMatchers(HttpMethod.DELETE, "/api/account/delete").authenticated()
-                        .requestMatchers("/", "/privacy", "/delete-account", "/h2-console/**", "/api/account/**", "/api/version/**").permitAll()
+                        .requestMatchers("/", "/privacy", "/delete-account", "/h2-console/**", "/api/account/**", "/api/status/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .headers(headers -> headers.frameOptions(frame -> frame.sameOrigin())) // H2 콘솔을 위해 필요

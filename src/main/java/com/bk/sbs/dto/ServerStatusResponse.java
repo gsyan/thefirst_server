@@ -6,15 +6,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * VersionCheckResponse
- * Auto-generated from Unity C# VersionCheckResponse class
+ * ServerStatusResponse
+ * Auto-generated from Unity C# ServerStatusResponse class
  */
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class VersionCheckResponse {
+public class ServerStatusResponse {
     private Boolean updateRequired;
     private Integer minVersionCode;
     private String minVersionName;
+    private Boolean working;
+    private String endTime;
 }

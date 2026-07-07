@@ -11,7 +11,6 @@ DROP TABLE IF EXISTS ship;
 DROP TABLE IF EXISTS fleet;
 DROP TABLE IF EXISTS cleared_zone;
 DROP TABLE IF EXISTS redeem_code_usage;
-DROP TABLE IF EXISTS module_research;
 DROP TABLE IF EXISTS pvp_record;
 DROP TABLE IF EXISTS pvp_season;
 DROP TABLE IF EXISTS progress;
@@ -162,21 +161,6 @@ CREATE TABLE pvp_record (
     last_rewarded_season    INT             NOT NULL DEFAULT 0,
     PRIMARY KEY (id),
     UNIQUE KEY uk_pvp_commander (commander_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ============================================================
--- module_research
--- 문자열 기반 모듈 연구 상태 저장
--- ============================================================
-CREATE TABLE module_research (
-    id              BIGINT          NOT NULL AUTO_INCREMENT,
-    commander_id    BIGINT          NOT NULL,
-    research_id     VARCHAR(255)        NULL,
-    researched      TINYINT(1)      NOT NULL DEFAULT 0,
-    created         DATETIME(6)     NOT NULL,
-    modified        DATETIME(6)     NOT NULL,
-    PRIMARY KEY (id),
-    INDEX idx_research_commander (commander_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================

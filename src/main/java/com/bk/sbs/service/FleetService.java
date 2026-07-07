@@ -27,18 +27,16 @@ public class FleetService {
     private final ShipRepository shipRepository;
     private final ShipModuleRepository shipModuleRepository;
     private final CommanderRepository commanderRepository;
-    private final ModuleResearchRepository moduleResearchRepository;
     private final GameDataService gameDataService;
 
     public FleetService(FleetRepository fleetRepository, ShipRepository shipRepository,
                        ShipModuleRepository shipModuleRepository,
                        CommanderRepository commanderRepository,
-                       ModuleResearchRepository moduleResearchRepository, GameDataService gameDataService) {
+                       GameDataService gameDataService) {
         this.fleetRepository = fleetRepository;
         this.shipRepository = shipRepository;
         this.shipModuleRepository = shipModuleRepository;
         this.commanderRepository = commanderRepository;
-        this.moduleResearchRepository = moduleResearchRepository;
         this.gameDataService = gameDataService;
     }
 
@@ -1341,14 +1339,6 @@ public class FleetService {
         }
     }
 
-
-    // 문자열 기반 완료 연구 ID 목록 조회 (tech_level_N 등)
-    public List<String> getResearchedIds(Long commanderId) {
-        return moduleResearchRepository.findByCommanderIdAndResearchIdIsNotNullAndResearchedTrue(commanderId)
-                .stream()
-                .map(ModuleResearch::getResearchId)
-                .collect(Collectors.toList());
-    }
 
     // ─────────────────────────────────────────────────────────────────────────
     // 모듈 리셋 (레벨 1 + unlockedSubTypes 초기화 + 투자분 100% 환급)
