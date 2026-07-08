@@ -36,8 +36,8 @@ public class ZoneController {
     public ResponseEntity<ApiResponse<GetStageEnemiesResponse>> getStageEnemies(
             @RequestBody GetStageEnemiesRequest request,
             HttpServletRequest httpRequest) {
-        getCommanderIdFromToken(httpRequest);
-        GetStageEnemiesResponse response = zoneService.getStageEnemies(request);
+        Long actualCommanderId = getCommanderIdFromToken(httpRequest);
+        GetStageEnemiesResponse response = zoneService.getStageEnemies(actualCommanderId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 

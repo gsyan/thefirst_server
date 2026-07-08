@@ -5,7 +5,8 @@ pipeline {
 
     parameters {
         booleanParam(name: 'DB_CREATE',     defaultValue: false, description: 'GameDB DROP+CREATE+schema.sql (prod 서버)')
-        booleanParam(name: 'SERVER_BUILD',  defaultValue: true,  description: 'Gradle 빌드 + Docker 이미지 빌드 & Push')
+        booleanParam(name: 'SERVER_BUILD',  defaultValue: true,  description: 'Gradle 빌드 + Docker 이미지 빌드')
+        booleanParam(name: 'DOCKER_PUSH',   defaultValue: true,  description: 'Docker 이미지 Push (SERVER_BUILD 필요)')
         booleanParam(name: 'SERVER_RUN',    defaultValue: true,  description: 'Ubuntu 서버에서 docker compose pull & restart')
     }
 
@@ -84,9 +85,19 @@ pipeline {
             }
         }
 
-        stage('Docker 빌드 & Push') {
+        stage('Docker 빌드') {
             when {
                 expression { return params.SERVER_BUILD }
+            }
+            steps {
+                bat 'docker builder prune -f'
+                bat "docker build --platform linux/arm64/v8 -t ${IMAGE_NAME}:latest ."
+            }
+        }
+
+        stage('Docker Push') {
+            when {
+                expression { return params.SERVER_BUILD && params.DOCKER_PUSH }
             }
             steps {
                 withCredentials([usernamePassword(
@@ -94,15 +105,15 @@ pipeline {
                     usernameVariable: 'DOCKER_USER',
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
-                    bat 'docker builder prune -f'
                     // Docker Hub 연결 타임아웃 대비 최대 3회 재시도
                     retry(3) {
                         bat '''
                             powershell -Command "$Env:DOCKER_PASS | docker login -u %DOCKER_USER% --password-stdin"
                         '''
                     }
-                    bat "docker build --platform linux/arm64/v8 -t ${IMAGE_NAME}:latest ."
-                    bat "docker push ${IMAGE_NAME}:latest"
+                    retry(3) {
+                        bat "docker push ${IMAGE_NAME}:latest"
+                    }
                     // Push 완료 후 gsyan/sbs 이미지 최신 4개만 유지, 나머지 삭제
                     bat '''
                         powershell -Command "$ids = docker images gsyan/sbs --format \"{{.ID}}\"; $toDelete = $ids | Select-Object -Skip 4; foreach ($id in $toDelete) { docker rmi $id -f }"

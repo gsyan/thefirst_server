@@ -60,23 +60,7 @@ public class ZoneService {
         if (zoneConfig == null)
             throw new BusinessException(ServerErrorCode.ZONE_DESTROY_WAVE_FAIL_ZONE_NOT_FOUND);
 
-        int[] parsed = parseZoneName(zoneName);
-        int group = parsed[0];
-        int stage = parsed[1];
-        if (requirePreviousStageClearedCheck == true) {
-            if (stage > 1) {
-                String prevStageName = group + "-" + (stage - 1);
-                if (clearedZoneRepository.existsByCommanderIdAndZoneName(commanderId, prevStageName) == false)
-                    throw new BusinessException(ServerErrorCode.ZONE_PREVIOUS_STAGE_NOT_CLEARED);
-            } else if (group > 1) {
-                int maxPrevStage = gameDataService.getZoneConfig().getMaxStageInGroup(group - 1);
-                if (maxPrevStage > 0) {
-                    String prevStageName = (group - 1) + "-" + maxPrevStage;
-                    if (clearedZoneRepository.existsByCommanderIdAndZoneName(commanderId, prevStageName) == false)
-                        throw new BusinessException(ServerErrorCode.ZONE_PREVIOUS_STAGE_NOT_CLEARED);
-                }
-            }
-        }
+        checkPreviousStageCleared(commanderId, zoneName);
 
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.ZONE_DESTROY_WAVE_FAIL_COMMANDER_NOT_FOUND));
@@ -323,11 +307,35 @@ public class ZoneService {
         }
     }
 
-    public GetStageEnemiesResponse getStageEnemies(GetStageEnemiesRequest request) {
+    // 이전 스테이지 클리어 여부 검증 (입장/클리어 보고 공통)
+    private void checkPreviousStageCleared(Long commanderId, String zoneName) {
+        if (requirePreviousStageClearedCheck == false) return;
+
+        int[] parsed = parseZoneName(zoneName);
+        int group = parsed[0];
+        int stage = parsed[1];
+
+        if (stage > 1) {
+            String prevStageName = group + "-" + (stage - 1);
+            if (clearedZoneRepository.existsByCommanderIdAndZoneName(commanderId, prevStageName) == false)
+                throw new BusinessException(ServerErrorCode.ZONE_PREVIOUS_STAGE_NOT_CLEARED);
+        } else if (group > 1) {
+            int maxPrevStage = gameDataService.getZoneConfig().getMaxStageInGroup(group - 1);
+            if (maxPrevStage > 0) {
+                String prevStageName = (group - 1) + "-" + maxPrevStage;
+                if (clearedZoneRepository.existsByCommanderIdAndZoneName(commanderId, prevStageName) == false)
+                    throw new BusinessException(ServerErrorCode.ZONE_PREVIOUS_STAGE_NOT_CLEARED);
+            }
+        }
+    }
+
+    public GetStageEnemiesResponse getStageEnemies(Long commanderId, GetStageEnemiesRequest request) {
         String zoneName = request.getZoneName();
         ZoneConfigData zoneConfig = gameDataService.getZoneConfigByName(zoneName);
         if (zoneConfig == null)
             throw new BusinessException(ServerErrorCode.ZONE_DESTROY_WAVE_FAIL_ZONE_NOT_FOUND);
+
+        checkPreviousStageCleared(commanderId, zoneName);
 
         return GetStageEnemiesResponse.builder()
                 .zoneName(zoneName)
