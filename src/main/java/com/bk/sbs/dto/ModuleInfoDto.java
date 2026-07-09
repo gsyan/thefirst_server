@@ -22,5 +22,6 @@ public class ModuleInfoDto {
     private Integer bodyIndex;
     private Integer slotIndex;
     private Integer investedModulePoint;
+    private Integer addShipModulePoint;
     private Integer investedMineral;
 }

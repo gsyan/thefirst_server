@@ -111,6 +111,7 @@ CREATE TABLE ship_module (
     body_index              INT             NOT NULL,
     slot_index              INT             NOT NULL,
     invested_module_point   INT             NOT NULL DEFAULT 0,
+    add_ship_module_point   INT             NOT NULL DEFAULT 0,
     invested_mineral        INT             NOT NULL DEFAULT 0,
     current_health          FLOAT           NOT NULL DEFAULT 0,
     deleted                 TINYINT(1)      NOT NULL DEFAULT 0,

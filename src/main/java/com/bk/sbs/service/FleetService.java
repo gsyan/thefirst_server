@@ -405,6 +405,7 @@ public class FleetService {
                                     .bodyIndex(beamModule.getBodyIndex())
                                     .slotIndex(beamModule.getSlotIndex())
                                     .investedModulePoint(beamModule.getInvestedModulePoint())
+                                    .addShipModulePoint(beamModule.getAddShipModulePoint())
                                     .investedMineral(beamModule.getInvestedMineral())
                                     .build())
                             .collect(Collectors.toList());
@@ -418,6 +419,7 @@ public class FleetService {
                                     .bodyIndex(missileModule.getBodyIndex())
                                     .slotIndex(missileModule.getSlotIndex())
                                     .investedModulePoint(missileModule.getInvestedModulePoint())
+                                    .addShipModulePoint(missileModule.getAddShipModulePoint())
                                     .investedMineral(missileModule.getInvestedMineral())
                                     .build())
                             .collect(Collectors.toList());
@@ -431,6 +433,7 @@ public class FleetService {
                                     .bodyIndex(hangerModule.getBodyIndex())
                                     .slotIndex(hangerModule.getSlotIndex())
                                     .investedModulePoint(hangerModule.getInvestedModulePoint())
+                                    .addShipModulePoint(hangerModule.getAddShipModulePoint())
                                     .investedMineral(hangerModule.getInvestedMineral())
                                     .build())
                             .collect(Collectors.toList());
@@ -454,6 +457,7 @@ public class FleetService {
                             .missiles(missiles)
                             .hangers(hangers)
                             .investedModulePoint(bodyModule.getInvestedModulePoint())
+                            .addShipModulePoint(bodyModule.getAddShipModulePoint())
                             .investedMineral(bodyModule.getInvestedMineral())
                             .currentHealth(normalizedHealth)
                             .build();
@@ -558,6 +562,7 @@ public class FleetService {
         bodyModule.setBodyIndex(0);
         bodyModule.setSlotIndex(0);
         bodyModule.setInvestedModulePoint(bodyInvestedMineral);
+        bodyModule.setAddShipModulePoint(bodyInvestedMineral);
         bodyModule.setCurrentHealth(bodyData != null && bodyData.getHealth() != null ? bodyData.getHealth() : 0f);
         bodyModule.setDeleted(false);
         bodyModule.setCreated(Instant.now());
@@ -573,6 +578,7 @@ public class FleetService {
         weaponModule.setBodyIndex(0);
         weaponModule.setSlotIndex(0);
         weaponModule.setInvestedModulePoint(beamInvestedMineral);
+        weaponModule.setAddShipModulePoint(beamInvestedMineral);
         weaponModule.setDeleted(false);
         weaponModule.setCreated(Instant.now());
         weaponModule.setModified(Instant.now());
@@ -1085,8 +1091,8 @@ public class FleetService {
         int prevSubTypeValue = currentSubType.getValue() - 100;
         EModuleSubType prevSubType = EModuleSubType.fromValue(prevSubTypeValue);
 
-        // baseline 계산
-        int investedModulePoint =  currentModule.getInvestedModulePoint();
+        // baseline 계산 (addShip 배분분은 baseline에서 제외)
+        int investedModulePoint = currentModule.getInvestedModulePoint() - currentModule.getAddShipModulePoint();
         int[] baseline = calcModulePointBaseline(moduleType, investedModulePoint);
         int baselineSubTypeVal = (baseline != null) ? baseline[0] : 0;
         boolean isAtBaseline = currentSubType.getValue() <= baselineSubTypeVal;
@@ -1644,7 +1650,7 @@ public class FleetService {
 
                 totalRefund = totalRefund + module.getInvestedMineral();
 
-                int[] baselineCalc = calcModulePointBaseline(module.getModuleType(), module.getInvestedModulePoint());
+                int[] baselineCalc = calcModulePointBaseline(module.getModuleType(), module.getInvestedModulePoint() - module.getAddShipModulePoint());
                 boolean mineralOnlyUnlocked = (baselineCalc == null);
                 if (mineralOnlyUnlocked) {
                     if (module.getModuleType() == EModuleType.body) {
@@ -1710,7 +1716,7 @@ public class FleetService {
 
                 totalRefund = totalRefund + module.getInvestedMineral();
 
-                int[] baselineCalc = calcModulePointBaseline(module.getModuleType(), module.getInvestedModulePoint());
+                int[] baselineCalc = calcModulePointBaseline(module.getModuleType(), module.getInvestedModulePoint() - module.getAddShipModulePoint());
                 boolean mineralOnlyUnlocked = (baselineCalc == null);
                 if (mineralOnlyUnlocked) {
                     if (module.getModuleType() == EModuleType.body) {
@@ -1894,12 +1900,55 @@ public class FleetService {
             throw new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_MINERAL_FAIL_LEVEL_MISMATCH);
         }
 
+        // targetLevel == 0: Lv.1에서 이전 등급 맥스레벨로 강등 (그레이드업만 취소, 이전 등급 투자금은 유지)
+        if (request.getTargetLevel() == 0) {
+            if (request.getCurrentLevel() != 1) {
+                throw new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_MINERAL_FAIL_LEVEL_MISMATCH);
+            }
+
+            EModuleSubType prevSubType = EModuleSubType.fromValue(moduleSubType.getValue() - 100);
+            if (prevSubType == null) {
+                throw new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_MINERAL_FAIL_LEVEL_MISMATCH);
+            }
+
+            int maxLevel = gameDataService.getMaxModuleLevel(moduleType, prevSubType);
+            // 이전 등급 레벨업 비용은 investedMineral에 이미 포함 → 그레이드업 비용만 환급
+            int totalRefund = gameDataService.getModuleResearchCost(moduleSubType);
+
+            Commander commander = commanderRepository.findByIdForUpdate(commanderId)
+                    .orElseThrow(() -> new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_MINERAL_FAIL_COMMANDER_NOT_FOUND));
+
+            if (moduleType == EModuleType.body) {
+                refundAndResetLostSlots(request.getShipId(), request.getBodyIndex(), prevSubType, commander);
+            }
+
+            commander.setMineral(commander.getMineral() + totalRefund);
+            commanderRepository.save(commander);
+
+            module.setModuleSubType(prevSubType);
+            module.setModuleLevel(maxLevel);
+            module.setInvestedMineral(Math.max(0, module.getInvestedMineral() - totalRefund));
+            module.setModified(Instant.now());
+            shipModuleRepository.save(module);
+
+            return ModuleLevelChangeResponse.builder()
+                    .shipId(request.getShipId())
+                    .bodyIndex(request.getBodyIndex())
+                    .moduleType(moduleType)
+                    .moduleSubType(prevSubType)
+                    .slotIndex(module.getSlotIndex())
+                    .newLevel(maxLevel)
+                    .pointRemain(commander.getMineral())
+                    .investedPoint(module.getInvestedMineral())
+                    .build();
+        }
+
         if (request.getTargetLevel() < 1 || request.getTargetLevel() >= request.getCurrentLevel()) {
             throw new BusinessException(ServerErrorCode.MODULE_LEVELDOWN_MINERAL_FAIL_LEVEL_MISMATCH);
         }
 
         // 모듈포인트 기준 레벨 아래로 다운 불가 (역산) — baseline의 subType이 현재 subType과 같을 때만 적용
-        int[] baselineCalc = calcModulePointBaseline(moduleType, module.getInvestedModulePoint());
+        int[] baselineCalc = calcModulePointBaseline(moduleType, module.getInvestedModulePoint() - module.getAddShipModulePoint());
         int baselineLevel = 1;
         if (baselineCalc != null && baselineCalc[0] == moduleSubType.getValue()) {
             baselineLevel = baselineCalc[1];
@@ -1978,7 +2027,7 @@ public class FleetService {
         commanderRepository.save(commander);
 
         // investedModulePoint 역산으로 기준 서브타입/레벨 결정
-        int[] baseline      = calcModulePointBaseline(request.getModuleType(), currentModule.getInvestedModulePoint());
+        int[] baseline      = calcModulePointBaseline(request.getModuleType(), currentModule.getInvestedModulePoint() - currentModule.getAddShipModulePoint());
         boolean isModuleRemoved = (baseline == null);
 
         EModuleSubType resultSubType;
@@ -2036,7 +2085,7 @@ public class FleetService {
         int refund = bodyModule.getInvestedMineral();
         commander.setMineral(commander.getMineral() + refund);
 
-        int[] baseline = calcModulePointBaseline(EModuleType.body, bodyModule.getInvestedModulePoint());
+        int[] baseline = calcModulePointBaseline(EModuleType.body, bodyModule.getInvestedModulePoint() - bodyModule.getAddShipModulePoint());
         EModuleSubType resultSubType;
         int resultLevel;
         if (baseline != null) {

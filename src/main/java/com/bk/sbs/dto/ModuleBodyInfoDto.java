@@ -25,6 +25,7 @@ public class ModuleBodyInfoDto {
     private List<ModuleInfoDto> missiles;
     private List<ModuleInfoDto> hangers;
     private Integer investedModulePoint;
+    private Integer addShipModulePoint;
     private Float currentHealth;
     private Integer investedMineral;
 }

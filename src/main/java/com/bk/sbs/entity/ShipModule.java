@@ -41,6 +41,10 @@ public class ShipModule {
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
     private int investedModulePoint = 0;
 
+    // addShip 시 배분된 modulePoint (baseline 계산에서 제외, 환급 대상에서는 investedModulePoint에 포함되어 있으므로 별도 환급 불필요)
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int addShipModulePoint = 0;
+
     // 투자한 미네랄 이력 — 전투 승리 시 소모 + 초기화, 그 전까지 환급 가능
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
     private int investedMineral = 0;
