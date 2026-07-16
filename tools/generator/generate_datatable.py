@@ -295,14 +295,7 @@ if __name__ == "__main__":
         'class_name': "ModuleData"
     }
 
-    # ModuleResearchData 생성
-    module_research_data_config = {
-        'csharp_file_path': r"../../../thefirst_client_unity/Assets/Scripts/System/Data/DataTableResearch.cs",
-        'class_name': "ModuleResearchData"
-    }
-
-    # 두 클래스 모두 생성
-    configs = [module_data_config, module_research_data_config]
+    configs = [module_data_config]
 
     output_files = []
     for config in configs:
