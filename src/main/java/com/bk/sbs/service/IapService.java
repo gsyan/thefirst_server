@@ -157,10 +157,11 @@ public class IapService {
         // 2) 오늘 날짜 계산, UTC 날짜, 월
         Instant now = Instant.now();
         ZonedDateTime nowUtc = now.atZone(ZoneOffset.UTC);
+        LocalDate today = nowUtc.toLocalDate();
         int currentMonth = nowUtc.getYear() * 100 + nowUtc.getMonthValue();
-        int todayInMonth = nowUtc.getDayOfMonth();
 
         // 3) 새로운 달(month) 되었다면 마스크 클리어, loginRewardMonth 업데이트
+        //    리셋은 반드시 실제 다음 달 1일에만 — 28일을 다 받았어도 그 전까진 새 사이클 시작 안 함
         Integer savedMonth = commander.getLoginRewardMonth();
         boolean isNewMonth = savedMonth == null || savedMonth != currentMonth;
         boolean needsSave  = false;
@@ -168,6 +169,7 @@ public class IapService {
             commander.setClaimedDaysMask(0);
             commander.setVipClaimedDaysMask(0);
             commander.setLoginRewardMonth(currentMonth);
+            commander.setLastDailyClaimDate(null);
             needsSave = true;
         }
         // 4) 정보 취합
@@ -177,10 +179,13 @@ public class IapService {
         // 다음 받을 시간
         Instant nextMidnightUtc = nowUtc.withHour(0).withMinute(0).withSecond(0).withNano(0).plusDays(1).toInstant();
         String nextAvailableAt = DateTimeFormatter.ISO_INSTANT.format(nextMidnightUtc);
-        // 일반, vip 이미 받았나?
+
+        // 5) 출석 순번(todayInMonth) — 실제 날짜가 아니라 "이번 달 몇 번째 보상인지"(마스크 비트 수 기준)
+        //    같은 날 중복 호출 시 순번이 잘못 증가하지 않도록 실제 날짜(lastDailyClaimDate)로 먼저 가드
+        boolean normalAlreadyClaimed = today.equals(commander.getLastDailyClaimDate());
+        int todayInMonth = Integer.bitCount(currentMask) + (normalAlreadyClaimed ? 0 : 1);
         int todayBit = 1 << (todayInMonth - 1);
-        boolean normalAlreadyClaimed = (currentMask & todayBit) != 0;
-        boolean vipAlreadyClaimed    = (currentVipMask & todayBit) != 0;
+        boolean vipAlreadyClaimed = (currentVipMask & todayBit) != 0;
         // 응답 기본값 (클레임 불가 케이스)
         boolean available      = false;
         int grantedMineral     = 0;
@@ -189,12 +194,13 @@ public class IapService {
         int tableMineral = gameDataService.getDailyMineralForDay(todayInMonth, EDailyBonusTier.Normal);
         boolean tableEmpty = tableMineral < 0;
 
-        // 5) 받을게 있는 상황 ( 일반/vip 각각 이미 받았는지는 내부에서 개별적으로 가드 )
+        // 6) 받을게 있는 상황 ( 일반/vip 각각 이미 받았는지는 내부에서 개별적으로 가드 )
         if (tableEmpty == false) {
             // 5-1) 일반 보상 처리
             if (normalAlreadyClaimed == false) {
                 grantedMineral += tableMineral; // 일반 보상 추가
                 commander.setClaimedDaysMask(currentMask | todayBit); // 마스크 비트 세팅
+                commander.setLastDailyClaimDate(today); // 오늘 받았음 기록 — todayInMonth 중복 증가 방지
             }
             // 5-2) VIP 추가 보상: catch-up 적용
             Optional<VipSubscription> sub = vipSubscriptionRepository.findByCommanderId(commanderId);

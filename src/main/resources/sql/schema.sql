@@ -57,6 +57,7 @@ CREATE TABLE commander (
     claimed_days_mask       INT             NOT NULL DEFAULT 0,
     vip_claimed_days_mask   INT             NOT NULL DEFAULT 0,
     login_reward_month      INT                 NULL,
+    last_daily_claim_date   DATE                NULL,
     deleted                 TINYINT(1)      NOT NULL DEFAULT 0,
     date_time               DATETIME(6)     NOT NULL,
     PRIMARY KEY (id),

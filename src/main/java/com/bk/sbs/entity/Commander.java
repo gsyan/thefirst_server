@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "commander")
@@ -76,6 +77,10 @@ public class Commander {
 
     // claimedDaysMask 기준 달 (yyyyMM, 새 달 판단용)
     private Integer loginRewardMonth;
+
+    // 일일 로그인 보상을 실제로 마지막 수령한 UTC 날짜 — todayDay(출석 순번) 계산이 마스크 비트 수 기반이라
+    // 같은 날 중복 호출 시 순번이 잘못 증가하는 것을 막기 위한 가드
+    private LocalDate lastDailyClaimDate;
 
     @Column(nullable = false)
     private boolean deleted = false;
