@@ -1314,11 +1314,20 @@ public class FleetService {
                 .build();
     }
 
-    // body 다운그레이드 시 새 body가 지원하지 않는 슬롯의 포인트 환급 + 초기화
-    // body 등급 하락 시 사라지는 슬롯의 modulePoint+mineral 환급 및 soft-delete (두 계열 공통)
+    // body 다운그레이드 시 새 body가 지원하지 않는 슬롯의 포인트 환급 + 초기화 (미네랄도 환급, 기존 호출부 호환용)
     private void refundAndResetLostSlots(Long shipId, int bodyIndex,
                                          EModuleSubType newBodySubType,
                                          Commander commander) {
+        refundAndResetLostSlots(shipId, bodyIndex, newBodySubType, commander, true);
+    }
+
+    // body 등급 하락 시 사라지는 슬롯의 modulePoint(+선택적 mineral) 환급 및 soft-delete (두 계열 공통)
+    // refundMineral=false: resetMineralModules(존 보상 유지비 부족 시 강제초기화) 전용 — modulePoint는 환급하되 기존 정책대로 미네랄은 환급하지 않음
+    // 반환값: 실제로 환급된 미네랄 총액 (호출부 totalRefund 집계용)
+    private int refundAndResetLostSlots(Long shipId, int bodyIndex,
+                                         EModuleSubType newBodySubType,
+                                         Commander commander,
+                                         boolean refundMineral) {
         List<ModuleSlotInfoDto> newBodySlots = gameDataService.getBodyModuleSlots(newBodySubType);
 
         java.util.Set<String> supportedKeys = new java.util.HashSet<>();
@@ -1328,6 +1337,7 @@ public class FleetService {
             }
         }
 
+        int mineralRefunded = 0;
         List<ShipModule> allModules = shipModuleRepository.findByShipIdAndBodyIndexAndDeletedFalse(shipId, bodyIndex);
         for (ShipModule module : allModules) {
             if (module.getModuleType() == EModuleType.body) continue;
@@ -1335,7 +1345,10 @@ public class FleetService {
             String key = module.getModuleType().name() + "_" + module.getSlotIndex();
             if (!supportedKeys.contains(key)) {
                 commander.setModulePoint(commander.getModulePoint() + module.getInvestedModulePoint());
-                commander.setMineral(commander.getMineral() + module.getInvestedMineral());
+                if (refundMineral == true) {
+                    commander.setMineral(commander.getMineral() + module.getInvestedMineral());
+                    mineralRefunded += module.getInvestedMineral();
+                }
                 module.setDeleted(true);
                 module.setInvestedModulePoint(0);
                 module.setInvestedMineral(0);
@@ -1343,6 +1356,7 @@ public class FleetService {
                 shipModuleRepository.save(module);
             }
         }
+        return mineralRefunded;
     }
 
 
@@ -1641,45 +1655,57 @@ public class FleetService {
             throw new BusinessException(ServerErrorCode.FLEET_RESET_ALL_INVESTED_MINERAL_FAIL_FLEET_ACCESS_DENIED);
         }
 
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.FLEET_RESET_ALL_INVESTED_MINERAL_FAIL_COMMANDER_NOT_FOUND));
+
         List<Ship> ships = shipRepository.findByFleetIdAndDeletedFalseOrderByPositionIndex(fleet.getId());
-        int totalRefund = 0;
+        int directRefund = 0;    // module.investedMineral 합산분 — 아래서 commander에 일괄 반영
+        int lostSlotRefund = 0;  // refundAndResetLostSlots가 이미 commander에 직접 반영한 분 — 리포트 집계only
         for (Ship ship : ships) {
             List<ShipModule> modules = shipModuleRepository.findByShipIdAndDeletedFalseOrderBySlotIndex(ship.getId());
             for (ShipModule module : modules) {
                 if (module.getInvestedMineral() <= 0) continue;
 
-                totalRefund = totalRefund + module.getInvestedMineral();
+                directRefund = directRefund + module.getInvestedMineral();
 
                 int[] baselineCalc = calcModulePointBaseline(module.getModuleType(), module.getInvestedModulePoint() - module.getAddShipModulePoint());
                 boolean mineralOnlyUnlocked = (baselineCalc == null);
+                EModuleSubType resultSubType;
                 if (mineralOnlyUnlocked) {
                     if (module.getModuleType() == EModuleType.body) {
                         // body는 investedModulePoint=0이 기함의 정상 초기값 — 삭제 대신 T1 Lv1로 복원
-                        module.setModuleSubType(EModuleSubType.body_t1_m1);
+                        resultSubType = EModuleSubType.body_t1_m1;
+                        module.setModuleSubType(resultSubType);
                         module.setModuleLevel(1);
                     } else {
                         // 미네랄로만 언락된 슬롯 — soft-delete
+                        resultSubType = null;
                         module.setDeleted(true);
                     }
                 } else {
-                    EModuleSubType baselineSubType = EModuleSubType.fromValue(baselineCalc[0]);
+                    resultSubType = EModuleSubType.fromValue(baselineCalc[0]);
                     int baselineLevel = baselineCalc[1];
-                    module.setModuleSubType(baselineSubType);
+                    module.setModuleSubType(resultSubType);
                     module.setModuleLevel(baselineLevel);
                 }
                 module.setInvestedMineral(0);
                 module.setModified(Instant.now());
                 shipModuleRepository.save(module);
+
+                // body 등급이 내려가 더 이상 지원하지 않게 된 하위 슬롯(모듈포인트로만 언락된 것 포함) 정리
+                // refundAndResetLostSlots는 commander.mineral/modulePoint를 직접 반영하므로 directRefund에는 합산하지 않음
+                if (module.getModuleType() == EModuleType.body && resultSubType != null) {
+                    lostSlotRefund += refundAndResetLostSlots(ship.getId(), module.getBodyIndex(), resultSubType, commander, true);
+                }
             }
         }
 
+        int totalRefund = directRefund + lostSlotRefund;
         if (totalRefund <= 0) {
             throw new BusinessException(ServerErrorCode.FLEET_RESET_ALL_INVESTED_MINERAL_FAIL_NO_MINERAL_INVESTED);
         }
 
-        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.FLEET_RESET_ALL_INVESTED_MINERAL_FAIL_COMMANDER_NOT_FOUND));
-        commander.setMineral(commander.getMineral() + totalRefund);
+        commander.setMineral(commander.getMineral() + directRefund);
         commanderRepository.save(commander);
 
         return FleetResetAllInvestedMineralResponse.builder()
@@ -1707,6 +1733,8 @@ public class FleetService {
                 .orElse(null);
         if (fleet == null) return 0;
 
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId).orElse(null);
+
         List<Ship> ships = shipRepository.findByFleetIdAndDeletedFalseOrderByPositionIndex(fleet.getId());
         int totalRefund = 0;
         for (Ship ship : ships) {
@@ -1718,26 +1746,39 @@ public class FleetService {
 
                 int[] baselineCalc = calcModulePointBaseline(module.getModuleType(), module.getInvestedModulePoint() - module.getAddShipModulePoint());
                 boolean mineralOnlyUnlocked = (baselineCalc == null);
+                EModuleSubType resultSubType;
                 if (mineralOnlyUnlocked) {
                     if (module.getModuleType() == EModuleType.body) {
                         // body는 investedModulePoint=0이 기함의 정상 초기값 — 삭제 대신 T1 Lv1로 복원
-                        module.setModuleSubType(EModuleSubType.body_t1_m1);
+                        resultSubType = EModuleSubType.body_t1_m1;
+                        module.setModuleSubType(resultSubType);
                         module.setModuleLevel(1);
                     } else {
                         // 미네랄로만 언락된 슬롯 — soft-delete
+                        resultSubType = null;
                         module.setDeleted(true);
                     }
                 } else {
                     // 역산 기준값으로 복원
-                    EModuleSubType baselineSubType = EModuleSubType.fromValue(baselineCalc[0]);
+                    resultSubType = EModuleSubType.fromValue(baselineCalc[0]);
                     int baselineLevel = baselineCalc[1];
-                    module.setModuleSubType(baselineSubType);
+                    module.setModuleSubType(resultSubType);
                     module.setModuleLevel(baselineLevel);
                 }
                 module.setInvestedMineral(0);
                 module.setModified(Instant.now());
                 shipModuleRepository.save(module);
+
+                // body 등급이 내려가 더 이상 지원하지 않게 된 하위 슬롯 정리
+                // 미네랄은 이 경로의 기존 정책대로 소멸(환급 없음), modulePoint만 정당하게 환급
+                if (module.getModuleType() == EModuleType.body && resultSubType != null && commander != null) {
+                    refundAndResetLostSlots(ship.getId(), module.getBodyIndex(), resultSubType, commander, false);
+                }
             }
+        }
+
+        if (commander != null) {
+            commanderRepository.save(commander);
         }
         return totalRefund;
     }
