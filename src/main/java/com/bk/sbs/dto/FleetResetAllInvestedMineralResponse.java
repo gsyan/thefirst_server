@@ -16,5 +16,6 @@ import lombok.NoArgsConstructor;
 public class FleetResetAllInvestedMineralResponse {
     private Integer mineralRemain;
     private Integer totalRefundedMineral;
+    private Integer modulePointRemain;
     private FleetInfoDto updatedFleetInfo;
 }

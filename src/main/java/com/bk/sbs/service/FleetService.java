@@ -1711,6 +1711,7 @@ public class FleetService {
         return FleetResetAllInvestedMineralResponse.builder()
                 .mineralRemain(commander.getMineral())
                 .totalRefundedMineral(totalRefund)
+                .modulePointRemain(commander.getModulePoint())
                 .updatedFleetInfo(getActiveFleet(commanderId))
                 .build();
     }
