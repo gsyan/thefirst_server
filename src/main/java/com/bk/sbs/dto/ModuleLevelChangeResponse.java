@@ -24,4 +24,5 @@ public class ModuleLevelChangeResponse {
     private Integer newLevel;
     private Integer pointRemain;
     private Integer investedPoint;
+    private Integer modulePointRemain;
 }

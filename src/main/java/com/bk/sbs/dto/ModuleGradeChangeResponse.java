@@ -26,6 +26,7 @@ public class ModuleGradeChangeResponse {
     private Integer moduleNewLevel;
     private Integer pointRemain;
     private Integer investedPoint;
+    private Integer modulePointRemain;
     private Boolean isModuleRemoved;
     private Boolean isShipRemoved;
     private Long removedShipId;

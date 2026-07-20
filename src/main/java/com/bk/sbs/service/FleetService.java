@@ -1004,6 +1004,7 @@ public class FleetService {
                 .moduleNewLevel(1)
                 .pointRemain(commander.getMineral())
                 .investedPoint(currentModule.getInvestedMineral())
+                .modulePointRemain(commander.getModulePoint())
                 .build();
     }
 
@@ -1116,6 +1117,7 @@ public class FleetService {
                     .moduleNewLevel(resetRes.getModuleNewLevel())
                     .pointRemain(resetRes.getPointRemain())
                     .investedPoint(resetRes.getInvestedPoint())
+                    .modulePointRemain(resetRes.getModulePointRemain())
                     .isModuleRemoved(resetRes.getIsModuleRemoved())
                     .isShipRemoved(resetRes.getIsShipRemoved())
                     .removedShipId(resetRes.getRemovedShipId())
@@ -1167,6 +1169,7 @@ public class FleetService {
                 .moduleNewLevel(resultLevel)
                 .pointRemain(commander.getMineral())
                 .investedPoint(currentModule.getInvestedMineral())
+                .modulePointRemain(commander.getModulePoint())
                 .isModuleRemoved(false)
                 .isShipRemoved(false)
                 .build();
@@ -1920,6 +1923,7 @@ public class FleetService {
                 .newLevel(module.getModuleLevel())
                 .pointRemain(commander.getMineral())
                 .investedPoint(module.getInvestedMineral())
+                .modulePointRemain(commander.getModulePoint())
                 .build();
     }
 
@@ -1982,6 +1986,7 @@ public class FleetService {
                     .newLevel(maxLevel)
                     .pointRemain(commander.getMineral())
                     .investedPoint(module.getInvestedMineral())
+                    .modulePointRemain(commander.getModulePoint())
                     .build();
         }
 
@@ -2032,6 +2037,7 @@ public class FleetService {
                 .newLevel(module.getModuleLevel())
                 .pointRemain(commander.getMineral())
                 .investedPoint(module.getInvestedMineral())
+                .modulePointRemain(commander.getModulePoint())
                 .build();
     }
 
@@ -2105,6 +2111,7 @@ public class FleetService {
                 .isModuleRemoved(isModuleRemoved)
                 .pointRemain(commander.getMineral())
                 .investedPoint(0)
+                .modulePointRemain(commander.getModulePoint())
                 .isShipRemoved(false)
                 .build();
     }
@@ -2159,6 +2166,7 @@ public class FleetService {
                 .isModuleRemoved(false)
                 .pointRemain(commander.getMineral())
                 .investedPoint(0)
+                .modulePointRemain(commander.getModulePoint())
                 .isShipRemoved(false)
                 .build();
     }
