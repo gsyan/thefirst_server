@@ -44,6 +44,9 @@ public class CommanderService {
 @Value("${worldid}")
     private int worldId;
 
+    @Value("${exploration.world-seed}")
+    private int explorationWorldSeed;
+
     public CommanderService(CommanderRepository commanderRepository, AccountRepository accountRepository, FleetService fleetService, ClearedZoneRepository clearedZoneRepository, StringRedisTemplate redisTemplate, GameDataService gameDataService) {
         this.commanderRepository = commanderRepository;
         this.accountRepository = accountRepository;
@@ -82,10 +85,9 @@ public class CommanderService {
         }
         log.info("createCommander: accountId={}, commanderId={}, name={}", accountId, savedCommander.getId(), savedCommander.getCommanderName());
 
-        // 커맨더 생성과 동시에 기본 함대 생성 및 활성화
+        // 커맨더 생성과 동시에 기본 함대 프리셋(presetIndex=0) 생성
         // 실패 시 전체 트랜잭션 롤백됨
-        fleetService.createFleet(savedCommander.getId(), "Default Fleet", "Auto-generated default fleet.");
-        fleetService.activateFirstFleet(savedCommander.getId());
+        fleetService.createDefaultFleetPreset(savedCommander.getId());
 
         // commanderId = worldId(8비트) + id(56비트)
         return CommanderResponse.builder()
@@ -122,6 +124,7 @@ public class CommanderService {
                 .pvpPointExpiry(commander.getPvpPointExpiry() != null ? commander.getPvpPointExpiry().toString() : null)
                 .clearedZones(clearedZoneRepository.findZoneNamesByCommanderId(commanderId))
                 .nameChangeCount(commander.getNameChangeCount())
+                .explorationSeedBase(explorationWorldSeed ^ commanderId.hashCode())
                 .build();
     }
 

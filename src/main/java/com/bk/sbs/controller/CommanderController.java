@@ -9,7 +9,7 @@ import com.bk.sbs.dto.CommanderRenameResponse;
 import com.bk.sbs.dto.CommanderValidateNameRequest;
 import com.bk.sbs.dto.CommanderResponse;
 import com.bk.sbs.dto.CommanderInfoDto;
-import com.bk.sbs.dto.FleetInfoDto;
+import com.bk.sbs.dto.TempFleetInfoDto;
 import com.bk.sbs.dto.VipStatusResponse;
 import com.bk.sbs.dto.ProgressListResponse;
 import com.bk.sbs.exception.BusinessException;
@@ -72,8 +72,8 @@ public class CommanderController {
         String newAccessToken = jwtUtil.createAccessTokenWithCommander(accountId, commanderId);
         String newRefreshToken = jwtUtil.createRefreshTokenWithCommander(accountId, commanderId);
 
-        // 활성 함대 정보 조회
-        FleetInfoDto activeFleet = fleetService.getActiveFleet(actualCommanderId);
+        // 활성 함대 정보 조회 (프리셋 기반)
+        TempFleetInfoDto activeFleet = fleetService.getActiveFleetPreset(actualCommanderId);
 
         if (activeFleet == null) throw new BusinessException(ServerErrorCode.COMMANDER_CONTROLLER_FAIL_NULL_ACTIVE_FLEET);
 

@@ -28,16 +28,58 @@ public class FleetService {
     private final ShipModuleRepository shipModuleRepository;
     private final CommanderRepository commanderRepository;
     private final GameDataService gameDataService;
+    private final CommanderFleetPresetRepository commanderFleetPresetRepository;
+
+    // 신규 커맨더에게 지급되는 기본 함대 프리셋(presetIndex=0)의 초기 함선 — DataTableShipPreset 기준
+    private static final String DEFAULT_FLEET_PRESET_SHIP_PRESET_ID = "beam_light_01";
 
     public FleetService(FleetRepository fleetRepository, ShipRepository shipRepository,
                        ShipModuleRepository shipModuleRepository,
                        CommanderRepository commanderRepository,
-                       GameDataService gameDataService) {
+                       GameDataService gameDataService,
+                       CommanderFleetPresetRepository commanderFleetPresetRepository) {
         this.fleetRepository = fleetRepository;
         this.shipRepository = shipRepository;
         this.shipModuleRepository = shipModuleRepository;
         this.commanderRepository = commanderRepository;
         this.gameDataService = gameDataService;
+        this.commanderFleetPresetRepository = commanderFleetPresetRepository;
+    }
+
+    // 신규 커맨더 생성 시 기본 함대 프리셋(presetIndex=0) 생성 — ExplorationShipSlot 기반, 구식 Fleet/Ship 엔티티 사용 안 함
+    @Transactional
+    public void createDefaultFleetPreset(Long commanderId) {
+        CommanderFleetPreset preset = new CommanderFleetPreset();
+        preset.setCommanderId(commanderId);
+        preset.setPresetIndex(0);
+        preset = commanderFleetPresetRepository.save(preset);
+
+        CommanderFleetPresetSlot slot = new CommanderFleetPresetSlot();
+        slot.setFleetPreset(preset);
+        slot.setSlotIndex(0);
+        slot.setShipPresetId(DEFAULT_FLEET_PRESET_SHIP_PRESET_ID);
+        slot.setFront(true);
+        preset.setSlots(new ArrayList<>(List.of(slot)));
+
+        commanderFleetPresetRepository.save(preset);
+    }
+
+    // 로그인 시 내려주는 "내 함대" — presetIndex=0 프리셋을 TempFleetInfoDto로 변환
+    public TempFleetInfoDto getActiveFleetPreset(Long commanderId) {
+        CommanderFleetPreset preset = commanderFleetPresetRepository.findByCommanderIdAndPresetIndex(commanderId, 0)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.COMMANDER_CONTROLLER_FAIL_NULL_ACTIVE_FLEET));
+
+        List<ExplorationShipSlotDto> ships = preset.getSlots().stream()
+                .sorted((a, b) -> Integer.compare(a.getSlotIndex(), b.getSlotIndex()))
+                .map(slot -> ExplorationShipSlotDto.builder()
+                        .shipPresetId(slot.getShipPresetId())
+                        .isFront(slot.isFront())
+                        .build())
+                .collect(Collectors.toList());
+
+        return TempFleetInfoDto.builder()
+                .ships(ships)
+                .build();
     }
 
     // 캐릭터의 모든 함대 조회

@@ -27,4 +27,5 @@ public class CommanderInfoDto {
     private String pvpPointExpiry;
     private List<String> clearedZones;
     private Integer nameChangeCount;
+    private Integer explorationSeedBase;
 }

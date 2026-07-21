@@ -1,0 +1,417 @@
+> Task :compileJava UP-TO-DATE
+> Task :processResources
+> Task :classes
+> Task :resolveMainClassName
+
+> Task :bootRun
+Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.3)
+
+2026-07-22T01:01:23.870+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.SbsApplication                : Starting SbsApplication using Java 21.0.8 with PID 27520 (D:\BK\thefirst\thefirst_server\build\classes\java\main started by bk in D:\BK\thefirst\thefirst_server)
+2026-07-22T01:01:23.871+09:00 DEBUG 27520 --- [sbs] [           main] com.bk.sbs.SbsApplication                : Running with Spring Boot v3.5.3, Spring v6.2.8
+2026-07-22T01:01:23.872+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.SbsApplication                : The following 1 profile is active: "dev"
+2026-07-22T01:01:24.500+09:00  INFO 27520 --- [sbs] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-07-22T01:01:24.501+09:00  INFO 27520 --- [sbs] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-22T01:01:24.650+09:00  INFO 27520 --- [sbs] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 142 ms. Found 13 JPA repository interfaces.
+2026-07-22T01:01:24.664+09:00  INFO 27520 --- [sbs] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode
+2026-07-22T01:01:24.665+09:00  INFO 27520 --- [sbs] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-07-22T01:01:24.678+09:00  INFO 27520 --- [sbs] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bk.sbs.repository.AccountRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-22T01:01:24.679+09:00  INFO 27520 --- [sbs] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bk.sbs.repository.AppConfigRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-22T01:01:24.679+09:00  INFO 27520 --- [sbs] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bk.sbs.repository.ClearedZoneRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-22T01:01:24.680+09:00  INFO 27520 --- [sbs] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bk.sbs.repository.CommanderFleetPresetRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-22T01:01:24.680+09:00  INFO 27520 --- [sbs] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bk.sbs.repository.CommanderRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-22T01:01:24.680+09:00  INFO 27520 --- [sbs] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bk.sbs.repository.FleetRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-22T01:01:24.680+09:00  INFO 27520 --- [sbs] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bk.sbs.repository.ProgressRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-22T01:01:24.680+09:00  INFO 27520 --- [sbs] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bk.sbs.repository.PvpRecordRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-22T01:01:24.681+09:00  INFO 27520 --- [sbs] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bk.sbs.repository.PvpSeasonRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-22T01:01:24.681+09:00  INFO 27520 --- [sbs] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bk.sbs.repository.RedeemCodeUsageRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-22T01:01:24.681+09:00  INFO 27520 --- [sbs] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bk.sbs.repository.ShipModuleRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-22T01:01:24.681+09:00  INFO 27520 --- [sbs] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bk.sbs.repository.ShipRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-22T01:01:24.681+09:00  INFO 27520 --- [sbs] [           main] .RepositoryConfigurationExtensionSupport : Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.bk.sbs.repository.VipSubscriptionRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-07-22T01:01:24.681+09:00  INFO 27520 --- [sbs] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 10 ms. Found 0 Redis repository interfaces.
+2026-07-22T01:01:25.142+09:00  INFO 27520 --- [sbs] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-07-22T01:01:25.156+09:00  INFO 27520 --- [sbs] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-07-22T01:01:25.157+09:00  INFO 27520 --- [sbs] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.42]
+2026-07-22T01:01:25.219+09:00  INFO 27520 --- [sbs] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-07-22T01:01:25.219+09:00  INFO 27520 --- [sbs] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1315 ms
+Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+2026-07-22T01:01:25.266+09:00 DEBUG 27520 --- [sbs] [           main] c.b.s.security.JwtAuthenticationFilter   : Filter 'jwtAuthenticationFilter' configured for use
+2026-07-22T01:01:25.316+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : Class org.mariadb.jdbc.Driver found in Thread context class loader jdk.internal.loader.ClassLoaders$AppClassLoader@6bc7c054
+2026-07-22T01:01:25.450+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : HikariPool-1 - configuration:
+2026-07-22T01:01:25.453+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : allowPoolSuspension.............false
+2026-07-22T01:01:25.453+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : autoCommit......................true
+2026-07-22T01:01:25.453+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : catalog.........................none
+2026-07-22T01:01:25.453+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : connectionInitSql...............none
+2026-07-22T01:01:25.453+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : connectionTestQuery.............none
+2026-07-22T01:01:25.453+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : connectionTimeout...............30000
+2026-07-22T01:01:25.454+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : credentials.....................com.zaxxer.hikari.util.Credentials@1815577b
+2026-07-22T01:01:25.454+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : dataSource......................none
+2026-07-22T01:01:25.454+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : dataSourceClassName.............none
+2026-07-22T01:01:25.454+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : dataSourceJNDI..................none
+2026-07-22T01:01:25.454+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : dataSourceProperties............{password=<masked>}
+2026-07-22T01:01:25.454+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : driverClassName................."org.mariadb.jdbc.Driver"
+2026-07-22T01:01:25.454+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : exceptionOverride...............none
+2026-07-22T01:01:25.455+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : exceptionOverrideClassName......none
+2026-07-22T01:01:25.455+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : healthCheckProperties...........{}
+2026-07-22T01:01:25.455+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : healthCheckRegistry.............none
+2026-07-22T01:01:25.455+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : idleTimeout.....................600000
+2026-07-22T01:01:25.455+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : initializationFailTimeout.......1
+2026-07-22T01:01:25.455+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : isolateInternalQueries..........false
+2026-07-22T01:01:25.456+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : jdbcUrl.........................jdbc:mariadb://127.0.0.1:3306/GameDB?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+2026-07-22T01:01:25.456+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : keepaliveTime...................120000
+2026-07-22T01:01:25.456+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : leakDetectionThreshold..........0
+2026-07-22T01:01:25.456+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : maxLifetime.....................1800000
+2026-07-22T01:01:25.456+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : maximumPoolSize.................10
+2026-07-22T01:01:25.456+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : metricRegistry..................none
+2026-07-22T01:01:25.456+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : metricsTrackerFactory...........none
+2026-07-22T01:01:25.456+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : minimumIdle.....................10
+2026-07-22T01:01:25.456+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : password........................<masked>
+2026-07-22T01:01:25.457+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : poolName........................"HikariPool-1"
+2026-07-22T01:01:25.457+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : readOnly........................false
+2026-07-22T01:01:25.457+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : registerMbeans..................false
+2026-07-22T01:01:25.457+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : scheduledExecutor...............none
+2026-07-22T01:01:25.457+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : schema..........................none
+2026-07-22T01:01:25.457+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : threadFactory...................internal
+2026-07-22T01:01:25.457+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : transactionIsolation............default
+2026-07-22T01:01:25.457+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : username........................"root"
+2026-07-22T01:01:25.458+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariConfig           : validationTimeout...............5000
+2026-07-22T01:01:25.458+09:00  INFO 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-07-22T01:01:25.466+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Attempting to create/setup new connection (0fbd2b08-0b8e-40d8-95b9-a8f049306553)
+2026-07-22T01:01:25.529+09:00 DEBUG 27520 --- [sbs] [           main] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Established new connection (0fbd2b08-0b8e-40d8-95b9-a8f049306553)
+2026-07-22T01:01:25.530+09:00  INFO 27520 --- [sbs] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.mariadb.jdbc.Connection@7af0d91b
+2026-07-22T01:01:25.531+09:00  INFO 27520 --- [sbs] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-07-22T01:01:25.551+09:00  WARN 27520 --- [sbs] [           main] o.m.jdbc.message.server.ErrorPacket      : Error: 1193-HY000: Unknown system variable 'WSREP_ON'
+2026-07-22T01:01:25.568+09:00  INFO 27520 --- [sbs] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:mariadb://127.0.0.1/GameDB?user=root&password=********&serverTimezone=Asia/Seoul&characterEncoding=UTF-8 (MariaDB 11.8)
+2026-07-22T01:01:25.572+09:00  WARN 27520 --- [sbs] [           main] o.f.c.internal.database.base.Database    : Flyway upgrade recommended: MariaDB 11.8 is newer than this version of Flyway and support has not been tested. The latest supported version of MariaDB is 11.2.
+2026-07-22T01:01:25.588+09:00  INFO 27520 --- [sbs] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table `gamedb`.`flyway_schema_history` does not exist yet
+2026-07-22T01:01:25.589+09:00  INFO 27520 --- [sbs] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.011s)
+2026-07-22T01:01:25.620+09:00  INFO 27520 --- [sbs] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table `gamedb`.`flyway_schema_history` with baseline ...
+2026-07-22T01:01:25.647+09:00 DEBUG 27520 --- [sbs] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Pool stats (total=1/10, idle=0/10, active=1, waiting=0)
+2026-07-22T01:01:25.647+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Attempting to create/setup new connection (b873d095-6a07-4cb1-8156-3eaa377cbed3)
+2026-07-22T01:01:25.648+09:00  INFO 27520 --- [sbs] [           main] o.f.core.internal.command.DbBaseline     : Successfully baselined schema with version: 1
+2026-07-22T01:01:25.650+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Established new connection (b873d095-6a07-4cb1-8156-3eaa377cbed3)
+2026-07-22T01:01:25.650+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.mariadb.jdbc.Connection@59ca8181
+2026-07-22T01:01:25.658+09:00  INFO 27520 --- [sbs] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema `gamedb`: 1
+2026-07-22T01:01:25.660+09:00  INFO 27520 --- [sbs] [           main] o.f.core.internal.command.DbMigrate      : Schema `gamedb` is up to date. No migration necessary.
+2026-07-22T01:01:25.692+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After adding stats (total=2/10, idle=2/10, active=0, waiting=0)
+2026-07-22T01:01:25.692+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Attempting to create/setup new connection (f4ba7884-8226-4477-9386-bb462aaf5af2)
+2026-07-22T01:01:25.694+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Established new connection (f4ba7884-8226-4477-9386-bb462aaf5af2)
+2026-07-22T01:01:25.695+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.mariadb.jdbc.Connection@c896d22
+2026-07-22T01:01:25.720+09:00  INFO 27520 --- [sbs] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-07-22T01:01:25.739+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After adding stats (total=3/10, idle=3/10, active=0, waiting=0)
+2026-07-22T01:01:25.739+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Attempting to create/setup new connection (2d9aff85-2931-4216-a7c4-57b5b6c1e4cc)
+2026-07-22T01:01:25.741+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Established new connection (2d9aff85-2931-4216-a7c4-57b5b6c1e4cc)
+2026-07-22T01:01:25.741+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.mariadb.jdbc.Connection@5480d78c
+2026-07-22T01:01:25.763+09:00  INFO 27520 --- [sbs] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.18.Final
+2026-07-22T01:01:25.784+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After adding stats (total=4/10, idle=4/10, active=0, waiting=0)
+2026-07-22T01:01:25.784+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Attempting to create/setup new connection (1672986a-6dac-4b6e-adc8-befc5674de56)
+2026-07-22T01:01:25.786+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Established new connection (1672986a-6dac-4b6e-adc8-befc5674de56)
+2026-07-22T01:01:25.786+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.mariadb.jdbc.Connection@6f0a2f88
+2026-07-22T01:01:25.788+09:00  INFO 27520 --- [sbs] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-07-22T01:01:25.830+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After adding stats (total=5/10, idle=5/10, active=0, waiting=0)
+2026-07-22T01:01:25.830+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Attempting to create/setup new connection (356e72e9-65d8-4204-aa5d-2f1f713687f3)
+2026-07-22T01:01:25.832+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Established new connection (356e72e9-65d8-4204-aa5d-2f1f713687f3)
+2026-07-22T01:01:25.833+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.mariadb.jdbc.Connection@b89235
+2026-07-22T01:01:25.875+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After adding stats (total=6/10, idle=6/10, active=0, waiting=0)
+2026-07-22T01:01:25.875+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Attempting to create/setup new connection (3c06890c-86fc-4c2a-a61b-7efa0f415cbd)
+2026-07-22T01:01:25.878+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Established new connection (3c06890c-86fc-4c2a-a61b-7efa0f415cbd)
+2026-07-22T01:01:25.878+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.mariadb.jdbc.Connection@5b053911
+2026-07-22T01:01:25.921+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After adding stats (total=7/10, idle=7/10, active=0, waiting=0)
+2026-07-22T01:01:25.922+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Attempting to create/setup new connection (2ce22d00-0b63-465e-bbcf-8696352831a4)
+2026-07-22T01:01:25.924+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Established new connection (2ce22d00-0b63-465e-bbcf-8696352831a4)
+2026-07-22T01:01:25.924+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.mariadb.jdbc.Connection@7767bb3c
+2026-07-22T01:01:25.967+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After adding stats (total=8/10, idle=8/10, active=0, waiting=0)
+2026-07-22T01:01:25.967+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Attempting to create/setup new connection (741c6589-248b-43c0-80a0-9afe073b08da)
+2026-07-22T01:01:25.974+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Established new connection (741c6589-248b-43c0-80a0-9afe073b08da)
+2026-07-22T01:01:25.974+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.mariadb.jdbc.Connection@642bc448
+2026-07-22T01:01:26.012+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After adding stats (total=9/10, idle=9/10, active=0, waiting=0)
+2026-07-22T01:01:26.012+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Attempting to create/setup new connection (7f1f38d2-5991-490c-8aa8-1ca2002f41fe)
+2026-07-22T01:01:26.013+09:00  INFO 27520 --- [sbs] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-22T01:01:26.014+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.PoolBase          : HikariPool-1 - Established new connection (7f1f38d2-5991-490c-8aa8-1ca2002f41fe)
+2026-07-22T01:01:26.014+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.mariadb.jdbc.Connection@67993f42
+2026-07-22T01:01:26.059+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - After adding stats (total=10/10, idle=9/10, active=1, waiting=0)
+2026-07-22T01:01:26.059+09:00 DEBUG 27520 --- [sbs] [onnection-adder] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Connection not added, stats (total=10/10, idle=9/10, active=1, waiting=0)
+2026-07-22T01:01:26.068+09:00  INFO 27520 --- [sbs] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 11.8.5
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-07-22T01:01:26.074+09:00 DEBUG 27520 --- [sbs] [           main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(12, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@2a16d393) replaced previous registration(org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@14d1032a)
+2026-07-22T01:01:26.074+09:00 DEBUG 27520 --- [sbs] [           main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(-9, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@414e8b31) replaced previous registration(org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@b90c5a5)
+2026-07-22T01:01:26.074+09:00 DEBUG 27520 --- [sbs] [           main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(-3, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@1786150f) replaced previous registration(org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@bd28c86)
+2026-07-22T01:01:26.074+09:00 DEBUG 27520 --- [sbs] [           main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(4003, org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@3ef089ce) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@3340ce58)
+2026-07-22T01:01:26.074+09:00 DEBUG 27520 --- [sbs] [           main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(4001, org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@14499b52) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@be083e1)
+2026-07-22T01:01:26.075+09:00 DEBUG 27520 --- [sbs] [           main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(4002, org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@3164d5aa) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@4e3ffd0)
+2026-07-22T01:01:26.075+09:00 DEBUG 27520 --- [sbs] [           main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(2004, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@5ca86715) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@53d808ea)
+2026-07-22T01:01:26.075+09:00 DEBUG 27520 --- [sbs] [           main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(2005, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@44864ebe) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@5f803481)
+2026-07-22T01:01:26.075+09:00 DEBUG 27520 --- [sbs] [           main] o.h.t.d.sql.spi.DdlTypeRegistry          : addDescriptor(2011, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@408f70ab) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@5383bf08)
+2026-07-22T01:01:26.962+09:00  INFO 27520 --- [sbs] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-22T01:01:27.000+09:00  INFO 27520 --- [sbs] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-22T01:01:27.005+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.config.FirebaseConfig         : Starting Firebase initialization...
+2026-07-22T01:01:27.010+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.config.FirebaseConfig         : No existing Firebase apps found, initializing new app...
+2026-07-22T01:01:27.010+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.config.FirebaseConfig         : Loading Firebase credentials from: firebase-service-account.json
+2026-07-22T01:01:27.058+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.config.FirebaseConfig         : Firebase initialized successfully!
+2026-07-22T01:01:27.303+09:00  INFO 27520 --- [sbs] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-07-22T01:01:27.998+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.service.GameDataService       : GameConfig.json loaded successfully from resources/data/
+2026-07-22T01:01:28.050+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.service.GameDataService       : DataTableModule.json loaded successfully from resources/data/ (fallback mode)
+2026-07-22T01:01:28.054+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.service.GameDataService       : DataTableUpgradeCost.json loaded: 14 entries
+2026-07-22T01:01:28.056+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.service.GameDataService       : DataTableCommanderLevel.json loaded: 50 entries
+2026-07-22T01:01:28.706+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.service.GameDataService       : ZoneConfig.json loaded successfully from resources/data/
+2026-07-22T01:01:28.709+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.service.GameDataService       : DataTablePvpSeason.json loaded successfully from resources/data/
+2026-07-22T01:01:28.713+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.service.GameDataService       : DataTableDailyBonus.json loaded successfully: 28일치
+2026-07-22T01:01:29.270+09:00  WARN 27520 --- [sbs] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-22T01:01:29.290+09:00  INFO 27520 --- [sbs] [           main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page template: index
+2026-07-22T01:01:29.398+09:00  WARN 27520 --- [sbs] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 63336868-e3bc-4b36-a030-cc23b604e2f0
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-07-22T01:01:29.404+09:00  INFO 27520 --- [sbs] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name inMemoryUserDetailsManager
+2026-07-22T01:01:29.742+09:00  INFO 27520 --- [sbs] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-07-22T01:01:29.752+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.SbsApplication                : Started SbsApplication in 6.266 seconds (process running for 6.644)
+2026-07-22T01:01:29.911+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.util.AppConfigInitializer     : [AppConfig] 삽입: android_min_version_code = 219
+2026-07-22T01:01:29.915+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.util.AppConfigInitializer     : [AppConfig] 삽입: android_min_version_name = 0.1.43
+2026-07-22T01:01:29.915+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.util.AppConfigInitializer     : [AppConfig] 초기값 반영 완료
+2026-07-22T01:01:29.922+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.util.TestDataInitializer      : TestDataInitializer: 기본 더미 데이터 3개 생성 시작 — account AUTO_INCREMENT=1, commander AUTO_INCREMENT=1
+2026-07-22T01:01:30.005+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.util.TestDataInitializer      : TestDataInitializer: 기본 더미 데이터 3개 생성 완료 — accountId 1~3, commanderId 1~3
+2026-07-22T01:01:30.006+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.util.TestDataInitializer      : TestDataInitializer: PVP 더미 데이터 3개 생성 완료 (base=1000, dev=100)
+2026-07-22T01:01:30.007+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.util.TestDataInitializer      : TestDataInitializer: Zone 더미 데이터 3개 생성 완료 (base=5-5, dev=5)
+2026-07-22T01:01:30.388+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.service.PvpService            : PVP Redis 동기화 완료: 3건
+2026-07-22T01:01:30.418+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.service.RankingService        : Zone 랭킹 Redis 동기화 완료: 3건
+2026-07-22T01:01:30.434+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.service.PvpSeasonService      : PVP 시즌 설정 완료: 시즌=1 2026-07-01T00:00:00Z ~ 2026-07-29T00:00:00Z
+2026-07-22T01:01:30.434+09:00  INFO 27520 --- [sbs] [           main] com.bk.sbs.service.PvpSeasonService      : 서버 시작: 시즌 정보 없음 → 시즌 1 자동 생성 (2026-07-01T00:00:00Z~2026-07-29T00:00:00Z)
+2026-07-22T01:01:55.649+09:00 DEBUG 27520 --- [sbs] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Pool stats (total=10/10, idle=10/10, active=0, waiting=0)
+2026-07-22T01:01:55.649+09:00 DEBUG 27520 --- [sbs] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-22T01:02:10.070+09:00  INFO 27520 --- [sbs] [nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-22T01:02:10.070+09:00  INFO 27520 --- [sbs] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-07-22T01:02:10.071+09:00  INFO 27520 --- [sbs] [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-07-22T01:02:10.119+09:00  INFO 27520 --- [sbs] [nio-8080-exec-2] com.bk.sbs.service.AccountService        : Guest login attempt with guestId: null
+2026-07-22T01:02:25.663+09:00 DEBUG 27520 --- [sbs] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Pool stats (total=10/10, idle=10/10, active=0, waiting=0)
+2026-07-22T01:02:25.663+09:00 DEBUG 27520 --- [sbs] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-22T01:02:55.665+09:00 DEBUG 27520 --- [sbs] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Pool stats (total=10/10, idle=10/10, active=0, waiting=0)
+2026-07-22T01:02:55.665+09:00 DEBUG 27520 --- [sbs] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-22T01:02:58.788+09:00  INFO 27520 --- [sbs] [nio-8080-exec-1] com.bk.sbs.service.AccountService        : Guest login attempt with guestId: test-fleet-preset-guest-001
+2026-07-22T01:02:58.790+09:00  INFO 27520 --- [sbs] [nio-8080-exec-1] com.bk.sbs.service.AccountService        : Creating new guest account with guestId: test-fleet-preset-guest-001
+2026-07-22T01:02:58.862+09:00  INFO 27520 --- [sbs] [nio-8080-exec-1] com.bk.sbs.service.AccountService        : createAccountWithDefaultCommander: accountId=4, email=guest_test-fleet-preset-guest-001
+2026-07-22T01:02:58.868+09:00  INFO 27520 --- [sbs] [nio-8080-exec-1] com.bk.sbs.service.CommanderService      : createCommander: accountId=4, commanderId=4, name=commander_4
+2026-07-22T01:02:58.876+09:00 ERROR 27520 --- [sbs] [nio-8080-exec-1] c.b.s.exception.GlobalExceptionHandler   : [UNKNOWN_ERROR] UnsupportedOperationException: null
+
+java.lang.UnsupportedOperationException: null
+	at java.base/java.util.ImmutableCollections.uoe(ImmutableCollections.java:142) ~[na:na]
+	at java.base/java.util.ImmutableCollections$AbstractImmutableCollection.clear(ImmutableCollections.java:149) ~[na:na]
+	at org.hibernate.type.CollectionType.replaceElements(CollectionType.java:506) ~[hibernate-core-6.6.18.Final.jar:6.6.18.Final]
+	at org.hibernate.type.CollectionType.replace(CollectionType.java:719) ~[hibernate-core-6.6.18.Final.jar:6.6.18.Final]
+	at org.hibernate.type.TypeHelper.replace(TypeHelper.java:117) ~[hibernate-core-6.6.18.Final.jar:6.6.18.Final]
+	at org.hibernate.event.internal.DefaultMergeEventListener.copyValues(DefaultMergeEventListener.java:596) ~[hibernate-core-6.6.18.Final.jar:6.6.18.Final]
+	at org.hibernate.event.internal.DefaultMergeEventListener.entityIsPersistent(DefaultMergeEventListener.java:286) ~[hibernate-core-6.6.18.Final.jar:6.6.18.Final]
+	at org.hibernate.event.internal.DefaultMergeEventListener.merge(DefaultMergeEventListener.java:220) ~[hibernate-core-6.6.18.Final.jar:6.6.18.Final]
+	at org.hibernate.event.internal.DefaultMergeEventListener.doMerge(DefaultMergeEventListener.java:152) ~[hibernate-core-6.6.18.Final.jar:6.6.18.Final]
+	at org.hibernate.event.internal.DefaultMergeEventListener.onMerge(DefaultMergeEventListener.java:136) ~[hibernate-core-6.6.18.Final.jar:6.6.18.Final]
+	at org.hibernate.event.internal.DefaultMergeEventListener.onMerge(DefaultMergeEventListener.java:89) ~[hibernate-core-6.6.18.Final.jar:6.6.18.Final]
+	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127) ~[hibernate-core-6.6.18.Final.jar:6.6.18.Final]
+	at org.hibernate.internal.SessionImpl.fireMerge(SessionImpl.java:854) ~[hibernate-core-6.6.18.Final.jar:6.6.18.Final]
+	at org.hibernate.internal.SessionImpl.merge(SessionImpl.java:840) ~[hibernate-core-6.6.18.Final.jar:6.6.18.Final]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.orm.jpa.ExtendedEntityManagerCreator$ExtendedEntityManagerInvocationHandler.invoke(ExtendedEntityManagerCreator.java:364) ~[spring-orm-6.2.8.jar:6.2.8]
+	at jdk.proxy2/jdk.proxy2.$Proxy141.merge(Unknown Source) ~[na:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.orm.jpa.SharedEntityManagerCreator$SharedEntityManagerInvocationHandler.invoke(SharedEntityManagerCreator.java:320) ~[spring-orm-6.2.8.jar:6.2.8]
+	at jdk.proxy2/jdk.proxy2.$Proxy141.merge(Unknown Source) ~[na:na]
+	at org.springframework.data.jpa.repository.support.SimpleJpaRepository.save(SimpleJpaRepository.java:656) ~[spring-data-jpa-3.5.1.jar:3.5.1]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359) ~[spring-aop-6.2.8.jar:6.2.8]
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker$RepositoryFragmentMethodInvoker.lambda$new$0(RepositoryMethodInvoker.java:277) ~[spring-data-commons-3.5.1.jar:3.5.1]
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.doInvoke(RepositoryMethodInvoker.java:170) ~[spring-data-commons-3.5.1.jar:3.5.1]
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.invoke(RepositoryMethodInvoker.java:158) ~[spring-data-commons-3.5.1.jar:3.5.1]
+	at org.springframework.data.repository.core.support.RepositoryComposition$RepositoryFragments.invoke(RepositoryComposition.java:515) ~[spring-data-commons-3.5.1.jar:3.5.1]
+	at org.springframework.data.repository.core.support.RepositoryComposition.invoke(RepositoryComposition.java:284) ~[spring-data-commons-3.5.1.jar:3.5.1]
+	at org.springframework.data.repository.core.support.RepositoryFactorySupport$ImplementationMethodExecutionInterceptor.invoke(RepositoryFactorySupport.java:734) ~[spring-data-commons-3.5.1.jar:3.5.1]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.8.jar:6.2.8]
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.doInvoke(QueryExecutorMethodInterceptor.java:174) ~[spring-data-commons-3.5.1.jar:3.5.1]
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.invoke(QueryExecutorMethodInterceptor.java:149) ~[spring-data-commons-3.5.1.jar:3.5.1]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.8.jar:6.2.8]
+	at org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor.invoke(DefaultMethodInvokingMethodInterceptor.java:69) ~[spring-data-commons-3.5.1.jar:3.5.1]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.8.jar:6.2.8]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380) ~[spring-tx-6.2.8.jar:6.2.8]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.2.8.jar:6.2.8]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.8.jar:6.2.8]
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:138) ~[spring-tx-6.2.8.jar:6.2.8]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.8.jar:6.2.8]
+	at org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:165) ~[spring-data-jpa-3.5.1.jar:3.5.1]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.8.jar:6.2.8]
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:223) ~[spring-aop-6.2.8.jar:6.2.8]
+	at jdk.proxy2/jdk.proxy2.$Proxy159.save(Unknown Source) ~[na:na]
+	at com.bk.sbs.service.FleetService.createDefaultFleetPreset(FleetService.java:64) ~[main/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359) ~[spring-aop-6.2.8.jar:6.2.8]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.2.8.jar:6.2.8]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.2.8.jar:6.2.8]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380) ~[spring-tx-6.2.8.jar:6.2.8]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.2.8.jar:6.2.8]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.8.jar:6.2.8]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728) ~[spring-aop-6.2.8.jar:6.2.8]
+	at com.bk.sbs.service.FleetService$$SpringCGLIB$$0.createDefaultFleetPreset(<generated>) ~[main/:na]
+	at com.bk.sbs.service.CommanderService.createCommander(CommanderService.java:87) ~[main/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359) ~[spring-aop-6.2.8.jar:6.2.8]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.2.8.jar:6.2.8]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.2.8.jar:6.2.8]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380) ~[spring-tx-6.2.8.jar:6.2.8]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.2.8.jar:6.2.8]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.8.jar:6.2.8]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728) ~[spring-aop-6.2.8.jar:6.2.8]
+	at com.bk.sbs.service.CommanderService$$SpringCGLIB$$0.createCommander(<generated>) ~[main/:na]
+	at com.bk.sbs.service.AccountService.createAccountWithDefaultCommander(AccountService.java:144) ~[main/:na]
+	at com.bk.sbs.service.AccountService.lambda$guestLogin$6(AccountService.java:387) ~[main/:na]
+	at java.base/java.util.Optional.orElseGet(Optional.java:364) ~[na:na]
+	at com.bk.sbs.service.AccountService.guestLogin(AccountService.java:385) ~[main/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.aop.support.AopUtils.invokeJoinpointUsingReflection(AopUtils.java:359) ~[spring-aop-6.2.8.jar:6.2.8]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.invokeJoinpoint(ReflectiveMethodInvocation.java:196) ~[spring-aop-6.2.8.jar:6.2.8]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:163) ~[spring-aop-6.2.8.jar:6.2.8]
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:380) ~[spring-tx-6.2.8.jar:6.2.8]
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.2.8.jar:6.2.8]
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.8.jar:6.2.8]
+	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:728) ~[spring-aop-6.2.8.jar:6.2.8]
+	at com.bk.sbs.service.AccountService$$SpringCGLIB$$0.guestLogin(<generated>) ~[main/:na]
+	at com.bk.sbs.controller.AccountController.guestLogin(AccountController.java:53) ~[main/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:258) ~[spring-web-6.2.8.jar:6.2.8]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:191) ~[spring-web-6.2.8.jar:6.2.8]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.2.8.jar:6.2.8]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:986) ~[spring-webmvc-6.2.8.jar:6.2.8]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:891) ~[spring-webmvc-6.2.8.jar:6.2.8]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.2.8.jar:6.2.8]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.2.8.jar:6.2.8]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.2.8.jar:6.2.8]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.8.jar:6.2.8]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.2.8.jar:6.2.8]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590) ~[tomcat-embed-core-10.1.42.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.2.8.jar:6.2.8]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.42.jar:6.0]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:110) ~[spring-web-6.2.8.jar:6.2.8]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108) ~[spring-web-6.2.8.jar:6.2.8]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108) ~[spring-web-6.2.8.jar:6.2.8]
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:365) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:125) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:119) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at com.bk.sbs.security.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:42) ~[main/:na]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.8.jar:6.2.8]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.8.jar:6.2.8]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.8.jar:6.2.8]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.8.jar:6.2.8]
+	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191) ~[spring-security-web-6.5.1.jar:6.5.1]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.2.8.jar:6.2.8]
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52) ~[spring-web-6.2.8.jar:6.2.8]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.2.8.jar:6.2.8]
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74) ~[spring-web-6.2.8.jar:6.2.8]
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:319) ~[spring-security-config-6.5.1.jar:6.5.1]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.2.8.jar:6.2.8]
+	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$4(HandlerMappingIntrospector.java:267) ~[spring-webmvc-6.2.8.jar:6.2.8]
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.2.8.jar:6.2.8]
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74) ~[spring-web-6.2.8.jar:6.2.8]
+	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:240) ~[spring-security-config-6.5.1.jar:6.5.1]
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362) ~[spring-web-6.2.8.jar:6.2.8]
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278) ~[spring-web-6.2.8.jar:6.2.8]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.8.jar:6.2.8]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.8.jar:6.2.8]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.8.jar:6.2.8]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.8.jar:6.2.8]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.8.jar:6.2.8]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.8.jar:6.2.8]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:116) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:398) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1769) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1189) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:658) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.42.jar:10.1.42]
+	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
+
+2026-07-22T01:03:06.041+09:00 DEBUG 27520 --- [sbs] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - keepalive: connection org.mariadb.jdbc.Connection@7af0d91b is alive
+2026-07-22T01:03:11.172+09:00 DEBUG 27520 --- [sbs] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - keepalive: connection org.mariadb.jdbc.Connection@67993f42 is alive
+2026-07-22T01:03:14.948+09:00 DEBUG 27520 --- [sbs] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - keepalive: connection org.mariadb.jdbc.Connection@5480d78c is alive
+2026-07-22T01:03:16.216+09:00 DEBUG 27520 --- [sbs] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - keepalive: connection org.mariadb.jdbc.Connection@7767bb3c is alive
+2026-07-22T01:03:16.718+09:00 DEBUG 27520 --- [sbs] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - keepalive: connection org.mariadb.jdbc.Connection@b89235 is alive
+2026-07-22T01:03:19.141+09:00 DEBUG 27520 --- [sbs] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - keepalive: connection org.mariadb.jdbc.Connection@59ca8181 is alive
+2026-07-22T01:03:19.978+09:00 DEBUG 27520 --- [sbs] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - keepalive: connection org.mariadb.jdbc.Connection@6f0a2f88 is alive
+2026-07-22T01:03:20.054+09:00 DEBUG 27520 --- [sbs] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - keepalive: connection org.mariadb.jdbc.Connection@c896d22 is alive
+2026-07-22T01:03:23.938+09:00 DEBUG 27520 --- [sbs] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - keepalive: connection org.mariadb.jdbc.Connection@5b053911 is alive
+2026-07-22T01:03:24.533+09:00 DEBUG 27520 --- [sbs] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - keepalive: connection org.mariadb.jdbc.Connection@642bc448 is alive
+2026-07-22T01:03:25.674+09:00 DEBUG 27520 --- [sbs] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Pool stats (total=10/10, idle=10/10, active=0, waiting=0)
+2026-07-22T01:03:25.674+09:00 DEBUG 27520 --- [sbs] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-22T01:03:55.679+09:00 DEBUG 27520 --- [sbs] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Pool stats (total=10/10, idle=10/10, active=0, waiting=0)
+2026-07-22T01:03:55.679+09:00 DEBUG 27520 --- [sbs] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-22T01:04:25.690+09:00 DEBUG 27520 --- [sbs] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Pool stats (total=10/10, idle=10/10, active=0, waiting=0)
+2026-07-22T01:04:25.690+09:00 DEBUG 27520 --- [sbs] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Fill pool skipped, pool has sufficient level or currently being filled.
+2026-07-22T01:04:46.539+09:00 DEBUG 27520 --- [sbs] [l-1:housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - keepalive: connection org.mariadb.jdbc.Connection@7af0d91b is alive

@@ -42,8 +42,8 @@ def map_csharp_type_to_java(csharp_type):
     if csharp_type.endswith('[]'):
         return f'List<{map_csharp_type_to_java(csharp_type[:-2])}>'
 
-    # enum (E로 시작) 그대로 유지
-    if csharp_type.startswith('E'):
+    # enum (E + 대문자, 예: EUnitState) 그대로 유지 — E로 시작하는 일반 클래스(ExplorationFleetInfo 등)와 구분
+    if re.match(r'^E[A-Z]', csharp_type):
         return csharp_type
 
     mapped = type_mapping.get(csharp_type, csharp_type)
@@ -116,8 +116,8 @@ def generate_java_dto(class_info, package_name):
         jt = f['java_type']
         if jt.startswith('List<'):
             imports.add('import java.util.List;')
-        # enum import (E로 시작하는 타입)
-        inner = re.search(r'(\bE\w+)', jt)
+        # enum import (E + 대문자로 시작하는 타입, 예: EUnitState)
+        inner = re.search(r'(\bE[A-Z]\w*)', jt)
         if inner:
             imports.add(f"import com.bk.sbs.enums.{inner.group(1)};")
 
