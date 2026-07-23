@@ -28,4 +28,5 @@ public class CommanderInfoDto {
     private List<String> clearedZones;
     private Integer nameChangeCount;
     private Integer explorationSeedBase;
+    private Integer commandPowerMax;
 }

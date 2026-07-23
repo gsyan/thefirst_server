@@ -7,44 +7,17 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
+// 함선 시스템 대격변으로 zoneName/스테이지 기준(zoneStages)에서 zoneIndex 기준(zoneConfigs)으로 재구성됨 —
+// 그리드 셀 적함대를 클라(ExplorationEnemyFleetGenerator)와 동일하게 재계산하는 데 필요한 필드만 담음
 @Data
 @NoArgsConstructor
 public class ZoneConfig {
-    private List<ZoneConfigData> zoneStages = new ArrayList<>();
+    private List<ZoneConfigData> zoneConfigs = new ArrayList<>();
 
-    public ZoneConfigData getZoneByName(String zoneName) {
-        if (zoneName == null || zoneName.isEmpty()) return null;
-        return zoneStages.stream()
-                .filter(z -> zoneName.equals(z.getZoneName()))
+    public ZoneConfigData getZoneByIndex(int zoneIndex) {
+        return zoneConfigs.stream()
+                .filter(z -> z.getZoneIndex() != null && z.getZoneIndex() == zoneIndex)
                 .findFirst()
                 .orElse(null);
-    }
-
-    public int getMaxStageInGroup(int group) {
-        int max = 0;
-        for (ZoneConfigData z : zoneStages) {
-            String name = z.getZoneName();
-            if (name == null) continue;
-            String[] parts = name.split("-");
-            if (parts.length != 2) continue;
-            try {
-                if (Integer.parseInt(parts[0]) == group) {
-                    int stage = Integer.parseInt(parts[1]);
-                    if (stage > max) max = stage;
-                }
-            } catch (NumberFormatException ignored) {}
-        }
-        return max;
-    }
-
-    // 이름 목록으로 ZoneConfigData 반환 (순서 무관)
-    public List<ZoneConfigData> getZonesByNames(List<String> zoneNames) {
-        List<ZoneConfigData> result = new ArrayList<>();
-        if (zoneNames == null) return result;
-        for (String name : zoneNames) {
-            ZoneConfigData z = getZoneByName(name);
-            if (z != null) result.add(z);
-        }
-        return result;
     }
 }

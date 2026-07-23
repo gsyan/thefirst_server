@@ -20,11 +20,7 @@ public class ModuleData {
 
     private EModuleSubType moduleSubType;
 
-    private Integer moduleLevel;
-
-    private Integer modulePointCost;
-
-    private Integer mineralCost;
+    private Integer statPoint;
 
     private String description;
 
@@ -36,7 +32,7 @@ public class ModuleData {
 
     private Float speed;
 
-    private Integer attackFireCount;
+    private Float turnRate;
 
     private Float attack;
 
@@ -44,15 +40,11 @@ public class ModuleData {
 
     private Float attackCool;
 
-    private Float projectileSpeed;
-
     private Float silenceTime;
 
     private Integer airCount;
 
     private Float airMaintenanceTime;
-
-    private Float airLaunchDist;
 
     private Float airHealth;
 
@@ -71,4 +63,16 @@ public class ModuleData {
     private Float airAvoidRadius;
 
     private Float airAdditionalDelay;
+
+    private Float shieldGauge;
+
+    private Float shieldDelay;
+
+    private Float shieldRegenRate;
+
+    private Integer interceptorCount;
+
+    private Float interceptorDelay;
+
+    private Float interceptorRegenRate;
 }

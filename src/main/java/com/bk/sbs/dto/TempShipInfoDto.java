@@ -6,14 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * ExplorationShipSlotDto
- * Auto-generated from Unity C# ExplorationShipSlot class
+ * TempShipInfoDto
+ * Auto-generated from Unity C# TempShipInfo class
  */
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class ExplorationShipSlotDto {
+public class TempShipInfoDto {
     private String shipPresetId;
     private Boolean isFront;
 }

@@ -1,5 +1,6 @@
 package com.bk.sbs.config;
 
+import com.bk.sbs.dto.ShipStatFormulaSettings;
 import lombok.Data;
 
 /**
@@ -41,5 +42,7 @@ public class DataTableConfig {
     private Float aircraftTacticDamageMultiplier;
 
     private Float aircraftTacticAmmoMultiplier;
+
+    private ShipStatFormulaSettings shipStatFormula;
 
 }

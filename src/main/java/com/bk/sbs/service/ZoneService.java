@@ -52,6 +52,9 @@ public class ZoneService {
         this.fleetService = fleetService;
     }
 
+    // 함선 시스템 대격변으로 클라이언트 ZoneStageConfig(존별 보상/적함대 데이터) 삭제됨 — 서버 ZoneConfigData도 항상 빈 데이터라
+    // 이 메서드들은 현재 전부 ZONE_NOT_FOUND만 반환함. 삭제 아님 — 그리드 기반 설계로 재구성 시 참고용으로 주석 처리
+    /*
     // 클리어 기록, rewardClaimed 리셋, 보상은 claimZoneReward에서 별도 처리
     @Transactional
     public ClearZoneStageResponse clearZoneStage(Long commanderId, ClearZoneStageRequest request) {
@@ -242,6 +245,7 @@ public class ZoneService {
         int[] p = parseZoneName(zoneName);
         return (long) p[0] * 1000 + p[1];
     }
+    */
 
     // dev 치트용: 다음 레벨에 필요한 exp만큼만 채워서 정확히 1레벨 증가, 결과 commanderLevel 반환
     @Transactional
@@ -276,26 +280,23 @@ public class ZoneService {
         return commander.getCommanderLevel();
     }
 
-    // exp 누적 기준으로 레벨업 조건 판정 후 자동 승급, 레벨업한 만큼 모듈포인트 지급
+    // exp 누적 기준으로 레벨업 조건 판정 후 자동 승급 (레벨업 모듈포인트 보상 개념은 삭제됨)
     private void autoLevelUpIfNeeded(Commander commander) {
         int currentLevel = commander.getCommanderLevel();
         int accumulatedExp = commander.getExp();
-        int modulePointReward = 0;
         int nextLevel = currentLevel + 1;
         int requiredExp = gameDataService.getCommanderLevelRequiredExp(nextLevel);
         while (requiredExp > 0 && accumulatedExp >= requiredExp) {
             currentLevel = nextLevel;
-            modulePointReward += gameDataService.getModulePointReward(currentLevel);
             nextLevel = currentLevel + 1;
             requiredExp = gameDataService.getCommanderLevelRequiredExp(nextLevel);
         }
         commander.setCommanderLevel(currentLevel);
-        if (modulePointReward > 0) {
-            commander.setModulePoint(commander.getModulePoint() + modulePointReward);
-            commander.setModulePointMaxGot(commander.getModulePointMaxGot() + modulePointReward);
-        }
     }
 
+    // 함선 시스템 대격변으로 위 clearZoneStage/claimZoneReward/claimPendingStageRewards와 함께 비활성화된 헬퍼들 —
+    // parseZoneName/checkPreviousStageCleared/getStageEnemies는 여기서만 쓰였음. 삭제 아님, 그리드 기반 설계로 재구성 시 참고
+    /*
     private int[] parseZoneName(String zoneName) {
         if (zoneName == null || zoneName.isEmpty()) return new int[]{0, 0};
         String[] parts = zoneName.split("-");
@@ -342,6 +343,7 @@ public class ZoneService {
                 .enemyFleets(zoneConfig.getEnemyFleets())
                 .build();
     }
+    */
 
     @Transactional
     public HeartbeatResponse heartbeat(Long commanderId) {

@@ -78,11 +78,11 @@ def parse_server_fields_from_csharp(cs_file_path, class_name):
 
 
 def generate_zone_config_dto(cs_source_path, output_dir, package_name):
-    """C# ZoneStageConfig에서 [server] 마커 필드를 읽어 ZoneConfigData.java 생성"""
+    """C# ZoneConfig에서 [server] 마커 필드를 읽어 ZoneConfigData.java 생성"""
 
-    server_fields = parse_server_fields_from_csharp(cs_source_path, 'ZoneStageConfig')
+    server_fields = parse_server_fields_from_csharp(cs_source_path, 'ZoneConfig')
     if not server_fields:
-        raise ValueError("No [server] fields found in ZoneStageConfig. Check // [server] markers in DataTableZone.cs")
+        raise ValueError("No [server] fields found in ZoneConfig. Check // [server] markers in DataTableZone.cs")
 
     java_class_name = "ZoneConfigData"
 
@@ -98,7 +98,7 @@ def generate_zone_config_dto(cs_source_path, output_dir, package_name):
     java_code += "\n"
     java_code += "/**\n"
     java_code += f" * {java_class_name}\n"
-    java_code += " * Auto-generated from Unity C# ZoneStageConfig class (server-required fields only)\n"
+    java_code += " * Auto-generated from Unity C# ZoneConfig class (server-required fields only)\n"
     java_code += " */\n"
     java_code += "@Data\n"
     java_code += "@NoArgsConstructor\n"

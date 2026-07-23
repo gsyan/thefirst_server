@@ -221,7 +221,7 @@ public class TestDataInitializer {
         float bodyMaxHealth = (bodyData != null && bodyData.getHealth() != null) ? bodyData.getHealth() : 0f;
         List<Object[]> moduleRows = new ArrayList<>(count);
         for (Long shipId : shipIds) {
-            moduleRows.add(new Object[]{shipId, "body", "body_t1_m1", 1, bodyMaxHealth, now});
+            moduleRows.add(new Object[]{shipId, "body", "body_t1_m111", 1, bodyMaxHealth, now});
         }
         jdbc.batchUpdate(
                 "INSERT INTO ship_module (ship_id, module_type, module_sub_type, module_level," +

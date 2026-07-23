@@ -32,6 +32,8 @@ public class ZoneController {
         this.jwtUtil = jwtUtil;
     }
 
+    // 함선 시스템 대격변으로 ZoneService의 대응 메서드들이 비활성화됨 — 삭제 아님, 그리드 기반 설계로 재구성 시 참고
+    /*
     @PostMapping("/get-stage-enemies")
     public ResponseEntity<ApiResponse<GetStageEnemiesResponse>> getStageEnemies(
             @RequestBody GetStageEnemiesRequest request,
@@ -68,6 +70,7 @@ public class ZoneController {
         PendingStageRewardResponse response = zoneService.claimPendingStageRewards(actualCommanderId);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
+    */
 
     // 하트비트 (온라인 시간 갱신)
     @PostMapping("/heartbeat")

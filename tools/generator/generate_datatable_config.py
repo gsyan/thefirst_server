@@ -25,7 +25,7 @@ def open_file_location(file_path):
         print(f"Failed to open file location: {e}")
         print(f"File location: {os.path.abspath(file_path)}")
 
-def map_csharp_type_to_java(csharp_type, add_dto_suffix=True):
+def map_csharp_type_to_java(csharp_type):
     """C# 타입을 Java 타입으로 매핑"""
     type_mapping = {
         'int': 'Integer',
@@ -41,32 +41,22 @@ def map_csharp_type_to_java(csharp_type, add_dto_suffix=True):
     # 배열 타입 처리 (예: CostStruct[] -> List<CostStructDto>)
     if csharp_type.endswith('[]'):
         element_type = csharp_type[:-2]
-        java_element_type = map_csharp_type_to_java(element_type, add_dto_suffix)
+        java_element_type = map_csharp_type_to_java(element_type)
         return f"List<{java_element_type}>"
 
     # C# 제네릭 타입 처리 (예: List<string> -> List<String>)
     generic_match = re.match(r'(\w+)<(\w+)>', csharp_type)
     if generic_match:
         element_type = generic_match.group(2)
-        java_element_type = map_csharp_type_to_java(element_type, add_dto_suffix)
+        java_element_type = map_csharp_type_to_java(element_type)
         return f"List<{java_element_type}>"
 
     # enum 타입 (E로 시작하는 타입)은 그대로 유지
     if csharp_type.startswith('E'):
         return csharp_type
 
-    # 기본 타입 매핑
-    mapped_type = type_mapping.get(csharp_type, csharp_type)
-
-    # 커스텀 타입 (DTO 클래스)에는 Dto 접미사 추가
-    # 기본 타입(Integer, String 등)이 아닌 경우
-    if add_dto_suffix and mapped_type == csharp_type and csharp_type not in type_mapping:
-        # Request/Response는 Dto 불필요
-        if csharp_type.endswith('Request') or csharp_type.endswith('Response'):
-            return csharp_type
-        return f"{csharp_type}Dto"
-
-    return mapped_type
+    # 기본 타입 매핑 — 커스텀 타입(설정 클래스)은 접미사 없이 원래 이름 그대로 유지(네트워크 Dto가 아님)
+    return type_mapping.get(csharp_type, csharp_type)
 
 def extract_class_fields(csharp_content, class_name):
     """C# 클래스에서 public 필드 추출 (부모 클래스 필드 포함)"""
@@ -136,7 +126,7 @@ def extract_class_fields(csharp_content, class_name):
     return parent_fields + fields
 
 def generate_java_dto(csharp_file_path, output_dir, package_name, class_name):
-    """C# 클래스에서 Java DTO 생성"""
+    """C# 클래스에서 Java DTO 생성 (com.bk.sbs.dto 패키지용, Dto 접미사 포함)"""
     # C# 파일 읽기
     with open(csharp_file_path, 'r', encoding='utf-8') as file:
         content = file.read()
@@ -159,7 +149,7 @@ def generate_java_dto(csharp_file_path, output_dir, package_name, class_name):
             imports.add(f"import com.bk.sbs.enums.{field['java_type']};")
         if field['java_type'].startswith('List<'):
             has_list = True
-    
+
     if has_list:
         imports.add("import java.util.List;")
 
@@ -230,17 +220,22 @@ def generate_data_table_config_java(csharp_file_path, output_dir, package_name):
     imports = set()
     imports.add("import lombok.Data;")
 
+    primitive_java_types = {'Integer', 'Float', 'Double', 'Boolean', 'String', 'Long', 'Short', 'Byte'}
+
     has_list = False
     for field in fields:
-        if field['java_type'].startswith('List<'):
+        java_type = field['java_type']
+        if java_type.startswith('List<'):
             has_list = True
-        if field['java_type'].startswith('E'):
-            imports.add(f"import com.bk.sbs.enums.{field['java_type']};")
-        # List 내부의 Dto 타입 import
-        if 'Dto' in field['java_type']:
-            dto_type = re.search(r'(\w+Dto)', field['java_type'])
-            if dto_type:
-                imports.add(f"import com.bk.sbs.dto.{dto_type.group(1)};")
+
+        # List<T> 내부 타입이든 단일 타입이든 실제 참조 타입을 꺼내서 판별
+        list_match = re.match(r'List<(\w+)>', java_type)
+        inner_type = list_match.group(1) if list_match else java_type
+
+        if inner_type.startswith('E'):
+            imports.add(f"import com.bk.sbs.enums.{inner_type};")
+        elif inner_type not in primitive_java_types:
+            imports.add(f"import com.bk.sbs.dto.{inner_type};")
 
     if has_list:
         imports.add("import java.util.List;")
@@ -284,50 +279,46 @@ def generate_data_table_config_java(csharp_file_path, output_dir, package_name):
 
     return output_file_path
 
-
 if __name__ == "__main__":
-    output_dir = r"../../src/main/java/com/bk/sbs/dto"
-    package_name = "com.bk.sbs.dto"
-
-    # ModuleData 생성
-    module_data_config = {
-        'csharp_file_path': r"../../../thefirst_client_unity/Assets/Scripts/System/Data/DataTableModule.cs",
-        'class_name': "ModuleData"
-    }
-
-    configs = [module_data_config]
+    csharp_file_path = r"../../../thefirst_client_unity/Assets/Scripts/System/Data/DataTableConfig.cs"
+    dto_output_dir = r"../../src/main/java/com/bk/sbs/dto"
+    dto_package_name = "com.bk.sbs.dto"
 
     output_files = []
-    for config in configs:
-        print(f"\n{'='*60}")
-        print(f"Generating {config['class_name']} from {config['csharp_file_path']}")
-        print(f"{'='*60}")
 
-        output_file = generate_java_dto(
-            config['csharp_file_path'],
-            output_dir,
-            package_name,
-            config['class_name']
-        )
-
-        if output_file:
-            output_files.append(output_file)
-
-    # DataTableConfig 생성 (config 패키지)
+    # DataTableConfig.java 생성 (config 패키지, GameSettings 최상위 필드)
     print(f"\n{'='*60}")
     print("Generating DataTableConfig.java")
     print(f"{'='*60}")
 
     data_table_config_file = generate_data_table_config_java(
-        r"../../../thefirst_client_unity/Assets/Scripts/System/Data/DataTableConfig.cs",
+        csharp_file_path,
         r"../../src/main/java/com/bk/sbs/config",
         "com.bk.sbs.config"
     )
-
     if data_table_config_file:
         output_files.append(data_table_config_file)
 
-    # 생성된 파일들의 폴더 열기
+    # GameSettings.shipStatFormula가 참조하는 중첩 포뮬러 클래스들 (dto 패키지)
+    ship_stat_formula_class_names = [
+        "ShipStatFormulaSettings",
+        "BeamFormula",
+        "MissileFormula",
+        "HangarFormula",
+        "ShieldFormula",
+        "InterceptorFormula",
+        "FlatStatFormula",
+    ]
+
+    for class_name in ship_stat_formula_class_names:
+        print(f"\n{'='*60}")
+        print(f"Generating {class_name} from {csharp_file_path}")
+        print(f"{'='*60}")
+
+        output_file = generate_java_dto(csharp_file_path, dto_output_dir, dto_package_name, class_name)
+        if output_file:
+            output_files.append(output_file)
+
     if output_files:
         print(f"\n{'='*60}")
         print(f"Generated {len(output_files)} files successfully!")

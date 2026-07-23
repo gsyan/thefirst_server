@@ -61,6 +61,11 @@ public class Commander {
     @Column(nullable = false, columnDefinition = "INT DEFAULT 2")
     private Integer nameChangeCount = 2;
 
+    // 탐험 함대 편성 지휘력 최대치 — IncreaseCommandPowerMaxRequest(은행 탐험 포인트 소모)로 영구 증가
+    // 기본값은 임시 밸런스값(더미 프리셋 commandCost 100~500 기준 1~2척 배치 가능한 수준) — 기획 확정 시 조정
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 300")
+    private int commandPowerMax = 300;
+
     // 마지막 자원 수집 시간 (zone clear 시 또는 collect 시 갱신, UTC)
     private Instant collectDateTime;
 

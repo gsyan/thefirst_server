@@ -125,6 +125,7 @@ public class CommanderService {
                 .clearedZones(clearedZoneRepository.findZoneNamesByCommanderId(commanderId))
                 .nameChangeCount(commander.getNameChangeCount())
                 .explorationSeedBase(explorationWorldSeed ^ commanderId.hashCode())
+                .commandPowerMax(commander.getCommandPowerMax())
                 .build();
     }
 

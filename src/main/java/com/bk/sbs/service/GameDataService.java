@@ -31,20 +31,30 @@ public class GameDataService {
     private DataTablePvpSeason dataTablePvpSeason = new DataTablePvpSeason();
     private DataTableDailyBonus dataTableDailyBonus = new DataTableDailyBonus();
     private ZoneConfig zoneConfig = new ZoneConfig();
-    // 커맨더 레벨 전체 데이터 (요구 exp, shipCount, 레벨업 보상 modulePoint, 모듈 서브타입 등급 상한)
-    private static class CommanderLevelData {
+    // 커맨더 레벨 전체 데이터 (요구 exp, shipCount)
+    private static class CommanderData {
         int requireExp;
-        int modulePointReward;
         int shipCount;
-        int subtypeLevel;
-        CommanderLevelData(int requireExp, int modulePointReward, int shipCount, int subtypeLevel) {
-            this.requireExp = requireExp; this.modulePointReward = modulePointReward;
-            this.shipCount = shipCount; this.subtypeLevel = subtypeLevel;
+        CommanderData(int requireExp, int shipCount) {
+            this.requireExp = requireExp;
+            this.shipCount = shipCount;
         }
     }
-    private Map<Integer, CommanderLevelData> commanderLevelDataMap = new HashMap<>();
-    private Map<Integer, Long> upgradeCostByTier = new HashMap<>();
+    private Map<Integer, CommanderData> commanderDataMap = new HashMap<>();
     private int cachedMaxShipCount = 1;
+
+    // ZoneEnemyFleetGenerator에서 클라(ExplorationEnemyFleetGenerator)와 동일한 함대를 재계산하는 데 필요한 최소 정보만 보관
+    public static class ShipPresetSummary {
+        public String presetId;
+        public int unlockCommanderLevel;
+        public int commandCost;
+        public ShipPresetSummary(String presetId, int unlockCommanderLevel, int commandCost) {
+            this.presetId = presetId;
+            this.unlockCommanderLevel = unlockCommanderLevel;
+            this.commandCost = commandCost;
+        }
+    }
+    private java.util.List<ShipPresetSummary> shipPresetList = new java.util.ArrayList<>();
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -69,45 +79,25 @@ public class GameDataService {
                 log.warn("No game data files found in resources/data/, using empty data");
             }
 
-            ClassPathResource upgradeCostResource = new ClassPathResource("data/DataTableUpgradeCost.json");
-            if (upgradeCostResource.exists()) {
-                String json = new String(upgradeCostResource.getInputStream().readAllBytes());
+            ClassPathResource commanderResource = new ClassPathResource("data/DataTableCommander.json");
+            if (commanderResource.exists()) {
+                String json = new String(commanderResource.getInputStream().readAllBytes());
                 com.fasterxml.jackson.databind.JsonNode arrayNode = objectMapper.readTree(json);
-                upgradeCostByTier.clear();
-                for (com.fasterxml.jackson.databind.JsonNode node : arrayNode) {
-                    com.fasterxml.jackson.databind.JsonNode gradeNode = node.path("subtypeGrade");
-                    if (gradeNode.isMissingNode() == false) {
-                        int grade = gradeNode.asInt();
-                        long cost = node.path("modulePointCost").asLong(0);
-                        upgradeCostByTier.put(grade, cost);
-                    }
-                }
-                log.info("DataTableUpgradeCost.json loaded: {} entries", upgradeCostByTier.size());
-            } else {
-                log.warn("DataTableUpgradeCost.json not found in resources/data/, using empty data");
-            }
-
-            ClassPathResource commanderLevelResource = new ClassPathResource("data/DataTableCommanderLevel.json");
-            if (commanderLevelResource.exists()) {
-                String json = new String(commanderLevelResource.getInputStream().readAllBytes());
-                com.fasterxml.jackson.databind.JsonNode arrayNode = objectMapper.readTree(json);
-                commanderLevelDataMap.clear();
+                commanderDataMap.clear();
                 for (com.fasterxml.jackson.databind.JsonNode levelNode : arrayNode) {
                     com.fasterxml.jackson.databind.JsonNode commanderLevelNode = levelNode.path("commanderLevel");
                     com.fasterxml.jackson.databind.JsonNode expNode = levelNode.path("requireExp");
                     if (commanderLevelNode.isMissingNode() == false && expNode.isMissingNode() == false) {
-                        int commanderLevel    = commanderLevelNode.asInt();
-                        int requireExp        = expNode.asInt(0);
-                        int modulePointReward = levelNode.path("modulePointReward").asInt(0);
-                        int shipCount         = levelNode.path("shipCount").asInt(1);
-                        int subtypeLevel      = levelNode.path("subtypeLevel").asInt(1);
-                        commanderLevelDataMap.put(commanderLevel, new CommanderLevelData(requireExp, modulePointReward, shipCount, subtypeLevel));
+                        int commanderLevel = commanderLevelNode.asInt();
+                        int requireExp     = expNode.asInt(0);
+                        int shipCount       = levelNode.path("shipCount").asInt(1);
+                        commanderDataMap.put(commanderLevel, new CommanderData(requireExp, shipCount));
                     }
                 }
-                cachedMaxShipCount = commanderLevelDataMap.values().stream().mapToInt(d -> d.shipCount).max().orElse(1);
-                log.info("DataTableCommanderLevel.json loaded: {} entries", commanderLevelDataMap.size());
+                cachedMaxShipCount = commanderDataMap.values().stream().mapToInt(d -> d.shipCount).max().orElse(1);
+                log.info("DataTableCommander.json loaded: {} entries", commanderDataMap.size());
             } else {
-                log.warn("DataTableCommanderLevel.json not found in resources/data/, using empty data");
+                log.warn("DataTableCommander.json not found in resources/data/, using empty data");
             }
 
             ClassPathResource zoneConfigResource = new ClassPathResource("data/DataTableZone.json");
@@ -117,6 +107,24 @@ public class GameDataService {
                 log.info("ZoneConfig.json loaded successfully from resources/data/");
             } else {
                 log.warn("ZoneConfig.json not found in resources/data/, using empty data");
+            }
+
+            // ZoneEnemyFleetGenerator가 클라와 동일하게 셀 적함대를 재계산하는 데 필요 — presetId/unlockCommanderLevel/commandCost만 추출
+            ClassPathResource shipPresetResource = new ClassPathResource("data/DataTableShipPreset.json");
+            if (shipPresetResource.exists()) {
+                String json = new String(shipPresetResource.getInputStream().readAllBytes());
+                com.fasterxml.jackson.databind.JsonNode arrayNode = objectMapper.readTree(json);
+                shipPresetList.clear();
+                for (com.fasterxml.jackson.databind.JsonNode presetNode : arrayNode) {
+                    String presetId = presetNode.path("presetId").asText(null);
+                    int unlockCommanderLevel = presetNode.path("unlockCommanderLevel").asInt(1);
+                    int commandCost = presetNode.path("commandCost").asInt(0);
+                    if (presetId != null)
+                        shipPresetList.add(new ShipPresetSummary(presetId, unlockCommanderLevel, commandCost));
+                }
+                log.info("DataTableShipPreset.json loaded: {} entries", shipPresetList.size());
+            } else {
+                log.warn("DataTableShipPreset.json not found in resources/data/, using empty data");
             }
 
             ClassPathResource pvpSeasonResource = new ClassPathResource("data/DataTablePvpSeason.json");
@@ -199,77 +207,24 @@ public class GameDataService {
         return modules.isEmpty() ? new ModuleData() : modules.get(0);
     }
 
-    // 특정 subType의 최대 레벨 반환 — moduleLevel 최댓값 기준
-    public int getMaxModuleLevel(EModuleType moduleType, EModuleSubType moduleSubType) {
-        List<ModuleData> modules = getModulesByType(moduleType);
-        return modules.stream()
-                .filter(m -> moduleSubType.equals(m.getModuleSubType()))
-                .mapToInt(ModuleData::getModuleLevel)
-                .max()
-                .orElse(0);
-    }
-
-    // 서브타입 등급(tier)별 등급업 비용 — prerequisites 체인 없이 (value/100)%100로 산출한 tier 기준 조회
-    public int getModuleResearchCost(EModuleSubType moduleSubType) {
-        if (moduleSubType == null) return 0;
-        int tier = (moduleSubType.getValue() / 100) % 100;
-        Long cost = upgradeCostByTier.get(tier);
-        return cost != null ? cost.intValue() : 0;
-    }
-
-    // 특정 body subtype의 level 1 moduleSlots 반환 (다운그레이드 시 사라지는 슬롯 판별용)
-    public List<com.bk.sbs.dto.ModuleSlotInfoDto> getBodyModuleSlots(EModuleSubType bodySubType) {
-        return getModulesByType(EModuleType.body).stream()
-                .filter(m -> bodySubType.equals(m.getModuleSubType()) && m.getModuleLevel() == 1)
-                .findFirst()
-                .map(ModuleData::getModuleSlots)
-                .orElse(java.util.Collections.emptyList());
-    }
-
-    // newSubType이 currentSubType의 직접 다음 단계인지 확인 — prerequisites 체인 없이 인코딩 산술(+100)로 판정
-    public boolean isDirectNextStep(EModuleSubType currentSubType, EModuleSubType newSubType) {
-        return newSubType == getNextSubType(currentSubType);
-    }
-
-    // currentSubType의 직접 다음 단계 반환 (없으면 none)
-    public EModuleSubType getNextSubType(EModuleSubType currentSubType) {
-        if (currentSubType == null) return EModuleSubType.none;
-        EModuleSubType next = EModuleSubType.fromValue(currentSubType.getValue() + 100);
-        return next;
-    }
-
-    // currentSubType의 직접 이전 단계 반환 (없으면 none)
-    public EModuleSubType getPrevSubType(EModuleSubType currentSubType) {
-        if (currentSubType == null) return EModuleSubType.none;
-        return EModuleSubType.fromValue(currentSubType.getValue() - 100);
-    }
-
     // 레벨업 기준 누적 exp 반환 (차감 없음, 서버 자동 판정 기준)
     public int getCommanderLevelRequiredExp(int commanderLevel) {
-        CommanderLevelData data = commanderLevelDataMap.get(commanderLevel);
+        CommanderData data = commanderDataMap.get(commanderLevel);
         return data != null ? data.requireExp : 0;
     }
 
     // 해당 커맨더 레벨에서 허용되는 최대 함선 수 반환
     public int getShipCount(int commanderLevel) {
-        CommanderLevelData data = commanderLevelDataMap.get(commanderLevel);
+        CommanderData data = commanderDataMap.get(commanderLevel);
         return data != null ? data.shipCount : 1;
-    }
-
-    // 해당 레벨 도달 시 지급되는 모듈포인트 보상
-    public int getModulePointReward(int commanderLevel) {
-        CommanderLevelData data = commanderLevelDataMap.get(commanderLevel);
-        return data != null ? data.modulePointReward : 0;
-    }
-
-    // 해당 커맨더 레벨에서 허용되는 모듈 서브타입 등급 상한
-    public int getSubtypeLevel(int commanderLevel) {
-        CommanderLevelData data = commanderLevelDataMap.get(commanderLevel);
-        return data != null ? data.subtypeLevel : 1;
     }
 
     public ZoneConfig getZoneConfig() {
         return zoneConfig != null ? zoneConfig : new ZoneConfig();
+    }
+
+    public java.util.List<ShipPresetSummary> getShipPresetList() {
+        return shipPresetList;
     }
 
     public DataTablePvpSeason getDataTablePvpSeason() {
@@ -286,8 +241,8 @@ public class GameDataService {
         return dataTableDailyBonus.getVipMineralCatchup(fromDay, toDay);
     }
 
-    public ZoneConfigData getZoneConfigByName(String zoneName) {
-        return getZoneConfig().getZoneByName(zoneName);
+    public ZoneConfigData getZoneConfigByIndex(int zoneIndex) {
+        return getZoneConfig().getZoneByIndex(zoneIndex);
     }
 
 }
