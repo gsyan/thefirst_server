@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class AuthResponse {
     private String accessToken;
     private String refreshToken;
-    private TempFleetInfoDto activeFleetInfo;
+    private FleetInfoDto activeFleetInfo;
     private CommanderInfoDto commanderInfo;
     private Boolean bGoogleLinked;
     private VipStatusResponse vipStatus;

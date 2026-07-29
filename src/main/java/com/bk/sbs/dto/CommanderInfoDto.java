@@ -17,16 +17,19 @@ import lombok.NoArgsConstructor;
 public class CommanderInfoDto {
     private Long commanderId;
     private String commanderName;
-    private Integer mineral;
+    private Integer nameChangeCount;
     private Integer commanderLevel;
     private Integer exp;
+    private Integer commandPowerMax;
+    private Integer explorationSeedBase;
+    private List<String> clearedZones;
+    private Integer explorationZoneNumber;
+    private String explorationCell;
+    private Integer mineral;
     private Integer modulePoint;
     private Integer modulePointMaxGot;
     private Integer pvpPoint;
     private Integer pvpPointMaxGot;
     private String pvpPointExpiry;
-    private List<String> clearedZones;
-    private Integer nameChangeCount;
-    private Integer explorationSeedBase;
-    private Integer commandPowerMax;
+    private Integer explorationPoint;
 }

@@ -149,6 +149,26 @@ public class FleetController {
         return ResponseEntity.ok(ApiResponse.success(null));
     }
 
+    // 함대편성(FleetComposition) 슬롯에 함선 배치/교체 저장
+    @PostMapping("/preset/place-ship")
+    public ResponseEntity<ApiResponse<Void>> placeFleetPresetShip(
+            @RequestBody FleetPresetPlaceShipRequest request,
+            HttpServletRequest httpRequest) {
+        Long actualCommanderId = getCommanderIdFromToken(httpRequest);
+        fleetService.placeFleetPresetShip(actualCommanderId, request);
+        return ResponseEntity.ok(ApiResponse.success(null));
+    }
+
+    // 함대편성 슬롯 전/후방 토글 저장
+    @PostMapping("/preset/set-front")
+    public ResponseEntity<ApiResponse<Void>> setFleetPresetShipFront(
+            @RequestBody FleetPresetSetFrontRequest request,
+            HttpServletRequest httpRequest) {
+        Long actualCommanderId = getCommanderIdFromToken(httpRequest);
+        fleetService.setFleetPresetShipFront(actualCommanderId, request);
+        return ResponseEntity.ok(ApiResponse.success(null));
+    }
+
     // 함선 리셋 및 제거
     @PostMapping("/reset-ship")
     public ResponseEntity<ApiResponse<ShipResetRemoveResponse>> resetAndRemoveShip(

@@ -25,4 +25,6 @@ public class ShipInfoDto {
     private Float beamMultiplier;
     private Float missileMultiplier;
     private Float hangerMultiplier;
+    private String shipPresetId;
+    private Boolean isFront;
 }

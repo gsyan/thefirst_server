@@ -64,22 +64,55 @@ public class FleetService {
         commanderFleetPresetRepository.save(preset);
     }
 
-    // 로그인 시 내려주는 "내 함대" — presetIndex=0 프리셋을 TempFleetInfoDto로 변환
-    public TempFleetInfoDto getActiveFleetPreset(Long commanderId) {
+    // 로그인 시 내려주는 "내 함대" — presetIndex=0 프리셋을 FleetInfoDto로 변환
+    public FleetInfoDto getActiveFleetPreset(Long commanderId) {
         CommanderFleetPreset preset = commanderFleetPresetRepository.findByCommanderIdAndPresetIndex(commanderId, 0)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.COMMANDER_CONTROLLER_FAIL_NULL_ACTIVE_FLEET));
 
-        List<TempShipInfoDto> ships = preset.getSlots().stream()
+        List<ShipInfoDto> ships = preset.getSlots().stream()
                 .sorted((a, b) -> Integer.compare(a.getSlotIndex(), b.getSlotIndex()))
-                .map(slot -> TempShipInfoDto.builder()
+                .map(slot -> ShipInfoDto.builder()
                         .shipPresetId(slot.getShipPresetId())
                         .isFront(slot.isFront())
                         .build())
                 .collect(Collectors.toList());
 
-        return TempFleetInfoDto.builder()
+        return FleetInfoDto.builder()
                 .ships(ships)
                 .build();
+    }
+
+    // 함대편성(FleetComposition) 슬롯에 함선 배치/교체 — 클라에서 이미 확정한 상태를 그대로 반영(saveFleetHealth와 동일한 저장 패턴)
+    @Transactional
+    public void placeFleetPresetShip(Long commanderId, FleetPresetPlaceShipRequest request) {
+        CommanderFleetPreset preset = commanderFleetPresetRepository.findByCommanderIdAndPresetIndex(commanderId, 0)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.COMMANDER_CONTROLLER_FAIL_NULL_ACTIVE_FLEET));
+
+        CommanderFleetPresetSlot slot = preset.getSlots().stream()
+                .filter(s -> s.getSlotIndex() == request.getSlotIndex())
+                .findFirst()
+                .orElseGet(() -> {
+                    CommanderFleetPresetSlot newSlot = new CommanderFleetPresetSlot();
+                    newSlot.setFleetPreset(preset);
+                    newSlot.setSlotIndex(request.getSlotIndex());
+                    preset.getSlots().add(newSlot);
+                    return newSlot;
+                });
+        slot.setShipPresetId(request.getShipPresetId());
+        slot.setFront(request.getIsFront());
+        commanderFleetPresetRepository.save(preset);
+    }
+
+    // 함대편성 슬롯 전/후방 토글 저장
+    @Transactional
+    public void setFleetPresetShipFront(Long commanderId, FleetPresetSetFrontRequest request) {
+        CommanderFleetPreset preset = commanderFleetPresetRepository.findByCommanderIdAndPresetIndex(commanderId, 0)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.COMMANDER_CONTROLLER_FAIL_NULL_ACTIVE_FLEET));
+
+        preset.getSlots().stream()
+                .filter(s -> s.getSlotIndex() == request.getSlotIndex())
+                .findFirst()
+                .ifPresent(slot -> slot.setFront(request.getIsFront()));
     }
 
     // 캐릭터의 모든 함대 조회

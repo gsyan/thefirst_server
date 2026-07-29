@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ClearExplorationCellRequest {
     private Integer zoneNumber;
-    private Integer cellX;
-    private Integer cellY;
+    private Integer cellRow;
+    private Integer cellCol;
 }

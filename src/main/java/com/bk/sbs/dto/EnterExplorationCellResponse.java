@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class EnterExplorationCellResponse {
     private Integer zoneNumber;
-    private Integer cellX;
-    private Integer cellY;
+    private Integer cellRow;
+    private Integer cellCol;
     private List<StageEnemyFleetSpawnConfigDto> enemyFleets;
 }

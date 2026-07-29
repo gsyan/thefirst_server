@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EnterExplorationCellRequest {
     private Integer zoneNumber;
-    private Integer cellX;
-    private Integer cellY;
-    private TempFleetInfoDto fleetInfo;
+    private Integer cellRow;
+    private Integer cellCol;
+    private FleetInfoDto fleetInfo;
 }

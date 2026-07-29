@@ -11,6 +11,8 @@ DROP TABLE IF EXISTS commander_fleet_preset;
 DROP TABLE IF EXISTS ship_module;
 DROP TABLE IF EXISTS ship;
 DROP TABLE IF EXISTS fleet;
+DROP TABLE IF EXISTS zone_cell_clear_log;
+DROP TABLE IF EXISTS zone_run;
 DROP TABLE IF EXISTS cleared_zone;
 DROP TABLE IF EXISTS redeem_code_usage;
 DROP TABLE IF EXISTS pvp_record;
@@ -55,6 +57,8 @@ CREATE TABLE commander (
     pvp_point_season_ref    INT             NOT NULL DEFAULT 0,
     name_change_count       INT             NOT NULL DEFAULT 2,
     command_power_max       INT             NOT NULL DEFAULT 300,
+    exploration_point           INT         NOT NULL DEFAULT 0,
+    highest_cleared_zone_number INT         NOT NULL DEFAULT 0,
     collect_date_time       DATETIME(6)         NULL,
     last_online_at          DATETIME(6)         NULL,
     claimed_days_mask       INT             NOT NULL DEFAULT 0,
@@ -223,6 +227,36 @@ CREATE TABLE cleared_zone (
     PRIMARY KEY (id),
     UNIQUE KEY uk_cleared_zone (commander_id, zone_name),
     INDEX idx_cleared_commander (commander_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- zone_run — 탐사 그리드 존 진행(런). 커맨더당 status='IN_PROGRESS' 행은 항상 최대 1개(애플리케이션에서 보장)
+-- ============================================================
+CREATE TABLE zone_run (
+    id                          BIGINT       NOT NULL AUTO_INCREMENT,
+    commander_id                BIGINT       NOT NULL,
+    zone_number                 INT          NOT NULL,
+    status                      VARCHAR(255) NOT NULL DEFAULT 'IN_PROGRESS', -- IN_PROGRESS/ESCAPED/ABANDONED (EFormationType처럼 길이 미지정 문자열 enum 컬럼 관례와 동일)
+    reward_claimed              TINYINT(1)   NOT NULL DEFAULT 0,
+    exploration_point_banked    INT          NOT NULL DEFAULT 0,
+    current_cell                VARCHAR(20)  NOT NULL, -- "x-y" 형식(0-indexed), 마지막으로 클리어한 셀
+    started_at                  DATETIME(6)  NOT NULL,
+    ended_at                    DATETIME(6)      NULL,
+    PRIMARY KEY (id),
+    INDEX idx_zone_run_commander (commander_id),
+    INDEX idx_zone_run_commander_status (commander_id, status)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- zone_cell_clear_log — zone_run 하나 안에서 셀을 클리어한 순서/시각 기록(재접속 진행 복구용)
+-- ============================================================
+CREATE TABLE zone_cell_clear_log (
+    id            BIGINT       NOT NULL AUTO_INCREMENT,
+    zone_run_id   BIGINT       NOT NULL,
+    cell         VARCHAR(20)  NOT NULL, -- "x-y" 형식(0-indexed)
+    cleared_at    DATETIME(6)  NOT NULL,
+    PRIMARY KEY (id),
+    INDEX idx_zone_cell_clear_log_run (zone_run_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- app_config: 운영 설정값 저장 (버전 체크 등)

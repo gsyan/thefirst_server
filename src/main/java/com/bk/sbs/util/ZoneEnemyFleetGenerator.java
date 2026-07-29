@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // 클라 Assets/Scripts/Exploration/ExplorationEnemyFleetGenerator.cs를 그대로 포팅 — 서버가 클라와 동일한 셀 적함대를
-// (seed, x, y, fleetIndex) 조합만으로 재계산할 수 있어야 클리어 보상을 결과값(파괴 함선 수/commandCost)으로 검증 가능함.
+// (seed, row, col, fleetIndex) 조합만으로 재계산할 수 있어야 클리어 보상을 결과값(파괴 함선 수/commandCost)으로 검증 가능함.
 // CrossPlatformRandom을 함께 써야 하며, 두 파일은 항상 함께 수정할 것.
 public class ZoneEnemyFleetGenerator {
 
@@ -25,27 +25,27 @@ public class ZoneEnemyFleetGenerator {
     }
 
     // 존별로 설정된 순차 웨이브(fleets) 전체 생성
-    public static List<WaveResult> generateWaves(ZoneConfigData zoneConfig, int seed, int x, int y,
+    public static List<WaveResult> generateWaves(ZoneConfigData zoneConfig, int seed, int row, int col,
                                                   List<ShipPresetSummary> presets) {
         List<WaveResult> waves = new ArrayList<>();
         if (presets == null || presets.isEmpty() || zoneConfig == null) return waves;
 
         int fleetsPerCell = zoneConfig.getEnemyFleetsPerCell() != null ? zoneConfig.getEnemyFleetsPerCell() : 0;
         for (int fleetIndex = 0; fleetIndex < fleetsPerCell; fleetIndex++)
-            waves.add(generateOneWave(seed, x, y, fleetIndex, presets, zoneConfig));
+            waves.add(generateOneWave(seed, row, col, fleetIndex, presets, zoneConfig));
 
         return waves;
     }
 
-    // 구식 DataTableZoneEditor.GetBlockMaxTier와 동일 공식 — (x,y,fleetIndex) 결정론적, deviation만큼 costCap을 무작위로 낮춤
-    private static int resolveCostCap(int seed, int x, int y, int fleetIndex, int maxCost, int deviation) {
+    // 구식 DataTableZoneEditor.GetBlockMaxTier와 동일 공식 — (row,col,fleetIndex) 결정론적, deviation만큼 costCap을 무작위로 낮춤
+    private static int resolveCostCap(int seed, int row, int col, int fleetIndex, int maxCost, int deviation) {
         if (deviation <= 0) return maxCost;
-        CrossPlatformRandom random = new CrossPlatformRandom(seed ^ (x * 73856093) ^ (y * 19349663) ^ (fleetIndex * 83492791));
+        CrossPlatformRandom random = new CrossPlatformRandom(seed ^ (row * 73856093) ^ (col * 19349663) ^ (fleetIndex * 83492791));
         return Math.max(1, maxCost - random.next(0, deviation + 1));
     }
 
     // 예산을 무작위로 소진하되, 함선 수 상한에 걸리면 마지막 한 척은 "남은 예산에 가장 가까운(낭비 최소)" 프리셋으로 확정해서 채움
-    private static WaveResult generateOneWave(int seed, int x, int y, int fleetIndex,
+    private static WaveResult generateOneWave(int seed, int row, int col, int fleetIndex,
                                                List<ShipPresetSummary> presets, ZoneConfigData zoneConfig) {
         WaveResult waveResult = new WaveResult();
         int enemyMaxCost = zoneConfig.getEnemyMaxCost() != null ? zoneConfig.getEnemyMaxCost() : 0;
@@ -53,8 +53,8 @@ public class ZoneEnemyFleetGenerator {
         int enemyBudget = zoneConfig.getEnemyBudget() != null ? zoneConfig.getEnemyBudget() : 0;
         int enemyMaxShipsPerFleet = zoneConfig.getEnemyMaxShipsPerFleet() != null ? zoneConfig.getEnemyMaxShipsPerFleet() : 0;
 
-        int costCap = resolveCostCap(seed, x, y, fleetIndex, enemyMaxCost, enemyDeviation);
-        CrossPlatformRandom random = new CrossPlatformRandom(seed ^ (x * 73856093) ^ (y * 19349663) ^ (fleetIndex * 83492791) ^ 0x5EED);
+        int costCap = resolveCostCap(seed, row, col, fleetIndex, enemyMaxCost, enemyDeviation);
+        CrossPlatformRandom random = new CrossPlatformRandom(seed ^ (row * 73856093) ^ (col * 19349663) ^ (fleetIndex * 83492791) ^ 0x5EED);
 
         int remaining = enemyBudget;
         List<ShipPresetSummary> affordable = new ArrayList<>();

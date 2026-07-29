@@ -14,9 +14,11 @@ import com.bk.sbs.entity.Commander;
 import com.bk.sbs.enums.*;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
+import com.bk.sbs.entity.ZoneRun;
 import com.bk.sbs.repository.AccountRepository;
 import com.bk.sbs.repository.CommanderRepository;
 import com.bk.sbs.repository.ClearedZoneRepository;
+import com.bk.sbs.repository.ZoneRunRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -38,6 +40,7 @@ public class CommanderService {
     private final AccountRepository accountRepository;
     private final FleetService fleetService;
     private final ClearedZoneRepository clearedZoneRepository;
+    private final ZoneRunRepository zoneRunRepository;
     private final StringRedisTemplate redisTemplate;
     private final GameDataService gameDataService;
 
@@ -47,11 +50,12 @@ public class CommanderService {
     @Value("${exploration.world-seed}")
     private int explorationWorldSeed;
 
-    public CommanderService(CommanderRepository commanderRepository, AccountRepository accountRepository, FleetService fleetService, ClearedZoneRepository clearedZoneRepository, StringRedisTemplate redisTemplate, GameDataService gameDataService) {
+    public CommanderService(CommanderRepository commanderRepository, AccountRepository accountRepository, FleetService fleetService, ClearedZoneRepository clearedZoneRepository, ZoneRunRepository zoneRunRepository, StringRedisTemplate redisTemplate, GameDataService gameDataService) {
         this.commanderRepository = commanderRepository;
         this.accountRepository = accountRepository;
         this.fleetService = fleetService;
         this.clearedZoneRepository = clearedZoneRepository;
+        this.zoneRunRepository = zoneRunRepository;
         this.redisTemplate = redisTemplate;
         this.gameDataService = gameDataService;
     }
@@ -111,6 +115,11 @@ public class CommanderService {
         Commander commander = commanderRepository.findById(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.GET_COMMANDER_INFO_DTO_FAIL_COMMANDER_NOT_FOUND));
 
+        // 진행 중인 탐험 런이 있으면 마지막 클리어 셀을 내려줘 재접속/재진입 시 클라가 그 위치에서 이어서 시작할 수 있게 함
+        ZoneRun activeZoneRun = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS).orElse(null);
+        int explorationZoneNumber = activeZoneRun != null ? activeZoneRun.getZoneNumber() : 0;
+        String explorationCell = activeZoneRun != null ? activeZoneRun.getCurrentCell() : "";
+
         return CommanderInfoDto.builder()
                 .commanderId(commanderId)
                 .commanderName(commander.getCommanderName())
@@ -124,8 +133,11 @@ public class CommanderService {
                 .pvpPointExpiry(commander.getPvpPointExpiry() != null ? commander.getPvpPointExpiry().toString() : null)
                 .clearedZones(clearedZoneRepository.findZoneNamesByCommanderId(commanderId))
                 .nameChangeCount(commander.getNameChangeCount())
-                .explorationSeedBase(explorationWorldSeed ^ commanderId.hashCode())
+                .explorationSeedBase(explorationWorldSeed)
                 .commandPowerMax(commander.getCommandPowerMax())
+                .explorationZoneNumber(explorationZoneNumber)
+                .explorationCell(explorationCell)
+                .explorationPoint(commander.getExplorationPoint())
                 .build();
     }
 

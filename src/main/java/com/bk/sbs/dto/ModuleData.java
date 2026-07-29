@@ -62,7 +62,7 @@ public class ModuleData {
 
     private Float airAvoidRadius;
 
-    private Float airAdditionalDelay;
+    private Float airDisrupt;
 
     private Float shieldGauge;
 

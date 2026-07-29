@@ -66,6 +66,14 @@ public class Commander {
     @Column(nullable = false, columnDefinition = "INT DEFAULT 300")
     private int commandPowerMax = 300;
 
+    // 탐험 포인트 은행 잔액 — ZoneRun 탈출/포기 시 확정 지급되어 여기 누적, IncreaseCommandPowerMax/UnlockShipPreset로 소모
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int explorationPoint = 0;
+
+    // 존 탈출(ESCAPED)로 확정된 존 번호 중 최댓값 — 다음 존 입장 가능 여부 판정용(ZoneRun 조회 없이 O(1))
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int highestClearedZoneNumber = 0;
+
     // 마지막 자원 수집 시간 (zone clear 시 또는 collect 시 갱신, UTC)
     private Instant collectDateTime;
 

@@ -8,7 +8,8 @@
       "enemyBudget": 100,
       "enemyMaxCost": 100,
       "enemyDeviation": 0,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": []
     },
     {
       "zoneIndex": 1,
@@ -18,7 +19,27 @@
       "enemyBudget": 220,
       "enemyMaxCost": 220,
       "enemyDeviation": 0,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 0,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 2,
@@ -28,7 +49,27 @@
       "enemyBudget": 100,
       "enemyMaxCost": 100,
       "enemyDeviation": 0,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 3,
@@ -38,7 +79,27 @@
       "enemyBudget": 100,
       "enemyMaxCost": 100,
       "enemyDeviation": 0,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 4,
@@ -48,7 +109,27 @@
       "enemyBudget": 100,
       "enemyMaxCost": 100,
       "enemyDeviation": 0,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 0,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 5,
@@ -58,7 +139,39 @@
       "enemyBudget": 200,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 6,
@@ -68,7 +181,39 @@
       "enemyBudget": 200,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 0,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 7,
@@ -78,7 +223,39 @@
       "enemyBudget": 200,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 4,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 8,
@@ -88,7 +265,39 @@
       "enemyBudget": 200,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 1,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 9,
@@ -98,7 +307,39 @@
       "enemyBudget": 200,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 10,
@@ -108,7 +349,39 @@
       "enemyBudget": 200,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 11,
@@ -118,7 +391,39 @@
       "enemyBudget": 200,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 2,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 12,
@@ -128,7 +433,39 @@
       "enemyBudget": 200,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 4,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 13,
@@ -138,7 +475,39 @@
       "enemyBudget": 200,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 14,
@@ -148,7 +517,39 @@
       "enemyBudget": 200,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 3,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 15,
@@ -158,7 +559,39 @@
       "enemyBudget": 200,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 16,
@@ -168,7 +601,39 @@
       "enemyBudget": 200,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 1,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 17,
@@ -178,7 +643,39 @@
       "enemyBudget": 200,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 0,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 18,
@@ -188,7 +685,39 @@
       "enemyBudget": 200,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 4,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 19,
@@ -198,7 +727,39 @@
       "enemyBudget": 200,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 0,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 20,
@@ -208,7 +769,39 @@
       "enemyBudget": 200,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 21,
@@ -218,7 +811,39 @@
       "enemyBudget": 300,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 0,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 22,
@@ -228,7 +853,39 @@
       "enemyBudget": 300,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 2,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 23,
@@ -238,7 +895,39 @@
       "enemyBudget": 300,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 1,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 24,
@@ -248,7 +937,39 @@
       "enemyBudget": 300,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 1,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 25,
@@ -258,7 +979,39 @@
       "enemyBudget": 300,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 1,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 26,
@@ -268,7 +1021,39 @@
       "enemyBudget": 300,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 1,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 27,
@@ -278,7 +1063,39 @@
       "enemyBudget": 300,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 1,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 28,
@@ -288,7 +1105,39 @@
       "enemyBudget": 300,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 4,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 29,
@@ -298,7 +1147,39 @@
       "enemyBudget": 300,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 1,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 30,
@@ -308,7 +1189,39 @@
       "enemyBudget": 300,
       "enemyMaxCost": 200,
       "enemyDeviation": 100,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 0,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 31,
@@ -318,7 +1231,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 6,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 32,
@@ -328,7 +1297,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 6,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 6,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 33,
@@ -338,7 +1363,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 2,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 6,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 34,
@@ -348,7 +1429,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 0,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 35,
@@ -358,7 +1495,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 2,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 6,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 36,
@@ -368,7 +1561,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 5,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 37,
@@ -378,7 +1627,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 6,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 38,
@@ -388,7 +1693,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 2,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 39,
@@ -398,7 +1759,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 3,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 40,
@@ -408,7 +1825,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 4,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 6,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 6,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 41,
@@ -418,7 +1891,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 3,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 42,
@@ -428,7 +1957,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 5,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 43,
@@ -438,7 +2023,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 4,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 44,
@@ -448,7 +2089,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 6,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 5,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 6,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 45,
@@ -458,7 +2155,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 5,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 46,
@@ -468,7 +2221,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 4,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 1,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 6,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 47,
@@ -478,7 +2287,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 1,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 48,
@@ -488,7 +2353,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 2,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 49,
@@ -498,7 +2419,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 2,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 50,
@@ -508,7 +2485,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 5,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 51,
@@ -518,7 +2551,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 6,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 6,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 52,
@@ -528,7 +2617,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 0,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 6,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 53,
@@ -538,7 +2683,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 0,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 6,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 5,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 54,
@@ -548,7 +2749,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 2,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 5,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 55,
@@ -558,7 +2815,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 2,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 6,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 56,
@@ -568,7 +2881,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 5,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 57,
@@ -578,7 +2947,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 6,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 58,
@@ -588,7 +3013,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 5,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 4,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 5,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 59,
@@ -598,7 +3079,63 @@
       "enemyBudget": 500,
       "enemyMaxCost": 400,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 3,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 6,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 60,
@@ -608,7 +3145,63 @@
       "enemyBudget": 800,
       "enemyMaxCost": 600,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 0,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 6,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 61,
@@ -618,7 +3211,63 @@
       "enemyBudget": 800,
       "enemyMaxCost": 600,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 6,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 62,
@@ -628,7 +3277,63 @@
       "enemyBudget": 800,
       "enemyMaxCost": 600,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 4,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 63,
@@ -638,7 +3343,63 @@
       "enemyBudget": 800,
       "enemyMaxCost": 600,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 4,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 5,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 64,
@@ -648,7 +3409,63 @@
       "enemyBudget": 800,
       "enemyMaxCost": 600,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 3,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 6,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 65,
@@ -658,7 +3475,63 @@
       "enemyBudget": 800,
       "enemyMaxCost": 600,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 5,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 1,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 4,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 66,
@@ -668,7 +3541,63 @@
       "enemyBudget": 800,
       "enemyMaxCost": 600,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 0,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 6,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 67,
@@ -678,7 +3607,63 @@
       "enemyBudget": 800,
       "enemyMaxCost": 600,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 4,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 6,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 68,
@@ -688,7 +3673,63 @@
       "enemyBudget": 800,
       "enemyMaxCost": 600,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 6,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 3,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 69,
@@ -698,7 +3739,63 @@
       "enemyBudget": 800,
       "enemyMaxCost": 600,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 2,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 6,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 70,
@@ -708,7 +3805,63 @@
       "enemyBudget": 800,
       "enemyMaxCost": 600,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 1,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 6,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 71,
@@ -718,7 +3871,63 @@
       "enemyBudget": 800,
       "enemyMaxCost": 600,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 5,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 4,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 72,
@@ -728,7 +3937,63 @@
       "enemyBudget": 800,
       "enemyMaxCost": 600,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 0,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 5,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 73,
@@ -738,7 +4003,63 @@
       "enemyBudget": 800,
       "enemyMaxCost": 600,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 4,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 6,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 74,
@@ -748,7 +4069,63 @@
       "enemyBudget": 800,
       "enemyMaxCost": 600,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 1,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 3,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 75,
@@ -758,7 +4135,63 @@
       "enemyBudget": 800,
       "enemyMaxCost": 600,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 2,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 76,
@@ -768,7 +4201,63 @@
       "enemyBudget": 800,
       "enemyMaxCost": 600,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 1,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 77,
@@ -778,7 +4267,63 @@
       "enemyBudget": 800,
       "enemyMaxCost": 600,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 1,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 6,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 78,
@@ -788,7 +4333,63 @@
       "enemyBudget": 800,
       "enemyMaxCost": 600,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 5,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 6,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 6,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 79,
@@ -798,7 +4399,63 @@
       "enemyBudget": 800,
       "enemyMaxCost": 600,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 3,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 80,
@@ -808,7 +4465,63 @@
       "enemyBudget": 800,
       "enemyMaxCost": 600,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 4,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 1,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 81,
@@ -818,7 +4531,63 @@
       "enemyBudget": 1000,
       "enemyMaxCost": 700,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 6,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 82,
@@ -828,7 +4597,63 @@
       "enemyBudget": 1000,
       "enemyMaxCost": 700,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 4,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 6,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 83,
@@ -838,7 +4663,63 @@
       "enemyBudget": 1000,
       "enemyMaxCost": 700,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 5,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 84,
@@ -848,7 +4729,63 @@
       "enemyBudget": 1000,
       "enemyMaxCost": 700,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 5,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 85,
@@ -858,7 +4795,63 @@
       "enemyBudget": 1000,
       "enemyMaxCost": 700,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 5,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 6,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 86,
@@ -868,7 +4861,63 @@
       "enemyBudget": 1000,
       "enemyMaxCost": 700,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 6,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 1,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 5,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 5,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 87,
@@ -878,7 +4927,63 @@
       "enemyBudget": 1000,
       "enemyMaxCost": 700,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 3,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 88,
@@ -888,7 +4993,63 @@
       "enemyBudget": 1000,
       "enemyMaxCost": 700,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 6,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 1,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 4,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 89,
@@ -898,7 +5059,63 @@
       "enemyBudget": 1000,
       "enemyMaxCost": 700,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 2,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 6,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 90,
@@ -908,7 +5125,63 @@
       "enemyBudget": 1000,
       "enemyMaxCost": 700,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 0,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 6,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 6,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 91,
@@ -918,7 +5191,63 @@
       "enemyBudget": 1000,
       "enemyMaxCost": 700,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 0,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 5,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 92,
@@ -928,7 +5257,63 @@
       "enemyBudget": 1000,
       "enemyMaxCost": 700,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 5,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 4,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 93,
@@ -938,7 +5323,63 @@
       "enemyBudget": 1000,
       "enemyMaxCost": 700,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 0,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 6,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 6,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 94,
@@ -948,7 +5389,63 @@
       "enemyBudget": 1000,
       "enemyMaxCost": 700,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 0,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 6,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 5,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 95,
@@ -958,7 +5455,63 @@
       "enemyBudget": 1000,
       "enemyMaxCost": 700,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 4,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 1,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 96,
@@ -968,7 +5521,63 @@
       "enemyBudget": 1000,
       "enemyMaxCost": 700,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 4,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 6,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 2,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 5,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 97,
@@ -978,7 +5587,63 @@
       "enemyBudget": 1000,
       "enemyMaxCost": 700,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 3,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 5,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 98,
@@ -988,7 +5653,63 @@
       "enemyBudget": 1000,
       "enemyMaxCost": 700,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 2,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 1,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 6,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 1,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 3,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 99,
@@ -998,7 +5719,63 @@
       "enemyBudget": 1000,
       "enemyMaxCost": 700,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 5,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 5,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 1,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 5,
+          "col": 0,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 4,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 0,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     },
     {
       "zoneIndex": 100,
@@ -1008,7 +5785,63 @@
       "enemyBudget": 1200,
       "enemyMaxCost": 800,
       "enemyDeviation": 200,
-      "enemyMaxShipsPerFleet": 5
+      "enemyMaxShipsPerFleet": 5,
+      "cellOverrides": [
+        {
+          "row": 6,
+          "col": 4,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 0,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 2,
+          "col": 2,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 4,
+          "col": 3,
+          "type": "Blocked",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 3,
+          "col": 1,
+          "type": "Start",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 6,
+          "type": "Escape",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 6,
+          "col": 1,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        },
+        {
+          "row": 0,
+          "col": 4,
+          "type": "Event",
+          "eventType": "NoEnemy"
+        }
+      ]
     }
   ]
 }

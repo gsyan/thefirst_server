@@ -6,9 +6,8 @@ package com.bk.sbs.enums;
  */
 public enum EFormationType {
     linear_horizontal,
-    x_offensive,
-    x_defensive,
-    circle,
-    cross_defensive;
+    x,
+    cross,
+    circle;
 
 }
