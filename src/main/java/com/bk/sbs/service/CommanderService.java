@@ -137,6 +137,7 @@ public class CommanderService {
                 .commandPowerMax(commander.getCommandPowerMax())
                 .explorationZoneNumber(explorationZoneNumber)
                 .explorationCell(explorationCell)
+                .highestClearedZoneNumber(commander.getHighestClearedZoneNumber())
                 .explorationPoint(commander.getExplorationPoint())
                 .build();
     }

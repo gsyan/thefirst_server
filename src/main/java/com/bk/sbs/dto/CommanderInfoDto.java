@@ -23,13 +23,14 @@ public class CommanderInfoDto {
     private Integer commandPowerMax;
     private Integer explorationSeedBase;
     private List<String> clearedZones;
+    private Integer explorationPoint;
     private Integer explorationZoneNumber;
     private String explorationCell;
+    private Integer highestClearedZoneNumber;
     private Integer mineral;
     private Integer modulePoint;
     private Integer modulePointMaxGot;
     private Integer pvpPoint;
     private Integer pvpPointMaxGot;
     private String pvpPointExpiry;
-    private Integer explorationPoint;
 }
