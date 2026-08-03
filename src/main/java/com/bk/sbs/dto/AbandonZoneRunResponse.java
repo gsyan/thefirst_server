@@ -16,4 +16,7 @@ import lombok.NoArgsConstructor;
 public class AbandonZoneRunResponse {
     private Integer explorationPointGained;
     private Integer explorationPointRemain;
+    private Integer expGained;
+    private Integer totalExp;
+    private Integer commanderLevel;
 }

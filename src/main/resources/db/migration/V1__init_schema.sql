@@ -239,6 +239,7 @@ CREATE TABLE zone_run (
     status                      VARCHAR(255) NOT NULL DEFAULT 'IN_PROGRESS', -- IN_PROGRESS/ESCAPED/ABANDONED (EFormationType처럼 길이 미지정 문자열 enum 컬럼 관례와 동일)
     reward_claimed              TINYINT(1)   NOT NULL DEFAULT 0,
     exploration_point_banked    INT          NOT NULL DEFAULT 0,
+    commander_exp_banked        INT          NOT NULL DEFAULT 0,
     current_cell                VARCHAR(20)  NOT NULL, -- "x-y" 형식(0-indexed), 마지막으로 클리어한 셀
     started_at                  DATETIME(6)  NOT NULL,
     ended_at                    DATETIME(6)      NULL,

@@ -24,4 +24,6 @@ public class ZoneConfigData {
     private Integer enemyMaxCost;
     private Integer enemyDeviation;
     private Integer enemyMaxShipsPerFleet;
+    private Integer explorationPointReward;
+    private Integer commanderExpReward;
 }

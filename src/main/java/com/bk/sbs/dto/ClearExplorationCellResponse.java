@@ -15,4 +15,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ClearExplorationCellResponse {
     private Integer explorationPointGained;
+    private Integer expGained;
 }

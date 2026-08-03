@@ -169,26 +169,20 @@ public class ExplorationService {
         List<ZoneEnemyFleetGenerator.WaveResult> waves = ZoneEnemyFleetGenerator.generateWaves(
                 zoneConfig, seed, request.getCellRow(), request.getCellCol(), gameDataService.getShipPresetList());
 
-        // 적 함대 총 성능포인트(commandCost 합) 만큼 탐험 포인트 적립 — 클라 자기신고 값을 쓰지 않고 서버가 직접 재계산
-        int pointsGained = 0;
-        for (ZoneEnemyFleetGenerator.WaveResult wave : waves) {
-            for (ZoneEnemyFleetGenerator.ShipResult ship : wave.ships) {
-                for (GameDataService.ShipPresetSummary preset : gameDataService.getShipPresetList()) {
-                    if (preset.presetId.equals(ship.presetId)) {
-                        pointsGained += preset.commandCost;
-                        break;
-                    }
-                }
-            }
-        }
+        // 존 고정 보상값 적립 — 적 함대 성능(commandCost)과 무관, 웨이브에 함선이 있던 셀만 지급(빈 셀은 0)
+        boolean hasEnemies = waves.stream().anyMatch(wave -> wave.ships.isEmpty() == false);
+        int pointsGained = hasEnemies ? zoneConfig.getExplorationPointReward() : 0;
+        int expGained    = hasEnemies ? zoneConfig.getCommanderExpReward()     : 0;
 
         run.setCurrentPosition(request.getCellRow(), request.getCellCol());
         run.setExplorationPointBanked(run.getExplorationPointBanked() + pointsGained);
+        run.setCommanderExpBanked(run.getCommanderExpBanked() + expGained);
         zoneRunRepository.save(run);
         zoneCellClearLogRepository.save(new ZoneCellClearLog(run.getId(), request.getCellRow(), request.getCellCol()));
 
         return ClearExplorationCellResponse.builder()
                 .explorationPointGained(pointsGained)
+                .expGained(expGained)
                 .build();
     }
 
@@ -201,6 +195,7 @@ public class ExplorationService {
                     .zoneNumber(0)
                     .clearedCells(new ArrayList<>())
                     .explorationPointBanked(0)
+                    .commanderExpBanked(0)
                     .build();
         }
 
@@ -214,14 +209,21 @@ public class ExplorationService {
                 .zoneNumber(run.getZoneNumber())
                 .clearedCells(clearedCells)
                 .explorationPointBanked(run.getExplorationPointBanked())
+                .commanderExpBanked(run.getCommanderExpBanked())
                 .build();
     }
 
-    // 탈출 성공/실패 공통 정산 — escapeExplorationZone(성공/실패)과 abandonZoneRun(실패 고정)이 공유
-    private int settleZoneRun(Commander commander, ZoneRun run, boolean isSuccess) {
-        int payout = isSuccess ? run.getExplorationPointBanked() : run.getExplorationPointBanked() / 2;
+    // 탈출 성공/실패 공통 정산 결과 — 탐험 포인트/지휘관 경험치 확정 지급분
+    private record RunSettlement(int pointPayout, int expPayout) {}
 
-        commander.setExplorationPoint(commander.getExplorationPoint() + payout);
+    // 탈출 성공/실패 공통 정산 — escapeExplorationZone(성공/실패)과 abandonZoneRun(실패 고정)이 공유
+    private RunSettlement settleZoneRun(Commander commander, ZoneRun run, boolean isSuccess) {
+        int pointPayout = isSuccess ? run.getExplorationPointBanked() : run.getExplorationPointBanked() / 2;
+        int expPayout   = isSuccess ? run.getCommanderExpBanked()     : run.getCommanderExpBanked() / 2;
+
+        commander.setExplorationPoint(commander.getExplorationPoint() + pointPayout);
+        commander.setExp(commander.getExp() + expPayout);
+        autoLevelUpIfNeeded(commander);
         if (isSuccess && run.getZoneNumber() > commander.getHighestClearedZoneNumber())
             commander.setHighestClearedZoneNumber(run.getZoneNumber());
 
@@ -232,7 +234,21 @@ public class ExplorationService {
         commanderRepository.save(commander);
         zoneRunRepository.save(run);
 
-        return payout;
+        return new RunSettlement(pointPayout, expPayout);
+    }
+
+    // exp 누적 기준으로 레벨업 조건 판정 후 자동 승급 (연속 레벨업 지원)
+    private void autoLevelUpIfNeeded(Commander commander) {
+        int currentLevel = commander.getCommanderLevel();
+        int accumulatedExp = commander.getExp();
+        int nextLevel = currentLevel + 1;
+        int requiredExp = gameDataService.getCommanderLevelRequiredExp(nextLevel);
+        while (requiredExp > 0 && accumulatedExp >= requiredExp) {
+            currentLevel = nextLevel;
+            nextLevel = currentLevel + 1;
+            requiredExp = gameDataService.getCommanderLevelRequiredExp(nextLevel);
+        }
+        commander.setCommanderLevel(currentLevel);
     }
 
     @Transactional
@@ -256,11 +272,14 @@ public class ExplorationService {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
 
-        int payout = settleZoneRun(commander, run, isSuccess);
+        RunSettlement settlement = settleZoneRun(commander, run, isSuccess);
 
         return EscapeExplorationZoneResponse.builder()
-                .explorationPointGained(payout)
+                .explorationPointGained(settlement.pointPayout())
                 .explorationPointRemain(commander.getExplorationPoint())
+                .expGained(settlement.expPayout())
+                .totalExp(commander.getExp())
+                .commanderLevel(commander.getCommanderLevel())
                 .build();
     }
 
@@ -272,11 +291,14 @@ public class ExplorationService {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
 
-        int payout = settleZoneRun(commander, run, false);
+        RunSettlement settlement = settleZoneRun(commander, run, false);
 
         return AbandonZoneRunResponse.builder()
-                .explorationPointGained(payout)
+                .explorationPointGained(settlement.pointPayout())
                 .explorationPointRemain(commander.getExplorationPoint())
+                .expGained(settlement.expPayout())
+                .totalExp(commander.getExp())
+                .commanderLevel(commander.getCommanderLevel())
                 .build();
     }
 
