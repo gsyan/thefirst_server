@@ -51,77 +51,29 @@ public class DevController {
 
     private ApiResponse<String> executeDevCommand(String command, List<String> params, Long commanderId) {
         switch (command.toLowerCase()) {
-            case "setmineral":
-                if (params == null || params.isEmpty()) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_SETMINERAL_INVALID_PARAM);
-                int mineral = parseIntOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_SETMINERAL_PARSE_PARAM);
-                CommanderService.updateMineral(commanderId, mineral);
-                return ApiResponse.success("Mineral set to: " + mineral + "|mineral:" + mineral);
-            case "addmineral":
-                if (params == null || params.isEmpty()) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMIKNERAL_INVALID_PARAM);
-                int additionalMaterial = parseIntOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMIKNERAL_PARSE_PARAM);
-                int newMineral = CommanderService.addMineral(commanderId, additionalMaterial);
-                return ApiResponse.success("Mineral added: " + additionalMaterial + " (total: " + newMineral + ")|mineral:" + newMineral);
-
-            case "addminerals": {
-                // params: [mineral] [levelUp] [modulePoint] [pvpPoint] — 0이면 해당 타입 스킵, levelUp>0이면 정확히 1레벨만 증가
-                if (params == null || params.size() < 4) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMINERALS_INVALID_PARAM);
-                int addM      = parseIntOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMIKNERAL_PARSE_PARAM);
-                int addLevel  = parseIntOrThrow(params.get(1), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDPVPMINERAL_PARSE_PARAM);
-                int addMp     = parseIntOrThrow(params.get(2), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDTEMPMINERAL_PARSE_PARAM);
-                int addPvp    = parseIntOrThrow(params.get(3), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDPVPMINERAL_PARSE_PARAM);
+            case "adddevresources": {
+                // params: [levelUp] [exploPoint] [pvpPoint] — 0이면 해당 타입 스킵, levelUp>0이면 정확히 1레벨만 증가
+                if (params == null || params.size() < 3) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMINERALS_INVALID_PARAM);
+                int addLevel  = parseIntOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDPVPMINERAL_PARSE_PARAM);
+                int addExplo  = parseIntOrThrow(params.get(1), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDTEMPMINERAL_PARSE_PARAM);
+                int addPvp    = parseIntOrThrow(params.get(2), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDPVPMINERAL_PARSE_PARAM);
                 CommanderInfoDto cur = CommanderService.getCommanderInfoDto(commanderId);
-                int newM      = addM     > 0 ? CommanderService.addMineral(commanderId, addM)               : cur.getMineral();
-                int newMpMax  = addMp    > 0 ? CommanderService.addModulePointMaxGot(commanderId, addMp)    : cur.getModulePointMaxGot();
-                int newMp     = addMp    > 0 ? CommanderService.addModulePoint(commanderId, addMp)          : cur.getModulePoint();
+                int newExplo  = addExplo > 0 ? CommanderService.addExplorationPoint(commanderId, addExplo)  : cur.getExplorationPoint();
                 int newPvpMax = addPvp   > 0 ? CommanderService.addPvpPointMaxGot(commanderId, addPvp)      : cur.getPvpPointMaxGot();
                 int newPvp    = addPvp   > 0 ? CommanderService.addPvpPoint(commanderId, addPvp)            : cur.getPvpPoint();
                 int newCommanderLevel = addLevel > 0 ? zoneService.addOneCommanderLevel(commanderId) : cur.getCommanderLevel();
                 int newExp    = addLevel > 0 ? CommanderService.getCommanderInfoDto(commanderId).getExp()  : cur.getExp();
-                return ApiResponse.success("Resources added|mineral:" + newM + "|exp:" + newExp + "|modulePointMaxGot:" + newMpMax + "|modulePoint:" + newMp + "|pvpPointMaxGot:" + newPvpMax + "|pvpPoint:" + newPvp + "|commanderLevel:" + newCommanderLevel);
+                return ApiResponse.success("Resources added|exp:" + newExp + "|explorationPoint:" + newExplo + "|pvpPointMaxGot:" + newPvpMax + "|pvpPoint:" + newPvp + "|commanderLevel:" + newCommanderLevel);
             }
 
             case "getstatus":
                 CommanderInfoDto status = CommanderService.getCommanderInfoDto(commanderId);
                 StringBuilder result = new StringBuilder();
                 result.append("=== Commander Status ===\n");
-                result.append("Mineral: ").append(status.getMineral()).append("\n");
+                result.append("Exp: ").append(status.getExp()).append("\n");
+                result.append("ExplorationPoint: ").append(status.getExplorationPoint()).append("\n");
+                result.append("PvpPoint: ").append(status.getPvpPoint()).append("\n");
                 return ApiResponse.success(result.toString());
-
-//            case "addship":
-//                // 개발자 명령어: 자원이 부족할 경우 자동으로 충원
-//                CommanderInfoDto currentStatus = CommanderService.getCommanderInfoDto(commanderId);
-//
-//                // 현재 함선 수 확인
-//                FleetInfoDto activeFleet = fleetService.getActiveFleet(commanderId);
-//                int currentShipCount = activeFleet.getShips() != null ? activeFleet.getShips().size() : 0;
-//
-//                // 함선 추가에 필요한 자원 비용 확인 (GameDataService에서 가져오기)
-//                CostStructDto shipAddCost = gameDataService.getShipAddCost(currentShipCount);
-//
-//                // 자원 부족 시 자동 충원 (모든 미네랄 타입)
-//                if (currentStatus.getMineral() < shipAddCost.getMineral()) {
-//                    Long updatedMineral = currentStatus.getMineral() + shipAddCost.getMineral() + 5000;
-//                    CommanderService.updateMineral(commanderId, updatedMineral);
-//                }
-//                if (currentStatus.getMineralRare() < shipAddCost.getMineralRare()) {
-//                    Long updatedMineralRare = currentStatus.getMineralRare() + shipAddCost.getMineralRare() + 1000;
-//                    CommanderService.updateMineralRare(commanderId, updatedMineralRare);
-//                }
-//                if (currentStatus.getMineralExotic() < shipAddCost.getMineralExotic()) {
-//                    Long updatedMineralExotic = currentStatus.getMineralExotic() + shipAddCost.getMineralExotic() + 1000;
-//                    CommanderService.updateMineralExotic(commanderId, updatedMineralExotic);
-//                }
-//                if (currentStatus.getMineralDark() < shipAddCost.getMineralDark()) {
-//                    Long updatedMineralDark = currentStatus.getMineralDark() + shipAddCost.getMineralDark() + 1000;
-//                    CommanderService.updateMineralDark(commanderId, updatedMineralDark);
-//                }
-//
-//                AddShipRequest addShipRequest = new AddShipRequest();
-//                addShipRequest.setFleetId(null); // null이면 현재 활성 함대에 추가
-//
-//                AddShipResponse addShipResponse = fleetService.addShip(commanderId, addShipRequest);
-//                String addShipJson = jsonSerializeOrThrow(addShipResponse);
-//                return ApiResponse.success(addShipJson);
 
             case "changeformation":
                 if (params == null || params.isEmpty()) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_CHANGEFORMATION_INVALID_PARAM);

@@ -184,23 +184,6 @@ public class CommanderService {
     }
 
     @Transactional
-    public int updateMineral(Long commanderId, int mineral) {
-        Commander commander = commanderRepository.findByIdForUpdate(commanderId).orElseThrow(() -> new BusinessException(ServerErrorCode.UPDATE_MINERAL_FAIL_COMMANDER_NOT_FOUND));
-        commander.setMineral(mineral);
-        commander = commanderRepository.save(commander);
-        return mineral;
-    }
-
-    @Transactional
-    public int addMineral(Long commanderId, int amount) {
-        Commander commander = commanderRepository.findByIdForUpdate(commanderId).orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_MINERAL_FAIL_COMMANDER_NOT_FOUND));
-        int before = commander.getMineral();
-        commander.setMineral(before + amount);
-        commander = commanderRepository.save(commander);
-        return commander.getMineral();
-    }
-
-    @Transactional
     public int addExp(Long commanderId, int amount) {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId).orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_MINERAL_FAIL_COMMANDER_NOT_FOUND));
         commander.setExp(commander.getExp() + amount);
@@ -209,19 +192,11 @@ public class CommanderService {
     }
 
     @Transactional
-    public int addModulePoint(Long commanderId, int amount) {
+    public int addExplorationPoint(Long commanderId, int amount) {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId).orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_MINERAL_FAIL_COMMANDER_NOT_FOUND));
-        commander.setModulePoint(commander.getModulePoint() + amount);
+        commander.setExplorationPoint(commander.getExplorationPoint() + amount);
         commander = commanderRepository.save(commander);
-        return commander.getModulePoint();
-    }
-
-    @Transactional
-    public int addModulePointMaxGot(Long commanderId, int amount) {
-        Commander commander = commanderRepository.findByIdForUpdate(commanderId).orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_MINERAL_FAIL_COMMANDER_NOT_FOUND));
-        commander.setModulePointMaxGot(commander.getModulePointMaxGot() + amount);
-        commander = commanderRepository.save(commander);
-        return commander.getModulePointMaxGot();
+        return commander.getExplorationPoint();
     }
 
     @Transactional
