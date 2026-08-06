@@ -14,23 +14,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class MissileFormula {
-    private Integer installCost;
-
-    private Float baseAttack;
-
     private Float attackPerPoint;
-
-    private Float baseAttackCool;
 
     private Float attackCoolReductionPerPoint;
 
     private Float attackCoolFloor;
 
-    private Float baseProjectileSpeed;
-
     private Float projectileSpeedPerPoint;
-
-    private Float baseSilenceTime;
 
     private Float silenceTimePerPoint;
 }

@@ -80,6 +80,7 @@ public class CommanderService {
         commander.setModulePoint(0);        // 기본 beam unlock 1포인트 기함에 투입, 잔여 0
         commander.setModulePointMaxGot(1);  // 모듈 포인트 총 획득량 1 (beam unlock 반영)
         commander.setMineral(100);          // 기본 미네랄 100 지급
+        commander.setCommandPowerMax(gameDataService.getInitialCommandPowerMax()); // DataTableConfig.commandPowerMaxInit — 코드 재배포 없이 값 조정 가능
         Commander savedCommander = commanderRepository.save(commander);
 
         // 자동 이름: 저장 후 확정된 id로 commander_+id 설정 (유니크 보장)

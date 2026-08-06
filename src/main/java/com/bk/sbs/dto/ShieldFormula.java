@@ -14,14 +14,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class ShieldFormula {
-    private Integer installCost;
-
-    private Float baseGauge;
-
-    private Float baseDelay;
-
-    private Float baseRegenRate;
-
     private Float gaugePerPoint;
 
     private Float delayReductionPerPoint;

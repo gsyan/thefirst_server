@@ -178,6 +178,11 @@ public class GameDataService {
         return getDataTableConfig().getAddShipCost();
     }
 
+    public int getInitialCommandPowerMax() {
+        Integer val = getDataTableConfig().getCommandPowerMaxInit();
+        return val != null ? val : 120;
+    }
+
     public Integer getModuleUnlockPrice() {
         return getDataTableConfig().getModuleUnlockPrice();
     }

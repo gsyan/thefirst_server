@@ -4,7 +4,7 @@
     "unlockCommanderLevel": 1,
     "displayNameKey": "ShipPreset_M111B1",
     "prefabName": "body_t1_m111",
-    "commandCost": 220,
+    "commandCost": 120,
     "statAllocation": {
       "healthPoints": 0,
       "turnRatePoints": 0,
@@ -156,7 +156,7 @@
     "unlockCommanderLevel": 1,
     "displayNameKey": "ShipPreset_M111B1M1",
     "prefabName": "body_t1_m111",
-    "commandCost": 240,
+    "commandCost": 140,
     "statAllocation": {
       "healthPoints": 0,
       "turnRatePoints": 0,

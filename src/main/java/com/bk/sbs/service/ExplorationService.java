@@ -27,7 +27,7 @@ import java.util.Optional;
 @Slf4j
 public class ExplorationService {
 
-    // 지휘력 최대치 구매 고정폭 — 임시 밸런스값(기획 확정 시 조정, Commander.commandPowerMax 기본값 300과 같은 성격)
+    // 지휘력 최대치 구매 고정폭 — 임시 밸런스값(기획 확정 시 조정, Commander.commandPowerMax 기본값 120과 같은 성격)
     // 교환비: 탐험 포인트 100 -> 지휘력 10
     private static final int COMMAND_POWER_MAX_INCREASE = 10;
     private static final int COMMAND_POWER_MAX_COST      = 100;
@@ -280,6 +280,7 @@ public class ExplorationService {
                 .expGained(settlement.expPayout())
                 .totalExp(commander.getExp())
                 .commanderLevel(commander.getCommanderLevel())
+                .highestClearedZoneNumber(commander.getHighestClearedZoneNumber())
                 .build();
     }
 

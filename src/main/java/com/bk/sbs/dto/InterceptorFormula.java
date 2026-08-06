@@ -14,12 +14,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class InterceptorFormula {
-    private Integer installCost;
-
-    private Float baseDelay;
-
-    private Float baseRegenRate;
-
     private Float delayReductionPerPoint;
 
     private Float regenRatePerPoint;

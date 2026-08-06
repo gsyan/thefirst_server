@@ -13,6 +13,8 @@ public class DataTableConfig {
 
     private Integer addShipCost;
 
+    private Integer commandPowerMaxInit;
+
     private Integer pvpMinCommanderLevel;
 
     private Integer pvpListCount;

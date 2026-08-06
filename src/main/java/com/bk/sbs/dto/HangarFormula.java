@@ -14,8 +14,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class HangarFormula {
-    private Integer installCost;
-
     private Float baseShipAttack;
 
     private Float baseFighterAttack;

@@ -1,6 +1,7 @@
 {
   "version": "0.0.1",
   "addShipCost": 10,
+  "commandPowerMaxInit": 120,
   "pvpMinCommanderLevel": 2,
   "pvpListCount": 3,
   "pvpListRefreshCount": 5,
@@ -19,29 +20,19 @@
   "shipStatFormula": {
     "maxModuleSlots": 6,
     "beam": {
-      "installCost": 200,
-      "baseAttack": 20.0,
       "attackPerPoint": 0.1,
-      "baseAttackCool": 3.0,
       "attackCoolReductionPerPoint": 0.02,
       "attackCoolFloor": 0.5,
-      "baseProjectileSpeed": 50.0,
       "projectileSpeedPerPoint": 1.0
     },
     "missile": {
-      "installCost": 200,
-      "baseAttack": 20.0,
       "attackPerPoint": 0.1,
-      "baseAttackCool": 3.0,
       "attackCoolReductionPerPoint": 0.02,
       "attackCoolFloor": 0.5,
-      "baseProjectileSpeed": 50.0,
       "projectileSpeedPerPoint": 1.0,
-      "baseSilenceTime": 0.0,
       "silenceTimePerPoint": 0.1
     },
     "hangar": {
-      "installCost": 200,
       "baseShipAttack": 10.0,
       "baseFighterAttack": 10.0,
       "baseAmmo": 10.0,
@@ -49,19 +40,12 @@
       "reinforcePerPoint": 0.1
     },
     "shield": {
-      "installCost": 200,
-      "baseGauge": 100.0,
-      "baseDelay": 5.0,
-      "baseRegenRate": 5.0,
       "gaugePerPoint": 0.5,
       "delayReductionPerPoint": 0.02,
       "regenRatePerPoint": 0.1,
       "delayFloor": 1.0
     },
     "interceptor": {
-      "installCost": 100,
-      "baseDelay": 5.0,
-      "baseRegenRate": 5.0,
       "delayReductionPerPoint": 0.02,
       "regenRatePerPoint": 0.1,
       "delayFloor": 1.0

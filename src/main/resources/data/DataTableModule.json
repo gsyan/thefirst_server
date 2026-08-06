@@ -4,7 +4,7 @@
       {
         "moduleName": "body_t1_m111",
         "moduleSubType": "body_t1_m111",
-        "statPoint": 200,
+        "statPoint": 100,
         "description": "",
         "moduleSlots": [
           {
@@ -49,7 +49,7 @@
       {
         "moduleName": "body_t1_m211",
         "moduleSubType": "body_t1_m211",
-        "statPoint": 500,
+        "statPoint": 200,
         "description": "",
         "moduleSlots": [
           {
@@ -98,7 +98,7 @@
       {
         "moduleName": "body_t1_m221",
         "moduleSubType": "body_t1_m221",
-        "statPoint": 800,
+        "statPoint": 300,
         "description": "",
         "moduleSlots": [
           {
@@ -120,6 +120,63 @@
           {
             "moduleType": "hanger",
             "slotIndex": 0
+          }
+        ],
+        "health": 300.0,
+        "repair": 0.0,
+        "speed": 1.0,
+        "turnRate": 1.0,
+        "attack": 0.0,
+        "splashRadius": 0.0,
+        "attackCool": 0.0,
+        "silenceTime": 0.0,
+        "airCount": 0,
+        "airMaintenanceTime": 0.0,
+        "airHealth": 0.0,
+        "airAttack": 0.0,
+        "airAttackRange": 0.0,
+        "airAttackCool": 0.0,
+        "airSpeed": 0.0,
+        "airAmmo": 0,
+        "airDetectRadius": 0.0,
+        "airAvoidRadius": 0.0,
+        "airDisrupt": 0.0,
+        "shieldGauge": 0.0,
+        "shieldDelay": 0.0,
+        "shieldRegenRate": 0.0,
+        "interceptorCount": 0,
+        "interceptorDelay": 0.0,
+        "interceptorRegenRate": 0.0
+      },
+      {
+        "moduleName": "body_t1_m222",
+        "moduleSubType": "body_t1_m222",
+        "statPoint": 400,
+        "description": "",
+        "moduleSlots": [
+          {
+            "moduleType": "beam",
+            "slotIndex": 0
+          },
+          {
+            "moduleType": "beam",
+            "slotIndex": 1
+          },
+          {
+            "moduleType": "missile",
+            "slotIndex": 0
+          },
+          {
+            "moduleType": "missile",
+            "slotIndex": 1
+          },
+          {
+            "moduleType": "hanger",
+            "slotIndex": 0
+          },
+          {
+            "moduleType": "hanger",
+            "slotIndex": 1
           }
         ],
         "health": 400.0,
@@ -149,9 +206,9 @@
         "interceptorRegenRate": 0.0
       },
       {
-        "moduleName": "body_t1_m222",
-        "moduleSubType": "body_t1_m222",
-        "statPoint": 1000,
+        "moduleName": "body_t1_m322",
+        "moduleSubType": "body_t1_m322",
+        "statPoint": 500,
         "description": "",
         "moduleSlots": [
           {
@@ -161,6 +218,10 @@
           {
             "moduleType": "beam",
             "slotIndex": 1
+          },
+          {
+            "moduleType": "beam",
+            "slotIndex": 2
           },
           {
             "moduleType": "missile",
@@ -206,9 +267,9 @@
         "interceptorRegenRate": 0.0
       },
       {
-        "moduleName": "body_t1_m322",
-        "moduleSubType": "body_t1_m322",
-        "statPoint": 1200,
+        "moduleName": "body_t1_m332",
+        "moduleSubType": "body_t1_m332",
+        "statPoint": 600,
         "description": "",
         "moduleSlots": [
           {
@@ -230,6 +291,10 @@
           {
             "moduleType": "missile",
             "slotIndex": 1
+          },
+          {
+            "moduleType": "missile",
+            "slotIndex": 2
           },
           {
             "moduleType": "hanger",
@@ -267,9 +332,9 @@
         "interceptorRegenRate": 0.0
       },
       {
-        "moduleName": "body_t1_m332",
-        "moduleSubType": "body_t1_m332",
-        "statPoint": 1400,
+        "moduleName": "body_t1_m333",
+        "moduleSubType": "body_t1_m333",
+        "statPoint": 700,
         "description": "",
         "moduleSlots": [
           {
@@ -303,6 +368,10 @@
           {
             "moduleType": "hanger",
             "slotIndex": 1
+          },
+          {
+            "moduleType": "hanger",
+            "slotIndex": 2
           }
         ],
         "health": 700.0,
@@ -332,9 +401,9 @@
         "interceptorRegenRate": 0.0
       },
       {
-        "moduleName": "body_t1_m333",
-        "moduleSubType": "body_t1_m333",
-        "statPoint": 1600,
+        "moduleName": "body_t1_m433",
+        "moduleSubType": "body_t1_m433",
+        "statPoint": 800,
         "description": "",
         "moduleSlots": [
           {
@@ -348,6 +417,10 @@
           {
             "moduleType": "beam",
             "slotIndex": 2
+          },
+          {
+            "moduleType": "beam",
+            "slotIndex": 3
           },
           {
             "moduleType": "missile",
@@ -401,9 +474,9 @@
         "interceptorRegenRate": 0.0
       },
       {
-        "moduleName": "body_t1_m433",
-        "moduleSubType": "body_t1_m433",
-        "statPoint": 1800,
+        "moduleName": "body_t1_m443",
+        "moduleSubType": "body_t1_m443",
+        "statPoint": 900,
         "description": "",
         "moduleSlots": [
           {
@@ -433,6 +506,10 @@
           {
             "moduleType": "missile",
             "slotIndex": 2
+          },
+          {
+            "moduleType": "missile",
+            "slotIndex": 3
           },
           {
             "moduleType": "hanger",
@@ -474,9 +551,9 @@
         "interceptorRegenRate": 0.0
       },
       {
-        "moduleName": "body_t1_m443",
-        "moduleSubType": "body_t1_m443",
-        "statPoint": 2000,
+        "moduleName": "body_t1_m444",
+        "moduleSubType": "body_t1_m444",
+        "statPoint": 1000,
         "description": "",
         "moduleSlots": [
           {
@@ -522,6 +599,10 @@
           {
             "moduleType": "hanger",
             "slotIndex": 2
+          },
+          {
+            "moduleType": "hanger",
+            "slotIndex": 3
           }
         ],
         "health": 1000.0,
@@ -551,90 +632,9 @@
         "interceptorRegenRate": 0.0
       },
       {
-        "moduleName": "body_t1_m444",
-        "moduleSubType": "body_t1_m444",
-        "statPoint": 2400,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "hanger",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hanger",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hanger",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "hanger",
-            "slotIndex": 3
-          }
-        ],
-        "health": 1200.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttack": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldDelay": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorDelay": 0.0,
-        "interceptorRegenRate": 0.0
-      },
-      {
         "moduleName": "body_t1_m544",
         "moduleSubType": "body_t1_m544",
-        "statPoint": 2800,
+        "statPoint": 1100,
         "description": "",
         "moduleSlots": [
           {
@@ -690,7 +690,7 @@
             "slotIndex": 3
           }
         ],
-        "health": 1400.0,
+        "health": 1100.0,
         "repair": 0.0,
         "speed": 1.0,
         "turnRate": 1.0,
@@ -719,7 +719,7 @@
       {
         "moduleName": "body_t1_m554",
         "moduleSubType": "body_t1_m554",
-        "statPoint": 3000,
+        "statPoint": 1200,
         "description": "",
         "moduleSlots": [
           {
@@ -779,7 +779,7 @@
             "slotIndex": 3
           }
         ],
-        "health": 1500.0,
+        "health": 1200.0,
         "repair": 0.0,
         "speed": 1.0,
         "turnRate": 1.0,
