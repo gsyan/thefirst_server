@@ -6,6 +6,7 @@
 -- 초기화 (FK 의존성 역순으로 DROP)
 -- ============================================================
 SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS commander_fleet_preset_slot_module;
 DROP TABLE IF EXISTS commander_fleet_preset_slot;
 DROP TABLE IF EXISTS commander_fleet_preset;
 DROP TABLE IF EXISTS ship_module;
@@ -115,6 +116,20 @@ CREATE TABLE commander_fleet_preset_slot (
     PRIMARY KEY (id),
     CONSTRAINT fk_fleet_preset_slot_preset FOREIGN KEY (fleet_preset_id) REFERENCES commander_fleet_preset (id),
     INDEX idx_fleet_preset_slot_preset (fleet_preset_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- commander_fleet_preset_slot_module — 슬롯(함선) 하나에 유저가 실제로 장착한 모듈(빔/미사일/격납고, on/off만) — row 존재=장착
+-- ============================================================
+CREATE TABLE commander_fleet_preset_slot_module (
+    id                  BIGINT          NOT NULL AUTO_INCREMENT,
+    preset_slot_id      BIGINT          NOT NULL,
+    module_type         VARCHAR(100)    NOT NULL,
+    slot_index          INT             NOT NULL,
+    module_sub_type     VARCHAR(100)    NOT NULL,
+    PRIMARY KEY (id),
+    CONSTRAINT fk_fleet_preset_slot_module_slot FOREIGN KEY (preset_slot_id) REFERENCES commander_fleet_preset_slot (id),
+    INDEX idx_fleet_preset_slot_module_slot (preset_slot_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================

@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class IncreaseCommandPowerMaxRequest {
+    private Integer amount;
 }

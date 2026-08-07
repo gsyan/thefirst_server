@@ -169,6 +169,16 @@ public class FleetController {
         return ResponseEntity.ok(ApiResponse.success(null));
     }
 
+    // 함대편성 슬롯(함선) 하나의 장착 모듈 전체를 최종 상태로 한 번에 교체(on/off) — 예산/공격모듈 0개는 이 결과 상태 기준으로 검증
+    @PostMapping("/preset/set-modules")
+    public ResponseEntity<ApiResponse<SetFleetPresetSlotModulesResponse>> setFleetPresetSlotModules(
+            @RequestBody SetFleetPresetSlotModulesRequest request,
+            HttpServletRequest httpRequest) {
+        Long actualCommanderId = getCommanderIdFromToken(httpRequest);
+        SetFleetPresetSlotModulesResponse response = fleetService.setFleetPresetSlotModules(actualCommanderId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
     // 함선 리셋 및 제거
     @PostMapping("/reset-ship")
     public ResponseEntity<ApiResponse<ShipResetRemoveResponse>> resetAndRemoveShip(

@@ -84,7 +84,8 @@ public class ExplorationController {
             @RequestBody IncreaseCommandPowerMaxRequest request,
             HttpServletRequest httpRequest) {
         Long commanderId = getCommanderIdFromToken(httpRequest);
-        IncreaseCommandPowerMaxResponse response = explorationService.increaseCommandPowerMax(commanderId);
+        int amount = request.getAmount() != null ? request.getAmount() : 0;
+        IncreaseCommandPowerMaxResponse response = explorationService.increaseCommandPowerMax(commanderId, amount);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 

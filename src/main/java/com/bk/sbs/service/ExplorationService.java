@@ -27,11 +27,6 @@ import java.util.Optional;
 @Slf4j
 public class ExplorationService {
 
-    // 지휘력 최대치 구매 고정폭 — 임시 밸런스값(기획 확정 시 조정, Commander.commandPowerMax 기본값 120과 같은 성격)
-    // 교환비: 탐험 포인트 100 -> 지휘력 10
-    private static final int COMMAND_POWER_MAX_INCREASE = 10;
-    private static final int COMMAND_POWER_MAX_COST      = 100;
-
     // explorationSeedBase는 엔티티에 저장되지 않고 world seed 그 자체(유저 무관 공통값) — 모든 유저가 같은 Zone에서 같은 적함대를 보도록 commanderId를 섞지 않음
     // CommanderService.getCommanderInfoDto와 동일 공식, 항상 함께 수정할 것
     @Value("${exploration.world-seed}")
@@ -133,6 +128,7 @@ public class ExplorationService {
                 ships.add(ShipInfoDto.builder()
                         .shipPresetId(ship.presetId)
                         .isFront(ship.isFront)
+                        .bodies(List.of(ship.modules))
                         .build());
             }
             enemyFleets.add(StageEnemyFleetSpawnConfigDto.builder()
@@ -303,16 +299,20 @@ public class ExplorationService {
                 .build();
     }
 
+    // 교환비 1:1 — amount는 클라이언트가 지정, 소모 탐험 포인트와 증가 지휘력 최대치가 동일
     @Transactional
-    public IncreaseCommandPowerMaxResponse increaseCommandPowerMax(Long commanderId) {
+    public IncreaseCommandPowerMaxResponse increaseCommandPowerMax(Long commanderId, int amount) {
+        if (amount <= 0)
+            throw new BusinessException(ServerErrorCode.EXPLORATION_POINT_INSUFFICIENT);
+
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
 
-        if (commander.getExplorationPoint() < COMMAND_POWER_MAX_COST)
+        if (commander.getExplorationPoint() < amount)
             throw new BusinessException(ServerErrorCode.EXPLORATION_POINT_INSUFFICIENT);
 
-        commander.setExplorationPoint(commander.getExplorationPoint() - COMMAND_POWER_MAX_COST);
-        commander.setCommandPowerMax(commander.getCommandPowerMax() + COMMAND_POWER_MAX_INCREASE);
+        commander.setExplorationPoint(commander.getExplorationPoint() - amount);
+        commander.setCommandPowerMax(commander.getCommandPowerMax() + amount);
         commanderRepository.save(commander);
 
         return IncreaseCommandPowerMaxResponse.builder()
