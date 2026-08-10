@@ -210,14 +210,11 @@ public class PvpService {
             throw new BusinessException(ServerErrorCode.PVP_OPPONENT_FLEET_NOT_FOUND);
         }
 
-        // PVP 상대 함대는 미네랄 투입 레벨업 제외, 순수 모듈포인트 강화분만 전달
-        FleetInfoDto strippedFleet = fleetService.stripMineralLevels(opponentFleet);
-
         String battleToken = UUID.randomUUID().toString();
         redisService.saveBattleToken(battleToken, commanderId, opponentCommanderId);
 
         PvpBattleStartResponse response = new PvpBattleStartResponse();
-        response.setOpponentFleetInfo(strippedFleet);
+        response.setOpponentFleetInfo(opponentFleet);
         response.setBattleToken(battleToken);
         return response;
     }
@@ -380,7 +377,6 @@ public class PvpService {
             if (commander == null) continue;
 
             FleetInfoDto fleet = fleetService.getActiveFleet(opponentId);
-            FleetInfoDto strippedFleet = fleetService.stripMineralLevels(fleet);
 
             Double score = redisService.getPvpScore(opponentId);
             Long rank = redisService.getPvpRank(opponentId);
@@ -390,7 +386,7 @@ public class PvpService {
             info.setCommanderName(commander.getCommanderName());
             info.setPvpScore(score != null ? score.intValue() : 1000);
             info.setRank(rank != null ? rank.intValue() : 0);
-            info.setFleetInfo(strippedFleet);
+            info.setFleetInfo(fleet);
             opponents.add(info);
         }
         return opponents;

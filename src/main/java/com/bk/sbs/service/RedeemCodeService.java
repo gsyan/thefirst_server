@@ -47,8 +47,6 @@ public class RedeemCodeService {
         return RedeemCodeResponse.builder()
                 .commanderLevel(info.getCommanderLevel())
                 .exp(info.getExp())
-                .modulePoint(info.getModulePoint())
-                .modulePointMaxGot(info.getModulePointMaxGot())
                 .build();
     }
 

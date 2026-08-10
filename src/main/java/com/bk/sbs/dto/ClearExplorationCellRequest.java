@@ -1,5 +1,6 @@
 package com.bk.sbs.dto;
 
+import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,4 +14,5 @@ public class ClearExplorationCellRequest {
     private Integer zoneNumber;
     private Integer cellRow;
     private Integer cellCol;
+    private List<ShipHealthRatioInfoDto> shipHealthRatios;
 }

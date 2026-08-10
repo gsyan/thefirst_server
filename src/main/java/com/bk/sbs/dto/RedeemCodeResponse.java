@@ -16,6 +16,4 @@ import lombok.NoArgsConstructor;
 public class RedeemCodeResponse {
     private Integer commanderLevel;
     private Integer exp;
-    private Integer modulePoint;
-    private Integer modulePointMaxGot;
 }

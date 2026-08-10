@@ -19,4 +19,5 @@ public class GetActiveZoneRunProgressResponse {
     private List<String> clearedCells;
     private Integer explorationPointBanked;
     private Integer commanderExpBanked;
+    private List<ShipHealthRatioInfoDto> shipHealthRatios;
 }

@@ -15,5 +15,4 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ShipResetRemoveResponse {
     private Long removedShipId;
-    private Integer modulePointRemain;
 }

@@ -21,10 +21,16 @@ public class ZoneConfigData {
     private List<GridCellOverrideDto> cellOverrides;
     private Integer enemyFleetsPerCell;
     private Integer enemyBudget;
-    private Integer enemyMaxCost;
+    private Integer enemyMaxCostOfOneShip;
     private Integer enemyDeviation;
     private Integer enemyMaxShipsPerFleet;
-    private Float enemyStatMultiplier;
+    private Float enemyHealthMultiplier;
+    private Float enemyAttackMultiplier;
+    private Integer enemyBeamEquipSlots;
+    private Integer enemyMissileEquipSlots;
+    private Integer enemyHangerEquipSlots;
+    private Integer enemyShieldEquipSlots;
+    private Integer enemyInterceptorEquipSlots;
     private Integer explorationPointReward;
     private Integer commanderExpReward;
 }

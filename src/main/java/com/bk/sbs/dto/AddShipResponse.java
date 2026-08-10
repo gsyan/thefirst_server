@@ -15,5 +15,4 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AddShipResponse {
     private ShipInfoDto newShipInfo;
-    private Integer modulePointRemain;
 }

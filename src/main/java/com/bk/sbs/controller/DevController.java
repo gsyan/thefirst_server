@@ -53,10 +53,10 @@ public class DevController {
         switch (command.toLowerCase()) {
             case "adddevresources": {
                 // params: [levelUp] [exploPoint] [pvpPoint] — 0이면 해당 타입 스킵, levelUp>0이면 정확히 1레벨만 증가
-                if (params == null || params.size() < 3) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDMINERALS_INVALID_PARAM);
-                int addLevel  = parseIntOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDPVPMINERAL_PARSE_PARAM);
-                int addExplo  = parseIntOrThrow(params.get(1), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDTEMPMINERAL_PARSE_PARAM);
-                int addPvp    = parseIntOrThrow(params.get(2), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDPVPMINERAL_PARSE_PARAM);
+                if (params == null || params.size() < 3) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDDEVRESOURCES_INVALID_PARAM);
+                int addLevel  = parseIntOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDDEVRESOURCES_PARSE_PARAM);
+                int addExplo  = parseIntOrThrow(params.get(1), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDDEVRESOURCES_PARSE_EXPLO_PARAM);
+                int addPvp    = parseIntOrThrow(params.get(2), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDDEVRESOURCES_PARSE_PARAM);
                 CommanderInfoDto cur = CommanderService.getCommanderInfoDto(commanderId);
                 int newExplo  = addExplo > 0 ? CommanderService.addExplorationPoint(commanderId, addExplo)  : cur.getExplorationPoint();
                 int newPvpMax = addPvp   > 0 ? CommanderService.addPvpPointMaxGot(commanderId, addPvp)      : cur.getPvpPointMaxGot();

@@ -4,12 +4,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -19,12 +19,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -34,12 +34,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -49,12 +49,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -64,12 +64,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -79,12 +79,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -94,12 +94,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -109,12 +109,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -124,12 +124,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -139,12 +139,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -154,12 +154,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -169,12 +169,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -184,12 +184,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -199,12 +199,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -214,12 +214,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -229,12 +229,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -244,12 +244,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -259,12 +259,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -274,12 +274,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -289,12 +289,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -304,12 +304,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -319,12 +319,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -334,12 +334,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -349,12 +349,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -364,12 +364,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -379,12 +379,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -394,12 +394,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]
@@ -409,12 +409,12 @@
     "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 100
       },
       {
         "tier": "VIP",
-        "rewardType": "Mineral",
+        "rewardType": "ExplorationPoint",
         "amount": 200
       }
     ]

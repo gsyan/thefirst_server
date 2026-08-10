@@ -14,14 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class PendingStageRewardResponse {
-    private Integer mineralGained;
     private Integer expGained;
-    private Integer modulePointGained;
-    private Integer mineralRemain;
     private Integer commanderLevel;
     private Integer totalExp;
-    private Integer modulePointRemain;
-    private Integer modulePointMaxGot;
-    private Boolean mineralSettingReset;
-    private FleetInfoDto updatedFleetInfo;
 }

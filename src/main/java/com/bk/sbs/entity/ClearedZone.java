@@ -33,7 +33,7 @@ public class ClearedZone {
     private boolean rewardClaimed = false;      // per-run: clearZoneStage→false, claimZoneReward→true
 
     @Column(nullable = false)
-    private boolean firstBonusClaimed = false;  // 영구: techPoint/modulePoint 최초 지급 후 true, 리셋 없음
+    private boolean firstBonusClaimed = false;  // 영구: 보상 최초 지급 후 true, 리셋 없음
 
     public ClearedZone(Long commanderId, String zoneName) {
         this.commanderId = commanderId;

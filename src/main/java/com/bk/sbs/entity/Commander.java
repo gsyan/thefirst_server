@@ -26,9 +26,6 @@ public class Commander {
 
     private Long lastLocation;
 
-    @Column(nullable = false)
-    private int mineral;
-
     // 커맨더 레벨 (exp 누적 기준 자동 레벨업, 기본값 1)
     @Column(nullable = false, columnDefinition = "INT DEFAULT 1")
     private int commanderLevel = 1;
@@ -36,13 +33,6 @@ public class Commander {
     // 경험치 (스테이지 클리어마다 매번 지급)
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
     private int exp = 0;
-
-    // 모듈 레벨업/업그레이드 포인트 (커맨더 레벨업 보상)
-    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int modulePoint = 0;
-
-    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int modulePointMaxGot = 0;
 
     // PvP 시즌 보상 포인트 — 만료 시 소멸
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")

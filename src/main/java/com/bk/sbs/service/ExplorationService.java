@@ -13,6 +13,8 @@ import com.bk.sbs.repository.CommanderRepository;
 import com.bk.sbs.repository.ZoneCellClearLogRepository;
 import com.bk.sbs.repository.ZoneRunRepository;
 import com.bk.sbs.util.ZoneEnemyFleetGenerator;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -36,13 +38,37 @@ public class ExplorationService {
     private final ZoneRunRepository zoneRunRepository;
     private final ZoneCellClearLogRepository zoneCellClearLogRepository;
     private final GameDataService gameDataService;
+    private final ObjectMapper objectMapper;
 
     public ExplorationService(CommanderRepository commanderRepository, ZoneRunRepository zoneRunRepository,
-                               ZoneCellClearLogRepository zoneCellClearLogRepository, GameDataService gameDataService) {
+                               ZoneCellClearLogRepository zoneCellClearLogRepository, GameDataService gameDataService,
+                               ObjectMapper objectMapper) {
         this.commanderRepository = commanderRepository;
         this.zoneRunRepository = zoneRunRepository;
         this.zoneCellClearLogRepository = zoneCellClearLogRepository;
         this.gameDataService = gameDataService;
+        this.objectMapper = objectMapper;
+    }
+
+    // 셀 클리어 요청에 실린 함대 체력 스냅샷을 JSON으로 직렬화 — 비어있으면(null/빈 리스트) 기존 저장값을 그대로 둠(스냅샷 없이 보낸 요청이 덮어쓰지 않도록)
+    private String serializeHealthSnapshot(List<ShipHealthRatioInfoDto> shipHealthRatios, String previousJson) {
+        if (shipHealthRatios == null || shipHealthRatios.isEmpty()) return previousJson;
+        try {
+            return objectMapper.writeValueAsString(shipHealthRatios);
+        } catch (Exception e) {
+            log.error("Failed to serialize fleet health snapshot", e);
+            return previousJson;
+        }
+    }
+
+    private List<ShipHealthRatioInfoDto> deserializeHealthSnapshot(String json) {
+        if (json == null || json.isBlank()) return null;
+        try {
+            return objectMapper.readValue(json, new TypeReference<List<ShipHealthRatioInfoDto>>() {});
+        } catch (Exception e) {
+            log.error("Failed to deserialize fleet health snapshot", e);
+            return null;
+        }
     }
 
     // 클라 CommonUtility.ComputeExplorationZoneSeed(zoneNumber, explorationSeedBase)와 동일 — 두 곳은 항상 함께 수정할 것
@@ -118,7 +144,7 @@ public class ExplorationService {
 
         int seed = computeZoneSeedShared(request.getZoneNumber());
         List<ZoneEnemyFleetGenerator.WaveResult> waves = ZoneEnemyFleetGenerator.generateWaves(
-                zoneConfig, seed, request.getCellRow(), request.getCellCol(), gameDataService.getShipPresetList());
+                zoneConfig, seed, request.getCellRow(), request.getCellCol(), gameDataService.getShipPresetList(), gameDataService);
 
         List<StageEnemyFleetSpawnConfigDto> enemyFleets = new ArrayList<>();
         for (int i = 0; i < waves.size(); i++) {
@@ -129,6 +155,8 @@ public class ExplorationService {
                         .shipPresetId(ship.presetId)
                         .isFront(ship.isFront)
                         .bodies(List.of(ship.modules))
+                        .healthMultiplier(zoneConfig.getEnemyHealthMultiplier())
+                        .attackMultiplier(zoneConfig.getEnemyAttackMultiplier())
                         .build());
             }
             enemyFleets.add(StageEnemyFleetSpawnConfigDto.builder()
@@ -163,7 +191,7 @@ public class ExplorationService {
 
         int seed = computeZoneSeedShared(request.getZoneNumber());
         List<ZoneEnemyFleetGenerator.WaveResult> waves = ZoneEnemyFleetGenerator.generateWaves(
-                zoneConfig, seed, request.getCellRow(), request.getCellCol(), gameDataService.getShipPresetList());
+                zoneConfig, seed, request.getCellRow(), request.getCellCol(), gameDataService.getShipPresetList(), gameDataService);
 
         // 존 고정 보상값 적립 — 적 함대 성능(commandCost)과 무관, 웨이브에 함선이 있던 셀만 지급(빈 셀은 0)
         boolean hasEnemies = waves.stream().anyMatch(wave -> wave.ships.isEmpty() == false);
@@ -173,6 +201,7 @@ public class ExplorationService {
         run.setCurrentPosition(request.getCellRow(), request.getCellCol());
         run.setExplorationPointBanked(run.getExplorationPointBanked() + pointsGained);
         run.setCommanderExpBanked(run.getCommanderExpBanked() + expGained);
+        run.setFleetHealthSnapshotJson(serializeHealthSnapshot(request.getShipHealthRatios(), run.getFleetHealthSnapshotJson()));
         zoneRunRepository.save(run);
         zoneCellClearLogRepository.save(new ZoneCellClearLog(run.getId(), request.getCellRow(), request.getCellCol()));
 
@@ -206,6 +235,7 @@ public class ExplorationService {
                 .clearedCells(clearedCells)
                 .explorationPointBanked(run.getExplorationPointBanked())
                 .commanderExpBanked(run.getCommanderExpBanked())
+                .shipHealthRatios(deserializeHealthSnapshot(run.getFleetHealthSnapshotJson()))
                 .build();
     }
 

@@ -384,7 +384,6 @@ public class FleetService {
         beamModule.setModuleLevel(1); // 레벨 축 삭제 — 타입당 서브타입 1개뿐이라 고정값
         beamModule.setBodyIndex(0);
         beamModule.setSlotIndex(0);
-        beamModule.setInvestedModulePoint(1);
         beamModule.setDeleted(false);
         beamModule.setCreated(Instant.now());
         beamModule.setModified(Instant.now());
@@ -667,9 +666,6 @@ public class FleetService {
                                     .moduleLevel(beamModule.getModuleLevel())
                                     .bodyIndex(beamModule.getBodyIndex())
                                     .slotIndex(beamModule.getSlotIndex())
-                                    .investedModulePoint(beamModule.getInvestedModulePoint())
-                                    .addShipModulePoint(beamModule.getAddShipModulePoint())
-                                    .investedMineral(beamModule.getInvestedMineral())
                                     .build())
                             .collect(Collectors.toList());
 
@@ -681,9 +677,6 @@ public class FleetService {
                                     .moduleLevel(missileModule.getModuleLevel())
                                     .bodyIndex(missileModule.getBodyIndex())
                                     .slotIndex(missileModule.getSlotIndex())
-                                    .investedModulePoint(missileModule.getInvestedModulePoint())
-                                    .addShipModulePoint(missileModule.getAddShipModulePoint())
-                                    .investedMineral(missileModule.getInvestedMineral())
                                     .build())
                             .collect(Collectors.toList());
 
@@ -695,9 +688,6 @@ public class FleetService {
                                     .moduleLevel(hangerModule.getModuleLevel())
                                     .bodyIndex(hangerModule.getBodyIndex())
                                     .slotIndex(hangerModule.getSlotIndex())
-                                    .investedModulePoint(hangerModule.getInvestedModulePoint())
-                                    .addShipModulePoint(hangerModule.getAddShipModulePoint())
-                                    .investedMineral(hangerModule.getInvestedMineral())
                                     .build())
                             .collect(Collectors.toList());
 
@@ -718,9 +708,6 @@ public class FleetService {
                             .beams(beams)
                             .missiles(missiles)
                             .hangers(hangers)
-                            .investedModulePoint(bodyModule.getInvestedModulePoint())
-                            .addShipModulePoint(bodyModule.getAddShipModulePoint())
-                            .investedMineral(bodyModule.getInvestedMineral())
                             .currentHealth(normalizedHealth)
                             .build();
                 })
@@ -764,23 +751,11 @@ public class FleetService {
             throw new BusinessException(ServerErrorCode.ADD_SHIP_FAIL_FLEET_MAX_SHIPS_REACHED);
         }
 
-        // 현재 함선 수에 따른 추가 비용 가져오기
-        int shipAddCost = gameDataService.getShipAddCost();
-
         // 커맨더 레벨 검증 — 현재 레벨에서 허용된 최대 함선 수(ship_count) 초과 여부
         int charCommanderLevel = commander.getCommanderLevel();
         if (currentShips.size() >= gameDataService.getShipCount(charCommanderLevel)) {
             throw new BusinessException(ServerErrorCode.ADD_SHIP_FAIL_INSUFFICIENT_COMMANDER_LEVEL);
         }
-
-        // 자원 부족 검사
-        if (commander.getModulePoint() < shipAddCost) {
-            throw new BusinessException(ServerErrorCode.ADD_SHIP_FAIL_INSUFFICIENT_MODULE_POINT);
-        }
-
-        // 자원 차감
-        int addShipDeducted = deductModulePoint(commander, shipAddCost);
-        commanderRepository.save(commander);
 
         // 빠진 함대 positionIndex(삭제된 슬롯) 중 가장 낮은 값 사용
         java.util.Set<Integer> usedIndexes = currentShips.stream()
@@ -799,21 +774,18 @@ public class FleetService {
         newShip.setModified(Instant.now());
         Ship savedShip = shipRepository.save(newShip);
 
-        // 기본 모듈들 생성 (Body, Weapon) — 비용 분배: beam = moduleUnlockPrice, body = 나머지
-        int moduleUnlockPrice = gameDataService.getModuleUnlockPrice();
-        int bodyInvested = shipAddCost - moduleUnlockPrice;
-        createDefaultModules(savedShip, bodyInvested, moduleUnlockPrice);
+        // 기본 모듈들 생성 (Body, Weapon)
+        createDefaultModules(savedShip);
 
         // 응답 생성
         AddShipResponse response = AddShipResponse.builder()
                 .newShipInfo(convertShipToShipInfoDto(savedShip))
-                .modulePointRemain(commander.getModulePoint())
                 .build();
 
         return response;
     }
 
-    private void createDefaultModules(Ship ship, int bodyInvestedMineral, int beamInvestedMineral) {
+    private void createDefaultModules(Ship ship) {
         ModuleData bodyData = gameDataService.getFirstModuleByType(EModuleType.body);
         // Body 모듈
         ShipModule bodyModule = new ShipModule();
@@ -823,8 +795,6 @@ public class FleetService {
         bodyModule.setModuleLevel(1);
         bodyModule.setBodyIndex(0);
         bodyModule.setSlotIndex(0);
-        bodyModule.setInvestedModulePoint(bodyInvestedMineral);
-        bodyModule.setAddShipModulePoint(bodyInvestedMineral);
         bodyModule.setCurrentHealth(bodyData != null && bodyData.getHealth() != null ? bodyData.getHealth() : 0f);
         bodyModule.setDeleted(false);
         bodyModule.setCreated(Instant.now());
@@ -839,8 +809,6 @@ public class FleetService {
         weaponModule.setModuleLevel(1);
         weaponModule.setBodyIndex(0);
         weaponModule.setSlotIndex(0);
-        weaponModule.setInvestedModulePoint(beamInvestedMineral);
-        weaponModule.setAddShipModulePoint(beamInvestedMineral);
         weaponModule.setDeleted(false);
         weaponModule.setCreated(Instant.now());
         weaponModule.setModified(Instant.now());
@@ -910,16 +878,8 @@ public class FleetService {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.RESET_SHIP_FAIL_COMMANDER_NOT_FOUND));
 
-        // 전 모듈 투자 이력 합산 후 환급
-        List<ShipModule> allModules = shipModuleRepository.findByShipIdAndDeletedFalseOrderBySlotIndex(request.getShipId());
-        int refundMp = 0;
-        for (ShipModule mod : allModules) {
-            refundMp += mod.getInvestedModulePoint();
-        }
-        commander.setModulePoint(commander.getModulePoint() + refundMp);
-        commanderRepository.save(commander);
-
         // 모듈 soft delete
+        List<ShipModule> allModules = shipModuleRepository.findByShipIdAndDeletedFalseOrderBySlotIndex(request.getShipId());
         for (ShipModule mod : allModules) {
             mod.setDeleted(true);
             mod.setModified(Instant.now());
@@ -933,7 +893,6 @@ public class FleetService {
 
         return ShipResetRemoveResponse.builder()
                 .removedShipId(request.getShipId())
-                .modulePointRemain(commander.getModulePoint())
                 .build();
     }
 
@@ -994,35 +953,6 @@ public class FleetService {
         return null;
     }
 
-    private int deductModulePoint(Commander commander, int cost) {
-        commander.setModulePoint(commander.getModulePoint() - cost);
-        return cost;
-    }
-
-
-    // PVP 상대 함대 전달 시 미네랄 투자 정보를 제거한 FleetInfoDto 반환 (레벨업 시스템 삭제로 레벨 재계산은 불필요)
-    public FleetInfoDto stripMineralLevels(FleetInfoDto fleet) {
-        if (fleet == null || fleet.getShips() == null) return fleet;
-        for (ShipInfoDto ship : fleet.getShips()) {
-            if (ship.getBodies() == null) continue;
-            for (ModuleBodyInfoDto body : ship.getBodies()) {
-                body.setInvestedMineral(0);
-
-                stripMineralLevelsFromModuleList(body.getBeams());
-                stripMineralLevelsFromModuleList(body.getMissiles());
-                stripMineralLevelsFromModuleList(body.getHangers());
-            }
-        }
-        return fleet;
-    }
-
-    private void stripMineralLevelsFromModuleList(List<ModuleInfoDto> modules) {
-        if (modules == null) return;
-        for (ModuleInfoDto module : modules) {
-            module.setInvestedMineral(0);
-        }
-    }
-
     @Transactional
     public FleetInstantRepairResponse instantRepairFleet(Long commanderId) {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
@@ -1033,13 +963,6 @@ public class FleetService {
 
         List<Ship> ships = shipRepository.findByFleetIdAndDeletedFalseOrderByPositionIndex(fleet.getId());
         List<ModuleData> bodyDataList = gameDataService.getModulesByType(EModuleType.body);
-
-        int cost = gameDataService.getBattleRepairMineralPerSec() * gameDataService.getInstantRepairBaseSecs();
-        if (commander.getMineral() < cost)
-            throw new BusinessException(ServerErrorCode.FLEET_INSTANT_REPAIR_FAIL_INSUFFICIENT_MINERAL);
-
-        commander.setMineral(commander.getMineral() - cost);
-        commanderRepository.save(commander);
 
         // HP 전체 회복
         for (Ship ship : ships) {
@@ -1056,9 +979,7 @@ public class FleetService {
             }
         }
 
-        FleetInstantRepairResponse response = new FleetInstantRepairResponse();
-        response.setMineralRemain(commander.getMineral());
-        return response;
+        return FleetInstantRepairResponse.builder().build();
     }
 
     @Transactional

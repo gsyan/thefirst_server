@@ -21,10 +21,8 @@ public class ShipInfoDto {
     private Integer positionIndex;
     private String description;
     private List<ModuleBodyInfoDto> bodies;
-    private Float bodyMultiplier;
-    private Float beamMultiplier;
-    private Float missileMultiplier;
-    private Float hangerMultiplier;
+    private Float healthMultiplier;
+    private Float attackMultiplier;
     private String shipPresetId;
     private Boolean isFront;
 }

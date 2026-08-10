@@ -16,11 +16,6 @@ import lombok.NoArgsConstructor;
 public class ClaimZoneRewardResponse {
     private String zoneName;
     private Boolean watchedAd;
-    private Integer mineralRemain;
     private Integer commanderLevel;
     private Integer totalExp;
-    private Integer modulePointRemain;
-    private Integer modulePointMaxGot;
-    private Boolean mineralSettingReset;
-    private FleetInfoDto updatedFleetInfo;
 }

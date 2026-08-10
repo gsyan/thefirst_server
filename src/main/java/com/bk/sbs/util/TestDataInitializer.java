@@ -158,15 +158,14 @@ public class TestDataInitializer {
         // 3. Commander
         List<Object[]> charRows = new ArrayList<>(count);
         for (int i = 0; i < count; i++)
-            charRows.add(new Object[]{accountIds.get(i), "commander_" + (charAutoInc + i), 2, now});
+            charRows.add(new Object[]{accountIds.get(i), "commander_" + (charAutoInc + i), now});
         jdbc.batchUpdate(
-                "INSERT INTO commander (account_id, commander_name, mineral, deleted, date_time)" +
-                " VALUES (?, ?, ?, false, ?)",
+                "INSERT INTO commander (account_id, commander_name, deleted, date_time)" +
+                " VALUES (?, ?, false, ?)",
                 charRows, BATCH_SIZE, (ps, row) -> {
                     ps.setLong(1,   (Long)      row[0]);
                     ps.setString(2, (String)    row[1]);
-                    ps.setInt(3,    (Integer)   row[2]);
-                    ps.setTimestamp(4, (Timestamp) row[3]);
+                    ps.setTimestamp(3, (Timestamp) row[2]);
                 });
 
         // 4. Commander ID 목록

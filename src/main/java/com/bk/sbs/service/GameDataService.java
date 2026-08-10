@@ -7,7 +7,6 @@ import com.bk.sbs.config.DataTablePvpSeason;
 import com.bk.sbs.config.ZoneConfig;
 import com.bk.sbs.dto.ZoneConfigData;
 import com.bk.sbs.dto.ModuleData;
-import com.bk.sbs.enums.EDailyBonusTier;
 import com.bk.sbs.enums.EModuleSubType;
 import com.bk.sbs.enums.EModuleType;
 import com.bk.sbs.exception.BusinessException;
@@ -44,23 +43,23 @@ public class GameDataService {
     private int cachedMaxShipCount = 1;
 
     // ZoneEnemyFleetGenerator가 웨이브 예산을 맞추는 데 필요한 최소 정보 + FleetService의 슬롯 배치/모듈 토글(지휘력 재계산, 기본 로드아웃 시딩)에 사용
-    // prefabName/defaultModules는 FleetService용. maxSlots/fullEquipCost는 ZoneEnemyFleetGenerator의 적 함대 모듈 다양성용
+    // prefabName/defaultModules는 FleetService용. maxSlots/bodyCost는 ZoneEnemyFleetGenerator의 적 함대 예산 배분용
     public static class ShipPresetSummary {
         public String presetId;
         public int unlockCommanderLevel;
-        public int commandCost; // 기본 로드아웃(빔1) 기준 — 지휘력 계산/플레이어 프리셋 목록용, 적 함대 예산 계산에는 fullEquipCost를 씀
+        public int commandCost; // 기본 로드아웃(빔1) 기준 — 지휘력 계산/플레이어 프리셋 목록용
         public String prefabName;
         public java.util.List<DefaultModuleEntry> defaultModules;
         public int[] maxSlots; // [beam, missile, hanger, shield, interceptor] — presetId에서 파싱
-        public int fullEquipCost; // 모든 슬롯을 다 채웠을 때의 지휘력 코스트 — 적 함대는 이 값 기준으로 예산을 맞추고 실제로는 일부만 랜덤 장착(과소비 방지)
-        public ShipPresetSummary(String presetId, int unlockCommanderLevel, int commandCost, String prefabName, java.util.List<DefaultModuleEntry> defaultModules, int[] maxSlots, int fullEquipCost) {
+        public int bodyCost; // 순수 바디 설치비(모듈 미포함) — 적 함대는 이 값으로 함체를 고르고, 남은 예산을 모듈 구매에 씀
+        public ShipPresetSummary(String presetId, int unlockCommanderLevel, int commandCost, String prefabName, java.util.List<DefaultModuleEntry> defaultModules, int[] maxSlots, int bodyCost) {
             this.presetId = presetId;
             this.unlockCommanderLevel = unlockCommanderLevel;
             this.commandCost = commandCost;
             this.prefabName = prefabName;
             this.defaultModules = defaultModules;
             this.maxSlots = maxSlots;
-            this.fullEquipCost = fullEquipCost;
+            this.bodyCost = bodyCost;
         }
     }
 
@@ -148,8 +147,8 @@ public class GameDataService {
                     if (presetId != null)
                     {
                         int[] maxSlots = parseMaxSlotsFromPresetId(presetId);
-                        int fullEquipCost = computeFullEquipCost(prefabName, maxSlots);
-                        ShipPresetSummary summary = new ShipPresetSummary(presetId, unlockCommanderLevel, commandCost, prefabName, defaultModules, maxSlots, fullEquipCost);
+                        int bodyCost = computeBodyCost(prefabName);
+                        ShipPresetSummary summary = new ShipPresetSummary(presetId, unlockCommanderLevel, commandCost, prefabName, defaultModules, maxSlots, bodyCost);
                         shipPresetList.add(summary);
                         shipPresetById.put(presetId, summary);
                     }
@@ -219,8 +218,8 @@ public class GameDataService {
         return getDataTableConfig().getModuleUnlockPrice();
     }
 
-    public int getBattleRepairMineralPerSec() {
-        Integer val = getDataTableConfig().getRepairBoostMineralPerSec();
+    public int getBattleRepairExplorationPointPerSec() {
+        Integer val = getDataTableConfig().getRepairBoostExplorationPointPerSec();
         return val != null ? val : 1;
     }
 
@@ -281,25 +280,17 @@ public class GameDataService {
         return result;
     }
 
-    // 바디 설치비 + [beam, missile, hanger] 각 카테고리 최대 슬롯 수만큼 기본 서브타입(t1)을 전부 채웠을 때의 지휘력 코스트
-    private int computeFullEquipCost(String prefabName, int[] maxSlots) {
-        int bodyCost = 0;
-        if (prefabName != null) {
-            try {
-                bodyCost = getModuleStatPoint(EModuleType.body, EModuleSubType.valueOf(prefabName));
-            } catch (IllegalArgumentException ignored) {
-                // prefabName이 EModuleSubType에 없는 경우 — bodyCost 0으로 취급
-            }
+    // 순수 바디 설치비(모듈 미포함) — ZoneEnemyFleetGenerator가 함체 선택 기준으로 사용
+    private int computeBodyCost(String prefabName) {
+        if (prefabName == null) return 0;
+        try {
+            return getModuleStatPoint(EModuleType.body, EModuleSubType.valueOf(prefabName));
+        } catch (IllegalArgumentException ignored) {
+            return 0; // prefabName이 EModuleSubType에 없는 경우 — bodyCost 0으로 취급
         }
-
-        int beamCost = getModuleStatPoint(EModuleType.beam, EModuleSubType.beam_t1);
-        int missileCost = getModuleStatPoint(EModuleType.missile, EModuleSubType.missile_t1);
-        int hangerCost = getModuleStatPoint(EModuleType.hanger, EModuleSubType.hanger_t1);
-
-        return bodyCost + maxSlots[0] * beamCost + maxSlots[1] * missileCost + maxSlots[2] * hangerCost;
     }
 
-    private int getModuleStatPoint(EModuleType moduleType, EModuleSubType subType) {
+    public int getModuleStatPoint(EModuleType moduleType, EModuleSubType subType) {
         List<ModuleData> modules = getModulesByType(moduleType);
         for (ModuleData data : modules) {
             if (subType.equals(data.getModuleSubType()))
@@ -334,16 +325,6 @@ public class GameDataService {
 
     public DataTablePvpSeason getDataTablePvpSeason() {
         return dataTablePvpSeason != null ? dataTablePvpSeason : new DataTablePvpSeason();
-    }
-
-    // tier("Normal"/"VIP") 기준 day의 Mineral 보상 반환. 테이블에 없으면 -1
-    public int getDailyMineralForDay(int day, EDailyBonusTier tier) {
-        return dataTableDailyBonus.getMineralForDay(day, tier);
-    }
-
-    // fromDay~toDay 구간 VIP Mineral 합산 (catch-up용)
-    public int getVipMineralCatchup(int fromDay, int toDay) {
-        return dataTableDailyBonus.getVipMineralCatchup(fromDay, toDay);
     }
 
     public ZoneConfigData getZoneConfigByIndex(int zoneIndex) {

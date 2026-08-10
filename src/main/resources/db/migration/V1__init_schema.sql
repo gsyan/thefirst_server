@@ -47,11 +47,8 @@ CREATE TABLE commander (
     account_id              BIGINT          NOT NULL,
     commander_name          VARCHAR(255)    NOT NULL,
     last_location           BIGINT              NULL,
-    mineral                 INT             NOT NULL DEFAULT 0,
     commander_level         INT             NOT NULL DEFAULT 1,
     exp                     INT             NOT NULL DEFAULT 0,
-    module_point            INT             NOT NULL DEFAULT 0,
-    module_point_max_got    INT             NOT NULL DEFAULT 0,
     pvp_point               INT             NOT NULL DEFAULT 0,
     pvp_point_max_got       INT             NOT NULL DEFAULT 0,
     pvp_point_expiry        DATETIME(6)         NULL,
@@ -160,9 +157,6 @@ CREATE TABLE ship_module (
     module_level            INT             NOT NULL,
     body_index              INT             NOT NULL,
     slot_index              INT             NOT NULL,
-    invested_module_point   INT             NOT NULL DEFAULT 0,
-    add_ship_module_point   INT             NOT NULL DEFAULT 0,
-    invested_mineral        INT             NOT NULL DEFAULT 0,
     current_health          FLOAT           NOT NULL DEFAULT 0,
     deleted                 TINYINT(1)      NOT NULL DEFAULT 0,
     created                 DATETIME(6)     NOT NULL,
@@ -238,7 +232,7 @@ CREATE TABLE cleared_zone (
     zone_name            VARCHAR(255) NOT NULL,
     cleared_at           DATETIME(6)  NOT NULL,
     reward_claimed       TINYINT(1)   NOT NULL DEFAULT 0, -- per-run: clearZoneStage→0, claimZoneReward→1
-    first_bonus_claimed  TINYINT(1)   NOT NULL DEFAULT 0, -- 영구: techPoint/modulePoint 최초 지급 후 1, 리셋 없음
+    first_bonus_claimed  TINYINT(1)   NOT NULL DEFAULT 0, -- 영구: 보상 최초 지급 후 1, 리셋 없음
     PRIMARY KEY (id),
     UNIQUE KEY uk_cleared_zone (commander_id, zone_name),
     INDEX idx_cleared_commander (commander_id)
@@ -256,6 +250,7 @@ CREATE TABLE zone_run (
     exploration_point_banked    INT          NOT NULL DEFAULT 0,
     commander_exp_banked        INT          NOT NULL DEFAULT 0,
     current_cell                VARCHAR(20)  NOT NULL, -- "x-y" 형식(0-indexed), 마지막으로 클리어한 셀
+    fleet_health_snapshot_json  TEXT             NULL, -- 마지막 셀 클리어 시점의 내 함대 체력 비율(슬롯 포지션 인덱스별) JSON — 재접속 시 손상 상태 복구용
     started_at                  DATETIME(6)  NOT NULL,
     ended_at                    DATETIME(6)      NULL,
     PRIMARY KEY (id),
@@ -311,12 +306,11 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS sp_get_commander_resources$$
 CREATE PROCEDURE sp_get_commander_resources(
     IN  p_commander_id  BIGINT,
-    OUT p_mineral       INT,
     OUT p_pvp_point     INT
 )
 BEGIN
-    SELECT mineral, pvp_point
-    INTO   p_mineral, p_pvp_point
+    SELECT pvp_point
+    INTO   p_pvp_point
     FROM   commander
     WHERE  id = p_commander_id AND deleted = 0;
 END$$

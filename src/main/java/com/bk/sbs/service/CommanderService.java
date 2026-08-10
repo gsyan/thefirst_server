@@ -77,9 +77,6 @@ public class CommanderService {
         commander.setAccountId(account.getId());
         // 자동 이름 모드: 충돌 없는 UUID 임시 이름으로 저장 → 이후 commander_+id로 교체
         commander.setCommanderName(isAutoName ? UUID.randomUUID().toString() : requestedName);
-        commander.setModulePoint(0);        // 기본 beam unlock 1포인트 기함에 투입, 잔여 0
-        commander.setModulePointMaxGot(1);  // 모듈 포인트 총 획득량 1 (beam unlock 반영)
-        commander.setMineral(100);          // 기본 미네랄 100 지급
         commander.setCommandPowerMax(gameDataService.getInitialCommandPowerMax()); // DataTableConfig.commandPowerMaxInit — 코드 재배포 없이 값 조정 가능
         Commander savedCommander = commanderRepository.save(commander);
 
@@ -124,11 +121,8 @@ public class CommanderService {
         return CommanderInfoDto.builder()
                 .commanderId(commanderId)
                 .commanderName(commander.getCommanderName())
-                .mineral(commander.getMineral())
                 .commanderLevel(commander.getCommanderLevel())
                 .exp(commander.getExp())
-                .modulePoint(commander.getModulePoint())
-                .modulePointMaxGot(commander.getModulePointMaxGot())
                 .pvpPoint(commander.getPvpPoint())
                 .pvpPointMaxGot(commander.getPvpPointMaxGot())
                 .pvpPointExpiry(commander.getPvpPointExpiry() != null ? commander.getPvpPointExpiry().toString() : null)
@@ -186,7 +180,7 @@ public class CommanderService {
 
     @Transactional
     public int addExp(Long commanderId, int amount) {
-        Commander commander = commanderRepository.findByIdForUpdate(commanderId).orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_MINERAL_FAIL_COMMANDER_NOT_FOUND));
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId).orElseThrow(() -> new BusinessException(ServerErrorCode.DEV_ADD_RESOURCE_FAIL_COMMANDER_NOT_FOUND));
         commander.setExp(commander.getExp() + amount);
         commander = commanderRepository.save(commander);
         return commander.getExp();
@@ -194,7 +188,7 @@ public class CommanderService {
 
     @Transactional
     public int addExplorationPoint(Long commanderId, int amount) {
-        Commander commander = commanderRepository.findByIdForUpdate(commanderId).orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_MINERAL_FAIL_COMMANDER_NOT_FOUND));
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId).orElseThrow(() -> new BusinessException(ServerErrorCode.DEV_ADD_RESOURCE_FAIL_COMMANDER_NOT_FOUND));
         commander.setExplorationPoint(commander.getExplorationPoint() + amount);
         commander = commanderRepository.save(commander);
         return commander.getExplorationPoint();
@@ -202,7 +196,7 @@ public class CommanderService {
 
     @Transactional
     public int addPvpPoint(Long commanderId, int amount) {
-        Commander commander = commanderRepository.findByIdForUpdate(commanderId).orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_MINERAL_FAIL_COMMANDER_NOT_FOUND));
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId).orElseThrow(() -> new BusinessException(ServerErrorCode.DEV_ADD_RESOURCE_FAIL_COMMANDER_NOT_FOUND));
         commander.setPvpPoint(commander.getPvpPoint() + amount);
         commander = commanderRepository.save(commander);
         return commander.getPvpPoint();
@@ -210,7 +204,7 @@ public class CommanderService {
 
     @Transactional
     public int addPvpPointMaxGot(Long commanderId, int amount) {
-        Commander commander = commanderRepository.findByIdForUpdate(commanderId).orElseThrow(() -> new BusinessException(ServerErrorCode.ADD_MINERAL_FAIL_COMMANDER_NOT_FOUND));
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId).orElseThrow(() -> new BusinessException(ServerErrorCode.DEV_ADD_RESOURCE_FAIL_COMMANDER_NOT_FOUND));
         commander.setPvpPointMaxGot(commander.getPvpPointMaxGot() + amount);
         commander = commanderRepository.save(commander);
         return commander.getPvpPointMaxGot();

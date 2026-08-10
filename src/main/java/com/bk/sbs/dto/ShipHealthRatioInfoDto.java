@@ -6,14 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * ClearZoneStageResponse
- * Auto-generated from Unity C# ClearZoneStageResponse class
+ * ShipHealthRatioInfoDto
+ * Auto-generated from Unity C# ShipHealthRatioInfo class
  */
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class ClearZoneStageResponse {
-    private Boolean isFirstClear;
-    private String clearedZoneName;
+public class ShipHealthRatioInfoDto {
+    private Integer positionIndex;
+    private Float healthRatio;
 }

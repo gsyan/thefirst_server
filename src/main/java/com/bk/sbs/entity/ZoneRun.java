@@ -45,6 +45,10 @@ public class ZoneRun {
     @Column(name = "current_cell", nullable = false, length = 20)
     private String currentCell;
 
+    // 마지막 셀 클리어 시점의 내 함대 체력 비율(슬롯 포지션 인덱스별) JSON — 재접속 시 손상 상태 복구용. 없으면 null(만피로 스폰된 상태 그대로)
+    @Column(name = "fleet_health_snapshot_json", columnDefinition = "TEXT")
+    private String fleetHealthSnapshotJson;
+
     @Column(nullable = false)
     private Instant startedAt = Instant.now();
 

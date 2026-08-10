@@ -27,9 +27,6 @@ public class CommanderInfoDto {
     private Integer explorationZoneNumber;
     private String explorationCell;
     private Integer highestClearedZoneNumber;
-    private Integer mineral;
-    private Integer modulePoint;
-    private Integer modulePointMaxGot;
     private Integer pvpPoint;
     private Integer pvpPointMaxGot;
     private String pvpPointExpiry;
