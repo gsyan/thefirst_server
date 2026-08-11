@@ -12,6 +12,7 @@ import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.repository.CommanderRepository;
 import com.bk.sbs.repository.ZoneCellClearLogRepository;
 import com.bk.sbs.repository.ZoneRunRepository;
+import com.bk.sbs.util.RewardCardSelector;
 import com.bk.sbs.util.ZoneEnemyFleetGenerator;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -69,6 +70,39 @@ public class ExplorationService {
             log.error("Failed to deserialize fleet health snapshot", e);
             return null;
         }
+    }
+
+    // cardId 리스트 JSON 직렬화/역직렬화 — 셀 클리어 로그의 후보 3개, 재구성된 선택 이력 등 공용으로 사용
+    private String serializeCardIdList(List<String> cardIds) {
+        if (cardIds == null || cardIds.isEmpty()) return null;
+        try {
+            return objectMapper.writeValueAsString(cardIds);
+        } catch (Exception e) {
+            log.error("Failed to serialize reward card id list", e);
+            return null;
+        }
+    }
+
+    private List<String> deserializeCardIdList(String json) {
+        if (json == null || json.isBlank()) return null;
+        try {
+            return objectMapper.readValue(json, new TypeReference<List<String>>() {});
+        } catch (Exception e) {
+            log.error("Failed to deserialize reward card id list", e);
+            return null;
+        }
+    }
+
+    // 가중치 랜덤으로 후보 3개 추첨 — 결과는 ZoneCellClearLog.rewardCardCandidatesJson에 그대로 저장되므로 재계산할 필요 없음(confirmRewardCard 검증도 저장값 기준)
+    private List<String> rollRewardCardCandidates() {
+        List<GameDataService.RewardCardEntry> pool = gameDataService.getRewardCardList();
+        if (pool.isEmpty()) return null;
+
+        List<GameDataService.RewardCardEntry> picked = RewardCardSelector.selectCandidates(pool, 3, new java.util.Random());
+
+        List<String> cardIds = new ArrayList<>();
+        for (GameDataService.RewardCardEntry entry : picked) cardIds.add(entry.cardId);
+        return cardIds;
     }
 
     // 클라 CommonUtility.ComputeExplorationZoneSeed(zoneNumber, explorationSeedBase)와 동일 — 두 곳은 항상 함께 수정할 것
@@ -198,16 +232,62 @@ public class ExplorationService {
         int pointsGained = hasEnemies ? zoneConfig.getExplorationPointReward() : 0;
         int expGained    = hasEnemies ? zoneConfig.getCommanderExpReward()     : 0;
 
+        // 탈출 셀은 보상카드 후보 생성 스킵 — 탈출 셀은 별도의 탈출 확정 흐름을 가짐
+        GridCellOverrideDto escapeCell = findCellByType(zoneConfig, EGridCellType.Escape);
+        boolean isEscapeCell = escapeCell != null && escapeCell.getRow() == request.getCellRow() && escapeCell.getCol() == request.getCellCol();
+        List<String> rewardCardCandidates = (hasEnemies == true && isEscapeCell == false) ? rollRewardCardCandidates() : null;
+
         run.setCurrentPosition(request.getCellRow(), request.getCellCol());
         run.setExplorationPointBanked(run.getExplorationPointBanked() + pointsGained);
         run.setCommanderExpBanked(run.getCommanderExpBanked() + expGained);
         run.setFleetHealthSnapshotJson(serializeHealthSnapshot(request.getShipHealthRatios(), run.getFleetHealthSnapshotJson()));
         zoneRunRepository.save(run);
-        zoneCellClearLogRepository.save(new ZoneCellClearLog(run.getId(), request.getCellRow(), request.getCellCol()));
+
+        ZoneCellClearLog clearLog = new ZoneCellClearLog(run.getId(), request.getCellRow(), request.getCellCol());
+        clearLog.setRewardCardCandidatesJson(serializeCardIdList(rewardCardCandidates));
+        zoneCellClearLogRepository.save(clearLog);
 
         return ClearExplorationCellResponse.builder()
                 .explorationPointGained(pointsGained)
                 .expGained(expGained)
+                .rewardCardCandidates(rewardCardCandidates)
+                .build();
+    }
+
+    @Transactional
+    public ConfirmRewardCardResponse confirmRewardCard(Long commanderId, ConfirmRewardCardRequest request) {
+        ZoneRun run = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS)
+                .filter(r -> r.getZoneNumber() == request.getZoneNumber())
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_NO_ACTIVE_RUN));
+
+        String cell = request.getCellRow() + "-" + request.getCellCol();
+        ZoneCellClearLog clearLog = zoneCellClearLogRepository.findTopByZoneRunIdAndCellOrderByClearedAtDesc(run.getId(), cell)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_REWARD_CARD_INVALID_SELECTION));
+
+        if (clearLog.getRewardCardSelectedId() != null)
+            throw new BusinessException(ServerErrorCode.EXPLORATION_REWARD_CARD_INVALID_SELECTION); // 이미 선택 확정된 클리어 로그 — 중복 확정 방지
+
+        List<String> candidates = deserializeCardIdList(clearLog.getRewardCardCandidatesJson());
+        if (candidates == null || candidates.contains(request.getSelectedCardId()) == false)
+            throw new BusinessException(ServerErrorCode.EXPLORATION_REWARD_CARD_INVALID_SELECTION);
+
+        GameDataService.RewardCardEntry card = gameDataService.getRewardCard(request.getSelectedCardId());
+        if (card == null)
+            throw new BusinessException(ServerErrorCode.EXPLORATION_REWARD_CARD_INVALID_SELECTION);
+
+        int explorationPointGained = 0;
+        if ("Instant_ExplorationPointFlat".equals(card.effectType)) {
+            explorationPointGained = (int) card.value1;
+            run.setExplorationPointBanked(run.getExplorationPointBanked() + explorationPointGained);
+            zoneRunRepository.save(run);
+        }
+
+        clearLog.setRewardCardSelectedId(request.getSelectedCardId());
+        zoneCellClearLogRepository.save(clearLog);
+
+        return ConfirmRewardCardResponse.builder()
+                .selectedCardId(request.getSelectedCardId())
+                .explorationPointGained(explorationPointGained)
                 .build();
     }
 
@@ -225,10 +305,22 @@ public class ExplorationService {
         }
 
         ZoneRun run = activeRunOpt.get();
-        List<String> clearedCells = zoneCellClearLogRepository.findByZoneRunIdOrderByClearedAtAsc(run.getId())
-                .stream()
-                .map(ZoneCellClearLog::getCell)
+        List<ZoneCellClearLog> clearLogs = zoneCellClearLogRepository.findByZoneRunIdOrderByClearedAtAsc(run.getId());
+        List<String> clearedCells = clearLogs.stream().map(ZoneCellClearLog::getCell).toList();
+
+        // 이번 런에서 선택 확정한 카드 전체 — 별도 저장 없이 로그에서 재구성(정규화, ZoneRun에 중복 저장하지 않음)
+        List<String> selectedRewardCards = clearLogs.stream()
+                .map(ZoneCellClearLog::getRewardCardSelectedId)
+                .filter(java.util.Objects::nonNull)
                 .toList();
+
+        // 마지막 클리어 로그가 카드 후보는 있는데 아직 선택 확정 전이면 — 팝업이 뜨기 전에 앱이 꺼진 경우, 재접속 시 다시 띄워야 함
+        List<String> pendingRewardCardCandidates = null;
+        if (clearLogs.isEmpty() == false) {
+            ZoneCellClearLog lastLog = clearLogs.get(clearLogs.size() - 1);
+            if (lastLog.getRewardCardSelectedId() == null)
+                pendingRewardCardCandidates = deserializeCardIdList(lastLog.getRewardCardCandidatesJson());
+        }
 
         return GetActiveZoneRunProgressResponse.builder()
                 .zoneNumber(run.getZoneNumber())
@@ -236,6 +328,8 @@ public class ExplorationService {
                 .explorationPointBanked(run.getExplorationPointBanked())
                 .commanderExpBanked(run.getCommanderExpBanked())
                 .shipHealthRatios(deserializeHealthSnapshot(run.getFleetHealthSnapshotJson()))
+                .selectedRewardCards(selectedRewardCards)
+                .pendingRewardCardCandidates(pendingRewardCardCandidates)
                 .build();
     }
 

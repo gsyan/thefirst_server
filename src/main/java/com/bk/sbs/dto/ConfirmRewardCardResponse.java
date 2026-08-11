@@ -1,21 +1,19 @@
 package com.bk.sbs.dto;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * ClearExplorationCellResponse
- * Auto-generated from Unity C# ClearExplorationCellResponse class
+ * ConfirmRewardCardResponse
+ * Auto-generated from Unity C# ConfirmRewardCardResponse class
  */
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class ClearExplorationCellResponse {
+public class ConfirmRewardCardResponse {
+    private String selectedCardId;
     private Integer explorationPointGained;
-    private Integer expGained;
-    private List<String> rewardCardCandidates;
 }

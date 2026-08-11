@@ -4,6 +4,8 @@ import com.bk.sbs.dto.AbandonZoneRunRequest;
 import com.bk.sbs.dto.AbandonZoneRunResponse;
 import com.bk.sbs.dto.ClearExplorationCellRequest;
 import com.bk.sbs.dto.ClearExplorationCellResponse;
+import com.bk.sbs.dto.ConfirmRewardCardRequest;
+import com.bk.sbs.dto.ConfirmRewardCardResponse;
 import com.bk.sbs.dto.EnterExplorationCellRequest;
 import com.bk.sbs.dto.EnterExplorationCellResponse;
 import com.bk.sbs.dto.EscapeExplorationZoneRequest;
@@ -49,6 +51,15 @@ public class ExplorationController {
             HttpServletRequest httpRequest) {
         Long commanderId = getCommanderIdFromToken(httpRequest);
         ClearExplorationCellResponse response = explorationService.clearExplorationCell(commanderId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    @PostMapping("/confirm-reward-card")
+    public ResponseEntity<ApiResponse<ConfirmRewardCardResponse>> confirmRewardCard(
+            @RequestBody ConfirmRewardCardRequest request,
+            HttpServletRequest httpRequest) {
+        Long commanderId = getCommanderIdFromToken(httpRequest);
+        ConfirmRewardCardResponse response = explorationService.confirmRewardCard(commanderId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 

@@ -20,4 +20,6 @@ public class GetActiveZoneRunProgressResponse {
     private Integer explorationPointBanked;
     private Integer commanderExpBanked;
     private List<ShipHealthRatioInfoDto> shipHealthRatios;
+    private List<String> selectedRewardCards;
+    private List<String> pendingRewardCardCandidates;
 }

@@ -29,6 +29,14 @@ public class ZoneCellClearLog {
     @Column(nullable = false)
     private Instant clearedAt = Instant.now();
 
+    // 이 셀 클리어 시 추첨된 보상카드 후보 3개(cardId) JSON — 후보 없는 셀(탈출/빈 셀)은 null
+    @Column(name = "reward_card_candidates_json", columnDefinition = "TEXT")
+    private String rewardCardCandidatesJson;
+
+    // 확정 선택한 cardId — 아직 선택 전이면 null(재접속 시 이 상태로 카드 선택 팝업 복구)
+    @Column(name = "reward_card_selected_id", length = 64)
+    private String rewardCardSelectedId;
+
     public ZoneCellClearLog(Long zoneRunId, int cellRow, int cellCol) {
         this.zoneRunId = zoneRunId;
         this.cell = cellRow + "-" + cellCol;

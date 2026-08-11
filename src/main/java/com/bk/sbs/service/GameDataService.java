@@ -75,8 +75,28 @@ public class GameDataService {
         }
     }
 
+    // 셀 클리어 보상카드 1종 — 클라 RewardCardData의 서버 필요 필드만(ExportToServerJson 참고). 서버는 후보 추첨(weight)과 즉시효과 적용(effectType/value1/value2)에만 씀
+    public static class RewardCardEntry {
+        public String cardId;
+        public String effectType;
+        public boolean isPersistent;
+        public float value1;
+        public float value2;
+        public int weight;
+        public RewardCardEntry(String cardId, String effectType, boolean isPersistent, float value1, float value2, int weight) {
+            this.cardId = cardId;
+            this.effectType = effectType;
+            this.isPersistent = isPersistent;
+            this.value1 = value1;
+            this.value2 = value2;
+            this.weight = weight;
+        }
+    }
+
     private java.util.List<ShipPresetSummary> shipPresetList = new java.util.ArrayList<>();
     private java.util.Map<String, ShipPresetSummary> shipPresetById = new java.util.HashMap<>();
+    private java.util.List<RewardCardEntry> rewardCardList = new java.util.ArrayList<>();
+    private java.util.Map<String, RewardCardEntry> rewardCardById = new java.util.HashMap<>();
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -178,6 +198,30 @@ public class GameDataService {
                 log.warn("DataTableDailyBonus.json not found in resources/data/, using fallback properties value");
             }
 
+            ClassPathResource rewardCardResource = new ClassPathResource("data/DataTableRewardCard.json");
+            if (rewardCardResource.exists()) {
+                String json = new String(rewardCardResource.getInputStream().readAllBytes());
+                com.fasterxml.jackson.databind.JsonNode arrayNode = objectMapper.readTree(json);
+                rewardCardList.clear();
+                rewardCardById.clear();
+                for (com.fasterxml.jackson.databind.JsonNode cardNode : arrayNode) {
+                    String cardId = cardNode.path("cardId").asText(null);
+                    if (cardId == null) continue;
+                    RewardCardEntry entry = new RewardCardEntry(
+                            cardId,
+                            cardNode.path("effectType").asText(null),
+                            cardNode.path("isPersistent").asBoolean(false),
+                            (float) cardNode.path("value1").asDouble(0),
+                            (float) cardNode.path("value2").asDouble(0),
+                            cardNode.path("weight").asInt(1));
+                    rewardCardList.add(entry);
+                    rewardCardById.put(cardId, entry);
+                }
+                log.info("DataTableRewardCard.json loaded: {} entries", rewardCardList.size());
+            } else {
+                log.warn("DataTableRewardCard.json not found in resources/data/, using empty data");
+            }
+
         } catch (Exception e) {
             log.error("Failed to load game data: " + e.getMessage(), e);
             loadDefaultDataTableConfig();
@@ -265,6 +309,14 @@ public class GameDataService {
 
     public ShipPresetSummary getShipPresetSummary(String presetId) {
         return shipPresetById.get(presetId);
+    }
+
+    public java.util.List<RewardCardEntry> getRewardCardList() {
+        return rewardCardList;
+    }
+
+    public RewardCardEntry getRewardCard(String cardId) {
+        return rewardCardById.get(cardId);
     }
 
     // presetId(예: "m11100") → [beam, missile, hanger, shield, interceptor] 카테고리별 최대 슬롯 수. "m" + 5자리 숫자 형식 — 형식이 다르면 전부 0(안전하게 막힘)
