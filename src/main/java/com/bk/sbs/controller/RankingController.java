@@ -2,12 +2,9 @@ package com.bk.sbs.controller;
 
 import com.bk.sbs.dto.*;
 import com.bk.sbs.dto.nogenerated.ApiResponse;
-import com.bk.sbs.exception.BusinessException;
-import com.bk.sbs.exception.ServerErrorCode;
-import com.bk.sbs.security.JwtUtil;
+import com.bk.sbs.security.CommanderId;
 import com.bk.sbs.service.PvpService;
 import com.bk.sbs.service.RankingService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,20 +14,17 @@ public class RankingController {
 
     private final RankingService rankingService;
     private final PvpService pvpService;
-    private final JwtUtil jwtUtil;
 
-    public RankingController(RankingService rankingService, PvpService pvpService, JwtUtil jwtUtil) {
+    public RankingController(RankingService rankingService, PvpService pvpService) {
         this.rankingService = rankingService;
         this.pvpService = pvpService;
-        this.jwtUtil = jwtUtil;
     }
 
     // PVP 랭킹 보드 페이지 조회
     @PostMapping("/pvp")
     public ResponseEntity<ApiResponse<PvpRankingResponse>> getPvpRanking(
             @RequestBody PvpRankingRequest request,
-            HttpServletRequest httpRequest) {
-        Long commanderId = getCommanderIdFromToken(httpRequest);
+            @CommanderId Long commanderId) {
         PvpRankingResponse response = rankingService.getPvpRanking(request.getOffset(), request.getLimit(), commanderId);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
@@ -39,8 +33,7 @@ public class RankingController {
     @PostMapping("/pvp/my-rank")
     public ResponseEntity<ApiResponse<PvpMyRankResponse>> getMyPvpRank(
             @RequestBody PvpMyRankRequest request,
-            HttpServletRequest httpRequest) {
-        Long commanderId = getCommanderIdFromToken(httpRequest);
+            @CommanderId Long commanderId) {
         PvpMyRankResponse response = pvpService.getMyRank(commanderId);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
@@ -49,21 +42,9 @@ public class RankingController {
     @PostMapping("/zone")
     public ResponseEntity<ApiResponse<ZoneRankingResponse>> getZoneRanking(
             @RequestBody ZoneRankingRequest request,
-            HttpServletRequest httpRequest) {
-        Long commanderId = getCommanderIdFromToken(httpRequest);
+            @CommanderId Long commanderId) {
         ZoneRankingResponse response = rankingService.getZoneRanking(request.getOffset(), request.getLimit(), commanderId);
         return ResponseEntity.ok(ApiResponse.success(response));
-    }
-
-    private Long getCommanderIdFromToken(HttpServletRequest request) {
-        String token = jwtUtil.getTokenFromRequest(request);
-        if (token == null) throw new BusinessException(ServerErrorCode.PVP_CONTROLLER_FAIL_INVALID_TOKEN);
-        if (jwtUtil.hasCommanderId(token) == false) throw new BusinessException(ServerErrorCode.PVP_CONTROLLER_FAIL_JWT_HAS_COMMANDERID);
-
-        Long commanderId = jwtUtil.getCommanderIdFromToken(token);
-        if (commanderId == null) throw new BusinessException(ServerErrorCode.PVP_CONTROLLER_FAIL_JWT_GET_COMMANDERID);
-
-        return commanderId & 0x00FFFFFFFFFFFFFFL;
     }
 }
 

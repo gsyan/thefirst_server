@@ -19,4 +19,5 @@ public class EnterExplorationCellResponse {
     private Integer cellRow;
     private Integer cellCol;
     private List<StageEnemyFleetSpawnConfigDto> enemyFleets;
+    private String challengeToken;
 }

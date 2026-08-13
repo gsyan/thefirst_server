@@ -12,7 +12,7 @@ public enum EModuleType {
     body(1),
     beam(2),
     missile(3),
-    hanger(4),
+    hangar(4),
     shield(5),
     interceptor(6),
     max(7);

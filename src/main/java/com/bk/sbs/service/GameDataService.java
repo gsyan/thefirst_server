@@ -50,7 +50,7 @@ public class GameDataService {
         public int commandCost; // 기본 로드아웃(빔1) 기준 — 지휘력 계산/플레이어 프리셋 목록용
         public String prefabName;
         public java.util.List<DefaultModuleEntry> defaultModules;
-        public int[] maxSlots; // [beam, missile, hanger, shield, interceptor] — presetId에서 파싱
+        public int[] maxSlots; // [beam, missile, hangar, shield, interceptor] — presetId에서 파싱
         public int bodyCost; // 순수 바디 설치비(모듈 미포함) — 적 함대는 이 값으로 함체를 고르고, 남은 예산을 모듈 구매에 씀
         public ShipPresetSummary(String presetId, int unlockCommanderLevel, int commandCost, String prefabName, java.util.List<DefaultModuleEntry> defaultModules, int[] maxSlots, int bodyCost) {
             this.presetId = presetId;
@@ -277,7 +277,7 @@ public class GameDataService {
             case body -> dataTableModule.getBodyModules();
             case beam -> dataTableModule.getBeamModules();
             case missile -> dataTableModule.getMissileModules();
-            case hanger -> dataTableModule.getHangerModules();
+            case hangar -> dataTableModule.getHangarModules();
             default -> throw new BusinessException(ServerErrorCode.UNKNOWN_ERROR);
         };
     }
@@ -319,7 +319,7 @@ public class GameDataService {
         return rewardCardById.get(cardId);
     }
 
-    // presetId(예: "m11100") → [beam, missile, hanger, shield, interceptor] 카테고리별 최대 슬롯 수. "m" + 5자리 숫자 형식 — 형식이 다르면 전부 0(안전하게 막힘)
+    // presetId(예: "m11100") → [beam, missile, hangar, shield, interceptor] 카테고리별 최대 슬롯 수. "m" + 5자리 숫자 형식 — 형식이 다르면 전부 0(안전하게 막힘)
     // FleetService.toggleFleetPresetSlotModule과 ZoneEnemyFleetGenerator(적 함대 모듈 다양성)가 공유
     public static int[] parseMaxSlotsFromPresetId(String presetId) {
         int[] result = new int[5];
@@ -351,14 +351,14 @@ public class GameDataService {
         return 0;
     }
 
-    // DataTableShipPreset.json의 statAllocation 노드에서 beam/missile/hanger 각각 비어있지 않은 슬롯만 추출 — modules_in_preset.csv와 동일한 "빈칸=미장착" 규칙
+    // DataTableShipPreset.json의 statAllocation 노드에서 beam/missile/hangar 각각 비어있지 않은 슬롯만 추출 — modules_in_preset.csv와 동일한 "빈칸=미장착" 규칙
     private java.util.List<DefaultModuleEntry> parseDefaultModules(com.fasterxml.jackson.databind.JsonNode statAllocation) {
         java.util.List<DefaultModuleEntry> result = new java.util.ArrayList<>();
         if (statAllocation == null || statAllocation.isMissingNode()) return result;
 
         appendDefaultModules(result, statAllocation.path("beamModuleSubType"), EModuleType.beam);
         appendDefaultModules(result, statAllocation.path("missileModuleSubType"), EModuleType.missile);
-        appendDefaultModules(result, statAllocation.path("hangarModuleSubType"), EModuleType.hanger);
+        appendDefaultModules(result, statAllocation.path("hangarModuleSubType"), EModuleType.hangar);
         return result;
     }
 

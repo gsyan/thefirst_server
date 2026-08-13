@@ -14,7 +14,7 @@ public class DataTableModule {
     private volatile List<ModuleData> bodyModules = new ArrayList<>();
     private volatile List<ModuleData> beamModules = new ArrayList<>();
     private volatile List<ModuleData> missileModules = new ArrayList<>();
-    private volatile List<ModuleData> hangerModules = new ArrayList<>();
+    private volatile List<ModuleData> hangarModules = new ArrayList<>();
 
     /**
      * JSON의 "modules" 맵을 파싱하여 각 타입별 리스트에 분배
@@ -27,12 +27,12 @@ public class DataTableModule {
         String bodyKey    = String.valueOf(EModuleType.body.getValue());
         String beamKey    = String.valueOf(EModuleType.beam.getValue());
         String missileKey = String.valueOf(EModuleType.missile.getValue());
-        String hangerKey  = String.valueOf(EModuleType.hanger.getValue());
+        String hangarKey  = String.valueOf(EModuleType.hangar.getValue());
 
         if (modules.containsKey(bodyKey))    this.bodyModules    = new ArrayList<>(modules.get(bodyKey));
         if (modules.containsKey(beamKey))    this.beamModules    = new ArrayList<>(modules.get(beamKey));
         if (modules.containsKey(missileKey)) this.missileModules = new ArrayList<>(modules.get(missileKey));
-        if (modules.containsKey(hangerKey))  this.hangerModules  = new ArrayList<>(modules.get(hangerKey));
+        if (modules.containsKey(hangarKey))  this.hangarModules  = new ArrayList<>(modules.get(hangarKey));
     }
 
     public List<ModuleData> getBodyModules() {
@@ -44,8 +44,8 @@ public class DataTableModule {
     public List<ModuleData> getMissileModules() {
         return Collections.unmodifiableList(missileModules);
     }
-    public List<ModuleData> getHangerModules() {
-        return Collections.unmodifiableList(hangerModules);
+    public List<ModuleData> getHangarModules() {
+        return Collections.unmodifiableList(hangarModules);
     }
 
 }

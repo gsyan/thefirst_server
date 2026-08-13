@@ -16,7 +16,7 @@
             "slotIndex": 0
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 0
           }
         ],
@@ -65,7 +65,7 @@
             "slotIndex": 0
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 0
           }
         ],
@@ -118,7 +118,7 @@
             "slotIndex": 1
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 0
           }
         ],
@@ -171,11 +171,11 @@
             "slotIndex": 1
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 0
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 1
           }
         ],
@@ -232,11 +232,11 @@
             "slotIndex": 1
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 0
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 1
           }
         ],
@@ -297,11 +297,11 @@
             "slotIndex": 2
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 0
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 1
           }
         ],
@@ -362,15 +362,15 @@
             "slotIndex": 2
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 0
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 1
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 2
           }
         ],
@@ -435,15 +435,15 @@
             "slotIndex": 2
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 0
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 1
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 2
           }
         ],
@@ -512,15 +512,15 @@
             "slotIndex": 3
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 0
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 1
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 2
           }
         ],
@@ -589,19 +589,19 @@
             "slotIndex": 3
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 0
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 1
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 2
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 3
           }
         ],
@@ -674,19 +674,19 @@
             "slotIndex": 3
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 0
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 1
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 2
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 3
           }
         ],
@@ -763,19 +763,19 @@
             "slotIndex": 4
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 0
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 1
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 2
           },
           {
-            "moduleType": "hanger",
+            "moduleType": "hangar",
             "slotIndex": 3
           }
         ],
@@ -874,40 +874,7 @@
         "interceptorRegenRate": 0.0
       }
     ],
-    "4": [
-      {
-        "moduleName": "hanger_t1",
-        "moduleSubType": "hanger_t1",
-        "statPoint": 20,
-        "description": "",
-        "moduleSlots": [],
-        "health": 0.0,
-        "repair": 0.0,
-        "speed": 0.0,
-        "turnRate": 0.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 3.0,
-        "silenceTime": 0.0,
-        "airCount": 3,
-        "airMaintenanceTime": 15.0,
-        "airHealth": 50.0,
-        "airAttack": 10.0,
-        "airAttackRange": 4.0,
-        "airAttackCool": 4.0,
-        "airSpeed": 10.0,
-        "airAmmo": 10,
-        "airDetectRadius": 10.0,
-        "airAvoidRadius": 2.0,
-        "airDisrupt": 0.1,
-        "shieldGauge": 0.0,
-        "shieldDelay": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorDelay": 0.0,
-        "interceptorRegenRate": 0.0
-      }
-    ],
+    "4": [],
     "5": [
       {
         "moduleName": "shield_t1",

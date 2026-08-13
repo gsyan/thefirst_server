@@ -66,6 +66,12 @@ public class AccountController {
         return ApiResponse.success(response);
     }
 
+    @PostMapping("/logout")
+    public ApiResponse<String> logout() {
+        accountService.logout();
+        return ApiResponse.success("Logged out");
+    }
+
     @DeleteMapping("/delete")
     public ApiResponse<String> deleteAccount() {
         accountService.deleteAccount();

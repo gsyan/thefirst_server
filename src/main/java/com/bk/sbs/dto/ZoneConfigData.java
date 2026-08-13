@@ -28,7 +28,7 @@ public class ZoneConfigData {
     private Float enemyAttackMultiplier;
     private Integer enemyBeamEquipSlots;
     private Integer enemyMissileEquipSlots;
-    private Integer enemyHangerEquipSlots;
+    private Integer enemyHangarEquipSlots;
     private Integer enemyShieldEquipSlots;
     private Integer enemyInterceptorEquipSlots;
     private Integer explorationPointReward;

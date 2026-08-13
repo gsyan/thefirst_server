@@ -23,7 +23,7 @@ public enum EModuleSubType {
     body_t1_m554(101554),
     beam_t1(201000),
     missile_t1(301000),
-    hanger_t1(401000),
+    hangar_t1(401000),
     shield_t1(501000),
     interceptor_t1(601000);
 

@@ -251,6 +251,9 @@ CREATE TABLE zone_run (
     commander_exp_banked        INT          NOT NULL DEFAULT 0,
     current_cell                VARCHAR(20)  NOT NULL, -- "x-y" 형식(0-indexed), 마지막으로 클리어한 셀
     fleet_health_snapshot_json  TEXT             NULL, -- 마지막 셀 클리어 시점의 내 함대 체력 비율(슬롯 포지션 인덱스별) JSON — 재접속 시 손상 상태 복구용
+    active_challenge_token      VARCHAR(36)      NULL, -- enter-cell이 발급, clear-cell 검증 후 즉시 무효화(1회용)
+    active_challenge_cell       VARCHAR(20)      NULL, -- 토큰이 발급된 셀("x-y")
+    active_challenge_issued_at  DATETIME(6)      NULL,
     started_at                  DATETIME(6)  NOT NULL,
     ended_at                    DATETIME(6)      NULL,
     PRIMARY KEY (id),

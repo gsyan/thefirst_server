@@ -13,12 +13,14 @@ import com.bk.sbs.service.GameDataService;
 import com.bk.sbs.service.PvpSeasonService;
 import com.bk.sbs.service.ZoneService;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/dev")
+@Profile({"dev"})
 public class DevController {
 
     private final CommanderService CommanderService;

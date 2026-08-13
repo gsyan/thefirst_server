@@ -54,6 +54,7 @@ public class AccountService {
     @Autowired private ShipRepository shipRepository;
     @Autowired private FleetRepository fleetRepository;
     @Autowired private ProgressRepository progressRepository;
+    @Autowired private RedisService redisService;
 
     @Value("${google.client-id}")
     private String googleClientId;
@@ -149,6 +150,18 @@ public class AccountService {
         return savedAccount;
     }
 
+    // 새 리프레시 토큰의 jti를 활성 세션으로 등록. Redis 장애 시에도 로그인 자체는 막지 않고 로그만 남김
+    public void registerSession(Long accountId, String refreshToken) {
+        try {
+            String jti = jwtUtil.getJtiFromToken(refreshToken);
+            if (jti != null) {
+                redisService.setActiveJti(accountId, jti, jwtUtil.getRefreshTokenValidity());
+            }
+        } catch (Exception e) {
+            log.error("리프레시 토큰 세션 등록 실패: accountId={}", accountId, e);
+        }
+    }
+
     // 이메일 형식 검증 메서드
     private boolean isValidEmail(String email) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
@@ -184,9 +197,12 @@ public class AccountService {
             throw new BusinessException(ServerErrorCode.LOGIN_FAIL_MATCH_PASSWORD);
         }
 
+        String refreshToken = jwtUtil.createRefreshToken(account.getId());
+        registerSession(account.getId(), refreshToken);
+
         return AuthResponse.builder()
                 .accessToken(jwtUtil.createAccessToken(account.getId()))
-                .refreshToken(jwtUtil.createRefreshToken(account.getId()))
+                .refreshToken(refreshToken)
                 .build();
     }
 
@@ -224,19 +240,83 @@ public class AccountService {
 
         boolean bGoogleLinked = isGoogleLinked(account.getId());
 
-        // 6. 새 토큰 생성
+        // 6. jti 회전/재사용 검증. 유예 응답이면 새 jti를 발급하지 않고 현재 활성 jti를 그대로 재사용
+        String presentedJti = jwtUtil.getJtiFromToken(refreshToken);
+        String reusedActiveJti = resolveJtiForRotation(accountId, presentedJti);
+
+        String newJti;
+        if (reusedActiveJti != null) {
+            newJti = reusedActiveJti;
+        } else {
+            newJti = UUID.randomUUID().toString();
+            rotateSession(accountId, presentedJti, newJti);
+        }
+
+        // 7. 새 토큰 생성
         AuthResponse response = AuthResponse.builder()
                 .accessToken(jwtUtil.createAccessToken(account.getId()))
-                .refreshToken(jwtUtil.createRefreshToken(account.getId()))
+                .refreshToken(jwtUtil.createRefreshTokenWithJti(account.getId(), newJti))
                 .bGoogleLinked(bGoogleLinked)
                 .build();
 
         if (commanderId != null) {
             response.setAccessToken(jwtUtil.createAccessTokenWithCommander(account.getId(), commanderId));
-            response.setRefreshToken(jwtUtil.createRefreshTokenWithCommander(account.getId(), commanderId));
+            response.setRefreshToken(jwtUtil.createRefreshTokenWithCommanderAndJti(account.getId(), commanderId, newJti));
         }
 
         return response;
+    }
+
+    // 제출된 jti가 유예 기간 중인 구 jti면 현재 활성 jti를 반환(재발급 없이 세션 유지), 아니면 null
+    private String resolveJtiForRotation(Long accountId, String presentedJti) {
+        String activeJti;
+        try {
+            activeJti = redisService.getActiveJti(accountId);
+        } catch (Exception e) {
+            log.error("리프레시 jti 조회 실패, 검증을 건너뜀: accountId={}", accountId, e);
+            return null;
+        }
+
+        // 구버전 토큰(jti 없음) 또는 아직 세션이 등록되지 않은 경우 → 검증 없이 통과 (마이그레이션 허용)
+        if (activeJti == null) {
+            return null;
+        }
+
+        if (activeJti.equals(presentedJti)) {
+            return null;
+        }
+
+        boolean inGrace;
+        try {
+            inGrace = redisService.isJtiInGrace(accountId, presentedJti);
+        } catch (Exception e) {
+            log.error("리프레시 jti 유예 조회 실패, 검증을 건너뜀: accountId={}", accountId, e);
+            return null;
+        }
+
+        if (inGrace == true) {
+            // 응답 유실로 인한 재시도로 판단 → 세션 유지, 최신 jti를 다시 내려줌
+            return activeJti;
+        }
+
+        // 유예 기간도 지난 구 jti가 옴 → 탈취 의심, 전체 세션 폐기
+        log.warn("리프레시 토큰 재사용 감지, 전체 세션 폐기: accountId={}", accountId);
+        try {
+            redisService.revokeAllSessions(accountId);
+        } catch (Exception e) {
+            log.error("재사용 감지 후 세션 폐기 실패: accountId={}", accountId, e);
+        }
+        throw new BusinessException(ServerErrorCode.REFRESH_TOKEN_FAIL_REUSE_DETECTED);
+    }
+
+    // 구 jti를 유예 상태로 남기고 새 jti를 활성 세션으로 등록
+    private void rotateSession(Long accountId, String oldJti, String newJti) {
+        try {
+            redisService.markJtiInGrace(accountId, oldJti);
+            redisService.setActiveJti(accountId, newJti, jwtUtil.getRefreshTokenValidity());
+        } catch (Exception e) {
+            log.error("리프레시 세션 회전 실패: accountId={}", accountId, e);
+        }
     }
 
     @Transactional
@@ -291,9 +371,12 @@ public class AccountService {
             accountRepository.save(account);
         }
 
+        String refreshToken = jwtUtil.createRefreshToken(account.getId());
+        registerSession(account.getId(), refreshToken);
+
         return AuthResponse.builder()
                 .accessToken(jwtUtil.createAccessToken(account.getId()))
-                .refreshToken(jwtUtil.createRefreshToken(account.getId()))
+                .refreshToken(refreshToken)
                 .bGoogleLinked(true)
                 .build();
     }
@@ -387,10 +470,24 @@ public class AccountService {
                     return createAccountWithDefaultCommander(guestEmail, request.getGuestId());
                 });
 
+        String refreshToken = jwtUtil.createRefreshToken(account.getId());
+        registerSession(account.getId(), refreshToken);
+
         return AuthResponse.builder()
                 .accessToken(jwtUtil.createAccessToken(account.getId()))
-                .refreshToken(jwtUtil.createRefreshToken(account.getId()))
+                .refreshToken(refreshToken)
                 .build();
+    }
+
+    // 로그아웃 — 현재 계정의 활성 리프레시 토큰 세션을 즉시 폐기
+    public void logout() {
+        Long accountId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
+        try {
+            redisService.revokeAllSessions(accountId);
+        } catch (Exception e) {
+            log.error("로그아웃 시 세션 폐기 실패: accountId={}", accountId, e);
+        }
+        log.info("Account logged out: accountId={}", accountId);
     }
 
     @Transactional
@@ -419,6 +516,13 @@ public class AccountService {
         }
         commanderRepository.deleteByAccountId(accountId);
         accountRepository.delete(account);
+
+        try {
+            redisService.revokeAllSessions(accountId);
+        } catch (Exception e) {
+            log.error("계정 삭제 시 세션 폐기 실패: accountId={}", accountId, e);
+        }
+
         log.info("Account hard-deleted: accountId={}", accountId);
     }
 

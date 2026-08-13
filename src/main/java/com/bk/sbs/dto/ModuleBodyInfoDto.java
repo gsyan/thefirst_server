@@ -23,7 +23,7 @@ public class ModuleBodyInfoDto {
     private Integer bodyIndex;
     private List<ModuleInfoDto> beams;
     private List<ModuleInfoDto> missiles;
-    private List<ModuleInfoDto> hangers;
+    private List<ModuleInfoDto> hangars;
     private String shieldModuleSubType;
     private String interceptorModuleSubType;
     private Float currentHealth;

@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
+import java.util.UUID;
 
 @Component
 public class JwtUtil {
@@ -32,27 +33,40 @@ public class JwtUtil {
 
     // 로그인 시 accountId만 포함된 토큰 생성
     public String createAccessToken(Long accountId) {
-        return createToken(accountId, null, accessTokenValidity);
+        return createToken(accountId, null, accessTokenValidity, null);
     }
 
+    // 리프레시 토큰은 회전/재사용 감지를 위해 jti(고유 id)를 부여
     public String createRefreshToken(Long accountId) {
-        return createToken(accountId, null, refreshTokenValidity);
+        return createToken(accountId, null, refreshTokenValidity, UUID.randomUUID().toString());
+    }
+
+    // 유예 기간 재시도용 — 새 jti를 발급하지 않고 지정된 jti(현재 활성 세션)를 그대로 사용
+    public String createRefreshTokenWithJti(Long accountId, String jti) {
+        return createToken(accountId, null, refreshTokenValidity, jti);
     }
 
     // 캐릭터 선택 후 commanderId까지 포함된 토큰 생성
     public String createAccessTokenWithCommander(Long accountId, Long commanderId) {
-        return createToken(accountId, commanderId, accessTokenValidity);
+        return createToken(accountId, commanderId, accessTokenValidity, null);
     }
 
     public String createRefreshTokenWithCommander(Long accountId, Long commanderId) {
-        return createToken(accountId, commanderId, refreshTokenValidity);
+        return createToken(accountId, commanderId, refreshTokenValidity, UUID.randomUUID().toString());
+    }
+
+    public String createRefreshTokenWithCommanderAndJti(Long accountId, Long commanderId, String jti) {
+        return createToken(accountId, commanderId, refreshTokenValidity, jti);
     }
 
     // subject = accountId (불변값), email 제거
-    private String createToken(Long accountId, Long commanderId, long validity) {
+    private String createToken(Long accountId, Long commanderId, long validity, String jti) {
         Claims claims = Jwts.claims().setSubject(accountId.toString());
         if (commanderId != null) {
             claims.put("commanderId", commanderId);
+        }
+        if (jti != null) {
+            claims.put("jti", jti);
         }
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + validity * 1000);
@@ -78,6 +92,16 @@ public class JwtUtil {
     public boolean hasCommanderId(String token) {
         Claims claims = getClaimsFromToken(token);
         return claims.get("commanderId") != null;
+    }
+
+    // 리프레시 토큰의 jti 추출 (구버전 토큰은 jti 클레임이 없어 null)
+    public String getJtiFromToken(String token) {
+        Claims claims = getClaimsFromToken(token);
+        return claims.get("jti", String.class);
+    }
+
+    public long getRefreshTokenValidity() {
+        return refreshTokenValidity;
     }
 
     public String getTokenFromRequest(HttpServletRequest request) {

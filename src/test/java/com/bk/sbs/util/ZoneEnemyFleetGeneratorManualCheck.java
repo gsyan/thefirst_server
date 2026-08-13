@@ -78,16 +78,16 @@ public class ZoneEnemyFleetGeneratorManualCheck {
                 GameDataService.ShipPresetSummary preset = gameDataService.getShipPresetSummary(ship.presetId);
                 int beamCount = ship.modules.getBeams() != null ? ship.modules.getBeams().size() : 0;
                 int missileCount = ship.modules.getMissiles() != null ? ship.modules.getMissiles().size() : 0;
-                int hangerCount = ship.modules.getHangers() != null ? ship.modules.getHangers().size() : 0;
+                int hangarCount = ship.modules.getHangars() != null ? ship.modules.getHangars().size() : 0;
 
-                int shipSpent = preset.bodyCost + (beamCount + missileCount + hangerCount) * 20; // 지금은 모듈 전부 t1=20이라 근사 출력용
+                int shipSpent = preset.bodyCost + (beamCount + missileCount + hangarCount) * 20; // 지금은 모듈 전부 t1=20이라 근사 출력용
                 totalSpent += shipSpent;
 
                 sb.append(" | ").append(ship.presetId).append("(body=").append(preset.bodyCost)
                         .append(", front=").append(ship.isFront)
                         .append(", beam=").append(beamCount)
                         .append(", missile=").append(missileCount)
-                        .append(", hanger=").append(hangerCount)
+                        .append(", hangar=").append(hangarCount)
                         .append(", spent~=").append(shipSpent).append(")");
             }
             sb.append(" totalSpent~=").append(totalSpent);

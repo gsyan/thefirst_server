@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 // CommanderFleetPresetSlot에 유저가 실제로 장착한 모듈 1개 — row 존재 = 장착, 없음 = 미장착(on/off만 지원, 티어 선택 없음)
-// moduleType: beam/missile/hanger만 취급(실드/요격체는 현재 바디에 슬롯 자체가 없어 미사용)
+// moduleType: beam/missile/hangar만 취급(실드/요격체는 현재 바디에 슬롯 자체가 없어 미사용)
 @Entity
 @Getter
 @Setter

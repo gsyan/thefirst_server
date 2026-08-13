@@ -2,18 +2,11 @@
 package com.bk.sbs.service;
 
 import com.bk.sbs.dto.*;
-import com.bk.sbs.dto.ClearZoneStageRequest;
-import com.bk.sbs.dto.ClearZoneStageResponse;
-import com.bk.sbs.dto.ClaimZoneRewardRequest;
-import com.bk.sbs.dto.ClaimZoneRewardResponse;
 import com.bk.sbs.entity.Commander;
-import com.bk.sbs.entity.ClearedZone;
-import com.bk.sbs.entity.VipSubscription;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.repository.CommanderRepository;
-import com.bk.sbs.repository.ClearedZoneRepository;
-import com.bk.sbs.repository.VipSubscriptionRepository;
+import com.bk.sbs.util.CommanderLevelUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,26 +23,15 @@ public class ZoneService {
     @Value("${heartbeat.throttle-seconds:30}")
     private long heartbeatThrottleSeconds;
 
-    @Value("${zone.require-previous-stage-cleared:true}")
-    private boolean requirePreviousStageClearedCheck;
-
     private final CommanderRepository commanderRepository;
-    private final ClearedZoneRepository clearedZoneRepository;
     private final GameDataService gameDataService;
     private final RedisService redisService;
-    private final VipSubscriptionRepository vipSubscriptionRepository;
-    private final FleetService fleetService;
 
-    public ZoneService(CommanderRepository commanderRepository, ClearedZoneRepository clearedZoneRepository,
-                       GameDataService gameDataService, RedisService redisService,
-                       VipSubscriptionRepository vipSubscriptionRepository,
-                       FleetService fleetService) {
+    public ZoneService(CommanderRepository commanderRepository,
+                       GameDataService gameDataService, RedisService redisService) {
         this.commanderRepository = commanderRepository;
-        this.clearedZoneRepository = clearedZoneRepository;
         this.gameDataService = gameDataService;
         this.redisService = redisService;
-        this.vipSubscriptionRepository = vipSubscriptionRepository;
-        this.fleetService = fleetService;
     }
 
 
@@ -63,7 +45,7 @@ public class ZoneService {
         if (requiredExp > 0 && commander.getExp() < requiredExp)
             commander.setExp(requiredExp);
 
-        autoLevelUpIfNeeded(commander);
+        CommanderLevelUtil.autoLevelUpIfNeeded(commander, gameDataService);
         commanderRepository.save(commander);
         return commander.getCommanderLevel();
     }
@@ -81,23 +63,9 @@ public class ZoneService {
         if (requiredExp > 0 && commander.getExp() < requiredExp)
             commander.setExp(requiredExp);
 
-        autoLevelUpIfNeeded(commander);
+        CommanderLevelUtil.autoLevelUpIfNeeded(commander, gameDataService);
         commanderRepository.save(commander);
         return commander.getCommanderLevel();
-    }
-
-    // exp 누적 기준으로 레벨업 조건 판정 후 자동 승급 (레벨업 모듈포인트 보상 개념은 삭제됨)
-    private void autoLevelUpIfNeeded(Commander commander) {
-        int currentLevel = commander.getCommanderLevel();
-        int accumulatedExp = commander.getExp();
-        int nextLevel = currentLevel + 1;
-        int requiredExp = gameDataService.getCommanderLevelRequiredExp(nextLevel);
-        while (requiredExp > 0 && accumulatedExp >= requiredExp) {
-            currentLevel = nextLevel;
-            nextLevel = currentLevel + 1;
-            requiredExp = gameDataService.getCommanderLevelRequiredExp(nextLevel);
-        }
-        commander.setCommanderLevel(currentLevel);
     }
 
     @Transactional

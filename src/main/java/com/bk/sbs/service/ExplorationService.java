@@ -3,6 +3,7 @@ package com.bk.sbs.service;
 
 import com.bk.sbs.dto.*;
 import com.bk.sbs.entity.Commander;
+import com.bk.sbs.entity.Ship;
 import com.bk.sbs.entity.ZoneCellClearLog;
 import com.bk.sbs.entity.ZoneRun;
 import com.bk.sbs.enums.EGridCellType;
@@ -10,8 +11,10 @@ import com.bk.sbs.enums.EZoneRunStatus;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.repository.CommanderRepository;
+import com.bk.sbs.repository.ShipRepository;
 import com.bk.sbs.repository.ZoneCellClearLogRepository;
 import com.bk.sbs.repository.ZoneRunRepository;
+import com.bk.sbs.util.CommanderLevelUtil;
 import com.bk.sbs.util.RewardCardSelector;
 import com.bk.sbs.util.ZoneEnemyFleetGenerator;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -38,15 +41,17 @@ public class ExplorationService {
     private final CommanderRepository commanderRepository;
     private final ZoneRunRepository zoneRunRepository;
     private final ZoneCellClearLogRepository zoneCellClearLogRepository;
+    private final ShipRepository shipRepository;
     private final GameDataService gameDataService;
     private final ObjectMapper objectMapper;
 
     public ExplorationService(CommanderRepository commanderRepository, ZoneRunRepository zoneRunRepository,
-                               ZoneCellClearLogRepository zoneCellClearLogRepository, GameDataService gameDataService,
-                               ObjectMapper objectMapper) {
+                               ZoneCellClearLogRepository zoneCellClearLogRepository, ShipRepository shipRepository,
+                               GameDataService gameDataService, ObjectMapper objectMapper) {
         this.commanderRepository = commanderRepository;
         this.zoneRunRepository = zoneRunRepository;
         this.zoneCellClearLogRepository = zoneCellClearLogRepository;
+        this.shipRepository = shipRepository;
         this.gameDataService = gameDataService;
         this.objectMapper = objectMapper;
     }
@@ -70,6 +75,80 @@ public class ExplorationService {
             log.error("Failed to deserialize fleet health snapshot", e);
             return null;
         }
+    }
+
+    private static final float HEALTH_RATIO_MIN = 0f;
+    private static final float HEALTH_RATIO_MAX = 1f;
+    // 모듈 repair(시간당 회복)를 정밀 계산하지 않고 넉넉한 고정 여유값으로 흡수 — 전투 지속시간이 길수록 허용치도 커짐.
+    // 오탐(정상 유저 차단)이 치트 차단 실패보다 훨씬 나쁘므로 넉넉하게 잡음. 정밀 계산은 알려진 한계로 남겨둠.
+    private static final float HEALTH_RATIO_TIME_MARGIN_PER_SEC = 0.01f;
+
+    // 체력 비율 범위(0~1), 함선 구성 일치, 직전 스냅샷 대비 증가폭(허용치: 회복 카드 효과 + 시간 여유값) 검증
+    private void validateHealthSnapshot(Long commanderId, ZoneRun run, List<ShipHealthRatioInfoDto> reported) {
+        if (reported == null || reported.isEmpty()) return;
+
+        for (ShipHealthRatioInfoDto info : reported) {
+            if (info.getHealthRatio() == null) continue;
+            if (info.getHealthRatio() < HEALTH_RATIO_MIN || info.getHealthRatio() > HEALTH_RATIO_MAX)
+                throw new BusinessException(ServerErrorCode.EXPLORATION_FLEET_HEALTH_INVALID);
+        }
+
+        validateFleetComposition(commanderId, reported);
+
+        List<ShipHealthRatioInfoDto> previous = deserializeHealthSnapshot(run.getFleetHealthSnapshotJson());
+        if (previous == null || previous.isEmpty()) return;
+
+        float healBonus = getPendingHealthHealBonus(run);
+        long elapsedSeconds = 0;
+        if (run.getActiveChallengeIssuedAt() != null)
+            elapsedSeconds = Math.max(0, Instant.now().getEpochSecond() - run.getActiveChallengeIssuedAt().getEpochSecond());
+        float allowedIncrease = healBonus + (elapsedSeconds * HEALTH_RATIO_TIME_MARGIN_PER_SEC);
+
+        for (ShipHealthRatioInfoDto info : reported) {
+            if (info.getHealthRatio() == null || info.getPositionIndex() == null) continue;
+            Optional<ShipHealthRatioInfoDto> prevOpt = previous.stream()
+                    .filter(p -> p.getPositionIndex() != null && p.getPositionIndex().equals(info.getPositionIndex()))
+                    .findFirst();
+            if (prevOpt.isEmpty()) continue;
+
+            float increase = info.getHealthRatio() - prevOpt.get().getHealthRatio();
+            if (increase > allowedIncrease)
+                throw new BusinessException(ServerErrorCode.EXPLORATION_FLEET_HEALTH_INVALID);
+        }
+    }
+
+    // 리포트된 함선이 실제로 이 커맨더 소유이고 서버가 아는 포지션과 일치하는지 검증(shipId 미포함 구버전 클라 하위호환 위해 0/null은 스킵)
+    private void validateFleetComposition(Long commanderId, List<ShipHealthRatioInfoDto> reported) {
+        for (ShipHealthRatioInfoDto info : reported) {
+            if (info.getShipId() == null || info.getShipId() <= 0) continue;
+            if (info.getPositionIndex() == null) continue;
+
+            Ship ship = shipRepository.findByIdAndDeletedFalse(info.getShipId()).orElse(null);
+            if (ship == null)
+                throw new BusinessException(ServerErrorCode.EXPLORATION_FLEET_HEALTH_INVALID);
+            if (ship.getFleet().getCommanderId().equals(commanderId) == false)
+                throw new BusinessException(ServerErrorCode.EXPLORATION_FLEET_HEALTH_INVALID);
+            if (ship.getPositionIndex() != info.getPositionIndex())
+                throw new BusinessException(ServerErrorCode.EXPLORATION_FLEET_HEALTH_INVALID);
+        }
+    }
+
+    // 직전 클리어 로그에서 선택 확정된 보상카드가 체력 즉시회복 계열이면 그 회복량을 허용 증가치로 반환
+    private float getPendingHealthHealBonus(ZoneRun run) {
+        List<ZoneCellClearLog> clearLogs = zoneCellClearLogRepository.findByZoneRunIdOrderByClearedAtAsc(run.getId());
+        if (clearLogs.isEmpty()) return 0f;
+
+        ZoneCellClearLog lastLog = clearLogs.get(clearLogs.size() - 1);
+        String selectedCardId = lastLog.getRewardCardSelectedId();
+        if (selectedCardId == null) return 0f;
+
+        GameDataService.RewardCardEntry card = gameDataService.getRewardCard(selectedCardId);
+        if (card == null) return 0f;
+
+        if ("Instant_HealthHeal".equals(card.effectType))
+            return card.value1;
+
+        return 0f;
     }
 
     // cardId 리스트 JSON 직렬화/역직렬화 — 셀 클리어 로그의 후보 3개, 재구성된 선택 이력 등 공용으로 사용
@@ -134,6 +213,28 @@ public class ExplorationService {
         return null;
     }
 
+    // clear-cell 최소 경과시간 — enter-cell 직후 클리어 요청이 오면(전투를 생략한 것이 명백하므로) 거부. 정상 전투는 이보다 훨씬 오래 걸리므로 넉넉하게 잡음
+    private static final long CHALLENGE_TOKEN_MIN_ELAPSED_MILLIS = 2000L;
+
+    // enter-cell이 발급한 1회용 토큰을 검증 — 통과 시 즉시 무효화(재사용 방지). enter-cell 없이 clear-cell만 반복 호출하는 것을 막는 것이 목적
+    private void validateAndConsumeChallengeToken(ZoneRun run, String requestToken, int cellRow, int cellCol) {
+        String expectedCell = cellRow + "-" + cellCol;
+        boolean tokenMatches = run.getActiveChallengeToken() != null
+                && run.getActiveChallengeToken().equals(requestToken)
+                && run.getActiveChallengeCell() != null
+                && run.getActiveChallengeCell().equals(expectedCell);
+        if (tokenMatches == false)
+            throw new BusinessException(ServerErrorCode.EXPLORATION_CHALLENGE_TOKEN_INVALID);
+
+        long elapsedMillis = Instant.now().toEpochMilli() - run.getActiveChallengeIssuedAt().toEpochMilli();
+        if (elapsedMillis < CHALLENGE_TOKEN_MIN_ELAPSED_MILLIS)
+            throw new BusinessException(ServerErrorCode.EXPLORATION_CHALLENGE_TOKEN_INVALID);
+
+        run.setActiveChallengeToken(null);
+        run.setActiveChallengeCell(null);
+        run.setActiveChallengeIssuedAt(null);
+    }
+
     // 요청 셀이 (fromRow,fromCol) 기준 4방향 인접인지 + Blocked가 아닌지 검증 — 클라가 보낸 좌표를 신뢰하지 않음
     private void validateCellChallenge(ZoneConfigData zoneConfig, int fromRow, int fromCol, int toRow, int toCol) {
         int deltaRow = Math.abs(fromRow - toRow);
@@ -176,6 +277,13 @@ public class ExplorationService {
             run = zoneRunRepository.save(run);
         }
 
+        // 이 셀에 대한 1회용 클리어 챌린지 토큰 발급 — clear-cell이 이 토큰 없이는 통과 못 하도록 함(enter 생략한 clear 반복 호출 차단)
+        String challengeToken = java.util.UUID.randomUUID().toString();
+        run.setActiveChallengeToken(challengeToken);
+        run.setActiveChallengeCell(request.getCellRow() + "-" + request.getCellCol());
+        run.setActiveChallengeIssuedAt(Instant.now());
+        zoneRunRepository.save(run);
+
         int seed = computeZoneSeedShared(request.getZoneNumber());
         List<ZoneEnemyFleetGenerator.WaveResult> waves = ZoneEnemyFleetGenerator.generateWaves(
                 zoneConfig, seed, request.getCellRow(), request.getCellCol(), gameDataService.getShipPresetList(), gameDataService);
@@ -205,6 +313,7 @@ public class ExplorationService {
                 .cellRow(request.getCellRow())
                 .cellCol(request.getCellCol())
                 .enemyFleets(enemyFleets)
+                .challengeToken(challengeToken)
                 .build();
     }
 
@@ -223,19 +332,35 @@ public class ExplorationService {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
 
-        int seed = computeZoneSeedShared(request.getZoneNumber());
-        List<ZoneEnemyFleetGenerator.WaveResult> waves = ZoneEnemyFleetGenerator.generateWaves(
-                zoneConfig, seed, request.getCellRow(), request.getCellCol(), gameDataService.getShipPresetList(), gameDataService);
+        // 재방문(이 런에서 이미 클리어 로그가 있는 셀)은 패스 — 포인트/경험치/보상카드 재지급 없이 위치만 갱신
+        // 클라가 재방문 셀 이동 시에도 이 API를 그대로 호출해 서버의 run.currentCell을 동기화함(안 그러면 다음 이동의 인접성 검사가 어긋남)
+        String cell = request.getCellRow() + "-" + request.getCellCol();
+        boolean isRevisit = zoneCellClearLogRepository.findTopByZoneRunIdAndCellOrderByClearedAtDesc(run.getId(), cell).isPresent();
 
-        // 존 고정 보상값 적립 — 적 함대 성능(commandCost)과 무관, 웨이브에 함선이 있던 셀만 지급(빈 셀은 0)
-        boolean hasEnemies = waves.stream().anyMatch(wave -> wave.ships.isEmpty() == false);
-        int pointsGained = hasEnemies ? zoneConfig.getExplorationPointReward() : 0;
-        int expGained    = hasEnemies ? zoneConfig.getCommanderExpReward()     : 0;
+        int pointsGained = 0;
+        int expGained = 0;
+        List<String> rewardCardCandidates = null;
 
-        // 탈출 셀은 보상카드 후보 생성 스킵 — 탈출 셀은 별도의 탈출 확정 흐름을 가짐
-        GridCellOverrideDto escapeCell = findCellByType(zoneConfig, EGridCellType.Escape);
-        boolean isEscapeCell = escapeCell != null && escapeCell.getRow() == request.getCellRow() && escapeCell.getCol() == request.getCellCol();
-        List<String> rewardCardCandidates = (hasEnemies == true && isEscapeCell == false) ? rollRewardCardCandidates() : null;
+        if (isRevisit == false) {
+            // 최초 클리어(보상 지급)에만 토큰을 요구 — enter-cell 없이 clear-cell 반복 호출로 무한 획득하는 것을 막는 지점
+            validateAndConsumeChallengeToken(run, request.getChallengeToken(), request.getCellRow(), request.getCellCol());
+
+            int seed = computeZoneSeedShared(request.getZoneNumber());
+            List<ZoneEnemyFleetGenerator.WaveResult> waves = ZoneEnemyFleetGenerator.generateWaves(
+                    zoneConfig, seed, request.getCellRow(), request.getCellCol(), gameDataService.getShipPresetList(), gameDataService);
+
+            // 존 고정 보상값 적립 — 적 함대 성능(commandCost)과 무관, 웨이브에 함선이 있던 셀만 지급(빈 셀은 0)
+            boolean hasEnemies = waves.stream().anyMatch(wave -> wave.ships.isEmpty() == false);
+            pointsGained = hasEnemies ? zoneConfig.getExplorationPointReward() : 0;
+            expGained    = hasEnemies ? zoneConfig.getCommanderExpReward()     : 0;
+
+            // 탈출 셀은 보상카드 후보 생성 스킵 — 탈출 셀은 별도의 탈출 확정 흐름을 가짐
+            GridCellOverrideDto escapeCell = findCellByType(zoneConfig, EGridCellType.Escape);
+            boolean isEscapeCell = escapeCell != null && escapeCell.getRow() == request.getCellRow() && escapeCell.getCol() == request.getCellCol();
+            rewardCardCandidates = (hasEnemies == true && isEscapeCell == false) ? rollRewardCardCandidates() : null;
+        }
+
+        validateHealthSnapshot(commanderId, run, request.getShipHealthRatios());
 
         run.setCurrentPosition(request.getCellRow(), request.getCellCol());
         run.setExplorationPointBanked(run.getExplorationPointBanked() + pointsGained);
@@ -343,7 +468,7 @@ public class ExplorationService {
 
         commander.setExplorationPoint(commander.getExplorationPoint() + pointPayout);
         commander.setExp(commander.getExp() + expPayout);
-        autoLevelUpIfNeeded(commander);
+        CommanderLevelUtil.autoLevelUpIfNeeded(commander, gameDataService);
         if (isSuccess && run.getZoneNumber() > commander.getHighestClearedZoneNumber())
             commander.setHighestClearedZoneNumber(run.getZoneNumber());
 
@@ -355,20 +480,6 @@ public class ExplorationService {
         zoneRunRepository.save(run);
 
         return new RunSettlement(pointPayout, expPayout);
-    }
-
-    // exp 누적 기준으로 레벨업 조건 판정 후 자동 승급 (연속 레벨업 지원)
-    private void autoLevelUpIfNeeded(Commander commander) {
-        int currentLevel = commander.getCommanderLevel();
-        int accumulatedExp = commander.getExp();
-        int nextLevel = currentLevel + 1;
-        int requiredExp = gameDataService.getCommanderLevelRequiredExp(nextLevel);
-        while (requiredExp > 0 && accumulatedExp >= requiredExp) {
-            currentLevel = nextLevel;
-            nextLevel = currentLevel + 1;
-            requiredExp = gameDataService.getCommanderLevelRequiredExp(nextLevel);
-        }
-        commander.setCommanderLevel(currentLevel);
     }
 
     @Transactional

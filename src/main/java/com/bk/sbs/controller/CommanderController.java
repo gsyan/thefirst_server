@@ -71,6 +71,8 @@ public class CommanderController {
         // 새로운 토큰 생성 (commanderId 포함)
         String newAccessToken = jwtUtil.createAccessTokenWithCommander(accountId, commanderId);
         String newRefreshToken = jwtUtil.createRefreshTokenWithCommander(accountId, commanderId);
+        // 리프레시 토큰 회전 검증(jti)이 이 새 토큰을 재사용으로 오인하지 않도록 활성 세션으로 등록
+        accountService.registerSession(accountId, newRefreshToken);
 
         // 활성 함대 정보 조회 (프리셋 기반)
         FleetInfoDto activeFleet = fleetService.getActiveFleetPreset(actualCommanderId);

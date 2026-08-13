@@ -35,6 +35,9 @@ public class RedisService {
     private static final String PVP_SEASON_NAME          = "pvp:season:name";
     private static final String PVP_SEASON_START         = "pvp:season:start";
     private static final String PVP_SEASON_END           = "pvp:season:end";
+    private static final String AUTH_ACTIVE_JTI_PREFIX   = "auth:jti:active:"; // accountId → 현재 유효한 리프레시 토큰 jti
+    private static final String AUTH_GRACE_JTI_PREFIX    = "auth:jti:grace:";  // 방금 교체된 구 jti (네트워크 유실 재시도 허용용)
+    private static final Duration AUTH_JTI_GRACE_DURATION = Duration.ofSeconds(45);
 
     private final StringRedisTemplate redisTemplate;
     private final ObjectMapper objectMapper;
@@ -399,6 +402,37 @@ public class RedisService {
         return countAbove != null ? countAbove + 1 : 1L;
     }
 
+
+    // ══════════════════════════════════════════════════════════════════════
+    // 리프레시 토큰 회전 (jti 세션 관리) — 계정당 1개 세션, 재사용 감지
+    // ══════════════════════════════════════════════════════════════════════
+
+    /** 계정의 현재 유효 jti를 등록/교체. ttlSeconds는 리프레시 토큰 만료시간과 동일하게 맞출 것 */
+    public void setActiveJti(Long accountId, String jti, long ttlSeconds) {
+        redisTemplate.opsForValue().set(AUTH_ACTIVE_JTI_PREFIX + accountId, jti, Duration.ofSeconds(ttlSeconds));
+    }
+
+    public String getActiveJti(Long accountId) {
+        return redisTemplate.opsForValue().get(AUTH_ACTIVE_JTI_PREFIX + accountId);
+    }
+
+    /** 방금 교체되어 밀려난 구 jti를 유예 기간 동안 기록 (응답 유실로 인한 재시도 허용용) */
+    public void markJtiInGrace(Long accountId, String oldJti) {
+        if (oldJti == null) return;
+        redisTemplate.opsForValue().set(AUTH_GRACE_JTI_PREFIX + accountId + ":" + oldJti, "1", AUTH_JTI_GRACE_DURATION);
+    }
+
+    public boolean isJtiInGrace(Long accountId, String jti) {
+        if (jti == null) return false;
+        return redisTemplate.hasKey(AUTH_GRACE_JTI_PREFIX + accountId + ":" + jti) == Boolean.TRUE;
+    }
+
+    /** 재사용 감지(탈취 의심) 또는 로그아웃/계정삭제 시 계정의 모든 세션 폐기 */
+    public void revokeAllSessions(Long accountId) {
+        redisTemplate.delete(AUTH_ACTIVE_JTI_PREFIX + accountId);
+        Set<String> graceKeys = redisTemplate.keys(AUTH_GRACE_JTI_PREFIX + accountId + ":*");
+        if (graceKeys != null && graceKeys.isEmpty() == false) redisTemplate.delete(graceKeys);
+    }
 
     // ── 내부 헬퍼 ──────────────────────────────────────────────────────────
 

@@ -49,6 +49,18 @@ public class ZoneRun {
     @Column(name = "fleet_health_snapshot_json", columnDefinition = "TEXT")
     private String fleetHealthSnapshotJson;
 
+    // enter-cell 없이 clear-cell만 반복 호출해 보상을 무한 획득하는 것을 막기 위한 1회용 챌린지 토큰 — enter-cell 발급, clear-cell 검증 후 즉시 무효화
+    @Column(name = "active_challenge_token", length = 36)
+    private String activeChallengeToken;
+
+    // 토큰이 발급된 셀("row-col") — clear-cell 요청 좌표와 일치해야 함
+    @Column(name = "active_challenge_cell", length = 20)
+    private String activeChallengeCell;
+
+    // 토큰 발급 시각 — clear-cell과의 최소 경과시간 검증 및 향후 전투시간 상한 계산(S4)에 사용
+    @Column(name = "active_challenge_issued_at")
+    private Instant activeChallengeIssuedAt;
+
     @Column(nullable = false)
     private Instant startedAt = Instant.now();
 

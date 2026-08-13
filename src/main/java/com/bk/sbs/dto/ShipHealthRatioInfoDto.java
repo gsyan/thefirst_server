@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class ShipHealthRatioInfoDto {
+    private Long shipId;
     private Integer positionIndex;
     private Float healthRatio;
 }

@@ -143,13 +143,13 @@ public class FleetService {
         return switch (moduleType) {
             case beam -> EModuleSubType.beam_t1;
             case missile -> EModuleSubType.missile_t1;
-            case hanger -> EModuleSubType.hanger_t1;
+            case hangar -> EModuleSubType.hangar_t1;
             default -> null;
         };
     }
 
     private boolean isAttackModuleType(EModuleType moduleType) {
-        return moduleType == EModuleType.beam || moduleType == EModuleType.missile || moduleType == EModuleType.hanger;
+        return moduleType == EModuleType.beam || moduleType == EModuleType.missile || moduleType == EModuleType.hangar;
     }
 
     private int getModuleStatPoint(EModuleType moduleType, EModuleSubType subType) {
@@ -188,7 +188,7 @@ public class FleetService {
     private ModuleBodyInfoDto buildModuleBodyInfoDto(CommanderFleetPresetSlot slot) {
         List<ModuleInfoDto> beams = new ArrayList<>();
         List<ModuleInfoDto> missiles = new ArrayList<>();
-        List<ModuleInfoDto> hangers = new ArrayList<>();
+        List<ModuleInfoDto> hangars = new ArrayList<>();
 
         if (slot.getModules() != null) {
             for (CommanderFleetPresetSlotModule module : slot.getModules()) {
@@ -200,7 +200,7 @@ public class FleetService {
                 switch (module.getModuleType()) {
                     case beam -> beams.add(dto);
                     case missile -> missiles.add(dto);
-                    case hanger -> hangers.add(dto);
+                    case hangar -> hangars.add(dto);
                     default -> { }
                 }
             }
@@ -209,7 +209,7 @@ public class FleetService {
         return ModuleBodyInfoDto.builder()
                 .beams(beams)
                 .missiles(missiles)
-                .hangers(hangers)
+                .hangars(hangars)
                 .build();
     }
 
@@ -234,7 +234,7 @@ public class FleetService {
         List<DesiredModule> desired = new ArrayList<>();
         appendDesiredModules(desired, EModuleType.beam, maxSlots[0], requestedModules != null ? requestedModules.getBeams() : null);
         appendDesiredModules(desired, EModuleType.missile, maxSlots[1], requestedModules != null ? requestedModules.getMissiles() : null);
-        appendDesiredModules(desired, EModuleType.hanger, maxSlots[2], requestedModules != null ? requestedModules.getHangers() : null);
+        appendDesiredModules(desired, EModuleType.hangar, maxSlots[2], requestedModules != null ? requestedModules.getHangars() : null);
 
         boolean hasAttackModule = desired.stream().anyMatch(m -> isAttackModuleType(m.moduleType));
         if (hasAttackModule == false)
@@ -363,7 +363,7 @@ public class FleetService {
         ModuleData bodyData = gameDataService.getFirstModuleByType(EModuleType.body);
         ModuleData beamData = gameDataService.getFirstModuleByType(EModuleType.beam);
         ModuleData missileData = gameDataService.getFirstModuleByType(EModuleType.missile);
-        ModuleData hangerData = gameDataService.getFirstModuleByType(EModuleType.hanger);
+        ModuleData hangarData = gameDataService.getFirstModuleByType(EModuleType.hangar);
 
         // 1. Body
         ShipModule bodyModule = new ShipModule();
@@ -399,15 +399,15 @@ public class FleetService {
 //        missileModule.setSlotIndex(0);
 //        shipModuleRepository.save(missileModule);
 
-//        // Hanger 모듈 (type 4)
-//        ShipModule hangerModule = new ShipModule();
-//        hangerModule.setShip(defaultShip);
-//        hangerModule.setModuleType(EModuleType.hanger);
-//        hangerModule.setModuleSubType(EModuleSubType.hanger_t1_std);
-//        hangerModule.setModuleLevel(hangerData.getModuleLevel());
-//        hangerModule.setBodyIndex(0);
-//        hangerModule.setSlotIndex(0);
-//        shipModuleRepository.save(hangerModule);
+//        // Hangar 모듈 (type 4)
+//        ShipModule hangarModule = new ShipModule();
+//        hangarModule.setShip(defaultShip);
+//        hangarModule.setModuleType(EModuleType.hangar);
+//        hangarModule.setModuleSubType(EModuleSubType.hangar_t1_std);
+//        hangarModule.setModuleLevel(hangarData.getModuleLevel());
+//        hangarModule.setBodyIndex(0);
+//        hangarModule.setSlotIndex(0);
+//        shipModuleRepository.save(hangarModule);
 
 
         System.out.println("Default ship and modules created: " + defaultShip.getShipName());
@@ -680,14 +680,14 @@ public class FleetService {
                                     .build())
                             .collect(Collectors.toList());
 
-                    List<ModuleInfoDto> hangers = modules.stream()
-                            .filter(m -> m.getModuleType() == EModuleType.hanger && m.getBodyIndex() == bodyIndex)
-                            .map(hangerModule -> ModuleInfoDto.builder()
-                                    .moduleType(hangerModule.getModuleType())
-                                    .moduleSubType(hangerModule.getModuleSubType())
-                                    .moduleLevel(hangerModule.getModuleLevel())
-                                    .bodyIndex(hangerModule.getBodyIndex())
-                                    .slotIndex(hangerModule.getSlotIndex())
+                    List<ModuleInfoDto> hangars = modules.stream()
+                            .filter(m -> m.getModuleType() == EModuleType.hangar && m.getBodyIndex() == bodyIndex)
+                            .map(hangarModule -> ModuleInfoDto.builder()
+                                    .moduleType(hangarModule.getModuleType())
+                                    .moduleSubType(hangarModule.getModuleSubType())
+                                    .moduleLevel(hangarModule.getModuleLevel())
+                                    .bodyIndex(hangarModule.getBodyIndex())
+                                    .slotIndex(hangarModule.getSlotIndex())
                                     .build())
                             .collect(Collectors.toList());
 
@@ -707,7 +707,7 @@ public class FleetService {
                             .bodyIndex(bodyIndex)
                             .beams(beams)
                             .missiles(missiles)
-                            .hangers(hangers)
+                            .hangars(hangars)
                             .currentHealth(normalizedHealth)
                             .build();
                 })
@@ -928,9 +928,9 @@ public class FleetService {
                         }
                     }
                 }
-                if (body.getHangers() != null) {
-                    for (ModuleInfoDto hanger : body.getHangers()) {
-                        ModuleData data = findModuleData(EModuleType.hanger, hanger.getModuleSubType());
+                if (body.getHangars() != null) {
+                    for (ModuleInfoDto hangar : body.getHangars()) {
+                        ModuleData data = findModuleData(EModuleType.hangar, hangar.getModuleSubType());
                         if (data != null) {
                             statAirCount  += data.getAirCount() != null ? data.getAirCount() : 0;
                             statAirAttack += data.getAirAttack() != null ? data.getAirAttack() : 0f;
@@ -988,6 +988,8 @@ public class FleetService {
             return;
         }
 
+        List<ModuleData> bodyDataList = gameDataService.getModulesByType(EModuleType.body);
+
         for (ShipHealthInfoDto shipHealth : request.getShips()) {
             Ship ship = shipRepository.findById(shipHealth.getShipId()).orElse(null);
             if (ship == null || !ship.getFleet().getCommanderId().equals(commanderId)) continue;
@@ -999,7 +1001,14 @@ public class FleetService {
                 if (bodyOpt.isEmpty()) continue;
 
                 ShipModule body = bodyOpt.get();
-                body.setCurrentHealth(entry.getCurrentHealth());
+                float maxHealth = bodyDataList.stream()
+                        .filter(d -> d.getModuleSubType() == body.getModuleSubType())
+                        .findFirst()
+                        .map(d -> d.getHealth() != null ? d.getHealth() : 0f)
+                        .orElse(0f);
+                // 클라가 999 같은 임의값을 보내도 실제 최대 체력을 넘지 못하도록 클램프
+                float clampedHealth = Math.max(0f, Math.min(entry.getCurrentHealth(), maxHealth));
+                body.setCurrentHealth(clampedHealth);
                 shipModuleRepository.save(body);
             }
         }

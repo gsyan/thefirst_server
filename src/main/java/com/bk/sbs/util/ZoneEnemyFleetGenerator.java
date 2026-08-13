@@ -43,10 +43,10 @@ public class ZoneEnemyFleetGenerator {
         ShipPresetSummary preset;
         List<ModuleInfoDto> beams = new ArrayList<>();
         List<ModuleInfoDto> missiles = new ArrayList<>();
-        List<ModuleInfoDto> hangers = new ArrayList<>();
+        List<ModuleInfoDto> hangars = new ArrayList<>();
         int beamTarget;
         int missileTarget;
-        int hangerTarget;
+        int hangarTarget;
         String shieldSubType = "";
         String interceptorSubType = "";
     }
@@ -189,10 +189,10 @@ public class ZoneEnemyFleetGenerator {
 
         int beamEquipSlots    = zoneConfig.getEnemyBeamEquipSlots()    != null ? zoneConfig.getEnemyBeamEquipSlots()    : 0;
         int missileEquipSlots = zoneConfig.getEnemyMissileEquipSlots() != null ? zoneConfig.getEnemyMissileEquipSlots() : 0;
-        int hangerEquipSlots  = zoneConfig.getEnemyHangerEquipSlots()  != null ? zoneConfig.getEnemyHangerEquipSlots()  : 0;
+        int hangarEquipSlots  = zoneConfig.getEnemyHangarEquipSlots()  != null ? zoneConfig.getEnemyHangarEquipSlots()  : 0;
         ship.beamTarget    = Math.min(beamEquipSlots, preset.maxSlots[0]);
         ship.missileTarget = Math.min(missileEquipSlots, preset.maxSlots[1]);
-        ship.hangerTarget  = Math.min(hangerEquipSlots, preset.maxSlots[2]);
+        ship.hangarTarget  = Math.min(hangarEquipSlots, preset.maxSlots[2]);
 
         // 실드/인터셉터 — 슬롯 1개뿐이라 "장착 여부"만 존재. 클라 배관(ModuleBodyInfo.shieldModuleSubType 등)만 채우고
         // 클라이언트가 실제로 소비(스탯 반영/스폰)하는 로직은 아직 없음 — 후속 작업
@@ -210,7 +210,7 @@ public class ZoneEnemyFleetGenerator {
         boolean progressed = true;
         while (progressed && spent < shipBudget) {
             progressed = false;
-            for (EModuleType category : new EModuleType[] { EModuleType.beam, EModuleType.missile, EModuleType.hanger }) {
+            for (EModuleType category : new EModuleType[] { EModuleType.beam, EModuleType.missile, EModuleType.hangar }) {
                 if (hasSlotRoom(ship, category) == false) continue;
                 Integer cost = tryEquipOneModule(ship, category, shipBudget - spent, gameDataService, random);
                 if (cost != null) {
@@ -229,7 +229,7 @@ public class ZoneEnemyFleetGenerator {
         while (remaining > 0 && progressed) {
             progressed = false;
             for (BuildingShip ship : ships) {
-                for (EModuleType category : new EModuleType[] { EModuleType.beam, EModuleType.missile, EModuleType.hanger }) {
+                for (EModuleType category : new EModuleType[] { EModuleType.beam, EModuleType.missile, EModuleType.hangar }) {
                     if (hasSlotRoom(ship, category) == false) continue;
                     Integer cost = tryEquipOneModule(ship, category, remaining, gameDataService, random);
                     if (cost != null) {
@@ -246,7 +246,7 @@ public class ZoneEnemyFleetGenerator {
         return switch (category) {
             case beam -> ship.beams.size() < ship.beamTarget;
             case missile -> ship.missiles.size() < ship.missileTarget;
-            case hanger -> ship.hangers.size() < ship.hangerTarget;
+            case hangar -> ship.hangars.size() < ship.hangarTarget;
             default -> false;
         };
     }
@@ -296,7 +296,7 @@ public class ZoneEnemyFleetGenerator {
         return switch (category) {
             case beam -> 0;
             case missile -> 1;
-            case hanger -> 2;
+            case hangar -> 2;
             default -> 0;
         };
     }
@@ -305,7 +305,7 @@ public class ZoneEnemyFleetGenerator {
         return switch (category) {
             case beam -> ship.beams;
             case missile -> ship.missiles;
-            case hanger -> ship.hangers;
+            case hangar -> ship.hangars;
             default -> new ArrayList<>();
         };
     }
@@ -314,7 +314,7 @@ public class ZoneEnemyFleetGenerator {
         switch (moduleType) {
             case beam -> ship.beams.add(dto);
             case missile -> ship.missiles.add(dto);
-            case hanger -> ship.hangers.add(dto);
+            case hangar -> ship.hangars.add(dto);
             default -> { }
         }
     }
@@ -331,7 +331,7 @@ public class ZoneEnemyFleetGenerator {
             boolean isFront = i < (order.size() + 1) / 2;
 
             ModuleBodyInfoDto modules = ModuleBodyInfoDto.builder()
-                    .beams(ship.beams).missiles(ship.missiles).hangers(ship.hangers)
+                    .beams(ship.beams).missiles(ship.missiles).hangars(ship.hangars)
                     .shieldModuleSubType(ship.shieldSubType)
                     .interceptorModuleSubType(ship.interceptorSubType)
                     .build();
@@ -341,6 +341,6 @@ public class ZoneEnemyFleetGenerator {
     }
 
     private static int equippedCount(BuildingShip ship) {
-        return ship.beams.size() + ship.missiles.size() + ship.hangers.size();
+        return ship.beams.size() + ship.missiles.size() + ship.hangars.size();
     }
 }

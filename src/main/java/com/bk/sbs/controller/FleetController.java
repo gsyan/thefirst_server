@@ -2,14 +2,11 @@ package com.bk.sbs.controller;
 
 import com.bk.sbs.dto.*;
 import com.bk.sbs.dto.nogenerated.ApiResponse;
-import com.bk.sbs.exception.BusinessException;
-import com.bk.sbs.exception.ServerErrorCode;
-import com.bk.sbs.security.JwtUtil;
+import com.bk.sbs.security.CommanderId;
 import com.bk.sbs.service.FleetService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -17,33 +14,28 @@ import java.util.List;
 public class FleetController {
 
     private final FleetService fleetService;
-    private final JwtUtil jwtUtil;
 
-    public FleetController(FleetService fleetService, JwtUtil jwtUtil) {
+    public FleetController(FleetService fleetService) {
         this.fleetService = fleetService;
-        this.jwtUtil = jwtUtil;
     }
 
     // 캐릭터의 모든 함대 목록 조회
     @GetMapping("/list")
-    public ResponseEntity<ApiResponse<List<FleetInfoDto>>> getUserFleets(HttpServletRequest request) {
-        Long actualCommanderId = getCommanderIdFromToken(request);
+    public ResponseEntity<ApiResponse<List<FleetInfoDto>>> getUserFleets(@CommanderId Long actualCommanderId) {
         List<FleetInfoDto> fleets = fleetService.getUserFleets(actualCommanderId);
         return ResponseEntity.ok(ApiResponse.success(fleets));
     }
 
     // 특정 함대 상세 조회
     @GetMapping("/{fleetId}")
-    public ResponseEntity<ApiResponse<FleetInfoDto>> getFleetDetail(@PathVariable("fleetId") Long fleetId, HttpServletRequest request) {
-        Long actualCommanderId = getCommanderIdFromToken(request);
+    public ResponseEntity<ApiResponse<FleetInfoDto>> getFleetDetail(@PathVariable("fleetId") Long fleetId, @CommanderId Long actualCommanderId) {
         FleetInfoDto fleet = fleetService.getFleetDetail(actualCommanderId, fleetId);
         return ResponseEntity.ok(ApiResponse.success(fleet));
     }
 
     // 활성 함대 조회
     @GetMapping("/active")
-    public ResponseEntity<ApiResponse<FleetInfoDto>> getActiveFleet(HttpServletRequest request) {
-        Long actualCommanderId = getCommanderIdFromToken(request);
+    public ResponseEntity<ApiResponse<FleetInfoDto>> getActiveFleet(@CommanderId Long actualCommanderId) {
         FleetInfoDto fleet = fleetService.getActiveFleet(actualCommanderId);
         return ResponseEntity.ok(ApiResponse.success(fleet));
     }
@@ -60,8 +52,7 @@ public class FleetController {
 
     // 함대 활성화
     @PostMapping("/{fleetId}/activate")
-    public ResponseEntity<ApiResponse<Void>> activateFleet(@PathVariable("fleetId") Long fleetId, HttpServletRequest request) {
-        Long actualCommanderId = getCommanderIdFromToken(request);
+    public ResponseEntity<ApiResponse<Void>> activateFleet(@PathVariable("fleetId") Long fleetId, @CommanderId Long actualCommanderId) {
         fleetService.activateFleet(actualCommanderId, fleetId);
         return ResponseEntity.ok(ApiResponse.success(null));
     }
@@ -94,8 +85,7 @@ public class FleetController {
 
     // 함대 삭제
     @DeleteMapping("/{fleetId}")
-    public ResponseEntity<ApiResponse<Void>> deleteFleet( @PathVariable("fleetId") Long fleetId, HttpServletRequest request) {
-        Long actualCommanderId = getCommanderIdFromToken(request);
+    public ResponseEntity<ApiResponse<Void>> deleteFleet( @PathVariable("fleetId") Long fleetId, @CommanderId Long actualCommanderId) {
         fleetService.deleteFleet(actualCommanderId, fleetId);
         return ResponseEntity.ok(ApiResponse.success(null));
     }
@@ -104,8 +94,7 @@ public class FleetController {
     @PostMapping("/add-ship")
     public ResponseEntity<ApiResponse<AddShipResponse>> addShip(
             @RequestBody AddShipRequest request,
-            HttpServletRequest httpRequest) {
-        Long actualCommanderId = getCommanderIdFromToken(httpRequest);
+            @CommanderId Long actualCommanderId) {
         AddShipResponse response = fleetService.addShip(actualCommanderId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
@@ -114,8 +103,7 @@ public class FleetController {
     @PostMapping("/change-formation")
     public ResponseEntity<ApiResponse<ChangeFormationResponse>> changeFormation(
             @RequestBody ChangeFormationRequest request,
-            HttpServletRequest httpRequest) {
-        Long actualCommanderId = getCommanderIdFromToken(httpRequest);
+            @CommanderId Long actualCommanderId) {
         ChangeFormationResponse response = fleetService.changeFormation(actualCommanderId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
@@ -124,8 +112,7 @@ public class FleetController {
     @PostMapping("/change-tactic-options")
     public ResponseEntity<ApiResponse<ChangeTacticOptionsResponse>> changeTacticOptions(
             @RequestBody ChangeTacticOptionsRequest request,
-            HttpServletRequest httpRequest) {
-        Long actualCommanderId = getCommanderIdFromToken(httpRequest);
+            @CommanderId Long actualCommanderId) {
         ChangeTacticOptionsResponse response = fleetService.changeTacticOptions(actualCommanderId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
@@ -133,8 +120,7 @@ public class FleetController {
     // 즉시 함대 회복 (미네랄 소모)
     @PostMapping("/instant-repair")
     public ResponseEntity<ApiResponse<FleetInstantRepairResponse>> instantRepairFleet(
-            HttpServletRequest httpRequest) {
-        Long actualCommanderId = getCommanderIdFromToken(httpRequest);
+            @CommanderId Long actualCommanderId) {
         FleetInstantRepairResponse response = fleetService.instantRepairFleet(actualCommanderId);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
@@ -143,8 +129,7 @@ public class FleetController {
     @PostMapping("/save-health")
     public ResponseEntity<ApiResponse<Void>> saveFleetHealth(
             @RequestBody FleetHealthSaveRequest request,
-            HttpServletRequest httpRequest) {
-        Long actualCommanderId = getCommanderIdFromToken(httpRequest);
+            @CommanderId Long actualCommanderId) {
         fleetService.saveFleetHealth(actualCommanderId, request);
         return ResponseEntity.ok(ApiResponse.success(null));
     }
@@ -153,8 +138,7 @@ public class FleetController {
     @PostMapping("/preset/place-ship")
     public ResponseEntity<ApiResponse<Void>> placeFleetPresetShip(
             @RequestBody FleetPresetPlaceShipRequest request,
-            HttpServletRequest httpRequest) {
-        Long actualCommanderId = getCommanderIdFromToken(httpRequest);
+            @CommanderId Long actualCommanderId) {
         fleetService.placeFleetPresetShip(actualCommanderId, request);
         return ResponseEntity.ok(ApiResponse.success(null));
     }
@@ -163,8 +147,7 @@ public class FleetController {
     @PostMapping("/preset/set-front")
     public ResponseEntity<ApiResponse<Void>> setFleetPresetShipFront(
             @RequestBody FleetPresetSetFrontRequest request,
-            HttpServletRequest httpRequest) {
-        Long actualCommanderId = getCommanderIdFromToken(httpRequest);
+            @CommanderId Long actualCommanderId) {
         fleetService.setFleetPresetShipFront(actualCommanderId, request);
         return ResponseEntity.ok(ApiResponse.success(null));
     }
@@ -173,8 +156,7 @@ public class FleetController {
     @PostMapping("/preset/set-modules")
     public ResponseEntity<ApiResponse<SetFleetPresetSlotModulesResponse>> setFleetPresetSlotModules(
             @RequestBody SetFleetPresetSlotModulesRequest request,
-            HttpServletRequest httpRequest) {
-        Long actualCommanderId = getCommanderIdFromToken(httpRequest);
+            @CommanderId Long actualCommanderId) {
         SetFleetPresetSlotModulesResponse response = fleetService.setFleetPresetSlotModules(actualCommanderId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
@@ -183,23 +165,9 @@ public class FleetController {
     @PostMapping("/reset-ship")
     public ResponseEntity<ApiResponse<ShipResetRemoveResponse>> resetAndRemoveShip(
             @RequestBody ShipResetRemoveRequest request,
-            HttpServletRequest httpRequest) {
-        Long actualCommanderId = getCommanderIdFromToken(httpRequest);
+            @CommanderId Long actualCommanderId) {
         ShipResetRemoveResponse response = fleetService.resetAndRemoveShip(actualCommanderId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
-    }
-
-    // JWT 토큰에서 캐릭터 ID 추출 (비트 마스킹 포함)
-    private Long getCommanderIdFromToken(HttpServletRequest request) {
-        String token = jwtUtil.getTokenFromRequest(request);
-        if (token == null) throw new BusinessException(ServerErrorCode.FLEET_CONTROLLER_FAIL_INVALID_TOKEN);
-        if (jwtUtil.hasCommanderId(token) == false) throw new BusinessException(ServerErrorCode.FLEET_CONTROLLER_FAIL_JWT_HAS_COMMANDERID);
-
-        Long commanderId = jwtUtil.getCommanderIdFromToken(token);
-        if (commanderId == null) throw new BusinessException(ServerErrorCode.FLEET_CONTROLLER_FAIL_JWT_GET_COMMANDERID);
-
-        // commanderId에서 실제 commander ID 추출 (하위 56비트)
-        return commanderId & 0x00FFFFFFFFFFFFFFL;
     }
 }
 
