@@ -12,7 +12,7 @@ pipeline {
 
     environment {
         IMAGE_NAME  = 'gsyan/sbs'
-        DEPLOY_HOST = '192.168.0.61'
+        DEPLOY_HOST = '192.168.50.61'
         DEPLOY_DIR  = '~/app'
         DB_USER     = 'bk'
         DB_PASS     = '12121212'
