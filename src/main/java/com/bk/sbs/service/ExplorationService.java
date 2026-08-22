@@ -267,6 +267,9 @@ public class ExplorationService {
 
             validateCellChallenge(zoneConfig, run.getCurrentRow(), run.getCurrentCol(), request.getCellRow(), request.getCellCol());
         } else {
+            if (request.getZoneNumber() > commander.getHighestClearedZoneNumber() + 1)
+                throw new BusinessException(ServerErrorCode.EXPLORATION_ZONE_LOCKED);
+
             GridCellOverrideDto startCell = findCellByType(zoneConfig, EGridCellType.Start);
             if (startCell == null)
                 throw new BusinessException(ServerErrorCode.EXPLORATION_START_CELL_NOT_CONFIGURED);
