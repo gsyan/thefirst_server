@@ -195,6 +195,8 @@ public class PvpService {
     public PvpBattleStartResponse startBattle(Long commanderId, Long opponentCommanderId) {
         getOrCreatePvpRecord(commanderId);
 
+        // TODO: 테스트 위해 레벨 제한 임시 주석처리 — 원복 필요(클라이언트 UIPanelRank.OnAttackClicked와 동일 사유)
+        /*
         Integer minCommanderLevel = gameDataService.getDataTableConfig().getPvpMinCommanderLevel();
         if (minCommanderLevel != null && minCommanderLevel > 0) {
             int myCommanderLevel = commanderRepository.findById(commanderId)
@@ -204,6 +206,7 @@ public class PvpService {
                 throw new BusinessException(ServerErrorCode.PVP_COMMANDER_LEVEL_TOO_LOW);
             }
         }
+        */
 
         FleetInfoDto opponentFleet = fleetService.getActiveFleet(opponentCommanderId);
         if (opponentFleet == null) {

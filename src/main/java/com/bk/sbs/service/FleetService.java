@@ -85,10 +85,34 @@ public class FleetService {
     }
 
     // 함대편성(FleetComposition) 슬롯에 함선 배치/교체 — 바디(프리셋) 자체를 바꾸는 동작이라 그 슬롯의 장착 모듈은 새 바디의 기본 로드아웃(빔1)으로 초기화됨
+    // 클라이언트(FleetComposition.TryPlaceShipAt/ComputeUnlockedPresets)가 이미 동일한 조건(레벨/슬롯범위/지휘력)을 검증하지만,
+    // 조작된 요청을 막기 위해 서버에서도 동일 조건을 재검증한다 — setFleetPresetSlotModules(라인 218)와 동일한 검증 패턴
     @Transactional
     public void placeFleetPresetShip(Long commanderId, FleetPresetPlaceShipRequest request) {
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.PLACE_FLEET_PRESET_SHIP_FAIL_COMMANDER_NOT_FOUND));
+
+        GameDataService.ShipPresetSummary summary = gameDataService.getShipPresetSummary(request.getShipPresetId());
+        if (summary == null)
+            throw new BusinessException(ServerErrorCode.PLACE_FLEET_PRESET_SHIP_FAIL_PRESET_NOT_FOUND);
+        if (summary.unlockCommanderLevel > commander.getCommanderLevel())
+            throw new BusinessException(ServerErrorCode.PLACE_FLEET_PRESET_SHIP_FAIL_INSUFFICIENT_COMMANDER_LEVEL);
+
+        int openSlotCount = gameDataService.getShipCount(commander.getCommanderLevel());
+        if (request.getSlotIndex() < 0 || request.getSlotIndex() >= openSlotCount)
+            throw new BusinessException(ServerErrorCode.PLACE_FLEET_PRESET_SHIP_FAIL_SLOT_LOCKED);
+
         CommanderFleetPreset preset = commanderFleetPresetRepository.findByCommanderIdAndPresetIndex(commanderId, 0)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.COMMANDER_CONTROLLER_FAIL_NULL_ACTIVE_FLEET));
+
+        // summary.commandCost는 기본 로드아웃(빔1) 기준 지휘력 총합 — 이 슬롯이 배치 후 실제로 점유할 비용과 동일
+        int usedByOtherSlots = 0;
+        for (CommanderFleetPresetSlot s : preset.getSlots()) {
+            if (s.getSlotIndex() == request.getSlotIndex()) continue;
+            usedByOtherSlots += computeSlotCommandCost(s);
+        }
+        if (usedByOtherSlots + summary.commandCost > commander.getCommandPowerMax())
+            throw new BusinessException(ServerErrorCode.PLACE_FLEET_PRESET_SHIP_FAIL_NOT_ENOUGH_COMMAND_POWER);
 
         CommanderFleetPresetSlot slot = preset.getSlots().stream()
                 .filter(s -> s.getSlotIndex() == request.getSlotIndex())

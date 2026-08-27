@@ -874,7 +874,40 @@
         "interceptorRegenRate": 0.0
       }
     ],
-    "4": [],
+    "4": [
+      {
+        "moduleName": "hangar_t1",
+        "moduleSubType": "hangar_t1",
+        "statPoint": 20,
+        "description": "",
+        "moduleSlots": [],
+        "health": 0.0,
+        "repair": 0.0,
+        "speed": 0.0,
+        "turnRate": 0.0,
+        "attack": 0.0,
+        "splashRadius": 0.0,
+        "attackCool": 3.0,
+        "silenceTime": 0.0,
+        "airCount": 3,
+        "airMaintenanceTime": 15.0,
+        "airHealth": 50.0,
+        "airAttack": 10.0,
+        "airAttackRange": 4.0,
+        "airAttackCool": 4.0,
+        "airSpeed": 10.0,
+        "airAmmo": 10,
+        "airDetectRadius": 10.0,
+        "airAvoidRadius": 2.0,
+        "airDisrupt": 0.1,
+        "shieldGauge": 0.0,
+        "shieldDelay": 0.0,
+        "shieldRegenRate": 0.0,
+        "interceptorCount": 0,
+        "interceptorDelay": 0.0,
+        "interceptorRegenRate": 0.0
+      }
+    ],
     "5": [
       {
         "moduleName": "shield_t1",
