@@ -353,6 +353,8 @@ public class ExplorationService {
                     zoneConfig, seed, request.getCellRow(), request.getCellCol(), gameDataService.getShipPresetList(), gameDataService);
 
             // 존 고정 보상값 적립 — 적 함대 성능(commandCost)과 무관, 웨이브에 함선이 있던 셀만 지급(빈 셀은 0)
+            // Buff_ExplorationPointRate 배율은 여기서 적용하지 않음 — 적립(banked)은 항상 고정값 그대로 쌓고,
+            // 배율은 탈출/포기 확정(settleZoneRun) 시점에 최종 적립 총액에 한 번만 곱함
             boolean hasEnemies = waves.stream().anyMatch(wave -> wave.ships.isEmpty() == false);
             pointsGained = hasEnemies ? zoneConfig.getExplorationPointReward() : 0;
             expGained    = hasEnemies ? zoneConfig.getCommanderExpReward()     : 0;
@@ -380,6 +382,24 @@ public class ExplorationService {
                 .expGained(expGained)
                 .rewardCardCandidates(rewardCardCandidates)
                 .build();
+    }
+
+    // 이번 런에서 지금까지 선택 확정된 지속버프 카드 중 Buff_ExplorationPointRate만 골라 배율 합산 —
+    // 클라 RewardCardSessionState.ApplyCard와 동일한 규칙(같은 effectType을 여러 장 고르면 %를 합산: 1 + sum(value1))
+    private float computeExplorationPointRateMultiplier(Long zoneRunId) {
+        List<ZoneCellClearLog> logs = zoneCellClearLogRepository.findByZoneRunIdOrderByClearedAtAsc(zoneRunId);
+        float valueSum = 0f;
+        for (ZoneCellClearLog log : logs) {
+            String selectedCardId = log.getRewardCardSelectedId();
+            if (selectedCardId == null) continue;
+
+            GameDataService.RewardCardEntry card = gameDataService.getRewardCard(selectedCardId);
+            if (card == null || card.isPersistent == false) continue;
+            if ("Buff_ExplorationPointRate".equals(card.effectType) == false) continue;
+
+            valueSum += card.value1;
+        }
+        return 1f + valueSum;
     }
 
     @Transactional
@@ -466,7 +486,12 @@ public class ExplorationService {
 
     // 탈출 성공/실패 공통 정산 — escapeExplorationZone(성공/실패)과 abandonZoneRun(실패 고정)이 공유
     private RunSettlement settleZoneRun(Commander commander, ZoneRun run, boolean isSuccess) {
-        int pointPayout = isSuccess ? run.getExplorationPointBanked() : run.getExplorationPointBanked() / 2;
+        // Buff_ExplorationPointRate 배율은 여기(최종 확정 지급 시점)에서만 한 번 적용 — 성공/실패(50%) 여부와 무관하게
+        // 이번 런에서 선택 확정된 카드 기준으로 최종 적립 총액에 곱함. 반올림 대신 올림 사용 —
+        // 배율이 작을 때(예: 1% 카드 1장, 적립 30) Math.round(30*1.01f)=30으로 뭉개져 카드 효과가 사라지는 것을 방지
+        float pointRateMultiplier = computeExplorationPointRateMultiplier(run.getId());
+        int bankedPointWithRate = (int) Math.ceil(run.getExplorationPointBanked() * pointRateMultiplier);
+        int pointPayout = isSuccess ? bankedPointWithRate : bankedPointWithRate / 2;
         int expPayout   = isSuccess ? run.getCommanderExpBanked()     : run.getCommanderExpBanked() / 2;
 
         commander.setExplorationPoint(commander.getExplorationPoint() + pointPayout);

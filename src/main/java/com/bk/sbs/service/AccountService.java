@@ -242,6 +242,7 @@ public class AccountService {
 
         // 6. jti 회전/재사용 검증. 유예 응답이면 새 jti를 발급하지 않고 현재 활성 jti를 그대로 재사용
         String presentedJti = jwtUtil.getJtiFromToken(refreshToken);
+        log.info("[임시로그] refreshToken 진입: accountId={} presentedJti={} 요청시각={}", accountId, presentedJti, java.time.Instant.now());
         String reusedActiveJti = resolveJtiForRotation(accountId, presentedJti);
 
         String newJti;
@@ -273,16 +274,19 @@ public class AccountService {
         try {
             activeJti = redisService.getActiveJti(accountId);
         } catch (Exception e) {
-            log.error("리프레시 jti 조회 실패, 검증을 건너뜀: accountId={}", accountId, e);
+            log.error("[임시로그] 리프레시 jti 조회 실패, 검증을 건너뜀: accountId={}", accountId, e);
             return null;
         }
+        log.info("[임시로그] resolveJtiForRotation: accountId={} presentedJti={} activeJti(redis)={}", accountId, presentedJti, activeJti);
 
         // 구버전 토큰(jti 없음) 또는 아직 세션이 등록되지 않은 경우 → 검증 없이 통과 (마이그레이션 허용)
         if (activeJti == null) {
+            log.info("[임시로그] resolveJtiForRotation 분기=activeJti가 null(마이그레이션 허용, 검증 통과): accountId={}", accountId);
             return null;
         }
 
         if (activeJti.equals(presentedJti)) {
+            log.info("[임시로그] resolveJtiForRotation 분기=presentedJti == activeJti(정상, 회전 진행): accountId={}", accountId);
             return null;
         }
 
@@ -290,21 +294,23 @@ public class AccountService {
         try {
             inGrace = redisService.isJtiInGrace(accountId, presentedJti);
         } catch (Exception e) {
-            log.error("리프레시 jti 유예 조회 실패, 검증을 건너뜀: accountId={}", accountId, e);
+            log.error("[임시로그] 리프레시 jti 유예 조회 실패, 검증을 건너뜀: accountId={}", accountId, e);
             return null;
         }
+        log.info("[임시로그] resolveJtiForRotation: accountId={} presentedJti가 activeJti와 다름, inGrace={}", accountId, inGrace);
 
         if (inGrace == true) {
             // 응답 유실로 인한 재시도로 판단 → 세션 유지, 최신 jti를 다시 내려줌
+            log.info("[임시로그] resolveJtiForRotation 분기=유예기간 내 재시도로 판단, 세션 유지: accountId={}", accountId);
             return activeJti;
         }
 
         // 유예 기간도 지난 구 jti가 옴 → 탈취 의심, 전체 세션 폐기
-        log.warn("리프레시 토큰 재사용 감지, 전체 세션 폐기: accountId={}", accountId);
+        log.warn("[임시로그] 리프레시 토큰 재사용 감지, 전체 세션 폐기: accountId={} presentedJti={} activeJti={}", accountId, presentedJti, activeJti);
         try {
             redisService.revokeAllSessions(accountId);
         } catch (Exception e) {
-            log.error("재사용 감지 후 세션 폐기 실패: accountId={}", accountId, e);
+            log.error("[임시로그] 재사용 감지 후 세션 폐기 실패: accountId={}", accountId, e);
         }
         throw new BusinessException(ServerErrorCode.REFRESH_TOKEN_FAIL_REUSE_DETECTED);
     }
