@@ -266,6 +266,24 @@ public class ExplorationService {
                 throw new BusinessException(ServerErrorCode.EXPLORATION_ANOTHER_ZONE_IN_PROGRESS);
 
             validateCellChallenge(zoneConfig, run.getCurrentRow(), run.getCurrentCol(), request.getCellRow(), request.getCellCol());
+
+            // 재방문(이 런에서 이미 클리어 로그가 있는 셀)은 전투가 없는 게 서버 기준으로 확정된 상태 —
+            // 클라의 로컬 클리어 캐시(m_gridData.isCleared)를 신뢰하지 않고 서버가 클리어 로그로 직접 재확인.
+            // 토큰 발급/웨이브 계산 없이 위치만 확정하고 빈 함대로 응답(클라는 "빈 셀"과 동일하게 전투 없이 통과 처리)
+            String revisitCell = request.getCellRow() + "-" + request.getCellCol();
+            boolean isRevisit = zoneCellClearLogRepository.findTopByZoneRunIdAndCellOrderByClearedAtDesc(run.getId(), revisitCell).isPresent();
+            if (isRevisit == true) {
+                run.setCurrentPosition(request.getCellRow(), request.getCellCol());
+                zoneRunRepository.save(run);
+
+                return EnterExplorationCellResponse.builder()
+                        .zoneNumber(request.getZoneNumber())
+                        .cellRow(request.getCellRow())
+                        .cellCol(request.getCellCol())
+                        .enemyFleets(new ArrayList<>())
+                        .challengeToken(null)
+                        .build();
+            }
         } else {
             if (request.getZoneNumber() > commander.getHighestClearedZoneNumber() + 1)
                 throw new BusinessException(ServerErrorCode.EXPLORATION_ZONE_LOCKED);
@@ -309,6 +327,14 @@ public class ExplorationService {
                     .positionIndex(0)
                     .fleetInfo(FleetInfoDto.builder().ships(ships).build())
                     .build());
+        }
+
+        // 빈 셀(적 없음)은 전투가 없으므로 클라가 별도로 clear-cell을 부를 필요 없이 여기서 바로 위치 확정 —
+        // validateCellChallenge를 이미 통과했으므로(인접 + Blocked 아님) 이동 가능한 셀인 것은 보장됨
+        boolean hasEnemies = waves.stream().anyMatch(wave -> wave.ships.isEmpty() == false);
+        if (hasEnemies == false) {
+            run.setCurrentPosition(request.getCellRow(), request.getCellCol());
+            zoneRunRepository.save(run);
         }
 
         return EnterExplorationCellResponse.builder()
