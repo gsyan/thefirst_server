@@ -40,6 +40,11 @@ public class ZoneRun {
     @Column(nullable = false)
     private int commanderExpBanked = 0; // 이 런에서 셀 클리어로 쌓인 미확정 지휘관 경험치
 
+    // 전투 중 전술 토글(체력회복/미사일/함재기) 3종이 공유하는 소모 게이지 현재치 — 런 시작 시 Commander.tacticPowerMax로 초기화,
+    // 이 런이 끝나면(ESCAPED/ABANDONED) 함께 소멸(다음 런은 새 ZoneRun이라 자동으로 다시 Max로 초기화됨)
+    @Column(nullable = false)
+    private int tacticPower = 0;
+
     // "row-col" 형식(0-indexed) 단일 문자열 — 마지막으로 클리어한 셀(승리 시에만 갱신), 인접 검증 기준점. 정수 2컬럼 대신 사람이 읽기 좋은 하나의 컬럼으로 저장
     // ZoneCellClearLog.cell과 동일하게 0-indexed — DB/네트워크/코드 전부 0-indexed로 통일(변환 지점을 아예 없앰)
     @Column(name = "current_cell", nullable = false, length = 20)
@@ -66,13 +71,14 @@ public class ZoneRun {
 
     private Instant endedAt; // ESCAPED/ABANDONED로 종결된 시각 — IN_PROGRESS면 null
 
-    public ZoneRun(Long commanderId, int zoneNumber, int startRow, int startCol) {
+    public ZoneRun(Long commanderId, int zoneNumber, int startRow, int startCol, int tacticPowerMax) {
         this.commanderId = commanderId;
         this.zoneNumber = zoneNumber;
         this.status = EZoneRunStatus.IN_PROGRESS;
         this.rewardClaimed = false;
         this.explorationPointBanked = 0;
         this.commanderExpBanked = 0;
+        this.tacticPower = tacticPowerMax;
         setCurrentPosition(startRow, startCol);
         this.startedAt = Instant.now();
     }

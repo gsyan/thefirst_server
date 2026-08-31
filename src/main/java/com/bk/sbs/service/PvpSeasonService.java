@@ -14,11 +14,12 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.YearMonth;
 import java.time.ZoneOffset;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,11 +83,9 @@ public class PvpSeasonService {
         resetSeasonScores();
 
         int nextSeasonNumber = season.getSeasonNumber() + 1;
-        // 현재 시즌 종료월 기준 다음 달 1일~28일
-        YearMonth currentEndMonth = YearMonth.from(season.getEndTime().atZone(ZoneOffset.UTC));
-        YearMonth nextMonth = currentEndMonth.plusMonths(1);
-        Instant nextStart = calcMonthlySeasonStart(nextMonth);
-        Instant nextEnd = calcMonthlySeasonEnd(nextMonth);
+        // 현재 시즌 종료 시각을 다음 시즌 시작으로 그대로 이어붙여 공백 없이 연결
+        Instant nextStart = season.getEndTime();
+        Instant nextEnd = calcWeeklySeasonEnd(nextStart);
 
         setSeasonManual(nextSeasonNumber, nextStart, nextEnd);
         log.info("다음 시즌 자동 시작: 시즌 {}", nextSeasonNumber);
@@ -123,8 +122,8 @@ public class PvpSeasonService {
 
         // 보상 수령 처리 (reward <= 0 이어도 lastRewardedSeason은 갱신)
         if (reward > 0) {
-            YearMonth currentEndMonth = YearMonth.from(season.getEndTime().atZone(ZoneOffset.UTC));
-            Instant rewardExpiry = calcMonthlySeasonEnd(currentEndMonth.plusMonths(1));
+            // season.endTime == 다음 시즌 시작 시각 → 다음 시즌 종료일까지를 만료일로 설정
+            Instant rewardExpiry = calcWeeklySeasonEnd(season.getEndTime());
 
             Commander commander = commanderRepository.findById(commanderId).orElse(null);
             if (commander == null) return 0;
@@ -170,10 +169,9 @@ public class PvpSeasonService {
         Optional<PvpSeason> currentOpt = getCurrentSeason();
 
         if (currentOpt.isPresent() == false) {
-            // 이번 달 1일~28일 UTC 기준 시즌 1 생성
-            YearMonth thisMonth = YearMonth.now(ZoneOffset.UTC);
-            Instant start = calcMonthlySeasonStart(thisMonth);
-            Instant end = calcMonthlySeasonEnd(thisMonth);
+            // 이번 주 월요일 00:00 UTC ~ 다음 주 월요일 00:00 UTC 기준 시즌 1 생성
+            Instant start = calcWeeklySeasonStart(Instant.now());
+            Instant end = calcWeeklySeasonEnd(start);
             setSeasonManual(1, start, end);
             log.info("서버 시작: 시즌 정보 없음 → 시즌 1 자동 생성 ({}~{})", start, end);
             return;
@@ -198,17 +196,17 @@ public class PvpSeasonService {
                 season.getSeasonNumber(), season.getEndTime(), season.isRewardDistributed());
     }
 
-    // ── 월별 시즌 날짜 계산 헬퍼 ──────────────────────────────────────────
-    // 매달 1일 00:00 UTC
-    private Instant calcMonthlySeasonStart(YearMonth month) {
-        LocalDate firstDay = month.atDay(1);
-        return firstDay.atStartOfDay(ZoneOffset.UTC).toInstant();
+    // ── 주간 시즌 날짜 계산 헬퍼 ──────────────────────────────────────────
+    // 기준 시각이 속한 주의 월요일 00:00 UTC
+    private Instant calcWeeklySeasonStart(Instant reference) {
+        LocalDate refDate = reference.atZone(ZoneOffset.UTC).toLocalDate();
+        LocalDate monday = refDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        return monday.atStartOfDay(ZoneOffset.UTC).toInstant();
     }
 
-    // 매달 29일 00:00 UTC (28→29일 자정에 정산)
-    private Instant calcMonthlySeasonEnd(YearMonth month) {
-        LocalDate day29 = month.atDay(29);
-        return day29.atStartOfDay(ZoneOffset.UTC).toInstant();
+    // 시즌 시작(월요일) + 7일 = 다음 주 월요일 00:00 UTC
+    private Instant calcWeeklySeasonEnd(Instant seasonStart) {
+        return seasonStart.plus(7, ChronoUnit.DAYS);
     }
 
     // ── 1시간 주기 자동 시즌 종료 체크 ────────────────────────────────────

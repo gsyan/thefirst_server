@@ -80,6 +80,8 @@ public class FleetService {
                 .collect(Collectors.toList());
 
         return FleetInfoDto.builder()
+                .id(preset.getId())
+                .tacticOptions(preset.getTacticOptions())
                 .ships(ships)
                 .build();
     }
@@ -863,21 +865,23 @@ public class FleetService {
                 .build();
     }
 
+    // 프리셋 기반 함대 시스템(CommanderFleetPreset)으로 전환 — 구식 Fleet 엔티티는 더 이상 참조하지 않음.
+    // fleetId는 CommanderFleetPreset.id(FleetInfoDto.id로 클라에 내려준 값) — 미지정(0/null)이면 활성 프리셋(presetIndex=0)으로 폴백
     @Transactional
     public ChangeTacticOptionsResponse changeTacticOptions(Long commanderId, ChangeTacticOptionsRequest request) {
-        Fleet fleet;
+        CommanderFleetPreset preset;
 
         if (request.getFleetId() == null || request.getFleetId() == 0) {
-            fleet = fleetRepository.findByCommanderIdAndIsActiveTrueAndDeletedFalse(commanderId)
+            preset = commanderFleetPresetRepository.findByCommanderIdAndPresetIndex(commanderId, 0)
                     .orElseThrow(() -> new BusinessException(ServerErrorCode.FLEET_NOT_FOUND));
         } else {
-            fleet = fleetRepository.findByIdAndCommanderIdAndDeletedFalse(request.getFleetId(), commanderId)
+            preset = commanderFleetPresetRepository.findByIdAndCommanderId(request.getFleetId(), commanderId)
                     .orElseThrow(() -> new BusinessException(ServerErrorCode.FLEET_NOT_FOUND));
         }
 
-        fleet.setTacticOptions(request.getTacticOptions());
-        fleet.setModified(Instant.now());
-        fleetRepository.save(fleet);
+        preset.setTacticOptions(request.getTacticOptions());
+        preset.setModified(Instant.now());
+        commanderFleetPresetRepository.save(preset);
 
         return ChangeTacticOptionsResponse.builder()
                 .tacticOptions(request.getTacticOptions())

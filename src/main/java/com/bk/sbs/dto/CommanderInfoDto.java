@@ -21,6 +21,8 @@ public class CommanderInfoDto {
     private Integer commanderLevel;
     private Integer exp;
     private Integer commandPowerMax;
+    private Integer tacticPowerMax;
+    private Integer tacticPower;
     private Integer explorationSeedBase;
     private List<String> clearedZones;
     private Integer explorationPoint;

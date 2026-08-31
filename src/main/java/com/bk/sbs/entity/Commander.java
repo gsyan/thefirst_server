@@ -56,6 +56,11 @@ public class Commander {
     @Column(nullable = false, columnDefinition = "INT DEFAULT 120")
     private int commandPowerMax = 120;
 
+    // 전술력 최대치 — 전투 중 전술 토글(체력회복/미사일/함재기) 3종이 공유하는 소모 게이지의 상한.
+    // IncreaseTacticPowerMaxRequest(은행 탐험 포인트 소모)로 영구 증가. 존 런 시작 시 이 값으로 ZoneRun.tacticPower가 초기화됨
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 60")
+    private int tacticPowerMax = 60;
+
     // 탐험 포인트 은행 잔액 — ZoneRun 탈출/포기 시 확정 지급되어 여기 누적, IncreaseCommandPowerMax/UnlockShipPreset로 소모
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
     private int explorationPoint = 0;

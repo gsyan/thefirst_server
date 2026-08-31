@@ -294,7 +294,7 @@ public class ExplorationService {
 
             validateCellChallenge(zoneConfig, startCell.getRow(), startCell.getCol(), request.getCellRow(), request.getCellCol());
 
-            run = new ZoneRun(commanderId, request.getZoneNumber(), startCell.getRow(), startCell.getCol());
+            run = new ZoneRun(commanderId, request.getZoneNumber(), startCell.getRow(), startCell.getCol(), commander.getTacticPowerMax());
             run = zoneRunRepository.save(run);
         }
 
@@ -397,6 +397,10 @@ public class ExplorationService {
         run.setExplorationPointBanked(run.getExplorationPointBanked() + pointsGained);
         run.setCommanderExpBanked(run.getCommanderExpBanked() + expGained);
         run.setFleetHealthSnapshotJson(serializeHealthSnapshot(request.getShipHealthRatios(), run.getFleetHealthSnapshotJson()));
+        // 전투 중엔 서버에 실시간 저장하지 않고 셀 클리어 확정 시점에만 전술력을 저장 — 0~tacticPowerMax로 클램프(체력 스냅샷과 동일하게 클라 계산값을 신뢰하되 범위만 방어)
+        int reportedTacticPower = request.getTacticPower() != null ? request.getTacticPower() : run.getTacticPower();
+        int clampedTacticPower = Math.max(0, Math.min(reportedTacticPower, commander.getTacticPowerMax()));
+        run.setTacticPower(clampedTacticPower);
         zoneRunRepository.save(run);
 
         ZoneCellClearLog clearLog = new ZoneCellClearLog(run.getId(), request.getCellRow(), request.getCellCol());
@@ -609,4 +613,27 @@ public class ExplorationService {
                 .explorationPointRemain(commander.getExplorationPoint())
                 .build();
     }
+
+    // 교환비 1:1 — increaseCommandPowerMax와 동일 패턴, 탐험 포인트를 소모해 전술력 최대치를 영구 증가
+    @Transactional
+    public IncreaseTacticPowerMaxResponse increaseTacticPowerMax(Long commanderId, int amount) {
+        if (amount <= 0)
+            throw new BusinessException(ServerErrorCode.EXPLORATION_POINT_INSUFFICIENT);
+
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
+
+        if (commander.getExplorationPoint() < amount)
+            throw new BusinessException(ServerErrorCode.EXPLORATION_POINT_INSUFFICIENT);
+
+        commander.setExplorationPoint(commander.getExplorationPoint() - amount);
+        commander.setTacticPowerMax(commander.getTacticPowerMax() + amount);
+        commanderRepository.save(commander);
+
+        return IncreaseTacticPowerMaxResponse.builder()
+                .tacticPowerMax(commander.getTacticPowerMax())
+                .explorationPointRemain(commander.getExplorationPoint())
+                .build();
+    }
+
 }

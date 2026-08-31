@@ -14,6 +14,8 @@ import com.bk.sbs.dto.GetActiveZoneRunProgressRequest;
 import com.bk.sbs.dto.GetActiveZoneRunProgressResponse;
 import com.bk.sbs.dto.IncreaseCommandPowerMaxRequest;
 import com.bk.sbs.dto.IncreaseCommandPowerMaxResponse;
+import com.bk.sbs.dto.IncreaseTacticPowerMaxRequest;
+import com.bk.sbs.dto.IncreaseTacticPowerMaxResponse;
 import com.bk.sbs.dto.nogenerated.ApiResponse;
 import com.bk.sbs.security.CommanderId;
 import com.bk.sbs.service.ExplorationService;
@@ -84,6 +86,15 @@ public class ExplorationController {
             @CommanderId Long commanderId) {
         int amount = request.getAmount() != null ? request.getAmount() : 0;
         IncreaseCommandPowerMaxResponse response = explorationService.increaseCommandPowerMax(commanderId, amount);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    @PostMapping("/increase-tactic-power")
+    public ResponseEntity<ApiResponse<IncreaseTacticPowerMaxResponse>> increaseTacticPowerMax(
+            @RequestBody IncreaseTacticPowerMaxRequest request,
+            @CommanderId Long commanderId) {
+        int amount = request.getAmount() != null ? request.getAmount() : 0;
+        IncreaseTacticPowerMaxResponse response = explorationService.increaseTacticPowerMax(commanderId, amount);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 }

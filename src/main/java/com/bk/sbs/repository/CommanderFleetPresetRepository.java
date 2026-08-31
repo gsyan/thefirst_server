@@ -17,6 +17,9 @@ public interface CommanderFleetPresetRepository extends JpaRepository<CommanderF
 
     List<CommanderFleetPreset> findByCommanderIdOrderByPresetIndex(Long commanderId);
 
+    // id로 조회하되 commanderId까지 함께 검증 — 다른 커맨더 소유 프리셋을 id만으로 조작하지 못하도록 방지
+    Optional<CommanderFleetPreset> findByIdAndCommanderId(Long id, Long commanderId);
+
     @Modifying
     @Query("DELETE FROM CommanderFleetPreset p WHERE p.commanderId = :commanderId")
     void deleteByCommanderId(@Param("commanderId") Long commanderId);

@@ -54,7 +54,8 @@ CREATE TABLE commander (
     pvp_point_expiry        DATETIME(6)         NULL,
     pvp_point_season_ref    INT             NOT NULL DEFAULT 0,
     name_change_count       INT             NOT NULL DEFAULT 2,
-    command_power_max       INT             NOT NULL DEFAULT 300,
+    command_power_max       INT             NOT NULL DEFAULT 120,
+    tactic_power_max         INT            NOT NULL DEFAULT 60,
     exploration_point           INT         NOT NULL DEFAULT 0,
     highest_cleared_zone_number INT         NOT NULL DEFAULT 0,
     collect_date_time       DATETIME(6)         NULL,
@@ -95,6 +96,7 @@ CREATE TABLE commander_fleet_preset (
     id              BIGINT          NOT NULL AUTO_INCREMENT,
     commander_id    BIGINT          NOT NULL,
     preset_index    INT             NOT NULL,
+    tactic_options  INT             NOT NULL DEFAULT 0, -- 전술 토글 비트마스크(bit0=수리, bit1=미사일, bit2=함재기) — 이 프리셋(함대)에 귀속
     created         DATETIME(6)     NOT NULL,
     modified        DATETIME(6)     NOT NULL,
     PRIMARY KEY (id),
@@ -249,6 +251,7 @@ CREATE TABLE zone_run (
     reward_claimed              TINYINT(1)   NOT NULL DEFAULT 0,
     exploration_point_banked    INT          NOT NULL DEFAULT 0,
     commander_exp_banked        INT          NOT NULL DEFAULT 0,
+    tactic_power                INT          NOT NULL DEFAULT 0, -- 전술 토글(체력회복/미사일/함재기) 공용 소모 게이지 현재치, 런 시작 시 Commander.tactic_power_max로 초기화
     current_cell                VARCHAR(20)  NOT NULL, -- "x-y" 형식(0-indexed), 마지막으로 클리어한 셀
     fleet_health_snapshot_json  TEXT             NULL, -- 마지막 셀 클리어 시점의 내 함대 체력 비율(슬롯 포지션 인덱스별) JSON — 재접속 시 손상 상태 복구용
     active_challenge_token      VARCHAR(36)      NULL, -- enter-cell이 발급, clear-cell 검증 후 즉시 무효화(1회용)

@@ -117,6 +117,8 @@ public class CommanderService {
         ZoneRun activeZoneRun = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS).orElse(null);
         int explorationZoneNumber = activeZoneRun != null ? activeZoneRun.getZoneNumber() : 0;
         String explorationCell = activeZoneRun != null ? activeZoneRun.getCurrentCell() : "";
+        // 전술력 현재치도 동일 패턴 — 진행 중인 런이 있으면 그 런의 값을, 없으면 꽉 찬 상태(tacticPowerMax)를 내려줌
+        int tacticPower = activeZoneRun != null ? activeZoneRun.getTacticPower() : commander.getTacticPowerMax();
 
         return CommanderInfoDto.builder()
                 .commanderId(commanderId)
@@ -130,6 +132,8 @@ public class CommanderService {
                 .nameChangeCount(commander.getNameChangeCount())
                 .explorationSeedBase(explorationWorldSeed)
                 .commandPowerMax(commander.getCommandPowerMax())
+                .tacticPowerMax(commander.getTacticPowerMax())
+                .tacticPower(tacticPower)
                 .explorationZoneNumber(explorationZoneNumber)
                 .explorationCell(explorationCell)
                 .highestClearedZoneNumber(commander.getHighestClearedZoneNumber())
