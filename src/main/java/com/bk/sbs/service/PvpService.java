@@ -3,7 +3,6 @@ package com.bk.sbs.service;
 import com.bk.sbs.config.DataTableConfig;
 import com.bk.sbs.dto.*;
 import com.bk.sbs.entity.Commander;
-import com.bk.sbs.entity.Fleet;
 import com.bk.sbs.entity.PvpRecord;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
@@ -70,7 +69,7 @@ public class PvpService {
             String name = nameMap.get(record.getCommanderId());
             if (name != null) redisService.setRankName(record.getCommanderId(), name);
 
-            FleetInfoDto fleet = fleetService.getActiveFleet(record.getCommanderId());
+            FleetInfoDto fleet = fleetService.getActiveFleetPresetOrNull(record.getCommanderId());
             String statJson = fleetService.computeFleetRankStatJson(fleet);
             if (statJson != null) redisService.setRankStat(record.getCommanderId(), statJson);
         }
@@ -90,7 +89,7 @@ public class PvpService {
         for (PvpRecord record : records) {
             redisService.setPvpScore(record.getCommanderId(), record.getScore());
 
-            FleetInfoDto fleet = fleetService.getActiveFleet(record.getCommanderId());
+            FleetInfoDto fleet = fleetService.getActiveFleetPresetOrNull(record.getCommanderId());
             String statJson = fleetService.computeFleetRankStatJson(fleet);
             if (statJson != null) redisService.setRankStat(record.getCommanderId(), statJson);
         }
@@ -208,7 +207,7 @@ public class PvpService {
         }
         */
 
-        FleetInfoDto opponentFleet = fleetService.getActiveFleet(opponentCommanderId);
+        FleetInfoDto opponentFleet = fleetService.getActiveFleetPresetOrNull(opponentCommanderId);
         if (opponentFleet == null) {
             throw new BusinessException(ServerErrorCode.PVP_OPPONENT_FLEET_NOT_FOUND);
         }
@@ -379,7 +378,7 @@ public class PvpService {
             Commander commander = commanderRepository.findById(opponentId).orElse(null);
             if (commander == null) continue;
 
-            FleetInfoDto fleet = fleetService.getActiveFleet(opponentId);
+            FleetInfoDto fleet = fleetService.getActiveFleetPresetOrNull(opponentId);
 
             Double score = redisService.getPvpScore(opponentId);
             Long rank = redisService.getPvpRank(opponentId);

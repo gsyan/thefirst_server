@@ -72,24 +72,6 @@ CREATE TABLE commander (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
--- fleet
--- ============================================================
-CREATE TABLE fleet (
-    id              BIGINT          NOT NULL AUTO_INCREMENT,
-    commander_id    BIGINT          NOT NULL,
-    fleet_name      VARCHAR(255)    NOT NULL,
-    description     TEXT                NULL,
-    is_active       TINYINT(1)      NOT NULL DEFAULT 1,
-    deleted         TINYINT(1)      NOT NULL DEFAULT 0,
-    formation       VARCHAR(255)    NOT NULL,
-    tactic_options  INT             NOT NULL DEFAULT 0,
-    created         DATETIME(6)     NOT NULL,
-    modified        DATETIME(6)     NOT NULL,
-    PRIMARY KEY (id),
-    INDEX idx_fleet_commander (commander_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ============================================================
 -- commander_fleet_preset (프리셋 기반 신규 함대 시스템 — presetIndex=0이 현재 기본 활성 함대)
 -- ============================================================
 CREATE TABLE commander_fleet_preset (
@@ -131,42 +113,6 @@ CREATE TABLE commander_fleet_preset_slot_module (
     INDEX idx_fleet_preset_slot_module_slot (preset_slot_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- ============================================================
--- ship
--- ============================================================
-CREATE TABLE ship (
-    id              BIGINT          NOT NULL AUTO_INCREMENT,
-    fleet_id        BIGINT          NOT NULL,
-    ship_name       VARCHAR(255)    NOT NULL,
-    position_index  INT             NOT NULL,
-    description     TEXT                NULL,
-    deleted         TINYINT(1)      NOT NULL DEFAULT 0,
-    created         DATETIME(6)     NOT NULL,
-    modified        DATETIME(6)     NOT NULL,
-    PRIMARY KEY (id),
-    CONSTRAINT fk_ship_fleet FOREIGN KEY (fleet_id) REFERENCES fleet (id),
-    INDEX idx_ship_fleet (fleet_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ============================================================
--- ship_module
--- ============================================================
-CREATE TABLE ship_module (
-    id                      BIGINT          NOT NULL AUTO_INCREMENT,
-    ship_id                 BIGINT          NOT NULL,
-    module_type             VARCHAR(100)    NOT NULL,
-    module_sub_type         VARCHAR(100)    NOT NULL,
-    module_level            INT             NOT NULL,
-    body_index              INT             NOT NULL,
-    slot_index              INT             NOT NULL,
-    current_health          FLOAT           NOT NULL DEFAULT 0,
-    deleted                 TINYINT(1)      NOT NULL DEFAULT 0,
-    created                 DATETIME(6)     NOT NULL,
-    modified                DATETIME(6)     NOT NULL,
-    PRIMARY KEY (id),
-    CONSTRAINT fk_ship_module_ship FOREIGN KEY (ship_id) REFERENCES ship (id),
-    INDEX idx_module_ship (ship_id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
 -- progress

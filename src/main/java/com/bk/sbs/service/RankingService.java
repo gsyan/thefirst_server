@@ -61,7 +61,7 @@ public class RankingService {
                 redisService.setZoneScore(c.getId(), maxScore);
                 redisService.setRankName(c.getId(), c.getCommanderName());
 
-                FleetInfoDto fleet = fleetService.getActiveFleet(c.getId());
+                FleetInfoDto fleet = fleetService.getActiveFleetPresetOrNull(c.getId());
                 String statJson = fleetService.computeFleetRankStatJson(fleet);
                 if (statJson != null) redisService.setRankStat(c.getId(), statJson);
             }

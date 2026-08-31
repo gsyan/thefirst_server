@@ -50,9 +50,6 @@ public class AccountService {
     @Autowired private VipSubscriptionRepository vipSubscriptionRepository;
     @Autowired private PvpRecordRepository pvpRecordRepository;
     @Autowired private ClearedZoneRepository clearedZoneRepository;
-    @Autowired private ShipModuleRepository shipModuleRepository;
-    @Autowired private ShipRepository shipRepository;
-    @Autowired private FleetRepository fleetRepository;
     @Autowired private ProgressRepository progressRepository;
     @Autowired private RedisService redisService;
 
@@ -515,9 +512,6 @@ public class AccountService {
             vipSubscriptionRepository.deleteByCommanderId(commanderId);
             pvpRecordRepository.deleteByCommanderId(commanderId);
             clearedZoneRepository.deleteByCommanderId(commanderId);
-            shipModuleRepository.deleteByCommanderId(commanderId);
-            shipRepository.deleteByCommanderId(commanderId);
-            fleetRepository.deleteByCommanderId(commanderId);
             progressRepository.deleteByCommanderId(commanderId);
         }
         commanderRepository.deleteByAccountId(accountId);

@@ -8,7 +8,6 @@ import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.security.JwtUtil;
 import com.bk.sbs.entity.PvpSeason;
 import com.bk.sbs.service.CommanderService;
-import com.bk.sbs.service.FleetService;
 import com.bk.sbs.service.GameDataService;
 import com.bk.sbs.service.PvpSeasonService;
 import com.bk.sbs.service.ZoneService;
@@ -24,16 +23,14 @@ import java.util.List;
 public class DevController {
 
     private final CommanderService CommanderService;
-    private final FleetService fleetService;
     private final GameDataService gameDataService;
     private final PvpSeasonService pvpSeasonService;
     private final ZoneService zoneService;
     private final JwtUtil jwtUtil;
     private final ObjectMapper objectMapper;
 
-    public DevController(CommanderService CommanderService, FleetService fleetService, GameDataService gameDataService, PvpSeasonService pvpSeasonService, ZoneService zoneService, JwtUtil jwtUtil, ObjectMapper objectMapper) {
+    public DevController(CommanderService CommanderService, GameDataService gameDataService, PvpSeasonService pvpSeasonService, ZoneService zoneService, JwtUtil jwtUtil, ObjectMapper objectMapper) {
         this.CommanderService = CommanderService;
-        this.fleetService = fleetService;
         this.gameDataService = gameDataService;
         this.pvpSeasonService = pvpSeasonService;
         this.zoneService = zoneService;
@@ -76,34 +73,6 @@ public class DevController {
                 result.append("ExplorationPoint: ").append(status.getExplorationPoint()).append("\n");
                 result.append("PvpPoint: ").append(status.getPvpPoint()).append("\n");
                 return ApiResponse.success(result.toString());
-
-            case "changeformation":
-                if (params == null || params.isEmpty()) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_CHANGEFORMATION_INVALID_PARAM);
-
-                EFormationType formationType;
-                if (params.get(0).matches("\\d+")) {
-                    int index = parseIntOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_CHANGEFORMATION_PARSE_PARAM);
-                    EFormationType[] formations = EFormationType.values();
-                    if (index >= 0 && index < formations.length) {
-                        formationType = formations[index];
-                    } else {
-                        throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_CHANGEFORMATION_INVALID_INDEX);
-                    }
-                } else {
-                    try {
-                        formationType = EFormationType.valueOf(params.get(0));
-                    } catch (IllegalArgumentException e) {
-                        throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_CHANGEFORMATION_INVALID_TYPE);
-                    }
-                }
-
-                ChangeFormationRequest changeFormationRequest = new ChangeFormationRequest();
-                changeFormationRequest.setFleetId(null);
-                changeFormationRequest.setFormationType(formationType);
-
-                ChangeFormationResponse changeFormationResponse = fleetService.changeFormation(commanderId, changeFormationRequest);
-                String changeFormationJson = jsonSerializeOrThrow(changeFormationResponse);
-                return ApiResponse.success(changeFormationJson);
 
             // pvpseason set [시즌번호] [시작ISO] [종료ISO]
             // 예) pvpseason set 1 2026-05-01T00:00:00Z 2026-05-15T00:00:00Z

@@ -3,7 +3,6 @@ package com.bk.sbs.service;
 
 import com.bk.sbs.dto.*;
 import com.bk.sbs.entity.Commander;
-import com.bk.sbs.entity.Ship;
 import com.bk.sbs.entity.ZoneCellClearLog;
 import com.bk.sbs.entity.ZoneRun;
 import com.bk.sbs.enums.EGridCellType;
@@ -11,7 +10,6 @@ import com.bk.sbs.enums.EZoneRunStatus;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.repository.CommanderRepository;
-import com.bk.sbs.repository.ShipRepository;
 import com.bk.sbs.repository.ZoneCellClearLogRepository;
 import com.bk.sbs.repository.ZoneRunRepository;
 import com.bk.sbs.util.CommanderLevelUtil;
@@ -41,17 +39,15 @@ public class ExplorationService {
     private final CommanderRepository commanderRepository;
     private final ZoneRunRepository zoneRunRepository;
     private final ZoneCellClearLogRepository zoneCellClearLogRepository;
-    private final ShipRepository shipRepository;
     private final GameDataService gameDataService;
     private final ObjectMapper objectMapper;
 
     public ExplorationService(CommanderRepository commanderRepository, ZoneRunRepository zoneRunRepository,
-                               ZoneCellClearLogRepository zoneCellClearLogRepository, ShipRepository shipRepository,
+                               ZoneCellClearLogRepository zoneCellClearLogRepository,
                                GameDataService gameDataService, ObjectMapper objectMapper) {
         this.commanderRepository = commanderRepository;
         this.zoneRunRepository = zoneRunRepository;
         this.zoneCellClearLogRepository = zoneCellClearLogRepository;
-        this.shipRepository = shipRepository;
         this.gameDataService = gameDataService;
         this.objectMapper = objectMapper;
     }
@@ -93,8 +89,6 @@ public class ExplorationService {
                 throw new BusinessException(ServerErrorCode.EXPLORATION_FLEET_HEALTH_INVALID);
         }
 
-        validateFleetComposition(commanderId, reported);
-
         List<ShipHealthRatioInfoDto> previous = deserializeHealthSnapshot(run.getFleetHealthSnapshotJson());
         if (previous == null || previous.isEmpty()) return;
 
@@ -113,22 +107,6 @@ public class ExplorationService {
 
             float increase = info.getHealthRatio() - prevOpt.get().getHealthRatio();
             if (increase > allowedIncrease)
-                throw new BusinessException(ServerErrorCode.EXPLORATION_FLEET_HEALTH_INVALID);
-        }
-    }
-
-    // 리포트된 함선이 실제로 이 커맨더 소유이고 서버가 아는 포지션과 일치하는지 검증(shipId 미포함 구버전 클라 하위호환 위해 0/null은 스킵)
-    private void validateFleetComposition(Long commanderId, List<ShipHealthRatioInfoDto> reported) {
-        for (ShipHealthRatioInfoDto info : reported) {
-            if (info.getShipId() == null || info.getShipId() <= 0) continue;
-            if (info.getPositionIndex() == null) continue;
-
-            Ship ship = shipRepository.findByIdAndDeletedFalse(info.getShipId()).orElse(null);
-            if (ship == null)
-                throw new BusinessException(ServerErrorCode.EXPLORATION_FLEET_HEALTH_INVALID);
-            if (ship.getFleet().getCommanderId().equals(commanderId) == false)
-                throw new BusinessException(ServerErrorCode.EXPLORATION_FLEET_HEALTH_INVALID);
-            if (ship.getPositionIndex() != info.getPositionIndex())
                 throw new BusinessException(ServerErrorCode.EXPLORATION_FLEET_HEALTH_INVALID);
         }
     }
