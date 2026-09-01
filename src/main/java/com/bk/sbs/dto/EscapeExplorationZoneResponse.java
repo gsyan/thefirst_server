@@ -20,4 +20,5 @@ public class EscapeExplorationZoneResponse {
     private Integer totalExp;
     private Integer commanderLevel;
     private Integer highestClearedZoneNumber;
+    private Integer tacticPower;
 }

@@ -19,6 +19,7 @@
   "aircraftTacticAmmoMultiplier": 2.0,
   "shipStatFormula": {
     "maxModuleSlots": 6,
+    "maxAttackReinforcePointsPerSlot": 10,
     "beam": {
       "attackPerPoint": 0.1,
       "attackCoolReductionPerPoint": 0.02,

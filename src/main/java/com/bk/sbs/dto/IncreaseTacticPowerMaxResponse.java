@@ -15,5 +15,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class IncreaseTacticPowerMaxResponse {
     private Integer tacticPowerMax;
+    private Integer tacticPower;
     private Integer explorationPointRemain;
 }

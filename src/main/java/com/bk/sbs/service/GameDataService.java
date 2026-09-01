@@ -7,6 +7,7 @@ import com.bk.sbs.config.DataTablePvpSeason;
 import com.bk.sbs.config.ZoneConfig;
 import com.bk.sbs.dto.ZoneConfigData;
 import com.bk.sbs.dto.ModuleData;
+import com.bk.sbs.dto.ShipStatFormulaSettings;
 import com.bk.sbs.enums.EModuleSubType;
 import com.bk.sbs.enums.EModuleType;
 import com.bk.sbs.exception.BusinessException;
@@ -42,39 +43,6 @@ public class GameDataService {
     private Map<Integer, CommanderData> commanderDataMap = new HashMap<>();
     private int cachedMaxShipCount = 1;
 
-    // ZoneEnemyFleetGenerator가 웨이브 예산을 맞추는 데 필요한 최소 정보 + FleetService의 슬롯 배치/모듈 토글(지휘력 재계산, 기본 로드아웃 시딩)에 사용
-    // prefabName/defaultModules는 FleetService용. maxSlots/bodyCost는 ZoneEnemyFleetGenerator의 적 함대 예산 배분용
-    public static class ShipPresetSummary {
-        public String presetId;
-        public int unlockCommanderLevel;
-        public int commandCost; // 기본 로드아웃(빔1) 기준 — 지휘력 계산/플레이어 프리셋 목록용
-        public String prefabName;
-        public java.util.List<DefaultModuleEntry> defaultModules;
-        public int[] maxSlots; // [beam, missile, hangar, shield, interceptor] — presetId에서 파싱
-        public int bodyCost; // 순수 바디 설치비(모듈 미포함) — 적 함대는 이 값으로 함체를 고르고, 남은 예산을 모듈 구매에 씀
-        public ShipPresetSummary(String presetId, int unlockCommanderLevel, int commandCost, String prefabName, java.util.List<DefaultModuleEntry> defaultModules, int[] maxSlots, int bodyCost) {
-            this.presetId = presetId;
-            this.unlockCommanderLevel = unlockCommanderLevel;
-            this.commandCost = commandCost;
-            this.prefabName = prefabName;
-            this.defaultModules = defaultModules;
-            this.maxSlots = maxSlots;
-            this.bodyCost = bodyCost;
-        }
-    }
-
-    // 프리셋 배치(placeFleetPresetShip) 시 CommanderFleetPresetSlotModule로 그대로 시딩되는 기본 장착 모듈 1건 — 지금은 beam slot0=beam_t1뿐
-    public static class DefaultModuleEntry {
-        public EModuleType moduleType;
-        public int slotIndex;
-        public EModuleSubType moduleSubType;
-        public DefaultModuleEntry(EModuleType moduleType, int slotIndex, EModuleSubType moduleSubType) {
-            this.moduleType = moduleType;
-            this.slotIndex = slotIndex;
-            this.moduleSubType = moduleSubType;
-        }
-    }
-
     // 셀 클리어 보상카드 1종 — 클라 RewardCardData의 서버 필요 필드만(ExportToServerJson 참고). 서버는 후보 추첨(weight)과 즉시효과 적용(effectType/value1/value2)에만 씀
     public static class RewardCardEntry {
         public String cardId;
@@ -93,8 +61,6 @@ public class GameDataService {
         }
     }
 
-    private java.util.List<ShipPresetSummary> shipPresetList = new java.util.ArrayList<>();
-    private java.util.Map<String, ShipPresetSummary> shipPresetById = new java.util.HashMap<>();
     private java.util.List<RewardCardEntry> rewardCardList = new java.util.ArrayList<>();
     private java.util.Map<String, RewardCardEntry> rewardCardById = new java.util.HashMap<>();
     @Autowired
@@ -149,33 +115,6 @@ public class GameDataService {
                 log.info("ZoneConfig.json loaded successfully from resources/data/");
             } else {
                 log.warn("ZoneConfig.json not found in resources/data/, using empty data");
-            }
-
-            // ZoneEnemyFleetGenerator가 클라와 동일하게 셀 적함대를 재계산하는 데 필요 + FleetService의 슬롯 배치/모듈 토글 지휘력 계산에도 사용
-            ClassPathResource shipPresetResource = new ClassPathResource("data/DataTableShipPreset.json");
-            if (shipPresetResource.exists()) {
-                String json = new String(shipPresetResource.getInputStream().readAllBytes());
-                com.fasterxml.jackson.databind.JsonNode arrayNode = objectMapper.readTree(json);
-                shipPresetList.clear();
-                shipPresetById.clear();
-                for (com.fasterxml.jackson.databind.JsonNode presetNode : arrayNode) {
-                    String presetId = presetNode.path("presetId").asText(null);
-                    int unlockCommanderLevel = presetNode.path("unlockCommanderLevel").asInt(1);
-                    int commandCost = presetNode.path("commandCost").asInt(0);
-                    String prefabName = presetNode.path("prefabName").asText(null);
-                    java.util.List<DefaultModuleEntry> defaultModules = parseDefaultModules(presetNode.path("statAllocation"));
-                    if (presetId != null)
-                    {
-                        int[] maxSlots = parseMaxSlotsFromPresetId(presetId);
-                        int bodyCost = computeBodyCost(prefabName);
-                        ShipPresetSummary summary = new ShipPresetSummary(presetId, unlockCommanderLevel, commandCost, prefabName, defaultModules, maxSlots, bodyCost);
-                        shipPresetList.add(summary);
-                        shipPresetById.put(presetId, summary);
-                    }
-                }
-                log.info("DataTableShipPreset.json loaded: {} entries", shipPresetList.size());
-            } else {
-                log.warn("DataTableShipPreset.json not found in resources/data/, using empty data");
             }
 
             ClassPathResource pvpSeasonResource = new ClassPathResource("data/DataTablePvpSeason.json");
@@ -262,6 +201,14 @@ public class GameDataService {
         return getDataTableConfig().getModuleUnlockPrice();
     }
 
+    public int getMaxAttackReinforcePointsPerSlot() {
+        ShipStatFormulaSettings formula = getDataTableConfig().getShipStatFormula();
+        if (formula == null) return 10;
+        Integer maxPoints = formula.getMaxAttackReinforcePointsPerSlot();
+        if (maxPoints == null) return 10;
+        return maxPoints;
+    }
+
     public int getBattleRepairExplorationPointPerSec() {
         Integer val = getDataTableConfig().getRepairBoostExplorationPointPerSec();
         return val != null ? val : 1;
@@ -303,12 +250,24 @@ public class GameDataService {
         return zoneConfig != null ? zoneConfig : new ZoneConfig();
     }
 
-    public java.util.List<ShipPresetSummary> getShipPresetList() {
-        return shipPresetList;
+    // 해금 커맨더 레벨 이하인 body(함체) 목록만 — 플레이어가 선택 가능한 함체 목록용
+    public java.util.List<ModuleData> getUnlockedBodyModules(int commanderLevel) {
+        return getModulesByType(EModuleType.body).stream()
+                .filter(d -> (d.getUnlockCommanderLevel() != null ? d.getUnlockCommanderLevel() : 1) <= commanderLevel)
+                .collect(java.util.stream.Collectors.toList());
     }
 
-    public ShipPresetSummary getShipPresetSummary(String presetId) {
-        return shipPresetById.get(presetId);
+    // hullSubType(예: "h1_11100") → body ModuleData 조회. 존재하지 않는 이름이면 null
+    public ModuleData getHullModuleData(String hullSubType) {
+        if (hullSubType == null) return null;
+        try {
+            EModuleSubType subType = EModuleSubType.valueOf(hullSubType);
+            return getModulesByType(EModuleType.body).stream()
+                    .filter(d -> subType.equals(d.getModuleSubType()))
+                    .findFirst().orElse(null);
+        } catch (IllegalArgumentException ignored) {
+            return null;
+        }
     }
 
     public java.util.List<RewardCardEntry> getRewardCardList() {
@@ -319,27 +278,18 @@ public class GameDataService {
         return rewardCardById.get(cardId);
     }
 
-    // presetId(예: "m11100") → [beam, missile, hangar, shield, interceptor] 카테고리별 최대 슬롯 수. "m" + 5자리 숫자 형식 — 형식이 다르면 전부 0(안전하게 막힘)
-    // FleetService.toggleFleetPresetSlotModule과 ZoneEnemyFleetGenerator(적 함대 모듈 다양성)가 공유
-    public static int[] parseMaxSlotsFromPresetId(String presetId) {
+    // hullSubType(예: "h1_11100") → [beam, missile, hangar, shield, interceptor] 카테고리별 최대 슬롯 수.
+    // 이름 규칙: "h" + tier(1자리) + "_" + 5자리 슬롯코드 — 형식이 다르면 전부 0(안전하게 막힘)
+    // FleetService.setFleetSlotModules와 ZoneEnemyFleetGenerator(적 함대 모듈 다양성)가 공유
+    public static int[] parseMaxSlotsFromHullSubType(String hullSubType) {
         int[] result = new int[5];
-        if (presetId == null || presetId.length() != 6 || presetId.charAt(0) != 'm') return result;
+        if (hullSubType == null || hullSubType.length() != 8 || hullSubType.charAt(0) != 'h') return result;
         for (int i = 0; i < 5; i++) {
-            char c = presetId.charAt(1 + i);
+            char c = hullSubType.charAt(3 + i);
             if (Character.isDigit(c) == false) return new int[5];
             result[i] = Character.getNumericValue(c);
         }
         return result;
-    }
-
-    // 순수 바디 설치비(모듈 미포함) — ZoneEnemyFleetGenerator가 함체 선택 기준으로 사용
-    private int computeBodyCost(String prefabName) {
-        if (prefabName == null) return 0;
-        try {
-            return getModuleStatPoint(EModuleType.body, EModuleSubType.valueOf(prefabName));
-        } catch (IllegalArgumentException ignored) {
-            return 0; // prefabName이 EModuleSubType에 없는 경우 — bodyCost 0으로 취급
-        }
     }
 
     public int getModuleStatPoint(EModuleType moduleType, EModuleSubType subType) {
@@ -349,30 +299,6 @@ public class GameDataService {
                 return data.getStatPoint() != null ? data.getStatPoint() : 0;
         }
         return 0;
-    }
-
-    // DataTableShipPreset.json의 statAllocation 노드에서 beam/missile/hangar 각각 비어있지 않은 슬롯만 추출 — modules_in_preset.csv와 동일한 "빈칸=미장착" 규칙
-    private java.util.List<DefaultModuleEntry> parseDefaultModules(com.fasterxml.jackson.databind.JsonNode statAllocation) {
-        java.util.List<DefaultModuleEntry> result = new java.util.ArrayList<>();
-        if (statAllocation == null || statAllocation.isMissingNode()) return result;
-
-        appendDefaultModules(result, statAllocation.path("beamModuleSubType"), EModuleType.beam);
-        appendDefaultModules(result, statAllocation.path("missileModuleSubType"), EModuleType.missile);
-        appendDefaultModules(result, statAllocation.path("hangarModuleSubType"), EModuleType.hangar);
-        return result;
-    }
-
-    private void appendDefaultModules(java.util.List<DefaultModuleEntry> result, com.fasterxml.jackson.databind.JsonNode subTypeArray, EModuleType moduleType) {
-        if (subTypeArray == null || subTypeArray.isArray() == false) return;
-        for (int i = 0; i < subTypeArray.size(); i++) {
-            String subTypeName = subTypeArray.get(i).asText("");
-            if (subTypeName.isEmpty()) continue;
-            try {
-                result.add(new DefaultModuleEntry(moduleType, i, EModuleSubType.valueOf(subTypeName)));
-            } catch (IllegalArgumentException e) {
-                log.warn("[GameDataService] DataTableShipPreset.json에 알 수 없는 moduleSubType '{}' — 무시", subTypeName);
-            }
-        }
     }
 
     public DataTablePvpSeason getDataTablePvpSeason() {

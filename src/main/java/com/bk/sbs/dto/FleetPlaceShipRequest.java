@@ -4,12 +4,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * FleetPresetSetFrontRequest
- * Auto-generated from Unity C# FleetPresetSetFrontRequest class
+ * FleetPlaceShipRequest
+ * Auto-generated from Unity C# FleetPlaceShipRequest class
  */
 @Data
 @NoArgsConstructor
-public class FleetPresetSetFrontRequest {
+public class FleetPlaceShipRequest {
     private Integer slotIndex;
+    private String hullSubType;
     private Boolean isFront;
 }

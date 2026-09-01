@@ -4,12 +4,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * SetFleetPresetSlotModulesRequest
- * Auto-generated from Unity C# SetFleetPresetSlotModulesRequest class
+ * SetModuleRequest
+ * Auto-generated from Unity C# SetModuleRequest class
  */
 @Data
 @NoArgsConstructor
-public class SetFleetPresetSlotModulesRequest {
+public class SetModuleRequest {
     private Integer slotIndex;
     private ModuleBodyInfoDto modules;
 }

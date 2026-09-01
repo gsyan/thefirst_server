@@ -69,7 +69,7 @@ public class PvpService {
             String name = nameMap.get(record.getCommanderId());
             if (name != null) redisService.setRankName(record.getCommanderId(), name);
 
-            FleetInfoDto fleet = fleetService.getActiveFleetPresetOrNull(record.getCommanderId());
+            FleetInfoDto fleet = fleetService.getActiveFleetOrNull(record.getCommanderId());
             String statJson = fleetService.computeFleetRankStatJson(fleet);
             if (statJson != null) redisService.setRankStat(record.getCommanderId(), statJson);
         }
@@ -89,7 +89,7 @@ public class PvpService {
         for (PvpRecord record : records) {
             redisService.setPvpScore(record.getCommanderId(), record.getScore());
 
-            FleetInfoDto fleet = fleetService.getActiveFleetPresetOrNull(record.getCommanderId());
+            FleetInfoDto fleet = fleetService.getActiveFleetOrNull(record.getCommanderId());
             String statJson = fleetService.computeFleetRankStatJson(fleet);
             if (statJson != null) redisService.setRankStat(record.getCommanderId(), statJson);
         }
@@ -207,7 +207,7 @@ public class PvpService {
         }
         */
 
-        FleetInfoDto opponentFleet = fleetService.getActiveFleetPresetOrNull(opponentCommanderId);
+        FleetInfoDto opponentFleet = fleetService.getActiveFleetOrNull(opponentCommanderId);
         if (opponentFleet == null) {
             throw new BusinessException(ServerErrorCode.PVP_OPPONENT_FLEET_NOT_FOUND);
         }
@@ -378,7 +378,7 @@ public class PvpService {
             Commander commander = commanderRepository.findById(opponentId).orElse(null);
             if (commander == null) continue;
 
-            FleetInfoDto fleet = fleetService.getActiveFleetPresetOrNull(opponentId);
+            FleetInfoDto fleet = fleetService.getActiveFleetOrNull(opponentId);
 
             Double score = redisService.getPvpScore(opponentId);
             Long rank = redisService.getPvpRank(opponentId);

@@ -6,6 +6,7 @@ import com.bk.sbs.entity.Commander;
 import com.bk.sbs.entity.ZoneCellClearLog;
 import com.bk.sbs.entity.ZoneRun;
 import com.bk.sbs.enums.EGridCellType;
+import com.bk.sbs.enums.EModuleType;
 import com.bk.sbs.enums.EZoneRunStatus;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
@@ -159,6 +160,8 @@ public class ExplorationService {
 
         List<String> cardIds = new ArrayList<>();
         for (GameDataService.RewardCardEntry entry : picked) cardIds.add(entry.cardId);
+        // [디버그] 특정 보상 카드 테스트용 강제 노출 — 필요할 때만 주석 해제 (카드ID는 datatable_reward_card.csv 참고)
+        //if (cardIds.isEmpty() == false) cardIds.set(1, "card_health_heal");
         return cardIds;
     }
 
@@ -285,7 +288,7 @@ public class ExplorationService {
 
         int seed = computeZoneSeedShared(request.getZoneNumber());
         List<ZoneEnemyFleetGenerator.WaveResult> waves = ZoneEnemyFleetGenerator.generateWaves(
-                zoneConfig, seed, request.getCellRow(), request.getCellCol(), gameDataService.getShipPresetList(), gameDataService);
+                zoneConfig, seed, request.getCellRow(), request.getCellCol(), gameDataService.getModulesByType(EModuleType.body), gameDataService);
 
         List<StageEnemyFleetSpawnConfigDto> enemyFleets = new ArrayList<>();
         for (int i = 0; i < waves.size(); i++) {
@@ -293,7 +296,7 @@ public class ExplorationService {
             List<ShipInfoDto> ships = new ArrayList<>();
             for (ZoneEnemyFleetGenerator.ShipResult ship : wave.ships) {
                 ships.add(ShipInfoDto.builder()
-                        .shipPresetId(ship.presetId)
+                        .hullSubType(ship.hullSubType)
                         .isFront(ship.isFront)
                         .bodies(List.of(ship.modules))
                         .healthMultiplier(zoneConfig.getEnemyHealthMultiplier())
@@ -354,7 +357,7 @@ public class ExplorationService {
 
             int seed = computeZoneSeedShared(request.getZoneNumber());
             List<ZoneEnemyFleetGenerator.WaveResult> waves = ZoneEnemyFleetGenerator.generateWaves(
-                    zoneConfig, seed, request.getCellRow(), request.getCellCol(), gameDataService.getShipPresetList(), gameDataService);
+                    zoneConfig, seed, request.getCellRow(), request.getCellCol(), gameDataService.getModulesByType(EModuleType.body), gameDataService);
 
             // 존 고정 보상값 적립 — 적 함대 성능(commandCost)과 무관, 웨이브에 함선이 있던 셀만 지급(빈 셀은 0)
             // Buff_ExplorationPointRate 배율은 여기서 적용하지 않음 — 적립(banked)은 항상 고정값 그대로 쌓고,
@@ -489,8 +492,8 @@ public class ExplorationService {
                 .build();
     }
 
-    // 탈출 성공/실패 공통 정산 결과 — 탐험 포인트/지휘관 경험치 확정 지급분
-    private record RunSettlement(int pointPayout, int expPayout) {}
+    // 탈출 성공/실패 공통 정산 결과 — 탐험 포인트/지휘관 경험치 확정 지급분 + 런 종료로 회복된 전술력 현재치
+    private record RunSettlement(int pointPayout, int expPayout, int tacticPower) {}
 
     // 탈출 성공/실패 공통 정산 — escapeExplorationZone(성공/실패)과 abandonZoneRun(실패 고정)이 공유
     private RunSettlement settleZoneRun(Commander commander, ZoneRun run, boolean isSuccess) {
@@ -515,7 +518,8 @@ public class ExplorationService {
         commanderRepository.save(commander);
         zoneRunRepository.save(run);
 
-        return new RunSettlement(pointPayout, expPayout);
+        // 런이 끝나면 전술력은 다음 런 시작 전이라도 즉시 완전 회복된 것으로 취급(다음 ZoneRun 생성 시 이 값으로 초기화되는 것과 동일한 결과)
+        return new RunSettlement(pointPayout, expPayout, commander.getTacticPowerMax());
     }
 
     @Transactional
@@ -548,6 +552,7 @@ public class ExplorationService {
                 .totalExp(commander.getExp())
                 .commanderLevel(commander.getCommanderLevel())
                 .highestClearedZoneNumber(commander.getHighestClearedZoneNumber())
+                .tacticPower(settlement.tacticPower())
                 .build();
     }
 
@@ -567,6 +572,7 @@ public class ExplorationService {
                 .expGained(settlement.expPayout())
                 .totalExp(commander.getExp())
                 .commanderLevel(commander.getCommanderLevel())
+                .tacticPower(settlement.tacticPower())
                 .build();
     }
 
@@ -608,8 +614,20 @@ public class ExplorationService {
         commander.setTacticPowerMax(commander.getTacticPowerMax() + amount);
         commanderRepository.save(commander);
 
+        // 진행 중인 런이 있으면 그 런의 전술력 현재치도 증가분만큼 동일하게 올려줌 — 없으면 다음 런 시작 시 새 tacticPowerMax로 초기화되므로 별도 처리 불필요
+        ZoneRun activeRun = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS).orElse(null);
+        int tacticPower;
+        if (activeRun != null) {
+            activeRun.setTacticPower(activeRun.getTacticPower() + amount);
+            zoneRunRepository.save(activeRun);
+            tacticPower = activeRun.getTacticPower();
+        } else {
+            tacticPower = commander.getTacticPowerMax();
+        }
+
         return IncreaseTacticPowerMaxResponse.builder()
                 .tacticPowerMax(commander.getTacticPowerMax())
+                .tacticPower(tacticPower)
                 .explorationPointRemain(commander.getExplorationPoint())
                 .build();
     }

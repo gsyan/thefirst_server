@@ -2,9 +2,10 @@
   "modules": {
     "1": [
       {
-        "moduleName": "body_t1_m111",
-        "moduleSubType": "body_t1_m111",
+        "moduleName": "h1_11100",
+        "moduleSubType": "h1_11100",
         "statPoint": 100,
+        "unlockCommanderLevel": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -47,9 +48,10 @@
         "interceptorRegenRate": 0.0
       },
       {
-        "moduleName": "body_t1_m211",
-        "moduleSubType": "body_t1_m211",
+        "moduleName": "h1_21100",
+        "moduleSubType": "h1_21100",
         "statPoint": 200,
+        "unlockCommanderLevel": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -96,9 +98,10 @@
         "interceptorRegenRate": 0.0
       },
       {
-        "moduleName": "body_t1_m221",
-        "moduleSubType": "body_t1_m221",
+        "moduleName": "h1_22100",
+        "moduleSubType": "h1_22100",
         "statPoint": 300,
+        "unlockCommanderLevel": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -149,9 +152,10 @@
         "interceptorRegenRate": 0.0
       },
       {
-        "moduleName": "body_t1_m222",
-        "moduleSubType": "body_t1_m222",
+        "moduleName": "h1_22200",
+        "moduleSubType": "h1_22200",
         "statPoint": 400,
+        "unlockCommanderLevel": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -206,9 +210,10 @@
         "interceptorRegenRate": 0.0
       },
       {
-        "moduleName": "body_t1_m322",
-        "moduleSubType": "body_t1_m322",
+        "moduleName": "h1_32200",
+        "moduleSubType": "h1_32200",
         "statPoint": 500,
+        "unlockCommanderLevel": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -267,9 +272,10 @@
         "interceptorRegenRate": 0.0
       },
       {
-        "moduleName": "body_t1_m332",
-        "moduleSubType": "body_t1_m332",
+        "moduleName": "h1_33200",
+        "moduleSubType": "h1_33200",
         "statPoint": 600,
+        "unlockCommanderLevel": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -332,9 +338,10 @@
         "interceptorRegenRate": 0.0
       },
       {
-        "moduleName": "body_t1_m333",
-        "moduleSubType": "body_t1_m333",
+        "moduleName": "h1_33300",
+        "moduleSubType": "h1_33300",
         "statPoint": 700,
+        "unlockCommanderLevel": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -401,9 +408,10 @@
         "interceptorRegenRate": 0.0
       },
       {
-        "moduleName": "body_t1_m433",
-        "moduleSubType": "body_t1_m433",
+        "moduleName": "h1_43300",
+        "moduleSubType": "h1_43300",
         "statPoint": 800,
+        "unlockCommanderLevel": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -474,9 +482,10 @@
         "interceptorRegenRate": 0.0
       },
       {
-        "moduleName": "body_t1_m443",
-        "moduleSubType": "body_t1_m443",
+        "moduleName": "h1_44300",
+        "moduleSubType": "h1_44300",
         "statPoint": 900,
+        "unlockCommanderLevel": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -551,9 +560,10 @@
         "interceptorRegenRate": 0.0
       },
       {
-        "moduleName": "body_t1_m444",
-        "moduleSubType": "body_t1_m444",
+        "moduleName": "h1_44400",
+        "moduleSubType": "h1_44400",
         "statPoint": 1000,
+        "unlockCommanderLevel": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -632,9 +642,10 @@
         "interceptorRegenRate": 0.0
       },
       {
-        "moduleName": "body_t1_m544",
-        "moduleSubType": "body_t1_m544",
+        "moduleName": "h1_54400",
+        "moduleSubType": "h1_54400",
         "statPoint": 1100,
+        "unlockCommanderLevel": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -717,9 +728,10 @@
         "interceptorRegenRate": 0.0
       },
       {
-        "moduleName": "body_t1_m554",
-        "moduleSubType": "body_t1_m554",
+        "moduleName": "h1_55400",
+        "moduleSubType": "h1_55400",
         "statPoint": 1200,
+        "unlockCommanderLevel": 1,
         "description": "",
         "moduleSlots": [
           {
@@ -808,11 +820,12 @@
     ],
     "2": [
       {
-        "moduleName": "beam_t1",
-        "moduleSubType": "beam_t1",
+        "moduleName": "beam1",
+        "moduleSubType": "beam1",
         "statPoint": 20,
+        "unlockCommanderLevel": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 200.0,
@@ -842,11 +855,12 @@
     ],
     "3": [
       {
-        "moduleName": "missile_t1",
-        "moduleSubType": "missile_t1",
+        "moduleName": "missile1",
+        "moduleSubType": "missile1",
         "statPoint": 20,
+        "unlockCommanderLevel": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 10.0,
@@ -876,11 +890,12 @@
     ],
     "4": [
       {
-        "moduleName": "hangar_t1",
-        "moduleSubType": "hangar_t1",
+        "moduleName": "hangar1",
+        "moduleSubType": "hangar1",
         "statPoint": 20,
+        "unlockCommanderLevel": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -910,11 +925,12 @@
     ],
     "5": [
       {
-        "moduleName": "shield_t1",
-        "moduleSubType": "shield_t1",
+        "moduleName": "shield1",
+        "moduleSubType": "shield1",
         "statPoint": 20,
+        "unlockCommanderLevel": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -944,11 +960,12 @@
     ],
     "6": [
       {
-        "moduleName": "interceptor_t1",
-        "moduleSubType": "interceptor_t1",
+        "moduleName": "interceptor1",
+        "moduleSubType": "interceptor1",
         "statPoint": 20,
+        "unlockCommanderLevel": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,

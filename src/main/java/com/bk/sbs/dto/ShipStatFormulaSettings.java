@@ -16,6 +16,8 @@ import lombok.NoArgsConstructor;
 public class ShipStatFormulaSettings {
     private Integer maxModuleSlots;
 
+    private Integer maxAttackReinforcePointsPerSlot;
+
     private BeamFormula beam;
 
     private MissileFormula missile;

@@ -89,7 +89,7 @@ public class CommanderService {
 
         // 커맨더 생성과 동시에 기본 함대 프리셋(presetIndex=0) 생성
         // 실패 시 전체 트랜잭션 롤백됨
-        fleetService.createDefaultFleetPreset(savedCommander.getId());
+        fleetService.createDefaultFleet(savedCommander.getId());
 
         // commanderId = worldId(8비트) + id(56비트)
         return CommanderResponse.builder()

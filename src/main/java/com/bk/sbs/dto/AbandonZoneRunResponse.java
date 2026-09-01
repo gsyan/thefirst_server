@@ -19,4 +19,5 @@ public class AbandonZoneRunResponse {
     private Integer expGained;
     private Integer totalExp;
     private Integer commanderLevel;
+    private Integer tacticPower;
 }

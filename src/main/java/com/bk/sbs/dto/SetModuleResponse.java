@@ -6,14 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * SetFleetPresetSlotModulesResponse
- * Auto-generated from Unity C# SetFleetPresetSlotModulesResponse class
+ * SetModuleResponse
+ * Auto-generated from Unity C# SetModuleResponse class
  */
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class SetFleetPresetSlotModulesResponse {
+public class SetModuleResponse {
     private ModuleBodyInfoDto body;
     private Integer commandCost;
     private Integer remainingCommandPower;

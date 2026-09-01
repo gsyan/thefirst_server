@@ -4,6 +4,7 @@ import com.bk.sbs.config.DataTableModule;
 import com.bk.sbs.dto.*;
 import com.bk.sbs.entity.*;
 import com.bk.sbs.entity.Commander;
+import com.bk.sbs.entity.Module;
 import com.bk.sbs.enums.*;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
@@ -25,153 +26,197 @@ public class FleetService {
 
     private final CommanderRepository commanderRepository;
     private final GameDataService gameDataService;
-    private final CommanderFleetPresetRepository commanderFleetPresetRepository;
+    private final FleetRepository fleetRepository;
 
-    // 신규 커맨더에게 지급되는 기본 함대 프리셋(presetIndex=0)의 초기 함선 — 바디 body_t1_m111(빔1/미사일1/격납고1) + 기본 빔1 장착
-    private static final String DEFAULT_FLEET_PRESET_SHIP_PRESET_ID = "m11100";
+    // 신규 커맨더에게 지급되는 기본 함대(fleetIndex=0)의 초기 함선 — 바디 h1_11100(빔1/미사일1/격납고1) + 기본 빔1 장착
+    private static final String DEFAULT_FLEET_HULL_SUB_TYPE = "h1_11100";
 
     public FleetService(CommanderRepository commanderRepository,
                        GameDataService gameDataService,
-                       CommanderFleetPresetRepository commanderFleetPresetRepository) {
+                       FleetRepository fleetRepository) {
         this.commanderRepository = commanderRepository;
         this.gameDataService = gameDataService;
-        this.commanderFleetPresetRepository = commanderFleetPresetRepository;
+        this.fleetRepository = fleetRepository;
     }
 
-    // 신규 커맨더 생성 시 기본 함대 프리셋(presetIndex=0) 생성 — ExplorationShipSlot 기반, 구식 Fleet/Ship 엔티티 사용 안 함
+    // 신규 커맨더 생성 시 기본 함대(fleetIndex=0) 생성
     @Transactional
-    public void createDefaultFleetPreset(Long commanderId) {
-        CommanderFleetPreset preset = new CommanderFleetPreset();
-        preset.setCommanderId(commanderId);
-        preset.setPresetIndex(0);
-        preset = commanderFleetPresetRepository.save(preset);
+    public void createDefaultFleet(Long commanderId) {
+        Fleet fleet = new Fleet();
+        fleet.setCommanderId(commanderId);
+        fleet.setFleetIndex(0);
+        fleet = fleetRepository.save(fleet);
 
-        CommanderFleetPresetSlot slot = new CommanderFleetPresetSlot();
-        slot.setFleetPreset(preset);
-        slot.setSlotIndex(0);
-        slot.setShipPresetId(DEFAULT_FLEET_PRESET_SHIP_PRESET_ID);
-        slot.setFront(true);
-        seedDefaultModules(slot, DEFAULT_FLEET_PRESET_SHIP_PRESET_ID);
-        preset.setSlots(new ArrayList<>(List.of(slot)));
+        Ship ship = new Ship();
+        ship.setFleet(fleet);
+        ship.setSlotIndex(0);
+        ship.setHullSubType(DEFAULT_FLEET_HULL_SUB_TYPE);
+        ship.setFront(true);
+        replaceShipModules(ship, buildDefaultModules(ship));
+        fleet.setShips(new ArrayList<>(List.of(ship)));
 
-        commanderFleetPresetRepository.save(preset);
+        fleetRepository.save(fleet);
     }
 
-    // 로그인 시 내려주는 "내 함대" — presetIndex=0 프리셋을 FleetInfoDto로 변환, 슬롯별 실제 장착 모듈(bodies)까지 포함
-    public FleetInfoDto getActiveFleetPreset(Long commanderId) {
-        CommanderFleetPreset preset = commanderFleetPresetRepository.findByCommanderIdAndPresetIndex(commanderId, 0)
+    // 로그인 시 내려주는 "내 함대" — fleetIndex=0 함대를 FleetInfoDto로 변환, 함선별 실제 장착 모듈(bodies)까지 포함
+    // Fleet.ships가 LAZY라 convertFleetToFleetInfoDto에서 컬렉션을 순회하는 동안 세션이 열려 있어야 함 — @Transactional 필수
+    @Transactional(readOnly = true)
+    public FleetInfoDto getActiveFleet(Long commanderId) {
+        Fleet fleet = fleetRepository.findByCommanderIdAndFleetIndex(commanderId, 0)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.COMMANDER_CONTROLLER_FAIL_NULL_ACTIVE_FLEET));
-        return convertPresetToFleetInfoDto(preset);
+        return convertFleetToFleetInfoDto(fleet);
     }
 
-    // PvP 상대 함대 조회/랭킹 함대 능력치 계산용 — 프리셋이 없으면(탈퇴 등) null 반환, getActiveFleetPreset과 달리 예외를 던지지 않음
-    public FleetInfoDto getActiveFleetPresetOrNull(Long commanderId) {
-        return commanderFleetPresetRepository.findByCommanderIdAndPresetIndex(commanderId, 0)
-                .map(this::convertPresetToFleetInfoDto)
+    // PvP 상대 함대 조회/랭킹 함대 능력치 계산용 — 함대가 없으면(탈퇴 등) null 반환, getActiveFleet과 달리 예외를 던지지 않음
+    @Transactional(readOnly = true)
+    public FleetInfoDto getActiveFleetOrNull(Long commanderId) {
+        return fleetRepository.findByCommanderIdAndFleetIndex(commanderId, 0)
+                .map(this::convertFleetToFleetInfoDto)
                 .orElse(null);
     }
 
-    private FleetInfoDto convertPresetToFleetInfoDto(CommanderFleetPreset preset) {
-        List<ShipInfoDto> ships = preset.getSlots().stream()
+    private FleetInfoDto convertFleetToFleetInfoDto(Fleet fleet) {
+        List<ShipInfoDto> ships = fleet.getShips().stream()
                 .sorted((a, b) -> Integer.compare(a.getSlotIndex(), b.getSlotIndex()))
-                .map(slot -> ShipInfoDto.builder()
-                        .shipPresetId(slot.getShipPresetId())
-                        .isFront(slot.isFront())
-                        .bodies(List.of(buildModuleBodyInfoDto(slot)))
+                .map(ship -> ShipInfoDto.builder()
+                        .hullSubType(ship.getHullSubType())
+                        .isFront(ship.isFront())
+                        .bodies(List.of(buildModuleBodyInfoDto(ship)))
                         .build())
                 .collect(Collectors.toList());
 
         return FleetInfoDto.builder()
-                .id(preset.getId())
-                .tacticOptions(preset.getTacticOptions())
+                .id(fleet.getId())
+                .tacticOptions(fleet.getTacticOptions())
                 .ships(ships)
                 .build();
     }
 
-    // 함대편성(FleetComposition) 슬롯에 함선 배치/교체 — 바디(프리셋) 자체를 바꾸는 동작이라 그 슬롯의 장착 모듈은 새 바디의 기본 로드아웃(빔1)으로 초기화됨
-    // 클라이언트(FleetComposition.TryPlaceShipAt/ComputeUnlockedPresets)가 이미 동일한 조건(레벨/슬롯범위/지휘력)을 검증하지만,
-    // 조작된 요청을 막기 위해 서버에서도 동일 조건을 재검증한다 — setFleetPresetSlotModules(라인 218)와 동일한 검증 패턴
+    // 함대편성(FleetComposition) 슬롯에 함선 배치/교체 — 바디(프리셋)를 바꿔도 새 함체에 같은 카테고리+슬롯 인덱스가 남아있는
+    // 기존 모듈(서브타입/강화 포인트 포함)은 그대로 유지하고, 슬롯 자체가 사라진 모듈만 소실된다(자동으로 일부만 끄는 로직은 없음 —
+    // 유지 결과 지휘력이 초과되면 배치 자체를 거부). 클라(FleetComposition.TryPlaceShipAt)가 동일 로직으로 미리보기를 계산하지만,
+    // 조작된 요청을 막기 위해 서버가 DB의 기존 모듈을 직접 기준으로 재계산한다 — setFleetSlotModules와 동일한 신뢰 경계 원칙
     @Transactional
-    public void placeFleetPresetShip(Long commanderId, FleetPresetPlaceShipRequest request) {
+    public void placeFleetShip(Long commanderId, FleetPlaceShipRequest request) {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.PLACE_FLEET_PRESET_SHIP_FAIL_COMMANDER_NOT_FOUND));
 
-        GameDataService.ShipPresetSummary summary = gameDataService.getShipPresetSummary(request.getShipPresetId());
-        if (summary == null)
+        ModuleData hullData = gameDataService.getHullModuleData(request.getHullSubType());
+        if (hullData == null)
             throw new BusinessException(ServerErrorCode.PLACE_FLEET_PRESET_SHIP_FAIL_PRESET_NOT_FOUND);
-        if (summary.unlockCommanderLevel > commander.getCommanderLevel())
+        int unlockCommanderLevel = hullData.getUnlockCommanderLevel() != null ? hullData.getUnlockCommanderLevel() : 1;
+        if (unlockCommanderLevel > commander.getCommanderLevel())
             throw new BusinessException(ServerErrorCode.PLACE_FLEET_PRESET_SHIP_FAIL_INSUFFICIENT_COMMANDER_LEVEL);
 
         int openSlotCount = gameDataService.getShipCount(commander.getCommanderLevel());
         if (request.getSlotIndex() < 0 || request.getSlotIndex() >= openSlotCount)
             throw new BusinessException(ServerErrorCode.PLACE_FLEET_PRESET_SHIP_FAIL_SLOT_LOCKED);
 
-        CommanderFleetPreset preset = commanderFleetPresetRepository.findByCommanderIdAndPresetIndex(commanderId, 0)
+        Fleet fleet = fleetRepository.findByCommanderIdAndFleetIndex(commanderId, 0)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.COMMANDER_CONTROLLER_FAIL_NULL_ACTIVE_FLEET));
 
-        // summary.commandCost는 기본 로드아웃(빔1) 기준 지휘력 총합 — 이 슬롯이 배치 후 실제로 점유할 비용과 동일
-        int usedByOtherSlots = 0;
-        for (CommanderFleetPresetSlot s : preset.getSlots()) {
-            if (s.getSlotIndex() == request.getSlotIndex()) continue;
-            usedByOtherSlots += computeSlotCommandCost(s);
-        }
-        if (usedByOtherSlots + summary.commandCost > commander.getCommandPowerMax())
-            throw new BusinessException(ServerErrorCode.PLACE_FLEET_PRESET_SHIP_FAIL_NOT_ENOUGH_COMMAND_POWER);
-
-        CommanderFleetPresetSlot slot = preset.getSlots().stream()
+        Ship ship = fleet.getShips().stream()
                 .filter(s -> s.getSlotIndex() == request.getSlotIndex())
                 .findFirst()
                 .orElseGet(() -> {
-                    CommanderFleetPresetSlot newSlot = new CommanderFleetPresetSlot();
-                    newSlot.setFleetPreset(preset);
-                    newSlot.setSlotIndex(request.getSlotIndex());
-                    preset.getSlots().add(newSlot);
-                    return newSlot;
+                    Ship newShip = new Ship();
+                    newShip.setFleet(fleet);
+                    newShip.setSlotIndex(request.getSlotIndex());
+                    fleet.getShips().add(newShip);
+                    return newShip;
                 });
-        slot.setShipPresetId(request.getShipPresetId());
-        slot.setFront(request.getIsFront());
-        seedDefaultModules(slot, request.getShipPresetId());
-        commanderFleetPresetRepository.save(preset);
+
+        // 새 함체 반영 전에 기존 모듈을 스냅샷 — replaceShipModules가 이 컬렉션을 곧 비우므로 미리 복사해둬야 함
+        List<Module> existingModules = ship.getModules() != null ? new ArrayList<>(ship.getModules()) : new ArrayList<>();
+        int[] newMaxSlots = GameDataService.parseMaxSlotsFromHullSubType(request.getHullSubType());
+        List<Module> keptModules = existingModules.isEmpty() == false
+                ? filterModulesForNewHull(existingModules, newMaxSlots, ship)
+                : buildDefaultModules(ship);
+
+        boolean hasAttackModule = keptModules.stream().anyMatch(m -> isAttackModuleType(m.getModuleType()));
+        if (hasAttackModule == false)
+            throw new BusinessException(ServerErrorCode.PLACE_FLEET_PRESET_SHIP_FAIL_NO_ATTACK_MODULE_REMAINING);
+
+        int newShipCost = hullData.getStatPoint() != null ? hullData.getStatPoint() : 0;
+        for (Module m : keptModules) {
+            int installCost = getModuleStatPoint(m.getModuleType(), m.getModuleSubType());
+            int reinforceCost = m.getAttackPoints() + m.getAttackToFighterPoints();
+            newShipCost += installCost + reinforceCost;
+        }
+
+        int usedByOtherShips = 0;
+        for (Ship s : fleet.getShips()) {
+            if (s.getSlotIndex() == request.getSlotIndex()) continue;
+            usedByOtherShips += computeShipCommandCost(s);
+        }
+        if (usedByOtherShips + newShipCost > commander.getCommandPowerMax())
+            throw new BusinessException(ServerErrorCode.PLACE_FLEET_PRESET_SHIP_FAIL_NOT_ENOUGH_COMMAND_POWER);
+
+        ship.setHullSubType(request.getHullSubType());
+        ship.setFront(request.getIsFront());
+        replaceShipModules(ship, keptModules);
+        fleetRepository.save(fleet);
     }
 
-    // presetId(바디)의 기본 로드아웃(현재는 beam slot0=beam_t1)을 슬롯의 장착 모듈로 초기화 — orphanRemoval로 기존 모듈은 자동 삭제됨
-    private void seedDefaultModules(CommanderFleetPresetSlot slot, String presetId) {
-        List<CommanderFleetPresetSlotModule> modules = new ArrayList<>();
-        GameDataService.ShipPresetSummary summary = gameDataService.getShipPresetSummary(presetId);
-        if (summary != null && summary.defaultModules != null) {
-            for (GameDataService.DefaultModuleEntry entry : summary.defaultModules) {
-                CommanderFleetPresetSlotModule module = new CommanderFleetPresetSlotModule();
-                module.setPresetSlot(slot);
-                module.setModuleType(entry.moduleType);
-                module.setSlotIndex(entry.slotIndex);
-                module.setModuleSubType(entry.moduleSubType);
-                modules.add(module);
-            }
+    // 기존 장착 모듈 중 새 함체(newMaxSlots)에도 같은 카테고리+슬롯 인덱스가 존재하는 것만 유지 — 서브타입/강화 포인트는 그대로 복사
+    // (지금은 모듈이 티어1 하나뿐이라 서브타입이 달라질 일이 없음 — 티어가 늘어나면 이 부분 재검토 필요)
+    private List<Module> filterModulesForNewHull(List<Module> existingModules, int[] newMaxSlots, Ship targetShip) {
+        List<Module> kept = new ArrayList<>();
+        for (Module old : existingModules) {
+            int maxSlotForCategory = getMaxSlotForCategory(newMaxSlots, old.getModuleType());
+            if (old.getSlotIndex() >= maxSlotForCategory) continue;
+
+            Module module = new Module();
+            module.setShip(targetShip);
+            module.setModuleType(old.getModuleType());
+            module.setSlotIndex(old.getSlotIndex());
+            module.setModuleSubType(old.getModuleSubType());
+            module.setAttackPoints(old.getAttackPoints());
+            module.setAttackToFighterPoints(old.getAttackToFighterPoints());
+            kept.add(module);
         }
-        replaceSlotModules(slot, modules);
+        return kept;
+    }
+
+    // newMaxSlots = [beam, missile, hangar, shield, interceptor] — moduleType과 배열 인덱스 매핑
+    private int getMaxSlotForCategory(int[] maxSlots, EModuleType moduleType) {
+        if (moduleType == EModuleType.beam) return maxSlots[0];
+        if (moduleType == EModuleType.missile) return maxSlots[1];
+        if (moduleType == EModuleType.hangar) return maxSlots[2];
+        return 0;
+    }
+
+    // 기본 로드아웃(beam slot0=beam1)을 상수 규칙으로 생성 — 함체마다 달랐던 DataTableShipPreset 기본 로드아웃은 폐기됨(전 함체 공통). 반영(저장)은 호출부 책임
+    private List<Module> buildDefaultModules(Ship ship) {
+        Module module = new Module();
+        module.setShip(ship);
+        module.setModuleType(EModuleType.beam);
+        module.setSlotIndex(0);
+        module.setModuleSubType(EModuleSubType.beam1);
+        return new ArrayList<>(List.of(module));
     }
 
     // Hibernate orphanRemoval 컬렉션은 필드 참조 자체를 새 List로 갈아끼우면 안 됨(기존에 관리되던 컬렉션이 고아가 되어
     // "A collection with orphan deletion was no longer referenced" 예외 발생) — 기존 컬렉션이 있으면 clear() 후 채우고,
-    // 아직 없으면(신규 슬롯 등 영속화 전) 그대로 세팅
-    private void replaceSlotModules(CommanderFleetPresetSlot slot, List<CommanderFleetPresetSlotModule> newModules) {
-        List<CommanderFleetPresetSlotModule> current = slot.getModules();
+    // 아직 없으면(신규 함선 등 영속화 전) 그대로 세팅
+    private void replaceShipModules(Ship ship, List<Module> newModules) {
+        List<Module> current = ship.getModules();
         if (current == null) {
-            slot.setModules(newModules);
+            ship.setModules(newModules);
             return;
         }
         current.clear();
         current.addAll(newModules);
     }
 
-    // ── 슬롯 모듈 편집 ────────────────────────────────────────────────
+    // ── 함선 모듈 편집 ────────────────────────────────────────────────
 
     // on/off만 지원하므로 카테고리당 서브타입은 항상 이 값 하나 — 티어 선택이 생기면 이 지점부터 확장
     private EModuleSubType getDefaultSubTypeForCategory(EModuleType moduleType) {
         return switch (moduleType) {
-            case beam -> EModuleSubType.beam_t1;
-            case missile -> EModuleSubType.missile_t1;
-            case hangar -> EModuleSubType.hangar_t1;
+            case beam -> EModuleSubType.beam1;
+            case missile -> EModuleSubType.missile1;
+            case hangar -> EModuleSubType.hangar1;
             default -> null;
         };
     }
@@ -190,40 +235,39 @@ public class FleetService {
         return 0;
     }
 
-    private int computeBodyCost(String presetId) {
-        GameDataService.ShipPresetSummary summary = gameDataService.getShipPresetSummary(presetId);
-        if (summary == null || summary.prefabName == null) return 0;
-        try {
-            return getModuleStatPoint(EModuleType.body, EModuleSubType.valueOf(summary.prefabName));
-        } catch (IllegalArgumentException ignored) {
-            return 0; // prefabName이 EModuleSubType에 없는 경우 — bodyCost 0으로 취급
-        }
+    private int computeBodyCost(String hullSubType) {
+        ModuleData hullData = gameDataService.getHullModuleData(hullSubType);
+        return hullData != null && hullData.getStatPoint() != null ? hullData.getStatPoint() : 0;
     }
 
-    // 바디 설치비 + 현재 장착된 모든 모듈의 설치비 합 — 클라 ShipStatAllocation.GetTotalPointsUsed와 동일한 계산
-    private int computeSlotCommandCost(CommanderFleetPresetSlot slot) {
-        int bodyCost = computeBodyCost(slot.getShipPresetId());
+    // 바디 설치비 + 현재 장착된 모든 모듈의 설치비/강화 포인트 합 — 클라 ShipStatAllocation.GetTotalPointsUsed와 동일한 계산
+    private int computeShipCommandCost(Ship ship) {
+        int bodyCost = computeBodyCost(ship.getHullSubType());
 
         int modulesCost = 0;
-        if (slot.getModules() != null) {
-            for (CommanderFleetPresetSlotModule module : slot.getModules()) {
-                modulesCost += getModuleStatPoint(module.getModuleType(), module.getModuleSubType());
+        if (ship.getModules() != null) {
+            for (Module module : ship.getModules()) {
+                int installCost = getModuleStatPoint(module.getModuleType(), module.getModuleSubType());
+                int reinforceCost = module.getAttackPoints() + module.getAttackToFighterPoints();
+                modulesCost += installCost + reinforceCost;
             }
         }
         return bodyCost + modulesCost;
     }
 
-    private ModuleBodyInfoDto buildModuleBodyInfoDto(CommanderFleetPresetSlot slot) {
+    private ModuleBodyInfoDto buildModuleBodyInfoDto(Ship ship) {
         List<ModuleInfoDto> beams = new ArrayList<>();
         List<ModuleInfoDto> missiles = new ArrayList<>();
         List<ModuleInfoDto> hangars = new ArrayList<>();
 
-        if (slot.getModules() != null) {
-            for (CommanderFleetPresetSlotModule module : slot.getModules()) {
+        if (ship.getModules() != null) {
+            for (Module module : ship.getModules()) {
                 ModuleInfoDto dto = ModuleInfoDto.builder()
                         .moduleType(module.getModuleType())
                         .moduleSubType(module.getModuleSubType())
                         .slotIndex(module.getSlotIndex())
+                        .attackPoints(module.getAttackPoints())
+                        .attackToFighterPoints(module.getAttackToFighterPoints())
                         .build();
                 switch (module.getModuleType()) {
                     case beam -> beams.add(dto);
@@ -234,7 +278,7 @@ public class FleetService {
             }
         }
 
-        EModuleSubType bodySubType = getBodySubType(slot.getShipPresetId());
+        EModuleSubType bodySubType = getBodySubType(ship.getHullSubType());
         Float maxHealth = getModuleMaxHealth(bodySubType);
 
         return ModuleBodyInfoDto.builder()
@@ -247,12 +291,11 @@ public class FleetService {
                 .build();
     }
 
-    // shipPresetId(예: "m11100")의 prefabName을 EModuleSubType(body)으로 변환 — computeBodyCost와 동일 패턴
-    private EModuleSubType getBodySubType(String presetId) {
-        GameDataService.ShipPresetSummary summary = gameDataService.getShipPresetSummary(presetId);
-        if (summary == null || summary.prefabName == null) return null;
+    // hullSubType(예: "h1_11100") 문자열을 EModuleSubType(body)으로 변환
+    private EModuleSubType getBodySubType(String hullSubType) {
+        if (hullSubType == null) return null;
         try {
-            return EModuleSubType.valueOf(summary.prefabName);
+            return EModuleSubType.valueOf(hullSubType);
         } catch (IllegalArgumentException ignored) {
             return null;
         }
@@ -268,22 +311,22 @@ public class FleetService {
                 .orElse(null);
     }
 
-    // 슬롯 하나의 장착 모듈 "전체"를 최종 상태로 한 번에 교체 — 낱개 토글을 순서대로 여러 번 보내면 중간 상태에서
+    // 함선 하나의 장착 모듈 "전체"를 최종 상태로 한 번에 교체 — 낱개 토글을 순서대로 여러 번 보내면 중간 상태에서
     // 예산/공격모듈 0개 검증에 걸릴 수 있어(예: 빔→미사일 교체 시 어느 순서로 보내도 중간엔 항상 실패), 요청받은 최종 구성만 검증한다
     @Transactional
-    public SetFleetPresetSlotModulesResponse setFleetPresetSlotModules(Long commanderId, SetFleetPresetSlotModulesRequest request) {
+    public SetModuleResponse setFleetSlotModules(Long commanderId, SetModuleRequest request) {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.TOGGLE_FLEET_PRESET_MODULE_FAIL_COMMANDER_NOT_FOUND));
 
-        CommanderFleetPreset preset = commanderFleetPresetRepository.findByCommanderIdAndPresetIndex(commanderId, 0)
+        Fleet fleet = fleetRepository.findByCommanderIdAndFleetIndex(commanderId, 0)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.TOGGLE_FLEET_PRESET_MODULE_FAIL_PRESET_NOT_FOUND));
 
-        CommanderFleetPresetSlot slot = preset.getSlots().stream()
+        Ship ship = fleet.getShips().stream()
                 .filter(s -> s.getSlotIndex() == request.getSlotIndex())
                 .findFirst()
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.TOGGLE_FLEET_PRESET_MODULE_FAIL_SLOT_NOT_FOUND));
 
-        int[] maxSlots = GameDataService.parseMaxSlotsFromPresetId(slot.getShipPresetId());
+        int[] maxSlots = GameDataService.parseMaxSlotsFromHullSubType(ship.getHullSubType());
         ModuleBodyInfoDto requestedModules = request.getModules();
 
         List<DesiredModule> desired = new ArrayList<>();
@@ -291,48 +334,57 @@ public class FleetService {
         appendDesiredModules(desired, EModuleType.missile, maxSlots[1], requestedModules != null ? requestedModules.getMissiles() : null);
         appendDesiredModules(desired, EModuleType.hangar, maxSlots[2], requestedModules != null ? requestedModules.getHangars() : null);
 
-        boolean hasAttackModule = desired.stream().anyMatch(m -> isAttackModuleType(m.moduleType));
+        boolean hasAttackModule = desired.stream().anyMatch(m -> isAttackModuleType(m.moduleType()));
         if (hasAttackModule == false)
             throw new BusinessException(ServerErrorCode.TOGGLE_FLEET_PRESET_MODULE_FAIL_NO_ATTACK_MODULE_REMAINING);
 
-        int newSlotCost = computeBodyCost(slot.getShipPresetId());
-        for (DesiredModule m : desired) newSlotCost += getModuleStatPoint(m.moduleType, m.moduleSubType);
-
-        int usedByOtherSlots = 0;
-        for (CommanderFleetPresetSlot s : preset.getSlots()) {
-            if (s.getSlotIndex() == slot.getSlotIndex()) continue;
-            usedByOtherSlots += computeSlotCommandCost(s);
+        int newShipCost = computeBodyCost(ship.getHullSubType());
+        for (DesiredModule m : desired) {
+            int installCost = getModuleStatPoint(m.moduleType(), m.moduleSubType());
+            int reinforceCost = m.attackPoints() + m.attackToFighterPoints();
+            newShipCost += installCost + reinforceCost;
         }
-        if (usedByOtherSlots + newSlotCost > commander.getCommandPowerMax())
+
+        int usedByOtherShips = 0;
+        for (Ship s : fleet.getShips()) {
+            if (s.getSlotIndex() == ship.getSlotIndex()) continue;
+            usedByOtherShips += computeShipCommandCost(s);
+        }
+        if (usedByOtherShips + newShipCost > commander.getCommandPowerMax())
             throw new BusinessException(ServerErrorCode.TOGGLE_FLEET_PRESET_MODULE_FAIL_NOT_ENOUGH_COMMAND_POWER);
 
-        List<CommanderFleetPresetSlotModule> newModules = new ArrayList<>();
+        List<Module> newModules = new ArrayList<>();
         for (DesiredModule m : desired) {
-            CommanderFleetPresetSlotModule module = new CommanderFleetPresetSlotModule();
-            module.setPresetSlot(slot);
-            module.setModuleType(m.moduleType);
-            module.setSlotIndex(m.slotIndex);
-            module.setModuleSubType(m.moduleSubType);
+            Module module = new Module();
+            module.setShip(ship);
+            module.setModuleType(m.moduleType());
+            module.setSlotIndex(m.slotIndex());
+            module.setModuleSubType(m.moduleSubType());
+            module.setAttackPoints(m.attackPoints());
+            module.setAttackToFighterPoints(m.attackToFighterPoints());
             newModules.add(module);
         }
-        replaceSlotModules(slot, newModules);
-        commanderFleetPresetRepository.save(preset);
+        replaceShipModules(ship, newModules);
+        fleetRepository.save(fleet);
 
-        int remainingAfter = commander.getCommandPowerMax() - (usedByOtherSlots + newSlotCost);
+        int remainingAfter = commander.getCommandPowerMax() - (usedByOtherShips + newShipCost);
 
-        return SetFleetPresetSlotModulesResponse.builder()
-                .body(buildModuleBodyInfoDto(slot))
-                .commandCost(newSlotCost)
+        return SetModuleResponse.builder()
+                .body(buildModuleBodyInfoDto(ship))
+                .commandCost(newShipCost)
                 .remainingCommandPower(remainingAfter)
                 .build();
     }
 
-    private record DesiredModule(EModuleType moduleType, int slotIndex, EModuleSubType moduleSubType) { }
+    private record DesiredModule(EModuleType moduleType, int slotIndex, EModuleSubType moduleSubType, int attackPoints, int attackToFighterPoints) { }
 
     // requested의 각 항목이 유효한 슬롯 인덱스(0 <= idx < maxSlotCount)인지, 중복 슬롯이 없는지 검증하며 desired 목록에 채워 넣음
+    // 강화 포인트는 클라 입력을 신뢰하지 않고 서버가 직접 clamp — moduleSubType을 defaultSubType으로 강제 고정하는 것과 동일한 신뢰 경계 원칙
     private void appendDesiredModules(List<DesiredModule> target, EModuleType moduleType, int maxSlotCount, List<ModuleInfoDto> requested) {
         if (requested == null) return;
         EModuleSubType defaultSubType = getDefaultSubTypeForCategory(moduleType);
+        int maxPerSlot = gameDataService.getMaxAttackReinforcePointsPerSlot();
+        boolean isHangar = moduleType == EModuleType.hangar;
 
         java.util.Set<Integer> seenSlotIndexes = new java.util.HashSet<>();
         for (ModuleInfoDto item : requested) {
@@ -342,39 +394,48 @@ public class FleetService {
             if (seenSlotIndexes.add(slotIndex) == false)
                 throw new BusinessException(ServerErrorCode.TOGGLE_FLEET_PRESET_MODULE_FAIL_INVALID_SLOT_INDEX); // 같은 슬롯이 중복 요청됨
 
-            target.add(new DesiredModule(moduleType, slotIndex, defaultSubType));
+            int clampedAttackPoints = clampReinforcePoints(item.getAttackPoints(), maxPerSlot);
+            int clampedFighterPoints = isHangar ? clampReinforcePoints(item.getAttackToFighterPoints(), maxPerSlot) : 0;
+
+            target.add(new DesiredModule(moduleType, slotIndex, defaultSubType, clampedAttackPoints, clampedFighterPoints));
         }
+    }
+
+    // 클라가 보낸 강화 포인트 값을 0~maxPerSlot 범위로 강제 — null/음수/상한 초과 모두 방어
+    private int clampReinforcePoints(Integer requested, int maxPerSlot) {
+        int rawValue = requested != null ? requested : 0;
+        int nonNegativeValue = Math.max(0, rawValue);
+        return Math.min(nonNegativeValue, maxPerSlot);
     }
 
     // 함대편성 슬롯 전/후방 토글 저장
     @Transactional
-    public void setFleetPresetShipFront(Long commanderId, FleetPresetSetFrontRequest request) {
-        CommanderFleetPreset preset = commanderFleetPresetRepository.findByCommanderIdAndPresetIndex(commanderId, 0)
+    public void setFleetShipFront(Long commanderId, FleetSetFrontRequest request) {
+        Fleet fleet = fleetRepository.findByCommanderIdAndFleetIndex(commanderId, 0)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.COMMANDER_CONTROLLER_FAIL_NULL_ACTIVE_FLEET));
 
-        preset.getSlots().stream()
+        fleet.getShips().stream()
                 .filter(s -> s.getSlotIndex() == request.getSlotIndex())
                 .findFirst()
-                .ifPresent(slot -> slot.setFront(request.getIsFront()));
+                .ifPresent(ship -> ship.setFront(request.getIsFront()));
     }
 
-    // 프리셋 기반 함대 시스템(CommanderFleetPreset)으로 전환 — 구식 Fleet 엔티티는 더 이상 참조하지 않음.
-    // fleetId는 CommanderFleetPreset.id(FleetInfoDto.id로 클라에 내려준 값) — 미지정(0/null)이면 활성 프리셋(presetIndex=0)으로 폴백
+    // fleetId는 Fleet.id(FleetInfoDto.id로 클라에 내려준 값) — 미지정(0/null)이면 활성 함대(fleetIndex=0)로 폴백
     @Transactional
     public ChangeTacticOptionsResponse changeTacticOptions(Long commanderId, ChangeTacticOptionsRequest request) {
-        CommanderFleetPreset preset;
+        Fleet fleet;
 
         if (request.getFleetId() == null || request.getFleetId() == 0) {
-            preset = commanderFleetPresetRepository.findByCommanderIdAndPresetIndex(commanderId, 0)
+            fleet = fleetRepository.findByCommanderIdAndFleetIndex(commanderId, 0)
                     .orElseThrow(() -> new BusinessException(ServerErrorCode.FLEET_NOT_FOUND));
         } else {
-            preset = commanderFleetPresetRepository.findByIdAndCommanderId(request.getFleetId(), commanderId)
+            fleet = fleetRepository.findByIdAndCommanderId(request.getFleetId(), commanderId)
                     .orElseThrow(() -> new BusinessException(ServerErrorCode.FLEET_NOT_FOUND));
         }
 
-        preset.setTacticOptions(request.getTacticOptions());
-        preset.setModified(Instant.now());
-        commanderFleetPresetRepository.save(preset);
+        fleet.setTacticOptions(request.getTacticOptions());
+        fleet.setModified(Instant.now());
+        fleetRepository.save(fleet);
 
         return ChangeTacticOptionsResponse.builder()
                 .tacticOptions(request.getTacticOptions())
@@ -438,12 +499,3 @@ public class FleetService {
         return null;
     }
 }
-
-
-
-
-
-
-
-
-

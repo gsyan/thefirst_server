@@ -75,7 +75,7 @@ public class CommanderController {
         accountService.registerSession(accountId, newRefreshToken);
 
         // 활성 함대 정보 조회 (프리셋 기반)
-        FleetInfoDto activeFleet = fleetService.getActiveFleetPreset(actualCommanderId);
+        FleetInfoDto activeFleet = fleetService.getActiveFleet(actualCommanderId);
 
         if (activeFleet == null) throw new BusinessException(ServerErrorCode.COMMANDER_CONTROLLER_FAIL_NULL_ACTIVE_FLEET);
 

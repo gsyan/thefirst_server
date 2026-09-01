@@ -22,6 +22,8 @@ public class ModuleData {
 
     private Integer statPoint;
 
+    private Integer unlockCommanderLevel;
+
     private String description;
 
     private List<ModuleSlotInfoDto> moduleSlots;

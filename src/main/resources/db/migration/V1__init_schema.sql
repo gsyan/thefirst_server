@@ -6,10 +6,7 @@
 -- 초기화 (FK 의존성 역순으로 DROP)
 -- ============================================================
 SET FOREIGN_KEY_CHECKS = 0;
-DROP TABLE IF EXISTS commander_fleet_preset_slot_module;
-DROP TABLE IF EXISTS commander_fleet_preset_slot;
-DROP TABLE IF EXISTS commander_fleet_preset;
-DROP TABLE IF EXISTS ship_module;
+DROP TABLE IF EXISTS module;
 DROP TABLE IF EXISTS ship;
 DROP TABLE IF EXISTS fleet;
 DROP TABLE IF EXISTS zone_cell_clear_log;
@@ -72,45 +69,47 @@ CREATE TABLE commander (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
--- commander_fleet_preset (프리셋 기반 신규 함대 시스템 — presetIndex=0이 현재 기본 활성 함대)
+-- fleet (프리셋 기반 신규 함대 시스템 — fleetIndex=0이 현재 기본 활성 함대)
 -- ============================================================
-CREATE TABLE commander_fleet_preset (
+CREATE TABLE fleet (
     id              BIGINT          NOT NULL AUTO_INCREMENT,
     commander_id    BIGINT          NOT NULL,
-    preset_index    INT             NOT NULL,
-    tactic_options  INT             NOT NULL DEFAULT 0, -- 전술 토글 비트마스크(bit0=수리, bit1=미사일, bit2=함재기) — 이 프리셋(함대)에 귀속
+    fleet_index     INT             NOT NULL,
+    tactic_options  INT             NOT NULL DEFAULT 0, -- 전술 토글 비트마스크(bit0=수리, bit1=미사일, bit2=함재기) — 이 함대에 귀속
     created         DATETIME(6)     NOT NULL,
     modified        DATETIME(6)     NOT NULL,
     PRIMARY KEY (id),
-    INDEX idx_fleet_preset_commander (commander_id)
+    INDEX idx_fleet_commander (commander_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
--- commander_fleet_preset_slot
+-- ship
 -- ============================================================
-CREATE TABLE commander_fleet_preset_slot (
+CREATE TABLE ship (
     id                  BIGINT          NOT NULL AUTO_INCREMENT,
-    fleet_preset_id     BIGINT          NOT NULL,
+    fleet_id            BIGINT          NOT NULL,
     slot_index          INT             NOT NULL,
-    ship_preset_id      VARCHAR(255)    NOT NULL,
+    hull_sub_type       VARCHAR(255)    NOT NULL,
     is_front            TINYINT(1)      NOT NULL DEFAULT 0,
     PRIMARY KEY (id),
-    CONSTRAINT fk_fleet_preset_slot_preset FOREIGN KEY (fleet_preset_id) REFERENCES commander_fleet_preset (id),
-    INDEX idx_fleet_preset_slot_preset (fleet_preset_id)
+    CONSTRAINT fk_ship_fleet FOREIGN KEY (fleet_id) REFERENCES fleet (id),
+    INDEX idx_ship_fleet (fleet_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
--- commander_fleet_preset_slot_module — 슬롯(함선) 하나에 유저가 실제로 장착한 모듈(빔/미사일/격납고, on/off만) — row 존재=장착
+-- module — 함선 하나에 유저가 실제로 장착한 모듈(빔/미사일/격납고, on/off + 공격력 강화 포인트) — row 존재=장착
 -- ============================================================
-CREATE TABLE commander_fleet_preset_slot_module (
-    id                  BIGINT          NOT NULL AUTO_INCREMENT,
-    preset_slot_id      BIGINT          NOT NULL,
-    module_type         VARCHAR(100)    NOT NULL,
-    slot_index          INT             NOT NULL,
-    module_sub_type     VARCHAR(100)    NOT NULL,
+CREATE TABLE module (
+    id                      BIGINT          NOT NULL AUTO_INCREMENT,
+    ship_id                 BIGINT          NOT NULL,
+    module_type             VARCHAR(100)    NOT NULL,
+    slot_index              INT             NOT NULL,
+    module_sub_type         VARCHAR(100)    NOT NULL,
+    attack_points           INT             NOT NULL DEFAULT 0,
+    attack_to_fighter_points INT            NOT NULL DEFAULT 0,
     PRIMARY KEY (id),
-    CONSTRAINT fk_fleet_preset_slot_module_slot FOREIGN KEY (preset_slot_id) REFERENCES commander_fleet_preset_slot (id),
-    INDEX idx_fleet_preset_slot_module_slot (preset_slot_id)
+    CONSTRAINT fk_module_ship FOREIGN KEY (ship_id) REFERENCES ship (id),
+    INDEX idx_module_ship (ship_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 

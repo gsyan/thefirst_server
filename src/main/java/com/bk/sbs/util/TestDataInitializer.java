@@ -108,7 +108,7 @@ public class TestDataInitializer {
         return max == Integer.MAX_VALUE ? requested : Math.min(requested, max);
     }
 
-    // ── 기본 데이터 (account / commander / fleet / ship / module_research) ──────
+    // ── 기본 데이터 (account / commander / fleet / ship / module) ──────
 
     private List<Long> ensureBaseData(int count) {
         Integer exists = jdbc.queryForObject(
@@ -168,6 +168,52 @@ public class TestDataInitializer {
                 "SELECT c.id FROM commander c JOIN account a ON a.id = c.account_id" +
                 " WHERE a.email LIKE 'guest\\_test%' ORDER BY c.id",
                 Long.class);
+
+        // 5. Fleet — FleetService.createDefaultFleet()과 동일한 기본값(fleetIndex=0)
+        List<Object[]> fleetRows = new ArrayList<>(count);
+        for (Long charId : charIds)
+            fleetRows.add(new Object[]{charId, now});
+        jdbc.batchUpdate(
+                "INSERT INTO fleet (commander_id, fleet_index, tactic_options, created, modified)" +
+                " VALUES (?, 0, 0, ?, ?)",
+                fleetRows, BATCH_SIZE, (ps, row) -> {
+                    ps.setLong(1,  (Long)      row[0]);
+                    ps.setTimestamp(2, (Timestamp) row[1]);
+                    ps.setTimestamp(3, (Timestamp) row[1]);
+                });
+
+        // 6. Fleet ID 목록
+        List<Long> fleetIds = jdbc.queryForList(
+                "SELECT f.id FROM fleet f JOIN commander c ON c.id = f.commander_id" +
+                " JOIN account a ON a.id = c.account_id WHERE a.email LIKE 'guest\\_test%' ORDER BY f.id",
+                Long.class);
+
+        // 7. Ship — FleetService.DEFAULT_FLEET_HULL_SUB_TYPE("h1_11100")과 동일한 기본 함선 1척
+        List<Object[]> shipRows = new ArrayList<>(count);
+        for (Long fleetId : fleetIds)
+            shipRows.add(new Object[]{fleetId});
+        jdbc.batchUpdate(
+                "INSERT INTO ship (fleet_id, slot_index, hull_sub_type, is_front) VALUES (?, 0, 'h1_11100', true)",
+                shipRows, BATCH_SIZE, (ps, row) -> {
+                    ps.setLong(1, (Long) row[0]);
+                });
+
+        // 8. Ship ID 목록
+        List<Long> shipIds = jdbc.queryForList(
+                "SELECT s.id FROM ship s JOIN fleet f ON f.id = s.fleet_id" +
+                " JOIN commander c ON c.id = f.commander_id" +
+                " JOIN account a ON a.id = c.account_id WHERE a.email LIKE 'guest\\_test%' ORDER BY s.id",
+                Long.class);
+
+        // 9. Module — buildDefaultModules와 동일하게 beam slot0=beam1 기본 장착
+        List<Object[]> moduleRows = new ArrayList<>(count);
+        for (Long shipId : shipIds)
+            moduleRows.add(new Object[]{shipId});
+        jdbc.batchUpdate(
+                "INSERT INTO module (ship_id, module_type, slot_index, module_sub_type) VALUES (?, 'beam', 0, 'beam1')",
+                moduleRows, BATCH_SIZE, (ps, row) -> {
+                    ps.setLong(1, (Long) row[0]);
+                });
 
         log.info("TestDataInitializer: 기본 더미 데이터 {}개 생성 완료 — accountId {}~{}, commanderId {}~{}",
                 count,

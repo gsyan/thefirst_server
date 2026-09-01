@@ -23,6 +23,6 @@ public class ShipInfoDto {
     private List<ModuleBodyInfoDto> bodies;
     private Float healthMultiplier;
     private Float attackMultiplier;
-    private String shipPresetId;
+    private String hullSubType;
     private Boolean isFront;
 }

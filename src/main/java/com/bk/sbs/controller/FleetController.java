@@ -27,29 +27,29 @@ public class FleetController {
     }
 
     // 함대편성(FleetComposition) 슬롯에 함선 배치/교체 저장
-    @PostMapping("/preset/place-ship")
-    public ResponseEntity<ApiResponse<Void>> placeFleetPresetShip(
-            @RequestBody FleetPresetPlaceShipRequest request,
+    @PostMapping("/place-ship")
+    public ResponseEntity<ApiResponse<Void>> placeFleetShip(
+            @RequestBody FleetPlaceShipRequest request,
             @CommanderId Long actualCommanderId) {
-        fleetService.placeFleetPresetShip(actualCommanderId, request);
+        fleetService.placeFleetShip(actualCommanderId, request);
         return ResponseEntity.ok(ApiResponse.success(null));
     }
 
     // 함대편성 슬롯 전/후방 토글 저장
-    @PostMapping("/preset/set-front")
-    public ResponseEntity<ApiResponse<Void>> setFleetPresetShipFront(
-            @RequestBody FleetPresetSetFrontRequest request,
+    @PostMapping("/set-front")
+    public ResponseEntity<ApiResponse<Void>> setFleetShipFront(
+            @RequestBody FleetSetFrontRequest request,
             @CommanderId Long actualCommanderId) {
-        fleetService.setFleetPresetShipFront(actualCommanderId, request);
+        fleetService.setFleetShipFront(actualCommanderId, request);
         return ResponseEntity.ok(ApiResponse.success(null));
     }
 
     // 함대편성 슬롯(함선) 하나의 장착 모듈 전체를 최종 상태로 한 번에 교체(on/off) — 예산/공격모듈 0개는 이 결과 상태 기준으로 검증
-    @PostMapping("/preset/set-modules")
-    public ResponseEntity<ApiResponse<SetFleetPresetSlotModulesResponse>> setFleetPresetSlotModules(
-            @RequestBody SetFleetPresetSlotModulesRequest request,
+    @PostMapping("/set-modules")
+    public ResponseEntity<ApiResponse<SetModuleResponse>> setFleetSlotModules(
+            @RequestBody SetModuleRequest request,
             @CommanderId Long actualCommanderId) {
-        SetFleetPresetSlotModulesResponse response = fleetService.setFleetPresetSlotModules(actualCommanderId, request);
+        SetModuleResponse response = fleetService.setFleetSlotModules(actualCommanderId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
