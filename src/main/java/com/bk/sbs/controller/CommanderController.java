@@ -74,7 +74,7 @@ public class CommanderController {
         // 리프레시 토큰 회전 검증(jti)이 이 새 토큰을 재사용으로 오인하지 않도록 활성 세션으로 등록
         accountService.registerSession(accountId, newRefreshToken);
 
-        // 활성 함대 정보 조회 (프리셋 기반)
+        // 활성 함대 정보 조회
         FleetInfoDto activeFleet = fleetService.getActiveFleet(actualCommanderId);
 
         if (activeFleet == null) throw new BusinessException(ServerErrorCode.COMMANDER_CONTROLLER_FAIL_NULL_ACTIVE_FLEET);

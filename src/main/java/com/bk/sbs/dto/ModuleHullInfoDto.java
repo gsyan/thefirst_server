@@ -9,18 +9,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * ModuleBodyInfoDto
- * Auto-generated from Unity C# ModuleBodyInfo class
+ * ModuleHullInfoDto
+ * Auto-generated from Unity C# ModuleHullInfo class
  */
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class ModuleBodyInfoDto {
+public class ModuleHullInfoDto {
     private EModuleType moduleType;
     private EModuleSubType moduleSubType;
     private Integer moduleLevel;
-    private Integer bodyIndex;
+    private Integer hullIndex;
     private List<ModuleInfoDto> beams;
     private List<ModuleInfoDto> missiles;
     private List<ModuleInfoDto> hangars;

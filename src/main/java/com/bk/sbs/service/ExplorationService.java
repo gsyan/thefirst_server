@@ -288,7 +288,7 @@ public class ExplorationService {
 
         int seed = computeZoneSeedShared(request.getZoneNumber());
         List<ZoneEnemyFleetGenerator.WaveResult> waves = ZoneEnemyFleetGenerator.generateWaves(
-                zoneConfig, seed, request.getCellRow(), request.getCellCol(), gameDataService.getModulesByType(EModuleType.body), gameDataService);
+                zoneConfig, seed, request.getCellRow(), request.getCellCol(), gameDataService.getModulesByType(EModuleType.hull), gameDataService);
 
         List<StageEnemyFleetSpawnConfigDto> enemyFleets = new ArrayList<>();
         for (int i = 0; i < waves.size(); i++) {
@@ -298,7 +298,7 @@ public class ExplorationService {
                 ships.add(ShipInfoDto.builder()
                         .hullSubType(ship.hullSubType)
                         .isFront(ship.isFront)
-                        .bodies(List.of(ship.modules))
+                        .hulls(List.of(ship.modules))
                         .healthMultiplier(zoneConfig.getEnemyHealthMultiplier())
                         .attackMultiplier(zoneConfig.getEnemyAttackMultiplier())
                         .build());
@@ -357,7 +357,7 @@ public class ExplorationService {
 
             int seed = computeZoneSeedShared(request.getZoneNumber());
             List<ZoneEnemyFleetGenerator.WaveResult> waves = ZoneEnemyFleetGenerator.generateWaves(
-                    zoneConfig, seed, request.getCellRow(), request.getCellCol(), gameDataService.getModulesByType(EModuleType.body), gameDataService);
+                    zoneConfig, seed, request.getCellRow(), request.getCellCol(), gameDataService.getModulesByType(EModuleType.hull), gameDataService);
 
             // 존 고정 보상값 적립 — 적 함대 성능(commandCost)과 무관, 웨이브에 함선이 있던 셀만 지급(빈 셀은 0)
             // Buff_ExplorationPointRate 배율은 여기서 적용하지 않음 — 적립(banked)은 항상 고정값 그대로 쌓고,

@@ -28,7 +28,7 @@ public class FleetService {
     private final GameDataService gameDataService;
     private final FleetRepository fleetRepository;
 
-    // 신규 커맨더에게 지급되는 기본 함대(fleetIndex=0)의 초기 함선 — 바디 h1_11100(빔1/미사일1/격납고1) + 기본 빔1 장착
+    // 신규 커맨더에게 지급되는 기본 함대(fleetIndex=0)의 초기 함선 — 함체 h1_11100(빔1/미사일1/격납고1) + 기본 빔1 장착
     private static final String DEFAULT_FLEET_HULL_SUB_TYPE = "h1_11100";
 
     public FleetService(CommanderRepository commanderRepository,
@@ -58,7 +58,7 @@ public class FleetService {
         fleetRepository.save(fleet);
     }
 
-    // 로그인 시 내려주는 "내 함대" — fleetIndex=0 함대를 FleetInfoDto로 변환, 함선별 실제 장착 모듈(bodies)까지 포함
+    // 로그인 시 내려주는 "내 함대" — fleetIndex=0 함대를 FleetInfoDto로 변환, 함선별 실제 장착 모듈(hulls)까지 포함
     // Fleet.ships가 LAZY라 convertFleetToFleetInfoDto에서 컬렉션을 순회하는 동안 세션이 열려 있어야 함 — @Transactional 필수
     @Transactional(readOnly = true)
     public FleetInfoDto getActiveFleet(Long commanderId) {
@@ -81,7 +81,7 @@ public class FleetService {
                 .map(ship -> ShipInfoDto.builder()
                         .hullSubType(ship.getHullSubType())
                         .isFront(ship.isFront())
-                        .bodies(List.of(buildModuleBodyInfoDto(ship)))
+                        .hulls(List.of(buildModuleHullInfoDto(ship)))
                         .build())
                 .collect(Collectors.toList());
 
@@ -92,25 +92,25 @@ public class FleetService {
                 .build();
     }
 
-    // 함대편성(FleetComposition) 슬롯에 함선 배치/교체 — 바디(프리셋)를 바꿔도 새 함체에 같은 카테고리+슬롯 인덱스가 남아있는
+    // 함대편성(FleetComposition) 슬롯에 함선 배치/교체 — 함체를 바꿔도 새 함체에 같은 카테고리+슬롯 인덱스가 남아있는
     // 기존 모듈(서브타입/강화 포인트 포함)은 그대로 유지하고, 슬롯 자체가 사라진 모듈만 소실된다(자동으로 일부만 끄는 로직은 없음 —
     // 유지 결과 지휘력이 초과되면 배치 자체를 거부). 클라(FleetComposition.TryPlaceShipAt)가 동일 로직으로 미리보기를 계산하지만,
     // 조작된 요청을 막기 위해 서버가 DB의 기존 모듈을 직접 기준으로 재계산한다 — setFleetSlotModules와 동일한 신뢰 경계 원칙
     @Transactional
     public void placeFleetShip(Long commanderId, FleetPlaceShipRequest request) {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.PLACE_FLEET_PRESET_SHIP_FAIL_COMMANDER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.PLACE_FLEET_SHIP_FAIL_COMMANDER_NOT_FOUND));
 
         ModuleData hullData = gameDataService.getHullModuleData(request.getHullSubType());
         if (hullData == null)
-            throw new BusinessException(ServerErrorCode.PLACE_FLEET_PRESET_SHIP_FAIL_PRESET_NOT_FOUND);
+            throw new BusinessException(ServerErrorCode.PLACE_FLEET_SHIP_FAIL_HULL_NOT_FOUND);
         int unlockCommanderLevel = hullData.getUnlockCommanderLevel() != null ? hullData.getUnlockCommanderLevel() : 1;
         if (unlockCommanderLevel > commander.getCommanderLevel())
-            throw new BusinessException(ServerErrorCode.PLACE_FLEET_PRESET_SHIP_FAIL_INSUFFICIENT_COMMANDER_LEVEL);
+            throw new BusinessException(ServerErrorCode.PLACE_FLEET_SHIP_FAIL_INSUFFICIENT_COMMANDER_LEVEL);
 
         int openSlotCount = gameDataService.getShipCount(commander.getCommanderLevel());
         if (request.getSlotIndex() < 0 || request.getSlotIndex() >= openSlotCount)
-            throw new BusinessException(ServerErrorCode.PLACE_FLEET_PRESET_SHIP_FAIL_SLOT_LOCKED);
+            throw new BusinessException(ServerErrorCode.PLACE_FLEET_SHIP_FAIL_SLOT_LOCKED);
 
         Fleet fleet = fleetRepository.findByCommanderIdAndFleetIndex(commanderId, 0)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.COMMANDER_CONTROLLER_FAIL_NULL_ACTIVE_FLEET));
@@ -135,7 +135,7 @@ public class FleetService {
 
         boolean hasAttackModule = keptModules.stream().anyMatch(m -> isAttackModuleType(m.getModuleType()));
         if (hasAttackModule == false)
-            throw new BusinessException(ServerErrorCode.PLACE_FLEET_PRESET_SHIP_FAIL_NO_ATTACK_MODULE_REMAINING);
+            throw new BusinessException(ServerErrorCode.PLACE_FLEET_SHIP_FAIL_NO_ATTACK_MODULE_REMAINING);
 
         int newShipCost = hullData.getStatPoint() != null ? hullData.getStatPoint() : 0;
         for (Module m : keptModules) {
@@ -150,7 +150,7 @@ public class FleetService {
             usedByOtherShips += computeShipCommandCost(s);
         }
         if (usedByOtherShips + newShipCost > commander.getCommandPowerMax())
-            throw new BusinessException(ServerErrorCode.PLACE_FLEET_PRESET_SHIP_FAIL_NOT_ENOUGH_COMMAND_POWER);
+            throw new BusinessException(ServerErrorCode.PLACE_FLEET_SHIP_FAIL_NOT_ENOUGH_COMMAND_POWER);
 
         ship.setHullSubType(request.getHullSubType());
         ship.setFront(request.getIsFront());
@@ -183,10 +183,11 @@ public class FleetService {
         if (moduleType == EModuleType.beam) return maxSlots[0];
         if (moduleType == EModuleType.missile) return maxSlots[1];
         if (moduleType == EModuleType.hangar) return maxSlots[2];
+        if (moduleType == EModuleType.shield) return maxSlots[3];
         return 0;
     }
 
-    // 기본 로드아웃(beam slot0=beam1)을 상수 규칙으로 생성 — 함체마다 달랐던 DataTableShipPreset 기본 로드아웃은 폐기됨(전 함체 공통). 반영(저장)은 호출부 책임
+    // 기본 로드아웃(beam slot0=beam1)을 상수 규칙으로 생성 — 전 함체 공통. 반영(저장)은 호출부 책임
     private List<Module> buildDefaultModules(Ship ship) {
         Module module = new Module();
         module.setShip(ship);
@@ -217,6 +218,7 @@ public class FleetService {
             case beam -> EModuleSubType.beam1;
             case missile -> EModuleSubType.missile1;
             case hangar -> EModuleSubType.hangar1;
+            case shield -> EModuleSubType.shield1;
             default -> null;
         };
     }
@@ -235,14 +237,14 @@ public class FleetService {
         return 0;
     }
 
-    private int computeBodyCost(String hullSubType) {
+    private int computeHullCost(String hullSubType) {
         ModuleData hullData = gameDataService.getHullModuleData(hullSubType);
         return hullData != null && hullData.getStatPoint() != null ? hullData.getStatPoint() : 0;
     }
 
-    // 바디 설치비 + 현재 장착된 모든 모듈의 설치비/강화 포인트 합 — 클라 ShipStatAllocation.GetTotalPointsUsed와 동일한 계산
+    // 함체 설치비 + 현재 장착된 모든 모듈의 설치비/강화 포인트 합 — 클라 ShipStatAllocation.GetTotalPointsUsed와 동일한 계산
     private int computeShipCommandCost(Ship ship) {
-        int bodyCost = computeBodyCost(ship.getHullSubType());
+        int hullCost = computeHullCost(ship.getHullSubType());
 
         int modulesCost = 0;
         if (ship.getModules() != null) {
@@ -252,13 +254,14 @@ public class FleetService {
                 modulesCost += installCost + reinforceCost;
             }
         }
-        return bodyCost + modulesCost;
+        return hullCost + modulesCost;
     }
 
-    private ModuleBodyInfoDto buildModuleBodyInfoDto(Ship ship) {
+    private ModuleHullInfoDto buildModuleHullInfoDto(Ship ship) {
         List<ModuleInfoDto> beams = new ArrayList<>();
         List<ModuleInfoDto> missiles = new ArrayList<>();
         List<ModuleInfoDto> hangars = new ArrayList<>();
+        String shieldModuleSubType = "";
 
         if (ship.getModules() != null) {
             for (Module module : ship.getModules()) {
@@ -273,26 +276,28 @@ public class FleetService {
                     case beam -> beams.add(dto);
                     case missile -> missiles.add(dto);
                     case hangar -> hangars.add(dto);
+                    case shield -> shieldModuleSubType = module.getModuleSubType().name();
                     default -> { }
                 }
             }
         }
 
-        EModuleSubType bodySubType = getBodySubType(ship.getHullSubType());
-        Float maxHealth = getModuleMaxHealth(bodySubType);
+        EModuleSubType hullSubTypeEnum = getHullSubTypeEnum(ship.getHullSubType());
+        Float maxHealth = getModuleMaxHealth(hullSubTypeEnum);
 
-        return ModuleBodyInfoDto.builder()
-                .moduleType(EModuleType.body)
-                .moduleSubType(bodySubType)
+        return ModuleHullInfoDto.builder()
+                .moduleType(EModuleType.hull)
+                .moduleSubType(hullSubTypeEnum)
                 .beams(beams)
                 .missiles(missiles)
                 .hangars(hangars)
+                .shieldModuleSubType(shieldModuleSubType)
                 .currentHealth(maxHealth)
                 .build();
     }
 
-    // hullSubType(예: "h1_11100") 문자열을 EModuleSubType(body)으로 변환
-    private EModuleSubType getBodySubType(String hullSubType) {
+    // hullSubType(예: "h1_11100") 문자열을 EModuleSubType(hull)으로 변환
+    private EModuleSubType getHullSubTypeEnum(String hullSubType) {
         if (hullSubType == null) return null;
         try {
             return EModuleSubType.valueOf(hullSubType);
@@ -301,11 +306,11 @@ public class FleetService {
         }
     }
 
-    private Float getModuleMaxHealth(EModuleSubType bodySubType) {
-        if (bodySubType == null) return null;
-        List<ModuleData> bodyDataList = gameDataService.getModulesByType(EModuleType.body);
-        return bodyDataList.stream()
-                .filter(d -> d.getModuleSubType() == bodySubType)
+    private Float getModuleMaxHealth(EModuleSubType hullSubTypeEnum) {
+        if (hullSubTypeEnum == null) return null;
+        List<ModuleData> hullDataList = gameDataService.getModulesByType(EModuleType.hull);
+        return hullDataList.stream()
+                .filter(d -> d.getModuleSubType() == hullSubTypeEnum)
                 .findFirst()
                 .map(d -> d.getHealth() != null ? d.getHealth() : 0f)
                 .orElse(null);
@@ -316,29 +321,30 @@ public class FleetService {
     @Transactional
     public SetModuleResponse setFleetSlotModules(Long commanderId, SetModuleRequest request) {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.TOGGLE_FLEET_PRESET_MODULE_FAIL_COMMANDER_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_COMMANDER_NOT_FOUND));
 
         Fleet fleet = fleetRepository.findByCommanderIdAndFleetIndex(commanderId, 0)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.TOGGLE_FLEET_PRESET_MODULE_FAIL_PRESET_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_FLEET_NOT_FOUND));
 
         Ship ship = fleet.getShips().stream()
                 .filter(s -> s.getSlotIndex() == request.getSlotIndex())
                 .findFirst()
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.TOGGLE_FLEET_PRESET_MODULE_FAIL_SLOT_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_SLOT_NOT_FOUND));
 
         int[] maxSlots = GameDataService.parseMaxSlotsFromHullSubType(ship.getHullSubType());
-        ModuleBodyInfoDto requestedModules = request.getModules();
+        ModuleHullInfoDto requestedModules = request.getModules();
 
         List<DesiredModule> desired = new ArrayList<>();
         appendDesiredModules(desired, EModuleType.beam, maxSlots[0], requestedModules != null ? requestedModules.getBeams() : null);
         appendDesiredModules(desired, EModuleType.missile, maxSlots[1], requestedModules != null ? requestedModules.getMissiles() : null);
         appendDesiredModules(desired, EModuleType.hangar, maxSlots[2], requestedModules != null ? requestedModules.getHangars() : null);
+        appendDesiredShield(desired, maxSlots[3], requestedModules != null ? requestedModules.getShieldModuleSubType() : null);
 
         boolean hasAttackModule = desired.stream().anyMatch(m -> isAttackModuleType(m.moduleType()));
         if (hasAttackModule == false)
-            throw new BusinessException(ServerErrorCode.TOGGLE_FLEET_PRESET_MODULE_FAIL_NO_ATTACK_MODULE_REMAINING);
+            throw new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_NO_ATTACK_MODULE_REMAINING);
 
-        int newShipCost = computeBodyCost(ship.getHullSubType());
+        int newShipCost = computeHullCost(ship.getHullSubType());
         for (DesiredModule m : desired) {
             int installCost = getModuleStatPoint(m.moduleType(), m.moduleSubType());
             int reinforceCost = m.attackPoints() + m.attackToFighterPoints();
@@ -351,7 +357,7 @@ public class FleetService {
             usedByOtherShips += computeShipCommandCost(s);
         }
         if (usedByOtherShips + newShipCost > commander.getCommandPowerMax())
-            throw new BusinessException(ServerErrorCode.TOGGLE_FLEET_PRESET_MODULE_FAIL_NOT_ENOUGH_COMMAND_POWER);
+            throw new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_NOT_ENOUGH_COMMAND_POWER);
 
         List<Module> newModules = new ArrayList<>();
         for (DesiredModule m : desired) {
@@ -370,7 +376,7 @@ public class FleetService {
         int remainingAfter = commander.getCommandPowerMax() - (usedByOtherShips + newShipCost);
 
         return SetModuleResponse.builder()
-                .body(buildModuleBodyInfoDto(ship))
+                .hull(buildModuleHullInfoDto(ship))
                 .commandCost(newShipCost)
                 .remainingCommandPower(remainingAfter)
                 .build();
@@ -390,15 +396,25 @@ public class FleetService {
         for (ModuleInfoDto item : requested) {
             Integer slotIndex = item.getSlotIndex();
             if (slotIndex == null || slotIndex < 0 || slotIndex >= maxSlotCount)
-                throw new BusinessException(ServerErrorCode.TOGGLE_FLEET_PRESET_MODULE_FAIL_INVALID_SLOT_INDEX);
+                throw new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_INVALID_SLOT_INDEX);
             if (seenSlotIndexes.add(slotIndex) == false)
-                throw new BusinessException(ServerErrorCode.TOGGLE_FLEET_PRESET_MODULE_FAIL_INVALID_SLOT_INDEX); // 같은 슬롯이 중복 요청됨
+                throw new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_INVALID_SLOT_INDEX); // 같은 슬롯이 중복 요청됨
 
             int clampedAttackPoints = clampReinforcePoints(item.getAttackPoints(), maxPerSlot);
             int clampedFighterPoints = isHangar ? clampReinforcePoints(item.getAttackToFighterPoints(), maxPerSlot) : 0;
 
             target.add(new DesiredModule(moduleType, slotIndex, defaultSubType, clampedAttackPoints, clampedFighterPoints));
         }
+    }
+
+    // 실드는 리스트가 아니라 문자열 하나(장착 여부)뿐 — 슬롯 인덱스는 항상 0, 강화 포인트도 아직 없음(on/off만 지원)
+    // maxSlotCount<=0(실드 슬롯 없는 함체)인데 장착 요청이 오면 슬롯 인덱스 검증과 동일하게 거부
+    private void appendDesiredShield(List<DesiredModule> target, int maxSlotCount, String requestedShieldSubType) {
+        if (requestedShieldSubType == null || requestedShieldSubType.isEmpty()) return;
+        if (maxSlotCount <= 0)
+            throw new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_INVALID_SLOT_INDEX);
+
+        target.add(new DesiredModule(EModuleType.shield, 0, EModuleSubType.shield1, 0, 0));
     }
 
     // 클라가 보낸 강화 포인트 값을 0~maxPerSlot 범위로 강제 — null/음수/상한 초과 모두 방어
@@ -453,29 +469,29 @@ public class FleetService {
         int statAirCount = 0;
 
         for (ShipInfoDto ship : fleetInfo.getShips()) {
-            if (ship.getBodies() == null) continue;
-            for (ModuleBodyInfoDto body : ship.getBodies()) {
-                ModuleData bodyData = findModuleData(EModuleType.body, body.getModuleSubType());
-                if (bodyData != null) statHealth += bodyData.getHealth() != null ? bodyData.getHealth() : 0f;
+            if (ship.getHulls() == null) continue;
+            for (ModuleHullInfoDto hull : ship.getHulls()) {
+                ModuleData hullData = findModuleData(EModuleType.hull, hull.getModuleSubType());
+                if (hullData != null) statHealth += hullData.getHealth() != null ? hullData.getHealth() : 0f;
 
-                if (body.getBeams() != null) {
-                    for (ModuleInfoDto beam : body.getBeams()) {
+                if (hull.getBeams() != null) {
+                    for (ModuleInfoDto beam : hull.getBeams()) {
                         ModuleData data = findModuleData(EModuleType.beam, beam.getModuleSubType());
                         if (data != null) {
                             statAttack += data.getAttack() != null ? data.getAttack() : 0f;
                         }
                     }
                 }
-                if (body.getMissiles() != null) {
-                    for (ModuleInfoDto missile : body.getMissiles()) {
+                if (hull.getMissiles() != null) {
+                    for (ModuleInfoDto missile : hull.getMissiles()) {
                         ModuleData data = findModuleData(EModuleType.missile, missile.getModuleSubType());
                         if (data != null) {
                             statAttack += data.getAttack() != null ? data.getAttack() : 0f;
                         }
                     }
                 }
-                if (body.getHangars() != null) {
-                    for (ModuleInfoDto hangar : body.getHangars()) {
+                if (hull.getHangars() != null) {
+                    for (ModuleInfoDto hangar : hull.getHangars()) {
                         ModuleData data = findModuleData(EModuleType.hangar, hangar.getModuleSubType());
                         if (data != null) {
                             statAirCount  += data.getAirCount() != null ? data.getAirCount() : 0;

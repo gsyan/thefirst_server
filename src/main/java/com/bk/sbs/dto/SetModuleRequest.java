@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SetModuleRequest {
     private Integer slotIndex;
-    private ModuleBodyInfoDto modules;
+    private ModuleHullInfoDto modules;
 }

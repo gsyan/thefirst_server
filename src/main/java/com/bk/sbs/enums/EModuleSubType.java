@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum EModuleSubType {
     none(0),
     h1_11100(10111100),
+    h1_11110(10111110),
     h1_21100(10121100),
     h1_22100(10122100),
     h1_22200(10122200),

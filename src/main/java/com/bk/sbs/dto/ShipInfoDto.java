@@ -20,7 +20,7 @@ public class ShipInfoDto {
     private String shipName;
     private Integer positionIndex;
     private String description;
-    private List<ModuleBodyInfoDto> bodies;
+    private List<ModuleHullInfoDto> hulls;
     private Float healthMultiplier;
     private Float attackMultiplier;
     private String hullSubType;

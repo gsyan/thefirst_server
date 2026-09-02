@@ -17,6 +17,7 @@
   "aircraftTacticExplorationPointPerSec": 1,
   "aircraftTacticDamageMultiplier": 2.0,
   "aircraftTacticAmmoMultiplier": 2.0,
+  "shieldTacticExplorationPointPerSec": 1,
   "shipStatFormula": {
     "maxModuleSlots": 6,
     "maxAttackReinforcePointsPerSlot": 10,
@@ -42,9 +43,7 @@
     },
     "shield": {
       "gaugePerPoint": 0.5,
-      "delayReductionPerPoint": 0.02,
-      "regenRatePerPoint": 0.1,
-      "delayFloor": 1.0
+      "regenRatePerPoint": 0.1
     },
     "interceptor": {
       "delayReductionPerPoint": 0.02,

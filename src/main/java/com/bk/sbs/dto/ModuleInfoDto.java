@@ -19,7 +19,7 @@ public class ModuleInfoDto {
     private EModuleType moduleType;
     private EModuleSubType moduleSubType;
     private Integer moduleLevel;
-    private Integer bodyIndex;
+    private Integer hullIndex;
     private Integer slotIndex;
     private Integer attackPoints;
     private Integer attackToFighterPoints;

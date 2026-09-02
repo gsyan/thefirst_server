@@ -68,8 +68,6 @@ public class ModuleData {
 
     private Float shieldGauge;
 
-    private Float shieldDelay;
-
     private Float shieldRegenRate;
 
     private Integer interceptorCount;

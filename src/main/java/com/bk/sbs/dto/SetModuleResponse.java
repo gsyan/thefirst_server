@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class SetModuleResponse {
-    private ModuleBodyInfoDto body;
+    private ModuleHullInfoDto hull;
     private Integer commandCost;
     private Integer remainingCommandPower;
 }

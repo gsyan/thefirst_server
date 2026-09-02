@@ -26,7 +26,7 @@ public class Module {
     private EModuleType moduleType;
 
     @Column(nullable = false)
-    private int slotIndex; // 같은 moduleType 안에서의 슬롯 인덱스(0부터) — modules_in_preset.csv의 등장 순서와 동일 개념
+    private int slotIndex; // 같은 moduleType 안에서의 슬롯 인덱스(0부터)
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

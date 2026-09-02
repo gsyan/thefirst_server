@@ -221,10 +221,12 @@ public class GameDataService {
 
     public List<ModuleData> getModulesByType(EModuleType moduleType) {
         return switch (moduleType) {
-            case body -> dataTableModule.getBodyModules();
+            case hull -> dataTableModule.getHullModules();
             case beam -> dataTableModule.getBeamModules();
             case missile -> dataTableModule.getMissileModules();
             case hangar -> dataTableModule.getHangarModules();
+            case shield -> dataTableModule.getShieldModules();
+            case interceptor -> dataTableModule.getInterceptorModules();
             default -> throw new BusinessException(ServerErrorCode.UNKNOWN_ERROR);
         };
     }
@@ -250,19 +252,19 @@ public class GameDataService {
         return zoneConfig != null ? zoneConfig : new ZoneConfig();
     }
 
-    // 해금 커맨더 레벨 이하인 body(함체) 목록만 — 플레이어가 선택 가능한 함체 목록용
-    public java.util.List<ModuleData> getUnlockedBodyModules(int commanderLevel) {
-        return getModulesByType(EModuleType.body).stream()
+    // 해금 커맨더 레벨 이하인 hull(함체) 목록만 — 플레이어가 선택 가능한 함체 목록용
+    public java.util.List<ModuleData> getUnlockedHullModules(int commanderLevel) {
+        return getModulesByType(EModuleType.hull).stream()
                 .filter(d -> (d.getUnlockCommanderLevel() != null ? d.getUnlockCommanderLevel() : 1) <= commanderLevel)
                 .collect(java.util.stream.Collectors.toList());
     }
 
-    // hullSubType(예: "h1_11100") → body ModuleData 조회. 존재하지 않는 이름이면 null
+    // hullSubType(예: "h1_11100") → hull ModuleData 조회. 존재하지 않는 이름이면 null
     public ModuleData getHullModuleData(String hullSubType) {
         if (hullSubType == null) return null;
         try {
             EModuleSubType subType = EModuleSubType.valueOf(hullSubType);
-            return getModulesByType(EModuleType.body).stream()
+            return getModulesByType(EModuleType.hull).stream()
                     .filter(d -> subType.equals(d.getModuleSubType()))
                     .findFirst().orElse(null);
         } catch (IllegalArgumentException ignored) {

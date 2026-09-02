@@ -1,6 +1,6 @@
 package com.bk.sbs.util;
 
-import com.bk.sbs.dto.ModuleBodyInfoDto;
+import com.bk.sbs.dto.ModuleHullInfoDto;
 import com.bk.sbs.dto.ModuleData;
 import com.bk.sbs.dto.ModuleInfoDto;
 import com.bk.sbs.dto.ZoneConfigData;
@@ -17,15 +17,15 @@ import java.util.List;
 // 클라는 전투 시작(EnterExplorationCellRequest) 응답으로만 이 값을 받아 스폰하므로(UIPanelExplorationGrid),
 // 클라 사전 프리뷰(ExplorationEnemyFleetGenerator.GenerateWaves)에는 모듈 구성이 반영되지 않음(함체 선택까지만 미리보기)
 //
-// 예산 소진 순서: (1) 함체(bodyCost, 함선마다 편차 새로 굴림) → (2) 남은 함대 예산으로 빔/미사일/격납고 라운드로빈 구매
+// 예산 소진 순서: (1) 함체(hullCost, 함선마다 편차 새로 굴림) → (2) 남은 함대 예산으로 빔/미사일/격납고 라운드로빈 구매
 // → (3) 함선수 상한/예산 부족으로 루프가 끝나고도 남은 애매한 잔액을 1번 함선부터 다시 훑으며 흡수
 public class ZoneEnemyFleetGenerator {
 
     public static class ShipResult {
         public String hullSubType;
         public boolean isFront;
-        public ModuleBodyInfoDto modules; // 실제 장착 모듈(존 데이터+예산 기반 결정론) — 기본 로드아웃(빔1) + 라운드로빈으로 추가 장착
-        public ShipResult(String hullSubType, boolean isFront, ModuleBodyInfoDto modules) {
+        public ModuleHullInfoDto modules; // 실제 장착 모듈(존 데이터+예산 기반 결정론) — 기본 로드아웃(빔1) + 라운드로빈으로 추가 장착
+        public ShipResult(String hullSubType, boolean isFront, ModuleHullInfoDto modules) {
             this.hullSubType = hullSubType;
             this.isFront = isFront;
             this.modules = modules;
@@ -76,13 +76,13 @@ public class ZoneEnemyFleetGenerator {
         return gameDataService.getModuleStatPoint(EModuleType.beam, EModuleSubType.beam1);
     }
 
-    // 함체들 중 (bodyCost + 기본모듈 비용) 최솟값 — 함선 하나를 만드는 데 최소로 필요한 예산. 하드코딩하지 않고 데이터에서 매번 계산
+    // 함체들 중 (hullCost + 기본모듈 비용) 최솟값 — 함선 하나를 만드는 데 최소로 필요한 예산. 하드코딩하지 않고 데이터에서 매번 계산
     private static int resolveMinShipCost(List<ModuleData> hulls, GameDataService gameDataService) {
         int defaultCost = defaultModuleCost(gameDataService);
         int minCost = Integer.MAX_VALUE;
         for (ModuleData hull : hulls) {
-            int bodyCost = hull.getStatPoint() != null ? hull.getStatPoint() : 0;
-            int cost = bodyCost + defaultCost;
+            int hullCost = hull.getStatPoint() != null ? hull.getStatPoint() : 0;
+            int cost = hullCost + defaultCost;
             if (cost < minCost) minCost = cost;
         }
         return minCost == Integer.MAX_VALUE ? 0 : minCost;
@@ -111,8 +111,8 @@ public class ZoneEnemyFleetGenerator {
             BuildingShip ship = buildOneShip(hulls, perShipCap, zoneConfig, gameDataService, random);
             if (ship == null) break;
 
-            int bodyCost = ship.hull.getStatPoint() != null ? ship.hull.getStatPoint() : 0;
-            int spent = bodyCost + defaultCost;
+            int hullCost = ship.hull.getStatPoint() != null ? ship.hull.getStatPoint() : 0;
+            int spent = hullCost + defaultCost;
             int shipBudget = perShipCap - spent;
             spent += fillRoundRobin(ship, shipBudget, gameDataService, random);
 
@@ -125,8 +125,8 @@ public class ZoneEnemyFleetGenerator {
         if (remaining >= minShipCost && minShipCost > 0 && ships.size() < enemyMaxShipsPerFleet) {
             BuildingShip lastShip = buildBestFitShip(hulls, remaining, zoneConfig, gameDataService);
             if (lastShip != null) {
-                int bodyCost = lastShip.hull.getStatPoint() != null ? lastShip.hull.getStatPoint() : 0;
-                int spent = bodyCost + defaultCost;
+                int hullCost = lastShip.hull.getStatPoint() != null ? lastShip.hull.getStatPoint() : 0;
+                int spent = hullCost + defaultCost;
                 int shipBudget = remaining - spent;
                 spent += fillRoundRobin(lastShip, shipBudget, gameDataService, random);
                 remaining -= spent;
@@ -151,9 +151,9 @@ public class ZoneEnemyFleetGenerator {
         int defaultCost = defaultModuleCost(gameDataService);
         List<ModuleData> affordable = new ArrayList<>();
         for (ModuleData hull : hulls) {
-            int bodyCost = hull.getStatPoint() != null ? hull.getStatPoint() : 0;
-            int minCostForHull = bodyCost + defaultCost;
-            if (bodyCost > 0 && minCostForHull <= cap)
+            int hullCost = hull.getStatPoint() != null ? hull.getStatPoint() : 0;
+            int minCostForHull = hullCost + defaultCost;
+            if (hullCost > 0 && minCostForHull <= cap)
                 affordable.add(hull);
         }
         if (affordable.isEmpty()) return null;
@@ -167,14 +167,14 @@ public class ZoneEnemyFleetGenerator {
                                                   GameDataService gameDataService) {
         int defaultCost = defaultModuleCost(gameDataService);
         ModuleData bestFit = null;
-        int bestFitBodyCost = 0;
+        int bestFitHullCost = 0;
         for (ModuleData hull : hulls) {
-            int bodyCost = hull.getStatPoint() != null ? hull.getStatPoint() : 0;
-            int minCostForHull = bodyCost + defaultCost;
-            if (bodyCost > 0 && minCostForHull <= cap
-                    && (bestFit == null || bodyCost > bestFitBodyCost)) {
+            int hullCost = hull.getStatPoint() != null ? hull.getStatPoint() : 0;
+            int minCostForHull = hullCost + defaultCost;
+            if (hullCost > 0 && minCostForHull <= cap
+                    && (bestFit == null || hullCost > bestFitHullCost)) {
                 bestFit = hull;
-                bestFitBodyCost = bodyCost;
+                bestFitHullCost = hullCost;
             }
         }
         return bestFit == null ? null : newBuildingShip(bestFit, zoneConfig);
@@ -200,7 +200,7 @@ public class ZoneEnemyFleetGenerator {
         ship.missileTarget = Math.min(missileEquipSlots, ship.maxSlots[1]);
         ship.hangarTarget  = Math.min(hangarEquipSlots, ship.maxSlots[2]);
 
-        // 실드/인터셉터 — 슬롯 1개뿐이라 "장착 여부"만 존재. 클라 배관(ModuleBodyInfo.shieldModuleSubType 등)만 채우고
+        // 실드/인터셉터 — 슬롯 1개뿐이라 "장착 여부"만 존재. 클라 배관(ModuleHullInfo.shieldModuleSubType 등)만 채우고
         // 클라이언트가 실제로 소비(스탯 반영/스폰)하는 로직은 아직 없음 — 후속 작업
         int shieldEquipSlots      = zoneConfig.getEnemyShieldEquipSlots()      != null ? zoneConfig.getEnemyShieldEquipSlots()      : 0;
         int interceptorEquipSlots = zoneConfig.getEnemyInterceptorEquipSlots() != null ? zoneConfig.getEnemyInterceptorEquipSlots() : 0;
@@ -336,7 +336,7 @@ public class ZoneEnemyFleetGenerator {
             BuildingShip ship = ships.get(idx);
             boolean isFront = i < (order.size() + 1) / 2;
 
-            ModuleBodyInfoDto modules = ModuleBodyInfoDto.builder()
+            ModuleHullInfoDto modules = ModuleHullInfoDto.builder()
                     .beams(ship.beams).missiles(ship.missiles).hangars(ship.hangars)
                     .shieldModuleSubType(ship.shieldSubType)
                     .interceptorModuleSubType(ship.interceptorSubType)

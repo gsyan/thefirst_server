@@ -1,7 +1,9 @@
 package com.bk.sbs.util;
 
+import com.bk.sbs.dto.ModuleData;
 import com.bk.sbs.dto.ModuleInfoDto;
 import com.bk.sbs.dto.ZoneConfigData;
+import com.bk.sbs.enums.EModuleType;
 import com.bk.sbs.service.GameDataService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -58,7 +60,7 @@ public class ZoneEnemyFleetGeneratorManualCheck {
                 for (int row = 0; row < height; row++) {
                     for (int col = 0; col < width; col++) {
                         List<ZoneEnemyFleetGenerator.WaveResult> waves = ZoneEnemyFleetGenerator.generateWaves(
-                                zoneConfig, seed, row, col, gameDataService.getShipPresetList(), gameDataService);
+                                zoneConfig, seed, row, col, gameDataService.getModulesByType(EModuleType.hull), gameDataService);
                         printCell(row, col, waves, gameDataService);
                     }
                 }
@@ -75,15 +77,16 @@ public class ZoneEnemyFleetGeneratorManualCheck {
 
             int totalSpent = 0;
             for (ZoneEnemyFleetGenerator.ShipResult ship : wave.ships) {
-                GameDataService.ShipPresetSummary preset = gameDataService.getShipPresetSummary(ship.presetId);
+                ModuleData hull = gameDataService.getHullModuleData(ship.hullSubType);
+                int hullCost = hull != null && hull.getStatPoint() != null ? hull.getStatPoint() : 0;
                 int beamCount = ship.modules.getBeams() != null ? ship.modules.getBeams().size() : 0;
                 int missileCount = ship.modules.getMissiles() != null ? ship.modules.getMissiles().size() : 0;
                 int hangarCount = ship.modules.getHangars() != null ? ship.modules.getHangars().size() : 0;
 
-                int shipSpent = preset.bodyCost + (beamCount + missileCount + hangarCount) * 20; // 지금은 모듈 전부 t1=20이라 근사 출력용
+                int shipSpent = hullCost + (beamCount + missileCount + hangarCount) * 20; // 지금은 모듈 전부 t1=20이라 근사 출력용
                 totalSpent += shipSpent;
 
-                sb.append(" | ").append(ship.presetId).append("(body=").append(preset.bodyCost)
+                sb.append(" | ").append(ship.hullSubType).append("(hull=").append(hullCost)
                         .append(", front=").append(ship.isFront)
                         .append(", beam=").append(beamCount)
                         .append(", missile=").append(missileCount)
