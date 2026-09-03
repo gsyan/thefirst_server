@@ -4,7 +4,6 @@ import com.bk.sbs.dto.ModuleHullInfoDto;
 import com.bk.sbs.dto.ModuleData;
 import com.bk.sbs.dto.ModuleInfoDto;
 import com.bk.sbs.dto.ZoneConfigData;
-import com.bk.sbs.enums.EModuleSubType;
 import com.bk.sbs.enums.EModuleType;
 import com.bk.sbs.service.GameDataService;
 
@@ -71,9 +70,9 @@ public class ZoneEnemyFleetGenerator {
         return Math.max(1, maxCost - random.next(0, deviation + 1));
     }
 
-    // 기본 로드아웃(beam slot0=beam1) 정가 — 전 함체 공통 상수(클라 FleetComposition.BuildDefaultModules와 동일 규칙)
+    // 기본 로드아웃(beam slot0=beam_1_1) 정가 — 전 함체 공통 상수(클라 FleetComposition.BuildDefaultModules와 동일 규칙)
     private static int defaultModuleCost(GameDataService gameDataService) {
-        return gameDataService.getModuleStatPoint(EModuleType.beam, EModuleSubType.beam1);
+        return gameDataService.getModuleStatPoint(EModuleType.beam, "beam_1_1");
     }
 
     // 함체들 중 (hullCost + 기본모듈 비용) 최솟값 — 함선 하나를 만드는 데 최소로 필요한 예산. 하드코딩하지 않고 데이터에서 매번 계산
@@ -183,12 +182,12 @@ public class ZoneEnemyFleetGenerator {
     private static BuildingShip newBuildingShip(ModuleData hull, ZoneConfigData zoneConfig) {
         BuildingShip ship = new BuildingShip();
         ship.hull = hull;
-        ship.maxSlots = GameDataService.parseMaxSlotsFromHullSubType(hull.getModuleSubType() != null ? hull.getModuleSubType().name() : null);
+        ship.maxSlots = GameDataService.parseMaxSlotsFromHullSubType(hull.getModuleSubType());
 
-        // 기본 로드아웃(beam slot0=beam1)을 상수 규칙으로 시딩 — 전 함체 공통(클라 FleetComposition.BuildDefaultModules와 동일 규칙)
+        // 기본 로드아웃(beam slot0=beam_1_1)을 상수 규칙으로 시딩 — 전 함체 공통(클라 FleetComposition.BuildDefaultModules와 동일 규칙)
         ModuleInfoDto defaultBeam = ModuleInfoDto.builder()
                 .moduleType(EModuleType.beam)
-                .moduleSubType(EModuleSubType.beam1)
+                .moduleSubType("beam_1_1")
                 .slotIndex(0)
                 .build();
         addToCategory(ship, EModuleType.beam, defaultBeam);
@@ -204,8 +203,8 @@ public class ZoneEnemyFleetGenerator {
         // 클라이언트가 실제로 소비(스탯 반영/스폰)하는 로직은 아직 없음 — 후속 작업
         int shieldEquipSlots      = zoneConfig.getEnemyShieldEquipSlots()      != null ? zoneConfig.getEnemyShieldEquipSlots()      : 0;
         int interceptorEquipSlots = zoneConfig.getEnemyInterceptorEquipSlots() != null ? zoneConfig.getEnemyInterceptorEquipSlots() : 0;
-        ship.shieldSubType = ship.maxSlots[3] > 0 && shieldEquipSlots > 0 ? EModuleSubType.shield1.name() : "";
-        ship.interceptorSubType = ship.maxSlots[4] > 0 && interceptorEquipSlots > 0 ? EModuleSubType.interceptor1.name() : "";
+        ship.shieldSubType = ship.maxSlots[3] > 0 && shieldEquipSlots > 0 ? "shield_1_1" : "";
+        ship.interceptorSubType = ship.maxSlots[4] > 0 && interceptorEquipSlots > 0 ? "interceptor_1_1" : "";
         return ship;
     }
 
@@ -292,9 +291,9 @@ public class ZoneEnemyFleetGenerator {
         return list.size();
     }
 
-    private static boolean isAlreadyEquipped(BuildingShip ship, EModuleType category, EModuleSubType subType) {
+    private static boolean isAlreadyEquipped(BuildingShip ship, EModuleType category, String subType) {
         for (ModuleInfoDto dto : categoryList(ship, category))
-            if (dto.getModuleSubType() == subType) return true;
+            if (subType.equals(dto.getModuleSubType())) return true;
         return false;
     }
 
@@ -341,7 +340,7 @@ public class ZoneEnemyFleetGenerator {
                     .shieldModuleSubType(ship.shieldSubType)
                     .interceptorModuleSubType(ship.interceptorSubType)
                     .build();
-            waveResult.ships.add(new ShipResult(ship.hull.getModuleSubType().name(), isFront, modules));
+            waveResult.ships.add(new ShipResult(ship.hull.getModuleSubType(), isFront, modules));
         }
         return waveResult;
     }

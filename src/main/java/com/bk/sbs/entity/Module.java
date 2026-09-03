@@ -1,6 +1,5 @@
 package com.bk.sbs.entity;
 
-import com.bk.sbs.enums.EModuleSubType;
 import com.bk.sbs.enums.EModuleType;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -28,9 +27,8 @@ public class Module {
     @Column(nullable = false)
     private int slotIndex; // 같은 moduleType 안에서의 슬롯 인덱스(0부터)
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private EModuleSubType moduleSubType;
+    private String moduleSubType;
 
     @Column(nullable = false)
     private int attackPoints; // 빔/미사일 공격력, 격납고는 대함 공격력 강화 포인트(1p=지휘력 1)

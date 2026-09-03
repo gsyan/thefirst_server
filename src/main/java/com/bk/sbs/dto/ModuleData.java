@@ -1,6 +1,5 @@
 package com.bk.sbs.dto;
 
-import com.bk.sbs.enums.EModuleSubType;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +17,7 @@ import lombok.NoArgsConstructor;
 public class ModuleData {
     private String moduleName;
 
-    private EModuleSubType moduleSubType;
+    private String moduleSubType;
 
     private Integer statPoint;
 

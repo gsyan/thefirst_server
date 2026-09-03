@@ -9,7 +9,6 @@ import com.bk.sbs.enums.*;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.repository.*;
-import com.bk.sbs.util.ModuleTypeConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,8 +27,8 @@ public class FleetService {
     private final GameDataService gameDataService;
     private final FleetRepository fleetRepository;
 
-    // 신규 커맨더에게 지급되는 기본 함대(fleetIndex=0)의 초기 함선 — 함체 h1_11100(빔1/미사일1/격납고1) + 기본 빔1 장착
-    private static final String DEFAULT_FLEET_HULL_SUB_TYPE = "h1_11100";
+    // 신규 커맨더에게 지급되는 기본 함대(fleetIndex=0)의 초기 함선 — 함체 hull_3_1_11100(빔1/미사일1/격납고1) + 기본 빔1 장착
+    private static final String DEFAULT_FLEET_HULL_SUB_TYPE = "hull_3_1_11100";
 
     public FleetService(CommanderRepository commanderRepository,
                        GameDataService gameDataService,
@@ -159,7 +158,7 @@ public class FleetService {
     }
 
     // 기존 장착 모듈 중 새 함체(newMaxSlots)에도 같은 카테고리+슬롯 인덱스가 존재하는 것만 유지 — 서브타입/강화 포인트는 그대로 복사
-    // (지금은 모듈이 티어1 하나뿐이라 서브타입이 달라질 일이 없음 — 티어가 늘어나면 이 부분 재검토 필요)
+    // 주의: 함체 교체 시 기존 무기의 서브타입(티어)은 새 함체 티어에 맞춰 자동 갱신되지 않고 그대로 유지됨(의도적으로 미확정 — 갱신 여부는 별도 확인 필요)
     private List<Module> filterModulesForNewHull(List<Module> existingModules, int[] newMaxSlots, Ship targetShip) {
         List<Module> kept = new ArrayList<>();
         for (Module old : existingModules) {
@@ -187,13 +186,13 @@ public class FleetService {
         return 0;
     }
 
-    // 기본 로드아웃(beam slot0=beam1)을 상수 규칙으로 생성 — 전 함체 공통. 반영(저장)은 호출부 책임
+    // 기본 로드아웃(beam slot0=beam_1_1)을 상수 규칙으로 생성 — 전 함체 공통, 무기 티어는 함체와 독립적인 별도 축. 반영(저장)은 호출부 책임
     private List<Module> buildDefaultModules(Ship ship) {
         Module module = new Module();
         module.setShip(ship);
         module.setModuleType(EModuleType.beam);
         module.setSlotIndex(0);
-        module.setModuleSubType(EModuleSubType.beam1);
+        module.setModuleSubType("beam_1_1");
         return new ArrayList<>(List.of(module));
     }
 
@@ -212,13 +211,13 @@ public class FleetService {
 
     // ── 함선 모듈 편집 ────────────────────────────────────────────────
 
-    // on/off만 지원하므로 카테고리당 서브타입은 항상 이 값 하나 — 티어 선택이 생기면 이 지점부터 확장
-    private EModuleSubType getDefaultSubTypeForCategory(EModuleType moduleType) {
+    // on/off만 지원하므로 카테고리당 서브타입은 항상 이 값 하나 — 무기 티어는 함체와 독립적인 별도 축이라 기본값은 항상 1티어
+    private String getDefaultSubTypeForCategory(EModuleType moduleType) {
         return switch (moduleType) {
-            case beam -> EModuleSubType.beam1;
-            case missile -> EModuleSubType.missile1;
-            case hangar -> EModuleSubType.hangar1;
-            case shield -> EModuleSubType.shield1;
+            case beam -> "beam_1_1";
+            case missile -> "missile_1_1";
+            case hangar -> "hangar_1_1";
+            case shield -> "shield_1_1";
             default -> null;
         };
     }
@@ -227,7 +226,7 @@ public class FleetService {
         return moduleType == EModuleType.beam || moduleType == EModuleType.missile || moduleType == EModuleType.hangar;
     }
 
-    private int getModuleStatPoint(EModuleType moduleType, EModuleSubType subType) {
+    private int getModuleStatPoint(EModuleType moduleType, String subType) {
         if (subType == null) return 0;
         List<ModuleData> modules = gameDataService.getModulesByType(moduleType);
         for (ModuleData data : modules) {
@@ -276,18 +275,18 @@ public class FleetService {
                     case beam -> beams.add(dto);
                     case missile -> missiles.add(dto);
                     case hangar -> hangars.add(dto);
-                    case shield -> shieldModuleSubType = module.getModuleSubType().name();
+                    case shield -> shieldModuleSubType = module.getModuleSubType();
                     default -> { }
                 }
             }
         }
 
-        EModuleSubType hullSubTypeEnum = getHullSubTypeEnum(ship.getHullSubType());
-        Float maxHealth = getModuleMaxHealth(hullSubTypeEnum);
+        String hullSubType = ship.getHullSubType();
+        Float maxHealth = getModuleMaxHealth(hullSubType);
 
         return ModuleHullInfoDto.builder()
                 .moduleType(EModuleType.hull)
-                .moduleSubType(hullSubTypeEnum)
+                .moduleSubType(hullSubType)
                 .beams(beams)
                 .missiles(missiles)
                 .hangars(hangars)
@@ -296,21 +295,11 @@ public class FleetService {
                 .build();
     }
 
-    // hullSubType(예: "h1_11100") 문자열을 EModuleSubType(hull)으로 변환
-    private EModuleSubType getHullSubTypeEnum(String hullSubType) {
+    private Float getModuleMaxHealth(String hullSubType) {
         if (hullSubType == null) return null;
-        try {
-            return EModuleSubType.valueOf(hullSubType);
-        } catch (IllegalArgumentException ignored) {
-            return null;
-        }
-    }
-
-    private Float getModuleMaxHealth(EModuleSubType hullSubTypeEnum) {
-        if (hullSubTypeEnum == null) return null;
         List<ModuleData> hullDataList = gameDataService.getModulesByType(EModuleType.hull);
         return hullDataList.stream()
-                .filter(d -> d.getModuleSubType() == hullSubTypeEnum)
+                .filter(d -> hullSubType.equals(d.getModuleSubType()))
                 .findFirst()
                 .map(d -> d.getHealth() != null ? d.getHealth() : 0f)
                 .orElse(null);
@@ -382,13 +371,13 @@ public class FleetService {
                 .build();
     }
 
-    private record DesiredModule(EModuleType moduleType, int slotIndex, EModuleSubType moduleSubType, int attackPoints, int attackToFighterPoints) { }
+    private record DesiredModule(EModuleType moduleType, int slotIndex, String moduleSubType, int attackPoints, int attackToFighterPoints) { }
 
     // requested의 각 항목이 유효한 슬롯 인덱스(0 <= idx < maxSlotCount)인지, 중복 슬롯이 없는지 검증하며 desired 목록에 채워 넣음
     // 강화 포인트는 클라 입력을 신뢰하지 않고 서버가 직접 clamp — moduleSubType을 defaultSubType으로 강제 고정하는 것과 동일한 신뢰 경계 원칙
     private void appendDesiredModules(List<DesiredModule> target, EModuleType moduleType, int maxSlotCount, List<ModuleInfoDto> requested) {
         if (requested == null) return;
-        EModuleSubType defaultSubType = getDefaultSubTypeForCategory(moduleType);
+        String defaultSubType = getDefaultSubTypeForCategory(moduleType);
         int maxPerSlot = gameDataService.getMaxAttackReinforcePointsPerSlot();
         boolean isHangar = moduleType == EModuleType.hangar;
 
@@ -414,7 +403,7 @@ public class FleetService {
         if (maxSlotCount <= 0)
             throw new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_INVALID_SLOT_INDEX);
 
-        target.add(new DesiredModule(EModuleType.shield, 0, EModuleSubType.shield1, 0, 0));
+        target.add(new DesiredModule(EModuleType.shield, 0, "shield_1_1", 0, 0));
     }
 
     // 클라가 보낸 강화 포인트 값을 0~maxPerSlot 범위로 강제 — null/음수/상한 초과 모두 방어
@@ -506,7 +495,7 @@ public class FleetService {
                 shipCount, statHealth, statAttack, statAirCount, statAirAttack);
     }
 
-    private ModuleData findModuleData(EModuleType type, EModuleSubType subType) {
+    private ModuleData findModuleData(EModuleType type, String subType) {
         if (subType == null) return null;
         List<ModuleData> list = gameDataService.getModulesByType(type);
         for (ModuleData data : list) {

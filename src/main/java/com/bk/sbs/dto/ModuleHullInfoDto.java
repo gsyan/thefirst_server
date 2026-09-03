@@ -1,6 +1,5 @@
 package com.bk.sbs.dto;
 
-import com.bk.sbs.enums.EModuleSubType;
 import com.bk.sbs.enums.EModuleType;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -18,7 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ModuleHullInfoDto {
     private EModuleType moduleType;
-    private EModuleSubType moduleSubType;
+    private String moduleSubType;
     private Integer moduleLevel;
     private Integer hullIndex;
     private List<ModuleInfoDto> beams;

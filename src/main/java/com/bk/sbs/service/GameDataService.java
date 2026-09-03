@@ -8,7 +8,6 @@ import com.bk.sbs.config.ZoneConfig;
 import com.bk.sbs.dto.ZoneConfigData;
 import com.bk.sbs.dto.ModuleData;
 import com.bk.sbs.dto.ShipStatFormulaSettings;
-import com.bk.sbs.enums.EModuleSubType;
 import com.bk.sbs.enums.EModuleType;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
@@ -259,17 +258,12 @@ public class GameDataService {
                 .collect(java.util.stream.Collectors.toList());
     }
 
-    // hullSubType(예: "h1_11100") → hull ModuleData 조회. 존재하지 않는 이름이면 null
+    // hullSubType(예: "hull_3_1_11100") → hull ModuleData 조회. 존재하지 않는 이름이면 null
     public ModuleData getHullModuleData(String hullSubType) {
         if (hullSubType == null) return null;
-        try {
-            EModuleSubType subType = EModuleSubType.valueOf(hullSubType);
-            return getModulesByType(EModuleType.hull).stream()
-                    .filter(d -> subType.equals(d.getModuleSubType()))
-                    .findFirst().orElse(null);
-        } catch (IllegalArgumentException ignored) {
-            return null;
-        }
+        return getModulesByType(EModuleType.hull).stream()
+                .filter(d -> hullSubType.equals(d.getModuleSubType()))
+                .findFirst().orElse(null);
     }
 
     public java.util.List<RewardCardEntry> getRewardCardList() {
@@ -280,21 +274,35 @@ public class GameDataService {
         return rewardCardById.get(cardId);
     }
 
-    // hullSubType(예: "h1_11100") → [beam, missile, hangar, shield, interceptor] 카테고리별 최대 슬롯 수.
-    // 이름 규칙: "h" + tier(1자리) + "_" + 5자리 슬롯코드 — 형식이 다르면 전부 0(안전하게 막힘)
+    // hullSubType(예: "hull_3_1_11100") → [beam, missile, hangar, shield, interceptor] 카테고리별 최대 슬롯 수.
+    // 이름 규칙: "hull_{tier}_{gen}_{5자리슬롯코드}" — 4번째 토큰(5자리)만 슬롯 수로 사용, 형식이 다르면 전부 0(안전하게 막힘)
     // FleetService.setFleetSlotModules와 ZoneEnemyFleetGenerator(적 함대 모듈 다양성)가 공유
     public static int[] parseMaxSlotsFromHullSubType(String hullSubType) {
         int[] result = new int[5];
-        if (hullSubType == null || hullSubType.length() != 8 || hullSubType.charAt(0) != 'h') return result;
+        if (hullSubType == null) return result;
+        String[] parts = hullSubType.split("_");
+        if (parts.length < 4 || parts[3].length() != 5) return result;
         for (int i = 0; i < 5; i++) {
-            char c = hullSubType.charAt(3 + i);
+            char c = parts[3].charAt(i);
             if (Character.isDigit(c) == false) return new int[5];
             result[i] = Character.getNumericValue(c);
         }
         return result;
     }
 
-    public int getModuleStatPoint(EModuleType moduleType, EModuleSubType subType) {
+    // hullSubType(예: "hull_3_1_11100") → tier 정수(두 번째 토큰). 형식이 다르면 0
+    public static int parseTierFromHullSubType(String hullSubType) {
+        if (hullSubType == null) return 0;
+        String[] parts = hullSubType.split("_");
+        if (parts.length < 2) return 0;
+        try {
+            return Integer.parseInt(parts[1]);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
+    public int getModuleStatPoint(EModuleType moduleType, String subType) {
         List<ModuleData> modules = getModulesByType(moduleType);
         for (ModuleData data : modules) {
             if (subType.equals(data.getModuleSubType()))
