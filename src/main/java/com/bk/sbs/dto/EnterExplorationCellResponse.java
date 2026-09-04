@@ -1,6 +1,5 @@
 package com.bk.sbs.dto;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +17,5 @@ public class EnterExplorationCellResponse {
     private Integer zoneNumber;
     private Integer cellRow;
     private Integer cellCol;
-    private List<StageEnemyFleetSpawnConfigDto> enemyFleets;
     private String challengeToken;
 }

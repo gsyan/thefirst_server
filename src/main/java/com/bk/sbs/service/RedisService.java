@@ -3,6 +3,7 @@ package com.bk.sbs.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
@@ -432,6 +433,26 @@ public class RedisService {
         redisTemplate.delete(AUTH_ACTIVE_JTI_PREFIX + accountId);
         Set<String> graceKeys = redisTemplate.keys(AUTH_GRACE_JTI_PREFIX + accountId + ":*");
         if (graceKeys != null && graceKeys.isEmpty() == false) redisTemplate.delete(graceKeys);
+    }
+
+    // [임시로그] 리프레시 토큰 재사용 감지(2106) 조사용 — Redis 인스턴스 재시작/영속성 상태 진단
+    // run_id가 이전 로그와 다르면 그 사이 Redis 프로세스가 재시작된 것. rdb_changes_since_last_save가 있으면
+    // 마지막 스냅샷 이후의 쓰기가 디스크에 아직 반영되지 않은 상태(재시작 시 유실 가능)임을 의미
+    public String getRedisDiagnosticInfo() {
+        try {
+            Properties info = redisTemplate.execute((RedisCallback<Properties>) connection -> connection.info());
+            if (info == null) return "조회 실패: info() 결과 null";
+            return String.format(
+                "run_id=%s uptime_in_seconds=%s rdb_changes_since_last_save=%s rdb_last_save_time=%s rdb_bgsave_in_progress=%s",
+                info.getProperty("run_id"),
+                info.getProperty("uptime_in_seconds"),
+                info.getProperty("rdb_changes_since_last_save"),
+                info.getProperty("rdb_last_save_time"),
+                info.getProperty("rdb_bgsave_in_progress")
+            );
+        } catch (Exception e) {
+            return "조회 실패: " + e.getMessage();
+        }
     }
 
     // ── 내부 헬퍼 ──────────────────────────────────────────────────────────

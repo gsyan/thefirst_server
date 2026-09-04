@@ -15,4 +15,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UnlinkGoogleResponse {
     private String guestId;
+    private String guestSecret;
 }

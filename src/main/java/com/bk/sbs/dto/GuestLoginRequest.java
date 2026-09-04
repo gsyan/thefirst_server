@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GuestLoginRequest {
     private String guestId;
+    private String guestSecret;
 }

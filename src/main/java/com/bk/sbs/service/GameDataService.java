@@ -276,7 +276,7 @@ public class GameDataService {
 
     // hullSubType(예: "hull_3_1_11100") → [beam, missile, hangar, shield, interceptor] 카테고리별 최대 슬롯 수.
     // 이름 규칙: "hull_{tier}_{gen}_{5자리슬롯코드}" — 4번째 토큰(5자리)만 슬롯 수로 사용, 형식이 다르면 전부 0(안전하게 막힘)
-    // FleetService.setFleetSlotModules와 ZoneEnemyFleetGenerator(적 함대 모듈 다양성)가 공유
+    // FleetService.setFleetSlotModules가 사용(적 함대 절차 생성은 클라 ExplorationEnemyFleetGenerator로 이전됨)
     public static int[] parseMaxSlotsFromHullSubType(String hullSubType) {
         int[] result = new int[5];
         if (hullSubType == null) return result;

@@ -1,5 +1,5 @@
 // 셀 클리어 보상카드 후보 추첨 — weight 기반 가중치 랜덤, 중복 없이 N개 선택
-// 적함대 생성(ZoneEnemyFleetGenerator)과 달리 유저가 재도전할 이유가 없는 영역이라 결정론적 시드가 필요 없음(java.util.Random으로 충분)
+// 적함대 생성(클라 ExplorationEnemyFleetGenerator, 결정론적 시드 기반)과 달리 유저가 재도전할 이유가 없는 영역이라 결정론적 시드가 필요 없음(java.util.Random으로 충분)
 package com.bk.sbs.util;
 
 import com.bk.sbs.service.GameDataService;

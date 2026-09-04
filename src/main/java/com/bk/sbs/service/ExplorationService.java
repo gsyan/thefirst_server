@@ -6,7 +6,6 @@ import com.bk.sbs.entity.Commander;
 import com.bk.sbs.entity.ZoneCellClearLog;
 import com.bk.sbs.entity.ZoneRun;
 import com.bk.sbs.enums.EGridCellType;
-import com.bk.sbs.enums.EModuleType;
 import com.bk.sbs.enums.EZoneRunStatus;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
@@ -15,11 +14,9 @@ import com.bk.sbs.repository.ZoneCellClearLogRepository;
 import com.bk.sbs.repository.ZoneRunRepository;
 import com.bk.sbs.util.CommanderLevelUtil;
 import com.bk.sbs.util.RewardCardSelector;
-import com.bk.sbs.util.ZoneEnemyFleetGenerator;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,11 +28,6 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class ExplorationService {
-
-    // explorationSeedBase는 엔티티에 저장되지 않고 world seed 그 자체(유저 무관 공통값) — 모든 유저가 같은 Zone에서 같은 적함대를 보도록 commanderId를 섞지 않음
-    // CommanderService.getCommanderInfoDto와 동일 공식, 항상 함께 수정할 것
-    @Value("${exploration.world-seed}")
-    private int explorationWorldSeed;
 
     private final CommanderRepository commanderRepository;
     private final ZoneRunRepository zoneRunRepository;
@@ -165,16 +157,6 @@ public class ExplorationService {
         return cardIds;
     }
 
-    // 클라 CommonUtility.ComputeExplorationZoneSeed(zoneNumber, explorationSeedBase)와 동일 — 두 곳은 항상 함께 수정할 것
-    private int computeZoneSeed(int zoneNumber, int explorationSeedBase) {
-        return explorationSeedBase ^ (zoneNumber * 486187739);
-    }
-
-    // 유저 무관 공통 시드 — 모든 커맨더가 같은 Zone/셀에서 항상 같은 적함대를 계산해내야 하므로 commanderId를 섞지 않음
-    private int computeZoneSeedShared(int zoneNumber) {
-        return computeZoneSeed(zoneNumber, explorationWorldSeed);
-    }
-
     private GridCellOverrideDto findCellOverride(ZoneConfigData zoneConfig, int row, int col) {
         List<GridCellOverrideDto> overrides = zoneConfig.getCellOverrides();
         if (overrides == null) return null;
@@ -183,6 +165,15 @@ public class ExplorationService {
                 return o;
         }
         return null;
+    }
+
+    // 클라 UIPanelExplorationGrid.BuildCellEnemyFleets의 "cellData.isBlocked || isStart || isEvent면 생성 대상 제외"와 동일 규칙 —
+    // 적함대 절차 생성을 서버에서 제거한 뒤에도 "이 셀에 전투가 있는지"는 셀 타입만으로 그대로 판정 가능(Escape는 전투 있음에 포함)
+    private boolean hasCombatCell(ZoneConfigData zoneConfig, int row, int col) {
+        GridCellOverrideDto override = findCellOverride(zoneConfig, row, col);
+        if (override == null) return true;
+        EGridCellType type = override.getType();
+        return type != EGridCellType.Blocked && type != EGridCellType.Start && type != EGridCellType.Event;
     }
 
     private GridCellOverrideDto findCellByType(ZoneConfigData zoneConfig, EGridCellType type) {
@@ -250,7 +241,7 @@ public class ExplorationService {
 
             // 재방문(이 런에서 이미 클리어 로그가 있는 셀)은 전투가 없는 게 서버 기준으로 확정된 상태 —
             // 클라의 로컬 클리어 캐시(m_gridData.isCleared)를 신뢰하지 않고 서버가 클리어 로그로 직접 재확인.
-            // 토큰 발급/웨이브 계산 없이 위치만 확정하고 빈 함대로 응답(클라는 "빈 셀"과 동일하게 전투 없이 통과 처리)
+            // 토큰 발급 없이 위치만 확정하고 응답(클라는 "빈 셀"과 동일하게 전투 없이 통과 처리)
             String revisitCell = request.getCellRow() + "-" + request.getCellCol();
             boolean isRevisit = zoneCellClearLogRepository.findTopByZoneRunIdAndCellOrderByClearedAtDesc(run.getId(), revisitCell).isPresent();
             if (isRevisit == true) {
@@ -261,7 +252,6 @@ public class ExplorationService {
                         .zoneNumber(request.getZoneNumber())
                         .cellRow(request.getCellRow())
                         .cellCol(request.getCellCol())
-                        .enemyFleets(new ArrayList<>())
                         .challengeToken(null)
                         .build();
             }
@@ -286,33 +276,10 @@ public class ExplorationService {
         run.setActiveChallengeIssuedAt(Instant.now());
         zoneRunRepository.save(run);
 
-        int seed = computeZoneSeedShared(request.getZoneNumber());
-        List<ZoneEnemyFleetGenerator.WaveResult> waves = ZoneEnemyFleetGenerator.generateWaves(
-                zoneConfig, seed, request.getCellRow(), request.getCellCol(), gameDataService.getModulesByType(EModuleType.hull), gameDataService);
-
-        List<StageEnemyFleetSpawnConfigDto> enemyFleets = new ArrayList<>();
-        for (int i = 0; i < waves.size(); i++) {
-            ZoneEnemyFleetGenerator.WaveResult wave = waves.get(i);
-            List<ShipInfoDto> ships = new ArrayList<>();
-            for (ZoneEnemyFleetGenerator.ShipResult ship : wave.ships) {
-                ships.add(ShipInfoDto.builder()
-                        .hullSubType(ship.hullSubType)
-                        .isFront(ship.isFront)
-                        .hulls(List.of(ship.modules))
-                        .healthMultiplier(zoneConfig.getEnemyHealthMultiplier())
-                        .attackMultiplier(zoneConfig.getEnemyAttackMultiplier())
-                        .build());
-            }
-            enemyFleets.add(StageEnemyFleetSpawnConfigDto.builder()
-                    .fleetIndex(i)
-                    .positionIndex(0)
-                    .fleetInfo(FleetInfoDto.builder().ships(ships).build())
-                    .build());
-        }
-
-        // 빈 셀(적 없음)은 전투가 없으므로 클라가 별도로 clear-cell을 부를 필요 없이 여기서 바로 위치 확정 —
-        // validateCellChallenge를 이미 통과했으므로(인접 + Blocked 아님) 이동 가능한 셀인 것은 보장됨
-        boolean hasEnemies = waves.stream().anyMatch(wave -> wave.ships.isEmpty() == false);
+        // 적함대 데이터 자체는 클라가 로컬(같은 seed+row+col)로 생성해서 이미 갖고 있음(UIPanelExplorationGrid.BuildCellEnemyFleets) —
+        // 서버는 전투 스폰 데이터를 만들어 내려줄 필요가 없고, 빈 셀(적 없음)은 전투가 없으므로 클라가 별도로 clear-cell을 부를
+        // 필요 없이 여기서 바로 위치 확정 — validateCellChallenge를 이미 통과했으므로(인접 + Blocked 아님) 이동 가능한 셀인 것은 보장됨
+        boolean hasEnemies = hasCombatCell(zoneConfig, request.getCellRow(), request.getCellCol());
         if (hasEnemies == false) {
             run.setCurrentPosition(request.getCellRow(), request.getCellCol());
             zoneRunRepository.save(run);
@@ -322,7 +289,6 @@ public class ExplorationService {
                 .zoneNumber(request.getZoneNumber())
                 .cellRow(request.getCellRow())
                 .cellCol(request.getCellCol())
-                .enemyFleets(enemyFleets)
                 .challengeToken(challengeToken)
                 .build();
     }
@@ -355,14 +321,10 @@ public class ExplorationService {
             // 최초 클리어(보상 지급)에만 토큰을 요구 — enter-cell 없이 clear-cell 반복 호출로 무한 획득하는 것을 막는 지점
             validateAndConsumeChallengeToken(run, request.getChallengeToken(), request.getCellRow(), request.getCellCol());
 
-            int seed = computeZoneSeedShared(request.getZoneNumber());
-            List<ZoneEnemyFleetGenerator.WaveResult> waves = ZoneEnemyFleetGenerator.generateWaves(
-                    zoneConfig, seed, request.getCellRow(), request.getCellCol(), gameDataService.getModulesByType(EModuleType.hull), gameDataService);
-
-            // 존 고정 보상값 적립 — 적 함대 성능(commandCost)과 무관, 웨이브에 함선이 있던 셀만 지급(빈 셀은 0)
+            // 존 고정 보상값 적립 — 적 함대 성능(commandCost)과 무관, 함선이 있던 셀만 지급(빈 셀은 0)
             // Buff_ExplorationPointRate 배율은 여기서 적용하지 않음 — 적립(banked)은 항상 고정값 그대로 쌓고,
             // 배율은 탈출/포기 확정(settleZoneRun) 시점에 최종 적립 총액에 한 번만 곱함
-            boolean hasEnemies = waves.stream().anyMatch(wave -> wave.ships.isEmpty() == false);
+            boolean hasEnemies = hasCombatCell(zoneConfig, request.getCellRow(), request.getCellCol());
             pointsGained = hasEnemies ? zoneConfig.getExplorationPointReward() : 0;
             expGained    = hasEnemies ? zoneConfig.getCommanderExpReward()     : 0;
 

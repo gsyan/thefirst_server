@@ -29,10 +29,13 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.security.SecureRandom;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import org.springframework.transaction.annotation.Transactional;
@@ -245,8 +248,10 @@ public class AccountService {
         String newJti;
         if (reusedActiveJti != null) {
             newJti = reusedActiveJti;
+            log.info("[임시로그] refreshToken newJti 결정: accountId={} 분기=유예재사용(회전 안함) newJti={}", accountId, newJti);
         } else {
             newJti = UUID.randomUUID().toString();
+            log.info("[임시로그] refreshToken newJti 결정: accountId={} 분기=신규회전 oldJti={} newJti={}", accountId, presentedJti, newJti);
             rotateSession(accountId, presentedJti, newJti);
         }
 
@@ -261,6 +266,10 @@ public class AccountService {
             response.setAccessToken(jwtUtil.createAccessTokenWithCommander(account.getId(), commanderId));
             response.setRefreshToken(jwtUtil.createRefreshTokenWithCommanderAndJti(account.getId(), commanderId, newJti));
         }
+
+        // [임시로그] 클라에 실제로 응답이 나가는 시점의 jti — 이 로그가 있는데도 다음 접속 시 activeJti(redis)가
+        // 이 newJti가 아니라면, 응답 전송은 성공했는데 그 이후 Redis 쓰기가 유실/롤백된 것으로 확정 가능
+        log.info("[임시로그] refreshToken 응답 반환 직전: accountId={} 응답에 담긴 jti={} 반환시각={}", accountId, newJti, java.time.Instant.now());
 
         return response;
     }
@@ -304,6 +313,7 @@ public class AccountService {
 
         // 유예 기간도 지난 구 jti가 옴 → 탈취 의심, 전체 세션 폐기
         log.warn("[임시로그] 리프레시 토큰 재사용 감지, 전체 세션 폐기: accountId={} presentedJti={} activeJti={}", accountId, presentedJti, activeJti);
+        log.warn("[임시로그] 재사용 감지 시점 Redis 진단: {}", redisService.getRedisDiagnosticInfo());
         try {
             redisService.revokeAllSessions(accountId);
         } catch (Exception e) {
@@ -314,11 +324,20 @@ public class AccountService {
 
     // 구 jti를 유예 상태로 남기고 새 jti를 활성 세션으로 등록
     private void rotateSession(Long accountId, String oldJti, String newJti) {
+        long ttlSeconds = jwtUtil.getRefreshTokenValidity();
+        log.info("[임시로그] rotateSession 시작: accountId={} oldJti={} newJti={} ttlSeconds={}", accountId, oldJti, newJti, ttlSeconds);
         try {
             redisService.markJtiInGrace(accountId, oldJti);
-            redisService.setActiveJti(accountId, newJti, jwtUtil.getRefreshTokenValidity());
+            redisService.setActiveJti(accountId, newJti, ttlSeconds);
+
+            // [임시로그] 쓰기 직후 같은 요청 안에서 즉시 읽어와 실제로 반영됐는지 확인 (2106 재현 조사용)
+            String readBack = redisService.getActiveJti(accountId);
+            boolean bMatched = newJti.equals(readBack);
+            log.info("[임시로그] rotateSession Redis 반영 확인: accountId={} newJti={} readBack={} 일치={}", accountId, newJti, readBack, bMatched);
+            if (bMatched == false)
+                log.warn("[임시로그] rotateSession 직후 read-back 불일치! Redis 진단: {}", redisService.getRedisDiagnosticInfo());
         } catch (Exception e) {
-            log.error("리프레시 세션 회전 실패: accountId={}", accountId, e);
+            log.error("[임시로그] 리프레시 세션 회전 실패: accountId={} oldJti={} newJti={}", accountId, oldJti, newJti, e);
         }
     }
 
@@ -440,11 +459,16 @@ public class AccountService {
             account.setEmail("guest_" + guestId);
         }
 
+        // 게스트로 복귀할 때마다 새 secret을 발급한다 (guestId 값이 기존/신규 어느 쪽이든 항상 재발급해 상태를 일관되게 유지)
+        String rawSecret = generateGuestSecret();
+        account.setGuestSecret(passwordEncoder.encode(rawSecret));
+
         accountRepository.save(account);
         log.info("Google account unlinked for accountId={}", account.getId());
 
         return UnlinkGoogleResponse.builder()
                 .guestId(guestId)
+                .guestSecret(rawSecret)
                 .build();
     }
 
@@ -455,8 +479,16 @@ public class AccountService {
                 .orElse(false);
     }
 
+    // 게스트 로그인 자격증명 원문 생성 — 32바이트 SecureRandom을 URL-safe Base64(패딩 없음)로 인코딩
+    private String generateGuestSecret() {
+        byte[] bytes = new byte[32];
+        new SecureRandom().nextBytes(bytes);
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
+    }
+
     @Transactional
     public AuthResponse guestLogin(GuestLoginRequest request) {
+        // guestSecret은 어떤 로그에도 남기지 않는다 — request 객체를 통째로 로깅하지 말 것
         log.info("Guest login attempt with guestId: {}", request.getGuestId());
 
         if (request.getGuestId() == null || request.getGuestId().trim().isEmpty()) {
@@ -465,13 +497,41 @@ public class AccountService {
 
         // guestId를 email 형식으로 변환 (기존 DB 구조 활용)
         String guestEmail = "guest_" + request.getGuestId();
+        String presentedSecret = request.getGuestSecret();
+        String issuedSecretForResponse = null;
 
-        // 계정 조회 또는 생성 (신규 계정 시 기본 캐릭터 자동 생성)
-        Account account = accountRepository.findByEmail(guestEmail)
-                .orElseGet(() -> {
-                    log.info("Creating new guest account with guestId: {}", request.getGuestId());
-                    return createAccountWithDefaultCommander(guestEmail, request.getGuestId());
-                });
+        Optional<Account> existing = accountRepository.findByEmail(guestEmail);
+        Account account;
+        if (existing.isEmpty() == true) {
+            // 신규 게스트 계정 — 기본 캐릭터 자동 생성 + secret 신규 발급
+            log.info("Creating new guest account with guestId: {}", request.getGuestId());
+            account = createAccountWithDefaultCommander(guestEmail, request.getGuestId());
+            String rawSecret = generateGuestSecret();
+            account.setGuestSecret(passwordEncoder.encode(rawSecret));
+            accountRepository.save(account);
+            issuedSecretForResponse = rawSecret;
+        } else {
+            account = existing.get();
+            if (account.getGuestSecret() == null) {
+                // 레거시 계정(이 secret 도입 이전 가입) — 1회에 한해 검증 없이 통과시키고 secret을 발급해 마이그레이션
+                log.info("Legacy guest account without secret, issuing new secret: accountId={}", account.getId());
+                String rawSecret = generateGuestSecret();
+                account.setGuestSecret(passwordEncoder.encode(rawSecret));
+                accountRepository.save(account);
+                issuedSecretForResponse = rawSecret;
+            } else {
+                // 정상 보호된 계정 — secret 검증 필수
+                if (presentedSecret == null || presentedSecret.trim().isEmpty()) {
+                    log.warn("[임시로그] guestLogin secret 없음: accountId={}", account.getId());
+                    throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GUEST_NULL_SECRET);
+                }
+                if (passwordEncoder.matches(presentedSecret, account.getGuestSecret()) == false) {
+                    log.warn("[임시로그] guestLogin secret 불일치: accountId={}", account.getId());
+                    throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GUEST_SECRET_MISMATCH);
+                }
+                log.info("[임시로그] guestLogin secret 검증 통과: accountId={}", account.getId());
+            }
+        }
 
         String refreshToken = jwtUtil.createRefreshToken(account.getId());
         registerSession(account.getId(), refreshToken);
@@ -479,6 +539,7 @@ public class AccountService {
         return AuthResponse.builder()
                 .accessToken(jwtUtil.createAccessToken(account.getId()))
                 .refreshToken(refreshToken)
+                .guestSecret(issuedSecretForResponse)
                 .build();
     }
 

@@ -22,4 +22,5 @@ public class AuthResponse {
     private Boolean bGoogleLinked;
     private VipStatusResponse vipStatus;
     private List<ProgressInfoDto> progressList;
+    private String guestSecret;
 }
