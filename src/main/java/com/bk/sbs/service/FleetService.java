@@ -78,6 +78,8 @@ public class FleetService {
         List<ShipInfoDto> ships = fleet.getShips().stream()
                 .sorted((a, b) -> Integer.compare(a.getSlotIndex(), b.getSlotIndex()))
                 .map(ship -> ShipInfoDto.builder()
+                        .id(ship.getId())
+                        .positionIndex(ship.getSlotIndex())
                         .hullSubType(ship.getHullSubType())
                         .isFront(ship.isFront())
                         .hulls(List.of(buildModuleHullInfoDto(ship)))
@@ -129,7 +131,7 @@ public class FleetService {
         List<Module> existingModules = ship.getModules() != null ? new ArrayList<>(ship.getModules()) : new ArrayList<>();
         int[] newMaxSlots = GameDataService.parseMaxSlotsFromHullSubType(request.getHullSubType());
         List<Module> keptModules = existingModules.isEmpty() == false
-                ? filterModulesForNewHull(existingModules, newMaxSlots, ship)
+                ? filterModulesForNewHull(existingModules, newMaxSlots, request.getHullSubType(), ship)
                 : buildDefaultModules(ship);
 
         boolean hasAttackModule = keptModules.stream().anyMatch(m -> isAttackModuleType(m.getModuleType()));
@@ -157,9 +159,11 @@ public class FleetService {
         fleetRepository.save(fleet);
     }
 
-    // 기존 장착 모듈 중 새 함체(newMaxSlots)에도 같은 카테고리+슬롯 인덱스가 존재하는 것만 유지 — 서브타입/강화 포인트는 그대로 복사
-    // 주의: 함체 교체 시 기존 무기의 서브타입(티어)은 새 함체 티어에 맞춰 자동 갱신되지 않고 그대로 유지됨(의도적으로 미확정 — 갱신 여부는 별도 확인 필요)
-    private List<Module> filterModulesForNewHull(List<Module> existingModules, int[] newMaxSlots, Ship targetShip) {
+    // 기존 장착 모듈 중 새 함체(newMaxSlots)에도 같은 카테고리+슬롯 인덱스가 존재하는 것만 유지 — 강화 포인트는 그대로 복사
+    // 확정 규칙: 무기 티어는 함체 티어와 독립적인 별도 축이지만 상한은 항상 함체 티어 — 새 함체 티어를 넘는 기존 모듈은 함체 티어로 자동 다운그레이드됨
+    // (지휘력 회수는 별도 처리 불필요 — 호출부 placeFleetShip이 이 결과의 statPoint로 비용을 재계산하므로 낮아진 티어가 자동 반영됨)
+    private List<Module> filterModulesForNewHull(List<Module> existingModules, int[] newMaxSlots, String newHullSubType, Ship targetShip) {
+        int newHullTier = GameDataService.parseTierFromHullSubType(newHullSubType);
         List<Module> kept = new ArrayList<>();
         for (Module old : existingModules) {
             int maxSlotForCategory = getMaxSlotForCategory(newMaxSlots, old.getModuleType());
@@ -169,12 +173,22 @@ public class FleetService {
             module.setShip(targetShip);
             module.setModuleType(old.getModuleType());
             module.setSlotIndex(old.getSlotIndex());
-            module.setModuleSubType(old.getModuleSubType());
+            module.setModuleSubType(clampModuleTierToHull(old.getModuleType(), old.getModuleSubType(), newHullTier));
             module.setAttackPoints(old.getAttackPoints());
             module.setAttackToFighterPoints(old.getAttackToFighterPoints());
             kept.add(module);
         }
         return kept;
+    }
+
+    // 모듈 서브타입의 티어가 함체 티어를 넘으면 {category}_{hullTier}_1로 다운그레이드 — 해당 티어 데이터가 없으면(비정상 데이터) 원본 유지
+    private String clampModuleTierToHull(EModuleType moduleType, String subType, int hullTier) {
+        if (GameDataService.parseTierFromHullSubType(subType) <= hullTier) return subType;
+
+        String downgradedSubType = moduleType + "_" + hullTier + "_1";
+        if (isValidSubTypeForCategory(moduleType, downgradedSubType) == false) return subType;
+
+        return downgradedSubType;
     }
 
     // newMaxSlots = [beam, missile, hangar, shield, interceptor] — moduleType과 배열 인덱스 매핑
@@ -321,12 +335,13 @@ public class FleetService {
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_SLOT_NOT_FOUND));
 
         int[] maxSlots = GameDataService.parseMaxSlotsFromHullSubType(ship.getHullSubType());
+        int hullTier = GameDataService.parseTierFromHullSubType(ship.getHullSubType());
         ModuleHullInfoDto requestedModules = request.getModules();
 
         List<DesiredModule> desired = new ArrayList<>();
-        appendDesiredModules(desired, EModuleType.beam, maxSlots[0], requestedModules != null ? requestedModules.getBeams() : null);
-        appendDesiredModules(desired, EModuleType.missile, maxSlots[1], requestedModules != null ? requestedModules.getMissiles() : null);
-        appendDesiredModules(desired, EModuleType.hangar, maxSlots[2], requestedModules != null ? requestedModules.getHangars() : null);
+        appendDesiredModules(desired, EModuleType.beam, maxSlots[0], hullTier, requestedModules != null ? requestedModules.getBeams() : null);
+        appendDesiredModules(desired, EModuleType.missile, maxSlots[1], hullTier, requestedModules != null ? requestedModules.getMissiles() : null);
+        appendDesiredModules(desired, EModuleType.hangar, maxSlots[2], hullTier, requestedModules != null ? requestedModules.getHangars() : null);
         appendDesiredShield(desired, maxSlots[3], requestedModules != null ? requestedModules.getShieldModuleSubType() : null);
 
         boolean hasAttackModule = desired.stream().anyMatch(m -> isAttackModuleType(m.moduleType()));
@@ -374,8 +389,9 @@ public class FleetService {
     private record DesiredModule(EModuleType moduleType, int slotIndex, String moduleSubType, int attackPoints, int attackToFighterPoints) { }
 
     // requested의 각 항목이 유효한 슬롯 인덱스(0 <= idx < maxSlotCount)인지, 중복 슬롯이 없는지 검증하며 desired 목록에 채워 넣음
-    // 강화 포인트는 클라 입력을 신뢰하지 않고 서버가 직접 clamp — moduleSubType을 defaultSubType으로 강제 고정하는 것과 동일한 신뢰 경계 원칙
-    private void appendDesiredModules(List<DesiredModule> target, EModuleType moduleType, int maxSlotCount, List<ModuleInfoDto> requested) {
+    // 강화 포인트는 클라 입력을 신뢰하지 않고 서버가 직접 clamp. moduleSubType(티어)도 마찬가지로 클라가 보낸 값을 그대로 믿지 않고
+    // 이 카테고리에 실제로 존재하는 데이터인지 + 함체 티어를 넘지 않는지 검증한 뒤에만 사용(티어업/다운) — 없거나 비어있거나 함체 티어 초과면 기본 1티어로 폴백
+    private void appendDesiredModules(List<DesiredModule> target, EModuleType moduleType, int maxSlotCount, int hullTier, List<ModuleInfoDto> requested) {
         if (requested == null) return;
         String defaultSubType = getDefaultSubTypeForCategory(moduleType);
         int maxPerSlot = gameDataService.getMaxAttackReinforcePointsPerSlot();
@@ -392,8 +408,28 @@ public class FleetService {
             int clampedAttackPoints = clampReinforcePoints(item.getAttackPoints(), maxPerSlot);
             int clampedFighterPoints = isHangar ? clampReinforcePoints(item.getAttackToFighterPoints(), maxPerSlot) : 0;
 
-            target.add(new DesiredModule(moduleType, slotIndex, defaultSubType, clampedAttackPoints, clampedFighterPoints));
+            String requestedSubType = item.getModuleSubType();
+            String subType = (requestedSubType != null && isValidSubTypeForCategory(moduleType, requestedSubType, hullTier))
+                    ? requestedSubType
+                    : defaultSubType;
+
+            target.add(new DesiredModule(moduleType, slotIndex, subType, clampedAttackPoints, clampedFighterPoints));
         }
+    }
+
+    // requestedSubType이 이 카테고리(moduleType)의 실제 데이터에 존재하는지 확인 — 다른 카테고리 문자열이나 존재하지 않는 티어를 그대로 믿지 않기 위함
+    private boolean isValidSubTypeForCategory(EModuleType moduleType, String requestedSubType) {
+        List<ModuleData> modules = gameDataService.getModulesByType(moduleType);
+        for (ModuleData data : modules) {
+            if (requestedSubType.equals(data.getModuleSubType())) return true;
+        }
+        return false;
+    }
+
+    // 강화(SetModule) 요청 전용 — 데이터 존재 여부에 더해, 확정 규칙(무기 티어 상한은 항상 함체 티어)까지 검증
+    private boolean isValidSubTypeForCategory(EModuleType moduleType, String requestedSubType, int hullTier) {
+        if (isValidSubTypeForCategory(moduleType, requestedSubType) == false) return false;
+        return GameDataService.parseTierFromHullSubType(requestedSubType) <= hullTier;
     }
 
     // 실드는 리스트가 아니라 문자열 하나(장착 여부)뿐 — 슬롯 인덱스는 항상 0, 강화 포인트도 아직 없음(on/off만 지원)

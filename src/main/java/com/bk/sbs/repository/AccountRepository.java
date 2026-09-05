@@ -14,4 +14,6 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     // 구글 UID로 계정 조회 (연동된 계정 찾기)
     Optional<Account> findByGoogleId(String googleId);
     boolean existsByGoogleId(String googleId);
+    // 게스트 식별자로 계정 조회
+    Optional<Account> findByGuestId(String guestId);
 }

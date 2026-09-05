@@ -127,7 +127,9 @@ public class AccountService {
     private Account createAccountWithDefaultCommander(String email, String password) {
         // 1. 계정 생성
         Account account = new Account();
-        account.setEmail(email.toLowerCase());
+        if (email != null) {
+            account.setEmail(email.toLowerCase());
+        }
         account.setPassword(passwordEncoder.encode(password));
         Account savedAccount = accountRepository.save(account);
 
@@ -383,9 +385,9 @@ public class AccountService {
         if (emailVerified == null) throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GOOGLE_NULL_EMAIL_VERIFIED);
         if (emailVerified == false) throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GOOGLE_EMAIL_VERIFIED);
 
-        // googleId로 조회 → 없으면 신규 생성 (email은 googlelink_uid 형식으로 저장)
+        // googleId로 조회 → 없으면 신규 생성 (구글 전용 계정은 email 없이 googleId로만 식별)
         Account account = accountRepository.findByGoogleId(uid).orElseGet(() ->
-            createAccountWithDefaultCommander("googlelink_" + uid, uid)
+            createAccountWithDefaultCommander(null, uid)
         );
 
         if (account.getGoogleId() == null) {
@@ -403,7 +405,7 @@ public class AccountService {
                 .build();
     }
 
-    // 현재 로그인된 계정에 구글 계정 연동 — email을 googlelink_uid 형식으로 변경
+    // 현재 로그인된 계정에 구글 계정 연동 — 게스트 자격증명은 제거하고 googleId만 남긴다
     @Transactional
     public AuthResponse linkGoogle(LinkGoogleRequest request) {
         Long accountId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -428,7 +430,8 @@ public class AccountService {
             throw new BusinessException(ServerErrorCode.LINK_GOOGLE_FAIL_GOOGLE_ID_ALREADY_USED);
 
         account.setGoogleId(uid);
-        account.setEmail("googlelink_" + uid);
+        account.setGuestId(null);
+        account.setGuestSecret(null);
         accountRepository.save(account);
         log.info("Google account linked for accountId={}", account.getId());
 
@@ -438,7 +441,7 @@ public class AccountService {
                 .build();
     }
 
-    // 구글 연동 해제 — 게스트 계정으로 전환 (email: guest_newUuid)
+    // 구글 연동 해제 — googleId를 지우고 완전히 새로운 게스트 신원(guestId/guestSecret)을 발급한다
     @Transactional
     public UnlinkGoogleResponse unlinkGoogle() {
         Long accountId = Long.parseLong(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -450,16 +453,9 @@ public class AccountService {
 
         account.setGoogleId(null);
 
-        String guestId;
-        if (account.getEmail().startsWith("guest_")) {
-            guestId = account.getEmail().substring(6);
-        } else {
-            // googlelink_ 또는 기타 → 새 게스트 계정으로 전환
-            guestId = UUID.randomUUID().toString();
-            account.setEmail("guest_" + guestId);
-        }
+        String guestId = UUID.randomUUID().toString();
+        account.setGuestId(guestId);
 
-        // 게스트로 복귀할 때마다 새 secret을 발급한다 (guestId 값이 기존/신규 어느 쪽이든 항상 재발급해 상태를 일관되게 유지)
         String rawSecret = generateGuestSecret();
         account.setGuestSecret(passwordEncoder.encode(rawSecret));
 
@@ -495,42 +491,32 @@ public class AccountService {
             throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GUEST_NULL_ID);
         }
 
-        // guestId를 email 형식으로 변환 (기존 DB 구조 활용)
-        String guestEmail = "guest_" + request.getGuestId();
         String presentedSecret = request.getGuestSecret();
         String issuedSecretForResponse = null;
 
-        Optional<Account> existing = accountRepository.findByEmail(guestEmail);
+        Optional<Account> existing = accountRepository.findByGuestId(request.getGuestId());
         Account account;
         if (existing.isEmpty() == true) {
             // 신규 게스트 계정 — 기본 캐릭터 자동 생성 + secret 신규 발급
             log.info("Creating new guest account with guestId: {}", request.getGuestId());
-            account = createAccountWithDefaultCommander(guestEmail, request.getGuestId());
+            account = createAccountWithDefaultCommander(null, request.getGuestId());
+            account.setGuestId(request.getGuestId());
             String rawSecret = generateGuestSecret();
             account.setGuestSecret(passwordEncoder.encode(rawSecret));
             accountRepository.save(account);
             issuedSecretForResponse = rawSecret;
         } else {
             account = existing.get();
-            if (account.getGuestSecret() == null) {
-                // 레거시 계정(이 secret 도입 이전 가입) — 1회에 한해 검증 없이 통과시키고 secret을 발급해 마이그레이션
-                log.info("Legacy guest account without secret, issuing new secret: accountId={}", account.getId());
-                String rawSecret = generateGuestSecret();
-                account.setGuestSecret(passwordEncoder.encode(rawSecret));
-                accountRepository.save(account);
-                issuedSecretForResponse = rawSecret;
-            } else {
-                // 정상 보호된 계정 — secret 검증 필수
-                if (presentedSecret == null || presentedSecret.trim().isEmpty()) {
-                    log.warn("[임시로그] guestLogin secret 없음: accountId={}", account.getId());
-                    throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GUEST_NULL_SECRET);
-                }
-                if (passwordEncoder.matches(presentedSecret, account.getGuestSecret()) == false) {
-                    log.warn("[임시로그] guestLogin secret 불일치: accountId={}", account.getId());
-                    throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GUEST_SECRET_MISMATCH);
-                }
-                log.info("[임시로그] guestLogin secret 검증 통과: accountId={}", account.getId());
+            // 정상 보호된 계정 — secret 검증 필수
+            if (presentedSecret == null || presentedSecret.trim().isEmpty()) {
+                log.warn("[임시로그] guestLogin secret 없음: accountId={}", account.getId());
+                throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GUEST_NULL_SECRET);
             }
+            if (passwordEncoder.matches(presentedSecret, account.getGuestSecret()) == false) {
+                log.warn("[임시로그] guestLogin secret 불일치: accountId={}", account.getId());
+                throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GUEST_SECRET_MISMATCH);
+            }
+            log.info("[임시로그] guestLogin secret 검증 통과: accountId={}", account.getId());
         }
 
         String refreshToken = jwtUtil.createRefreshToken(account.getId());

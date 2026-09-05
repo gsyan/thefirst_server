@@ -26,15 +26,17 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- ============================================================
 CREATE TABLE account (
     id            BIGINT          NOT NULL AUTO_INCREMENT,
-    email         VARCHAR(255)    NOT NULL,
+    email         VARCHAR(255)        NULL,
     password      VARCHAR(255)    NOT NULL,
     google_id     VARCHAR(255)        NULL,
+    guest_id      VARCHAR(255)        NULL,
     guest_secret  VARCHAR(255)        NULL,
     deleted       TINYINT(1)      NOT NULL DEFAULT 0,
     date_time     DATETIME(6)     NOT NULL,
     PRIMARY KEY (id),
     UNIQUE KEY uk_account_email     (email),
-    UNIQUE KEY uk_account_google_id (google_id)
+    UNIQUE KEY uk_account_google_id (google_id),
+    UNIQUE KEY uk_account_guest_id  (guest_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================

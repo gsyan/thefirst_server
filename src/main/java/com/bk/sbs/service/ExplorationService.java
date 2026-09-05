@@ -17,6 +17,7 @@ import com.bk.sbs.util.RewardCardSelector;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +35,10 @@ public class ExplorationService {
     private final ZoneCellClearLogRepository zoneCellClearLogRepository;
     private final GameDataService gameDataService;
     private final ObjectMapper objectMapper;
+
+    // false면 highestClearedZoneNumber 검사를 건너뜀 — 웨이브 밸런스 테스트용(application.properties)
+    @Value("${zone.require-previous-stage-cleared:true}")
+    private boolean requirePreviousStageCleared;
 
     public ExplorationService(CommanderRepository commanderRepository, ZoneRunRepository zoneRunRepository,
                                ZoneCellClearLogRepository zoneCellClearLogRepository,
@@ -231,11 +236,24 @@ public class ExplorationService {
 
         Optional<ZoneRun> activeRunOpt = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS);
 
+        // 다른 존에 진행 중인 런이 있어도, 그 런에서 셀을 하나도 클리어하지 못했다면(대치화면만 보고 물러났거나 첫 전투
+        // 클리어 전에 퇴각) 실질적으로 "진행 중"이 아니므로 확인 없이 조용히 종료(0포인트 정산)하고 새 런으로 진행
+        if (activeRunOpt.isPresent() && activeRunOpt.get().getZoneNumber() != request.getZoneNumber()) {
+            ZoneRun otherZoneRun = activeRunOpt.get();
+            boolean hasAnyProgress = zoneCellClearLogRepository.existsByZoneRunId(otherZoneRun.getId());
+            log.info("[enterExplorationCell] 다른 존 런 감지: commanderId={}, otherRunId={}, otherZone={}, requestedZone={}, hasAnyProgress={}",
+                    commanderId, otherZoneRun.getId(), otherZoneRun.getZoneNumber(), request.getZoneNumber(), hasAnyProgress);
+            if (hasAnyProgress == true)
+                throw new BusinessException(ServerErrorCode.EXPLORATION_ANOTHER_ZONE_IN_PROGRESS);
+
+            settleZoneRun(commander, otherZoneRun, false);
+            log.info("[enterExplorationCell] 진행 없는 런 조용히 종료함: otherRunId={}", otherZoneRun.getId());
+            activeRunOpt = Optional.empty();
+        }
+
         ZoneRun run;
         if (activeRunOpt.isPresent()) {
             run = activeRunOpt.get();
-            if (run.getZoneNumber() != request.getZoneNumber())
-                throw new BusinessException(ServerErrorCode.EXPLORATION_ANOTHER_ZONE_IN_PROGRESS);
 
             validateCellChallenge(zoneConfig, run.getCurrentRow(), run.getCurrentCol(), request.getCellRow(), request.getCellCol());
 
@@ -256,7 +274,7 @@ public class ExplorationService {
                         .build();
             }
         } else {
-            if (request.getZoneNumber() > commander.getHighestClearedZoneNumber() + 1)
+            if (requirePreviousStageCleared == true && request.getZoneNumber() > commander.getHighestClearedZoneNumber() + 1)
                 throw new BusinessException(ServerErrorCode.EXPLORATION_ZONE_LOCKED);
 
             GridCellOverrideDto startCell = findCellByType(zoneConfig, EGridCellType.Start);

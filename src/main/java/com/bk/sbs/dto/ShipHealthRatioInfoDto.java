@@ -17,4 +17,5 @@ public class ShipHealthRatioInfoDto {
     private Long shipId;
     private Integer positionIndex;
     private Float healthRatio;
+    private Float shieldRatio;
 }
