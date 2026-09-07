@@ -5,7 +5,6 @@ package com.bk.sbs.enums;
  * Auto-generated from Unity C# EGridEventType enum
  */
 public enum EGridEventType {
-    NoEnemy,
     Treasure,
     Trap,
     Merchant;

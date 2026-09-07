@@ -222,6 +222,7 @@ CREATE TABLE zone_cell_clear_log (
     cleared_at                    DATETIME(6)  NOT NULL,
     reward_card_candidates_json   TEXT             NULL, -- 이 셀 클리어 시 추첨된 보상카드 후보 3개(cardId) JSON — 후보 없는 셀(탈출/빈 셀)은 NULL
     reward_card_selected_id       VARCHAR(64)      NULL, -- 확정 선택한 cardId — 아직 선택 전이면 NULL(재접속 시 이 상태로 카드 선택 팝업 복구)
+    treasure_reward_type          VARCHAR(32)      NULL, -- Treasure(Event) 셀 클리어 시 당첨된 보상 종류 — Treasure 셀이 아니면 NULL
     PRIMARY KEY (id),
     INDEX idx_zone_cell_clear_log_run (zone_run_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

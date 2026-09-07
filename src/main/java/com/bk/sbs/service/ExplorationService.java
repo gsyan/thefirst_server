@@ -6,6 +6,8 @@ import com.bk.sbs.entity.Commander;
 import com.bk.sbs.entity.ZoneCellClearLog;
 import com.bk.sbs.entity.ZoneRun;
 import com.bk.sbs.enums.EGridCellType;
+import com.bk.sbs.enums.EGridEventType;
+import com.bk.sbs.enums.ETreasureRewardType;
 import com.bk.sbs.enums.EZoneRunStatus;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
@@ -77,6 +79,14 @@ public class ExplorationService {
     // 오탐(정상 유저 차단)이 치트 차단 실패보다 훨씬 나쁘므로 넉넉하게 잡음. 정밀 계산은 알려진 한계로 남겨둠.
     private static final float HEALTH_RATIO_TIME_MARGIN_PER_SEC = 0.01f;
 
+    // Treasure(Event) 셀 보상 — 3종 중 1개를 매 클리어마다 진짜 랜덤(java.util.Random 새 인스턴스)으로 지급
+    private static final ETreasureRewardType[] TREASURE_REWARD_POOL = {
+            ETreasureRewardType.ExplorationPoint, ETreasureRewardType.ShipHealthHeal, ETreasureRewardType.TacticPowerRestore
+    };
+    private static final int TREASURE_EXPLORATION_POINT_MULTIPLIER = 3; // 그 존의 일반 전투 셀 보상의 3배
+    private static final float TREASURE_SHIP_HEALTH_HEAL_RATIO = 0.5f;
+    private static final float TREASURE_TACTIC_POWER_RESTORE_RATIO = 1.0f;
+
     // 체력 비율 범위(0~1), 함선 구성 일치, 직전 스냅샷 대비 증가폭(허용치: 회복 카드 효과 + 시간 여유값) 검증
     private void validateHealthSnapshot(Long commanderId, ZoneRun run, List<ShipHealthRatioInfoDto> reported) {
         if (reported == null || reported.isEmpty()) return;
@@ -109,12 +119,16 @@ public class ExplorationService {
         }
     }
 
-    // 직전 클리어 로그에서 선택 확정된 보상카드가 체력 즉시회복 계열이면 그 회복량을 허용 증가치로 반환
+    // 직전 클리어 로그에서 선택 확정된 보상카드 또는 Treasure 당첨이 체력 즉시회복 계열이면 그 회복량을 허용 증가치로 반환
     private float getPendingHealthHealBonus(ZoneRun run) {
         List<ZoneCellClearLog> clearLogs = zoneCellClearLogRepository.findByZoneRunIdOrderByClearedAtAsc(run.getId());
         if (clearLogs.isEmpty()) return 0f;
 
         ZoneCellClearLog lastLog = clearLogs.get(clearLogs.size() - 1);
+
+        if (lastLog.getTreasureRewardType() == ETreasureRewardType.ShipHealthHeal)
+            return TREASURE_SHIP_HEALTH_HEAL_RATIO;
+
         String selectedCardId = lastLog.getRewardCardSelectedId();
         if (selectedCardId == null) return 0f;
 
@@ -181,6 +195,12 @@ public class ExplorationService {
         return type != EGridCellType.Blocked && type != EGridCellType.Start && type != EGridCellType.Event;
     }
 
+    // enter-cell 시점에 위치를 즉시 확정해도 되는 셀 — Blocked(도달 불가)/Start(시작점)만 해당.
+    // Event(Treasure)는 hasCombatCell()과 달리 여기서 제외하지 않음 — clear-cell 왕복을 거쳐야 트레저 보상을 지급할 수 있기 때문(hasCombatCell은 표준 존 보상/보상카드 지급 여부만 판정하는 별개 기준)
+    private boolean canConfirmPositionOnEnter(EGridCellType type) {
+        return type == EGridCellType.Blocked || type == EGridCellType.Start;
+    }
+
     private GridCellOverrideDto findCellByType(ZoneConfigData zoneConfig, EGridCellType type) {
         List<GridCellOverrideDto> overrides = zoneConfig.getCellOverrides();
         if (overrides == null) return null;
@@ -193,8 +213,9 @@ public class ExplorationService {
     // clear-cell 최소 경과시간 — enter-cell 직후 클리어 요청이 오면(전투를 생략한 것이 명백하므로) 거부. 정상 전투는 이보다 훨씬 오래 걸리므로 넉넉하게 잡음
     private static final long CHALLENGE_TOKEN_MIN_ELAPSED_MILLIS = 2000L;
 
-    // enter-cell이 발급한 1회용 토큰을 검증 — 통과 시 즉시 무효화(재사용 방지). enter-cell 없이 clear-cell만 반복 호출하는 것을 막는 것이 목적
-    private void validateAndConsumeChallengeToken(ZoneRun run, String requestToken, int cellRow, int cellCol) {
+    // enter-cell이 발급한 1회용 토큰을 검증 — 통과 시 즉시 무효화(재사용 방지). enter-cell 없이 clear-cell만 반복 호출하는 것을 막는 것이 목적.
+    // requireMinElapsedTime=false면 최소 경과시간 검사를 건너뜀 — Event(Treasure) 등 애초에 전투가 없는 셀은 "전투를 생략했다"는 의심 자체가 성립하지 않음
+    private void validateAndConsumeChallengeToken(ZoneRun run, String requestToken, int cellRow, int cellCol, boolean requireMinElapsedTime) {
         String expectedCell = cellRow + "-" + cellCol;
         boolean tokenMatches = run.getActiveChallengeToken() != null
                 && run.getActiveChallengeToken().equals(requestToken)
@@ -203,9 +224,11 @@ public class ExplorationService {
         if (tokenMatches == false)
             throw new BusinessException(ServerErrorCode.EXPLORATION_CHALLENGE_TOKEN_INVALID);
 
-        long elapsedMillis = Instant.now().toEpochMilli() - run.getActiveChallengeIssuedAt().toEpochMilli();
-        if (elapsedMillis < CHALLENGE_TOKEN_MIN_ELAPSED_MILLIS)
-            throw new BusinessException(ServerErrorCode.EXPLORATION_CHALLENGE_TOKEN_INVALID);
+        if (requireMinElapsedTime == true) {
+            long elapsedMillis = Instant.now().toEpochMilli() - run.getActiveChallengeIssuedAt().toEpochMilli();
+            if (elapsedMillis < CHALLENGE_TOKEN_MIN_ELAPSED_MILLIS)
+                throw new BusinessException(ServerErrorCode.EXPLORATION_CHALLENGE_TOKEN_INVALID);
+        }
 
         run.setActiveChallengeToken(null);
         run.setActiveChallengeCell(null);
@@ -294,11 +317,11 @@ public class ExplorationService {
         run.setActiveChallengeIssuedAt(Instant.now());
         zoneRunRepository.save(run);
 
-        // 적함대 데이터 자체는 클라가 로컬(같은 seed+row+col)로 생성해서 이미 갖고 있음(UIPanelExplorationGrid.BuildCellEnemyFleets) —
-        // 서버는 전투 스폰 데이터를 만들어 내려줄 필요가 없고, 빈 셀(적 없음)은 전투가 없으므로 클라가 별도로 clear-cell을 부를
-        // 필요 없이 여기서 바로 위치 확정 — validateCellChallenge를 이미 통과했으므로(인접 + Blocked 아님) 이동 가능한 셀인 것은 보장됨
-        boolean hasEnemies = hasCombatCell(zoneConfig, request.getCellRow(), request.getCellCol());
-        if (hasEnemies == false) {
+        // Blocked/Start만 여기서 바로 위치 확정 — validateCellChallenge를 이미 통과했으므로(인접 + Blocked 아님) 이동 가능한 셀인 것은 보장됨.
+        // Event(Treasure)는 hasCombatCell()상 "적 없음"이지만 clear-cell 왕복으로 보상을 지급해야 하므로 여기서 확정하지 않음(canConfirmPositionOnEnter 참고)
+        GridCellOverrideDto enteringCellOverride = findCellOverride(zoneConfig, request.getCellRow(), request.getCellCol());
+        EGridCellType enteringCellType = enteringCellOverride != null ? enteringCellOverride.getType() : null;
+        if (canConfirmPositionOnEnter(enteringCellType) == true) {
             run.setCurrentPosition(request.getCellRow(), request.getCellCol());
             zoneRunRepository.save(run);
         }
@@ -334,15 +357,19 @@ public class ExplorationService {
         int pointsGained = 0;
         int expGained = 0;
         List<String> rewardCardCandidates = null;
+        ETreasureRewardType treasureRewardType = ETreasureRewardType.None;
+        float treasureRewardRatio = 0f;
 
         if (isRevisit == false) {
-            // 최초 클리어(보상 지급)에만 토큰을 요구 — enter-cell 없이 clear-cell 반복 호출로 무한 획득하는 것을 막는 지점
-            validateAndConsumeChallengeToken(run, request.getChallengeToken(), request.getCellRow(), request.getCellCol());
+            // 최초 클리어(보상 지급)에만 토큰을 요구 — enter-cell 없이 clear-cell 반복 호출로 무한 획득하는 것을 막는 지점.
+            // 최소 경과시간 검사는 전투가 있는 셀에서만(hasEnemies) 적용 — Event(Treasure)는 애초에 전투가 없어 "생략" 의심이 성립하지 않고,
+            // 실제로 enter-cell 직후 곧바로 clear-cell을 호출하는 정상 흐름이라 검사를 걸면 항상 실패함
+            boolean hasEnemies = hasCombatCell(zoneConfig, request.getCellRow(), request.getCellCol());
+            validateAndConsumeChallengeToken(run, request.getChallengeToken(), request.getCellRow(), request.getCellCol(), hasEnemies);
 
             // 존 고정 보상값 적립 — 적 함대 성능(commandCost)과 무관, 함선이 있던 셀만 지급(빈 셀은 0)
             // Buff_ExplorationPointRate 배율은 여기서 적용하지 않음 — 적립(banked)은 항상 고정값 그대로 쌓고,
             // 배율은 탈출/포기 확정(settleZoneRun) 시점에 최종 적립 총액에 한 번만 곱함
-            boolean hasEnemies = hasCombatCell(zoneConfig, request.getCellRow(), request.getCellCol());
             pointsGained = hasEnemies ? zoneConfig.getExplorationPointReward() : 0;
             expGained    = hasEnemies ? zoneConfig.getCommanderExpReward()     : 0;
 
@@ -350,6 +377,20 @@ public class ExplorationService {
             GridCellOverrideDto escapeCell = findCellByType(zoneConfig, EGridCellType.Escape);
             boolean isEscapeCell = escapeCell != null && escapeCell.getRow() == request.getCellRow() && escapeCell.getCol() == request.getCellCol();
             rewardCardCandidates = (hasEnemies == true && isEscapeCell == false) ? rollRewardCardCandidates() : null;
+
+            // Event(Treasure) 셀 — 표준 존 보상/보상카드와는 별개로 3종 중 1개를 진짜 랜덤(매 호출 새 Random 인스턴스)으로 지급
+            GridCellOverrideDto cellOverride = findCellOverride(zoneConfig, request.getCellRow(), request.getCellCol());
+            boolean isTreasureCell = cellOverride != null && cellOverride.getType() == EGridCellType.Event
+                    && cellOverride.getEventType() == EGridEventType.Treasure;
+            if (isTreasureCell == true) {
+                treasureRewardType = TREASURE_REWARD_POOL[new java.util.Random().nextInt(TREASURE_REWARD_POOL.length)];
+                if (treasureRewardType == ETreasureRewardType.ExplorationPoint)
+                    pointsGained = zoneConfig.getExplorationPointReward() * TREASURE_EXPLORATION_POINT_MULTIPLIER;
+                else if (treasureRewardType == ETreasureRewardType.ShipHealthHeal)
+                    treasureRewardRatio = TREASURE_SHIP_HEALTH_HEAL_RATIO;
+                else if (treasureRewardType == ETreasureRewardType.TacticPowerRestore)
+                    treasureRewardRatio = TREASURE_TACTIC_POWER_RESTORE_RATIO;
+            }
         }
 
         validateHealthSnapshot(commanderId, run, request.getShipHealthRatios());
@@ -358,19 +399,25 @@ public class ExplorationService {
         run.setExplorationPointBanked(run.getExplorationPointBanked() + pointsGained);
         run.setCommanderExpBanked(run.getCommanderExpBanked() + expGained);
         run.setFleetHealthSnapshotJson(serializeHealthSnapshot(request.getShipHealthRatios(), run.getFleetHealthSnapshotJson()));
-        // 전투 중엔 서버에 실시간 저장하지 않고 셀 클리어 확정 시점에만 전술력을 저장 — 0~tacticPowerMax로 클램프(체력 스냅샷과 동일하게 클라 계산값을 신뢰하되 범위만 방어)
+        // 전투 중엔 서버에 실시간 저장하지 않고 셀 클리어 확정 시점에만 전술력을 저장 — 0~tacticPowerMax로 클램프(체력 스냅샷과 동일하게 클라 계산값을 신뢰하되 범위만 방어).
+        // TacticPowerRestore 트레저 당첨 시에는 클라 보고값과 무관하게 전액 회복으로 덮어씀(서버 확정값)
         int reportedTacticPower = request.getTacticPower() != null ? request.getTacticPower() : run.getTacticPower();
         int clampedTacticPower = Math.max(0, Math.min(reportedTacticPower, commander.getTacticPowerMax()));
-        run.setTacticPower(clampedTacticPower);
+        int finalTacticPower = treasureRewardType == ETreasureRewardType.TacticPowerRestore ? commander.getTacticPowerMax() : clampedTacticPower;
+        run.setTacticPower(finalTacticPower);
         zoneRunRepository.save(run);
 
         ZoneCellClearLog clearLog = new ZoneCellClearLog(run.getId(), request.getCellRow(), request.getCellCol());
         clearLog.setRewardCardCandidatesJson(serializeCardIdList(rewardCardCandidates));
+        clearLog.setTreasureRewardType(treasureRewardType == ETreasureRewardType.None ? null : treasureRewardType);
         zoneCellClearLogRepository.save(clearLog);
 
         return ClearExplorationCellResponse.builder()
                 .explorationPointGained(pointsGained)
                 .expGained(expGained)
+                .treasureRewardType(treasureRewardType)
+                .treasureRewardRatio(treasureRewardRatio)
+                .tacticPower(finalTacticPower)
                 .rewardCardCandidates(rewardCardCandidates)
                 .build();
     }

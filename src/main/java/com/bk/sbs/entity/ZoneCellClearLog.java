@@ -1,5 +1,6 @@
 package com.bk.sbs.entity;
 
+import com.bk.sbs.enums.ETreasureRewardType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,6 +37,11 @@ public class ZoneCellClearLog {
     // 확정 선택한 cardId — 아직 선택 전이면 null(재접속 시 이 상태로 카드 선택 팝업 복구)
     @Column(name = "reward_card_selected_id", length = 64)
     private String rewardCardSelectedId;
+
+    // Treasure(Event) 셀 클리어 시 당첨된 보상 종류 — Treasure 셀이 아니면 null. getPendingHealthHealBonus()가 ShipHealthHeal 당첨 여부 확인에 사용
+    @Enumerated(EnumType.STRING)
+    @Column(name = "treasure_reward_type", length = 32)
+    private ETreasureRewardType treasureRewardType;
 
     public ZoneCellClearLog(Long zoneRunId, int cellRow, int cellCol) {
         this.zoneRunId = zoneRunId;

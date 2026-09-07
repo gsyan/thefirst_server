@@ -134,10 +134,6 @@ public class FleetService {
                 ? filterModulesForNewHull(existingModules, newMaxSlots, request.getHullSubType(), ship)
                 : buildDefaultModules(ship);
 
-        boolean hasAttackModule = keptModules.stream().anyMatch(m -> isAttackModuleType(m.getModuleType()));
-        if (hasAttackModule == false)
-            throw new BusinessException(ServerErrorCode.PLACE_FLEET_SHIP_FAIL_NO_ATTACK_MODULE_REMAINING);
-
         int newShipCost = hullData.getStatPoint() != null ? hullData.getStatPoint() : 0;
         for (Module m : keptModules) {
             int installCost = getModuleStatPoint(m.getModuleType(), m.getModuleSubType());
@@ -200,14 +196,9 @@ public class FleetService {
         return 0;
     }
 
-    // 기본 로드아웃(beam slot0=beam_1_1)을 상수 규칙으로 생성 — 전 함체 공통, 무기 티어는 함체와 독립적인 별도 축. 반영(저장)은 호출부 책임
+    // 빈 슬롯의 기본 로드아웃 — 무기 없이 배치. 반영(저장)은 호출부 책임
     private List<Module> buildDefaultModules(Ship ship) {
-        Module module = new Module();
-        module.setShip(ship);
-        module.setModuleType(EModuleType.beam);
-        module.setSlotIndex(0);
-        module.setModuleSubType("beam_1_1");
-        return new ArrayList<>(List.of(module));
+        return new ArrayList<>();
     }
 
     // Hibernate orphanRemoval 컬렉션은 필드 참조 자체를 새 List로 갈아끼우면 안 됨(기존에 관리되던 컬렉션이 고아가 되어
@@ -234,10 +225,6 @@ public class FleetService {
             case shield -> "shield_1_1";
             default -> null;
         };
-    }
-
-    private boolean isAttackModuleType(EModuleType moduleType) {
-        return moduleType == EModuleType.beam || moduleType == EModuleType.missile || moduleType == EModuleType.hangar;
     }
 
     private int getModuleStatPoint(EModuleType moduleType, String subType) {
@@ -343,10 +330,6 @@ public class FleetService {
         appendDesiredModules(desired, EModuleType.missile, maxSlots[1], hullTier, requestedModules != null ? requestedModules.getMissiles() : null);
         appendDesiredModules(desired, EModuleType.hangar, maxSlots[2], hullTier, requestedModules != null ? requestedModules.getHangars() : null);
         appendDesiredShield(desired, maxSlots[3], requestedModules != null ? requestedModules.getShieldModuleSubType() : null);
-
-        boolean hasAttackModule = desired.stream().anyMatch(m -> isAttackModuleType(m.moduleType()));
-        if (hasAttackModule == false)
-            throw new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_NO_ATTACK_MODULE_REMAINING);
 
         int newShipCost = computeHullCost(ship.getHullSubType());
         for (DesiredModule m : desired) {

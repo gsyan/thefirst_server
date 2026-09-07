@@ -18,6 +18,7 @@
   "aircraftTacticDamageMultiplier": 2.0,
   "aircraftTacticAmmoMultiplier": 2.0,
   "shieldTacticExplorationPointPerSec": 1,
+  "interceptorTacticExplorationPointPerSec": 1,
   "shipStatFormula": {
     "maxModuleSlots": 6,
     "maxAttackReinforcePointsPerSlot": 10,
