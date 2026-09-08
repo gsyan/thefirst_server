@@ -5,6 +5,6 @@ package com.bk.sbs.enums;
  * Auto-generated from Unity C# EDailyBonusRewardType enum
  */
 public enum EDailyBonusRewardType {
-    ExplorationPoint;
+    ExplorationPoint, AchievementPoint;
 
 }

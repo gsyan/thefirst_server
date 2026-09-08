@@ -92,8 +92,8 @@ public class Commander {
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
     private int vipClaimedDaysMask = 0;
 
-    // claimedDaysMask 기준 달 (yyyyMM, 새 달 판단용)
-    private Integer loginRewardMonth;
+    // claimedDaysMask 기준 주(週) 시작일 — 이번 주 월요일 UTC 날짜, 새 주 판단용
+    private LocalDate loginRewardWeekStart;
 
     // 일일 로그인 보상을 실제로 마지막 수령한 UTC 날짜 — todayDay(출석 순번) 계산이 마스크 비트 수 기반이라
     // 같은 날 중복 호출 시 순번이 잘못 증가하는 것을 막기 위한 가드

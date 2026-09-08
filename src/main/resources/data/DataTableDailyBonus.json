@@ -10,7 +10,7 @@
       {
         "tier": "VIP",
         "rewardType": "ExplorationPoint",
-        "amount": 200
+        "amount": 0
       }
     ]
   },
@@ -20,12 +20,12 @@
       {
         "tier": "Normal",
         "rewardType": "ExplorationPoint",
-        "amount": 100
+        "amount": 200
       },
       {
         "tier": "VIP",
         "rewardType": "ExplorationPoint",
-        "amount": 200
+        "amount": 0
       }
     ]
   },
@@ -35,12 +35,12 @@
       {
         "tier": "Normal",
         "rewardType": "ExplorationPoint",
-        "amount": 100
+        "amount": 300
       },
       {
         "tier": "VIP",
         "rewardType": "ExplorationPoint",
-        "amount": 200
+        "amount": 0
       }
     ]
   },
@@ -50,12 +50,22 @@
       {
         "tier": "Normal",
         "rewardType": "ExplorationPoint",
-        "amount": 100
+        "amount": 300
+      },
+      {
+        "tier": "Normal",
+        "rewardType": "AchievementPoint",
+        "amount": 10
       },
       {
         "tier": "VIP",
         "rewardType": "ExplorationPoint",
-        "amount": 200
+        "amount": 0
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "AchievementPoint",
+        "amount": 0
       }
     ]
   },
@@ -65,12 +75,22 @@
       {
         "tier": "Normal",
         "rewardType": "ExplorationPoint",
-        "amount": 100
+        "amount": 300
+      },
+      {
+        "tier": "Normal",
+        "rewardType": "AchievementPoint",
+        "amount": 20
       },
       {
         "tier": "VIP",
         "rewardType": "ExplorationPoint",
-        "amount": 200
+        "amount": 0
+      },
+      {
+        "tier": "VIP",
+        "rewardType": "AchievementPoint",
+        "amount": 0
       }
     ]
   },
@@ -80,342 +100,22 @@
       {
         "tier": "Normal",
         "rewardType": "ExplorationPoint",
-        "amount": 100
+        "amount": 300
       },
-      {
-        "tier": "VIP",
-        "rewardType": "ExplorationPoint",
-        "amount": 200
-      }
-    ]
-  },
-  {
-    "day": 7,
-    "rewards": [
       {
         "tier": "Normal",
-        "rewardType": "ExplorationPoint",
-        "amount": 100
+        "rewardType": "AchievementPoint",
+        "amount": 30
       },
       {
         "tier": "VIP",
         "rewardType": "ExplorationPoint",
-        "amount": 200
-      }
-    ]
-  },
-  {
-    "day": 8,
-    "rewards": [
-      {
-        "tier": "Normal",
-        "rewardType": "ExplorationPoint",
-        "amount": 100
+        "amount": 0
       },
       {
         "tier": "VIP",
-        "rewardType": "ExplorationPoint",
-        "amount": 200
-      }
-    ]
-  },
-  {
-    "day": 9,
-    "rewards": [
-      {
-        "tier": "Normal",
-        "rewardType": "ExplorationPoint",
-        "amount": 100
-      },
-      {
-        "tier": "VIP",
-        "rewardType": "ExplorationPoint",
-        "amount": 200
-      }
-    ]
-  },
-  {
-    "day": 10,
-    "rewards": [
-      {
-        "tier": "Normal",
-        "rewardType": "ExplorationPoint",
-        "amount": 100
-      },
-      {
-        "tier": "VIP",
-        "rewardType": "ExplorationPoint",
-        "amount": 200
-      }
-    ]
-  },
-  {
-    "day": 11,
-    "rewards": [
-      {
-        "tier": "Normal",
-        "rewardType": "ExplorationPoint",
-        "amount": 100
-      },
-      {
-        "tier": "VIP",
-        "rewardType": "ExplorationPoint",
-        "amount": 200
-      }
-    ]
-  },
-  {
-    "day": 12,
-    "rewards": [
-      {
-        "tier": "Normal",
-        "rewardType": "ExplorationPoint",
-        "amount": 100
-      },
-      {
-        "tier": "VIP",
-        "rewardType": "ExplorationPoint",
-        "amount": 200
-      }
-    ]
-  },
-  {
-    "day": 13,
-    "rewards": [
-      {
-        "tier": "Normal",
-        "rewardType": "ExplorationPoint",
-        "amount": 100
-      },
-      {
-        "tier": "VIP",
-        "rewardType": "ExplorationPoint",
-        "amount": 200
-      }
-    ]
-  },
-  {
-    "day": 14,
-    "rewards": [
-      {
-        "tier": "Normal",
-        "rewardType": "ExplorationPoint",
-        "amount": 100
-      },
-      {
-        "tier": "VIP",
-        "rewardType": "ExplorationPoint",
-        "amount": 200
-      }
-    ]
-  },
-  {
-    "day": 15,
-    "rewards": [
-      {
-        "tier": "Normal",
-        "rewardType": "ExplorationPoint",
-        "amount": 100
-      },
-      {
-        "tier": "VIP",
-        "rewardType": "ExplorationPoint",
-        "amount": 200
-      }
-    ]
-  },
-  {
-    "day": 16,
-    "rewards": [
-      {
-        "tier": "Normal",
-        "rewardType": "ExplorationPoint",
-        "amount": 100
-      },
-      {
-        "tier": "VIP",
-        "rewardType": "ExplorationPoint",
-        "amount": 200
-      }
-    ]
-  },
-  {
-    "day": 17,
-    "rewards": [
-      {
-        "tier": "Normal",
-        "rewardType": "ExplorationPoint",
-        "amount": 100
-      },
-      {
-        "tier": "VIP",
-        "rewardType": "ExplorationPoint",
-        "amount": 200
-      }
-    ]
-  },
-  {
-    "day": 18,
-    "rewards": [
-      {
-        "tier": "Normal",
-        "rewardType": "ExplorationPoint",
-        "amount": 100
-      },
-      {
-        "tier": "VIP",
-        "rewardType": "ExplorationPoint",
-        "amount": 200
-      }
-    ]
-  },
-  {
-    "day": 19,
-    "rewards": [
-      {
-        "tier": "Normal",
-        "rewardType": "ExplorationPoint",
-        "amount": 100
-      },
-      {
-        "tier": "VIP",
-        "rewardType": "ExplorationPoint",
-        "amount": 200
-      }
-    ]
-  },
-  {
-    "day": 20,
-    "rewards": [
-      {
-        "tier": "Normal",
-        "rewardType": "ExplorationPoint",
-        "amount": 100
-      },
-      {
-        "tier": "VIP",
-        "rewardType": "ExplorationPoint",
-        "amount": 200
-      }
-    ]
-  },
-  {
-    "day": 21,
-    "rewards": [
-      {
-        "tier": "Normal",
-        "rewardType": "ExplorationPoint",
-        "amount": 100
-      },
-      {
-        "tier": "VIP",
-        "rewardType": "ExplorationPoint",
-        "amount": 200
-      }
-    ]
-  },
-  {
-    "day": 22,
-    "rewards": [
-      {
-        "tier": "Normal",
-        "rewardType": "ExplorationPoint",
-        "amount": 100
-      },
-      {
-        "tier": "VIP",
-        "rewardType": "ExplorationPoint",
-        "amount": 200
-      }
-    ]
-  },
-  {
-    "day": 23,
-    "rewards": [
-      {
-        "tier": "Normal",
-        "rewardType": "ExplorationPoint",
-        "amount": 100
-      },
-      {
-        "tier": "VIP",
-        "rewardType": "ExplorationPoint",
-        "amount": 200
-      }
-    ]
-  },
-  {
-    "day": 24,
-    "rewards": [
-      {
-        "tier": "Normal",
-        "rewardType": "ExplorationPoint",
-        "amount": 100
-      },
-      {
-        "tier": "VIP",
-        "rewardType": "ExplorationPoint",
-        "amount": 200
-      }
-    ]
-  },
-  {
-    "day": 25,
-    "rewards": [
-      {
-        "tier": "Normal",
-        "rewardType": "ExplorationPoint",
-        "amount": 100
-      },
-      {
-        "tier": "VIP",
-        "rewardType": "ExplorationPoint",
-        "amount": 200
-      }
-    ]
-  },
-  {
-    "day": 26,
-    "rewards": [
-      {
-        "tier": "Normal",
-        "rewardType": "ExplorationPoint",
-        "amount": 100
-      },
-      {
-        "tier": "VIP",
-        "rewardType": "ExplorationPoint",
-        "amount": 200
-      }
-    ]
-  },
-  {
-    "day": 27,
-    "rewards": [
-      {
-        "tier": "Normal",
-        "rewardType": "ExplorationPoint",
-        "amount": 100
-      },
-      {
-        "tier": "VIP",
-        "rewardType": "ExplorationPoint",
-        "amount": 200
-      }
-    ]
-  },
-  {
-    "day": 28,
-    "rewards": [
-      {
-        "tier": "Normal",
-        "rewardType": "ExplorationPoint",
-        "amount": 100
-      },
-      {
-        "tier": "VIP",
-        "rewardType": "ExplorationPoint",
-        "amount": 200
+        "rewardType": "AchievementPoint",
+        "amount": 0
       }
     ]
   }

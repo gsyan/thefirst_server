@@ -1,10 +1,14 @@
 package com.bk.sbs.service;
 
+import com.bk.sbs.config.DataTableDailyBonus;
+import com.bk.sbs.dto.DailyBonusStatusResponse;
 import com.bk.sbs.dto.DailyClaimResponse;
 import com.bk.sbs.dto.VipPurchaseRequest;
 import com.bk.sbs.dto.VipStatusResponse;
 import com.bk.sbs.entity.Commander;
 import com.bk.sbs.entity.VipSubscription;
+import com.bk.sbs.enums.EDailyBonusRewardType;
+import com.bk.sbs.enums.EDailyBonusTier;
 import com.bk.sbs.repository.CommanderRepository;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
@@ -23,6 +27,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.time.DayOfWeek;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
@@ -30,6 +35,7 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -142,86 +148,155 @@ public class IapService {
         return buildStatusResponse(expiry);
     }
 
-    // ── 일일 로그인 보상 지급 (고정 10 exploration point) ──────────────
+    // ── 일일 로그인 보상 (6일 주기, 매주 월요일 UTC 0시 리셋) ──────────────
 
-    private static final int DAILY_EXPLORATION_POINT_REWARD = 10;
+    private static final int DAILY_BONUS_CYCLE_DAYS = 6;
 
+    // 조회(getDailyBonusStatus)/수령(claimDailyReward) 공용 — DB에 쓰지 않고 "지금 이 순간"의 상태만 계산
+    private DailyBonusState computeDailyBonusState(Commander commander, LocalDate today) {
+        LocalDate currentWeekStart = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDate savedWeekStart = commander.getLoginRewardWeekStart();
+        boolean isNewWeek = savedWeekStart == null || savedWeekStart.isEqual(currentWeekStart) == false;
+
+        int effectiveMask    = isNewWeek ? 0 : commander.getClaimedDaysMask();
+        int effectiveVipMask = isNewWeek ? 0 : commander.getVipClaimedDaysMask();
+        boolean claimedToday = isNewWeek ? false : today.equals(commander.getLastDailyClaimDate());
+        int todayInWeek = Integer.bitCount(effectiveMask) + (claimedToday ? 0 : 1);
+
+        return new DailyBonusState(currentWeekStart, isNewWeek, effectiveMask, effectiveVipMask, claimedToday, todayInWeek);
+    }
+
+    private static class DailyBonusState {
+        final LocalDate currentWeekStart;
+        final boolean isNewWeek;
+        final int effectiveMask;
+        final int effectiveVipMask;
+        final boolean claimedToday;
+        final int todayInWeek;
+
+        DailyBonusState(LocalDate currentWeekStart, boolean isNewWeek, int effectiveMask, int effectiveVipMask,
+                        boolean claimedToday, int todayInWeek) {
+            this.currentWeekStart = currentWeekStart;
+            this.isNewWeek = isNewWeek;
+            this.effectiveMask = effectiveMask;
+            this.effectiveVipMask = effectiveVipMask;
+            this.claimedToday = claimedToday;
+            this.todayInWeek = todayInWeek;
+        }
+    }
+
+    // 조회 전용 — 지급 없이 오늘 수령 가능 여부만 확인(로그인 시점 레드닷 갱신용)
+    public DailyBonusStatusResponse getDailyBonusStatus(Long commanderId) {
+        Commander commander = commanderRepository.findById(commanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.IAP_DAILY_CLAIM_FAIL_COMMANDER_NOT_FOUND));
+
+        ZonedDateTime nowUtc = Instant.now().atZone(ZoneOffset.UTC);
+        LocalDate today = nowUtc.toLocalDate();
+        DailyBonusState state = computeDailyBonusState(commander, today);
+
+        boolean available = state.todayInWeek <= DAILY_BONUS_CYCLE_DAYS && state.claimedToday == false;
+        Instant nextMidnightUtc = nowUtc.withHour(0).withMinute(0).withSecond(0).withNano(0).plusDays(1).toInstant();
+
+        return DailyBonusStatusResponse.builder()
+                .available(available)
+                .todayDay(state.todayInWeek)
+                .claimedDaysMask(state.effectiveMask)
+                .vipClaimedDaysMask(state.effectiveVipMask)
+                .loginRewardWeekStart(state.currentWeekStart.toString())
+                .nextAvailableAt(DateTimeFormatter.ISO_INSTANT.format(nextMidnightUtc))
+                .build();
+    }
+
+    // 수령 전용 — 달력 팝업의 오늘 칸 Claim 버튼에서만 호출됨
     @Transactional
     public DailyClaimResponse claimDailyReward(Long commanderId) {
-        // 1) 케릭터 확보
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.IAP_DAILY_CLAIM_FAIL_COMMANDER_NOT_FOUND));
 
-        // 2) 오늘 날짜 계산, UTC 날짜, 월
-        Instant now = Instant.now();
-        ZonedDateTime nowUtc = now.atZone(ZoneOffset.UTC);
+        ZonedDateTime nowUtc = Instant.now().atZone(ZoneOffset.UTC);
         LocalDate today = nowUtc.toLocalDate();
-        int currentMonth = nowUtc.getYear() * 100 + nowUtc.getMonthValue();
+        DailyBonusState state = computeDailyBonusState(commander, today);
 
-        // 3) 새로운 달(month) 되었다면 마스크 클리어, loginRewardMonth 업데이트
-        Integer savedMonth = commander.getLoginRewardMonth();
-        boolean isNewMonth = savedMonth == null || savedMonth != currentMonth;
-        boolean needsSave  = false;
-        if (isNewMonth == true) {
+        if (state.isNewWeek == true) {
             commander.setClaimedDaysMask(0);
             commander.setVipClaimedDaysMask(0);
-            commander.setLoginRewardMonth(currentMonth);
+            commander.setLoginRewardWeekStart(state.currentWeekStart);
             commander.setLastDailyClaimDate(null);
-            needsSave = true;
         }
-        // 4) 정보 취합
-        int currentMask      = commander.getClaimedDaysMask();
-        int currentVipMask   = commander.getVipClaimedDaysMask();
-        int loginRewardMonth = commander.getLoginRewardMonth();
-        // 다음 받을 시간
+
         Instant nextMidnightUtc = nowUtc.withHour(0).withMinute(0).withSecond(0).withNano(0).plusDays(1).toInstant();
         String nextAvailableAt = DateTimeFormatter.ISO_INSTANT.format(nextMidnightUtc);
 
-        // 5) 출석 순번(todayInMonth) — 같은 날 중복 호출 시 순번이 잘못 증가하지 않도록 lastDailyClaimDate로 가드
-        boolean normalAlreadyClaimed = today.equals(commander.getLastDailyClaimDate());
-        int todayInMonth = Integer.bitCount(currentMask) + (normalAlreadyClaimed ? 0 : 1);
-        int todayBit = 1 << (todayInMonth - 1);
-        // 응답 기본값
-        boolean available                 = false;
-        int grantedExplorationPoint       = 0;
-        Integer explorationPointRemain    = null;
+        boolean available = false;
+        int grantedExplorationPoint = 0;
+        int grantedAchievementPoint = 0;
 
-        // 6) 28일 이내이면 보상 지급 가능 (todayInMonth는 1부터 28까지)
-        if (todayInMonth <= 28) {
-            // 일반 보상 처리
-            if (normalAlreadyClaimed == false) {
-                grantedExplorationPoint += DAILY_EXPLORATION_POINT_REWARD;
-                commander.setClaimedDaysMask(currentMask | todayBit);
-                commander.setLastDailyClaimDate(today);
-                needsSave = true;
+        if (state.todayInWeek <= DAILY_BONUS_CYCLE_DAYS && state.claimedToday == false) {
+            boolean isVip = isVipActive(commanderId);
+            int todayBit = 1 << (state.todayInWeek - 1);
+
+            DataTableDailyBonus dataTableDailyBonus = gameDataService.getDataTableDailyBonus();
+            List<DataTableDailyBonus.RewardEntry> normalRewards = dataTableDailyBonus.getRewards(state.todayInWeek, EDailyBonusTier.Normal);
+            for (DataTableDailyBonus.RewardEntry reward : normalRewards) {
+                if (reward.getRewardType() == EDailyBonusRewardType.ExplorationPoint)
+                    grantedExplorationPoint += reward.getAmount();
+                else if (reward.getRewardType() == EDailyBonusRewardType.AchievementPoint)
+                    grantedAchievementPoint += reward.getAmount();
             }
 
-            // 실제로 지급된 exploration point가 있을 때만 available 처리
+            boolean vipGranted = false;
+            if (isVip == true) {
+                List<DataTableDailyBonus.RewardEntry> vipRewards = dataTableDailyBonus.getRewards(state.todayInWeek, EDailyBonusTier.VIP);
+                for (DataTableDailyBonus.RewardEntry reward : vipRewards) {
+                    if (reward.getAmount() <= 0) continue;
+                    vipGranted = true;
+                    if (reward.getRewardType() == EDailyBonusRewardType.ExplorationPoint)
+                        grantedExplorationPoint += reward.getAmount();
+                    else if (reward.getRewardType() == EDailyBonusRewardType.AchievementPoint)
+                        grantedAchievementPoint += reward.getAmount();
+                }
+            }
+
+            commander.setClaimedDaysMask(state.effectiveMask | todayBit);
+            if (vipGranted == true)
+                commander.setVipClaimedDaysMask(state.effectiveVipMask | todayBit);
+            commander.setLastDailyClaimDate(today);
+
             if (grantedExplorationPoint > 0) {
                 commander.setExplorationPoint(commander.getExplorationPoint() + grantedExplorationPoint);
                 commander.setExplorationPointEarnedTotal(commander.getExplorationPointEarnedTotal() + grantedExplorationPoint);
-
-                available               = true;
-                explorationPointRemain  = commander.getExplorationPoint();
-
-                log.info("[IAP] 일일 로그인 보상 commanderId={} amount={} day={} mask={} vipMask={}",
-                        commanderId, grantedExplorationPoint, todayInMonth, commander.getClaimedDaysMask(), commander.getVipClaimedDaysMask());
             }
+            if (grantedAchievementPoint > 0)
+                commander.setAchievementPoint(commander.getAchievementPoint() + grantedAchievementPoint);
+
+            available = grantedExplorationPoint > 0 || grantedAchievementPoint > 0;
+
+            log.info("[IAP] 일일 로그인 보상 commanderId={} day={} exploration={} achievement={} vip={} mask={} vipMask={}",
+                    commanderId, state.todayInWeek, grantedExplorationPoint, grantedAchievementPoint, isVip,
+                    commander.getClaimedDaysMask(), commander.getVipClaimedDaysMask());
         }
 
-        if (needsSave == true)
-            commanderRepository.save(commander);
+        commanderRepository.save(commander);
 
         return DailyClaimResponse.builder()
                 .available(available)
                 .grantedExplorationPoint(grantedExplorationPoint)
-                .explorationPointRemain(explorationPointRemain)
-                .nextAvailableAt(todayInMonth <= 28 ? nextAvailableAt : null)
-                .todayDay(todayInMonth)
+                .grantedAchievementPoint(grantedAchievementPoint)
+                .explorationPointRemain(commander.getExplorationPoint())
+                .achievementPointRemain(commander.getAchievementPoint())
+                .nextAvailableAt(state.todayInWeek <= DAILY_BONUS_CYCLE_DAYS ? nextAvailableAt : null)
+                .todayDay(state.todayInWeek)
                 .claimedDaysMask(commander.getClaimedDaysMask())
                 .vipClaimedDaysMask(commander.getVipClaimedDaysMask())
-                .loginRewardMonth(loginRewardMonth)
+                .loginRewardWeekStart(commander.getLoginRewardWeekStart().toString())
                 .build();
+    }
+
+    // 활성 VIP 여부 — getVipStatus()의 만료시각 판정과 동일한 기준
+    private boolean isVipActive(Long commanderId) {
+        Optional<VipSubscription> sub = vipSubscriptionRepository.findByCommanderId(commanderId);
+        Instant expiry = sub.isPresent() ? sub.get().getVipExpiry() : null;
+        return expiry != null && Instant.now().isBefore(expiry);
     }
 
     // ── 내부 메서드 ──────────────────────────────────────────────────────────

@@ -351,6 +351,10 @@ public class GameDataService {
         return dataTablePvpSeason != null ? dataTablePvpSeason : new DataTablePvpSeason();
     }
 
+    public DataTableDailyBonus getDataTableDailyBonus() {
+        return dataTableDailyBonus != null ? dataTableDailyBonus : new DataTableDailyBonus();
+    }
+
     public ZoneConfigData getZoneConfigByIndex(int zoneIndex) {
         return getZoneConfig().getZoneByIndex(zoneIndex);
     }
