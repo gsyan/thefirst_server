@@ -20,4 +20,5 @@ public class AbandonZoneRunResponse {
     private Integer totalExp;
     private Integer commanderLevel;
     private Integer tacticPower;
+    private Boolean hasUnclaimedAchievement;
 }

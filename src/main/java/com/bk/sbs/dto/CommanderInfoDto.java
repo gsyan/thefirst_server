@@ -26,10 +26,13 @@ public class CommanderInfoDto {
     private Integer explorationSeedBase;
     private List<String> clearedZones;
     private Integer explorationPoint;
+    private Integer achievementPoint;
+    private List<String> unlockedHulls;
     private Integer explorationZoneNumber;
     private String explorationCell;
     private Integer highestClearedZoneNumber;
     private Integer pvpPoint;
     private Integer pvpPointMaxGot;
     private String pvpPointExpiry;
+    private Boolean hasUnclaimedAchievement;
 }

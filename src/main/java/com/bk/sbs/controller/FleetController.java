@@ -53,6 +53,15 @@ public class FleetController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
+    // 티어4+ 함체를 업적포인트로 언락(구매) — 언락만 처리, 실제 배치는 place-ship을 별도로 호출해야 함
+    @PostMapping("/unlock-hull")
+    public ResponseEntity<ApiResponse<UnlockHullResponse>> unlockHull(
+            @RequestBody UnlockHullRequest request,
+            @CommanderId Long actualCommanderId) {
+        UnlockHullResponse response = fleetService.unlockHull(actualCommanderId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
 }
 
 

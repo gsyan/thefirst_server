@@ -1,7 +1,10 @@
 package com.bk.sbs.repository;
 
 import com.bk.sbs.entity.ZoneCellClearLog;
+import com.bk.sbs.enums.ETreasureRewardType;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -14,4 +17,12 @@ public interface ZoneCellClearLogRepository extends JpaRepository<ZoneCellClearL
 
     // 이 런에서 셀을 하나라도 클리어했는지 — 하나도 없으면 "진행 없는 런"으로 간주(다른 존 충돌 판정에 사용)
     boolean existsByZoneRunId(Long zoneRunId);
+
+    // 업적(CellClear) — 커맨더 전체 런 통틀어 일반(비이벤트) 셀 누적 클리어수. 로그는 영구 보관되므로 이 COUNT가 곧 lifetime 총합
+    @Query("SELECT COUNT(l) FROM ZoneCellClearLog l WHERE l.zoneRunId IN (SELECT r.id FROM ZoneRun r WHERE r.commanderId = :commanderId) AND l.treasureRewardType IS NULL")
+    long countNormalCellClearByCommanderId(@Param("commanderId") Long commanderId);
+
+    // 업적(EventCell) — 커맨더 전체 런 통틀어 특정 트레저 보상 종류로 클리어한 이벤트 셀 누적 개수
+    @Query("SELECT COUNT(l) FROM ZoneCellClearLog l WHERE l.zoneRunId IN (SELECT r.id FROM ZoneRun r WHERE r.commanderId = :commanderId) AND l.treasureRewardType = :treasureRewardType")
+    long countEventCellClearByCommanderIdAndType(@Param("commanderId") Long commanderId, @Param("treasureRewardType") ETreasureRewardType treasureRewardType);
 }

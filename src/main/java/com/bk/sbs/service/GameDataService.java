@@ -62,6 +62,26 @@ public class GameDataService {
 
     private java.util.List<RewardCardEntry> rewardCardList = new java.util.ArrayList<>();
     private java.util.Map<String, RewardCardEntry> rewardCardById = new java.util.HashMap<>();
+
+    // 업적 정의 1개 — 클라 AchievementData(CSV 정적 정의)와 1:1. 완료/수령 여부는 여기 없고 AchievementService가 런타임에 계산
+    public static class AchievementEntry {
+        public String achievementId;
+        public com.bk.sbs.enums.EAchievementConditionType conditionType;
+        public String conditionParam;
+        public int threshold;
+        public int achievementPointReward;
+        public AchievementEntry(String achievementId, com.bk.sbs.enums.EAchievementConditionType conditionType,
+                                 String conditionParam, int threshold, int achievementPointReward) {
+            this.achievementId = achievementId;
+            this.conditionType = conditionType;
+            this.conditionParam = conditionParam;
+            this.threshold = threshold;
+            this.achievementPointReward = achievementPointReward;
+        }
+    }
+
+    private java.util.List<AchievementEntry> achievementList = new java.util.ArrayList<>();
+
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -160,6 +180,28 @@ public class GameDataService {
                 log.warn("DataTableRewardCard.json not found in resources/data/, using empty data");
             }
 
+            ClassPathResource achievementResource = new ClassPathResource("data/DataTableAchievement.json");
+            if (achievementResource.exists()) {
+                String json = new String(achievementResource.getInputStream().readAllBytes());
+                com.fasterxml.jackson.databind.JsonNode arrayNode = objectMapper.readTree(json);
+                achievementList.clear();
+                for (com.fasterxml.jackson.databind.JsonNode node : arrayNode) {
+                    String achievementId = node.path("achievementId").asText(null);
+                    if (achievementId == null) continue;
+                    com.bk.sbs.enums.EAchievementConditionType conditionType =
+                            com.bk.sbs.enums.EAchievementConditionType.valueOf(node.path("conditionType").asText());
+                    achievementList.add(new AchievementEntry(
+                            achievementId,
+                            conditionType,
+                            node.path("conditionParam").asText(""),
+                            node.path("threshold").asInt(0),
+                            node.path("achievementPointReward").asInt(0)));
+                }
+                log.info("DataTableAchievement.json loaded: {} entries", achievementList.size());
+            } else {
+                log.warn("DataTableAchievement.json not found in resources/data/, using empty data");
+            }
+
         } catch (Exception e) {
             log.error("Failed to load game data: " + e.getMessage(), e);
             loadDefaultDataTableConfig();
@@ -252,12 +294,6 @@ public class GameDataService {
     }
 
     // 해금 커맨더 레벨 이하인 hull(함체) 목록만 — 플레이어가 선택 가능한 함체 목록용
-    public java.util.List<ModuleData> getUnlockedHullModules(int commanderLevel) {
-        return getModulesByType(EModuleType.hull).stream()
-                .filter(d -> (d.getUnlockCommanderLevel() != null ? d.getUnlockCommanderLevel() : 1) <= commanderLevel)
-                .collect(java.util.stream.Collectors.toList());
-    }
-
     // hullSubType(예: "hull_3_1_11100") → hull ModuleData 조회. 존재하지 않는 이름이면 null
     public ModuleData getHullModuleData(String hullSubType) {
         if (hullSubType == null) return null;
@@ -317,6 +353,10 @@ public class GameDataService {
 
     public ZoneConfigData getZoneConfigByIndex(int zoneIndex) {
         return getZoneConfig().getZoneByIndex(zoneIndex);
+    }
+
+    public List<AchievementEntry> getAchievementList() {
+        return achievementList;
     }
 
 }

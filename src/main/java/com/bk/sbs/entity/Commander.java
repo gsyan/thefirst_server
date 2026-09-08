@@ -65,6 +65,15 @@ public class Commander {
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
     private int explorationPoint = 0;
 
+    // 역대 누적 획득 탐사포인트 — explorationPoint(잔액, 소모하면 줄어듦)와 달리 절대 줄어들지 않음. 업적(ExplorationPointTotal 조건) 판정 전용.
+    // 정식 지급 지점(존 클리어 정산, 일일 로그인 보상)에서만 같이 증가 — DevController 디버그 자원추가는 제외
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int explorationPointEarnedTotal = 0;
+
+    // 업적포인트 — 업적 패널에서 유저가 완료된 업적을 직접 수령(AchievementService.claimAchievement)해야만 지급됨(자동 지급 없음), 티어4+ 함체 언락(FleetService.unlockHull)에 소모
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int achievementPoint = 0;
+
     // 존 탈출(ESCAPED)로 확정된 존 번호 중 최댓값 — 다음 존 입장 가능 여부 판정용(ZoneRun 조회 없이 O(1))
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
     private int highestClearedZoneNumber = 0;

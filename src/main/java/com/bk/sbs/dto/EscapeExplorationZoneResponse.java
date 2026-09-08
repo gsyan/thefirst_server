@@ -21,4 +21,5 @@ public class EscapeExplorationZoneResponse {
     private Integer commanderLevel;
     private Integer highestClearedZoneNumber;
     private Integer tacticPower;
+    private Boolean hasUnclaimedAchievement;
 }

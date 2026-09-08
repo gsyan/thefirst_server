@@ -199,6 +199,7 @@ public class IapService {
             // 실제로 지급된 exploration point가 있을 때만 available 처리
             if (grantedExplorationPoint > 0) {
                 commander.setExplorationPoint(commander.getExplorationPoint() + grantedExplorationPoint);
+                commander.setExplorationPointEarnedTotal(commander.getExplorationPointEarnedTotal() + grantedExplorationPoint);
 
                 available               = true;
                 explorationPointRemain  = commander.getExplorationPoint();

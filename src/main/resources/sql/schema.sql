@@ -9,6 +9,8 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS module;
 DROP TABLE IF EXISTS ship;
 DROP TABLE IF EXISTS fleet;
+DROP TABLE IF EXISTS commander_unlocked_hull;
+DROP TABLE IF EXISTS commander_achievement_claim;
 DROP TABLE IF EXISTS zone_cell_clear_log;
 DROP TABLE IF EXISTS zone_run;
 DROP TABLE IF EXISTS cleared_zone;
@@ -57,6 +59,8 @@ CREATE TABLE commander (
     command_power_max       INT             NOT NULL DEFAULT 120,
     tactic_power_max         INT            NOT NULL DEFAULT 60,
     exploration_point           INT         NOT NULL DEFAULT 0,
+    exploration_point_earned_total INT      NOT NULL DEFAULT 0,
+    achievement_point           INT         NOT NULL DEFAULT 0,
     highest_cleared_zone_number INT         NOT NULL DEFAULT 0,
     collect_date_time       DATETIME(6)         NULL,
     last_online_at          DATETIME(6)         NULL,
@@ -225,6 +229,32 @@ CREATE TABLE zone_cell_clear_log (
     treasure_reward_type          VARCHAR(32)      NULL, -- Treasure(Event) 셀 클리어 시 당첨된 보상 종류 — Treasure 셀이 아니면 NULL
     PRIMARY KEY (id),
     INDEX idx_zone_cell_clear_log_run (zone_run_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- commander_unlocked_hull — 커맨더가 업적포인트로 언락 완료한 함체(티어4+) 기록
+-- 유니크: commander_id + hull_sub_type
+-- ============================================================
+CREATE TABLE commander_unlocked_hull (
+    id             BIGINT       NOT NULL AUTO_INCREMENT,
+    commander_id   BIGINT       NOT NULL,
+    hull_sub_type  VARCHAR(100) NOT NULL,
+    unlocked_at    DATETIME(6)  NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_commander_unlocked_hull (commander_id, hull_sub_type)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- commander_achievement_claim — 커맨더가 수령 완료한 업적 기록
+-- 유니크: commander_id + achievement_id
+-- ============================================================
+CREATE TABLE commander_achievement_claim (
+    id              BIGINT       NOT NULL AUTO_INCREMENT,
+    commander_id    BIGINT       NOT NULL,
+    achievement_id  VARCHAR(100) NOT NULL,
+    claimed_at      DATETIME(6)  NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_commander_achievement_claim (commander_id, achievement_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- app_config: 운영 설정값 저장 (버전 체크 등)

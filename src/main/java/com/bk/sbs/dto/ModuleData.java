@@ -21,7 +21,7 @@ public class ModuleData {
 
     private Integer statPoint;
 
-    private Integer unlockCommanderLevel;
+    private Integer unlockAchievementPointCost;
 
     private String description;
 

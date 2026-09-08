@@ -37,6 +37,7 @@ public class ExplorationService {
     private final ZoneCellClearLogRepository zoneCellClearLogRepository;
     private final GameDataService gameDataService;
     private final ObjectMapper objectMapper;
+    private final AchievementService achievementService;
 
     // false면 highestClearedZoneNumber 검사를 건너뜀 — 웨이브 밸런스 테스트용(application.properties)
     @Value("${zone.require-previous-stage-cleared:true}")
@@ -44,12 +45,14 @@ public class ExplorationService {
 
     public ExplorationService(CommanderRepository commanderRepository, ZoneRunRepository zoneRunRepository,
                                ZoneCellClearLogRepository zoneCellClearLogRepository,
-                               GameDataService gameDataService, ObjectMapper objectMapper) {
+                               GameDataService gameDataService, ObjectMapper objectMapper,
+                               AchievementService achievementService) {
         this.commanderRepository = commanderRepository;
         this.zoneRunRepository = zoneRunRepository;
         this.zoneCellClearLogRepository = zoneCellClearLogRepository;
         this.gameDataService = gameDataService;
         this.objectMapper = objectMapper;
+        this.achievementService = achievementService;
     }
 
     // 셀 클리어 요청에 실린 함대 체력 스냅샷을 JSON으로 직렬화 — 비어있으면(null/빈 리스트) 기존 저장값을 그대로 둠(스냅샷 없이 보낸 요청이 덮어쓰지 않도록)
@@ -520,7 +523,9 @@ public class ExplorationService {
     }
 
     // 탈출 성공/실패 공통 정산 결과 — 탐험 포인트/지휘관 경험치 확정 지급분 + 런 종료로 회복된 전술력 현재치
-    private record RunSettlement(int pointPayout, int expPayout, int tacticPower) {}
+    // 업적포인트는 더 이상 여기서 자동 지급하지 않음 — 유저가 업적 패널에서 직접 "받기"를 눌러야 지급(AchievementService.claimAchievement)
+    // hasUnclaimedAchievement: 이 정산으로 완료됐을 수 있는 업적을 클라가 바로 알 수 있도록 존런이 끝나는 시점(체크포인트)에 같이 계산
+    private record RunSettlement(int pointPayout, int expPayout, int tacticPower, boolean hasUnclaimedAchievement) {}
 
     // 탈출 성공/실패 공통 정산 — escapeExplorationZone(성공/실패)과 abandonZoneRun(실패 고정)이 공유
     private RunSettlement settleZoneRun(Commander commander, ZoneRun run, boolean isSuccess) {
@@ -533,6 +538,7 @@ public class ExplorationService {
         int expPayout   = isSuccess ? run.getCommanderExpBanked()     : run.getCommanderExpBanked() / 2;
 
         commander.setExplorationPoint(commander.getExplorationPoint() + pointPayout);
+        commander.setExplorationPointEarnedTotal(commander.getExplorationPointEarnedTotal() + pointPayout);
         commander.setExp(commander.getExp() + expPayout);
         CommanderLevelUtil.autoLevelUpIfNeeded(commander, gameDataService);
         if (isSuccess && run.getZoneNumber() > commander.getHighestClearedZoneNumber())
@@ -545,8 +551,10 @@ public class ExplorationService {
         commanderRepository.save(commander);
         zoneRunRepository.save(run);
 
+        boolean hasUnclaimedAchievement = achievementService.hasUnclaimedCompletedAchievement(commander.getId());
+
         // 런이 끝나면 전술력은 다음 런 시작 전이라도 즉시 완전 회복된 것으로 취급(다음 ZoneRun 생성 시 이 값으로 초기화되는 것과 동일한 결과)
-        return new RunSettlement(pointPayout, expPayout, commander.getTacticPowerMax());
+        return new RunSettlement(pointPayout, expPayout, commander.getTacticPowerMax(), hasUnclaimedAchievement);
     }
 
     @Transactional
@@ -580,6 +588,7 @@ public class ExplorationService {
                 .commanderLevel(commander.getCommanderLevel())
                 .highestClearedZoneNumber(commander.getHighestClearedZoneNumber())
                 .tacticPower(settlement.tacticPower())
+                .hasUnclaimedAchievement(settlement.hasUnclaimedAchievement())
                 .build();
     }
 
@@ -600,6 +609,7 @@ public class ExplorationService {
                 .totalExp(commander.getExp())
                 .commanderLevel(commander.getCommanderLevel())
                 .tacticPower(settlement.tacticPower())
+                .hasUnclaimedAchievement(settlement.hasUnclaimedAchievement())
                 .build();
     }
 

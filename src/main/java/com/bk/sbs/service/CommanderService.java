@@ -18,6 +18,7 @@ import com.bk.sbs.entity.ZoneRun;
 import com.bk.sbs.repository.AccountRepository;
 import com.bk.sbs.repository.CommanderRepository;
 import com.bk.sbs.repository.ClearedZoneRepository;
+import com.bk.sbs.repository.CommanderUnlockedHullRepository;
 import com.bk.sbs.repository.ZoneRunRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -43,6 +44,8 @@ public class CommanderService {
     private final ZoneRunRepository zoneRunRepository;
     private final StringRedisTemplate redisTemplate;
     private final GameDataService gameDataService;
+    private final CommanderUnlockedHullRepository commanderUnlockedHullRepository;
+    private final AchievementService achievementService;
 
 @Value("${worldid}")
     private int worldId;
@@ -50,7 +53,7 @@ public class CommanderService {
     @Value("${exploration.world-seed}")
     private int explorationWorldSeed;
 
-    public CommanderService(CommanderRepository commanderRepository, AccountRepository accountRepository, FleetService fleetService, ClearedZoneRepository clearedZoneRepository, ZoneRunRepository zoneRunRepository, StringRedisTemplate redisTemplate, GameDataService gameDataService) {
+    public CommanderService(CommanderRepository commanderRepository, AccountRepository accountRepository, FleetService fleetService, ClearedZoneRepository clearedZoneRepository, ZoneRunRepository zoneRunRepository, StringRedisTemplate redisTemplate, GameDataService gameDataService, CommanderUnlockedHullRepository commanderUnlockedHullRepository, AchievementService achievementService) {
         this.commanderRepository = commanderRepository;
         this.accountRepository = accountRepository;
         this.fleetService = fleetService;
@@ -58,6 +61,8 @@ public class CommanderService {
         this.zoneRunRepository = zoneRunRepository;
         this.redisTemplate = redisTemplate;
         this.gameDataService = gameDataService;
+        this.commanderUnlockedHullRepository = commanderUnlockedHullRepository;
+        this.achievementService = achievementService;
     }
 
     @Transactional
@@ -138,6 +143,11 @@ public class CommanderService {
                 .explorationCell(explorationCell)
                 .highestClearedZoneNumber(commander.getHighestClearedZoneNumber())
                 .explorationPoint(commander.getExplorationPoint())
+                .achievementPoint(commander.getAchievementPoint())
+                .unlockedHulls(commanderUnlockedHullRepository.findByCommanderId(commanderId).stream()
+                        .map(com.bk.sbs.entity.CommanderUnlockedHull::getHullSubType)
+                        .collect(java.util.stream.Collectors.toList()))
+                .hasUnclaimedAchievement(achievementService.hasUnclaimedCompletedAchievement(commanderId))
                 .build();
     }
 

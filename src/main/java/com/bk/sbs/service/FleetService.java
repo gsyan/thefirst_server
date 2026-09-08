@@ -26,16 +26,22 @@ public class FleetService {
     private final CommanderRepository commanderRepository;
     private final GameDataService gameDataService;
     private final FleetRepository fleetRepository;
+    private final CommanderUnlockedHullRepository commanderUnlockedHullRepository;
 
     // 신규 커맨더에게 지급되는 기본 함대(fleetIndex=0)의 초기 함선 — 함체 hull_3_1_11100(빔1/미사일1/격납고1) + 기본 빔1 장착
     private static final String DEFAULT_FLEET_HULL_SUB_TYPE = "hull_3_1_11100";
 
+    // 이 티어 미만은 조건 없이 사용 가능, 이 티어 이상은 업적포인트 언락(commander_unlocked_hull) 필요
+    private static final int ACHIEVEMENT_UNLOCK_MIN_HULL_TIER = 4;
+
     public FleetService(CommanderRepository commanderRepository,
                        GameDataService gameDataService,
-                       FleetRepository fleetRepository) {
+                       FleetRepository fleetRepository,
+                       CommanderUnlockedHullRepository commanderUnlockedHullRepository) {
         this.commanderRepository = commanderRepository;
         this.gameDataService = gameDataService;
         this.fleetRepository = fleetRepository;
+        this.commanderUnlockedHullRepository = commanderUnlockedHullRepository;
     }
 
     // 신규 커맨더 생성 시 기본 함대(fleetIndex=0) 생성
@@ -51,10 +57,20 @@ public class FleetService {
         ship.setSlotIndex(0);
         ship.setHullSubType(DEFAULT_FLEET_HULL_SUB_TYPE);
         ship.setFront(true);
-        replaceShipModules(ship, buildDefaultModules(ship));
+        replaceShipModules(ship, buildInitialFleetModules(ship));
         fleet.setShips(new ArrayList<>(List.of(ship)));
 
         fleetRepository.save(fleet);
+    }
+
+    // 신규 계정 최초 함선만 티어1 빔을 기본 장착 — 이후 수동 함선 배치/편집은 buildDefaultModules()(무기 없음)를 그대로 사용
+    private List<Module> buildInitialFleetModules(Ship ship) {
+        Module module = new Module();
+        module.setShip(ship);
+        module.setModuleType(EModuleType.beam);
+        module.setSlotIndex(0);
+        module.setModuleSubType("beam_1_1");
+        return new ArrayList<>(List.of(module));
     }
 
     // 로그인 시 내려주는 "내 함대" — fleetIndex=0 함대를 FleetInfoDto로 변환, 함선별 실제 장착 모듈(hulls)까지 포함
@@ -105,9 +121,10 @@ public class FleetService {
         ModuleData hullData = gameDataService.getHullModuleData(request.getHullSubType());
         if (hullData == null)
             throw new BusinessException(ServerErrorCode.PLACE_FLEET_SHIP_FAIL_HULL_NOT_FOUND);
-        int unlockCommanderLevel = hullData.getUnlockCommanderLevel() != null ? hullData.getUnlockCommanderLevel() : 1;
-        if (unlockCommanderLevel > commander.getCommanderLevel())
-            throw new BusinessException(ServerErrorCode.PLACE_FLEET_SHIP_FAIL_INSUFFICIENT_COMMANDER_LEVEL);
+        // 티어1~3은 조건 없이 사용 가능, 티어4+는 업적포인트 언락(구매)이 선행되어 있어야 배치 가능(커맨더 레벨은 이 판정에 관여하지 않음)
+        if (GameDataService.parseTierFromHullSubType(request.getHullSubType()) >= ACHIEVEMENT_UNLOCK_MIN_HULL_TIER
+                && commanderUnlockedHullRepository.existsByCommanderIdAndHullSubType(commanderId, request.getHullSubType()) == false)
+            throw new BusinessException(ServerErrorCode.PLACE_FLEET_SHIP_FAIL_HULL_NOT_UNLOCKED);
 
         int openSlotCount = gameDataService.getShipCount(commander.getCommanderLevel());
         if (request.getSlotIndex() < 0 || request.getSlotIndex() >= openSlotCount)
@@ -153,6 +170,41 @@ public class FleetService {
         ship.setFront(request.getIsFront());
         replaceShipModules(ship, keptModules);
         fleetRepository.save(fleet);
+    }
+
+    // 티어4+ 함체를 업적포인트로 언락(구매) — 언락 완료 후에도 배치는 placeFleetShip을 통해 별도로 해야 함(여기선 구매만 처리)
+    @Transactional
+    public UnlockHullResponse unlockHull(Long commanderId, UnlockHullRequest request) {
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.UNLOCK_HULL_FAIL_COMMANDER_NOT_FOUND));
+
+        ModuleData hullData = gameDataService.getHullModuleData(request.getHullSubType());
+        if (hullData == null)
+            throw new BusinessException(ServerErrorCode.UNLOCK_HULL_FAIL_HULL_NOT_FOUND);
+
+        if (GameDataService.parseTierFromHullSubType(request.getHullSubType()) < ACHIEVEMENT_UNLOCK_MIN_HULL_TIER)
+            throw new BusinessException(ServerErrorCode.UNLOCK_HULL_FAIL_NOT_ELIGIBLE);
+
+        if (commanderUnlockedHullRepository.existsByCommanderIdAndHullSubType(commanderId, request.getHullSubType()) == true)
+            throw new BusinessException(ServerErrorCode.UNLOCK_HULL_FAIL_ALREADY_UNLOCKED);
+
+        int unlockCost = hullData.getUnlockAchievementPointCost() != null ? hullData.getUnlockAchievementPointCost() : 0;
+        if (commander.getAchievementPoint() < unlockCost)
+            throw new BusinessException(ServerErrorCode.UNLOCK_HULL_FAIL_INSUFFICIENT_ACHIEVEMENT_POINT);
+
+        commander.setAchievementPoint(commander.getAchievementPoint() - unlockCost);
+        commanderRepository.save(commander);
+        commanderUnlockedHullRepository.save(new CommanderUnlockedHull(commanderId, request.getHullSubType()));
+
+        List<String> unlockedHulls = commanderUnlockedHullRepository.findByCommanderId(commanderId).stream()
+                .map(CommanderUnlockedHull::getHullSubType)
+                .collect(Collectors.toList());
+
+        return UnlockHullResponse.builder()
+                .hullSubType(request.getHullSubType())
+                .achievementPointRemain(commander.getAchievementPoint())
+                .unlockedHulls(unlockedHulls)
+                .build();
     }
 
     // 기존 장착 모듈 중 새 함체(newMaxSlots)에도 같은 카테고리+슬롯 인덱스가 존재하는 것만 유지 — 강화 포인트는 그대로 복사
