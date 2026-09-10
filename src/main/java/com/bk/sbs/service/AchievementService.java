@@ -2,6 +2,7 @@ package com.bk.sbs.service;
 
 import com.bk.sbs.dto.AchievementStatusDto;
 import com.bk.sbs.dto.ClaimAchievementResponse;
+import com.bk.sbs.dto.ClaimAllAchievementsResponse;
 import com.bk.sbs.dto.GetAchievementListResponse;
 import com.bk.sbs.entity.Commander;
 import com.bk.sbs.entity.CommanderAchievementClaim;
@@ -19,6 +20,7 @@ import com.bk.sbs.repository.ZoneCellClearLogRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -106,6 +108,41 @@ public class AchievementService {
         return ClaimAchievementResponse.builder()
                 .achievementId(achievementId)
                 .achievementPointReward(entry.achievementPointReward)
+                .achievementPointRemain(commander.getAchievementPoint())
+                .build();
+    }
+
+    // 완료+미수령 업적을 전부 한 번에 수령 처리 — 개별 claimAchievement와 동일한 조건/계산 로직 재사용
+    @Transactional
+    public ClaimAllAchievementsResponse claimAllAchievements(Long commanderId) {
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.ACHIEVEMENT_CLAIM_FAIL_COMMANDER_NOT_FOUND));
+
+        Fleet activeFleet = fleetRepository.findByCommanderIdAndFleetIndex(commanderId, ACTIVE_FLEET_INDEX).orElse(null);
+
+        List<String> claimedIds = new ArrayList<>();
+        int totalGranted = 0;
+
+        for (GameDataService.AchievementEntry entry : gameDataService.getAchievementList()) {
+            if (commanderAchievementClaimRepository.existsByCommanderIdAndAchievementId(commanderId, entry.achievementId) == true)
+                continue;
+
+            int currentValue = computeCurrentValue(commander, activeFleet, entry);
+            if (currentValue < entry.threshold)
+                continue;
+
+            commander.setAchievementPoint(commander.getAchievementPoint() + entry.achievementPointReward);
+            commanderAchievementClaimRepository.save(new CommanderAchievementClaim(commanderId, entry.achievementId));
+            claimedIds.add(entry.achievementId);
+            totalGranted += entry.achievementPointReward;
+        }
+
+        if (claimedIds.size() > 0)
+            commanderRepository.save(commander);
+
+        return ClaimAllAchievementsResponse.builder()
+                .claimedAchievementIds(claimedIds)
+                .totalAchievementPointGranted(totalGranted)
                 .achievementPointRemain(commander.getAchievementPoint())
                 .build();
     }

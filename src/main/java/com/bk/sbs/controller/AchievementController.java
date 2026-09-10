@@ -34,4 +34,13 @@ public class AchievementController {
         ClaimAchievementResponse response = achievementService.claimAchievement(actualCommanderId, request.getAchievementId());
         return ResponseEntity.ok(ApiResponse.success(response));
     }
+
+    // 완료+미수령 업적을 전부 한 번에 수령
+    @PostMapping("/claim-all")
+    public ResponseEntity<ApiResponse<ClaimAllAchievementsResponse>> claimAllAchievements(
+            @RequestBody ClaimAllAchievementsRequest request,
+            @CommanderId Long actualCommanderId) {
+        ClaimAllAchievementsResponse response = achievementService.claimAllAchievements(actualCommanderId);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
 }

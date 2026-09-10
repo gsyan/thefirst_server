@@ -245,6 +245,7 @@ public class FleetService {
         if (moduleType == EModuleType.missile) return maxSlots[1];
         if (moduleType == EModuleType.hangar) return maxSlots[2];
         if (moduleType == EModuleType.shield) return maxSlots[3];
+        if (moduleType == EModuleType.interceptor) return maxSlots[4];
         return 0;
     }
 
@@ -314,6 +315,7 @@ public class FleetService {
         List<ModuleInfoDto> missiles = new ArrayList<>();
         List<ModuleInfoDto> hangars = new ArrayList<>();
         String shieldModuleSubType = "";
+        String interceptorModuleSubType = "";
 
         if (ship.getModules() != null) {
             for (Module module : ship.getModules()) {
@@ -329,6 +331,7 @@ public class FleetService {
                     case missile -> missiles.add(dto);
                     case hangar -> hangars.add(dto);
                     case shield -> shieldModuleSubType = module.getModuleSubType();
+                    case interceptor -> interceptorModuleSubType = module.getModuleSubType();
                     default -> { }
                 }
             }
@@ -344,6 +347,7 @@ public class FleetService {
                 .missiles(missiles)
                 .hangars(hangars)
                 .shieldModuleSubType(shieldModuleSubType)
+                .interceptorModuleSubType(interceptorModuleSubType)
                 .currentHealth(maxHealth)
                 .build();
     }
@@ -382,6 +386,7 @@ public class FleetService {
         appendDesiredModules(desired, EModuleType.missile, maxSlots[1], hullTier, requestedModules != null ? requestedModules.getMissiles() : null);
         appendDesiredModules(desired, EModuleType.hangar, maxSlots[2], hullTier, requestedModules != null ? requestedModules.getHangars() : null);
         appendDesiredShield(desired, maxSlots[3], requestedModules != null ? requestedModules.getShieldModuleSubType() : null);
+        appendDesiredInterceptor(desired, maxSlots[4], requestedModules != null ? requestedModules.getInterceptorModuleSubType() : null);
 
         int newShipCost = computeHullCost(ship.getHullSubType());
         for (DesiredModule m : desired) {
@@ -475,6 +480,15 @@ public class FleetService {
             throw new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_INVALID_SLOT_INDEX);
 
         target.add(new DesiredModule(EModuleType.shield, 0, "shield_1_1", 0, 0));
+    }
+
+    // 요격체도 실드와 동일하게 리스트가 아니라 문자열 하나(장착 여부)뿐 — 슬롯 인덱스는 항상 0, 강화 포인트도 아직 없음(on/off만 지원)
+    private void appendDesiredInterceptor(List<DesiredModule> target, int maxSlotCount, String requestedInterceptorSubType) {
+        if (requestedInterceptorSubType == null || requestedInterceptorSubType.isEmpty()) return;
+        if (maxSlotCount <= 0)
+            throw new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_INVALID_SLOT_INDEX);
+
+        target.add(new DesiredModule(EModuleType.interceptor, 0, "interceptor_1_1", 0, 0));
     }
 
     // 클라가 보낸 강화 포인트 값을 0~maxPerSlot 범위로 강제 — null/음수/상한 초과 모두 방어

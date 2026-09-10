@@ -51,18 +51,20 @@ public class DevController {
     private ApiResponse<String> executeDevCommand(String command, List<String> params, Long commanderId) {
         switch (command.toLowerCase()) {
             case "adddevresources": {
-                // params: [levelUp] [exploPoint] [pvpPoint] — 0이면 해당 타입 스킵, levelUp>0이면 정확히 1레벨만 증가
+                // params: [levelUp] [exploPoint] [pvpPoint] [achievementPoint] — 0이면 해당 타입 스킵, levelUp>0이면 정확히 1레벨만 증가
                 if (params == null || params.size() < 3) throw new BusinessException(ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDDEVRESOURCES_INVALID_PARAM);
-                int addLevel  = parseIntOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDDEVRESOURCES_PARSE_PARAM);
-                int addExplo  = parseIntOrThrow(params.get(1), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDDEVRESOURCES_PARSE_EXPLO_PARAM);
-                int addPvp    = parseIntOrThrow(params.get(2), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDDEVRESOURCES_PARSE_PARAM);
+                int addLevel       = parseIntOrThrow(params.get(0), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDDEVRESOURCES_PARSE_PARAM);
+                int addExplo       = parseIntOrThrow(params.get(1), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDDEVRESOURCES_PARSE_EXPLO_PARAM);
+                int addPvp         = parseIntOrThrow(params.get(2), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDDEVRESOURCES_PARSE_PARAM);
+                int addAchievement = params.size() >= 4 ? parseIntOrThrow(params.get(3), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDDEVRESOURCES_PARSE_PARAM) : 0;
                 CommanderInfoDto cur = CommanderService.getCommanderInfoDto(commanderId);
-                int newExplo  = addExplo > 0 ? CommanderService.addExplorationPoint(commanderId, addExplo)  : cur.getExplorationPoint();
-                int newPvpMax = addPvp   > 0 ? CommanderService.addPvpPointMaxGot(commanderId, addPvp)      : cur.getPvpPointMaxGot();
-                int newPvp    = addPvp   > 0 ? CommanderService.addPvpPoint(commanderId, addPvp)            : cur.getPvpPoint();
+                int newExplo       = addExplo       > 0 ? CommanderService.addExplorationPoint(commanderId, addExplo)             : cur.getExplorationPoint();
+                int newPvpMax      = addPvp         > 0 ? CommanderService.addPvpPointMaxGot(commanderId, addPvp)                 : cur.getPvpPointMaxGot();
+                int newPvp         = addPvp         > 0 ? CommanderService.addPvpPoint(commanderId, addPvp)                       : cur.getPvpPoint();
+                int newAchievement = addAchievement > 0 ? CommanderService.addAchievementPoint(commanderId, addAchievement)       : cur.getAchievementPoint();
                 int newCommanderLevel = addLevel > 0 ? zoneService.addOneCommanderLevel(commanderId) : cur.getCommanderLevel();
                 int newExp    = addLevel > 0 ? CommanderService.getCommanderInfoDto(commanderId).getExp()  : cur.getExp();
-                return ApiResponse.success("Resources added|exp:" + newExp + "|explorationPoint:" + newExplo + "|pvpPointMaxGot:" + newPvpMax + "|pvpPoint:" + newPvp + "|commanderLevel:" + newCommanderLevel);
+                return ApiResponse.success("Resources added|exp:" + newExp + "|explorationPoint:" + newExplo + "|pvpPointMaxGot:" + newPvpMax + "|pvpPoint:" + newPvp + "|achievementPoint:" + newAchievement + "|commanderLevel:" + newCommanderLevel);
             }
 
             case "getstatus":

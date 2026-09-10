@@ -209,6 +209,14 @@ public class CommanderService {
     }
 
     @Transactional
+    public int addAchievementPoint(Long commanderId, int amount) {
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId).orElseThrow(() -> new BusinessException(ServerErrorCode.DEV_ADD_RESOURCE_FAIL_COMMANDER_NOT_FOUND));
+        commander.setAchievementPoint(commander.getAchievementPoint() + amount);
+        commander = commanderRepository.save(commander);
+        return commander.getAchievementPoint();
+    }
+
+    @Transactional
     public int addPvpPoint(Long commanderId, int amount) {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId).orElseThrow(() -> new BusinessException(ServerErrorCode.DEV_ADD_RESOURCE_FAIL_COMMANDER_NOT_FOUND));
         commander.setPvpPoint(commander.getPvpPoint() + amount);
