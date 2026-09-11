@@ -15,6 +15,7 @@ import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.repository.CommanderAchievementClaimRepository;
 import com.bk.sbs.repository.CommanderRepository;
+import com.bk.sbs.repository.CommanderUnlockedHullRepository;
 import com.bk.sbs.repository.FleetRepository;
 import com.bk.sbs.repository.ZoneCellClearLogRepository;
 import org.springframework.stereotype.Service;
@@ -36,15 +37,18 @@ public class AchievementService {
     private final ZoneCellClearLogRepository zoneCellClearLogRepository;
     private final FleetRepository fleetRepository;
     private final CommanderAchievementClaimRepository commanderAchievementClaimRepository;
+    private final CommanderUnlockedHullRepository commanderUnlockedHullRepository;
 
     public AchievementService(CommanderRepository commanderRepository, GameDataService gameDataService,
                                ZoneCellClearLogRepository zoneCellClearLogRepository, FleetRepository fleetRepository,
-                               CommanderAchievementClaimRepository commanderAchievementClaimRepository) {
+                               CommanderAchievementClaimRepository commanderAchievementClaimRepository,
+                               CommanderUnlockedHullRepository commanderUnlockedHullRepository) {
         this.commanderRepository = commanderRepository;
         this.gameDataService = gameDataService;
         this.zoneCellClearLogRepository = zoneCellClearLogRepository;
         this.fleetRepository = fleetRepository;
         this.commanderAchievementClaimRepository = commanderAchievementClaimRepository;
+        this.commanderUnlockedHullRepository = commanderUnlockedHullRepository;
     }
 
     @Transactional(readOnly = true)
@@ -172,6 +176,8 @@ public class AchievementService {
                 return countHullTier(activeFleet, Integer.parseInt(entry.conditionParam));
             case ModuleTierCount:
                 return countModuleTier(activeFleet, entry.conditionParam);
+            case HullUnlocked:
+                return commanderUnlockedHullRepository.existsByCommanderIdAndHullSubType(commander.getId(), entry.conditionParam) ? 1 : 0;
             default:
                 return 0;
         }

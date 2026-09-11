@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +82,10 @@ public class ExplorationService {
     // 모듈 repair(시간당 회복)를 정밀 계산하지 않고 넉넉한 고정 여유값으로 흡수 — 전투 지속시간이 길수록 허용치도 커짐.
     // 오탐(정상 유저 차단)이 치트 차단 실패보다 훨씬 나쁘므로 넉넉하게 잡음. 정밀 계산은 알려진 한계로 남겨둠.
     private static final float HEALTH_RATIO_TIME_MARGIN_PER_SEC = 0.01f;
+    // healthRatio(health/healthMax)와 카드 value1은 서로 다른 계산 경로를 거치는 float라 수학적으로 같은 증가량도
+    // 미세하게 어긋날 수 있음(예: 0.2 카드 효과가 increase=0.20000005로 계산됨) — 안티치트 목적상 정밀할 필요 없이
+    // "명백히 큰 증가"만 막으면 되므로 넉넉하게 여유를 둠
+    private static final float HEALTH_RATIO_FLOAT_EPSILON = 0.01f;
 
     // Treasure(Event) 셀 보상 — 3종 중 1개를 매 클리어마다 진짜 랜덤(java.util.Random 새 인스턴스)으로 지급
     private static final ETreasureRewardType[] TREASURE_REWARD_POOL = {
@@ -104,10 +109,14 @@ public class ExplorationService {
         if (previous == null || previous.isEmpty()) return;
 
         float healBonus = getPendingHealthHealBonus(run);
-        long elapsedSeconds = 0;
+        // 정수초로 자르면(getEpochSecond 차이) 두 요청이 같은 초 안에 들어올 때 elapsedSeconds가 무조건 0이 되어
+        // allowedIncrease도 0이 됨 — 수리 전술/보상카드 체력버프 등으로 생기는 미세한 정상 증가치조차 막아버리므로
+        // 밀리초 단위(소수점 초)로 계산해 그 찰나의 경과시간도 반영되게 함
+        float elapsedSeconds = 0f;
         if (run.getActiveChallengeIssuedAt() != null)
-            elapsedSeconds = Math.max(0, Instant.now().getEpochSecond() - run.getActiveChallengeIssuedAt().getEpochSecond());
+            elapsedSeconds = Math.max(0f, Duration.between(run.getActiveChallengeIssuedAt(), Instant.now()).toMillis() / 1000f);
         float allowedIncrease = healBonus + (elapsedSeconds * HEALTH_RATIO_TIME_MARGIN_PER_SEC);
+        log.info("[체력검증LOG] commanderId={} healBonus={} elapsedSeconds={} allowedIncrease={}", commanderId, healBonus, elapsedSeconds, allowedIncrease);
 
         for (ShipHealthRatioInfoDto info : reported) {
             if (info.getHealthRatio() == null || info.getPositionIndex() == null) continue;
@@ -117,12 +126,15 @@ public class ExplorationService {
             if (prevOpt.isEmpty()) continue;
 
             float increase = info.getHealthRatio() - prevOpt.get().getHealthRatio();
-            if (increase > allowedIncrease)
+            log.info("[체력검증LOG] positionIndex={} reported={} previous={} increase={}", info.getPositionIndex(), info.getHealthRatio(), prevOpt.get().getHealthRatio(), increase);
+            if (increase > allowedIncrease + HEALTH_RATIO_FLOAT_EPSILON)
                 throw new BusinessException(ServerErrorCode.EXPLORATION_FLEET_HEALTH_INVALID);
         }
     }
 
-    // 직전 클리어 로그에서 선택 확정된 보상카드 또는 Treasure 당첨이 체력 즉시회복 계열이면 그 회복량을 허용 증가치로 반환
+    // 직전 클리어 로그에서 선택 확정된 보상카드 또는 Treasure 당첨이 체력을 늘리는 계열(즉시회복 또는 최대체력 지속버프)이면
+    // 그 증가량을 허용 증가치로 반환 — Buff_ShipHealth는 카드 선택 즉시 최대체력이 늘어난 만큼 현재체력도 같이 늘어나므로
+    // (ModuleHull.RefreshRewardCardBuff) card.value1(체력 x(1+value1))을 그대로 상한으로 허용(실제 증가폭은 항상 이보다 작거나 같음)
     private float getPendingHealthHealBonus(ZoneRun run) {
         List<ZoneCellClearLog> clearLogs = zoneCellClearLogRepository.findByZoneRunIdOrderByClearedAtAsc(run.getId());
         if (clearLogs.isEmpty()) return 0f;
@@ -139,6 +151,8 @@ public class ExplorationService {
         if (card == null) return 0f;
 
         if ("Instant_HealthHeal".equals(card.effectType))
+            return card.value1;
+        if ("Buff_ShipHealth".equals(card.effectType))
             return card.value1;
 
         return 0f;
@@ -313,21 +327,31 @@ public class ExplorationService {
             run = zoneRunRepository.save(run);
         }
 
-        // 이 셀에 대한 1회용 클리어 챌린지 토큰 발급 — clear-cell이 이 토큰 없이는 통과 못 하도록 함(enter 생략한 clear 반복 호출 차단)
-        String challengeToken = java.util.UUID.randomUUID().toString();
-        run.setActiveChallengeToken(challengeToken);
-        run.setActiveChallengeCell(request.getCellRow() + "-" + request.getCellCol());
-        run.setActiveChallengeIssuedAt(Instant.now());
-        zoneRunRepository.save(run);
-
-        // Blocked/Start만 여기서 바로 위치 확정 — validateCellChallenge를 이미 통과했으므로(인접 + Blocked 아님) 이동 가능한 셀인 것은 보장됨.
+        // Blocked/Start는 여기서 바로 위치 확정 — validateCellChallenge를 이미 통과했으므로(인접 + Blocked 아님) 이동 가능한 셀인 것은 보장됨.
+        // 챌린지 토큰은 발급하지 않고 null로 응답 — 클라가 재방문(challengeToken==null)과 동일하게 처리해 뒤따르는
+        // clear-cell 호출을 하지 않게 됨. 여기서 토큰을 발급해버리면 클라가 clear-cell을 또 호출하는데, 그 시점엔
+        // run.currentRow/Col이 이미 이 셀로 확정된 뒤라 인접성 검사가 "자기 자신"과 비교돼 항상 실패함(EXPLORATION_CELL_NOT_ADJACENT).
         // Event(Treasure)는 hasCombatCell()상 "적 없음"이지만 clear-cell 왕복으로 보상을 지급해야 하므로 여기서 확정하지 않음(canConfirmPositionOnEnter 참고)
         GridCellOverrideDto enteringCellOverride = findCellOverride(zoneConfig, request.getCellRow(), request.getCellCol());
         EGridCellType enteringCellType = enteringCellOverride != null ? enteringCellOverride.getType() : null;
         if (canConfirmPositionOnEnter(enteringCellType) == true) {
             run.setCurrentPosition(request.getCellRow(), request.getCellCol());
             zoneRunRepository.save(run);
+
+            return EnterExplorationCellResponse.builder()
+                    .zoneNumber(request.getZoneNumber())
+                    .cellRow(request.getCellRow())
+                    .cellCol(request.getCellCol())
+                    .challengeToken(null)
+                    .build();
         }
+
+        // 이 셀에 대한 1회용 클리어 챌린지 토큰 발급 — clear-cell이 이 토큰 없이는 통과 못 하도록 함(enter 생략한 clear 반복 호출 차단)
+        String challengeToken = java.util.UUID.randomUUID().toString();
+        run.setActiveChallengeToken(challengeToken);
+        run.setActiveChallengeCell(request.getCellRow() + "-" + request.getCellCol());
+        run.setActiveChallengeIssuedAt(Instant.now());
+        zoneRunRepository.save(run);
 
         return EnterExplorationCellResponse.builder()
                 .zoneNumber(request.getZoneNumber())

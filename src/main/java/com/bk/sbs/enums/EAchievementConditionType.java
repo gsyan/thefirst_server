@@ -14,6 +14,7 @@ public enum EAchievementConditionType {
     TacticPower,
     ExplorationPointTotal,
     HullTierCount,
-    ModuleTierCount;
+    ModuleTierCount,
+    HullUnlocked;
 
 }
