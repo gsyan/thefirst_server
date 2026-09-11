@@ -4,10 +4,12 @@ import com.bk.sbs.config.DataTableConfig;
 import com.bk.sbs.dto.*;
 import com.bk.sbs.entity.Commander;
 import com.bk.sbs.entity.PvpRecord;
+import com.bk.sbs.enums.EZoneRunStatus;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.repository.CommanderRepository;
 import com.bk.sbs.repository.PvpRecordRepository;
+import com.bk.sbs.repository.ZoneRunRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -32,15 +34,17 @@ public class PvpService {
     private final FleetService fleetService;
     private final CommanderRepository commanderRepository;
     private final GameDataService gameDataService;
+    private final ZoneRunRepository zoneRunRepository;
 
     public PvpService(RedisService redisService, PvpRecordRepository pvpRecordRepository,
                       FleetService fleetService, CommanderRepository commanderRepository,
-                      GameDataService gameDataService) {
+                      GameDataService gameDataService, ZoneRunRepository zoneRunRepository) {
         this.redisService = redisService;
         this.pvpRecordRepository = pvpRecordRepository;
         this.fleetService = fleetService;
         this.commanderRepository = commanderRepository;
         this.gameDataService = gameDataService;
+        this.zoneRunRepository = zoneRunRepository;
     }
 
     // 서버 시작 시 Redis를 DB 상태로 동기화 (고아 키 제거) - TestDataInitializer(@Order(1)) 이후 실행
@@ -193,6 +197,12 @@ public class PvpService {
     // 전투 시작
     public PvpBattleStartResponse startBattle(Long commanderId, Long opponentCommanderId) {
         getOrCreatePvpRecord(commanderId);
+
+        // 존런(탐사) 진행 중에는 함선 체력이 만땅이 아닐 수 있어 PVP 시작 자체를 막음
+        boolean hasActiveZoneRun = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS).isPresent();
+        if (hasActiveZoneRun == true) {
+            throw new BusinessException(ServerErrorCode.PVP_START_FAIL_ZONE_RUN_IN_PROGRESS);
+        }
 
         // TODO: 테스트 위해 레벨 제한 임시 주석처리 — 원복 필요(클라이언트 UIPanelRank.OnAttackClicked와 동일 사유)
         /*

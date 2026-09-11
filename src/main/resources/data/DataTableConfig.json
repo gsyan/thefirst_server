@@ -1,7 +1,7 @@
 {
   "version": "0.0.1",
   "addShipCost": 10,
-  "commandPowerMaxInit": 310,
+  "commandPowerMaxInit": 400,
   "pvpMinCommanderLevel": 2,
   "pvpListCount": 3,
   "pvpListRefreshCount": 5,
@@ -23,13 +23,13 @@
     "maxModuleSlots": 6,
     "maxAttackReinforcePointsPerSlot": 10,
     "beam": {
-      "attackPerPoint": 0.1,
+      "attackPerPoint": 1.0,
       "attackCoolReductionPerPoint": 0.02,
       "attackCoolFloor": 0.5,
       "projectileSpeedPerPoint": 1.0
     },
     "missile": {
-      "attackPerPoint": 0.1,
+      "attackPerPoint": 1.0,
       "attackCoolReductionPerPoint": 0.02,
       "attackCoolFloor": 0.5,
       "projectileSpeedPerPoint": 1.0,
@@ -40,7 +40,7 @@
       "baseFighterAttack": 10.0,
       "baseAmmo": 10.0,
       "baseHealth": 50.0,
-      "reinforcePerPoint": 0.1
+      "reinforcePerPoint": 1.0
     },
     "shield": {
       "gaugePerPoint": 0.5,
