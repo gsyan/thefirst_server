@@ -95,6 +95,10 @@ public class ExplorationService {
     private static final float TREASURE_SHIP_HEALTH_HEAL_RATIO = 0.5f;
     private static final float TREASURE_TACTIC_POWER_RESTORE_RATIO = 1.0f;
 
+    private static final float ESCAPE_FAIL_PAYOUT_RATIO = 0.5f; // 탈출 실패(전투 패배 등) — 적립 보상의 50% 지급
+    private static final float ABANDON_PAYOUT_RATIO = 0.2f;     // 포기(광고 시청 안 함) — 적립 보상의 20% 지급
+    private static final float ABANDON_AD_PAYOUT_RATIO = 1.0f;  // 포기 + 광고 시청 — 적립 보상 전액 지급
+
     // 체력 비율 범위(0~1), 함선 구성 일치, 직전 스냅샷 대비 증가폭(허용치: 회복 카드 효과 + 시간 여유값) 검증
     private void validateHealthSnapshot(Long commanderId, ZoneRun run, List<ShipHealthRatioInfoDto> reported) {
         if (reported == null || reported.isEmpty()) return;
@@ -286,7 +290,7 @@ public class ExplorationService {
             if (hasAnyProgress == true)
                 throw new BusinessException(ServerErrorCode.EXPLORATION_ANOTHER_ZONE_IN_PROGRESS);
 
-            settleZoneRun(commander, otherZoneRun, false);
+            settleZoneRun(commander, otherZoneRun, false, ABANDON_PAYOUT_RATIO); // 진행도(적립 포인트) 자체가 0이라 비율은 결과에 영향 없음
             log.info("[enterExplorationCell] 진행 없는 런 조용히 종료함: otherRunId={}", otherZoneRun.getId());
             activeRunOpt = Optional.empty();
         }
@@ -551,15 +555,17 @@ public class ExplorationService {
     // hasUnclaimedAchievement: 이 정산으로 완료됐을 수 있는 업적을 클라가 바로 알 수 있도록 존런이 끝나는 시점(체크포인트)에 같이 계산
     private record RunSettlement(int pointPayout, int expPayout, int tacticPower, boolean hasUnclaimedAchievement) {}
 
-    // 탈출 성공/실패 공통 정산 — escapeExplorationZone(성공/실패)과 abandonZoneRun(실패 고정)이 공유
-    private RunSettlement settleZoneRun(Commander commander, ZoneRun run, boolean isSuccess) {
-        // Buff_ExplorationPointRate 배율은 여기(최종 확정 지급 시점)에서만 한 번 적용 — 성공/실패(50%) 여부와 무관하게
+    // 탈출 성공/실패, 포기 공통 정산 — escapeExplorationZone(성공/실패)과 abandonZoneRun(실패 고정)이 공유.
+    // payoutRatio는 isSuccess와 별개 파라미터 — isSuccess는 run 상태(ESCAPED/ABANDONED)·최고클리어존 갱신에만
+    // 쓰이고, 실제 지급 비율은 호출부가 상황(탈출 실패 50% / 포기 20% / 포기+광고 100%)에 맞게 넘김
+    private RunSettlement settleZoneRun(Commander commander, ZoneRun run, boolean isSuccess, float payoutRatio) {
+        // Buff_ExplorationPointRate 배율은 여기(최종 확정 지급 시점)에서만 한 번 적용 — payoutRatio와 무관하게
         // 이번 런에서 선택 확정된 카드 기준으로 최종 적립 총액에 곱함. 반올림 대신 올림 사용 —
         // 배율이 작을 때(예: 1% 카드 1장, 적립 30) Math.round(30*1.01f)=30으로 뭉개져 카드 효과가 사라지는 것을 방지
         float pointRateMultiplier = computeExplorationPointRateMultiplier(run.getId());
         int bankedPointWithRate = (int) Math.ceil(run.getExplorationPointBanked() * pointRateMultiplier);
-        int pointPayout = isSuccess ? bankedPointWithRate : bankedPointWithRate / 2;
-        int expPayout   = isSuccess ? run.getCommanderExpBanked()     : run.getCommanderExpBanked() / 2;
+        int pointPayout = (int) (bankedPointWithRate * payoutRatio);
+        int expPayout   = (int) (run.getCommanderExpBanked() * payoutRatio);
 
         commander.setExplorationPoint(commander.getExplorationPoint() + pointPayout);
         commander.setExplorationPointEarnedTotal(commander.getExplorationPointEarnedTotal() + pointPayout);
@@ -602,7 +608,8 @@ public class ExplorationService {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
 
-        RunSettlement settlement = settleZoneRun(commander, run, isSuccess);
+        float payoutRatio = isSuccess ? 1.0f : ESCAPE_FAIL_PAYOUT_RATIO;
+        RunSettlement settlement = settleZoneRun(commander, run, isSuccess, payoutRatio);
 
         return EscapeExplorationZoneResponse.builder()
                 .explorationPointGained(settlement.pointPayout())
@@ -617,14 +624,16 @@ public class ExplorationService {
     }
 
     @Transactional
-    public AbandonZoneRunResponse abandonZoneRun(Long commanderId) {
+    public AbandonZoneRunResponse abandonZoneRun(Long commanderId, AbandonZoneRunRequest request) {
         ZoneRun run = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_NO_ACTIVE_RUN));
 
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
 
-        RunSettlement settlement = settleZoneRun(commander, run, false);
+        boolean watchedAd = request.getWatchedAd() != null && request.getWatchedAd();
+        float payoutRatio = watchedAd ? ABANDON_AD_PAYOUT_RATIO : ABANDON_PAYOUT_RATIO;
+        RunSettlement settlement = settleZoneRun(commander, run, false, payoutRatio);
 
         return AbandonZoneRunResponse.builder()
                 .explorationPointGained(settlement.pointPayout())

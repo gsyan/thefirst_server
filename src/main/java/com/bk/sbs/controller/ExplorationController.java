@@ -76,7 +76,7 @@ public class ExplorationController {
     public ResponseEntity<ApiResponse<AbandonZoneRunResponse>> abandonRun(
             @RequestBody AbandonZoneRunRequest request,
             @CommanderId Long commanderId) {
-        AbandonZoneRunResponse response = explorationService.abandonZoneRun(commanderId);
+        AbandonZoneRunResponse response = explorationService.abandonZoneRun(commanderId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
