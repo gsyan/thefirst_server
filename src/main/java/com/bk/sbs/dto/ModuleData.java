@@ -49,7 +49,9 @@ public class ModuleData {
 
     private Float airHealth;
 
-    private Float airAttack;
+    private Float airAttackToShip;
+
+    private Float airAttackToFighter;
 
     private Float airAttackRange;
 

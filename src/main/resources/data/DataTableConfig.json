@@ -36,10 +36,7 @@
       "silenceTimePerPoint": 0.1
     },
     "hangar": {
-      "baseShipAttack": 10.0,
-      "baseFighterAttack": 10.0,
-      "baseAmmo": 10.0,
-      "baseHealth": 50.0,
+      "attackPerPoint": 0.1,
       "reinforcePerPoint": 1.0
     },
     "shield": {

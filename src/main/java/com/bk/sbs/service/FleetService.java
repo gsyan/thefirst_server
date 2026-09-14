@@ -570,7 +570,7 @@ public class FleetService {
                         ModuleData data = findModuleData(EModuleType.hangar, hangar.getModuleSubType());
                         if (data != null) {
                             statAirCount  += data.getAirCount() != null ? data.getAirCount() : 0;
-                            statAirAttack += data.getAirAttack() != null ? data.getAirAttack() : 0f;
+                            statAirAttack += data.getAirAttackToShip() != null ? data.getAirAttackToShip() : 0f;
                         }
                     }
                 }
