@@ -82,6 +82,25 @@ public class GameDataService {
 
     private java.util.List<AchievementEntry> achievementList = new java.util.ArrayList<>();
 
+    // 일일 업적 정의 1개 — 클라 DailyAchievementData(CSV 정적 정의)와 1:1. 완료/수령 여부는 DailyAchievementService가 매 요청 "오늘" 기준으로 계산
+    public static class DailyAchievementEntry {
+        public String achievementId;
+        public com.bk.sbs.enums.EAchievementConditionType conditionType;
+        public String conditionParam;
+        public int threshold;
+        public int achievementPointReward;
+        public DailyAchievementEntry(String achievementId, com.bk.sbs.enums.EAchievementConditionType conditionType,
+                                      String conditionParam, int threshold, int achievementPointReward) {
+            this.achievementId = achievementId;
+            this.conditionType = conditionType;
+            this.conditionParam = conditionParam;
+            this.threshold = threshold;
+            this.achievementPointReward = achievementPointReward;
+        }
+    }
+
+    private java.util.List<DailyAchievementEntry> dailyAchievementList = new java.util.ArrayList<>();
+
     @Autowired
     private ObjectMapper objectMapper;
 
@@ -200,6 +219,28 @@ public class GameDataService {
                 log.info("DataTableAchievement.json loaded: {} entries", achievementList.size());
             } else {
                 log.warn("DataTableAchievement.json not found in resources/data/, using empty data");
+            }
+
+            ClassPathResource dailyAchievementResource = new ClassPathResource("data/DataTableDailyAchievement.json");
+            if (dailyAchievementResource.exists()) {
+                String json = new String(dailyAchievementResource.getInputStream().readAllBytes());
+                com.fasterxml.jackson.databind.JsonNode arrayNode = objectMapper.readTree(json);
+                dailyAchievementList.clear();
+                for (com.fasterxml.jackson.databind.JsonNode node : arrayNode) {
+                    String achievementId = node.path("achievementId").asText(null);
+                    if (achievementId == null) continue;
+                    com.bk.sbs.enums.EAchievementConditionType conditionType =
+                            com.bk.sbs.enums.EAchievementConditionType.valueOf(node.path("conditionType").asText());
+                    dailyAchievementList.add(new DailyAchievementEntry(
+                            achievementId,
+                            conditionType,
+                            node.path("conditionParam").asText(""),
+                            node.path("threshold").asInt(0),
+                            node.path("achievementPointReward").asInt(0)));
+                }
+                log.info("DataTableDailyAchievement.json loaded: {} entries", dailyAchievementList.size());
+            } else {
+                log.warn("DataTableDailyAchievement.json not found in resources/data/, using empty data");
             }
 
         } catch (Exception e) {
@@ -361,6 +402,10 @@ public class GameDataService {
 
     public List<AchievementEntry> getAchievementList() {
         return achievementList;
+    }
+
+    public List<DailyAchievementEntry> getDailyAchievementList() {
+        return dailyAchievementList;
     }
 
 }

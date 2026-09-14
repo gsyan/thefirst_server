@@ -149,80 +149,88 @@ public class IapService {
     }
 
     // ── 일일 로그인 보상 (6일 주기, 매주 월요일 UTC 0시 리셋) ──────────────
+    // 출석일수 기반 — 수령 여부와 무관하게 접속한 서로 다른 날짜 수만큼 칸이 열리고, 열린 칸은 순서 상관없이 개별 수령 가능
 
     private static final int DAILY_BONUS_CYCLE_DAYS = 6;
 
-    // 조회(getDailyBonusStatus)/수령(claimDailyReward) 공용 — DB에 쓰지 않고 "지금 이 순간"의 상태만 계산
-    private DailyBonusState computeDailyBonusState(Commander commander, LocalDate today) {
+    // 조회(getDailyBonusStatus)/수령(claimDailyReward) 공용 — 접속 시점 출석일수 반영까지 포함(오늘 처음 호출이면 +1), DB 반영은 호출부(commanderRepository.save)에서 수행
+    private DailyBonusState applyAttendanceAndGetState(Commander commander, LocalDate today) {
         LocalDate currentWeekStart = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
         LocalDate savedWeekStart = commander.getLoginRewardWeekStart();
         boolean isNewWeek = savedWeekStart == null || savedWeekStart.isEqual(currentWeekStart) == false;
 
-        int effectiveMask    = isNewWeek ? 0 : commander.getClaimedDaysMask();
-        int effectiveVipMask = isNewWeek ? 0 : commander.getVipClaimedDaysMask();
-        boolean claimedToday = isNewWeek ? false : today.equals(commander.getLastDailyClaimDate());
-        int todayInWeek = Integer.bitCount(effectiveMask) + (claimedToday ? 0 : 1);
+        int mask = isNewWeek ? 0 : commander.getClaimedDaysMask();
+        int vipMask = isNewWeek ? 0 : commander.getVipClaimedDaysMask();
+        int attendanceDays = isNewWeek ? 0 : commander.getAttendanceDayCount();
+        LocalDate lastAttendance = isNewWeek ? null : commander.getLastAttendanceDate();
 
-        return new DailyBonusState(currentWeekStart, isNewWeek, effectiveMask, effectiveVipMask, claimedToday, todayInWeek);
+        if (today.equals(lastAttendance) == false) {
+            attendanceDays = Math.min(attendanceDays + 1, DAILY_BONUS_CYCLE_DAYS);
+            lastAttendance = today;
+        }
+
+        commander.setLoginRewardWeekStart(currentWeekStart);
+        commander.setClaimedDaysMask(mask);
+        commander.setVipClaimedDaysMask(vipMask);
+        commander.setAttendanceDayCount(attendanceDays);
+        commander.setLastAttendanceDate(lastAttendance);
+
+        return new DailyBonusState(currentWeekStart, mask, vipMask, attendanceDays);
     }
 
     private static class DailyBonusState {
         final LocalDate currentWeekStart;
-        final boolean isNewWeek;
-        final int effectiveMask;
-        final int effectiveVipMask;
-        final boolean claimedToday;
-        final int todayInWeek;
+        final int mask;
+        final int vipMask;
+        final int attendanceDays;
 
-        DailyBonusState(LocalDate currentWeekStart, boolean isNewWeek, int effectiveMask, int effectiveVipMask,
-                        boolean claimedToday, int todayInWeek) {
+        DailyBonusState(LocalDate currentWeekStart, int mask, int vipMask, int attendanceDays) {
             this.currentWeekStart = currentWeekStart;
-            this.isNewWeek = isNewWeek;
-            this.effectiveMask = effectiveMask;
-            this.effectiveVipMask = effectiveVipMask;
-            this.claimedToday = claimedToday;
-            this.todayInWeek = todayInWeek;
+            this.mask = mask;
+            this.vipMask = vipMask;
+            this.attendanceDays = attendanceDays;
         }
     }
 
-    // 조회 전용 — 지급 없이 오늘 수령 가능 여부만 확인(로그인 시점 레드닷 갱신용)
-    public DailyBonusStatusResponse getDailyBonusStatus(Long commanderId) {
-        Commander commander = commanderRepository.findById(commanderId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.IAP_DAILY_CLAIM_FAIL_COMMANDER_NOT_FOUND));
-
-        ZonedDateTime nowUtc = Instant.now().atZone(ZoneOffset.UTC);
-        LocalDate today = nowUtc.toLocalDate();
-        DailyBonusState state = computeDailyBonusState(commander, today);
-
-        boolean available = state.todayInWeek <= DAILY_BONUS_CYCLE_DAYS && state.claimedToday == false;
-        Instant nextMidnightUtc = nowUtc.withHour(0).withMinute(0).withSecond(0).withNano(0).plusDays(1).toInstant();
-
-        return DailyBonusStatusResponse.builder()
-                .available(available)
-                .todayDay(state.todayInWeek)
-                .claimedDaysMask(state.effectiveMask)
-                .vipClaimedDaysMask(state.effectiveVipMask)
-                .loginRewardWeekStart(state.currentWeekStart.toString())
-                .nextAvailableAt(DateTimeFormatter.ISO_INSTANT.format(nextMidnightUtc))
-                .build();
+    // 열린 칸(1~attendanceDays) 중 미수령이 하나라도 있는지
+    private boolean hasClaimableDay(DailyBonusState state) {
+        int unlockedMask = (1 << Math.min(state.attendanceDays, DAILY_BONUS_CYCLE_DAYS)) - 1;
+        return (unlockedMask & ~state.mask) != 0;
     }
 
-    // 수령 전용 — 달력 팝업의 오늘 칸 Claim 버튼에서만 호출됨
+    // 조회 전용 — 접속(로그인) 시점 출석일수를 반영하고, 지급 없이 수령 가능한 칸이 남아있는지만 확인(레드닷 갱신용)
     @Transactional
-    public DailyClaimResponse claimDailyReward(Long commanderId) {
+    public DailyBonusStatusResponse getDailyBonusStatus(Long commanderId) {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.IAP_DAILY_CLAIM_FAIL_COMMANDER_NOT_FOUND));
 
         ZonedDateTime nowUtc = Instant.now().atZone(ZoneOffset.UTC);
         LocalDate today = nowUtc.toLocalDate();
-        DailyBonusState state = computeDailyBonusState(commander, today);
+        DailyBonusState state = applyAttendanceAndGetState(commander, today);
+        commanderRepository.save(commander);
 
-        if (state.isNewWeek == true) {
-            commander.setClaimedDaysMask(0);
-            commander.setVipClaimedDaysMask(0);
-            commander.setLoginRewardWeekStart(state.currentWeekStart);
-            commander.setLastDailyClaimDate(null);
-        }
+        boolean available = hasClaimableDay(state);
+        Instant nextMidnightUtc = nowUtc.withHour(0).withMinute(0).withSecond(0).withNano(0).plusDays(1).toInstant();
+
+        return DailyBonusStatusResponse.builder()
+                .available(available)
+                .todayDay(state.attendanceDays)
+                .claimedDaysMask(state.mask)
+                .vipClaimedDaysMask(state.vipMask)
+                .loginRewardWeekStart(state.currentWeekStart.toString())
+                .nextAvailableAt(DateTimeFormatter.ISO_INSTANT.format(nextMidnightUtc))
+                .build();
+    }
+
+    // 수령 전용 — 달력 팝업에서 열려있는(day <= attendanceDays) 미수령 칸 아무거나 클릭 시 호출, day로 어느 칸인지 명시
+    @Transactional
+    public DailyClaimResponse claimDailyReward(Long commanderId, int day) {
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.IAP_DAILY_CLAIM_FAIL_COMMANDER_NOT_FOUND));
+
+        ZonedDateTime nowUtc = Instant.now().atZone(ZoneOffset.UTC);
+        LocalDate today = nowUtc.toLocalDate();
+        DailyBonusState state = applyAttendanceAndGetState(commander, today);
 
         Instant nextMidnightUtc = nowUtc.withHour(0).withMinute(0).withSecond(0).withNano(0).plusDays(1).toInstant();
         String nextAvailableAt = DateTimeFormatter.ISO_INSTANT.format(nextMidnightUtc);
@@ -231,12 +239,15 @@ public class IapService {
         int grantedExplorationPoint = 0;
         int grantedAchievementPoint = 0;
 
-        if (state.todayInWeek <= DAILY_BONUS_CYCLE_DAYS && state.claimedToday == false) {
+        boolean dayUnlocked = day >= 1 && day <= state.attendanceDays && day <= DAILY_BONUS_CYCLE_DAYS;
+        int dayBit = day >= 1 ? 1 << (day - 1) : 0;
+        boolean alreadyClaimed = (state.mask & dayBit) != 0;
+
+        if (dayUnlocked == true && alreadyClaimed == false) {
             boolean isVip = isVipActive(commanderId);
-            int todayBit = 1 << (state.todayInWeek - 1);
 
             DataTableDailyBonus dataTableDailyBonus = gameDataService.getDataTableDailyBonus();
-            List<DataTableDailyBonus.RewardEntry> normalRewards = dataTableDailyBonus.getRewards(state.todayInWeek, EDailyBonusTier.Normal);
+            List<DataTableDailyBonus.RewardEntry> normalRewards = dataTableDailyBonus.getRewards(day, EDailyBonusTier.Normal);
             for (DataTableDailyBonus.RewardEntry reward : normalRewards) {
                 if (reward.getRewardType() == EDailyBonusRewardType.ExplorationPoint)
                     grantedExplorationPoint += reward.getAmount();
@@ -246,7 +257,7 @@ public class IapService {
 
             boolean vipGranted = false;
             if (isVip == true) {
-                List<DataTableDailyBonus.RewardEntry> vipRewards = dataTableDailyBonus.getRewards(state.todayInWeek, EDailyBonusTier.VIP);
+                List<DataTableDailyBonus.RewardEntry> vipRewards = dataTableDailyBonus.getRewards(day, EDailyBonusTier.VIP);
                 for (DataTableDailyBonus.RewardEntry reward : vipRewards) {
                     if (reward.getAmount() <= 0) continue;
                     vipGranted = true;
@@ -257,10 +268,9 @@ public class IapService {
                 }
             }
 
-            commander.setClaimedDaysMask(state.effectiveMask | todayBit);
+            commander.setClaimedDaysMask(state.mask | dayBit);
             if (vipGranted == true)
-                commander.setVipClaimedDaysMask(state.effectiveVipMask | todayBit);
-            commander.setLastDailyClaimDate(today);
+                commander.setVipClaimedDaysMask(state.vipMask | dayBit);
 
             if (grantedExplorationPoint > 0) {
                 commander.setExplorationPoint(commander.getExplorationPoint() + grantedExplorationPoint);
@@ -272,11 +282,14 @@ public class IapService {
             available = grantedExplorationPoint > 0 || grantedAchievementPoint > 0;
 
             log.info("[IAP] 일일 로그인 보상 commanderId={} day={} exploration={} achievement={} vip={} mask={} vipMask={}",
-                    commanderId, state.todayInWeek, grantedExplorationPoint, grantedAchievementPoint, isVip,
+                    commanderId, day, grantedExplorationPoint, grantedAchievementPoint, isVip,
                     commander.getClaimedDaysMask(), commander.getVipClaimedDaysMask());
         }
 
         commanderRepository.save(commander);
+
+        DailyBonusState resultState = new DailyBonusState(state.currentWeekStart, commander.getClaimedDaysMask(), commander.getVipClaimedDaysMask(), state.attendanceDays);
+        boolean stillHasClaimableDay = hasClaimableDay(resultState);
 
         return DailyClaimResponse.builder()
                 .available(available)
@@ -284,8 +297,8 @@ public class IapService {
                 .grantedAchievementPoint(grantedAchievementPoint)
                 .explorationPointRemain(commander.getExplorationPoint())
                 .achievementPointRemain(commander.getAchievementPoint())
-                .nextAvailableAt(state.todayInWeek <= DAILY_BONUS_CYCLE_DAYS ? nextAvailableAt : null)
-                .todayDay(state.todayInWeek)
+                .nextAvailableAt(stillHasClaimableDay ? nextAvailableAt : null)
+                .todayDay(state.attendanceDays)
                 .claimedDaysMask(commander.getClaimedDaysMask())
                 .vipClaimedDaysMask(commander.getVipClaimedDaysMask())
                 .loginRewardWeekStart(commander.getLoginRewardWeekStart().toString())

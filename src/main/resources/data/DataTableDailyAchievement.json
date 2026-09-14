@@ -1,0 +1,101 @@
+[
+  {
+    "achievementId": "daily_cell_clear_5",
+    "conditionType": "CellClear",
+    "conditionParam": "",
+    "threshold": 5,
+    "achievementPointReward": 5,
+    "nameKey": "UIDailyAchievement_Name_cell_clear",
+    "descKey": "UIDailyAchievement_Desc_cell_clear"
+  },
+  {
+    "achievementId": "daily_cell_clear_10",
+    "conditionType": "CellClear",
+    "conditionParam": "",
+    "threshold": 10,
+    "achievementPointReward": 10,
+    "nameKey": "UIDailyAchievement_Name_cell_clear",
+    "descKey": "UIDailyAchievement_Desc_cell_clear"
+  },
+  {
+    "achievementId": "daily_cell_clear_20",
+    "conditionType": "CellClear",
+    "conditionParam": "",
+    "threshold": 20,
+    "achievementPointReward": 20,
+    "nameKey": "UIDailyAchievement_Name_cell_clear",
+    "descKey": "UIDailyAchievement_Desc_cell_clear"
+  },
+  {
+    "achievementId": "daily_event_cell_explorationpoint_3",
+    "conditionType": "EventCell",
+    "conditionParam": "ExplorationPoint",
+    "threshold": 3,
+    "achievementPointReward": 8,
+    "nameKey": "UIDailyAchievement_Name_event_cell_explorationpoint",
+    "descKey": "UIDailyAchievement_Desc_event_cell_explorationpoint"
+  },
+  {
+    "achievementId": "daily_event_cell_explorationpoint_6",
+    "conditionType": "EventCell",
+    "conditionParam": "ExplorationPoint",
+    "threshold": 6,
+    "achievementPointReward": 16,
+    "nameKey": "UIDailyAchievement_Name_event_cell_explorationpoint",
+    "descKey": "UIDailyAchievement_Desc_event_cell_explorationpoint"
+  },
+  {
+    "achievementId": "daily_event_cell_shiphealthheal_3",
+    "conditionType": "EventCell",
+    "conditionParam": "ShipHealthHeal",
+    "threshold": 3,
+    "achievementPointReward": 8,
+    "nameKey": "UIDailyAchievement_Name_event_cell_shiphealthheal",
+    "descKey": "UIDailyAchievement_Desc_event_cell_shiphealthheal"
+  },
+  {
+    "achievementId": "daily_event_cell_shiphealthheal_6",
+    "conditionType": "EventCell",
+    "conditionParam": "ShipHealthHeal",
+    "threshold": 6,
+    "achievementPointReward": 16,
+    "nameKey": "UIDailyAchievement_Name_event_cell_shiphealthheal",
+    "descKey": "UIDailyAchievement_Desc_event_cell_shiphealthheal"
+  },
+  {
+    "achievementId": "daily_event_cell_tacticpowerrestore_3",
+    "conditionType": "EventCell",
+    "conditionParam": "TacticPowerRestore",
+    "threshold": 3,
+    "achievementPointReward": 8,
+    "nameKey": "UIDailyAchievement_Name_event_cell_tacticpowerrestore",
+    "descKey": "UIDailyAchievement_Desc_event_cell_tacticpowerrestore"
+  },
+  {
+    "achievementId": "daily_event_cell_tacticpowerrestore_6",
+    "conditionType": "EventCell",
+    "conditionParam": "TacticPowerRestore",
+    "threshold": 6,
+    "achievementPointReward": 16,
+    "nameKey": "UIDailyAchievement_Name_event_cell_tacticpowerrestore",
+    "descKey": "UIDailyAchievement_Desc_event_cell_tacticpowerrestore"
+  },
+  {
+    "achievementId": "daily_zone_clear_total_3",
+    "conditionType": "ZoneClearTotal",
+    "conditionParam": "",
+    "threshold": 3,
+    "achievementPointReward": 15,
+    "nameKey": "UIDailyAchievement_Name_zone_clear_total",
+    "descKey": "UIDailyAchievement_Desc_zone_clear_total"
+  },
+  {
+    "achievementId": "daily_zone_clear_total_5",
+    "conditionType": "ZoneClearTotal",
+    "conditionParam": "",
+    "threshold": 5,
+    "achievementPointReward": 25,
+    "nameKey": "UIDailyAchievement_Name_zone_clear_total",
+    "descKey": "UIDailyAchievement_Desc_zone_clear_total"
+  }
+]

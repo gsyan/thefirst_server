@@ -1,6 +1,7 @@
 package com.bk.sbs.controller;
 
 import com.bk.sbs.dto.DailyBonusStatusResponse;
+import com.bk.sbs.dto.DailyClaimRequest;
 import com.bk.sbs.dto.DailyClaimResponse;
 import com.bk.sbs.dto.VipPurchaseRequest;
 import com.bk.sbs.dto.VipStatusResponse;
@@ -50,10 +51,12 @@ public class IapController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
-    // 일일 보상 지급 요청 — 달력 팝업의 오늘 칸 Claim 버튼 클릭 시에만 호출됨
+    // 일일 보상 지급 요청 — 달력 팝업에서 열려있는(출석일수 이하) 미수령 칸의 Claim 버튼 클릭 시 호출, day로 어느 칸인지 명시
     @PostMapping("/vip/daily-reward")
-    public ResponseEntity<ApiResponse<DailyClaimResponse>> claimDailyReward(@CommanderId Long commanderId) {
-        DailyClaimResponse response = iapService.claimDailyReward(commanderId);
+    public ResponseEntity<ApiResponse<DailyClaimResponse>> claimDailyReward(
+            @RequestBody DailyClaimRequest request,
+            @CommanderId Long commanderId) {
+        DailyClaimResponse response = iapService.claimDailyReward(commanderId, request.getDay());
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 }

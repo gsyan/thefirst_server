@@ -11,6 +11,7 @@ DROP TABLE IF EXISTS ship;
 DROP TABLE IF EXISTS fleet;
 DROP TABLE IF EXISTS commander_unlocked_hull;
 DROP TABLE IF EXISTS commander_achievement_claim;
+DROP TABLE IF EXISTS commander_daily_achievement_claim;
 DROP TABLE IF EXISTS zone_cell_clear_log;
 DROP TABLE IF EXISTS zone_run;
 DROP TABLE IF EXISTS cleared_zone;
@@ -67,7 +68,8 @@ CREATE TABLE commander (
     claimed_days_mask       INT             NOT NULL DEFAULT 0,
     vip_claimed_days_mask   INT             NOT NULL DEFAULT 0,
     login_reward_week_start DATE                NULL,
-    last_daily_claim_date   DATE                NULL,
+    attendance_day_count    INT             NOT NULL DEFAULT 0,
+    last_attendance_date    DATE                NULL,
     deleted                 TINYINT(1)      NOT NULL DEFAULT 0,
     date_time               DATETIME(6)     NOT NULL,
     PRIMARY KEY (id),
@@ -255,6 +257,20 @@ CREATE TABLE commander_achievement_claim (
     claimed_at      DATETIME(6)  NOT NULL,
     PRIMARY KEY (id),
     UNIQUE KEY uk_commander_achievement_claim (commander_id, achievement_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- commander_daily_achievement_claim — 커맨더가 수령 완료한 일일 업적 기록
+-- 유니크: commander_id + daily_achievement_id + claim_date (날짜가 바뀌면 재수령 가능, 배치 리셋 없이 라이브 판정)
+-- ============================================================
+CREATE TABLE commander_daily_achievement_claim (
+    id                     BIGINT       NOT NULL AUTO_INCREMENT,
+    commander_id           BIGINT       NOT NULL,
+    daily_achievement_id   VARCHAR(100) NOT NULL,
+    claim_date             DATE         NOT NULL,
+    claimed_at             DATETIME(6)  NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_commander_daily_achievement_claim (commander_id, daily_achievement_id, claim_date)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- app_config: 운영 설정값 저장 (버전 체크 등)

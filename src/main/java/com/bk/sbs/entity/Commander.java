@@ -95,9 +95,12 @@ public class Commander {
     // claimedDaysMask 기준 주(週) 시작일 — 이번 주 월요일 UTC 날짜, 새 주 판단용
     private LocalDate loginRewardWeekStart;
 
-    // 일일 로그인 보상을 실제로 마지막 수령한 UTC 날짜 — todayDay(출석 순번) 계산이 마스크 비트 수 기반이라
-    // 같은 날 중복 호출 시 순번이 잘못 증가하는 것을 막기 위한 가드
-    private LocalDate lastDailyClaimDate;
+    // 이번 주 동안 접속한 서로 다른 날짜 수(출석일수) — 수령 여부와 무관하게 접속만 해도 증가, todayDay(열린 칸 개수) 계산 기준
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int attendanceDayCount = 0;
+
+    // attendanceDayCount 중복 증가 방지용 — 마지막으로 출석 카운트한 UTC 날짜
+    private LocalDate lastAttendanceDate;
 
     @Column(nullable = false)
     private boolean deleted = false;
