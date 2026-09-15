@@ -25,6 +25,7 @@ public class RedisService {
     private static final String ZONE_RANKING_KEY          = "zone:ranking";          // 실시간 매칭용
     private static final String ZONE_RANKING_SNAPSHOT_KEY = "zone:ranking:snapshot"; // 랭킹 보드 표시용 (주기 스냅샷)
     private static final String PVP_INFO_PREFIX          = "pvp:info:";
+    private static final String REWARD_CARD_REROLL_PREFIX = "exploration:reward_card_reroll:";
     private static final String BATTLE_PREFIX            = "pvp:battle:";
     private static final String LIST_PREFIX              = "pvp:list:";
     private static final String RANK_NAME_KEY            = "rank:name";
@@ -283,6 +284,29 @@ public class RedisService {
 
     public void decrementRefreshRemain(Long commanderId) {
         redisTemplate.opsForHash().increment(PVP_INFO_PREFIX + commanderId, "refreshRemain", -1);
+    }
+
+    // ══════════════════════════════════════════════════════════════════════
+    // 보상카드 다시 뽑기(광고 시청 리롤) 1일 제한 횟수 — PVP 새로고침 카운터와 동일한 방식(UTC 자정 기준 자동 리셋)
+    // ══════════════════════════════════════════════════════════════════════
+
+    public int getRewardCardRerollRemain(Long commanderId, int maxReroll) {
+        String key = REWARD_CARD_REROLL_PREFIX + commanderId;
+        String lastDate = (String) redisTemplate.opsForHash().get(key, "lastResetDate");
+        String today = LocalDate.now(ZoneOffset.UTC).toString();
+
+        if (lastDate == null || lastDate.equals(today) == false) {
+            redisTemplate.opsForHash().put(key, "remain", String.valueOf(maxReroll));
+            redisTemplate.opsForHash().put(key, "lastResetDate", today);
+            return maxReroll;
+        }
+
+        String remain = (String) redisTemplate.opsForHash().get(key, "remain");
+        return remain != null ? Integer.parseInt(remain) : maxReroll;
+    }
+
+    public void decrementRewardCardRerollRemain(Long commanderId) {
+        redisTemplate.opsForHash().increment(REWARD_CARD_REROLL_PREFIX + commanderId, "remain", -1);
     }
 
     // ══════════════════════════════════════════════════════════════════════

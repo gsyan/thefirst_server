@@ -16,6 +16,8 @@ import com.bk.sbs.dto.IncreaseCommandPowerMaxRequest;
 import com.bk.sbs.dto.IncreaseCommandPowerMaxResponse;
 import com.bk.sbs.dto.IncreaseTacticPowerMaxRequest;
 import com.bk.sbs.dto.IncreaseTacticPowerMaxResponse;
+import com.bk.sbs.dto.RerollRewardCardRequest;
+import com.bk.sbs.dto.RerollRewardCardResponse;
 import com.bk.sbs.dto.nogenerated.ApiResponse;
 import com.bk.sbs.security.CommanderId;
 import com.bk.sbs.service.ExplorationService;
@@ -53,6 +55,14 @@ public class ExplorationController {
             @RequestBody ConfirmRewardCardRequest request,
             @CommanderId Long commanderId) {
         ConfirmRewardCardResponse response = explorationService.confirmRewardCard(commanderId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    @PostMapping("/reroll-reward-card")
+    public ResponseEntity<ApiResponse<RerollRewardCardResponse>> rerollRewardCard(
+            @RequestBody RerollRewardCardRequest request,
+            @CommanderId Long commanderId) {
+        RerollRewardCardResponse response = explorationService.rerollRewardCard(commanderId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 

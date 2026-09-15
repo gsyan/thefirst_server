@@ -6,13 +6,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * FlatStatFormula
- * Auto-generated from Unity C# FlatStatFormula class
+ * GeneralSettings
+ * Auto-generated from Unity C# GeneralSettings class
  */
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class FlatStatFormula {
-    private Float perPoint;
+public class GeneralSettings {
+    private Integer commandPowerMaxInit;
+
+    private Float attackJitterMax;
 }

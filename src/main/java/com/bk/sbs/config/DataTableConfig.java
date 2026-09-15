@@ -1,6 +1,10 @@
 package com.bk.sbs.config;
 
+import com.bk.sbs.dto.ExplorationSettings;
+import com.bk.sbs.dto.GeneralSettings;
+import com.bk.sbs.dto.PvpSettings;
 import com.bk.sbs.dto.ShipStatFormulaSettings;
+import com.bk.sbs.dto.TacticSettings;
 import lombok.Data;
 
 /**
@@ -9,41 +13,13 @@ import lombok.Data;
  */
 @Data
 public class DataTableConfig {
-    private String version;
+    private GeneralSettings general;
 
-    private Integer addShipCost;
+    private PvpSettings pvp;
 
-    private Integer commandPowerMaxInit;
+    private TacticSettings tactic;
 
-    private Integer pvpMinCommanderLevel;
-
-    private Integer pvpListCount;
-
-    private Integer pvpListRefreshCount;
-
-    private Integer pvpRankScoreInit;
-
-    private Integer pvpRankScorePenalty;
-
-    private Integer moduleUnlockPrice;
-
-    private Integer repairBoostExplorationPointPerSec;
-
-    private Float repairBoostMultiplier;
-
-    private Integer instantRepairBaseSecs;
-
-    private Integer missileTacticExplorationPointPerSec;
-
-    private Float missileTacticDamageMultiplier;
-
-    private Float missileTacticExplosionMultiplier;
-
-    private Integer aircraftTacticExplorationPointPerSec;
-
-    private Float aircraftTacticDamageMultiplier;
-
-    private Float aircraftTacticAmmoMultiplier;
+    private ExplorationSettings exploration;
 
     private ShipStatFormulaSettings shipStatFormula;
 

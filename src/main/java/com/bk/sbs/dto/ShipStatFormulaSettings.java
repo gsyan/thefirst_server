@@ -27,6 +27,4 @@ public class ShipStatFormulaSettings {
     private ShieldFormula shield;
 
     private InterceptorFormula interceptor;
-
-    private FlatStatFormula flatStats;
 }

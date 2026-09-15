@@ -232,7 +232,9 @@ def generate_data_table_config_java(csharp_file_path, output_dir, package_name):
         list_match = re.match(r'List<(\w+)>', java_type)
         inner_type = list_match.group(1) if list_match else java_type
 
-        if inner_type.startswith('E'):
+        # enum 네이밍 컨벤션은 E + 대문자(예: EGridCellType) — ExplorationSettings처럼 E로 시작하되
+        # 뒤가 소문자인 일반 설정 클래스와 구분해야 함
+        if re.match(r'^E[A-Z]', inner_type):
             imports.add(f"import com.bk.sbs.enums.{inner_type};")
         elif inner_type not in primitive_java_types:
             imports.add(f"import com.bk.sbs.dto.{inner_type};")
@@ -299,15 +301,18 @@ if __name__ == "__main__":
     if data_table_config_file:
         output_files.append(data_table_config_file)
 
-    # GameSettings.shipStatFormula가 참조하는 중첩 포뮬러 클래스들 (dto 패키지)
+    # GameSettings가 참조하는 중첩 클래스들 (dto 패키지)
     ship_stat_formula_class_names = [
+        "GeneralSettings",
+        "PvpSettings",
+        "TacticSettings",
+        "ExplorationSettings",
         "ShipStatFormulaSettings",
         "BeamFormula",
         "MissileFormula",
         "HangarFormula",
         "ShieldFormula",
         "InterceptorFormula",
-        "FlatStatFormula",
     ]
 
     for class_name in ship_stat_formula_class_names:

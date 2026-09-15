@@ -1,24 +1,25 @@
 {
-  "version": "0.0.1",
-  "addShipCost": 10,
-  "commandPowerMaxInit": 400,
-  "pvpMinCommanderLevel": 2,
-  "pvpListCount": 3,
-  "pvpListRefreshCount": 5,
-  "pvpRankScoreInit": 1000,
-  "pvpRankScorePenalty": 1,
-  "moduleUnlockPrice": 1,
-  "repairBoostExplorationPointPerSec": 1,
-  "repairBoostMultiplier": 2.0,
-  "instantRepairBaseSecs": 60,
-  "missileTacticExplorationPointPerSec": 1,
-  "missileTacticDamageMultiplier": 2.0,
-  "missileTacticExplosionMultiplier": 2.0,
-  "aircraftTacticExplorationPointPerSec": 1,
-  "aircraftTacticDamageMultiplier": 2.0,
-  "aircraftTacticAmmoMultiplier": 2.0,
-  "shieldTacticExplorationPointPerSec": 1,
-  "interceptorTacticExplorationPointPerSec": 1,
+  "general": {
+    "commandPowerMaxInit": 400,
+    "attackJitterMax": 1.0
+  },
+  "pvp": {
+    "pvpMinCommanderLevel": 2,
+    "pvpListCount": 3,
+    "pvpListRefreshCount": 5,
+    "pvpRankScoreInit": 1000,
+    "pvpRankScorePenalty": 1
+  },
+  "tactic": {
+    "tacticRepairCost": 1,
+    "tacticMissileCost": 1,
+    "tacticHangerCost": 1,
+    "tacticShieldCost": 1,
+    "tacticInterceptorCost": 1
+  },
+  "exploration": {
+    "rewardCardRerollLimit": 10
+  },
   "shipStatFormula": {
     "maxModuleSlots": 6,
     "maxAttackReinforcePointsPerSlot": 10,
@@ -47,9 +48,6 @@
       "delayReductionPerPoint": 0.02,
       "regenRatePerPoint": 0.1,
       "delayFloor": 1.0
-    },
-    "flatStats": {
-      "perPoint": 0.1
     }
   }
 }

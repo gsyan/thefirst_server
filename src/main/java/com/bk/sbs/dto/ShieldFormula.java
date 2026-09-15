@@ -16,9 +16,5 @@ import lombok.NoArgsConstructor;
 public class ShieldFormula {
     private Float gaugePerPoint;
 
-    private Float delayReductionPerPoint;
-
     private Float regenRatePerPoint;
-
-    private Float delayFloor;
 }

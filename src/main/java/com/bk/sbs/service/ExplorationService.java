@@ -1,6 +1,7 @@
 // 탐사 그리드 존 진행(ZoneRun) 서비스 — 셀 입장/클리어/탈출/포기, 탐험 포인트 정산, 지휘력 최대치 구매
 package com.bk.sbs.service;
 
+import com.bk.sbs.config.DataTableConfig;
 import com.bk.sbs.dto.*;
 import com.bk.sbs.entity.Commander;
 import com.bk.sbs.entity.ZoneCellClearLog;
@@ -39,6 +40,7 @@ public class ExplorationService {
     private final GameDataService gameDataService;
     private final ObjectMapper objectMapper;
     private final AchievementService achievementService;
+    private final RedisService redisService;
 
     // false면 highestClearedZoneNumber 검사를 건너뜀 — 웨이브 밸런스 테스트용(application.properties)
     @Value("${zone.require-previous-stage-cleared:true}")
@@ -47,13 +49,14 @@ public class ExplorationService {
     public ExplorationService(CommanderRepository commanderRepository, ZoneRunRepository zoneRunRepository,
                                ZoneCellClearLogRepository zoneCellClearLogRepository,
                                GameDataService gameDataService, ObjectMapper objectMapper,
-                               AchievementService achievementService) {
+                               AchievementService achievementService, RedisService redisService) {
         this.commanderRepository = commanderRepository;
         this.zoneRunRepository = zoneRunRepository;
         this.zoneCellClearLogRepository = zoneCellClearLogRepository;
         this.gameDataService = gameDataService;
         this.objectMapper = objectMapper;
         this.achievementService = achievementService;
+        this.redisService = redisService;
     }
 
     // 셀 클리어 요청에 실린 함대 체력 스냅샷을 JSON으로 직렬화 — 비어있으면(null/빈 리스트) 기존 저장값을 그대로 둠(스냅샷 없이 보낸 요청이 덮어쓰지 않도록)
@@ -505,6 +508,38 @@ public class ExplorationService {
         return ConfirmRewardCardResponse.builder()
                 .selectedCardId(request.getSelectedCardId())
                 .explorationPointGained(explorationPointGained)
+                .build();
+    }
+
+    // 보상카드 다시 뽑기(광고 시청 리롤) — 1일 제한 횟수는 RedisService의 PVP 새로고침과 동일한 방식(UTC 자정 리셋)으로 관리
+    @Transactional
+    public RerollRewardCardResponse rerollRewardCard(Long commanderId, RerollRewardCardRequest request) {
+        ZoneRun run = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS)
+                .filter(r -> r.getZoneNumber() == request.getZoneNumber())
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_NO_ACTIVE_RUN));
+
+        String cell = request.getCellRow() + "-" + request.getCellCol();
+        ZoneCellClearLog clearLog = zoneCellClearLogRepository.findTopByZoneRunIdAndCellOrderByClearedAtDesc(run.getId(), cell)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_REWARD_CARD_INVALID_SELECTION));
+
+        // 이미 선택 확정됐거나 애초에 카드 후보가 없던 셀(탈출/빈 셀 등)은 리롤 대상이 아님
+        if (clearLog.getRewardCardSelectedId() != null || clearLog.getRewardCardCandidatesJson() == null)
+            throw new BusinessException(ServerErrorCode.EXPLORATION_REWARD_CARD_INVALID_SELECTION);
+
+        DataTableConfig config = gameDataService.getDataTableConfig();
+        int rerollRemain = redisService.getRewardCardRerollRemain(commanderId, config.getExploration().getRewardCardRerollLimit());
+        if (rerollRemain <= 0)
+            throw new BusinessException(ServerErrorCode.EXPLORATION_REWARD_CARD_REROLL_LIMIT_EXCEEDED);
+
+        redisService.decrementRewardCardRerollRemain(commanderId);
+
+        List<String> newCandidates = rollRewardCardCandidates();
+        clearLog.setRewardCardCandidatesJson(serializeCardIdList(newCandidates));
+        zoneCellClearLogRepository.save(clearLog);
+
+        return RerollRewardCardResponse.builder()
+                .rewardCardCandidates(newCandidates)
+                .rerollRemain(rerollRemain - 1)
                 .build();
     }
 

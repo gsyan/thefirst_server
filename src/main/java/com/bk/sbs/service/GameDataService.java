@@ -7,7 +7,9 @@ import com.bk.sbs.config.DataTablePvpSeason;
 import com.bk.sbs.config.ZoneConfig;
 import com.bk.sbs.dto.ZoneConfigData;
 import com.bk.sbs.dto.ModuleData;
+import com.bk.sbs.dto.GeneralSettings;
 import com.bk.sbs.dto.ShipStatFormulaSettings;
+import com.bk.sbs.dto.TacticSettings;
 import com.bk.sbs.enums.EModuleType;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
@@ -270,17 +272,10 @@ public class GameDataService {
         return cachedMaxShipCount;
     }
 
-    public Integer getShipAddCost() {
-        return getDataTableConfig().getAddShipCost();
-    }
-
     public int getInitialCommandPowerMax() {
-        Integer val = getDataTableConfig().getCommandPowerMaxInit();
+        GeneralSettings general = getDataTableConfig().getGeneral();
+        Integer val = general != null ? general.getCommandPowerMaxInit() : null;
         return val != null ? val : 120;
-    }
-
-    public Integer getModuleUnlockPrice() {
-        return getDataTableConfig().getModuleUnlockPrice();
     }
 
     public int getMaxAttackReinforcePointsPerSlot() {
@@ -292,13 +287,9 @@ public class GameDataService {
     }
 
     public int getBattleRepairExplorationPointPerSec() {
-        Integer val = getDataTableConfig().getRepairBoostExplorationPointPerSec();
+        TacticSettings tactic = getDataTableConfig().getTactic();
+        Integer val = tactic != null ? tactic.getTacticRepairCost() : null;
         return val != null ? val : 1;
-    }
-
-    public int getInstantRepairBaseSecs() {
-        Integer val = getDataTableConfig().getInstantRepairBaseSecs();
-        return val != null ? val : 60;
     }
 
     public List<ModuleData> getModulesByType(EModuleType moduleType) {

@@ -6,15 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * HangarFormula
- * Auto-generated from Unity C# HangarFormula class
+ * ExplorationSettings
+ * Auto-generated from Unity C# ExplorationSettings class
  */
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class HangarFormula {
-    private Float attackPerPoint;
-
-    private Float reinforcePerPoint;
+public class ExplorationSettings {
+    private Integer rewardCardRerollLimit;
 }
