@@ -278,6 +278,12 @@ public class GameDataService {
         return val != null ? val : 120;
     }
 
+    public int getReinforceCpCostPerPoint() {
+        GeneralSettings general = getDataTableConfig().getGeneral();
+        Integer val = general != null ? general.getReinforceCpCostPerPoint() : null;
+        return val != null ? val : 10;
+    }
+
     public int getMaxAttackReinforcePointsPerSlot() {
         ShipStatFormulaSettings formula = getDataTableConfig().getShipStatFormula();
         if (formula == null) return 10;

@@ -33,7 +33,6 @@ public class FleetService {
 
     // 이 티어 미만은 조건 없이 사용 가능, 이 티어 이상은 업적포인트 언락(commander_unlocked_hull) 필요
     private static final int ACHIEVEMENT_UNLOCK_MIN_HULL_TIER = 4;
-    private static final int REINFORCE_CP_COST_PER_POINT = 10; // 강화 포인트 1당 소모 CP — 설치비 10배 인상에 맞춘 동일 배율
 
     public FleetService(CommanderRepository commanderRepository,
                        GameDataService gameDataService,
@@ -155,7 +154,7 @@ public class FleetService {
         int newShipCost = hullData.getStatPoint() != null ? hullData.getStatPoint() : 0;
         for (Module m : keptModules) {
             int installCost = getModuleStatPoint(m.getModuleType(), m.getModuleSubType());
-            int reinforceCost = REINFORCE_CP_COST_PER_POINT * (m.getAttackPoints() + m.getAttackToFighterPoints());
+            int reinforceCost = gameDataService.getReinforceCpCostPerPoint() * (m.getAttackPoints() + m.getAttackToFighterPoints());
             newShipCost += installCost + reinforceCost;
         }
 
@@ -304,7 +303,7 @@ public class FleetService {
         if (ship.getModules() != null) {
             for (Module module : ship.getModules()) {
                 int installCost = getModuleStatPoint(module.getModuleType(), module.getModuleSubType());
-                int reinforceCost = REINFORCE_CP_COST_PER_POINT * (module.getAttackPoints() + module.getAttackToFighterPoints());
+                int reinforceCost = gameDataService.getReinforceCpCostPerPoint() * (module.getAttackPoints() + module.getAttackToFighterPoints());
                 modulesCost += installCost + reinforceCost;
             }
         }
@@ -392,7 +391,7 @@ public class FleetService {
         int newShipCost = computeHullCost(ship.getHullSubType());
         for (DesiredModule m : desired) {
             int installCost = getModuleStatPoint(m.moduleType(), m.moduleSubType());
-            int reinforceCost = REINFORCE_CP_COST_PER_POINT * (m.attackPoints() + m.attackToFighterPoints());
+            int reinforceCost = gameDataService.getReinforceCpCostPerPoint() * (m.attackPoints() + m.attackToFighterPoints());
             newShipCost += installCost + reinforceCost;
         }
 

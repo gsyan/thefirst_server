@@ -17,4 +17,6 @@ public class GeneralSettings {
     private Integer commandPowerMaxInit;
 
     private Float attackJitterMax;
+
+    private Integer reinforceCpCostPerPoint;
 }

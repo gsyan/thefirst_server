@@ -1,7 +1,8 @@
 {
   "general": {
     "commandPowerMaxInit": 400,
-    "attackJitterMax": 1.0
+    "attackJitterMax": 1.0,
+    "reinforceCpCostPerPoint": 10
   },
   "pvp": {
     "pvpMinCommanderLevel": 2,
