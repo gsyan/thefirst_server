@@ -188,12 +188,12 @@ public class TestDataInitializer {
                 " JOIN account a ON a.id = c.account_id WHERE a.email LIKE 'guest\\_test%' ORDER BY f.id",
                 Long.class);
 
-        // 7. Ship — FleetService.DEFAULT_FLEET_HULL_SUB_TYPE("h1_11100")과 동일한 기본 함선 1척
+        // 7. Ship — FleetService.DEFAULT_FLEET_HULL_SUB_TYPE("hull_3_1_11100")과 동일한 기본 함선 1척
         List<Object[]> shipRows = new ArrayList<>(count);
         for (Long fleetId : fleetIds)
             shipRows.add(new Object[]{fleetId});
         jdbc.batchUpdate(
-                "INSERT INTO ship (fleet_id, slot_index, hull_sub_type, is_front) VALUES (?, 0, 'h1_11100', true)",
+                "INSERT INTO ship (fleet_id, slot_index, hull_sub_type, is_front) VALUES (?, 0, 'hull_3_1_11100', true)",
                 shipRows, BATCH_SIZE, (ps, row) -> {
                     ps.setLong(1, (Long) row[0]);
                 });
