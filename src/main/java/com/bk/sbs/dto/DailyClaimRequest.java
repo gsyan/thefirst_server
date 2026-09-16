@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DailyClaimRequest {
     private Integer day;
+    private Boolean claimVip;
 }

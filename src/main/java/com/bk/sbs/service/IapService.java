@@ -192,10 +192,12 @@ public class IapService {
         }
     }
 
-    // 열린 칸(1~attendanceDays) 중 미수령이 하나라도 있는지
-    private boolean hasClaimableDay(DailyBonusState state) {
+    // 열린 칸(1~attendanceDays) 중 일반 미수령이 있거나, VIP면 VIP 미수령도 있는지 — 두 트랙은 완전히 별개 수령이라 둘 다 확인
+    private boolean hasClaimableDay(DailyBonusState state, boolean isVip) {
         int unlockedMask = (1 << Math.min(state.attendanceDays, DAILY_BONUS_CYCLE_DAYS)) - 1;
-        return (unlockedMask & ~state.mask) != 0;
+        boolean normalClaimable = (unlockedMask & ~state.mask) != 0;
+        boolean vipClaimable = isVip == true && (unlockedMask & ~state.vipMask) != 0;
+        return normalClaimable || vipClaimable;
     }
 
     // 조회 전용 — 접속(로그인) 시점 출석일수를 반영하고, 지급 없이 수령 가능한 칸이 남아있는지만 확인(레드닷 갱신용)
@@ -209,7 +211,7 @@ public class IapService {
         DailyBonusState state = applyAttendanceAndGetState(commander, today);
         commanderRepository.save(commander);
 
-        boolean available = hasClaimableDay(state);
+        boolean available = hasClaimableDay(state, isVipActive(commanderId));
         Instant nextMidnightUtc = nowUtc.withHour(0).withMinute(0).withSecond(0).withNano(0).plusDays(1).toInstant();
 
         return DailyBonusStatusResponse.builder()
@@ -222,11 +224,15 @@ public class IapService {
                 .build();
     }
 
-    // 수령 전용 — 달력 팝업에서 열려있는(day <= attendanceDays) 미수령 칸 아무거나 클릭 시 호출, day로 어느 칸인지 명시
+    // 수령 전용 — 달력 팝업에서 열려있는(day <= attendanceDays) 미수령 칸 아무거나 클릭 시 호출, day로 어느 칸인지 명시.
+    // 일반/VIP 보상은 완전히 별개로 수령됨(claimVip로 구분) — claimedDaysMask/vipClaimedDaysMask도 각자 독립적으로 관리
     @Transactional
-    public DailyClaimResponse claimDailyReward(Long commanderId, int day) {
+    public DailyClaimResponse claimDailyReward(Long commanderId, int day, boolean claimVip) {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.IAP_DAILY_CLAIM_FAIL_COMMANDER_NOT_FOUND));
+
+        if (claimVip == true && isVipActive(commanderId) == false)
+            throw new BusinessException(ServerErrorCode.IAP_DAILY_CLAIM_FAIL_NOT_VIP);
 
         ZonedDateTime nowUtc = Instant.now().atZone(ZoneOffset.UTC);
         LocalDate today = nowUtc.toLocalDate();
@@ -241,36 +247,24 @@ public class IapService {
 
         boolean dayUnlocked = day >= 1 && day <= state.attendanceDays && day <= DAILY_BONUS_CYCLE_DAYS;
         int dayBit = day >= 1 ? 1 << (day - 1) : 0;
-        boolean alreadyClaimed = (state.mask & dayBit) != 0;
+        int relevantMask = claimVip == true ? state.vipMask : state.mask;
+        boolean alreadyClaimed = (relevantMask & dayBit) != 0;
 
         if (dayUnlocked == true && alreadyClaimed == false) {
-            boolean isVip = isVipActive(commanderId);
-
+            EDailyBonusTier tier = claimVip == true ? EDailyBonusTier.VIP : EDailyBonusTier.Normal;
             DataTableDailyBonus dataTableDailyBonus = gameDataService.getDataTableDailyBonus();
-            List<DataTableDailyBonus.RewardEntry> normalRewards = dataTableDailyBonus.getRewards(day, EDailyBonusTier.Normal);
-            for (DataTableDailyBonus.RewardEntry reward : normalRewards) {
+            List<DataTableDailyBonus.RewardEntry> rewards = dataTableDailyBonus.getRewards(day, tier);
+            for (DataTableDailyBonus.RewardEntry reward : rewards) {
                 if (reward.getRewardType() == EDailyBonusRewardType.ExplorationPoint)
                     grantedExplorationPoint += reward.getAmount();
                 else if (reward.getRewardType() == EDailyBonusRewardType.AchievementPoint)
                     grantedAchievementPoint += reward.getAmount();
             }
 
-            boolean vipGranted = false;
-            if (isVip == true) {
-                List<DataTableDailyBonus.RewardEntry> vipRewards = dataTableDailyBonus.getRewards(day, EDailyBonusTier.VIP);
-                for (DataTableDailyBonus.RewardEntry reward : vipRewards) {
-                    if (reward.getAmount() <= 0) continue;
-                    vipGranted = true;
-                    if (reward.getRewardType() == EDailyBonusRewardType.ExplorationPoint)
-                        grantedExplorationPoint += reward.getAmount();
-                    else if (reward.getRewardType() == EDailyBonusRewardType.AchievementPoint)
-                        grantedAchievementPoint += reward.getAmount();
-                }
-            }
-
-            commander.setClaimedDaysMask(state.mask | dayBit);
-            if (vipGranted == true)
+            if (claimVip == true)
                 commander.setVipClaimedDaysMask(state.vipMask | dayBit);
+            else
+                commander.setClaimedDaysMask(state.mask | dayBit);
 
             if (grantedExplorationPoint > 0) {
                 commander.setExplorationPoint(commander.getExplorationPoint() + grantedExplorationPoint);
@@ -281,15 +275,15 @@ public class IapService {
 
             available = grantedExplorationPoint > 0 || grantedAchievementPoint > 0;
 
-            log.info("[IAP] 일일 로그인 보상 commanderId={} day={} exploration={} achievement={} vip={} mask={} vipMask={}",
-                    commanderId, day, grantedExplorationPoint, grantedAchievementPoint, isVip,
+            log.info("[IAP] 일일 로그인 보상 commanderId={} day={} claimVip={} exploration={} achievement={} mask={} vipMask={}",
+                    commanderId, day, claimVip, grantedExplorationPoint, grantedAchievementPoint,
                     commander.getClaimedDaysMask(), commander.getVipClaimedDaysMask());
         }
 
         commanderRepository.save(commander);
 
         DailyBonusState resultState = new DailyBonusState(state.currentWeekStart, commander.getClaimedDaysMask(), commander.getVipClaimedDaysMask(), state.attendanceDays);
-        boolean stillHasClaimableDay = hasClaimableDay(resultState);
+        boolean stillHasClaimableDay = hasClaimableDay(resultState, isVipActive(commanderId));
 
         return DailyClaimResponse.builder()
                 .available(available)

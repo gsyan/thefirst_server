@@ -10,7 +10,7 @@
       {
         "tier": "VIP",
         "rewardType": "ExplorationPoint",
-        "amount": 0
+        "amount": 100
       }
     ]
   },
@@ -25,7 +25,7 @@
       {
         "tier": "VIP",
         "rewardType": "ExplorationPoint",
-        "amount": 0
+        "amount": 200
       }
     ]
   },
@@ -40,7 +40,7 @@
       {
         "tier": "VIP",
         "rewardType": "ExplorationPoint",
-        "amount": 0
+        "amount": 300
       }
     ]
   },
@@ -53,19 +53,9 @@
         "amount": 300
       },
       {
-        "tier": "Normal",
-        "rewardType": "AchievementPoint",
-        "amount": 10
-      },
-      {
         "tier": "VIP",
         "rewardType": "ExplorationPoint",
-        "amount": 0
-      },
-      {
-        "tier": "VIP",
-        "rewardType": "AchievementPoint",
-        "amount": 0
+        "amount": 300
       }
     ]
   },
@@ -78,19 +68,9 @@
         "amount": 300
       },
       {
-        "tier": "Normal",
-        "rewardType": "AchievementPoint",
-        "amount": 20
-      },
-      {
         "tier": "VIP",
         "rewardType": "ExplorationPoint",
-        "amount": 0
-      },
-      {
-        "tier": "VIP",
-        "rewardType": "AchievementPoint",
-        "amount": 0
+        "amount": 300
       }
     ]
   },
@@ -103,19 +83,9 @@
         "amount": 300
       },
       {
-        "tier": "Normal",
-        "rewardType": "AchievementPoint",
-        "amount": 30
-      },
-      {
         "tier": "VIP",
         "rewardType": "ExplorationPoint",
-        "amount": 0
-      },
-      {
-        "tier": "VIP",
-        "rewardType": "AchievementPoint",
-        "amount": 0
+        "amount": 300
       }
     ]
   }

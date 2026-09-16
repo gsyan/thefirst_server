@@ -17,4 +17,5 @@ public class AchievementStatusDto {
     private String achievementId;
     private Integer currentValue;
     private Boolean isClaimed;
+    private Boolean isVipClaimed;
 }

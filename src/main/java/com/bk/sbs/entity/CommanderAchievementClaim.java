@@ -26,12 +26,16 @@ public class CommanderAchievementClaim {
     @Column(name = "achievement_id", nullable = false, length = 100)
     private String achievementId;
 
+    @Column(name = "is_vip", nullable = false)
+    private boolean isVip;
+
     @Column(name = "claimed_at", nullable = false)
     private Instant claimedAt = Instant.now();
 
-    public CommanderAchievementClaim(Long commanderId, String achievementId) {
+    public CommanderAchievementClaim(Long commanderId, String achievementId, boolean isVip) {
         this.commanderId = commanderId;
         this.achievementId = achievementId;
+        this.isVip = isVip;
         this.claimedAt = Instant.now();
     }
 }

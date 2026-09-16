@@ -5,6 +5,7 @@
     "conditionParam": "",
     "threshold": 5,
     "achievementPointReward": 5,
+    "achievementPointRewardVip": 5,
     "nameKey": "UIDailyAchievement_Name_cell_clear",
     "descKey": "UIDailyAchievement_Desc_cell_clear"
   },
@@ -14,6 +15,7 @@
     "conditionParam": "",
     "threshold": 10,
     "achievementPointReward": 10,
+    "achievementPointRewardVip": 10,
     "nameKey": "UIDailyAchievement_Name_cell_clear",
     "descKey": "UIDailyAchievement_Desc_cell_clear"
   },
@@ -23,6 +25,7 @@
     "conditionParam": "",
     "threshold": 20,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIDailyAchievement_Name_cell_clear",
     "descKey": "UIDailyAchievement_Desc_cell_clear"
   },
@@ -32,6 +35,7 @@
     "conditionParam": "ExplorationPoint",
     "threshold": 3,
     "achievementPointReward": 8,
+    "achievementPointRewardVip": 8,
     "nameKey": "UIDailyAchievement_Name_event_cell_explorationpoint",
     "descKey": "UIDailyAchievement_Desc_event_cell_explorationpoint"
   },
@@ -41,6 +45,7 @@
     "conditionParam": "ExplorationPoint",
     "threshold": 6,
     "achievementPointReward": 16,
+    "achievementPointRewardVip": 16,
     "nameKey": "UIDailyAchievement_Name_event_cell_explorationpoint",
     "descKey": "UIDailyAchievement_Desc_event_cell_explorationpoint"
   },
@@ -50,6 +55,7 @@
     "conditionParam": "ShipHealthHeal",
     "threshold": 3,
     "achievementPointReward": 8,
+    "achievementPointRewardVip": 8,
     "nameKey": "UIDailyAchievement_Name_event_cell_shiphealthheal",
     "descKey": "UIDailyAchievement_Desc_event_cell_shiphealthheal"
   },
@@ -59,6 +65,7 @@
     "conditionParam": "ShipHealthHeal",
     "threshold": 6,
     "achievementPointReward": 16,
+    "achievementPointRewardVip": 16,
     "nameKey": "UIDailyAchievement_Name_event_cell_shiphealthheal",
     "descKey": "UIDailyAchievement_Desc_event_cell_shiphealthheal"
   },
@@ -68,6 +75,7 @@
     "conditionParam": "TacticPowerRestore",
     "threshold": 3,
     "achievementPointReward": 8,
+    "achievementPointRewardVip": 8,
     "nameKey": "UIDailyAchievement_Name_event_cell_tacticpowerrestore",
     "descKey": "UIDailyAchievement_Desc_event_cell_tacticpowerrestore"
   },
@@ -77,6 +85,7 @@
     "conditionParam": "TacticPowerRestore",
     "threshold": 6,
     "achievementPointReward": 16,
+    "achievementPointRewardVip": 16,
     "nameKey": "UIDailyAchievement_Name_event_cell_tacticpowerrestore",
     "descKey": "UIDailyAchievement_Desc_event_cell_tacticpowerrestore"
   },
@@ -86,6 +95,7 @@
     "conditionParam": "",
     "threshold": 3,
     "achievementPointReward": 15,
+    "achievementPointRewardVip": 15,
     "nameKey": "UIDailyAchievement_Name_zone_clear_total",
     "descKey": "UIDailyAchievement_Desc_zone_clear_total"
   },
@@ -95,6 +105,7 @@
     "conditionParam": "",
     "threshold": 5,
     "achievementPointReward": 25,
+    "achievementPointRewardVip": 25,
     "nameKey": "UIDailyAchievement_Name_zone_clear_total",
     "descKey": "UIDailyAchievement_Desc_zone_clear_total"
   }

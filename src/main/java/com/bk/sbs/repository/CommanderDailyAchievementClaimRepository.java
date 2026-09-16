@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CommanderDailyAchievementClaimRepository extends JpaRepository<CommanderDailyAchievementClaim, Long> {
 
-    boolean existsByCommanderIdAndDailyAchievementIdAndClaimDate(Long commanderId, String dailyAchievementId, LocalDate claimDate);
+    boolean existsByCommanderIdAndDailyAchievementIdAndClaimDateAndIsVip(Long commanderId, String dailyAchievementId, LocalDate claimDate, boolean isVip);
 
     List<CommanderDailyAchievementClaim> findByCommanderIdAndClaimDate(Long commanderId, LocalDate claimDate);
 }

@@ -22,4 +22,5 @@ public class ClearExplorationCellResponse {
     private ETreasureRewardType treasureRewardType;
     private Float treasureRewardRatio;
     private Integer tacticPower;
+    private Integer rerollRemain;
 }

@@ -5,6 +5,7 @@
     "conditionParam": "",
     "threshold": 10,
     "achievementPointReward": 5,
+    "achievementPointRewardVip": 5,
     "nameKey": "UIAchievement_Name_cell_clear",
     "descKey": "UIAchievement_Desc_cell_clear"
   },
@@ -14,6 +15,7 @@
     "conditionParam": "",
     "threshold": 50,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_cell_clear",
     "descKey": "UIAchievement_Desc_cell_clear"
   },
@@ -23,6 +25,7 @@
     "conditionParam": "",
     "threshold": 100,
     "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_cell_clear",
     "descKey": "UIAchievement_Desc_cell_clear"
   },
@@ -32,6 +35,7 @@
     "conditionParam": "",
     "threshold": 300,
     "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_cell_clear",
     "descKey": "UIAchievement_Desc_cell_clear"
   },
@@ -41,6 +45,7 @@
     "conditionParam": "",
     "threshold": 500,
     "achievementPointReward": 150,
+    "achievementPointRewardVip": 150,
     "nameKey": "UIAchievement_Name_cell_clear",
     "descKey": "UIAchievement_Desc_cell_clear"
   },
@@ -50,6 +55,7 @@
     "conditionParam": "",
     "threshold": 1000,
     "achievementPointReward": 250,
+    "achievementPointRewardVip": 250,
     "nameKey": "UIAchievement_Name_cell_clear",
     "descKey": "UIAchievement_Desc_cell_clear"
   },
@@ -59,6 +65,7 @@
     "conditionParam": "ExplorationPoint",
     "threshold": 5,
     "achievementPointReward": 10,
+    "achievementPointRewardVip": 10,
     "nameKey": "UIAchievement_Name_event_cell_explorationpoint",
     "descKey": "UIAchievement_Desc_event_cell_explorationpoint"
   },
@@ -68,6 +75,7 @@
     "conditionParam": "ExplorationPoint",
     "threshold": 10,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_event_cell_explorationpoint",
     "descKey": "UIAchievement_Desc_event_cell_explorationpoint"
   },
@@ -77,6 +85,7 @@
     "conditionParam": "ExplorationPoint",
     "threshold": 20,
     "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_event_cell_explorationpoint",
     "descKey": "UIAchievement_Desc_event_cell_explorationpoint"
   },
@@ -86,6 +95,7 @@
     "conditionParam": "ExplorationPoint",
     "threshold": 50,
     "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_event_cell_explorationpoint",
     "descKey": "UIAchievement_Desc_event_cell_explorationpoint"
   },
@@ -95,6 +105,7 @@
     "conditionParam": "ShipHealthHeal",
     "threshold": 5,
     "achievementPointReward": 10,
+    "achievementPointRewardVip": 10,
     "nameKey": "UIAchievement_Name_event_cell_shiphealthheal",
     "descKey": "UIAchievement_Desc_event_cell_shiphealthheal"
   },
@@ -104,6 +115,7 @@
     "conditionParam": "ShipHealthHeal",
     "threshold": 10,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_event_cell_shiphealthheal",
     "descKey": "UIAchievement_Desc_event_cell_shiphealthheal"
   },
@@ -113,6 +125,7 @@
     "conditionParam": "ShipHealthHeal",
     "threshold": 20,
     "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_event_cell_shiphealthheal",
     "descKey": "UIAchievement_Desc_event_cell_shiphealthheal"
   },
@@ -122,6 +135,7 @@
     "conditionParam": "ShipHealthHeal",
     "threshold": 50,
     "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_event_cell_shiphealthheal",
     "descKey": "UIAchievement_Desc_event_cell_shiphealthheal"
   },
@@ -131,6 +145,7 @@
     "conditionParam": "TacticPowerRestore",
     "threshold": 5,
     "achievementPointReward": 10,
+    "achievementPointRewardVip": 10,
     "nameKey": "UIAchievement_Name_event_cell_tacticpowerrestore",
     "descKey": "UIAchievement_Desc_event_cell_tacticpowerrestore"
   },
@@ -140,6 +155,7 @@
     "conditionParam": "TacticPowerRestore",
     "threshold": 10,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_event_cell_tacticpowerrestore",
     "descKey": "UIAchievement_Desc_event_cell_tacticpowerrestore"
   },
@@ -149,6 +165,7 @@
     "conditionParam": "TacticPowerRestore",
     "threshold": 20,
     "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_event_cell_tacticpowerrestore",
     "descKey": "UIAchievement_Desc_event_cell_tacticpowerrestore"
   },
@@ -158,6 +175,7 @@
     "conditionParam": "TacticPowerRestore",
     "threshold": 50,
     "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_event_cell_tacticpowerrestore",
     "descKey": "UIAchievement_Desc_event_cell_tacticpowerrestore"
   },
@@ -167,6 +185,7 @@
     "conditionParam": "",
     "threshold": 10,
     "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_zone_clear_total",
     "descKey": "UIAchievement_Desc_zone_clear_total"
   },
@@ -176,6 +195,7 @@
     "conditionParam": "",
     "threshold": 25,
     "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_clear_total",
     "descKey": "UIAchievement_Desc_zone_clear_total"
   },
@@ -185,6 +205,7 @@
     "conditionParam": "",
     "threshold": 50,
     "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_clear_total",
     "descKey": "UIAchievement_Desc_zone_clear_total"
   },
@@ -194,6 +215,7 @@
     "conditionParam": "",
     "threshold": 75,
     "achievementPointReward": 150,
+    "achievementPointRewardVip": 150,
     "nameKey": "UIAchievement_Name_zone_clear_total",
     "descKey": "UIAchievement_Desc_zone_clear_total"
   },
@@ -203,6 +225,7 @@
     "conditionParam": "",
     "threshold": 100,
     "achievementPointReward": 200,
+    "achievementPointRewardVip": 200,
     "nameKey": "UIAchievement_Name_zone_clear_total",
     "descKey": "UIAchievement_Desc_zone_clear_total"
   },
@@ -212,6 +235,7 @@
     "conditionParam": "1",
     "threshold": 1,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -221,6 +245,7 @@
     "conditionParam": "2",
     "threshold": 1,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -230,6 +255,7 @@
     "conditionParam": "3",
     "threshold": 1,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -239,6 +265,7 @@
     "conditionParam": "4",
     "threshold": 1,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -248,6 +275,7 @@
     "conditionParam": "5",
     "threshold": 1,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -257,6 +285,7 @@
     "conditionParam": "6",
     "threshold": 1,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -266,6 +295,7 @@
     "conditionParam": "7",
     "threshold": 1,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -275,6 +305,7 @@
     "conditionParam": "8",
     "threshold": 1,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -284,6 +315,7 @@
     "conditionParam": "9",
     "threshold": 1,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -293,6 +325,7 @@
     "conditionParam": "10",
     "threshold": 1,
     "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -302,6 +335,7 @@
     "conditionParam": "11",
     "threshold": 1,
     "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -311,6 +345,7 @@
     "conditionParam": "12",
     "threshold": 1,
     "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -320,6 +355,7 @@
     "conditionParam": "13",
     "threshold": 1,
     "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -329,6 +365,7 @@
     "conditionParam": "14",
     "threshold": 1,
     "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -338,6 +375,7 @@
     "conditionParam": "15",
     "threshold": 1,
     "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -347,6 +385,7 @@
     "conditionParam": "16",
     "threshold": 1,
     "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -356,6 +395,7 @@
     "conditionParam": "17",
     "threshold": 1,
     "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -365,6 +405,7 @@
     "conditionParam": "18",
     "threshold": 1,
     "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -374,6 +415,7 @@
     "conditionParam": "19",
     "threshold": 1,
     "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -383,6 +425,7 @@
     "conditionParam": "20",
     "threshold": 1,
     "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -392,6 +435,7 @@
     "conditionParam": "21",
     "threshold": 1,
     "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -401,6 +445,7 @@
     "conditionParam": "22",
     "threshold": 1,
     "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -410,6 +455,7 @@
     "conditionParam": "23",
     "threshold": 1,
     "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -419,6 +465,7 @@
     "conditionParam": "24",
     "threshold": 1,
     "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -428,6 +475,7 @@
     "conditionParam": "25",
     "threshold": 1,
     "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -437,6 +485,7 @@
     "conditionParam": "26",
     "threshold": 1,
     "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -446,6 +495,7 @@
     "conditionParam": "27",
     "threshold": 1,
     "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -455,6 +505,7 @@
     "conditionParam": "28",
     "threshold": 1,
     "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -464,6 +515,7 @@
     "conditionParam": "29",
     "threshold": 1,
     "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -473,6 +525,7 @@
     "conditionParam": "30",
     "threshold": 1,
     "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -482,6 +535,7 @@
     "conditionParam": "31",
     "threshold": 1,
     "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -491,6 +545,7 @@
     "conditionParam": "32",
     "threshold": 1,
     "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -500,6 +555,7 @@
     "conditionParam": "33",
     "threshold": 1,
     "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -509,6 +565,7 @@
     "conditionParam": "34",
     "threshold": 1,
     "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -518,6 +575,7 @@
     "conditionParam": "35",
     "threshold": 1,
     "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -527,6 +585,7 @@
     "conditionParam": "36",
     "threshold": 1,
     "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -536,6 +595,7 @@
     "conditionParam": "37",
     "threshold": 1,
     "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -545,6 +605,7 @@
     "conditionParam": "38",
     "threshold": 1,
     "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -554,6 +615,7 @@
     "conditionParam": "39",
     "threshold": 1,
     "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -563,6 +625,7 @@
     "conditionParam": "40",
     "threshold": 1,
     "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -572,6 +635,7 @@
     "conditionParam": "41",
     "threshold": 1,
     "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -581,6 +645,7 @@
     "conditionParam": "42",
     "threshold": 1,
     "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -590,6 +655,7 @@
     "conditionParam": "43",
     "threshold": 1,
     "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -599,6 +665,7 @@
     "conditionParam": "44",
     "threshold": 1,
     "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -608,6 +675,7 @@
     "conditionParam": "45",
     "threshold": 1,
     "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -617,6 +685,7 @@
     "conditionParam": "46",
     "threshold": 1,
     "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -626,6 +695,7 @@
     "conditionParam": "47",
     "threshold": 1,
     "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -635,6 +705,7 @@
     "conditionParam": "48",
     "threshold": 1,
     "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -644,6 +715,7 @@
     "conditionParam": "49",
     "threshold": 1,
     "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -653,6 +725,7 @@
     "conditionParam": "50",
     "threshold": 1,
     "achievementPointReward": 70,
+    "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -662,6 +735,7 @@
     "conditionParam": "51",
     "threshold": 1,
     "achievementPointReward": 70,
+    "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -671,6 +745,7 @@
     "conditionParam": "52",
     "threshold": 1,
     "achievementPointReward": 70,
+    "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -680,6 +755,7 @@
     "conditionParam": "53",
     "threshold": 1,
     "achievementPointReward": 70,
+    "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -689,6 +765,7 @@
     "conditionParam": "54",
     "threshold": 1,
     "achievementPointReward": 70,
+    "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -698,6 +775,7 @@
     "conditionParam": "55",
     "threshold": 1,
     "achievementPointReward": 70,
+    "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -707,6 +785,7 @@
     "conditionParam": "56",
     "threshold": 1,
     "achievementPointReward": 70,
+    "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -716,6 +795,7 @@
     "conditionParam": "57",
     "threshold": 1,
     "achievementPointReward": 70,
+    "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -725,6 +805,7 @@
     "conditionParam": "58",
     "threshold": 1,
     "achievementPointReward": 70,
+    "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -734,6 +815,7 @@
     "conditionParam": "59",
     "threshold": 1,
     "achievementPointReward": 70,
+    "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -743,6 +825,7 @@
     "conditionParam": "60",
     "threshold": 1,
     "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -752,6 +835,7 @@
     "conditionParam": "61",
     "threshold": 1,
     "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -761,6 +845,7 @@
     "conditionParam": "62",
     "threshold": 1,
     "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -770,6 +855,7 @@
     "conditionParam": "63",
     "threshold": 1,
     "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -779,6 +865,7 @@
     "conditionParam": "64",
     "threshold": 1,
     "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -788,6 +875,7 @@
     "conditionParam": "65",
     "threshold": 1,
     "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -797,6 +885,7 @@
     "conditionParam": "66",
     "threshold": 1,
     "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -806,6 +895,7 @@
     "conditionParam": "67",
     "threshold": 1,
     "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -815,6 +905,7 @@
     "conditionParam": "68",
     "threshold": 1,
     "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -824,6 +915,7 @@
     "conditionParam": "69",
     "threshold": 1,
     "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -833,6 +925,7 @@
     "conditionParam": "70",
     "threshold": 1,
     "achievementPointReward": 90,
+    "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -842,6 +935,7 @@
     "conditionParam": "71",
     "threshold": 1,
     "achievementPointReward": 90,
+    "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -851,6 +945,7 @@
     "conditionParam": "72",
     "threshold": 1,
     "achievementPointReward": 90,
+    "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -860,6 +955,7 @@
     "conditionParam": "73",
     "threshold": 1,
     "achievementPointReward": 90,
+    "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -869,6 +965,7 @@
     "conditionParam": "74",
     "threshold": 1,
     "achievementPointReward": 90,
+    "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -878,6 +975,7 @@
     "conditionParam": "75",
     "threshold": 1,
     "achievementPointReward": 90,
+    "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -887,6 +985,7 @@
     "conditionParam": "76",
     "threshold": 1,
     "achievementPointReward": 90,
+    "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -896,6 +995,7 @@
     "conditionParam": "77",
     "threshold": 1,
     "achievementPointReward": 90,
+    "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -905,6 +1005,7 @@
     "conditionParam": "78",
     "threshold": 1,
     "achievementPointReward": 90,
+    "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -914,6 +1015,7 @@
     "conditionParam": "79",
     "threshold": 1,
     "achievementPointReward": 90,
+    "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -923,6 +1025,7 @@
     "conditionParam": "80",
     "threshold": 1,
     "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -932,6 +1035,7 @@
     "conditionParam": "81",
     "threshold": 1,
     "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -941,6 +1045,7 @@
     "conditionParam": "82",
     "threshold": 1,
     "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -950,6 +1055,7 @@
     "conditionParam": "83",
     "threshold": 1,
     "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -959,6 +1065,7 @@
     "conditionParam": "84",
     "threshold": 1,
     "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -968,6 +1075,7 @@
     "conditionParam": "85",
     "threshold": 1,
     "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -977,6 +1085,7 @@
     "conditionParam": "86",
     "threshold": 1,
     "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -986,6 +1095,7 @@
     "conditionParam": "87",
     "threshold": 1,
     "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -995,6 +1105,7 @@
     "conditionParam": "88",
     "threshold": 1,
     "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -1004,6 +1115,7 @@
     "conditionParam": "89",
     "threshold": 1,
     "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -1013,6 +1125,7 @@
     "conditionParam": "90",
     "threshold": 1,
     "achievementPointReward": 110,
+    "achievementPointRewardVip": 110,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -1022,6 +1135,7 @@
     "conditionParam": "91",
     "threshold": 1,
     "achievementPointReward": 110,
+    "achievementPointRewardVip": 110,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -1031,6 +1145,7 @@
     "conditionParam": "92",
     "threshold": 1,
     "achievementPointReward": 110,
+    "achievementPointRewardVip": 110,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -1040,6 +1155,7 @@
     "conditionParam": "93",
     "threshold": 1,
     "achievementPointReward": 110,
+    "achievementPointRewardVip": 110,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -1049,6 +1165,7 @@
     "conditionParam": "94",
     "threshold": 1,
     "achievementPointReward": 110,
+    "achievementPointRewardVip": 110,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -1058,6 +1175,7 @@
     "conditionParam": "95",
     "threshold": 1,
     "achievementPointReward": 110,
+    "achievementPointRewardVip": 110,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -1067,6 +1185,7 @@
     "conditionParam": "96",
     "threshold": 1,
     "achievementPointReward": 110,
+    "achievementPointRewardVip": 110,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -1076,6 +1195,7 @@
     "conditionParam": "97",
     "threshold": 1,
     "achievementPointReward": 110,
+    "achievementPointRewardVip": 110,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -1085,6 +1205,7 @@
     "conditionParam": "98",
     "threshold": 1,
     "achievementPointReward": 110,
+    "achievementPointRewardVip": 110,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -1094,6 +1215,7 @@
     "conditionParam": "99",
     "threshold": 1,
     "achievementPointReward": 110,
+    "achievementPointRewardVip": 110,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -1103,6 +1225,7 @@
     "conditionParam": "100",
     "threshold": 1,
     "achievementPointReward": 120,
+    "achievementPointRewardVip": 120,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear"
   },
@@ -1112,6 +1235,7 @@
     "conditionParam": "",
     "threshold": 5,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level"
   },
@@ -1121,6 +1245,7 @@
     "conditionParam": "",
     "threshold": 10,
     "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level"
   },
@@ -1130,6 +1255,7 @@
     "conditionParam": "",
     "threshold": 15,
     "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level"
   },
@@ -1139,6 +1265,7 @@
     "conditionParam": "",
     "threshold": 20,
     "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level"
   },
@@ -1148,6 +1275,7 @@
     "conditionParam": "",
     "threshold": 25,
     "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level"
   },
@@ -1157,6 +1285,7 @@
     "conditionParam": "",
     "threshold": 30,
     "achievementPointReward": 120,
+    "achievementPointRewardVip": 120,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level"
   },
@@ -1166,6 +1295,7 @@
     "conditionParam": "",
     "threshold": 500,
     "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power"
   },
@@ -1175,6 +1305,7 @@
     "conditionParam": "",
     "threshold": 1000,
     "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power"
   },
@@ -1184,6 +1315,7 @@
     "conditionParam": "",
     "threshold": 1500,
     "achievementPointReward": 150,
+    "achievementPointRewardVip": 150,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power"
   },
@@ -1193,6 +1325,7 @@
     "conditionParam": "",
     "threshold": 2000,
     "achievementPointReward": 200,
+    "achievementPointRewardVip": 200,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power"
   },
@@ -1202,6 +1335,7 @@
     "conditionParam": "",
     "threshold": 2500,
     "achievementPointReward": 250,
+    "achievementPointRewardVip": 250,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power"
   },
@@ -1211,6 +1345,7 @@
     "conditionParam": "",
     "threshold": 3000,
     "achievementPointReward": 300,
+    "achievementPointRewardVip": 300,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power"
   },
@@ -1220,6 +1355,7 @@
     "conditionParam": "",
     "threshold": 3500,
     "achievementPointReward": 300,
+    "achievementPointRewardVip": 300,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power"
   },
@@ -1229,6 +1365,7 @@
     "conditionParam": "",
     "threshold": 4000,
     "achievementPointReward": 300,
+    "achievementPointRewardVip": 300,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power"
   },
@@ -1238,6 +1375,7 @@
     "conditionParam": "",
     "threshold": 4500,
     "achievementPointReward": 300,
+    "achievementPointRewardVip": 300,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power"
   },
@@ -1247,6 +1385,7 @@
     "conditionParam": "",
     "threshold": 5000,
     "achievementPointReward": 300,
+    "achievementPointRewardVip": 300,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power"
   },
@@ -1256,6 +1395,7 @@
     "conditionParam": "",
     "threshold": 5500,
     "achievementPointReward": 300,
+    "achievementPointRewardVip": 300,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power"
   },
@@ -1265,6 +1405,7 @@
     "conditionParam": "",
     "threshold": 6000,
     "achievementPointReward": 300,
+    "achievementPointRewardVip": 300,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power"
   },
@@ -1274,6 +1415,7 @@
     "conditionParam": "",
     "threshold": 6500,
     "achievementPointReward": 300,
+    "achievementPointRewardVip": 300,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power"
   },
@@ -1283,6 +1425,7 @@
     "conditionParam": "",
     "threshold": 7000,
     "achievementPointReward": 300,
+    "achievementPointRewardVip": 300,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power"
   },
@@ -1292,6 +1435,7 @@
     "conditionParam": "",
     "threshold": 7500,
     "achievementPointReward": 300,
+    "achievementPointRewardVip": 300,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power"
   },
@@ -1301,6 +1445,7 @@
     "conditionParam": "",
     "threshold": 8000,
     "achievementPointReward": 300,
+    "achievementPointRewardVip": 300,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power"
   },
@@ -1310,6 +1455,7 @@
     "conditionParam": "",
     "threshold": 8500,
     "achievementPointReward": 300,
+    "achievementPointRewardVip": 300,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power"
   },
@@ -1319,6 +1465,7 @@
     "conditionParam": "",
     "threshold": 9000,
     "achievementPointReward": 300,
+    "achievementPointRewardVip": 300,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power"
   },
@@ -1328,6 +1475,7 @@
     "conditionParam": "",
     "threshold": 9500,
     "achievementPointReward": 300,
+    "achievementPointRewardVip": 300,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power"
   },
@@ -1337,6 +1485,7 @@
     "conditionParam": "",
     "threshold": 10000,
     "achievementPointReward": 300,
+    "achievementPointRewardVip": 300,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power"
   },
@@ -1346,6 +1495,7 @@
     "conditionParam": "",
     "threshold": 100,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_tactic_power",
     "descKey": "UIAchievement_Desc_tactic_power"
   },
@@ -1355,6 +1505,7 @@
     "conditionParam": "",
     "threshold": 200,
     "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_tactic_power",
     "descKey": "UIAchievement_Desc_tactic_power"
   },
@@ -1364,6 +1515,7 @@
     "conditionParam": "",
     "threshold": 300,
     "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_tactic_power",
     "descKey": "UIAchievement_Desc_tactic_power"
   },
@@ -1373,6 +1525,7 @@
     "conditionParam": "",
     "threshold": 400,
     "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_tactic_power",
     "descKey": "UIAchievement_Desc_tactic_power"
   },
@@ -1382,6 +1535,7 @@
     "conditionParam": "",
     "threshold": 500,
     "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_tactic_power",
     "descKey": "UIAchievement_Desc_tactic_power"
   },
@@ -1391,6 +1545,7 @@
     "conditionParam": "",
     "threshold": 100,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total"
   },
@@ -1400,6 +1555,7 @@
     "conditionParam": "",
     "threshold": 200,
     "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total"
   },
@@ -1409,6 +1565,7 @@
     "conditionParam": "",
     "threshold": 300,
     "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total"
   },
@@ -1418,6 +1575,7 @@
     "conditionParam": "",
     "threshold": 400,
     "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total"
   },
@@ -1427,6 +1585,7 @@
     "conditionParam": "",
     "threshold": 500,
     "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total"
   },
@@ -1436,6 +1595,7 @@
     "conditionParam": "4",
     "threshold": 1,
     "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_hull_tier_count",
     "descKey": "UIAchievement_Desc_hull_tier_count"
   },
@@ -1445,6 +1605,7 @@
     "conditionParam": "4",
     "threshold": 2,
     "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_hull_tier_count",
     "descKey": "UIAchievement_Desc_hull_tier_count"
   },
@@ -1454,6 +1615,7 @@
     "conditionParam": "4",
     "threshold": 3,
     "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_hull_tier_count",
     "descKey": "UIAchievement_Desc_hull_tier_count"
   },
@@ -1463,6 +1625,7 @@
     "conditionParam": "5",
     "threshold": 1,
     "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_hull_tier_count",
     "descKey": "UIAchievement_Desc_hull_tier_count"
   },
@@ -1472,6 +1635,7 @@
     "conditionParam": "5",
     "threshold": 2,
     "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_hull_tier_count",
     "descKey": "UIAchievement_Desc_hull_tier_count"
   },
@@ -1481,6 +1645,7 @@
     "conditionParam": "5",
     "threshold": 3,
     "achievementPointReward": 150,
+    "achievementPointRewardVip": 150,
     "nameKey": "UIAchievement_Name_hull_tier_count",
     "descKey": "UIAchievement_Desc_hull_tier_count"
   },
@@ -1490,6 +1655,7 @@
     "conditionParam": "beam_2",
     "threshold": 1,
     "achievementPointReward": 10,
+    "achievementPointRewardVip": 10,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1499,6 +1665,7 @@
     "conditionParam": "beam_2",
     "threshold": 2,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1508,6 +1675,7 @@
     "conditionParam": "beam_2",
     "threshold": 3,
     "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1517,6 +1685,7 @@
     "conditionParam": "beam_3",
     "threshold": 1,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1526,6 +1695,7 @@
     "conditionParam": "beam_3",
     "threshold": 2,
     "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1535,6 +1705,7 @@
     "conditionParam": "beam_3",
     "threshold": 3,
     "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1544,6 +1715,7 @@
     "conditionParam": "missile_2",
     "threshold": 1,
     "achievementPointReward": 10,
+    "achievementPointRewardVip": 10,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1553,6 +1725,7 @@
     "conditionParam": "missile_2",
     "threshold": 2,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1562,6 +1735,7 @@
     "conditionParam": "missile_2",
     "threshold": 3,
     "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1571,6 +1745,7 @@
     "conditionParam": "missile_3",
     "threshold": 1,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1580,6 +1755,7 @@
     "conditionParam": "missile_3",
     "threshold": 2,
     "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1589,6 +1765,7 @@
     "conditionParam": "missile_3",
     "threshold": 3,
     "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1598,6 +1775,7 @@
     "conditionParam": "hangar_2",
     "threshold": 1,
     "achievementPointReward": 10,
+    "achievementPointRewardVip": 10,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1607,6 +1785,7 @@
     "conditionParam": "hangar_2",
     "threshold": 2,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1616,6 +1795,7 @@
     "conditionParam": "hangar_2",
     "threshold": 3,
     "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1625,6 +1805,7 @@
     "conditionParam": "hangar_3",
     "threshold": 1,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1634,6 +1815,7 @@
     "conditionParam": "hangar_3",
     "threshold": 2,
     "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1643,6 +1825,7 @@
     "conditionParam": "hangar_3",
     "threshold": 3,
     "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1652,6 +1835,7 @@
     "conditionParam": "shield_2",
     "threshold": 1,
     "achievementPointReward": 10,
+    "achievementPointRewardVip": 10,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1661,6 +1845,7 @@
     "conditionParam": "shield_2",
     "threshold": 2,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1670,6 +1855,7 @@
     "conditionParam": "shield_2",
     "threshold": 3,
     "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1679,6 +1865,7 @@
     "conditionParam": "shield_3",
     "threshold": 1,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1688,6 +1875,7 @@
     "conditionParam": "shield_3",
     "threshold": 2,
     "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1697,6 +1885,7 @@
     "conditionParam": "shield_3",
     "threshold": 3,
     "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1706,6 +1895,7 @@
     "conditionParam": "interceptor_2",
     "threshold": 1,
     "achievementPointReward": 10,
+    "achievementPointRewardVip": 10,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1715,6 +1905,7 @@
     "conditionParam": "interceptor_2",
     "threshold": 2,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1724,6 +1915,7 @@
     "conditionParam": "interceptor_2",
     "threshold": 3,
     "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1733,6 +1925,7 @@
     "conditionParam": "interceptor_3",
     "threshold": 1,
     "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1742,6 +1935,7 @@
     "conditionParam": "interceptor_3",
     "threshold": 2,
     "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1751,6 +1945,7 @@
     "conditionParam": "interceptor_3",
     "threshold": 3,
     "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_module_tier_count",
     "descKey": "UIAchievement_Desc_module_tier_count"
   },
@@ -1760,6 +1955,7 @@
     "conditionParam": "hull_4_1_21100",
     "threshold": 1,
     "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1769,6 +1965,7 @@
     "conditionParam": "hull_5_1_22100",
     "threshold": 1,
     "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1778,6 +1975,7 @@
     "conditionParam": "hull_6_1_22200",
     "threshold": 1,
     "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1787,6 +1985,7 @@
     "conditionParam": "hull_6_1_22201",
     "threshold": 1,
     "achievementPointReward": 120,
+    "achievementPointRewardVip": 120,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1796,6 +1995,7 @@
     "conditionParam": "hull_6_1_22210",
     "threshold": 1,
     "achievementPointReward": 120,
+    "achievementPointRewardVip": 120,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1805,6 +2005,7 @@
     "conditionParam": "hull_6_1_22211",
     "threshold": 1,
     "achievementPointReward": 180,
+    "achievementPointRewardVip": 180,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1814,6 +2015,7 @@
     "conditionParam": "hull_7_1_32200",
     "threshold": 1,
     "achievementPointReward": 70,
+    "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1823,6 +2025,7 @@
     "conditionParam": "hull_7_1_32201",
     "threshold": 1,
     "achievementPointReward": 140,
+    "achievementPointRewardVip": 140,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1832,6 +2035,7 @@
     "conditionParam": "hull_7_1_32210",
     "threshold": 1,
     "achievementPointReward": 140,
+    "achievementPointRewardVip": 140,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1841,6 +2045,7 @@
     "conditionParam": "hull_7_1_32211",
     "threshold": 1,
     "achievementPointReward": 210,
+    "achievementPointRewardVip": 210,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1850,6 +2055,7 @@
     "conditionParam": "hull_8_1_33200",
     "threshold": 1,
     "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1859,6 +2065,7 @@
     "conditionParam": "hull_8_1_33201",
     "threshold": 1,
     "achievementPointReward": 160,
+    "achievementPointRewardVip": 160,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1868,6 +2075,7 @@
     "conditionParam": "hull_8_1_33210",
     "threshold": 1,
     "achievementPointReward": 160,
+    "achievementPointRewardVip": 160,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1877,6 +2085,7 @@
     "conditionParam": "hull_8_1_33211",
     "threshold": 1,
     "achievementPointReward": 240,
+    "achievementPointRewardVip": 240,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1886,6 +2095,7 @@
     "conditionParam": "hull_9_1_33300",
     "threshold": 1,
     "achievementPointReward": 90,
+    "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1895,6 +2105,7 @@
     "conditionParam": "hull_9_1_33301",
     "threshold": 1,
     "achievementPointReward": 180,
+    "achievementPointRewardVip": 180,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1904,6 +2115,7 @@
     "conditionParam": "hull_9_1_33310",
     "threshold": 1,
     "achievementPointReward": 180,
+    "achievementPointRewardVip": 180,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1913,6 +2125,7 @@
     "conditionParam": "hull_9_1_33311",
     "threshold": 1,
     "achievementPointReward": 270,
+    "achievementPointRewardVip": 270,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1922,6 +2135,7 @@
     "conditionParam": "hull_10_1_43300",
     "threshold": 1,
     "achievementPointReward": 150,
+    "achievementPointRewardVip": 150,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1931,6 +2145,7 @@
     "conditionParam": "hull_10_1_43301",
     "threshold": 1,
     "achievementPointReward": 300,
+    "achievementPointRewardVip": 300,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1940,6 +2155,7 @@
     "conditionParam": "hull_10_1_43310",
     "threshold": 1,
     "achievementPointReward": 300,
+    "achievementPointRewardVip": 300,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1949,6 +2165,7 @@
     "conditionParam": "hull_10_1_43311",
     "threshold": 1,
     "achievementPointReward": 450,
+    "achievementPointRewardVip": 450,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1958,6 +2175,7 @@
     "conditionParam": "hull_11_1_44300",
     "threshold": 1,
     "achievementPointReward": 200,
+    "achievementPointRewardVip": 200,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1967,6 +2185,7 @@
     "conditionParam": "hull_11_1_44301",
     "threshold": 1,
     "achievementPointReward": 400,
+    "achievementPointRewardVip": 400,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1976,6 +2195,7 @@
     "conditionParam": "hull_11_1_44310",
     "threshold": 1,
     "achievementPointReward": 400,
+    "achievementPointRewardVip": 400,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1985,6 +2205,7 @@
     "conditionParam": "hull_11_1_44311",
     "threshold": 1,
     "achievementPointReward": 600,
+    "achievementPointRewardVip": 600,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -1994,6 +2215,7 @@
     "conditionParam": "hull_12_1_44400",
     "threshold": 1,
     "achievementPointReward": 250,
+    "achievementPointRewardVip": 250,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -2003,6 +2225,7 @@
     "conditionParam": "hull_12_1_44401",
     "threshold": 1,
     "achievementPointReward": 500,
+    "achievementPointRewardVip": 500,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -2012,6 +2235,7 @@
     "conditionParam": "hull_12_1_44410",
     "threshold": 1,
     "achievementPointReward": 500,
+    "achievementPointRewardVip": 500,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -2021,6 +2245,7 @@
     "conditionParam": "hull_12_1_44411",
     "threshold": 1,
     "achievementPointReward": 750,
+    "achievementPointRewardVip": 750,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -2030,6 +2255,7 @@
     "conditionParam": "hull_13_1_54400",
     "threshold": 1,
     "achievementPointReward": 300,
+    "achievementPointRewardVip": 300,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -2039,6 +2265,7 @@
     "conditionParam": "hull_13_1_54401",
     "threshold": 1,
     "achievementPointReward": 600,
+    "achievementPointRewardVip": 600,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -2048,6 +2275,7 @@
     "conditionParam": "hull_13_1_54410",
     "threshold": 1,
     "achievementPointReward": 600,
+    "achievementPointRewardVip": 600,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -2057,6 +2285,7 @@
     "conditionParam": "hull_13_1_54411",
     "threshold": 1,
     "achievementPointReward": 900,
+    "achievementPointRewardVip": 900,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -2066,6 +2295,7 @@
     "conditionParam": "hull_14_1_55400",
     "threshold": 1,
     "achievementPointReward": 350,
+    "achievementPointRewardVip": 350,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -2075,6 +2305,7 @@
     "conditionParam": "hull_14_1_55401",
     "threshold": 1,
     "achievementPointReward": 700,
+    "achievementPointRewardVip": 700,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -2084,6 +2315,7 @@
     "conditionParam": "hull_14_1_55410",
     "threshold": 1,
     "achievementPointReward": 700,
+    "achievementPointRewardVip": 700,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   },
@@ -2093,6 +2325,7 @@
     "conditionParam": "hull_14_1_55411",
     "threshold": 1,
     "achievementPointReward": 1050,
+    "achievementPointRewardVip": 1050,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
   }

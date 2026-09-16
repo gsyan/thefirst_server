@@ -72,13 +72,15 @@ public class GameDataService {
         public String conditionParam;
         public int threshold;
         public int achievementPointReward;
+        public int achievementPointRewardVip;
         public AchievementEntry(String achievementId, com.bk.sbs.enums.EAchievementConditionType conditionType,
-                                 String conditionParam, int threshold, int achievementPointReward) {
+                                 String conditionParam, int threshold, int achievementPointReward, int achievementPointRewardVip) {
             this.achievementId = achievementId;
             this.conditionType = conditionType;
             this.conditionParam = conditionParam;
             this.threshold = threshold;
             this.achievementPointReward = achievementPointReward;
+            this.achievementPointRewardVip = achievementPointRewardVip;
         }
     }
 
@@ -91,13 +93,15 @@ public class GameDataService {
         public String conditionParam;
         public int threshold;
         public int achievementPointReward;
+        public int achievementPointRewardVip;
         public DailyAchievementEntry(String achievementId, com.bk.sbs.enums.EAchievementConditionType conditionType,
-                                      String conditionParam, int threshold, int achievementPointReward) {
+                                      String conditionParam, int threshold, int achievementPointReward, int achievementPointRewardVip) {
             this.achievementId = achievementId;
             this.conditionType = conditionType;
             this.conditionParam = conditionParam;
             this.threshold = threshold;
             this.achievementPointReward = achievementPointReward;
+            this.achievementPointRewardVip = achievementPointRewardVip;
         }
     }
 
@@ -216,7 +220,8 @@ public class GameDataService {
                             conditionType,
                             node.path("conditionParam").asText(""),
                             node.path("threshold").asInt(0),
-                            node.path("achievementPointReward").asInt(0)));
+                            node.path("achievementPointReward").asInt(0),
+                            node.path("achievementPointRewardVip").asInt(0)));
                 }
                 log.info("DataTableAchievement.json loaded: {} entries", achievementList.size());
             } else {
@@ -238,7 +243,8 @@ public class GameDataService {
                             conditionType,
                             node.path("conditionParam").asText(""),
                             node.path("threshold").asInt(0),
-                            node.path("achievementPointReward").asInt(0)));
+                            node.path("achievementPointReward").asInt(0),
+                            node.path("achievementPointRewardVip").asInt(0)));
                 }
                 log.info("DataTableDailyAchievement.json loaded: {} entries", dailyAchievementList.size());
             } else {

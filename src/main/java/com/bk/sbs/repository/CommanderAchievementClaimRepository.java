@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface CommanderAchievementClaimRepository extends JpaRepository<CommanderAchievementClaim, Long> {
 
-    boolean existsByCommanderIdAndAchievementId(Long commanderId, String achievementId);
+    boolean existsByCommanderIdAndAchievementIdAndIsVip(Long commanderId, String achievementId, boolean isVip);
 
     List<CommanderAchievementClaim> findByCommanderId(Long commanderId);
 }

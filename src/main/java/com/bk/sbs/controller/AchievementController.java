@@ -31,7 +31,8 @@ public class AchievementController {
     public ResponseEntity<ApiResponse<ClaimAchievementResponse>> claimAchievement(
             @RequestBody ClaimAchievementRequest request,
             @CommanderId Long actualCommanderId) {
-        ClaimAchievementResponse response = achievementService.claimAchievement(actualCommanderId, request.getAchievementId());
+        boolean claimVip = request.getClaimVip() != null && request.getClaimVip();
+        ClaimAchievementResponse response = achievementService.claimAchievement(actualCommanderId, request.getAchievementId(), claimVip);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 

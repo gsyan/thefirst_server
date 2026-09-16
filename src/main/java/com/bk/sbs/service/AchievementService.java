@@ -9,6 +9,7 @@ import com.bk.sbs.entity.CommanderAchievementClaim;
 import com.bk.sbs.entity.Fleet;
 import com.bk.sbs.entity.Module;
 import com.bk.sbs.entity.Ship;
+import com.bk.sbs.entity.VipSubscription;
 import com.bk.sbs.enums.EModuleType;
 import com.bk.sbs.enums.ETreasureRewardType;
 import com.bk.sbs.exception.BusinessException;
@@ -17,12 +18,15 @@ import com.bk.sbs.repository.CommanderAchievementClaimRepository;
 import com.bk.sbs.repository.CommanderRepository;
 import com.bk.sbs.repository.CommanderUnlockedHullRepository;
 import com.bk.sbs.repository.FleetRepository;
+import com.bk.sbs.repository.VipSubscriptionRepository;
 import com.bk.sbs.repository.ZoneCellClearLogRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 // 업적 조건 판정 + 수령 처리 — 정의(GameDataService.AchievementEntry)는 데이터, 완료여부/수령상태는 여기서 매번 라이브 계산
@@ -38,17 +42,27 @@ public class AchievementService {
     private final FleetRepository fleetRepository;
     private final CommanderAchievementClaimRepository commanderAchievementClaimRepository;
     private final CommanderUnlockedHullRepository commanderUnlockedHullRepository;
+    private final VipSubscriptionRepository vipSubscriptionRepository;
 
     public AchievementService(CommanderRepository commanderRepository, GameDataService gameDataService,
                                ZoneCellClearLogRepository zoneCellClearLogRepository, FleetRepository fleetRepository,
                                CommanderAchievementClaimRepository commanderAchievementClaimRepository,
-                               CommanderUnlockedHullRepository commanderUnlockedHullRepository) {
+                               CommanderUnlockedHullRepository commanderUnlockedHullRepository,
+                               VipSubscriptionRepository vipSubscriptionRepository) {
         this.commanderRepository = commanderRepository;
         this.gameDataService = gameDataService;
         this.zoneCellClearLogRepository = zoneCellClearLogRepository;
         this.fleetRepository = fleetRepository;
         this.commanderAchievementClaimRepository = commanderAchievementClaimRepository;
         this.commanderUnlockedHullRepository = commanderUnlockedHullRepository;
+        this.vipSubscriptionRepository = vipSubscriptionRepository;
+    }
+
+    // 활성 VIP 여부 — IapService.isVipActive()와 동일 기준(서비스 간 커플링 없이 각자 보유)
+    private boolean isVipActive(Long commanderId) {
+        Optional<VipSubscription> sub = vipSubscriptionRepository.findByCommanderId(commanderId);
+        Instant expiry = sub.isPresent() ? sub.get().getVipExpiry() : null;
+        return expiry != null && Instant.now().isBefore(expiry);
     }
 
     @Transactional(readOnly = true)
@@ -62,7 +76,8 @@ public class AchievementService {
                 .map(entry -> AchievementStatusDto.builder()
                         .achievementId(entry.achievementId)
                         .currentValue(computeCurrentValue(commander, activeFleet, entry))
-                        .isClaimed(commanderAchievementClaimRepository.existsByCommanderIdAndAchievementId(commanderId, entry.achievementId))
+                        .isClaimed(commanderAchievementClaimRepository.existsByCommanderIdAndAchievementIdAndIsVip(commanderId, entry.achievementId, false))
+                        .isVipClaimed(commanderAchievementClaimRepository.existsByCommanderIdAndAchievementIdAndIsVip(commanderId, entry.achievementId, true))
                         .build())
                 .collect(Collectors.toList());
 
@@ -76,10 +91,12 @@ public class AchievementService {
         if (commander == null) return false;
 
         Fleet activeFleet = fleetRepository.findByCommanderIdAndFleetIndex(commanderId, ACTIVE_FLEET_INDEX).orElse(null);
+        boolean isVip = isVipActive(commanderId);
 
         for (GameDataService.AchievementEntry entry : gameDataService.getAchievementList()) {
-            boolean isClaimed = commanderAchievementClaimRepository.existsByCommanderIdAndAchievementId(commanderId, entry.achievementId);
-            if (isClaimed == true) continue;
+            boolean isClaimed = commanderAchievementClaimRepository.existsByCommanderIdAndAchievementIdAndIsVip(commanderId, entry.achievementId, false);
+            boolean isVipClaimed = isVip == true && commanderAchievementClaimRepository.existsByCommanderIdAndAchievementIdAndIsVip(commanderId, entry.achievementId, true);
+            if (isClaimed == true && (isVip == false || isVipClaimed == true)) continue;
 
             int currentValue = computeCurrentValue(commander, activeFleet, entry);
             if (currentValue >= entry.threshold) return true;
@@ -88,7 +105,7 @@ public class AchievementService {
     }
 
     @Transactional
-    public ClaimAchievementResponse claimAchievement(Long commanderId, String achievementId) {
+    public ClaimAchievementResponse claimAchievement(Long commanderId, String achievementId, boolean claimVip) {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.ACHIEVEMENT_CLAIM_FAIL_COMMANDER_NOT_FOUND));
 
@@ -97,7 +114,10 @@ public class AchievementService {
                 .findFirst()
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.ACHIEVEMENT_CLAIM_FAIL_NOT_FOUND));
 
-        if (commanderAchievementClaimRepository.existsByCommanderIdAndAchievementId(commanderId, achievementId) == true)
+        if (claimVip == true && isVipActive(commanderId) == false)
+            throw new BusinessException(ServerErrorCode.ACHIEVEMENT_CLAIM_FAIL_NOT_VIP);
+
+        if (commanderAchievementClaimRepository.existsByCommanderIdAndAchievementIdAndIsVip(commanderId, achievementId, claimVip) == true)
             throw new BusinessException(ServerErrorCode.ACHIEVEMENT_CLAIM_FAIL_ALREADY_CLAIMED);
 
         Fleet activeFleet = fleetRepository.findByCommanderIdAndFleetIndex(commanderId, ACTIVE_FLEET_INDEX).orElse(null);
@@ -105,43 +125,54 @@ public class AchievementService {
         if (currentValue < entry.threshold)
             throw new BusinessException(ServerErrorCode.ACHIEVEMENT_CLAIM_FAIL_NOT_COMPLETED);
 
-        commander.setAchievementPoint(commander.getAchievementPoint() + entry.achievementPointReward);
+        int reward = claimVip == true ? entry.achievementPointRewardVip : entry.achievementPointReward;
+        commander.setAchievementPoint(commander.getAchievementPoint() + reward);
         commanderRepository.save(commander);
-        commanderAchievementClaimRepository.save(new CommanderAchievementClaim(commanderId, achievementId));
+        commanderAchievementClaimRepository.save(new CommanderAchievementClaim(commanderId, achievementId, claimVip));
 
         return ClaimAchievementResponse.builder()
                 .achievementId(achievementId)
-                .achievementPointReward(entry.achievementPointReward)
+                .achievementPointReward(reward)
                 .achievementPointRemain(commander.getAchievementPoint())
                 .build();
     }
 
-    // 완료+미수령 업적을 전부 한 번에 수령 처리 — 개별 claimAchievement와 동일한 조건/계산 로직 재사용
+    // 완료+미수령 업적을 전부 한 번에 수령 처리 — 일반 보상은 항상, VIP 보상은 VIP 활성 상태일 때만 같이 스윕
     @Transactional
     public ClaimAllAchievementsResponse claimAllAchievements(Long commanderId) {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.ACHIEVEMENT_CLAIM_FAIL_COMMANDER_NOT_FOUND));
 
         Fleet activeFleet = fleetRepository.findByCommanderIdAndFleetIndex(commanderId, ACTIVE_FLEET_INDEX).orElse(null);
+        boolean isVip = isVipActive(commanderId);
 
         List<String> claimedIds = new ArrayList<>();
         int totalGranted = 0;
 
         for (GameDataService.AchievementEntry entry : gameDataService.getAchievementList()) {
-            if (commanderAchievementClaimRepository.existsByCommanderIdAndAchievementId(commanderId, entry.achievementId) == true)
-                continue;
-
             int currentValue = computeCurrentValue(commander, activeFleet, entry);
             if (currentValue < entry.threshold)
                 continue;
 
-            commander.setAchievementPoint(commander.getAchievementPoint() + entry.achievementPointReward);
-            commanderAchievementClaimRepository.save(new CommanderAchievementClaim(commanderId, entry.achievementId));
-            claimedIds.add(entry.achievementId);
-            totalGranted += entry.achievementPointReward;
+            boolean normalAlreadyClaimed = commanderAchievementClaimRepository.existsByCommanderIdAndAchievementIdAndIsVip(commanderId, entry.achievementId, false);
+            if (normalAlreadyClaimed == false) {
+                commander.setAchievementPoint(commander.getAchievementPoint() + entry.achievementPointReward);
+                commanderAchievementClaimRepository.save(new CommanderAchievementClaim(commanderId, entry.achievementId, false));
+                claimedIds.add(entry.achievementId);
+                totalGranted += entry.achievementPointReward;
+            }
+
+            if (isVip == true) {
+                boolean vipAlreadyClaimed = commanderAchievementClaimRepository.existsByCommanderIdAndAchievementIdAndIsVip(commanderId, entry.achievementId, true);
+                if (vipAlreadyClaimed == false) {
+                    commander.setAchievementPoint(commander.getAchievementPoint() + entry.achievementPointRewardVip);
+                    commanderAchievementClaimRepository.save(new CommanderAchievementClaim(commanderId, entry.achievementId, true));
+                    totalGranted += entry.achievementPointRewardVip;
+                }
+            }
         }
 
-        if (claimedIds.size() > 0)
+        if (claimedIds.size() > 0 || totalGranted > 0)
             commanderRepository.save(commander);
 
         return ClaimAllAchievementsResponse.builder()

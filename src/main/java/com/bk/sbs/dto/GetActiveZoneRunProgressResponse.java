@@ -22,4 +22,5 @@ public class GetActiveZoneRunProgressResponse {
     private List<ShipHealthRatioInfoDto> shipHealthRatios;
     private List<String> selectedRewardCards;
     private List<String> pendingRewardCardCandidates;
+    private Integer rerollRemain;
 }

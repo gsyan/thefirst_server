@@ -56,7 +56,8 @@ public class IapController {
     public ResponseEntity<ApiResponse<DailyClaimResponse>> claimDailyReward(
             @RequestBody DailyClaimRequest request,
             @CommanderId Long commanderId) {
-        DailyClaimResponse response = iapService.claimDailyReward(commanderId, request.getDay());
+        boolean claimVip = request.getClaimVip() != null && request.getClaimVip();
+        DailyClaimResponse response = iapService.claimDailyReward(commanderId, request.getDay(), claimVip);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 }

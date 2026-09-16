@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ClaimDailyAchievementRequest {
     private String achievementId;
+    private Boolean claimVip;
 }

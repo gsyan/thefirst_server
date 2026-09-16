@@ -4,6 +4,7 @@ package com.bk.sbs.service;
 import com.bk.sbs.config.DataTableConfig;
 import com.bk.sbs.dto.*;
 import com.bk.sbs.entity.Commander;
+import com.bk.sbs.entity.VipSubscription;
 import com.bk.sbs.entity.ZoneCellClearLog;
 import com.bk.sbs.entity.ZoneRun;
 import com.bk.sbs.enums.EGridCellType;
@@ -13,6 +14,7 @@ import com.bk.sbs.enums.EZoneRunStatus;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.repository.CommanderRepository;
+import com.bk.sbs.repository.VipSubscriptionRepository;
 import com.bk.sbs.repository.ZoneCellClearLogRepository;
 import com.bk.sbs.repository.ZoneRunRepository;
 import com.bk.sbs.util.CommanderLevelUtil;
@@ -26,6 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,7 +44,7 @@ public class ExplorationService {
     private final GameDataService gameDataService;
     private final ObjectMapper objectMapper;
     private final AchievementService achievementService;
-    private final RedisService redisService;
+    private final VipSubscriptionRepository vipSubscriptionRepository;
 
     // false면 highestClearedZoneNumber 검사를 건너뜀 — 웨이브 밸런스 테스트용(application.properties)
     @Value("${zone.require-previous-stage-cleared:true}")
@@ -49,14 +53,22 @@ public class ExplorationService {
     public ExplorationService(CommanderRepository commanderRepository, ZoneRunRepository zoneRunRepository,
                                ZoneCellClearLogRepository zoneCellClearLogRepository,
                                GameDataService gameDataService, ObjectMapper objectMapper,
-                               AchievementService achievementService, RedisService redisService) {
+                               AchievementService achievementService,
+                               VipSubscriptionRepository vipSubscriptionRepository) {
         this.commanderRepository = commanderRepository;
         this.zoneRunRepository = zoneRunRepository;
         this.zoneCellClearLogRepository = zoneCellClearLogRepository;
         this.gameDataService = gameDataService;
         this.objectMapper = objectMapper;
         this.achievementService = achievementService;
-        this.redisService = redisService;
+        this.vipSubscriptionRepository = vipSubscriptionRepository;
+    }
+
+    // 활성 VIP 여부 — IapService.isVipActive()와 동일 기준(서비스 간 커플링 없이 각자 보유)
+    private boolean isVipActive(Long commanderId) {
+        Optional<VipSubscription> sub = vipSubscriptionRepository.findByCommanderId(commanderId);
+        Instant expiry = sub.isPresent() ? sub.get().getVipExpiry() : null;
+        return expiry != null && Instant.now().isBefore(expiry);
     }
 
     // 셀 클리어 요청에 실린 함대 체력 스냅샷을 JSON으로 직렬화 — 비어있으면(null/빈 리스트) 기존 저장값을 그대로 둠(스냅샷 없이 보낸 요청이 덮어쓰지 않도록)
@@ -425,6 +437,12 @@ public class ExplorationService {
                 else if (treasureRewardType == ETreasureRewardType.TacticPowerRestore)
                     treasureRewardRatio = TREASURE_TACTIC_POWER_RESTORE_RATIO;
             }
+
+            // VIP 혜택 — 적립 자체를 2배로. 정산 비율(탈출/포기)은 이후 settleZoneRun에서 이 2배 적립 총량 위에 그대로 곱해짐
+            if (isVipActive(commanderId) == true) {
+                pointsGained *= 2;
+                expGained *= 2;
+            }
         }
 
         validateHealthSnapshot(commanderId, run, request.getShipHealthRatios());
@@ -446,6 +464,12 @@ public class ExplorationService {
         clearLog.setTreasureRewardType(treasureRewardType == ETreasureRewardType.None ? null : treasureRewardType);
         zoneCellClearLogRepository.save(clearLog);
 
+        int rerollRemain = 0;
+        if (rewardCardCandidates != null) {
+            DataTableConfig config = gameDataService.getDataTableConfig();
+            rerollRemain = getRewardCardRerollRemain(commander, config.getExploration().getRewardCardRerollLimit());
+        }
+
         return ClearExplorationCellResponse.builder()
                 .explorationPointGained(pointsGained)
                 .expGained(expGained)
@@ -453,6 +477,7 @@ public class ExplorationService {
                 .treasureRewardRatio(treasureRewardRatio)
                 .tacticPower(finalTacticPower)
                 .rewardCardCandidates(rewardCardCandidates)
+                .rerollRemain(rerollRemain)
                 .build();
     }
 
@@ -498,6 +523,8 @@ public class ExplorationService {
         int explorationPointGained = 0;
         if ("Instant_ExplorationPointFlat".equals(card.effectType)) {
             explorationPointGained = (int) card.value1;
+            if (isVipActive(commanderId) == true)
+                explorationPointGained *= 2;
             run.setExplorationPointBanked(run.getExplorationPointBanked() + explorationPointGained);
             zoneRunRepository.save(run);
         }
@@ -511,7 +538,7 @@ public class ExplorationService {
                 .build();
     }
 
-    // 보상카드 다시 뽑기(광고 시청 리롤) — 1일 제한 횟수는 RedisService의 PVP 새로고침과 동일한 방식(UTC 자정 리셋)으로 관리
+    // 보상카드 다시 뽑기(광고 시청 리롤) — 1일 제한 횟수는 Commander.rewardCardRerollCountToday/rewardCardRerollResetDate에 영구 저장(attendanceDayCount와 동일한 지연 리셋 패턴)
     @Transactional
     public RerollRewardCardResponse rerollRewardCard(Long commanderId, RerollRewardCardRequest request) {
         ZoneRun run = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS)
@@ -526,12 +553,15 @@ public class ExplorationService {
         if (clearLog.getRewardCardSelectedId() != null || clearLog.getRewardCardCandidatesJson() == null)
             throw new BusinessException(ServerErrorCode.EXPLORATION_REWARD_CARD_INVALID_SELECTION);
 
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
+
         DataTableConfig config = gameDataService.getDataTableConfig();
-        int rerollRemain = redisService.getRewardCardRerollRemain(commanderId, config.getExploration().getRewardCardRerollLimit());
+        int rerollRemain = getRewardCardRerollRemain(commander, config.getExploration().getRewardCardRerollLimit());
         if (rerollRemain <= 0)
             throw new BusinessException(ServerErrorCode.EXPLORATION_REWARD_CARD_REROLL_LIMIT_EXCEEDED);
 
-        redisService.decrementRewardCardRerollRemain(commanderId);
+        incrementRewardCardRerollCount(commander);
 
         List<String> newCandidates = rollRewardCardCandidates();
         clearLog.setRewardCardCandidatesJson(serializeCardIdList(newCandidates));
@@ -541,6 +571,21 @@ public class ExplorationService {
                 .rewardCardCandidates(newCandidates)
                 .rerollRemain(rerollRemain - 1)
                 .build();
+    }
+
+    // 오늘 남은 보상카드 리롤 횟수 조회 — 저장된 리셋 날짜가 오늘(UTC)이 아니면 이 자리에서 카운트를 0으로 리셋(attendanceDayCount와 동일한 지연 리셋).
+    // commander는 @Transactional 내에서 findByIdForUpdate로 조회된 관리 상태 엔티티여야 함 — 리셋 시 변경분이 트랜잭션 커밋 시 더티체킹으로 저장됨
+    private int getRewardCardRerollRemain(Commander commander, int maxReroll) {
+        LocalDate today = LocalDate.now(ZoneOffset.UTC);
+        if (commander.getRewardCardRerollResetDate() == null || commander.getRewardCardRerollResetDate().equals(today) == false) {
+            commander.setRewardCardRerollCountToday(0);
+            commander.setRewardCardRerollResetDate(today);
+        }
+        return Math.max(0, maxReroll - commander.getRewardCardRerollCountToday());
+    }
+
+    private void incrementRewardCardRerollCount(Commander commander) {
+        commander.setRewardCardRerollCountToday(commander.getRewardCardRerollCountToday() + 1);
     }
 
     // 재접속/SpaceScene 재로드로 클라 그리드가 초기화됐을 때, 진행 중인 런의 클리어 셀 목록을 다시 내려줘 방문 표시를 복구시킴
@@ -568,10 +613,16 @@ public class ExplorationService {
 
         // 마지막 클리어 로그가 카드 후보는 있는데 아직 선택 확정 전이면 — 팝업이 뜨기 전에 앱이 꺼진 경우, 재접속 시 다시 띄워야 함
         List<String> pendingRewardCardCandidates = null;
+        int rerollRemain = 0;
         if (clearLogs.isEmpty() == false) {
             ZoneCellClearLog lastLog = clearLogs.get(clearLogs.size() - 1);
-            if (lastLog.getRewardCardSelectedId() == null)
+            if (lastLog.getRewardCardSelectedId() == null) {
                 pendingRewardCardCandidates = deserializeCardIdList(lastLog.getRewardCardCandidatesJson());
+                Commander commander = commanderRepository.findByIdForUpdate(commanderId)
+                        .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
+                DataTableConfig config = gameDataService.getDataTableConfig();
+                rerollRemain = getRewardCardRerollRemain(commander, config.getExploration().getRewardCardRerollLimit());
+            }
         }
 
         return GetActiveZoneRunProgressResponse.builder()
@@ -582,6 +633,7 @@ public class ExplorationService {
                 .shipHealthRatios(deserializeHealthSnapshot(run.getFleetHealthSnapshotJson()))
                 .selectedRewardCards(selectedRewardCards)
                 .pendingRewardCardCandidates(pendingRewardCardCandidates)
+                .rerollRemain(rerollRemain)
                 .build();
     }
 
@@ -667,7 +719,8 @@ public class ExplorationService {
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
 
         boolean watchedAd = request.getWatchedAd() != null && request.getWatchedAd();
-        float payoutRatio = watchedAd ? ABANDON_AD_PAYOUT_RATIO : ABANDON_PAYOUT_RATIO;
+        boolean isVip = isVipActive(commanderId);
+        float payoutRatio = (watchedAd == true || isVip == true) ? ABANDON_AD_PAYOUT_RATIO : ABANDON_PAYOUT_RATIO;
         RunSettlement settlement = settleZoneRun(commander, run, false, payoutRatio);
 
         return AbandonZoneRunResponse.builder()

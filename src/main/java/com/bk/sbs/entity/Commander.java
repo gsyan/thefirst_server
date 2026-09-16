@@ -102,6 +102,13 @@ public class Commander {
     // attendanceDayCount 중복 증가 방지용 — 마지막으로 출석 카운트한 UTC 날짜
     private LocalDate lastAttendanceDate;
 
+    // 보상카드 리롤(광고 시청) 오늘 사용 횟수 — 남은 횟수는 DataTableConfig.exploration.rewardCardRerollLimit에서 이 값을 뺀 값(한도 설정이 바뀌어도 항상 최신 기준으로 계산됨)
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    private int rewardCardRerollCountToday = 0;
+
+    // rewardCardRerollCountToday 리셋 판단용 — 마지막으로 리셋된 UTC 날짜(attendanceDayCount/lastAttendanceDate와 동일한 지연 리셋 패턴)
+    private LocalDate rewardCardRerollResetDate;
+
     @Column(nullable = false)
     private boolean deleted = false;
 

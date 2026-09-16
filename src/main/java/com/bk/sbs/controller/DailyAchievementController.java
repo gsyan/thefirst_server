@@ -31,7 +31,8 @@ public class DailyAchievementController {
     public ResponseEntity<ApiResponse<ClaimDailyAchievementResponse>> claimDailyAchievement(
             @RequestBody ClaimDailyAchievementRequest request,
             @CommanderId Long actualCommanderId) {
-        ClaimDailyAchievementResponse response = dailyAchievementService.claimDailyAchievement(actualCommanderId, request.getAchievementId());
+        boolean claimVip = request.getClaimVip() != null && request.getClaimVip();
+        ClaimDailyAchievementResponse response = dailyAchievementService.claimDailyAchievement(actualCommanderId, request.getAchievementId(), claimVip);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 

@@ -30,13 +30,17 @@ public class CommanderDailyAchievementClaim {
     @Column(name = "claim_date", nullable = false)
     private LocalDate claimDate;
 
+    @Column(name = "is_vip", nullable = false)
+    private boolean isVip;
+
     @Column(name = "claimed_at", nullable = false)
     private Instant claimedAt = Instant.now();
 
-    public CommanderDailyAchievementClaim(Long commanderId, String dailyAchievementId, LocalDate claimDate) {
+    public CommanderDailyAchievementClaim(Long commanderId, String dailyAchievementId, LocalDate claimDate, boolean isVip) {
         this.commanderId = commanderId;
         this.dailyAchievementId = dailyAchievementId;
         this.claimDate = claimDate;
+        this.isVip = isVip;
         this.claimedAt = Instant.now();
     }
 }
