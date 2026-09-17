@@ -31,7 +31,7 @@
       "zoneIndex": 2,
       "gridWidth": 3,
       "gridHeight": 3,
-      "explorationPointReward": 20,
+      "explorationPointReward": 11,
       "commanderExpReward": 11,
       "cellOverrides": [
         {
@@ -58,7 +58,7 @@
       "zoneIndex": 3,
       "gridWidth": 3,
       "gridHeight": 3,
-      "explorationPointReward": 30,
+      "explorationPointReward": 12,
       "commanderExpReward": 12,
       "cellOverrides": [
         {
@@ -85,7 +85,7 @@
       "zoneIndex": 4,
       "gridWidth": 3,
       "gridHeight": 3,
-      "explorationPointReward": 40,
+      "explorationPointReward": 13,
       "commanderExpReward": 13,
       "cellOverrides": [
         {
@@ -112,7 +112,7 @@
       "zoneIndex": 5,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 50,
+      "explorationPointReward": 14,
       "commanderExpReward": 14,
       "cellOverrides": [
         {
@@ -151,7 +151,7 @@
       "zoneIndex": 6,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 60,
+      "explorationPointReward": 15,
       "commanderExpReward": 15,
       "cellOverrides": [
         {
@@ -190,7 +190,7 @@
       "zoneIndex": 7,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 70,
+      "explorationPointReward": 16,
       "commanderExpReward": 16,
       "cellOverrides": [
         {
@@ -229,7 +229,7 @@
       "zoneIndex": 8,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 80,
+      "explorationPointReward": 17,
       "commanderExpReward": 17,
       "cellOverrides": [
         {
@@ -268,7 +268,7 @@
       "zoneIndex": 9,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 90,
+      "explorationPointReward": 18,
       "commanderExpReward": 18,
       "cellOverrides": [
         {
@@ -307,7 +307,7 @@
       "zoneIndex": 10,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 100,
+      "explorationPointReward": 19,
       "commanderExpReward": 19,
       "cellOverrides": [
         {
@@ -346,7 +346,7 @@
       "zoneIndex": 11,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 110,
+      "explorationPointReward": 20,
       "commanderExpReward": 20,
       "cellOverrides": [
         {
@@ -385,7 +385,7 @@
       "zoneIndex": 12,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 120,
+      "explorationPointReward": 21,
       "commanderExpReward": 21,
       "cellOverrides": [
         {
@@ -424,7 +424,7 @@
       "zoneIndex": 13,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 130,
+      "explorationPointReward": 22,
       "commanderExpReward": 22,
       "cellOverrides": [
         {
@@ -463,7 +463,7 @@
       "zoneIndex": 14,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 140,
+      "explorationPointReward": 23,
       "commanderExpReward": 23,
       "cellOverrides": [
         {
@@ -502,7 +502,7 @@
       "zoneIndex": 15,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 150,
+      "explorationPointReward": 24,
       "commanderExpReward": 24,
       "cellOverrides": [
         {
@@ -541,7 +541,7 @@
       "zoneIndex": 16,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 160,
+      "explorationPointReward": 25,
       "commanderExpReward": 25,
       "cellOverrides": [
         {
@@ -580,7 +580,7 @@
       "zoneIndex": 17,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 170,
+      "explorationPointReward": 26,
       "commanderExpReward": 26,
       "cellOverrides": [
         {
@@ -619,7 +619,7 @@
       "zoneIndex": 18,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 180,
+      "explorationPointReward": 27,
       "commanderExpReward": 27,
       "cellOverrides": [
         {
@@ -658,7 +658,7 @@
       "zoneIndex": 19,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 190,
+      "explorationPointReward": 28,
       "commanderExpReward": 28,
       "cellOverrides": [
         {
@@ -697,7 +697,7 @@
       "zoneIndex": 20,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 200,
+      "explorationPointReward": 29,
       "commanderExpReward": 29,
       "cellOverrides": [
         {
@@ -736,7 +736,7 @@
       "zoneIndex": 21,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 210,
+      "explorationPointReward": 30,
       "commanderExpReward": 30,
       "cellOverrides": [
         {
@@ -775,7 +775,7 @@
       "zoneIndex": 22,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 220,
+      "explorationPointReward": 31,
       "commanderExpReward": 31,
       "cellOverrides": [
         {
@@ -814,7 +814,7 @@
       "zoneIndex": 23,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 230,
+      "explorationPointReward": 32,
       "commanderExpReward": 32,
       "cellOverrides": [
         {
@@ -853,7 +853,7 @@
       "zoneIndex": 24,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 240,
+      "explorationPointReward": 33,
       "commanderExpReward": 33,
       "cellOverrides": [
         {
@@ -892,7 +892,7 @@
       "zoneIndex": 25,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 250,
+      "explorationPointReward": 34,
       "commanderExpReward": 34,
       "cellOverrides": [
         {
@@ -931,7 +931,7 @@
       "zoneIndex": 26,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 260,
+      "explorationPointReward": 35,
       "commanderExpReward": 35,
       "cellOverrides": [
         {
@@ -970,7 +970,7 @@
       "zoneIndex": 27,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 270,
+      "explorationPointReward": 36,
       "commanderExpReward": 36,
       "cellOverrides": [
         {
@@ -1009,7 +1009,7 @@
       "zoneIndex": 28,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 280,
+      "explorationPointReward": 37,
       "commanderExpReward": 37,
       "cellOverrides": [
         {
@@ -1048,7 +1048,7 @@
       "zoneIndex": 29,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 290,
+      "explorationPointReward": 38,
       "commanderExpReward": 38,
       "cellOverrides": [
         {
@@ -1087,7 +1087,7 @@
       "zoneIndex": 30,
       "gridWidth": 5,
       "gridHeight": 5,
-      "explorationPointReward": 300,
+      "explorationPointReward": 39,
       "commanderExpReward": 39,
       "cellOverrides": [
         {
@@ -1126,7 +1126,7 @@
       "zoneIndex": 31,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 310,
+      "explorationPointReward": 40,
       "commanderExpReward": 40,
       "cellOverrides": [
         {
@@ -1189,7 +1189,7 @@
       "zoneIndex": 32,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 320,
+      "explorationPointReward": 41,
       "commanderExpReward": 41,
       "cellOverrides": [
         {
@@ -1252,7 +1252,7 @@
       "zoneIndex": 33,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 330,
+      "explorationPointReward": 42,
       "commanderExpReward": 42,
       "cellOverrides": [
         {
@@ -1315,7 +1315,7 @@
       "zoneIndex": 34,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 340,
+      "explorationPointReward": 43,
       "commanderExpReward": 43,
       "cellOverrides": [
         {
@@ -1378,7 +1378,7 @@
       "zoneIndex": 35,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 350,
+      "explorationPointReward": 44,
       "commanderExpReward": 44,
       "cellOverrides": [
         {
@@ -1441,7 +1441,7 @@
       "zoneIndex": 36,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 360,
+      "explorationPointReward": 45,
       "commanderExpReward": 45,
       "cellOverrides": [
         {
@@ -1504,7 +1504,7 @@
       "zoneIndex": 37,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 370,
+      "explorationPointReward": 46,
       "commanderExpReward": 46,
       "cellOverrides": [
         {
@@ -1567,7 +1567,7 @@
       "zoneIndex": 38,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 380,
+      "explorationPointReward": 47,
       "commanderExpReward": 47,
       "cellOverrides": [
         {
@@ -1630,7 +1630,7 @@
       "zoneIndex": 39,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 390,
+      "explorationPointReward": 48,
       "commanderExpReward": 48,
       "cellOverrides": [
         {
@@ -1693,7 +1693,7 @@
       "zoneIndex": 40,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 400,
+      "explorationPointReward": 49,
       "commanderExpReward": 49,
       "cellOverrides": [
         {
@@ -1756,7 +1756,7 @@
       "zoneIndex": 41,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 410,
+      "explorationPointReward": 50,
       "commanderExpReward": 50,
       "cellOverrides": [
         {
@@ -1819,7 +1819,7 @@
       "zoneIndex": 42,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 420,
+      "explorationPointReward": 51,
       "commanderExpReward": 51,
       "cellOverrides": [
         {
@@ -1882,7 +1882,7 @@
       "zoneIndex": 43,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 430,
+      "explorationPointReward": 52,
       "commanderExpReward": 52,
       "cellOverrides": [
         {
@@ -1945,7 +1945,7 @@
       "zoneIndex": 44,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 440,
+      "explorationPointReward": 53,
       "commanderExpReward": 53,
       "cellOverrides": [
         {
@@ -2008,7 +2008,7 @@
       "zoneIndex": 45,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 450,
+      "explorationPointReward": 54,
       "commanderExpReward": 54,
       "cellOverrides": [
         {
@@ -2071,7 +2071,7 @@
       "zoneIndex": 46,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 460,
+      "explorationPointReward": 55,
       "commanderExpReward": 55,
       "cellOverrides": [
         {
@@ -2134,7 +2134,7 @@
       "zoneIndex": 47,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 470,
+      "explorationPointReward": 56,
       "commanderExpReward": 56,
       "cellOverrides": [
         {
@@ -2197,7 +2197,7 @@
       "zoneIndex": 48,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 480,
+      "explorationPointReward": 57,
       "commanderExpReward": 57,
       "cellOverrides": [
         {
@@ -2260,7 +2260,7 @@
       "zoneIndex": 49,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 490,
+      "explorationPointReward": 58,
       "commanderExpReward": 58,
       "cellOverrides": [
         {
@@ -2323,7 +2323,7 @@
       "zoneIndex": 50,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 500,
+      "explorationPointReward": 59,
       "commanderExpReward": 59,
       "cellOverrides": [
         {
@@ -2386,7 +2386,7 @@
       "zoneIndex": 51,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 510,
+      "explorationPointReward": 60,
       "commanderExpReward": 60,
       "cellOverrides": [
         {
@@ -2449,7 +2449,7 @@
       "zoneIndex": 52,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 520,
+      "explorationPointReward": 61,
       "commanderExpReward": 61,
       "cellOverrides": [
         {
@@ -2512,7 +2512,7 @@
       "zoneIndex": 53,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 530,
+      "explorationPointReward": 62,
       "commanderExpReward": 62,
       "cellOverrides": [
         {
@@ -2575,7 +2575,7 @@
       "zoneIndex": 54,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 540,
+      "explorationPointReward": 63,
       "commanderExpReward": 63,
       "cellOverrides": [
         {
@@ -2638,7 +2638,7 @@
       "zoneIndex": 55,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 550,
+      "explorationPointReward": 64,
       "commanderExpReward": 64,
       "cellOverrides": [
         {
@@ -2701,7 +2701,7 @@
       "zoneIndex": 56,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 560,
+      "explorationPointReward": 65,
       "commanderExpReward": 65,
       "cellOverrides": [
         {
@@ -2764,7 +2764,7 @@
       "zoneIndex": 57,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 570,
+      "explorationPointReward": 66,
       "commanderExpReward": 66,
       "cellOverrides": [
         {
@@ -2827,7 +2827,7 @@
       "zoneIndex": 58,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 580,
+      "explorationPointReward": 67,
       "commanderExpReward": 67,
       "cellOverrides": [
         {
@@ -2890,7 +2890,7 @@
       "zoneIndex": 59,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 590,
+      "explorationPointReward": 68,
       "commanderExpReward": 68,
       "cellOverrides": [
         {
@@ -2953,7 +2953,7 @@
       "zoneIndex": 60,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 600,
+      "explorationPointReward": 69,
       "commanderExpReward": 69,
       "cellOverrides": [
         {
@@ -3016,7 +3016,7 @@
       "zoneIndex": 61,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 610,
+      "explorationPointReward": 70,
       "commanderExpReward": 70,
       "cellOverrides": [
         {
@@ -3079,7 +3079,7 @@
       "zoneIndex": 62,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 620,
+      "explorationPointReward": 71,
       "commanderExpReward": 71,
       "cellOverrides": [
         {
@@ -3142,7 +3142,7 @@
       "zoneIndex": 63,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 630,
+      "explorationPointReward": 72,
       "commanderExpReward": 72,
       "cellOverrides": [
         {
@@ -3205,7 +3205,7 @@
       "zoneIndex": 64,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 640,
+      "explorationPointReward": 73,
       "commanderExpReward": 73,
       "cellOverrides": [
         {
@@ -3268,7 +3268,7 @@
       "zoneIndex": 65,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 650,
+      "explorationPointReward": 74,
       "commanderExpReward": 74,
       "cellOverrides": [
         {
@@ -3331,7 +3331,7 @@
       "zoneIndex": 66,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 660,
+      "explorationPointReward": 75,
       "commanderExpReward": 75,
       "cellOverrides": [
         {
@@ -3394,7 +3394,7 @@
       "zoneIndex": 67,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 670,
+      "explorationPointReward": 76,
       "commanderExpReward": 76,
       "cellOverrides": [
         {
@@ -3457,7 +3457,7 @@
       "zoneIndex": 68,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 680,
+      "explorationPointReward": 77,
       "commanderExpReward": 77,
       "cellOverrides": [
         {
@@ -3520,7 +3520,7 @@
       "zoneIndex": 69,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 690,
+      "explorationPointReward": 78,
       "commanderExpReward": 78,
       "cellOverrides": [
         {
@@ -3583,7 +3583,7 @@
       "zoneIndex": 70,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 700,
+      "explorationPointReward": 79,
       "commanderExpReward": 79,
       "cellOverrides": [
         {
@@ -3646,7 +3646,7 @@
       "zoneIndex": 71,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 710,
+      "explorationPointReward": 80,
       "commanderExpReward": 80,
       "cellOverrides": [
         {
@@ -3709,7 +3709,7 @@
       "zoneIndex": 72,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 720,
+      "explorationPointReward": 81,
       "commanderExpReward": 81,
       "cellOverrides": [
         {
@@ -3772,7 +3772,7 @@
       "zoneIndex": 73,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 730,
+      "explorationPointReward": 82,
       "commanderExpReward": 82,
       "cellOverrides": [
         {
@@ -3835,7 +3835,7 @@
       "zoneIndex": 74,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 740,
+      "explorationPointReward": 83,
       "commanderExpReward": 83,
       "cellOverrides": [
         {
@@ -3898,7 +3898,7 @@
       "zoneIndex": 75,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 750,
+      "explorationPointReward": 84,
       "commanderExpReward": 84,
       "cellOverrides": [
         {
@@ -3961,7 +3961,7 @@
       "zoneIndex": 76,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 760,
+      "explorationPointReward": 85,
       "commanderExpReward": 85,
       "cellOverrides": [
         {
@@ -4024,7 +4024,7 @@
       "zoneIndex": 77,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 770,
+      "explorationPointReward": 86,
       "commanderExpReward": 86,
       "cellOverrides": [
         {
@@ -4087,7 +4087,7 @@
       "zoneIndex": 78,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 780,
+      "explorationPointReward": 87,
       "commanderExpReward": 87,
       "cellOverrides": [
         {
@@ -4150,7 +4150,7 @@
       "zoneIndex": 79,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 790,
+      "explorationPointReward": 88,
       "commanderExpReward": 88,
       "cellOverrides": [
         {
@@ -4213,7 +4213,7 @@
       "zoneIndex": 80,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 800,
+      "explorationPointReward": 89,
       "commanderExpReward": 89,
       "cellOverrides": [
         {
@@ -4276,7 +4276,7 @@
       "zoneIndex": 81,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 810,
+      "explorationPointReward": 90,
       "commanderExpReward": 90,
       "cellOverrides": [
         {
@@ -4339,7 +4339,7 @@
       "zoneIndex": 82,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 820,
+      "explorationPointReward": 91,
       "commanderExpReward": 91,
       "cellOverrides": [
         {
@@ -4402,7 +4402,7 @@
       "zoneIndex": 83,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 830,
+      "explorationPointReward": 92,
       "commanderExpReward": 92,
       "cellOverrides": [
         {
@@ -4465,7 +4465,7 @@
       "zoneIndex": 84,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 840,
+      "explorationPointReward": 93,
       "commanderExpReward": 93,
       "cellOverrides": [
         {
@@ -4528,7 +4528,7 @@
       "zoneIndex": 85,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 850,
+      "explorationPointReward": 94,
       "commanderExpReward": 94,
       "cellOverrides": [
         {
@@ -4591,7 +4591,7 @@
       "zoneIndex": 86,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 860,
+      "explorationPointReward": 95,
       "commanderExpReward": 95,
       "cellOverrides": [
         {
@@ -4654,7 +4654,7 @@
       "zoneIndex": 87,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 870,
+      "explorationPointReward": 96,
       "commanderExpReward": 96,
       "cellOverrides": [
         {
@@ -4717,7 +4717,7 @@
       "zoneIndex": 88,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 880,
+      "explorationPointReward": 97,
       "commanderExpReward": 97,
       "cellOverrides": [
         {
@@ -4780,7 +4780,7 @@
       "zoneIndex": 89,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 890,
+      "explorationPointReward": 98,
       "commanderExpReward": 98,
       "cellOverrides": [
         {
@@ -4843,7 +4843,7 @@
       "zoneIndex": 90,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 900,
+      "explorationPointReward": 99,
       "commanderExpReward": 99,
       "cellOverrides": [
         {
@@ -4906,7 +4906,7 @@
       "zoneIndex": 91,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 910,
+      "explorationPointReward": 100,
       "commanderExpReward": 100,
       "cellOverrides": [
         {
@@ -4969,7 +4969,7 @@
       "zoneIndex": 92,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 920,
+      "explorationPointReward": 101,
       "commanderExpReward": 101,
       "cellOverrides": [
         {
@@ -5032,7 +5032,7 @@
       "zoneIndex": 93,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 930,
+      "explorationPointReward": 102,
       "commanderExpReward": 102,
       "cellOverrides": [
         {
@@ -5095,7 +5095,7 @@
       "zoneIndex": 94,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 940,
+      "explorationPointReward": 103,
       "commanderExpReward": 103,
       "cellOverrides": [
         {
@@ -5158,7 +5158,7 @@
       "zoneIndex": 95,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 950,
+      "explorationPointReward": 104,
       "commanderExpReward": 104,
       "cellOverrides": [
         {
@@ -5221,7 +5221,7 @@
       "zoneIndex": 96,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 960,
+      "explorationPointReward": 105,
       "commanderExpReward": 105,
       "cellOverrides": [
         {
@@ -5284,7 +5284,7 @@
       "zoneIndex": 97,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 970,
+      "explorationPointReward": 106,
       "commanderExpReward": 106,
       "cellOverrides": [
         {
@@ -5347,7 +5347,7 @@
       "zoneIndex": 98,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 980,
+      "explorationPointReward": 107,
       "commanderExpReward": 107,
       "cellOverrides": [
         {
@@ -5410,7 +5410,7 @@
       "zoneIndex": 99,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 990,
+      "explorationPointReward": 108,
       "commanderExpReward": 108,
       "cellOverrides": [
         {
@@ -5473,7 +5473,7 @@
       "zoneIndex": 100,
       "gridWidth": 7,
       "gridHeight": 7,
-      "explorationPointReward": 1000,
+      "explorationPointReward": 109,
       "commanderExpReward": 109,
       "cellOverrides": [
         {

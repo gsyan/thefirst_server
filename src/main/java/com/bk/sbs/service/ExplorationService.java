@@ -45,6 +45,7 @@ public class ExplorationService {
     private final ObjectMapper objectMapper;
     private final AchievementService achievementService;
     private final VipSubscriptionRepository vipSubscriptionRepository;
+    private final RedisService redisService; // 첫 셀(ZoneRun 생성 전) 클리어 챌린지 임시 저장용
 
     // false면 highestClearedZoneNumber 검사를 건너뜀 — 웨이브 밸런스 테스트용(application.properties)
     @Value("${zone.require-previous-stage-cleared:true}")
@@ -54,7 +55,8 @@ public class ExplorationService {
                                ZoneCellClearLogRepository zoneCellClearLogRepository,
                                GameDataService gameDataService, ObjectMapper objectMapper,
                                AchievementService achievementService,
-                               VipSubscriptionRepository vipSubscriptionRepository) {
+                               VipSubscriptionRepository vipSubscriptionRepository,
+                               RedisService redisService) {
         this.commanderRepository = commanderRepository;
         this.zoneRunRepository = zoneRunRepository;
         this.zoneCellClearLogRepository = zoneCellClearLogRepository;
@@ -62,6 +64,7 @@ public class ExplorationService {
         this.objectMapper = objectMapper;
         this.achievementService = achievementService;
         this.vipSubscriptionRepository = vipSubscriptionRepository;
+        this.redisService = redisService;
     }
 
     // 활성 VIP 여부 — IapService.isVipActive()와 동일 기준(서비스 간 커플링 없이 각자 보유)
@@ -271,6 +274,27 @@ public class ExplorationService {
         run.setActiveChallengeIssuedAt(null);
     }
 
+    // validateAndConsumeChallengeToken과 동일한 검증(토큰/셀 일치 + 최소 경과시간)이지만, 대상이 아직 없는 ZoneRun이 아니라
+    // enter-cell이 Redis에 임시 저장해둔 첫 셀 챌린지 — 통과 시 즉시 삭제(재사용 방지)
+    private void validateAndConsumePendingZoneRunChallenge(Long commanderId, String requestToken, int zoneNumber, int cellRow, int cellCol, boolean requireMinElapsedTime) {
+        RedisService.PendingZoneRunChallengeInfo pending = redisService.getPendingZoneRunChallenge(commanderId);
+        String expectedCell = cellRow + "-" + cellCol;
+        boolean matches = pending != null
+                && pending.zoneNumber() == zoneNumber
+                && pending.cell().equals(expectedCell)
+                && pending.token().equals(requestToken);
+        if (matches == false)
+            throw new BusinessException(ServerErrorCode.EXPLORATION_CHALLENGE_TOKEN_INVALID);
+
+        if (requireMinElapsedTime == true) {
+            long elapsedMillis = Instant.now().toEpochMilli() - pending.issuedAt().toEpochMilli();
+            if (elapsedMillis < CHALLENGE_TOKEN_MIN_ELAPSED_MILLIS)
+                throw new BusinessException(ServerErrorCode.EXPLORATION_CHALLENGE_TOKEN_INVALID);
+        }
+
+        redisService.deletePendingZoneRunChallenge(commanderId);
+    }
+
     // 요청 셀이 (fromRow,fromCol) 기준 4방향 인접인지 + Blocked가 아닌지 검증 — 클라가 보낸 좌표를 신뢰하지 않음
     private void validateCellChallenge(ZoneConfigData zoneConfig, int fromRow, int fromCol, int toRow, int toCol) {
         int deltaRow = Math.abs(fromRow - toRow);
@@ -295,24 +319,13 @@ public class ExplorationService {
 
         Optional<ZoneRun> activeRunOpt = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS);
 
-        // 다른 존에 진행 중인 런이 있어도, 그 런에서 셀을 하나도 클리어하지 못했다면(대치화면만 보고 물러났거나 첫 전투
-        // 클리어 전에 퇴각) 실질적으로 "진행 중"이 아니므로 확인 없이 조용히 종료(0포인트 정산)하고 새 런으로 진행
-        if (activeRunOpt.isPresent() && activeRunOpt.get().getZoneNumber() != request.getZoneNumber()) {
-            ZoneRun otherZoneRun = activeRunOpt.get();
-            boolean hasAnyProgress = zoneCellClearLogRepository.existsByZoneRunId(otherZoneRun.getId());
-            log.info("[enterExplorationCell] 다른 존 런 감지: commanderId={}, otherRunId={}, otherZone={}, requestedZone={}, hasAnyProgress={}",
-                    commanderId, otherZoneRun.getId(), otherZoneRun.getZoneNumber(), request.getZoneNumber(), hasAnyProgress);
-            if (hasAnyProgress == true)
-                throw new BusinessException(ServerErrorCode.EXPLORATION_ANOTHER_ZONE_IN_PROGRESS);
+        // 다른 존에 진행 중인 런이 있으면 확인 없이는 진행 불가 — ZoneRun은 이제 항상 클리어 로그 최소 1개와 함께 생성되므로
+        // (첫 셀 클리어 전엔 ZoneRun 자체가 없음) "진행도 0인 런"이라는 상태가 더 이상 존재하지 않아 조용히 정리할 필요도 없어짐
+        if (activeRunOpt.isPresent() && activeRunOpt.get().getZoneNumber() != request.getZoneNumber())
+            throw new BusinessException(ServerErrorCode.EXPLORATION_ANOTHER_ZONE_IN_PROGRESS);
 
-            settleZoneRun(commander, otherZoneRun, false, ABANDON_PAYOUT_RATIO); // 진행도(적립 포인트) 자체가 0이라 비율은 결과에 영향 없음
-            log.info("[enterExplorationCell] 진행 없는 런 조용히 종료함: otherRunId={}", otherZoneRun.getId());
-            activeRunOpt = Optional.empty();
-        }
-
-        ZoneRun run;
         if (activeRunOpt.isPresent()) {
-            run = activeRunOpt.get();
+            ZoneRun run = activeRunOpt.get();
 
             validateCellChallenge(zoneConfig, run.getCurrentRow(), run.getCurrentCol(), request.getCellRow(), request.getCellCol());
 
@@ -332,28 +345,59 @@ public class ExplorationService {
                         .challengeToken(null)
                         .build();
             }
-        } else {
-            if (requirePreviousStageCleared == true && request.getZoneNumber() > commander.getHighestClearedZoneNumber() + 1)
-                throw new BusinessException(ServerErrorCode.EXPLORATION_ZONE_LOCKED);
 
-            GridCellOverrideDto startCell = findCellByType(zoneConfig, EGridCellType.Start);
-            if (startCell == null)
-                throw new BusinessException(ServerErrorCode.EXPLORATION_START_CELL_NOT_CONFIGURED);
+            // Blocked/Start는 여기서 바로 위치 확정 — validateCellChallenge를 이미 통과했으므로(인접 + Blocked 아님) 이동 가능한 셀인 것은 보장됨.
+            // 챌린지 토큰은 발급하지 않고 null로 응답 — 클라가 재방문(challengeToken==null)과 동일하게 처리해 뒤따르는
+            // clear-cell 호출을 하지 않게 됨. 여기서 토큰을 발급해버리면 클라가 clear-cell을 또 호출하는데, 그 시점엔
+            // run.currentRow/Col이 이미 이 셀로 확정된 뒤라 인접성 검사가 "자기 자신"과 비교돼 항상 실패함(EXPLORATION_CELL_NOT_ADJACENT).
+            // Event(Treasure)는 hasCombatCell()상 "적 없음"이지만 clear-cell 왕복으로 보상을 지급해야 하므로 여기서 확정하지 않음(canConfirmPositionOnEnter 참고)
+            GridCellOverrideDto enteringCellOverride = findCellOverride(zoneConfig, request.getCellRow(), request.getCellCol());
+            EGridCellType enteringCellType = enteringCellOverride != null ? enteringCellOverride.getType() : null;
+            if (canConfirmPositionOnEnter(enteringCellType) == true) {
+                run.setCurrentPosition(request.getCellRow(), request.getCellCol());
+                zoneRunRepository.save(run);
 
-            validateCellChallenge(zoneConfig, startCell.getRow(), startCell.getCol(), request.getCellRow(), request.getCellCol());
+                return EnterExplorationCellResponse.builder()
+                        .zoneNumber(request.getZoneNumber())
+                        .cellRow(request.getCellRow())
+                        .cellCol(request.getCellCol())
+                        .challengeToken(null)
+                        .build();
+            }
 
-            run = new ZoneRun(commanderId, request.getZoneNumber(), startCell.getRow(), startCell.getCol(), commander.getTacticPowerMax());
-            run = zoneRunRepository.save(run);
+            // 이 셀에 대한 1회용 클리어 챌린지 토큰 발급 — clear-cell이 이 토큰 없이는 통과 못 하도록 함(enter 생략한 clear 반복 호출 차단)
+            String challengeToken = java.util.UUID.randomUUID().toString();
+            run.setActiveChallengeToken(challengeToken);
+            run.setActiveChallengeCell(request.getCellRow() + "-" + request.getCellCol());
+            run.setActiveChallengeIssuedAt(Instant.now());
+            zoneRunRepository.save(run);
+
+            return EnterExplorationCellResponse.builder()
+                    .zoneNumber(request.getZoneNumber())
+                    .cellRow(request.getCellRow())
+                    .cellCol(request.getCellCol())
+                    .challengeToken(challengeToken)
+                    .build();
         }
 
-        // Blocked/Start는 여기서 바로 위치 확정 — validateCellChallenge를 이미 통과했으므로(인접 + Blocked 아님) 이동 가능한 셀인 것은 보장됨.
-        // 챌린지 토큰은 발급하지 않고 null로 응답 — 클라가 재방문(challengeToken==null)과 동일하게 처리해 뒤따르는
-        // clear-cell 호출을 하지 않게 됨. 여기서 토큰을 발급해버리면 클라가 clear-cell을 또 호출하는데, 그 시점엔
-        // run.currentRow/Col이 이미 이 셀로 확정된 뒤라 인접성 검사가 "자기 자신"과 비교돼 항상 실패함(EXPLORATION_CELL_NOT_ADJACENT).
-        // Event(Treasure)는 hasCombatCell()상 "적 없음"이지만 clear-cell 왕복으로 보상을 지급해야 하므로 여기서 확정하지 않음(canConfirmPositionOnEnter 참고)
+        // 진행 중인 런이 아직 없음(첫 셀) — requirePreviousStageCleared 검사 후 zone의 Start 셀을 원점으로 인접성만 검증.
+        // ZoneRun은 여기서 만들지 않음 — 클리어에 실제로 성공하는 시점(clearExplorationCell)에야 비로소 생성됨
+        if (requirePreviousStageCleared == true && request.getZoneNumber() > commander.getHighestClearedZoneNumber() + 1)
+            throw new BusinessException(ServerErrorCode.EXPLORATION_ZONE_LOCKED);
+
+        GridCellOverrideDto startCell = findCellByType(zoneConfig, EGridCellType.Start);
+        if (startCell == null)
+            throw new BusinessException(ServerErrorCode.EXPLORATION_START_CELL_NOT_CONFIGURED);
+
+        validateCellChallenge(zoneConfig, startCell.getRow(), startCell.getCol(), request.getCellRow(), request.getCellCol());
+
         GridCellOverrideDto enteringCellOverride = findCellOverride(zoneConfig, request.getCellRow(), request.getCellCol());
         EGridCellType enteringCellType = enteringCellOverride != null ? enteringCellOverride.getType() : null;
         if (canConfirmPositionOnEnter(enteringCellType) == true) {
+            // Blocked는 위 validateCellChallenge에서 이미 항상 걸러지고 Start도 첫 이동에서는 도달 불가능해 사실상 도달하지
+            // 않는 방어적 분기지만, 이 경우엔 뒤따르는 clear-cell 호출 자체가 없으므로(재방문과 동일하게 처리됨) 여기서
+            // 바로 ZoneRun을 만들어 위치를 확정해야 함
+            ZoneRun run = new ZoneRun(commanderId, request.getZoneNumber(), startCell.getRow(), startCell.getCol(), commander.getTacticPowerMax());
             run.setCurrentPosition(request.getCellRow(), request.getCellCol());
             zoneRunRepository.save(run);
 
@@ -365,12 +409,10 @@ public class ExplorationService {
                     .build();
         }
 
-        // 이 셀에 대한 1회용 클리어 챌린지 토큰 발급 — clear-cell이 이 토큰 없이는 통과 못 하도록 함(enter 생략한 clear 반복 호출 차단)
+        // 실질적으로 항상 도달하는 경로(일반 셀/Event/Escape) — ZoneRun 없이 Redis에 챌린지만 임시 저장
         String challengeToken = java.util.UUID.randomUUID().toString();
-        run.setActiveChallengeToken(challengeToken);
-        run.setActiveChallengeCell(request.getCellRow() + "-" + request.getCellCol());
-        run.setActiveChallengeIssuedAt(Instant.now());
-        zoneRunRepository.save(run);
+        String cell = request.getCellRow() + "-" + request.getCellCol();
+        redisService.savePendingZoneRunChallenge(commanderId, request.getZoneNumber(), cell, challengeToken);
 
         return EnterExplorationCellResponse.builder()
                 .zoneNumber(request.getZoneNumber())
@@ -382,23 +424,44 @@ public class ExplorationService {
 
     @Transactional
     public ClearExplorationCellResponse clearExplorationCell(Long commanderId, ClearExplorationCellRequest request) {
-        ZoneRun run = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS)
-                .filter(r -> r.getZoneNumber() == request.getZoneNumber())
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_NO_ACTIVE_RUN));
-
         ZoneConfigData zoneConfig = gameDataService.getZoneConfigByIndex(request.getZoneNumber());
         if (zoneConfig == null)
             throw new BusinessException(ServerErrorCode.EXPLORATION_FAIL_ZONE_NOT_FOUND);
 
-        validateCellChallenge(zoneConfig, run.getCurrentRow(), run.getCurrentCol(), request.getCellRow(), request.getCellCol());
-
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
 
+        Optional<ZoneRun> activeRunOpt = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS)
+                .filter(r -> r.getZoneNumber() == request.getZoneNumber());
+
+        // 첫 셀(이 존에 진행 중인 런이 아직 없음) 여부 — true면 아래에서 Redis 챌린지 검증 후 이 시점에 ZoneRun을 새로 만듦
+        boolean isFirstCellOfNewRun = activeRunOpt.isPresent() == false;
+
+        ZoneRun run;
+        if (isFirstCellOfNewRun == false) {
+            run = activeRunOpt.get();
+            validateCellChallenge(zoneConfig, run.getCurrentRow(), run.getCurrentCol(), request.getCellRow(), request.getCellCol());
+        } else {
+            GridCellOverrideDto startCell = findCellByType(zoneConfig, EGridCellType.Start);
+            if (startCell == null)
+                throw new BusinessException(ServerErrorCode.EXPLORATION_START_CELL_NOT_CONFIGURED);
+
+            validateCellChallenge(zoneConfig, startCell.getRow(), startCell.getCol(), request.getCellRow(), request.getCellCol());
+
+            boolean hasEnemiesForFirstCell = hasCombatCell(zoneConfig, request.getCellRow(), request.getCellCol());
+            validateAndConsumePendingZoneRunChallenge(commanderId, request.getChallengeToken(), request.getZoneNumber(),
+                    request.getCellRow(), request.getCellCol(), hasEnemiesForFirstCell);
+
+            run = new ZoneRun(commanderId, request.getZoneNumber(), startCell.getRow(), startCell.getCol(), commander.getTacticPowerMax());
+            run = zoneRunRepository.save(run);
+        }
+
         // 재방문(이 런에서 이미 클리어 로그가 있는 셀)은 패스 — 포인트/경험치/보상카드 재지급 없이 위치만 갱신
         // 클라가 재방문 셀 이동 시에도 이 API를 그대로 호출해 서버의 run.currentCell을 동기화함(안 그러면 다음 이동의 인접성 검사가 어긋남)
+        // 방금 새로 만든 런(isFirstCellOfNewRun)은 클리어 로그가 있을 수 없어 항상 false
         String cell = request.getCellRow() + "-" + request.getCellCol();
-        boolean isRevisit = zoneCellClearLogRepository.findTopByZoneRunIdAndCellOrderByClearedAtDesc(run.getId(), cell).isPresent();
+        boolean isRevisit = isFirstCellOfNewRun == false
+                && zoneCellClearLogRepository.findTopByZoneRunIdAndCellOrderByClearedAtDesc(run.getId(), cell).isPresent();
 
         int pointsGained = 0;
         int expGained = 0;
@@ -409,9 +472,11 @@ public class ExplorationService {
         if (isRevisit == false) {
             // 최초 클리어(보상 지급)에만 토큰을 요구 — enter-cell 없이 clear-cell 반복 호출로 무한 획득하는 것을 막는 지점.
             // 최소 경과시간 검사는 전투가 있는 셀에서만(hasEnemies) 적용 — Event(Treasure)는 애초에 전투가 없어 "생략" 의심이 성립하지 않고,
-            // 실제로 enter-cell 직후 곧바로 clear-cell을 호출하는 정상 흐름이라 검사를 걸면 항상 실패함
+            // 실제로 enter-cell 직후 곧바로 clear-cell을 호출하는 정상 흐름이라 검사를 걸면 항상 실패함.
+            // 첫 셀(isFirstCellOfNewRun)은 위에서 이미 Redis 챌린지로 검증·소비했으므로 여기서 다시 검증하지 않음(run에는 애초에 토큰이 없음)
             boolean hasEnemies = hasCombatCell(zoneConfig, request.getCellRow(), request.getCellCol());
-            validateAndConsumeChallengeToken(run, request.getChallengeToken(), request.getCellRow(), request.getCellCol(), hasEnemies);
+            if (isFirstCellOfNewRun == false)
+                validateAndConsumeChallengeToken(run, request.getChallengeToken(), request.getCellRow(), request.getCellCol(), hasEnemies);
 
             // 존 고정 보상값 적립 — 적 함대 성능(commandCost)과 무관, 함선이 있던 셀만 지급(빈 셀은 0)
             // Buff_ExplorationPointRate 배율은 여기서 적용하지 않음 — 적립(banked)은 항상 고정값 그대로 쌓고,

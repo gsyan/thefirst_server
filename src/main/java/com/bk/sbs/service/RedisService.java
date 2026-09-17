@@ -9,6 +9,7 @@ import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.*;
@@ -39,6 +40,9 @@ public class RedisService {
     private static final String AUTH_ACTIVE_JTI_PREFIX   = "auth:jti:active:"; // accountId → 현재 유효한 리프레시 토큰 jti
     private static final String AUTH_GRACE_JTI_PREFIX    = "auth:jti:grace:";  // 방금 교체된 구 jti (네트워크 유실 재시도 허용용)
     private static final Duration AUTH_JTI_GRACE_DURATION = Duration.ofSeconds(45);
+    // 존런(ZoneRun) 생성 전(첫 셀 클리어 전) enter-cell이 발급한 1회용 클리어 챌린지 임시 보관 — commanderId당 최대 1개, 다음 enter-cell 호출 시 덮어씀
+    private static final String EXPLORATION_PENDING_CHALLENGE_PREFIX = "exploration:pending_challenge:";
+    private static final Duration EXPLORATION_PENDING_CHALLENGE_TTL = Duration.ofMinutes(10); // 전투 소요 시간을 넉넉히 감안
 
     private final StringRedisTemplate redisTemplate;
     private final ObjectMapper objectMapper;
@@ -313,6 +317,47 @@ public class RedisService {
 
     public void deleteBattleToken(String token) {
         redisTemplate.delete(BATTLE_PREFIX + token);
+    }
+
+    // ══════════════════════════════════════════════════════════════════════
+    // 존런 생성 전 임시 클리어 챌린지 (첫 셀 전용 — ZoneRun이 아직 없는 동안의 enter-cell 토큰 보관)
+    // ══════════════════════════════════════════════════════════════════════
+
+    public record PendingZoneRunChallengeInfo(int zoneNumber, String cell, String token, Instant issuedAt) {}
+
+    public void savePendingZoneRunChallenge(Long commanderId, int zoneNumber, String cell, String token) {
+        try {
+            Map<String, Object> data = Map.of(
+                    "zoneNumber", zoneNumber,
+                    "cell", cell,
+                    "token", token,
+                    "issuedAt", Instant.now().toString());
+            String json = objectMapper.writeValueAsString(data);
+            redisTemplate.opsForValue().set(EXPLORATION_PENDING_CHALLENGE_PREFIX + commanderId, json, EXPLORATION_PENDING_CHALLENGE_TTL);
+        } catch (JsonProcessingException e) {
+            log.error("존런 대기 챌린지 저장 실패", e);
+        }
+    }
+
+    public PendingZoneRunChallengeInfo getPendingZoneRunChallenge(Long commanderId) {
+        String json = redisTemplate.opsForValue().get(EXPLORATION_PENDING_CHALLENGE_PREFIX + commanderId);
+        if (json == null) return null;
+        try {
+            @SuppressWarnings("unchecked")
+            Map<String, Object> data = objectMapper.readValue(json, Map.class);
+            return new PendingZoneRunChallengeInfo(
+                    (Integer) data.get("zoneNumber"),
+                    (String) data.get("cell"),
+                    (String) data.get("token"),
+                    Instant.parse((String) data.get("issuedAt")));
+        } catch (Exception e) {
+            log.error("존런 대기 챌린지 파싱 실패", e);
+            return null;
+        }
+    }
+
+    public void deletePendingZoneRunChallenge(Long commanderId) {
+        redisTemplate.delete(EXPLORATION_PENDING_CHALLENGE_PREFIX + commanderId);
     }
 
     // ══════════════════════════════════════════════════════════════════════
