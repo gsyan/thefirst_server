@@ -14,8 +14,6 @@ pipeline {
         IMAGE_NAME  = 'gsyan/sbs'
         DEPLOY_HOST = '192.168.50.61'
         DEPLOY_DIR  = '~/app'
-        DB_USER     = 'bk'
-        DB_PASS     = '12121212'
         DB_NAME     = 'GameDB'
     }
 
@@ -31,11 +29,18 @@ pipeline {
                 expression { return params.DB_CREATE }
             }
             steps {
-                withCredentials([sshUserPrivateKey(
-                    credentialsId: 'DEPLOY_SBS',
-                    keyFileVariable: 'SSH_KEY',
-                    usernameVariable: 'SSH_USER'
-                )]) {
+                withCredentials([
+                    sshUserPrivateKey(
+                        credentialsId: 'DEPLOY_SBS',
+                        keyFileVariable: 'SSH_KEY',
+                        usernameVariable: 'SSH_USER'
+                    ),
+                    usernamePassword(
+                        credentialsId: 'DEPLOY_UBUNTU_DB',
+                        usernameVariable: 'DB_USER',
+                        passwordVariable: 'DB_PASS'
+                    )
+                ]) {
                     bat """
                         icacls "${SSH_KEY}" /inheritance:r
                         icacls "${SSH_KEY}" /grant:r "NT AUTHORITY\\SYSTEM:(R)"

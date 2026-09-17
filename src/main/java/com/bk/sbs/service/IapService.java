@@ -28,6 +28,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.DayOfWeek;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
@@ -45,6 +46,7 @@ public class IapService {
     private static final String PLAY_API_SCOPE = "https://www.googleapis.com/auth/androidpublisher";
     private static final String PRODUCTS_URL =
             "https://androidpublisher.googleapis.com/androidpublisher/v3/applications/%s/purchases/products/%s/tokens/%s";
+    private static final int VIP_DURATION_DAYS = 30; // 구매 시점 기준 30일 — 달력 월 경계와 무관한 고정 기간
 
     @Value("${google.play.package-name}")
     private String packageName;
@@ -93,10 +95,8 @@ public class IapService {
 
         Instant purchaseTime = verifyGooglePlayConsumable(purchaseToken);
 
-        // 구매 월 말일 23:59:59 UTC를 만료 시각으로 설정
-        ZonedDateTime purchaseZdt = purchaseTime.atZone(ZoneOffset.UTC);
-        Instant expiry = purchaseZdt.with(TemporalAdjusters.lastDayOfMonth())
-                .withHour(23).withMinute(59).withSecond(59).withNano(0).toInstant();
+        // 구매 시점으로부터 VIP_DURATION_DAYS일 후를 만료 시각으로 설정
+        Instant expiry = purchaseTime.plus(Duration.ofDays(VIP_DURATION_DAYS));
 
         if (existing.isPresent() == true) {
             VipSubscription sub = existing.get();
@@ -115,14 +115,12 @@ public class IapService {
         return getVipStatus(commanderId);
     }
 
-    // ── 에디터 전용: VIP 강제 세팅 (영수증 검증 없이 이번 달 말일로 세팅) ──────
+    // ── 에디터 전용: VIP 강제 세팅 (영수증 검증 없이 지금으로부터 VIP_DURATION_DAYS일로 세팅) ──────
 
     @Transactional
     public VipStatusResponse debugForceVip(Long commanderId) {
         Instant now = Instant.now();
-        ZonedDateTime nowZdt = now.atZone(ZoneOffset.UTC);
-        Instant expiry = nowZdt.with(TemporalAdjusters.lastDayOfMonth())
-                .withHour(23).withMinute(59).withSecond(59).withNano(0).toInstant();
+        Instant expiry = now.plus(Duration.ofDays(VIP_DURATION_DAYS));
 
         Optional<VipSubscription> existing = vipSubscriptionRepository.findByCommanderId(commanderId);
         if (existing.isPresent() == true) {
