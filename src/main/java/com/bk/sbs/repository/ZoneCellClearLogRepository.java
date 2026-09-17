@@ -1,7 +1,6 @@
 package com.bk.sbs.repository;
 
 import com.bk.sbs.entity.ZoneCellClearLog;
-import com.bk.sbs.enums.ETreasureRewardType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,15 +22,15 @@ public interface ZoneCellClearLogRepository extends JpaRepository<ZoneCellClearL
     @Query("SELECT COUNT(l) FROM ZoneCellClearLog l WHERE l.zoneRunId IN (SELECT r.id FROM ZoneRun r WHERE r.commanderId = :commanderId) AND l.treasureRewardType IS NULL")
     long countNormalCellClearByCommanderId(@Param("commanderId") Long commanderId);
 
-    // 업적(EventCell) — 커맨더 전체 런 통틀어 특정 트레저 보상 종류로 클리어한 이벤트 셀 누적 개수
-    @Query("SELECT COUNT(l) FROM ZoneCellClearLog l WHERE l.zoneRunId IN (SELECT r.id FROM ZoneRun r WHERE r.commanderId = :commanderId) AND l.treasureRewardType = :treasureRewardType")
-    long countEventCellClearByCommanderIdAndType(@Param("commanderId") Long commanderId, @Param("treasureRewardType") ETreasureRewardType treasureRewardType);
+    // 업적(EventCell) — 커맨더 전체 런 통틀어 트레저 보상 종류를 가리지 않고 클리어한 이벤트 셀 누적 개수
+    @Query("SELECT COUNT(l) FROM ZoneCellClearLog l WHERE l.zoneRunId IN (SELECT r.id FROM ZoneRun r WHERE r.commanderId = :commanderId) AND l.treasureRewardType IS NOT NULL")
+    long countEventCellClearByCommanderId(@Param("commanderId") Long commanderId);
 
     // 일일 업적(CellClear) — 지정 구간(오늘 UTC) 안에서만 일반(비이벤트) 셀 클리어 개수
     @Query("SELECT COUNT(l) FROM ZoneCellClearLog l WHERE l.zoneRunId IN (SELECT r.id FROM ZoneRun r WHERE r.commanderId = :commanderId) AND l.treasureRewardType IS NULL AND l.clearedAt >= :dayStart AND l.clearedAt < :dayEnd")
     long countNormalCellClearByCommanderIdAndClearedAtBetween(@Param("commanderId") Long commanderId, @Param("dayStart") Instant dayStart, @Param("dayEnd") Instant dayEnd);
 
-    // 일일 업적(EventCell) — 지정 구간(오늘 UTC) 안에서만 특정 트레저 보상 종류로 클리어한 이벤트 셀 개수
-    @Query("SELECT COUNT(l) FROM ZoneCellClearLog l WHERE l.zoneRunId IN (SELECT r.id FROM ZoneRun r WHERE r.commanderId = :commanderId) AND l.treasureRewardType = :treasureRewardType AND l.clearedAt >= :dayStart AND l.clearedAt < :dayEnd")
-    long countEventCellClearByCommanderIdAndTypeAndClearedAtBetween(@Param("commanderId") Long commanderId, @Param("treasureRewardType") ETreasureRewardType treasureRewardType, @Param("dayStart") Instant dayStart, @Param("dayEnd") Instant dayEnd);
+    // 일일 업적(EventCell) — 지정 구간(오늘 UTC) 안에서 트레저 보상 종류를 가리지 않고 클리어한 이벤트 셀 개수
+    @Query("SELECT COUNT(l) FROM ZoneCellClearLog l WHERE l.zoneRunId IN (SELECT r.id FROM ZoneRun r WHERE r.commanderId = :commanderId) AND l.treasureRewardType IS NOT NULL AND l.clearedAt >= :dayStart AND l.clearedAt < :dayEnd")
+    long countEventCellClearByCommanderIdAndClearedAtBetween(@Param("commanderId") Long commanderId, @Param("dayStart") Instant dayStart, @Param("dayEnd") Instant dayEnd);
 }

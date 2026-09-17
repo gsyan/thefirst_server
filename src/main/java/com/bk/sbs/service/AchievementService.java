@@ -6,12 +6,12 @@ import com.bk.sbs.dto.ClaimAllAchievementsResponse;
 import com.bk.sbs.dto.GetAchievementListResponse;
 import com.bk.sbs.entity.Commander;
 import com.bk.sbs.entity.CommanderAchievementClaim;
+import com.bk.sbs.entity.CommanderUnlockedHull;
 import com.bk.sbs.entity.Fleet;
 import com.bk.sbs.entity.Module;
 import com.bk.sbs.entity.Ship;
 import com.bk.sbs.entity.VipSubscription;
 import com.bk.sbs.enums.EModuleType;
-import com.bk.sbs.enums.ETreasureRewardType;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.repository.CommanderAchievementClaimRepository;
@@ -25,8 +25,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 // 업적 조건 판정 + 수령 처리 — 정의(GameDataService.AchievementEntry)는 데이터, 완료여부/수령상태는 여기서 매번 라이브 계산
@@ -65,19 +69,70 @@ public class AchievementService {
         return expiry != null && Instant.now().isBefore(expiry);
     }
 
+    // 업적 진행도 판정에 필요한 데이터를 요청당 한 번만 모아두는 스냅샷 — 업적 항목 수(400여 개)만큼 반복 쿼리하는 대신
+    // 조건 타입별 집계를 루프 진입 전에 1회씩만 조회해서, 쿼리 수가 업적 개수와 무관하게 고정되도록 함
+    private static class AchievementProgressContext {
+        long normalCellClearCount;
+        long eventCellClearCount;
+        Set<String> claimedAchievementIds;
+        Set<String> vipClaimedAchievementIds;
+        Set<String> unlockedHullSubTypes;
+        Map<Integer, Integer> hullTierCounts;
+        Map<String, Integer> moduleTierCounts;
+    }
+
+    private AchievementProgressContext buildProgressContext(Long commanderId, Fleet activeFleet) {
+        AchievementProgressContext context = new AchievementProgressContext();
+
+        context.normalCellClearCount = zoneCellClearLogRepository.countNormalCellClearByCommanderId(commanderId);
+        context.eventCellClearCount = zoneCellClearLogRepository.countEventCellClearByCommanderId(commanderId);
+
+        context.claimedAchievementIds = new HashSet<>();
+        context.vipClaimedAchievementIds = new HashSet<>();
+        for (CommanderAchievementClaim claim : commanderAchievementClaimRepository.findByCommanderId(commanderId)) {
+            if (claim.isVip() == true)
+                context.vipClaimedAchievementIds.add(claim.getAchievementId());
+            else
+                context.claimedAchievementIds.add(claim.getAchievementId());
+        }
+
+        context.unlockedHullSubTypes = new HashSet<>();
+        for (CommanderUnlockedHull unlockedHull : commanderUnlockedHullRepository.findByCommanderId(commanderId))
+            context.unlockedHullSubTypes.add(unlockedHull.getHullSubType());
+
+        context.hullTierCounts = new HashMap<>();
+        context.moduleTierCounts = new HashMap<>();
+        if (activeFleet != null && activeFleet.getShips() != null) {
+            for (Ship ship : activeFleet.getShips()) {
+                int hullTier = GameDataService.parseTierFromHullSubType(ship.getHullSubType());
+                context.hullTierCounts.merge(hullTier, 1, Integer::sum);
+
+                if (ship.getModules() == null) continue;
+                for (Module module : ship.getModules()) {
+                    int moduleTier = GameDataService.parseTierFromHullSubType(module.getModuleSubType());
+                    String moduleTierKey = module.getModuleType() + "_" + moduleTier;
+                    context.moduleTierCounts.merge(moduleTierKey, 1, Integer::sum);
+                }
+            }
+        }
+
+        return context;
+    }
+
     @Transactional(readOnly = true)
     public GetAchievementListResponse getAchievementStatusList(Long commanderId) {
         Commander commander = commanderRepository.findById(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.ACHIEVEMENT_CLAIM_FAIL_COMMANDER_NOT_FOUND));
 
         Fleet activeFleet = fleetRepository.findByCommanderIdAndFleetIndex(commanderId, ACTIVE_FLEET_INDEX).orElse(null);
+        AchievementProgressContext context = buildProgressContext(commanderId, activeFleet);
 
         List<AchievementStatusDto> statusList = gameDataService.getAchievementList().stream()
                 .map(entry -> AchievementStatusDto.builder()
                         .achievementId(entry.achievementId)
-                        .currentValue(computeCurrentValue(commander, activeFleet, entry))
-                        .isClaimed(commanderAchievementClaimRepository.existsByCommanderIdAndAchievementIdAndIsVip(commanderId, entry.achievementId, false))
-                        .isVipClaimed(commanderAchievementClaimRepository.existsByCommanderIdAndAchievementIdAndIsVip(commanderId, entry.achievementId, true))
+                        .currentValue(computeCurrentValue(commander, context, entry))
+                        .isClaimed(context.claimedAchievementIds.contains(entry.achievementId))
+                        .isVipClaimed(context.vipClaimedAchievementIds.contains(entry.achievementId))
                         .build())
                 .collect(Collectors.toList());
 
@@ -91,14 +146,15 @@ public class AchievementService {
         if (commander == null) return false;
 
         Fleet activeFleet = fleetRepository.findByCommanderIdAndFleetIndex(commanderId, ACTIVE_FLEET_INDEX).orElse(null);
+        AchievementProgressContext context = buildProgressContext(commanderId, activeFleet);
         boolean isVip = isVipActive(commanderId);
 
         for (GameDataService.AchievementEntry entry : gameDataService.getAchievementList()) {
-            boolean isClaimed = commanderAchievementClaimRepository.existsByCommanderIdAndAchievementIdAndIsVip(commanderId, entry.achievementId, false);
-            boolean isVipClaimed = isVip == true && commanderAchievementClaimRepository.existsByCommanderIdAndAchievementIdAndIsVip(commanderId, entry.achievementId, true);
+            boolean isClaimed = context.claimedAchievementIds.contains(entry.achievementId);
+            boolean isVipClaimed = isVip == true && context.vipClaimedAchievementIds.contains(entry.achievementId);
             if (isClaimed == true && (isVip == false || isVipClaimed == true)) continue;
 
-            int currentValue = computeCurrentValue(commander, activeFleet, entry);
+            int currentValue = computeCurrentValue(commander, context, entry);
             if (currentValue >= entry.threshold) return true;
         }
         return false;
@@ -121,7 +177,7 @@ public class AchievementService {
             throw new BusinessException(ServerErrorCode.ACHIEVEMENT_CLAIM_FAIL_ALREADY_CLAIMED);
 
         Fleet activeFleet = fleetRepository.findByCommanderIdAndFleetIndex(commanderId, ACTIVE_FLEET_INDEX).orElse(null);
-        int currentValue = computeCurrentValue(commander, activeFleet, entry);
+        int currentValue = computeCurrentValueDirect(commander, activeFleet, entry);
         if (currentValue < entry.threshold)
             throw new BusinessException(ServerErrorCode.ACHIEVEMENT_CLAIM_FAIL_NOT_COMPLETED);
 
@@ -144,17 +200,18 @@ public class AchievementService {
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.ACHIEVEMENT_CLAIM_FAIL_COMMANDER_NOT_FOUND));
 
         Fleet activeFleet = fleetRepository.findByCommanderIdAndFleetIndex(commanderId, ACTIVE_FLEET_INDEX).orElse(null);
+        AchievementProgressContext context = buildProgressContext(commanderId, activeFleet);
         boolean isVip = isVipActive(commanderId);
 
         List<String> claimedIds = new ArrayList<>();
         int totalGranted = 0;
 
         for (GameDataService.AchievementEntry entry : gameDataService.getAchievementList()) {
-            int currentValue = computeCurrentValue(commander, activeFleet, entry);
+            int currentValue = computeCurrentValue(commander, context, entry);
             if (currentValue < entry.threshold)
                 continue;
 
-            boolean normalAlreadyClaimed = commanderAchievementClaimRepository.existsByCommanderIdAndAchievementIdAndIsVip(commanderId, entry.achievementId, false);
+            boolean normalAlreadyClaimed = context.claimedAchievementIds.contains(entry.achievementId);
             if (normalAlreadyClaimed == false) {
                 commander.setAchievementPoint(commander.getAchievementPoint() + entry.achievementPointReward);
                 commanderAchievementClaimRepository.save(new CommanderAchievementClaim(commanderId, entry.achievementId, false));
@@ -163,7 +220,7 @@ public class AchievementService {
             }
 
             if (isVip == true) {
-                boolean vipAlreadyClaimed = commanderAchievementClaimRepository.existsByCommanderIdAndAchievementIdAndIsVip(commanderId, entry.achievementId, true);
+                boolean vipAlreadyClaimed = context.vipClaimedAchievementIds.contains(entry.achievementId);
                 if (vipAlreadyClaimed == false) {
                     commander.setAchievementPoint(commander.getAchievementPoint() + entry.achievementPointRewardVip);
                     commanderAchievementClaimRepository.save(new CommanderAchievementClaim(commanderId, entry.achievementId, true));
@@ -182,14 +239,44 @@ public class AchievementService {
                 .build();
     }
 
-    // 조건 타입별 현재 진행도 계산 — activeFleet은 함대 미보유(신규 계정 등)면 null일 수 있어 함체/모듈 카운트는 0 처리
-    private int computeCurrentValue(Commander commander, Fleet activeFleet, GameDataService.AchievementEntry entry) {
+    // 조건 타입별 현재 진행도 계산(배치 경로) — buildProgressContext로 한 번만 모아둔 집계값을 순수 메모리 조회로만 읽음
+    private int computeCurrentValue(Commander commander, AchievementProgressContext context, GameDataService.AchievementEntry entry) {
+        switch (entry.conditionType) {
+            case CellClear:
+                return (int) context.normalCellClearCount;
+            case EventCell:
+                return (int) context.eventCellClearCount;
+            case ZoneClearTotal:
+                return commander.getHighestClearedZoneNumber();
+            case ZoneClearSpecific:
+                int requiredZoneNumber = Integer.parseInt(entry.conditionParam);
+                return commander.getHighestClearedZoneNumber() >= requiredZoneNumber ? 1 : 0;
+            case CommanderLevel:
+                return commander.getCommanderLevel();
+            case CommandPower:
+                return commander.getCommandPowerMax();
+            case TacticPower:
+                return commander.getTacticPowerMax();
+            case ExplorationPointTotal:
+                return commander.getExplorationPointEarnedTotal();
+            case HullTierCount:
+                return context.hullTierCounts.getOrDefault(Integer.parseInt(entry.conditionParam), 0);
+            case ModuleTierCount:
+                return context.moduleTierCounts.getOrDefault(entry.conditionParam, 0);
+            case HullUnlocked:
+                return context.unlockedHullSubTypes.contains(entry.conditionParam) ? 1 : 0;
+            default:
+                return 0;
+        }
+    }
+
+    // 조건 타입별 현재 진행도 계산(단일 업적 경로) — claimAchievement()는 항목 하나만 판정하므로 컨텍스트 전체를 모을 필요 없이 필요한 값만 직접 조회
+    private int computeCurrentValueDirect(Commander commander, Fleet activeFleet, GameDataService.AchievementEntry entry) {
         switch (entry.conditionType) {
             case CellClear:
                 return (int) zoneCellClearLogRepository.countNormalCellClearByCommanderId(commander.getId());
             case EventCell:
-                ETreasureRewardType treasureRewardType = ETreasureRewardType.valueOf(entry.conditionParam);
-                return (int) zoneCellClearLogRepository.countEventCellClearByCommanderIdAndType(commander.getId(), treasureRewardType);
+                return (int) zoneCellClearLogRepository.countEventCellClearByCommanderId(commander.getId());
             case ZoneClearTotal:
                 return commander.getHighestClearedZoneNumber();
             case ZoneClearSpecific:

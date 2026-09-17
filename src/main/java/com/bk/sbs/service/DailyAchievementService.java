@@ -7,7 +7,6 @@ import com.bk.sbs.dto.GetDailyAchievementListResponse;
 import com.bk.sbs.entity.Commander;
 import com.bk.sbs.entity.CommanderDailyAchievementClaim;
 import com.bk.sbs.entity.VipSubscription;
-import com.bk.sbs.enums.ETreasureRewardType;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.repository.CommanderDailyAchievementClaimRepository;
@@ -22,8 +21,10 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 // 일일(자정 UTC 리셋) 업적 조건 판정 + 수령 처리 — 배치/스케줄러 없이 매 요청마다 "오늘(UTC)" 구간을 계산해 라이브 판정(DailyBonus와 동일한 리셋 방식)
@@ -56,6 +57,35 @@ public class DailyAchievementService {
         return expiry != null && Instant.now().isBefore(expiry);
     }
 
+    // 일일 업적 진행도 판정에 필요한 데이터를 요청당 한 번만 모아두는 스냅샷 — 항목 수만큼 반복 쿼리하는 대신
+    // 조건 타입별 집계를 루프 진입 전에 1회씩만 조회
+    private static class DailyAchievementProgressContext {
+        long normalCellClearCount;
+        long eventCellClearCount;
+        long zoneClearTotalCount;
+        Set<String> claimedAchievementIds;
+        Set<String> vipClaimedAchievementIds;
+    }
+
+    private DailyAchievementProgressContext buildDailyProgressContext(Long commanderId, LocalDate today, Instant dayStart, Instant dayEnd) {
+        DailyAchievementProgressContext context = new DailyAchievementProgressContext();
+
+        context.normalCellClearCount = zoneCellClearLogRepository.countNormalCellClearByCommanderIdAndClearedAtBetween(commanderId, dayStart, dayEnd);
+        context.eventCellClearCount = zoneCellClearLogRepository.countEventCellClearByCommanderIdAndClearedAtBetween(commanderId, dayStart, dayEnd);
+        context.zoneClearTotalCount = zoneRunRepository.countEscapedByCommanderIdAndEndedAtBetween(commanderId, dayStart, dayEnd);
+
+        context.claimedAchievementIds = new HashSet<>();
+        context.vipClaimedAchievementIds = new HashSet<>();
+        for (CommanderDailyAchievementClaim claim : commanderDailyAchievementClaimRepository.findByCommanderIdAndClaimDate(commanderId, today)) {
+            if (claim.isVip() == true)
+                context.vipClaimedAchievementIds.add(claim.getDailyAchievementId());
+            else
+                context.claimedAchievementIds.add(claim.getDailyAchievementId());
+        }
+
+        return context;
+    }
+
     @Transactional(readOnly = true)
     public GetDailyAchievementListResponse getDailyAchievementStatusList(Long commanderId) {
         Commander commander = commanderRepository.findById(commanderId)
@@ -64,13 +94,14 @@ public class DailyAchievementService {
         LocalDate today = LocalDate.now(ZoneOffset.UTC);
         Instant dayStart = today.atStartOfDay(ZoneOffset.UTC).toInstant();
         Instant dayEnd = today.plusDays(1).atStartOfDay(ZoneOffset.UTC).toInstant();
+        DailyAchievementProgressContext context = buildDailyProgressContext(commanderId, today, dayStart, dayEnd);
 
         List<DailyAchievementStatusDto> statusList = gameDataService.getDailyAchievementList().stream()
                 .map(entry -> DailyAchievementStatusDto.builder()
                         .achievementId(entry.achievementId)
-                        .currentValue(computeDailyCurrentValue(commander, entry, dayStart, dayEnd))
-                        .isClaimed(commanderDailyAchievementClaimRepository.existsByCommanderIdAndDailyAchievementIdAndClaimDateAndIsVip(commanderId, entry.achievementId, today, false))
-                        .isVipClaimed(commanderDailyAchievementClaimRepository.existsByCommanderIdAndDailyAchievementIdAndClaimDateAndIsVip(commanderId, entry.achievementId, today, true))
+                        .currentValue(computeDailyCurrentValue(context, entry))
+                        .isClaimed(context.claimedAchievementIds.contains(entry.achievementId))
+                        .isVipClaimed(context.vipClaimedAchievementIds.contains(entry.achievementId))
                         .build())
                 .collect(Collectors.toList());
 
@@ -86,14 +117,15 @@ public class DailyAchievementService {
         LocalDate today = LocalDate.now(ZoneOffset.UTC);
         Instant dayStart = today.atStartOfDay(ZoneOffset.UTC).toInstant();
         Instant dayEnd = today.plusDays(1).atStartOfDay(ZoneOffset.UTC).toInstant();
+        DailyAchievementProgressContext context = buildDailyProgressContext(commanderId, today, dayStart, dayEnd);
         boolean isVip = isVipActive(commanderId);
 
         for (GameDataService.DailyAchievementEntry entry : gameDataService.getDailyAchievementList()) {
-            boolean isClaimed = commanderDailyAchievementClaimRepository.existsByCommanderIdAndDailyAchievementIdAndClaimDateAndIsVip(commanderId, entry.achievementId, today, false);
-            boolean isVipClaimed = isVip == true && commanderDailyAchievementClaimRepository.existsByCommanderIdAndDailyAchievementIdAndClaimDateAndIsVip(commanderId, entry.achievementId, today, true);
+            boolean isClaimed = context.claimedAchievementIds.contains(entry.achievementId);
+            boolean isVipClaimed = isVip == true && context.vipClaimedAchievementIds.contains(entry.achievementId);
             if (isClaimed == true && (isVip == false || isVipClaimed == true)) continue;
 
-            int currentValue = computeDailyCurrentValue(commander, entry, dayStart, dayEnd);
+            int currentValue = computeDailyCurrentValue(context, entry);
             if (currentValue >= entry.threshold) return true;
         }
         return false;
@@ -118,7 +150,7 @@ public class DailyAchievementService {
 
         Instant dayStart = today.atStartOfDay(ZoneOffset.UTC).toInstant();
         Instant dayEnd = today.plusDays(1).atStartOfDay(ZoneOffset.UTC).toInstant();
-        int currentValue = computeDailyCurrentValue(commander, entry, dayStart, dayEnd);
+        int currentValue = computeDailyCurrentValueDirect(commander, entry, dayStart, dayEnd);
         if (currentValue < entry.threshold)
             throw new BusinessException(ServerErrorCode.DAILY_ACHIEVEMENT_CLAIM_FAIL_NOT_COMPLETED);
 
@@ -143,17 +175,18 @@ public class DailyAchievementService {
         LocalDate today = LocalDate.now(ZoneOffset.UTC);
         Instant dayStart = today.atStartOfDay(ZoneOffset.UTC).toInstant();
         Instant dayEnd = today.plusDays(1).atStartOfDay(ZoneOffset.UTC).toInstant();
+        DailyAchievementProgressContext context = buildDailyProgressContext(commanderId, today, dayStart, dayEnd);
         boolean isVip = isVipActive(commanderId);
 
         List<String> claimedIds = new ArrayList<>();
         int totalGranted = 0;
 
         for (GameDataService.DailyAchievementEntry entry : gameDataService.getDailyAchievementList()) {
-            int currentValue = computeDailyCurrentValue(commander, entry, dayStart, dayEnd);
+            int currentValue = computeDailyCurrentValue(context, entry);
             if (currentValue < entry.threshold)
                 continue;
 
-            boolean normalAlreadyClaimed = commanderDailyAchievementClaimRepository.existsByCommanderIdAndDailyAchievementIdAndClaimDateAndIsVip(commanderId, entry.achievementId, today, false);
+            boolean normalAlreadyClaimed = context.claimedAchievementIds.contains(entry.achievementId);
             if (normalAlreadyClaimed == false) {
                 commander.setAchievementPoint(commander.getAchievementPoint() + entry.achievementPointReward);
                 commanderDailyAchievementClaimRepository.save(new CommanderDailyAchievementClaim(commanderId, entry.achievementId, today, false));
@@ -162,7 +195,7 @@ public class DailyAchievementService {
             }
 
             if (isVip == true) {
-                boolean vipAlreadyClaimed = commanderDailyAchievementClaimRepository.existsByCommanderIdAndDailyAchievementIdAndClaimDateAndIsVip(commanderId, entry.achievementId, today, true);
+                boolean vipAlreadyClaimed = context.vipClaimedAchievementIds.contains(entry.achievementId);
                 if (vipAlreadyClaimed == false) {
                     commander.setAchievementPoint(commander.getAchievementPoint() + entry.achievementPointRewardVip);
                     commanderDailyAchievementClaimRepository.save(new CommanderDailyAchievementClaim(commanderId, entry.achievementId, today, true));
@@ -181,14 +214,27 @@ public class DailyAchievementService {
                 .build();
     }
 
-    // 조건 타입별 "오늘(UTC)" 진행도 계산 — CellClear/EventCell/ZoneClearTotal만 지원(나머지는 오늘 발생분을 셀 로그/타임스탬프가 없는 스냅샷이라 0 고정)
-    private int computeDailyCurrentValue(Commander commander, GameDataService.DailyAchievementEntry entry, Instant dayStart, Instant dayEnd) {
+    // 조건 타입별 "오늘(UTC)" 진행도 계산(배치 경로) — CellClear/EventCell/ZoneClearTotal만 지원(나머지는 오늘 발생분을 셀 로그/타임스탬프가 없는 스냅샷이라 0 고정)
+    private int computeDailyCurrentValue(DailyAchievementProgressContext context, GameDataService.DailyAchievementEntry entry) {
+        switch (entry.conditionType) {
+            case CellClear:
+                return (int) context.normalCellClearCount;
+            case EventCell:
+                return (int) context.eventCellClearCount;
+            case ZoneClearTotal:
+                return (int) context.zoneClearTotalCount;
+            default:
+                return 0;
+        }
+    }
+
+    // 조건 타입별 "오늘(UTC)" 진행도 계산(단일 업적 경로) — claimDailyAchievement()는 항목 하나만 판정하므로 컨텍스트 전체를 모을 필요 없음
+    private int computeDailyCurrentValueDirect(Commander commander, GameDataService.DailyAchievementEntry entry, Instant dayStart, Instant dayEnd) {
         switch (entry.conditionType) {
             case CellClear:
                 return (int) zoneCellClearLogRepository.countNormalCellClearByCommanderIdAndClearedAtBetween(commander.getId(), dayStart, dayEnd);
             case EventCell:
-                ETreasureRewardType treasureRewardType = ETreasureRewardType.valueOf(entry.conditionParam);
-                return (int) zoneCellClearLogRepository.countEventCellClearByCommanderIdAndTypeAndClearedAtBetween(commander.getId(), treasureRewardType, dayStart, dayEnd);
+                return (int) zoneCellClearLogRepository.countEventCellClearByCommanderIdAndClearedAtBetween(commander.getId(), dayStart, dayEnd);
             case ZoneClearTotal:
                 return (int) zoneRunRepository.countEscapedByCommanderIdAndEndedAtBetween(commander.getId(), dayStart, dayEnd);
             default:
