@@ -4608,5 +4608,1005 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock"
+  },
+  {
+    "achievementId": "zone_full_clear_1",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "1",
+    "threshold": 1,
+    "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_2",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "2",
+    "threshold": 1,
+    "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_3",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "3",
+    "threshold": 1,
+    "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_4",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "4",
+    "threshold": 1,
+    "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_5",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "5",
+    "threshold": 1,
+    "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_6",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "6",
+    "threshold": 1,
+    "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_7",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "7",
+    "threshold": 1,
+    "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_8",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "8",
+    "threshold": 1,
+    "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_9",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "9",
+    "threshold": 1,
+    "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_10",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "10",
+    "threshold": 1,
+    "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_11",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "11",
+    "threshold": 1,
+    "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_12",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "12",
+    "threshold": 1,
+    "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_13",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "13",
+    "threshold": 1,
+    "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_14",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "14",
+    "threshold": 1,
+    "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_15",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "15",
+    "threshold": 1,
+    "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_16",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "16",
+    "threshold": 1,
+    "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_17",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "17",
+    "threshold": 1,
+    "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_18",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "18",
+    "threshold": 1,
+    "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_19",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "19",
+    "threshold": 1,
+    "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_20",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "20",
+    "threshold": 1,
+    "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_21",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "21",
+    "threshold": 1,
+    "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_22",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "22",
+    "threshold": 1,
+    "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_23",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "23",
+    "threshold": 1,
+    "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_24",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "24",
+    "threshold": 1,
+    "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_25",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "25",
+    "threshold": 1,
+    "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_26",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "26",
+    "threshold": 1,
+    "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_27",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "27",
+    "threshold": 1,
+    "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_28",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "28",
+    "threshold": 1,
+    "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_29",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "29",
+    "threshold": 1,
+    "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_30",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "30",
+    "threshold": 1,
+    "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_31",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "31",
+    "threshold": 1,
+    "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_32",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "32",
+    "threshold": 1,
+    "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_33",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "33",
+    "threshold": 1,
+    "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_34",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "34",
+    "threshold": 1,
+    "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_35",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "35",
+    "threshold": 1,
+    "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_36",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "36",
+    "threshold": 1,
+    "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_37",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "37",
+    "threshold": 1,
+    "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_38",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "38",
+    "threshold": 1,
+    "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_39",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "39",
+    "threshold": 1,
+    "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_40",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "40",
+    "threshold": 1,
+    "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_41",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "41",
+    "threshold": 1,
+    "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_42",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "42",
+    "threshold": 1,
+    "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_43",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "43",
+    "threshold": 1,
+    "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_44",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "44",
+    "threshold": 1,
+    "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_45",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "45",
+    "threshold": 1,
+    "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_46",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "46",
+    "threshold": 1,
+    "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_47",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "47",
+    "threshold": 1,
+    "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_48",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "48",
+    "threshold": 1,
+    "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_49",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "49",
+    "threshold": 1,
+    "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_50",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "50",
+    "threshold": 1,
+    "achievementPointReward": 70,
+    "achievementPointRewardVip": 70,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_51",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "51",
+    "threshold": 1,
+    "achievementPointReward": 70,
+    "achievementPointRewardVip": 70,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_52",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "52",
+    "threshold": 1,
+    "achievementPointReward": 70,
+    "achievementPointRewardVip": 70,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_53",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "53",
+    "threshold": 1,
+    "achievementPointReward": 70,
+    "achievementPointRewardVip": 70,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_54",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "54",
+    "threshold": 1,
+    "achievementPointReward": 70,
+    "achievementPointRewardVip": 70,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_55",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "55",
+    "threshold": 1,
+    "achievementPointReward": 70,
+    "achievementPointRewardVip": 70,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_56",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "56",
+    "threshold": 1,
+    "achievementPointReward": 70,
+    "achievementPointRewardVip": 70,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_57",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "57",
+    "threshold": 1,
+    "achievementPointReward": 70,
+    "achievementPointRewardVip": 70,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_58",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "58",
+    "threshold": 1,
+    "achievementPointReward": 70,
+    "achievementPointRewardVip": 70,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_59",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "59",
+    "threshold": 1,
+    "achievementPointReward": 70,
+    "achievementPointRewardVip": 70,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_60",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "60",
+    "threshold": 1,
+    "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_61",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "61",
+    "threshold": 1,
+    "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_62",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "62",
+    "threshold": 1,
+    "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_63",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "63",
+    "threshold": 1,
+    "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_64",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "64",
+    "threshold": 1,
+    "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_65",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "65",
+    "threshold": 1,
+    "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_66",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "66",
+    "threshold": 1,
+    "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_67",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "67",
+    "threshold": 1,
+    "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_68",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "68",
+    "threshold": 1,
+    "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_69",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "69",
+    "threshold": 1,
+    "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_70",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "70",
+    "threshold": 1,
+    "achievementPointReward": 90,
+    "achievementPointRewardVip": 90,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_71",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "71",
+    "threshold": 1,
+    "achievementPointReward": 90,
+    "achievementPointRewardVip": 90,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_72",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "72",
+    "threshold": 1,
+    "achievementPointReward": 90,
+    "achievementPointRewardVip": 90,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_73",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "73",
+    "threshold": 1,
+    "achievementPointReward": 90,
+    "achievementPointRewardVip": 90,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_74",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "74",
+    "threshold": 1,
+    "achievementPointReward": 90,
+    "achievementPointRewardVip": 90,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_75",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "75",
+    "threshold": 1,
+    "achievementPointReward": 90,
+    "achievementPointRewardVip": 90,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_76",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "76",
+    "threshold": 1,
+    "achievementPointReward": 90,
+    "achievementPointRewardVip": 90,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_77",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "77",
+    "threshold": 1,
+    "achievementPointReward": 90,
+    "achievementPointRewardVip": 90,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_78",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "78",
+    "threshold": 1,
+    "achievementPointReward": 90,
+    "achievementPointRewardVip": 90,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_79",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "79",
+    "threshold": 1,
+    "achievementPointReward": 90,
+    "achievementPointRewardVip": 90,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_80",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "80",
+    "threshold": 1,
+    "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_81",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "81",
+    "threshold": 1,
+    "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_82",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "82",
+    "threshold": 1,
+    "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_83",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "83",
+    "threshold": 1,
+    "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_84",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "84",
+    "threshold": 1,
+    "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_85",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "85",
+    "threshold": 1,
+    "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_86",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "86",
+    "threshold": 1,
+    "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_87",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "87",
+    "threshold": 1,
+    "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_88",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "88",
+    "threshold": 1,
+    "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_89",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "89",
+    "threshold": 1,
+    "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_90",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "90",
+    "threshold": 1,
+    "achievementPointReward": 110,
+    "achievementPointRewardVip": 110,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_91",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "91",
+    "threshold": 1,
+    "achievementPointReward": 110,
+    "achievementPointRewardVip": 110,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_92",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "92",
+    "threshold": 1,
+    "achievementPointReward": 110,
+    "achievementPointRewardVip": 110,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_93",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "93",
+    "threshold": 1,
+    "achievementPointReward": 110,
+    "achievementPointRewardVip": 110,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_94",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "94",
+    "threshold": 1,
+    "achievementPointReward": 110,
+    "achievementPointRewardVip": 110,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_95",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "95",
+    "threshold": 1,
+    "achievementPointReward": 110,
+    "achievementPointRewardVip": 110,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_96",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "96",
+    "threshold": 1,
+    "achievementPointReward": 110,
+    "achievementPointRewardVip": 110,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_97",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "97",
+    "threshold": 1,
+    "achievementPointReward": 110,
+    "achievementPointRewardVip": 110,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_98",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "98",
+    "threshold": 1,
+    "achievementPointReward": 110,
+    "achievementPointRewardVip": 110,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_99",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "99",
+    "threshold": 1,
+    "achievementPointReward": 110,
+    "achievementPointRewardVip": 110,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
+  },
+  {
+    "achievementId": "zone_full_clear_100",
+    "conditionType": "ZoneFullClear",
+    "conditionParam": "100",
+    "threshold": 1,
+    "achievementPointReward": 120,
+    "achievementPointRewardVip": 120,
+    "nameKey": "UIAchievement_Name_zone_full_clear",
+    "descKey": "UIAchievement_Desc_zone_full_clear"
   }
 ]

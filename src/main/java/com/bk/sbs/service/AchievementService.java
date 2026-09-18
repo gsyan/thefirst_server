@@ -22,6 +22,7 @@ import com.bk.sbs.repository.CommanderZoneFullClearRepository;
 import com.bk.sbs.repository.FleetRepository;
 import com.bk.sbs.repository.VipSubscriptionRepository;
 import com.bk.sbs.repository.ZoneCellClearLogRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +38,7 @@ import java.util.stream.Collectors;
 
 // 업적 조건 판정 + 수령 처리 — 정의(GameDataService.AchievementEntry)는 데이터, 완료여부/수령상태는 여기서 매번 라이브 계산
 @Service
+@Slf4j
 public class AchievementService {
 
     // 함체/모듈 동시보유 개수 업적은 활성 함대(fleetIndex=0) 하나만 기준(PvP용 등 다른 함대는 집계 제외)
@@ -263,7 +265,10 @@ public class AchievementService {
                 return commander.getHighestClearedZoneNumber() >= requiredZoneNumber ? 1 : 0;
             case ZoneFullClear:
                 int requiredFullClearZoneNumber = Integer.parseInt(entry.conditionParam);
-                return context.fullyClearedZoneNumbers.contains(requiredFullClearZoneNumber) ? 1 : 0;
+                int batchResult = context.fullyClearedZoneNumbers.contains(requiredFullClearZoneNumber) ? 1 : 0;
+                log.info("[ZoneFullClearLOG] (batch) commanderId={} achievementId={} requiredZoneNumber={} fullyClearedZoneNumbers={} result={}",
+                        commander.getId(), entry.achievementId, requiredFullClearZoneNumber, context.fullyClearedZoneNumbers, batchResult);
+                return batchResult;
             case CommanderLevel:
                 return commander.getCommanderLevel();
             case CommandPower:
@@ -297,7 +302,10 @@ public class AchievementService {
                 return commander.getHighestClearedZoneNumber() >= requiredZoneNumber ? 1 : 0;
             case ZoneFullClear:
                 int requiredFullClearZoneNumber = Integer.parseInt(entry.conditionParam);
-                return commanderZoneFullClearRepository.existsByCommanderIdAndZoneNumber(commander.getId(), requiredFullClearZoneNumber) ? 1 : 0;
+                boolean directExists = commanderZoneFullClearRepository.existsByCommanderIdAndZoneNumber(commander.getId(), requiredFullClearZoneNumber);
+                log.info("[ZoneFullClearLOG] (direct) commanderId={} achievementId={} requiredZoneNumber={} exists={}",
+                        commander.getId(), entry.achievementId, requiredFullClearZoneNumber, directExists);
+                return directExists ? 1 : 0;
             case CommanderLevel:
                 return commander.getCommanderLevel();
             case CommandPower:

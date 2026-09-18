@@ -254,17 +254,18 @@ public class ExplorationService {
         return null;
     }
 
-    // 업적(ZoneFullClear) — 존 전체 셀 수에서 Blocked 셀 수를 뺀, 실제로 클리어 가능한 셀 총수
+    // 업적(ZoneFullClear) — 존 전체 셀 수에서 클리어 로그가 절대 남지 않는 셀(Blocked/Start)을 뺀, 실제로 클리어 가능한 셀 총수
+    // Start는 canConfirmPositionOnEnter()로 clear-cell 왕복 없이 위치만 즉시 확정되므로 zone_cell_clear_log에 절대 기록되지 않음
     private int countNonBlockedCells(ZoneConfigData zoneConfig) {
         int totalCellCount = zoneConfig.getGridWidth() * zoneConfig.getGridHeight();
-        int blockedCellCount = 0;
+        int excludedCellCount = 0;
         List<GridCellOverrideDto> overrides = zoneConfig.getCellOverrides();
         if (overrides != null) {
             for (GridCellOverrideDto o : overrides) {
-                if (o.getType() == EGridCellType.Blocked) blockedCellCount++;
+                if (o.getType() == EGridCellType.Blocked || o.getType() == EGridCellType.Start) excludedCellCount++;
             }
         }
-        return totalCellCount - blockedCellCount;
+        return totalCellCount - excludedCellCount;
     }
 
     // clear-cell 최소 경과시간 — enter-cell 직후 클리어 요청이 오면(전투를 생략한 것이 명백하므로) 거부. 정상 전투는 이보다 훨씬 오래 걸리므로 넉넉하게 잡음
@@ -778,9 +779,13 @@ public class ExplorationService {
             int nonBlockedCellCount = countNonBlockedCells(zoneConfig);
             long distinctClearedCellCount = zoneCellClearLogRepository.countDistinctCellByZoneRunId(run.getId());
             boolean isAllCellsCleared = distinctClearedCellCount >= nonBlockedCellCount;
-            if (isAllCellsCleared == true
-                    && commanderZoneFullClearRepository.existsByCommanderIdAndZoneNumber(commanderId, request.getZoneNumber()) == false)
+            boolean alreadyRecorded = commanderZoneFullClearRepository.existsByCommanderIdAndZoneNumber(commanderId, request.getZoneNumber());
+            log.info("[ZoneFullClearLOG] commanderId={} zoneNumber={} nonBlockedCellCount={} distinctClearedCellCount={} isAllCellsCleared={} alreadyRecorded={}",
+                    commanderId, request.getZoneNumber(), nonBlockedCellCount, distinctClearedCellCount, isAllCellsCleared, alreadyRecorded);
+            if (isAllCellsCleared == true && alreadyRecorded == false) {
                 commanderZoneFullClearRepository.save(new CommanderZoneFullClear(commanderId, request.getZoneNumber()));
+                log.info("[ZoneFullClearLOG] commanderId={} zoneNumber={} CommanderZoneFullClear 저장 완료", commanderId, request.getZoneNumber());
+            }
         }
 
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
