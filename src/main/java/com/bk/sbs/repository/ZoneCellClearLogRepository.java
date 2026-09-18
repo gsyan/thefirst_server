@@ -18,6 +18,10 @@ public interface ZoneCellClearLogRepository extends JpaRepository<ZoneCellClearL
     // 이 런에서 셀을 하나라도 클리어했는지 — 하나도 없으면 "진행 없는 런"으로 간주(다른 존 충돌 판정에 사용)
     boolean existsByZoneRunId(Long zoneRunId);
 
+    // 업적(ZoneFullClear) — 이 런에서 서로 다른 셀을 몇 개 클리어했는지(같은 셀 재방문 파밍은 중복 제외)
+    @Query("SELECT COUNT(DISTINCT l.cell) FROM ZoneCellClearLog l WHERE l.zoneRunId = :zoneRunId")
+    long countDistinctCellByZoneRunId(@Param("zoneRunId") Long zoneRunId);
+
     // 업적(CellClear) — 커맨더 전체 런 통틀어 일반(비이벤트) 셀 누적 클리어수. 로그는 영구 보관되므로 이 COUNT가 곧 lifetime 총합
     @Query("SELECT COUNT(l) FROM ZoneCellClearLog l WHERE l.zoneRunId IN (SELECT r.id FROM ZoneRun r WHERE r.commanderId = :commanderId) AND l.treasureRewardType IS NULL")
     long countNormalCellClearByCommanderId(@Param("commanderId") Long commanderId);

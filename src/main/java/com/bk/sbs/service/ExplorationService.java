@@ -4,6 +4,7 @@ package com.bk.sbs.service;
 import com.bk.sbs.config.DataTableConfig;
 import com.bk.sbs.dto.*;
 import com.bk.sbs.entity.Commander;
+import com.bk.sbs.entity.CommanderZoneFullClear;
 import com.bk.sbs.entity.VipSubscription;
 import com.bk.sbs.entity.ZoneCellClearLog;
 import com.bk.sbs.entity.ZoneRun;
@@ -14,6 +15,7 @@ import com.bk.sbs.enums.EZoneRunStatus;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.repository.CommanderRepository;
+import com.bk.sbs.repository.CommanderZoneFullClearRepository;
 import com.bk.sbs.repository.VipSubscriptionRepository;
 import com.bk.sbs.repository.ZoneCellClearLogRepository;
 import com.bk.sbs.repository.ZoneRunRepository;
@@ -46,6 +48,7 @@ public class ExplorationService {
     private final AchievementService achievementService;
     private final VipSubscriptionRepository vipSubscriptionRepository;
     private final RedisService redisService; // 첫 셀(ZoneRun 생성 전) 클리어 챌린지 임시 저장용
+    private final CommanderZoneFullClearRepository commanderZoneFullClearRepository;
 
     // false면 highestClearedZoneNumber 검사를 건너뜀 — 웨이브 밸런스 테스트용(application.properties)
     @Value("${zone.require-previous-stage-cleared:true}")
@@ -56,7 +59,8 @@ public class ExplorationService {
                                GameDataService gameDataService, ObjectMapper objectMapper,
                                AchievementService achievementService,
                                VipSubscriptionRepository vipSubscriptionRepository,
-                               RedisService redisService) {
+                               RedisService redisService,
+                               CommanderZoneFullClearRepository commanderZoneFullClearRepository) {
         this.commanderRepository = commanderRepository;
         this.zoneRunRepository = zoneRunRepository;
         this.zoneCellClearLogRepository = zoneCellClearLogRepository;
@@ -65,6 +69,7 @@ public class ExplorationService {
         this.achievementService = achievementService;
         this.vipSubscriptionRepository = vipSubscriptionRepository;
         this.redisService = redisService;
+        this.commanderZoneFullClearRepository = commanderZoneFullClearRepository;
     }
 
     // 활성 VIP 여부 — IapService.isVipActive()와 동일 기준(서비스 간 커플링 없이 각자 보유)
@@ -247,6 +252,19 @@ public class ExplorationService {
             if (o.getType() == type) return o;
         }
         return null;
+    }
+
+    // 업적(ZoneFullClear) — 존 전체 셀 수에서 Blocked 셀 수를 뺀, 실제로 클리어 가능한 셀 총수
+    private int countNonBlockedCells(ZoneConfigData zoneConfig) {
+        int totalCellCount = zoneConfig.getGridWidth() * zoneConfig.getGridHeight();
+        int blockedCellCount = 0;
+        List<GridCellOverrideDto> overrides = zoneConfig.getCellOverrides();
+        if (overrides != null) {
+            for (GridCellOverrideDto o : overrides) {
+                if (o.getType() == EGridCellType.Blocked) blockedCellCount++;
+            }
+        }
+        return totalCellCount - blockedCellCount;
     }
 
     // clear-cell 최소 경과시간 — enter-cell 직후 클리어 요청이 오면(전투를 생략한 것이 명백하므로) 거부. 정상 전투는 이보다 훨씬 오래 걸리므로 넉넉하게 잡음
@@ -755,6 +773,14 @@ public class ExplorationService {
                     && escapeCell.getCol() == run.getCurrentCol();
             if (reachedEscape == false)
                 throw new BusinessException(ServerErrorCode.EXPLORATION_ESCAPE_NOT_REACHED);
+
+            // 업적(ZoneFullClear) — 이 런에서 Blocked 아닌 셀을 전부 클리어했는지, DB에 남은 클리어 로그만으로 판정(클라 보고값 신뢰 안 함)
+            int nonBlockedCellCount = countNonBlockedCells(zoneConfig);
+            long distinctClearedCellCount = zoneCellClearLogRepository.countDistinctCellByZoneRunId(run.getId());
+            boolean isAllCellsCleared = distinctClearedCellCount >= nonBlockedCellCount;
+            if (isAllCellsCleared == true
+                    && commanderZoneFullClearRepository.existsByCommanderIdAndZoneNumber(commanderId, request.getZoneNumber()) == false)
+                commanderZoneFullClearRepository.save(new CommanderZoneFullClear(commanderId, request.getZoneNumber()));
         }
 
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)

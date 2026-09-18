@@ -15,6 +15,7 @@ public enum EAchievementConditionType {
     ExplorationPointTotal,
     HullTierCount,
     ModuleTierCount,
-    HullUnlocked;
+    HullUnlocked,
+    ZoneFullClear;
 
 }

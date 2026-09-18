@@ -7,6 +7,7 @@ import com.bk.sbs.dto.GetAchievementListResponse;
 import com.bk.sbs.entity.Commander;
 import com.bk.sbs.entity.CommanderAchievementClaim;
 import com.bk.sbs.entity.CommanderUnlockedHull;
+import com.bk.sbs.entity.CommanderZoneFullClear;
 import com.bk.sbs.entity.Fleet;
 import com.bk.sbs.entity.Module;
 import com.bk.sbs.entity.Ship;
@@ -17,6 +18,7 @@ import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.repository.CommanderAchievementClaimRepository;
 import com.bk.sbs.repository.CommanderRepository;
 import com.bk.sbs.repository.CommanderUnlockedHullRepository;
+import com.bk.sbs.repository.CommanderZoneFullClearRepository;
 import com.bk.sbs.repository.FleetRepository;
 import com.bk.sbs.repository.VipSubscriptionRepository;
 import com.bk.sbs.repository.ZoneCellClearLogRepository;
@@ -47,12 +49,14 @@ public class AchievementService {
     private final CommanderAchievementClaimRepository commanderAchievementClaimRepository;
     private final CommanderUnlockedHullRepository commanderUnlockedHullRepository;
     private final VipSubscriptionRepository vipSubscriptionRepository;
+    private final CommanderZoneFullClearRepository commanderZoneFullClearRepository;
 
     public AchievementService(CommanderRepository commanderRepository, GameDataService gameDataService,
                                ZoneCellClearLogRepository zoneCellClearLogRepository, FleetRepository fleetRepository,
                                CommanderAchievementClaimRepository commanderAchievementClaimRepository,
                                CommanderUnlockedHullRepository commanderUnlockedHullRepository,
-                               VipSubscriptionRepository vipSubscriptionRepository) {
+                               VipSubscriptionRepository vipSubscriptionRepository,
+                               CommanderZoneFullClearRepository commanderZoneFullClearRepository) {
         this.commanderRepository = commanderRepository;
         this.gameDataService = gameDataService;
         this.zoneCellClearLogRepository = zoneCellClearLogRepository;
@@ -60,6 +64,7 @@ public class AchievementService {
         this.commanderAchievementClaimRepository = commanderAchievementClaimRepository;
         this.commanderUnlockedHullRepository = commanderUnlockedHullRepository;
         this.vipSubscriptionRepository = vipSubscriptionRepository;
+        this.commanderZoneFullClearRepository = commanderZoneFullClearRepository;
     }
 
     // 활성 VIP 여부 — IapService.isVipActive()와 동일 기준(서비스 간 커플링 없이 각자 보유)
@@ -79,6 +84,7 @@ public class AchievementService {
         Set<String> unlockedHullSubTypes;
         Map<Integer, Integer> hullTierCounts;
         Map<String, Integer> moduleTierCounts;
+        Set<Integer> fullyClearedZoneNumbers;
     }
 
     private AchievementProgressContext buildProgressContext(Long commanderId, Fleet activeFleet) {
@@ -99,6 +105,10 @@ public class AchievementService {
         context.unlockedHullSubTypes = new HashSet<>();
         for (CommanderUnlockedHull unlockedHull : commanderUnlockedHullRepository.findByCommanderId(commanderId))
             context.unlockedHullSubTypes.add(unlockedHull.getHullSubType());
+
+        context.fullyClearedZoneNumbers = new HashSet<>();
+        for (CommanderZoneFullClear fullClear : commanderZoneFullClearRepository.findByCommanderId(commanderId))
+            context.fullyClearedZoneNumbers.add(fullClear.getZoneNumber());
 
         context.hullTierCounts = new HashMap<>();
         context.moduleTierCounts = new HashMap<>();
@@ -251,6 +261,9 @@ public class AchievementService {
             case ZoneClearSpecific:
                 int requiredZoneNumber = Integer.parseInt(entry.conditionParam);
                 return commander.getHighestClearedZoneNumber() >= requiredZoneNumber ? 1 : 0;
+            case ZoneFullClear:
+                int requiredFullClearZoneNumber = Integer.parseInt(entry.conditionParam);
+                return context.fullyClearedZoneNumbers.contains(requiredFullClearZoneNumber) ? 1 : 0;
             case CommanderLevel:
                 return commander.getCommanderLevel();
             case CommandPower:
@@ -282,6 +295,9 @@ public class AchievementService {
             case ZoneClearSpecific:
                 int requiredZoneNumber = Integer.parseInt(entry.conditionParam);
                 return commander.getHighestClearedZoneNumber() >= requiredZoneNumber ? 1 : 0;
+            case ZoneFullClear:
+                int requiredFullClearZoneNumber = Integer.parseInt(entry.conditionParam);
+                return commanderZoneFullClearRepository.existsByCommanderIdAndZoneNumber(commander.getId(), requiredFullClearZoneNumber) ? 1 : 0;
             case CommanderLevel:
                 return commander.getCommanderLevel();
             case CommandPower:

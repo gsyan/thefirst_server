@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS module;
 DROP TABLE IF EXISTS ship;
 DROP TABLE IF EXISTS fleet;
 DROP TABLE IF EXISTS commander_unlocked_hull;
+DROP TABLE IF EXISTS commander_zone_full_clear;
 DROP TABLE IF EXISTS commander_achievement_claim;
 DROP TABLE IF EXISTS commander_daily_achievement_claim;
 DROP TABLE IF EXISTS zone_cell_clear_log;
@@ -246,6 +247,19 @@ CREATE TABLE commander_unlocked_hull (
     unlocked_at    DATETIME(6)  NOT NULL,
     PRIMARY KEY (id),
     UNIQUE KEY uk_commander_unlocked_hull (commander_id, hull_sub_type)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- commander_zone_full_clear — 커맨더가 한 런 안에서 이탈 없이 존의 모든 셀을 전부 클리어한 기록
+-- 유니크: commander_id + zone_number
+-- ============================================================
+CREATE TABLE commander_zone_full_clear (
+    id             BIGINT       NOT NULL AUTO_INCREMENT,
+    commander_id   BIGINT       NOT NULL,
+    zone_number    INT          NOT NULL,
+    cleared_at     DATETIME(6)  NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_commander_zone_full_clear (commander_id, zone_number)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================
