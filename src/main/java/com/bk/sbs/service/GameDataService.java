@@ -382,6 +382,34 @@ public class GameDataService {
         }
     }
 
+    // hullSubType(예: "hull_3_1_11100") → gen 정수(세 번째 토큰, 세대/외형 구분자). 형식이 다르면 0
+    public static int parseGenFromHullSubType(String hullSubType) {
+        if (hullSubType == null) return 0;
+        String[] parts = hullSubType.split("_");
+        if (parts.length < 3) return 0;
+        try {
+            return Integer.parseInt(parts[2]);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
+    }
+
+    // gen=1(기본 제공) 함체 중 tier/실드유무/요격체유무가 일치하는 함체의 subType 조회 — 함체 언락 선행조건 체크용. 없으면 null
+    public String findHullSubTypeByTierAndVariant(int tier, boolean hasShield, boolean hasInterceptor) {
+        for (ModuleData data : getModulesByType(EModuleType.hull)) {
+            String subType = data.getModuleSubType();
+            if (parseGenFromHullSubType(subType) != 1) continue;
+            if (parseTierFromHullSubType(subType) != tier) continue;
+
+            int[] slots = parseMaxSlotsFromHullSubType(subType);
+            boolean matchesShield = (slots[3] > 0) == hasShield;
+            boolean matchesInterceptor = (slots[4] > 0) == hasInterceptor;
+            if (matchesShield == true && matchesInterceptor == true)
+                return subType;
+        }
+        return null;
+    }
+
     public int getModuleStatPoint(EModuleType moduleType, String subType) {
         List<ModuleData> modules = getModulesByType(moduleType);
         for (ModuleData data : modules) {

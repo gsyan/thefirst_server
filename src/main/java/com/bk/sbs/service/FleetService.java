@@ -188,6 +188,8 @@ public class FleetService {
         if (commanderUnlockedHullRepository.existsByCommanderIdAndHullSubType(commanderId, request.getHullSubType()) == true)
             throw new BusinessException(ServerErrorCode.UNLOCK_HULL_FAIL_ALREADY_UNLOCKED);
 
+        validateUnlockPrerequisite(commanderId, request.getHullSubType());
+
         int unlockCost = hullData.getUnlockAchievementPointCost() != null ? hullData.getUnlockAchievementPointCost() : 0;
         if (commander.getAchievementPoint() < unlockCost)
             throw new BusinessException(ServerErrorCode.UNLOCK_HULL_FAIL_INSUFFICIENT_ACHIEVEMENT_POINT);
@@ -205,6 +207,30 @@ public class FleetService {
                 .achievementPointRemain(commander.getAchievementPoint())
                 .unlockedHulls(unlockedHulls)
                 .build();
+    }
+
+    // 함체 언락 선행조건 — gen=1(기본 제공) 함체에만 적용, gen이 다른(유료/미래 추가) 함체는 체인 규칙과 무관하게 통과시킴
+    // 기본형(실드/요격체 없음)은 이전 티어 기본형이, 실드/요격체/둘다 변형은 같은 티어 기본형이 선행 언락돼 있어야 함
+    private void validateUnlockPrerequisite(Long commanderId, String hullSubType) {
+        if (GameDataService.parseGenFromHullSubType(hullSubType) != 1) return;
+
+        int tier = GameDataService.parseTierFromHullSubType(hullSubType);
+        int[] slots = GameDataService.parseMaxSlotsFromHullSubType(hullSubType);
+        boolean hasShield = slots[3] > 0;
+        boolean hasInterceptor = slots[4] > 0;
+        boolean isBaseVariant = hasShield == false && hasInterceptor == false;
+
+        String prerequisiteSubType;
+        if (isBaseVariant == true) {
+            if (tier <= ACHIEVEMENT_UNLOCK_MIN_HULL_TIER) return;
+            prerequisiteSubType = gameDataService.findHullSubTypeByTierAndVariant(tier - 1, false, false);
+        } else {
+            prerequisiteSubType = gameDataService.findHullSubTypeByTierAndVariant(tier, false, false);
+        }
+
+        if (prerequisiteSubType == null) return;
+        if (commanderUnlockedHullRepository.existsByCommanderIdAndHullSubType(commanderId, prerequisiteSubType) == false)
+            throw new BusinessException(ServerErrorCode.UNLOCK_HULL_FAIL_PREREQUISITE_NOT_UNLOCKED);
     }
 
     // 기존 장착 모듈 중 새 함체(newMaxSlots)에도 같은 카테고리+슬롯 인덱스가 존재하는 것만 유지 — 강화 포인트는 그대로 복사
