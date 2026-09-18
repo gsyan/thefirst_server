@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>점검 모드 - 운영툴</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #1c1e26; color: #eee; margin: 0; }
+        main { padding: 40px; max-width: 480px; }
+        label { display: block; margin: 16px 0 6px; color: #aaa; font-size: 13px; }
+        input[type="text"] { width: 100%; box-sizing: border-box; padding: 8px; border-radius: 4px; border: 1px solid #444; background: #262936; color: #eee; }
+        .toggle-row { display: flex; align-items: center; gap: 10px; margin-top: 16px; }
+        button { margin-top: 24px; padding: 10px 20px; border: none; border-radius: 4px; background: #4a7dff; color: #fff; cursor: pointer; }
+        .status-text { margin-top: 16px; font-size: 13px; color: #8fd18f; }
+        .hint { color: #777; font-size: 12px; margin-top: 4px; }
+    </style>
+</head>
+<body>
+    <div id="adminNav"></div>
+    <main>
+        <h1>점검 모드</h1>
+        <div class="toggle-row">
+            <input type="checkbox" id="workingCheckbox" style="width:18px;height:18px;">
+            <label for="workingCheckbox" style="margin:0;">체크 해제 시 점검 중(클라이언트 접속 차단 안내)</label>
+        </div>
+        <label for="endTimeInput">점검 종료 예정 시각 (UTC, ISO-8601)</label>
+        <input type="text" id="endTimeInput" placeholder="2026-07-03T15:00:00Z">
+        <div class="hint">비워두면 클라이언트에 종료 시각을 표시하지 않음</div>
+        <button id="saveButton">저장</button>
+        <div class="status-text" id="statusText"></div>
+    </main>
+    <script src="/admin/js/admin-common.js"></script>
+    <script>
+        renderAdminNav('maintenance');
+
+        async function loadStatus() {
+            const response = await adminFetch('/admin/api/maintenance');
+            const status = await response.json();
+            document.getElementById('workingCheckbox').checked = status.working;
+            document.getElementById('endTimeInput').value = status.endTime || '';
+        }
+
+        document.getElementById('saveButton').addEventListener('click', async () => {
+            const working = document.getElementById('workingCheckbox').checked;
+            const endTime = document.getElementById('endTimeInput').value.trim();
+            const response = await adminFetch('/admin/api/maintenance', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ working, endTime }),
+            });
+            const statusText = document.getElementById('statusText');
+            if (response.ok) {
+                statusText.style.color = '#8fd18f';
+                statusText.textContent = '저장되었습니다.';
+            } else {
+                statusText.style.color = '#ff6b6b';
+                statusText.textContent = await response.text();
+            }
+        });
+
+        loadStatus();
+    </script>
+</body>
+</html>

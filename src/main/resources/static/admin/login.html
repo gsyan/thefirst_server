@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>어드민 로그인</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #1c1e26; color: #eee; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        form { background: #262936; padding: 32px; border-radius: 8px; width: 280px; }
+        h1 { font-size: 18px; margin: 0 0 20px; }
+        label { display: block; font-size: 13px; margin: 12px 0 4px; color: #aaa; }
+        input { width: 100%; box-sizing: border-box; padding: 8px; border-radius: 4px; border: 1px solid #444; background: #1c1e26; color: #eee; }
+        button { width: 100%; margin-top: 20px; padding: 10px; border: none; border-radius: 4px; background: #4a7dff; color: #fff; cursor: pointer; }
+        .error { color: #ff6b6b; font-size: 13px; margin-top: 12px; }
+    </style>
+</head>
+<body>
+    <form method="post" action="/admin/doLogin" id="loginForm">
+        <h1>운영툴 로그인</h1>
+        <input type="hidden" name="_csrf" id="csrfInput">
+        <label for="username">이메일</label>
+        <input type="text" id="username" name="username" autocomplete="username" required>
+        <label for="password">비밀번호</label>
+        <input type="password" id="password" name="password" autocomplete="current-password" required>
+        <button type="submit">로그인</button>
+        <div class="error" id="errorMessage"></div>
+    </form>
+    <script>
+        if (new URLSearchParams(location.search).get('error') === '1') {
+            document.getElementById('errorMessage').textContent = '이메일 또는 비밀번호가 올바르지 않습니다.';
+        }
+        const csrfMatch = document.cookie.match(/(?:^|; )XSRF-TOKEN=([^;]+)/);
+        document.getElementById('csrfInput').value = csrfMatch ? decodeURIComponent(csrfMatch[1]) : '';
+    </script>
+</body>
+</html>

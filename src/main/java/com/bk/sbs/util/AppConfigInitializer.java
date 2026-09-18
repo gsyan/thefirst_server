@@ -20,6 +20,12 @@ public class AppConfigInitializer {
     @Value("${app.init.android-min-version-name:0.1.0}")
     private String androidMinVersionName;
 
+    @Value("${server.status.working:true}")
+    private String serverStatusWorking;
+
+    @Value("${server.status.endTime:}")
+    private String serverStatusEndTime;
+
     private final AppConfigRepository appConfigRepository;
 
     public AppConfigInitializer(AppConfigRepository appConfigRepository) {
@@ -31,7 +37,18 @@ public class AppConfigInitializer {
     public void init() {
         upsertVersionCode("android_min_version_code", androidMinVersionCode, "Android 최소 허용 versionCode (Jenkins BUILD_NUMBER)");
         upsertVersionName("android_min_version_name", androidMinVersionName, "Android 최소 허용 versionName (표시용)");
+        insertIfMissing("server_status_working", serverStatusWorking, "점검 여부 (어드민 페이지에서 실시간 토글)");
+        insertIfMissing("server_status_end_time", serverStatusEndTime, "점검 종료 예정 시각, ISO-8601 (어드민 페이지에서 실시간 설정)");
         log.info("[AppConfig] 초기값 반영 완료");
+    }
+
+    // 최초 1회만 시딩 — 이후로는 어드민이 DB 값을 직접 바꾸므로 재기동 시 properties 값으로 덮어쓰지 않음
+    private void insertIfMissing(String key, String propertiesValue, String description) {
+        AppConfig config = appConfigRepository.findByConfigKey(key).orElse(null);
+        if (config != null) return;
+
+        appConfigRepository.save(new AppConfig(key, propertiesValue, description));
+        log.info("[AppConfig] 삽입: {} = {}", key, propertiesValue);
     }
 
     // versionCode(정수)는 application.properties 값이 DB 값보다 클 때만 덮어씀 — DB 값이 같거나 더 높으면 유지

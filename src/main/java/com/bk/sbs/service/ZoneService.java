@@ -26,12 +26,15 @@ public class ZoneService {
     private final CommanderRepository commanderRepository;
     private final GameDataService gameDataService;
     private final RedisService redisService;
+    private final PlaytimeService playtimeService;
 
     public ZoneService(CommanderRepository commanderRepository,
-                       GameDataService gameDataService, RedisService redisService) {
+                       GameDataService gameDataService, RedisService redisService,
+                       PlaytimeService playtimeService) {
         this.commanderRepository = commanderRepository;
         this.gameDataService = gameDataService;
         this.redisService = redisService;
+        this.playtimeService = playtimeService;
     }
 
 
@@ -71,7 +74,9 @@ public class ZoneService {
     @Transactional
     public HeartbeatResponse heartbeat(Long commanderId) {
         Instant now = Instant.now();
+        Instant previousLastOnlineAt = commanderRepository.findLastOnlineAtById(commanderId);
         commanderRepository.updateLastOnlineAtIfStale(commanderId, now, now.minusSeconds(heartbeatThrottleSeconds));
+        playtimeService.accumulate(commanderId, previousLastOnlineAt, now);
         return HeartbeatResponse.builder().build();
     }
 }

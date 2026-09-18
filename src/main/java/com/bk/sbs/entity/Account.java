@@ -36,4 +36,7 @@ public class Account {
 
     @Column(nullable = false)
     private Instant dateTime = Instant.now();
+
+    @Column(nullable = false, length = 20)
+    private String role = "USER";  // 어드민 판별용. EAccountRole(enums/nogenerated) 값 문자열
 }

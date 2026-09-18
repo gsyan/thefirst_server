@@ -55,6 +55,7 @@ public class AccountService {
     @Autowired private ClearedZoneRepository clearedZoneRepository;
     @Autowired private ProgressRepository progressRepository;
     @Autowired private RedisService redisService;
+    @Autowired private LoginLogService loginLogService;
 
     @Value("${google.client-id}")
     private String googleClientId;
@@ -201,11 +202,18 @@ public class AccountService {
 
         String refreshToken = jwtUtil.createRefreshToken(account.getId());
         registerSession(account.getId(), refreshToken);
+        loginLogService.record(account.getId(), resolveCommanderId(account.getId()), "EMAIL");
 
         return AuthResponse.builder()
                 .accessToken(jwtUtil.createAccessToken(account.getId()))
                 .refreshToken(refreshToken)
                 .build();
+    }
+
+    // 로그인 기록용 — 계정당 첫 번째 커맨더의 id (없으면 null)
+    private Long resolveCommanderId(Long accountId) {
+        List<Commander> commanders = commanderRepository.findByAccountId(accountId);
+        return commanders.isEmpty() ? null : commanders.get(0).getId();
     }
 
     public AuthResponse refreshToken(RefreshTokenRequest request) {
@@ -397,6 +405,7 @@ public class AccountService {
 
         String refreshToken = jwtUtil.createRefreshToken(account.getId());
         registerSession(account.getId(), refreshToken);
+        loginLogService.record(account.getId(), resolveCommanderId(account.getId()), "GOOGLE");
 
         return AuthResponse.builder()
                 .accessToken(jwtUtil.createAccessToken(account.getId()))
@@ -521,6 +530,7 @@ public class AccountService {
 
         String refreshToken = jwtUtil.createRefreshToken(account.getId());
         registerSession(account.getId(), refreshToken);
+        loginLogService.record(account.getId(), resolveCommanderId(account.getId()), "GUEST");
 
         return AuthResponse.builder()
                 .accessToken(jwtUtil.createAccessToken(account.getId()))

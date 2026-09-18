@@ -6,6 +6,9 @@
 -- 초기화 (FK 의존성 역순으로 DROP)
 -- ============================================================
 SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS concurrent_user_snapshot;
+DROP TABLE IF EXISTS commander_daily_playtime;
+DROP TABLE IF EXISTS commander_login_log;
 DROP TABLE IF EXISTS module;
 DROP TABLE IF EXISTS ship;
 DROP TABLE IF EXISTS fleet;
@@ -37,6 +40,7 @@ CREATE TABLE account (
     guest_secret  VARCHAR(255)        NULL,
     deleted       TINYINT(1)      NOT NULL DEFAULT 0,
     date_time     DATETIME(6)     NOT NULL,
+    role          VARCHAR(20)     NOT NULL DEFAULT 'USER',
     PRIMARY KEY (id),
     UNIQUE KEY uk_account_email     (email),
     UNIQUE KEY uk_account_google_id (google_id),
@@ -312,6 +316,46 @@ CREATE TABLE redeem_code_usage (
     used_at       DATETIME(6)  NOT NULL,
     PRIMARY KEY (id),
     UNIQUE KEY uk_redeem_code_usage (commander_id, code)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- commander_login_log: 로그인 이벤트 기록 (운영툴 - 유저 행동 분석용)
+-- ============================================================
+CREATE TABLE commander_login_log (
+    id            BIGINT       NOT NULL AUTO_INCREMENT,
+    account_id    BIGINT       NOT NULL,
+    commander_id  BIGINT           NULL,
+    login_type    VARCHAR(20)  NOT NULL,
+    login_at      DATETIME(6)  NOT NULL,
+    PRIMARY KEY (id),
+    INDEX idx_login_log_commander (commander_id, login_at),
+    INDEX idx_login_log_account (account_id, login_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- commander_daily_playtime: 날짜별 플레이타임 집계 (운영툴 - 유저 행동 분석용)
+-- 유니크: commander_id + play_date (하트비트마다 upsert)
+-- ============================================================
+CREATE TABLE commander_daily_playtime (
+    id                 BIGINT       NOT NULL AUTO_INCREMENT,
+    commander_id       BIGINT       NOT NULL,
+    play_date          DATE         NOT NULL,
+    played_seconds     INT          NOT NULL DEFAULT 0,
+    last_heartbeat_at  DATETIME(6)  NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_commander_daily_playtime (commander_id, play_date),
+    INDEX idx_daily_playtime_commander (commander_id, play_date)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- concurrent_user_snapshot: 시간대별 동시접속자 스냅샷 (운영툴 - 동접자 그래프용)
+-- ============================================================
+CREATE TABLE concurrent_user_snapshot (
+    id             BIGINT       NOT NULL AUTO_INCREMENT,
+    snapshot_at    DATETIME(6)  NOT NULL,
+    online_count   INT          NOT NULL,
+    PRIMARY KEY (id),
+    INDEX idx_snapshot_at (snapshot_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================

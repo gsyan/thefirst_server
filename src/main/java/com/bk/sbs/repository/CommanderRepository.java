@@ -4,6 +4,8 @@ package com.bk.sbs.repository;
 import com.bk.sbs.entity.Commander;
 import com.bk.sbs.entity.ClearedZone;
 import jakarta.persistence.LockModeType;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Modifying;
@@ -31,6 +33,16 @@ public interface CommanderRepository extends JpaRepository<Commander, Long> {
     @Modifying
     @Query("UPDATE Commander c SET c.lastOnlineAt = :now WHERE c.id = :id AND (c.lastOnlineAt IS NULL OR c.lastOnlineAt < :threshold)")
     int updateLastOnlineAtIfStale(@Param("id") Long id, @Param("now") Instant now, @Param("threshold") Instant threshold);
+
+    // 플레이타임 세션 근사 계산용 — 하트비트 갱신 직전의 lastOnlineAt 조회
+    @Query("SELECT c.lastOnlineAt FROM Commander c WHERE c.id = :id")
+    Instant findLastOnlineAtById(@Param("id") Long id);
+
+    // 동시접속자 스냅샷 — 최근 threshold 이내 하트비트가 있었던 커맨더 수
+    long countByLastOnlineAtAfter(Instant threshold);
+
+    // 어드민 유저 검색
+    Page<Commander> findByCommanderNameContainingIgnoreCase(String commanderName, Pageable pageable);
 
     @Modifying
     @Query("DELETE FROM Commander c WHERE c.accountId = :accountId")

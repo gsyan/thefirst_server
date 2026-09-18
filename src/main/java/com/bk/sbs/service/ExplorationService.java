@@ -123,7 +123,7 @@ public class ExplorationService {
     private static final float ABANDON_AD_PAYOUT_RATIO = 1.0f;  // 포기 + 광고 시청 — 적립 보상 전액 지급
 
     // 체력 비율 범위(0~1), 함선 구성 일치, 직전 스냅샷 대비 증가폭(허용치: 회복 카드 효과 + 시간 여유값) 검증
-    private void validateHealthSnapshot(Long commanderId, ZoneRun run, List<ShipHealthRatioInfoDto> reported) {
+    private void validateHealthSnapshot(ZoneRun run, List<ShipHealthRatioInfoDto> reported) {
         if (reported == null || reported.isEmpty()) return;
 
         for (ShipHealthRatioInfoDto info : reported) {
@@ -143,7 +143,6 @@ public class ExplorationService {
         if (run.getActiveChallengeIssuedAt() != null)
             elapsedSeconds = Math.max(0f, Duration.between(run.getActiveChallengeIssuedAt(), Instant.now()).toMillis() / 1000f);
         float allowedIncrease = healBonus + (elapsedSeconds * HEALTH_RATIO_TIME_MARGIN_PER_SEC);
-        log.info("[체력검증LOG] commanderId={} healBonus={} elapsedSeconds={} allowedIncrease={}", commanderId, healBonus, elapsedSeconds, allowedIncrease);
 
         for (ShipHealthRatioInfoDto info : reported) {
             if (info.getHealthRatio() == null || info.getPositionIndex() == null) continue;
@@ -153,7 +152,6 @@ public class ExplorationService {
             if (prevOpt.isEmpty()) continue;
 
             float increase = info.getHealthRatio() - prevOpt.get().getHealthRatio();
-            log.info("[체력검증LOG] positionIndex={} reported={} previous={} increase={}", info.getPositionIndex(), info.getHealthRatio(), prevOpt.get().getHealthRatio(), increase);
             if (increase > allowedIncrease + HEALTH_RATIO_FLOAT_EPSILON)
                 throw new BusinessException(ServerErrorCode.EXPLORATION_FLEET_HEALTH_INVALID);
         }
@@ -529,7 +527,7 @@ public class ExplorationService {
             }
         }
 
-        validateHealthSnapshot(commanderId, run, request.getShipHealthRatios());
+        validateHealthSnapshot(run, request.getShipHealthRatios());
 
         run.setCurrentPosition(request.getCellRow(), request.getCellCol());
         run.setExplorationPointBanked(run.getExplorationPointBanked() + pointsGained);

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>유저 통계 - 운영툴</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #1c1e26; color: #eee; margin: 0; }
+        main { padding: 40px; }
+        input[type="text"] { padding: 8px; border-radius: 4px; border: 1px solid #444; background: #262936; color: #eee; width: 240px; }
+        button { padding: 8px 16px; border: none; border-radius: 4px; background: #4a7dff; color: #fff; cursor: pointer; margin-left: 8px; }
+        table { border-collapse: collapse; margin-top: 20px; width: 100%; max-width: 720px; }
+        th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid #333; font-size: 14px; }
+        th { color: #999; font-weight: normal; }
+        tr.row-link { cursor: pointer; }
+        tr.row-link:hover { background: #262936; }
+        .pager { margin-top: 16px; display: flex; gap: 8px; align-items: center; }
+    </style>
+</head>
+<body>
+    <div id="adminNav"></div>
+    <main>
+        <h1>유저 통계</h1>
+        <input type="text" id="queryInput" placeholder="커맨더 이름 검색">
+        <button id="searchButton">검색</button>
+        <table>
+            <thead>
+                <tr><th>이름</th><th>레벨</th><th>최근 접속</th><th>최근 7일 플레이타임</th></tr>
+            </thead>
+            <tbody id="resultBody"></tbody>
+        </table>
+        <div class="pager">
+            <button id="prevButton">이전</button>
+            <span id="pageLabel">1</span>
+            <button id="nextButton">다음</button>
+        </div>
+    </main>
+    <script src="/admin/js/admin-common.js"></script>
+    <script>
+        renderAdminNav('users');
+
+        let currentPage = 0;
+
+        function formatSeconds(seconds) {
+            const hours = Math.floor(seconds / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            return `${hours}시간 ${minutes}분`;
+        }
+
+        async function loadPage(page) {
+            const query = document.getElementById('queryInput').value.trim();
+            const params = new URLSearchParams({ page, size: 20 });
+            if (query !== '') params.set('query', query);
+
+            const response = await adminFetch(`/admin/api/commanders?${params.toString()}`);
+            const result = await response.json();
+
+            const body = document.getElementById('resultBody');
+            body.innerHTML = result.content.map((c) => `
+                <tr class="row-link" onclick="location.href='/admin/user-detail.html?commanderId=${c.id}'">
+                    <td>${c.commanderName}</td>
+                    <td>${c.commanderLevel}</td>
+                    <td>${c.lastOnlineAt ? new Date(c.lastOnlineAt).toLocaleString() : '-'}</td>
+                    <td>${formatSeconds(c.recentSevenDayPlayedSeconds)}</td>
+                </tr>
+            `).join('');
+
+            currentPage = page;
+            document.getElementById('pageLabel').textContent = String(page + 1);
+        }
+
+        document.getElementById('searchButton').addEventListener('click', () => loadPage(0));
+        document.getElementById('prevButton').addEventListener('click', () => { if (currentPage > 0) loadPage(currentPage - 1); });
+        document.getElementById('nextButton').addEventListener('click', () => loadPage(currentPage + 1));
+
+        loadPage(0);
+    </script>
+</body>
+</html>

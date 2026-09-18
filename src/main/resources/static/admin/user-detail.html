@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>유저 상세 - 운영툴</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #1c1e26; color: #eee; margin: 0; }
+        main { padding: 40px; max-width: 720px; }
+        .chart-box { background: #262936; border-radius: 8px; padding: 16px; margin-top: 20px; }
+        table { border-collapse: collapse; margin-top: 20px; width: 100%; }
+        th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid #333; font-size: 14px; }
+        th { color: #999; font-weight: normal; }
+        a.back { color: #4a7dff; text-decoration: none; font-size: 13px; }
+    </style>
+</head>
+<body>
+    <div id="adminNav"></div>
+    <main>
+        <a class="back" href="/admin/users.html">&larr; 목록으로</a>
+        <h1 id="commanderTitle">-</h1>
+        <div class="chart-box">
+            <canvas id="playtimeChart" height="80"></canvas>
+        </div>
+        <h2>로그인 이력 (최근 20건)</h2>
+        <table>
+            <thead><tr><th>시각</th><th>방식</th></tr></thead>
+            <tbody id="loginHistoryBody"></tbody>
+        </table>
+    </main>
+    <script src="/admin/js/admin-common.js"></script>
+    <script>
+        renderAdminNav('users');
+
+        const commanderId = new URLSearchParams(location.search).get('commanderId');
+
+        async function load() {
+            const response = await adminFetch(`/admin/api/commanders/${commanderId}`);
+            const detail = await response.json();
+
+            document.getElementById('commanderTitle').textContent = `${detail.commanderName} (Lv.${detail.commanderLevel})`;
+
+            const labels = detail.dailyPlaytime.map((d) => d.playDate);
+            const minutes = detail.dailyPlaytime.map((d) => Math.round(d.playedSeconds / 60));
+            new Chart(document.getElementById('playtimeChart'), {
+                type: 'bar',
+                data: { labels, datasets: [{ label: '일별 플레이타임(분)', data: minutes, backgroundColor: '#4a7dff' }] },
+                options: { scales: { y: { beginAtZero: true } } },
+            });
+
+            const loginBody = document.getElementById('loginHistoryBody');
+            loginBody.innerHTML = detail.loginHistory.map((h) => `
+                <tr><td>${new Date(h.loginAt).toLocaleString()}</td><td>${h.loginType}</td></tr>
+            `).join('');
+        }
+
+        load();
+    </script>
+</body>
+</html>
