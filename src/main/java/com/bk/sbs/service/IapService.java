@@ -210,15 +210,12 @@ public class IapService {
         commanderRepository.save(commander);
 
         boolean available = hasClaimableDay(state, isVipActive(commanderId));
-        Instant nextMidnightUtc = nowUtc.withHour(0).withMinute(0).withSecond(0).withNano(0).plusDays(1).toInstant();
 
         return DailyBonusStatusResponse.builder()
                 .available(available)
                 .todayDay(state.attendanceDays)
                 .claimedDaysMask(state.mask)
                 .vipClaimedDaysMask(state.vipMask)
-                .loginRewardWeekStart(state.currentWeekStart.toString())
-                .nextAvailableAt(DateTimeFormatter.ISO_INSTANT.format(nextMidnightUtc))
                 .build();
     }
 
@@ -235,9 +232,6 @@ public class IapService {
         ZonedDateTime nowUtc = Instant.now().atZone(ZoneOffset.UTC);
         LocalDate today = nowUtc.toLocalDate();
         DailyBonusState state = applyAttendanceAndGetState(commander, today);
-
-        Instant nextMidnightUtc = nowUtc.withHour(0).withMinute(0).withSecond(0).withNano(0).plusDays(1).toInstant();
-        String nextAvailableAt = DateTimeFormatter.ISO_INSTANT.format(nextMidnightUtc);
 
         boolean available = false;
         int grantedExplorationPoint = 0;
@@ -280,20 +274,15 @@ public class IapService {
 
         commanderRepository.save(commander);
 
-        DailyBonusState resultState = new DailyBonusState(state.currentWeekStart, commander.getClaimedDaysMask(), commander.getVipClaimedDaysMask(), state.attendanceDays);
-        boolean stillHasClaimableDay = hasClaimableDay(resultState, isVipActive(commanderId));
-
         return DailyClaimResponse.builder()
                 .available(available)
                 .grantedExplorationPoint(grantedExplorationPoint)
                 .grantedAchievementPoint(grantedAchievementPoint)
                 .explorationPointRemain(commander.getExplorationPoint())
                 .achievementPointRemain(commander.getAchievementPoint())
-                .nextAvailableAt(stillHasClaimableDay ? nextAvailableAt : null)
                 .todayDay(state.attendanceDays)
                 .claimedDaysMask(commander.getClaimedDaysMask())
                 .vipClaimedDaysMask(commander.getVipClaimedDaysMask())
-                .loginRewardWeekStart(commander.getLoginRewardWeekStart().toString())
                 .build();
     }
 

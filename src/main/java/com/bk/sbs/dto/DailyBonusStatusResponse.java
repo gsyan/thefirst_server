@@ -18,6 +18,4 @@ public class DailyBonusStatusResponse {
     private Integer todayDay;
     private Integer claimedDaysMask;
     private Integer vipClaimedDaysMask;
-    private String loginRewardWeekStart;
-    private String nextAvailableAt;
 }

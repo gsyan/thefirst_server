@@ -19,9 +19,7 @@ public class DailyClaimResponse {
     private Integer grantedAchievementPoint;
     private Integer explorationPointRemain;
     private Integer achievementPointRemain;
-    private String nextAvailableAt;
     private Integer todayDay;
     private Integer claimedDaysMask;
     private Integer vipClaimedDaysMask;
-    private String loginRewardWeekStart;
 }
