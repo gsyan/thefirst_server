@@ -63,7 +63,7 @@ CREATE TABLE commander (
     pvp_point_season_ref    INT             NOT NULL DEFAULT 0,
     name_change_count       INT             NOT NULL DEFAULT 2,
     command_power_max       INT             NOT NULL DEFAULT 120,
-    tactic_power_max         INT            NOT NULL DEFAULT 60,
+    tactic_power_max         INT            NOT NULL DEFAULT 1000,
     exploration_point           INT         NOT NULL DEFAULT 0,
     exploration_point_earned_total INT      NOT NULL DEFAULT 0,
     achievement_point           INT         NOT NULL DEFAULT 0,

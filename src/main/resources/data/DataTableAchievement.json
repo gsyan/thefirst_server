@@ -1550,26 +1550,6 @@
     "descKey": "UIAchievement_Desc_command_power"
   },
   {
-    "achievementId": "tactic_power_500",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 500,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_1000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 1000,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
     "achievementId": "tactic_power_1500",
     "conditionType": "TacticPower",
     "conditionParam": "",
