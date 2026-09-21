@@ -154,7 +154,7 @@ public class FleetService {
         int newShipCost = hullData.getStatPoint() != null ? hullData.getStatPoint() : 0;
         for (Module m : keptModules) {
             int installCost = getModuleStatPoint(m.getModuleType(), m.getModuleSubType());
-            int reinforceCost = gameDataService.getReinforceCpCostPerPoint() * (m.getAttackPoints() + m.getAttackToFighterPoints());
+            int reinforceCost = gameDataService.getReinforceCpCostPerPoint() * sumReinforcePoints(m);
             newShipCost += installCost + reinforceCost;
         }
 
@@ -250,6 +250,11 @@ public class FleetService {
             module.setModuleSubType(clampModuleTierToHull(old.getModuleType(), old.getModuleSubType(), newHullTier));
             module.setAttackPoints(old.getAttackPoints());
             module.setAttackToFighterPoints(old.getAttackToFighterPoints());
+            module.setFireRatePoints(old.getFireRatePoints());
+            module.setSilencePoints(old.getSilencePoints());
+            module.setAmmoPoints(old.getAmmoPoints());
+            module.setHealthPoints(old.getHealthPoints());
+            module.setDisruptPoints(old.getDisruptPoints());
             kept.add(module);
         }
         return kept;
@@ -329,7 +334,7 @@ public class FleetService {
         if (ship.getModules() != null) {
             for (Module module : ship.getModules()) {
                 int installCost = getModuleStatPoint(module.getModuleType(), module.getModuleSubType());
-                int reinforceCost = gameDataService.getReinforceCpCostPerPoint() * (module.getAttackPoints() + module.getAttackToFighterPoints());
+                int reinforceCost = gameDataService.getReinforceCpCostPerPoint() * sumReinforcePoints(module);
                 modulesCost += installCost + reinforceCost;
             }
         }
@@ -341,7 +346,10 @@ public class FleetService {
         List<ModuleInfoDto> missiles = new ArrayList<>();
         List<ModuleInfoDto> hangars = new ArrayList<>();
         String shieldModuleSubType = "";
+        int shieldGaugePoints = 0;
+        int shieldRegenRatePoints = 0;
         String interceptorModuleSubType = "";
+        int interceptorRegenRatePoints = 0;
 
         if (ship.getModules() != null) {
             for (Module module : ship.getModules()) {
@@ -351,13 +359,25 @@ public class FleetService {
                         .slotIndex(module.getSlotIndex())
                         .attackPoints(module.getAttackPoints())
                         .attackToFighterPoints(module.getAttackToFighterPoints())
+                        .fireRatePoints(module.getFireRatePoints())
+                        .silencePoints(module.getSilencePoints())
+                        .ammoPoints(module.getAmmoPoints())
+                        .healthPoints(module.getHealthPoints())
+                        .disruptPoints(module.getDisruptPoints())
                         .build();
                 switch (module.getModuleType()) {
                     case beam -> beams.add(dto);
                     case missile -> missiles.add(dto);
                     case hangar -> hangars.add(dto);
-                    case shield -> shieldModuleSubType = module.getModuleSubType();
-                    case interceptor -> interceptorModuleSubType = module.getModuleSubType();
+                    case shield -> {
+                        shieldModuleSubType = module.getModuleSubType();
+                        shieldGaugePoints = module.getAttackPoints();
+                        shieldRegenRatePoints = module.getAttackToFighterPoints();
+                    }
+                    case interceptor -> {
+                        interceptorModuleSubType = module.getModuleSubType();
+                        interceptorRegenRatePoints = module.getAttackPoints();
+                    }
                     default -> { }
                 }
             }
@@ -373,7 +393,10 @@ public class FleetService {
                 .missiles(missiles)
                 .hangars(hangars)
                 .shieldModuleSubType(shieldModuleSubType)
+                .shieldGaugePoints(shieldGaugePoints)
+                .shieldRegenRatePoints(shieldRegenRatePoints)
                 .interceptorModuleSubType(interceptorModuleSubType)
+                .interceptorRegenRatePoints(interceptorRegenRatePoints)
                 .currentHealth(maxHealth)
                 .build();
     }
@@ -411,13 +434,18 @@ public class FleetService {
         appendDesiredModules(desired, EModuleType.beam, maxSlots[0], hullTier, requestedModules != null ? requestedModules.getBeams() : null);
         appendDesiredModules(desired, EModuleType.missile, maxSlots[1], hullTier, requestedModules != null ? requestedModules.getMissiles() : null);
         appendDesiredModules(desired, EModuleType.hangar, maxSlots[2], hullTier, requestedModules != null ? requestedModules.getHangars() : null);
-        appendDesiredShield(desired, maxSlots[3], requestedModules != null ? requestedModules.getShieldModuleSubType() : null);
-        appendDesiredInterceptor(desired, maxSlots[4], requestedModules != null ? requestedModules.getInterceptorModuleSubType() : null);
+        appendDesiredShield(desired, maxSlots[3], hullTier,
+                requestedModules != null ? requestedModules.getShieldModuleSubType() : null,
+                requestedModules != null ? requestedModules.getShieldGaugePoints() : null,
+                requestedModules != null ? requestedModules.getShieldRegenRatePoints() : null);
+        appendDesiredInterceptor(desired, maxSlots[4], hullTier,
+                requestedModules != null ? requestedModules.getInterceptorModuleSubType() : null,
+                requestedModules != null ? requestedModules.getInterceptorRegenRatePoints() : null);
 
         int newShipCost = computeHullCost(ship.getHullSubType());
         for (DesiredModule m : desired) {
             int installCost = getModuleStatPoint(m.moduleType(), m.moduleSubType());
-            int reinforceCost = gameDataService.getReinforceCpCostPerPoint() * (m.attackPoints() + m.attackToFighterPoints());
+            int reinforceCost = gameDataService.getReinforceCpCostPerPoint() * m.sumReinforcePoints();
             newShipCost += installCost + reinforceCost;
         }
 
@@ -438,6 +466,11 @@ public class FleetService {
             module.setModuleSubType(m.moduleSubType());
             module.setAttackPoints(m.attackPoints());
             module.setAttackToFighterPoints(m.attackToFighterPoints());
+            module.setFireRatePoints(m.fireRatePoints());
+            module.setSilencePoints(m.silencePoints());
+            module.setAmmoPoints(m.ammoPoints());
+            module.setHealthPoints(m.healthPoints());
+            module.setDisruptPoints(m.disruptPoints());
             newModules.add(module);
         }
         replaceShipModules(ship, newModules);
@@ -452,7 +485,18 @@ public class FleetService {
                 .build();
     }
 
-    private record DesiredModule(EModuleType moduleType, int slotIndex, String moduleSubType, int attackPoints, int attackToFighterPoints) { }
+    private record DesiredModule(EModuleType moduleType, int slotIndex, String moduleSubType, int attackPoints, int attackToFighterPoints,
+                                 int fireRatePoints, int silencePoints, int ammoPoints, int healthPoints, int disruptPoints) {
+        // 클라 FleetComposition.SumReinforcePoints와 동일 — CP 비용 = 이 합 × reinforceCpCostPerPoint
+        int sumReinforcePoints() {
+            return attackPoints + attackToFighterPoints + fireRatePoints + silencePoints + ammoPoints + healthPoints + disruptPoints;
+        }
+    }
+
+    private int sumReinforcePoints(Module module) {
+        return module.getAttackPoints() + module.getAttackToFighterPoints() + module.getFireRatePoints()
+                + module.getSilencePoints() + module.getAmmoPoints() + module.getHealthPoints() + module.getDisruptPoints();
+    }
 
     // requested의 각 항목이 유효한 슬롯 인덱스(0 <= idx < maxSlotCount)인지, 중복 슬롯이 없는지 검증하며 desired 목록에 채워 넣음
     // 강화 포인트는 클라 입력을 신뢰하지 않고 서버가 직접 clamp. moduleSubType(티어)도 마찬가지로 클라가 보낸 값을 그대로 믿지 않고
@@ -462,6 +506,8 @@ public class FleetService {
         String defaultSubType = getDefaultSubTypeForCategory(moduleType);
         int maxPerSlot = gameDataService.getMaxAttackReinforcePointsPerSlot();
         boolean isHangar = moduleType == EModuleType.hangar;
+        boolean isWeapon = moduleType == EModuleType.beam || moduleType == EModuleType.missile;
+        boolean isMissile = moduleType == EModuleType.missile;
 
         java.util.Set<Integer> seenSlotIndexes = new java.util.HashSet<>();
         for (ModuleInfoDto item : requested) {
@@ -473,13 +519,19 @@ public class FleetService {
 
             int clampedAttackPoints = clampReinforcePoints(item.getAttackPoints(), maxPerSlot);
             int clampedFighterPoints = isHangar ? clampReinforcePoints(item.getAttackToFighterPoints(), maxPerSlot) : 0;
+            int clampedFireRatePoints = isWeapon ? clampReinforcePoints(item.getFireRatePoints(), maxPerSlot) : 0;
+            int clampedSilencePoints = isMissile ? clampReinforcePoints(item.getSilencePoints(), maxPerSlot) : 0;
+            int clampedAmmoPoints = isHangar ? clampReinforcePoints(item.getAmmoPoints(), maxPerSlot) : 0;
+            int clampedHealthPoints = isHangar ? clampReinforcePoints(item.getHealthPoints(), maxPerSlot) : 0;
+            int clampedDisruptPoints = isHangar ? clampReinforcePoints(item.getDisruptPoints(), maxPerSlot) : 0;
 
             String requestedSubType = item.getModuleSubType();
             String subType = (requestedSubType != null && isValidSubTypeForCategory(moduleType, requestedSubType, hullTier))
                     ? requestedSubType
                     : defaultSubType;
 
-            target.add(new DesiredModule(moduleType, slotIndex, subType, clampedAttackPoints, clampedFighterPoints));
+            target.add(new DesiredModule(moduleType, slotIndex, subType, clampedAttackPoints, clampedFighterPoints,
+                    clampedFireRatePoints, clampedSilencePoints, clampedAmmoPoints, clampedHealthPoints, clampedDisruptPoints));
         }
     }
 
@@ -498,23 +550,36 @@ public class FleetService {
         return GameDataService.parseTierFromHullSubType(requestedSubType) <= hullTier;
     }
 
-    // 실드는 리스트가 아니라 문자열 하나(장착 여부)뿐 — 슬롯 인덱스는 항상 0, 강화 포인트도 아직 없음(on/off만 지원)
+    // 실드는 리스트가 아니라 문자열 하나(장착 여부)뿐 — 슬롯 인덱스는 항상 0. 티어 선택 가능(datatable_module 티어1~14)
+    // 강화 포인트는 Module의 두 컬럼을 재사용: attackPoints=게이지, attackToFighterPoints=회복속도 (서버가 직접 clamp)
     // maxSlotCount<=0(실드 슬롯 없는 함체)인데 장착 요청이 오면 슬롯 인덱스 검증과 동일하게 거부
-    private void appendDesiredShield(List<DesiredModule> target, int maxSlotCount, String requestedShieldSubType) {
+    // 요청된 티어는 클라를 신뢰하지 않고 무기 카테고리와 동일하게 검증(존재 여부 + 함체 티어 이하) 후 사용, 아니면 기본 티어1로 폴백
+    private void appendDesiredShield(List<DesiredModule> target, int maxSlotCount, int hullTier, String requestedShieldSubType, Integer requestedGaugePoints, Integer requestedRegenRatePoints) {
         if (requestedShieldSubType == null || requestedShieldSubType.isEmpty()) return;
         if (maxSlotCount <= 0)
             throw new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_INVALID_SLOT_INDEX);
 
-        target.add(new DesiredModule(EModuleType.shield, 0, "shield_1_1", 0, 0));
+        String subType = isValidSubTypeForCategory(EModuleType.shield, requestedShieldSubType, hullTier)
+                ? requestedShieldSubType
+                : "shield_1_1";
+        int maxPerSlot = gameDataService.getMaxAttackReinforcePointsPerSlot();
+        int gaugePoints = clampReinforcePoints(requestedGaugePoints, maxPerSlot);
+        int regenRatePoints = clampReinforcePoints(requestedRegenRatePoints, maxPerSlot);
+        target.add(new DesiredModule(EModuleType.shield, 0, subType, gaugePoints, regenRatePoints, 0, 0, 0, 0, 0));
     }
 
-    // 요격체도 실드와 동일하게 리스트가 아니라 문자열 하나(장착 여부)뿐 — 슬롯 인덱스는 항상 0, 강화 포인트도 아직 없음(on/off만 지원)
-    private void appendDesiredInterceptor(List<DesiredModule> target, int maxSlotCount, String requestedInterceptorSubType) {
+    // 요격체도 실드와 동일하게 문자열 하나(장착 여부) — 슬롯 인덱스는 항상 0. 강화 포인트는 attackPoints=회복속도(attackToFighterPoints는 항상 0)
+    private void appendDesiredInterceptor(List<DesiredModule> target, int maxSlotCount, int hullTier, String requestedInterceptorSubType, Integer requestedRegenRatePoints) {
         if (requestedInterceptorSubType == null || requestedInterceptorSubType.isEmpty()) return;
         if (maxSlotCount <= 0)
             throw new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_INVALID_SLOT_INDEX);
 
-        target.add(new DesiredModule(EModuleType.interceptor, 0, "interceptor_1_1", 0, 0));
+        String subType = isValidSubTypeForCategory(EModuleType.interceptor, requestedInterceptorSubType, hullTier)
+                ? requestedInterceptorSubType
+                : "interceptor_1_1";
+        int maxPerSlot = gameDataService.getMaxAttackReinforcePointsPerSlot();
+        int regenRatePoints = clampReinforcePoints(requestedRegenRatePoints, maxPerSlot);
+        target.add(new DesiredModule(EModuleType.interceptor, 0, subType, regenRatePoints, 0, 0, 0, 0, 0, 0));
     }
 
     // 클라가 보낸 강화 포인트 값을 0~maxPerSlot 범위로 강제 — null/음수/상한 초과 모두 방어

@@ -5,8 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-// Ship에 유저가 실제로 장착한 모듈 1개 — row 존재 = 장착, 없음 = 미장착(장착 on/off + 공격력 강화 포인트 지원, 티어 선택 없음)
-// moduleType: beam/missile/hangar만 취급(실드/요격체는 현재 바디에 슬롯 자체가 없어 미사용)
+// Ship에 유저가 실제로 장착한 모듈 1개 — row 존재 = 장착, 없음 = 미장착(장착 on/off + 티어 선택 + 강화 포인트 지원)
+// moduleType: beam/missile/hangar는 슬롯별 1행, shield/interceptor는 함선당 최대 1행(slotIndex 항상 0)
+// attackPoints/attackToFighterPoints는 카테고리별 의미가 다름 — shield: 게이지/회복속도, interceptor: 회복속도/0, hangar: 대함/대전투기, beam·missile: 공격력/0 (beam·missile 연사력=fireRatePoints, missile 침묵=silencePoints, hangar 탄약/체력/교란=ammoPoints/healthPoints/disruptPoints)
 @Entity
 @Getter
 @Setter
@@ -35,4 +36,19 @@ public class Module {
 
     @Column(nullable = false)
     private int attackToFighterPoints; // 격납고 전용 대전투기 공격력 강화 포인트 — beam/missile은 항상 0
+
+    @Column(nullable = false)
+    private int fireRatePoints; // 빔/미사일 전용 연사력(쿨다운 감소) 강화 포인트 — 그 외 카테고리는 항상 0
+
+    @Column(nullable = false)
+    private int silencePoints; // 미사일 전용 침묵시간 강화 포인트 — 그 외 카테고리는 항상 0
+
+    @Column(nullable = false)
+    private int ammoPoints; // 격납고 전용 함재기 탄약 강화 포인트 — 그 외 카테고리는 항상 0
+
+    @Column(nullable = false)
+    private int healthPoints; // 격납고 전용 함재기 체력 강화 포인트 — 그 외 카테고리는 항상 0
+
+    @Column(nullable = false)
+    private int disruptPoints; // 격납고 전용 함재기 교란(명중 시 공격 딜레이) 강화 포인트 — 그 외 카테고리는 항상 0
 }

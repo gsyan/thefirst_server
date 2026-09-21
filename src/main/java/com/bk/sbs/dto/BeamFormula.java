@@ -14,11 +14,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class BeamFormula {
-    private Float attackPerPoint;
+    private Float maxAttackBonusRatio;
 
-    private Float attackCoolReductionPerPoint;
+    private Float maxCoolReductionRatio;
 
     private Float attackCoolFloor;
-
-    private Float projectileSpeedPerPoint;
 }

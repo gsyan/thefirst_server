@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class ShieldFormula {
-    private Float gaugePerPoint;
+    private Float maxGaugeBonusRatio;
 
-    private Float regenRatePerPoint;
+    private Float maxRegenBonusRatio;
 }

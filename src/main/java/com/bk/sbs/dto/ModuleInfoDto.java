@@ -22,4 +22,9 @@ public class ModuleInfoDto {
     private Integer slotIndex;
     private Integer attackPoints;
     private Integer attackToFighterPoints;
+    private Integer fireRatePoints;
+    private Integer silencePoints;
+    private Integer ammoPoints;
+    private Integer healthPoints;
+    private Integer disruptPoints;
 }

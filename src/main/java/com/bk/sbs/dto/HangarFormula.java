@@ -14,7 +14,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class HangarFormula {
-    private Float attackPerPoint;
+    private Float maxAttackBonusRatio;
 
-    private Float reinforcePerPoint;
+    private Integer ammoPerPoint;
+
+    private Float maxHealthBonusRatio;
+
+    private Float maxDisruptBonusRatio;
 }

@@ -14,9 +14,5 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class InterceptorFormula {
-    private Float delayReductionPerPoint;
-
-    private Float regenRatePerPoint;
-
-    private Float delayFloor;
+    private Float maxRegenTimeReductionRatio;
 }

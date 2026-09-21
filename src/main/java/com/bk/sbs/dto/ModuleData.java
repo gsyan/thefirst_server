@@ -73,7 +73,5 @@ public class ModuleData {
 
     private Integer interceptorCount;
 
-    private Float interceptorDelay;
-
-    private Float interceptorRegenRate;
+    private Float interceptorRegenTime;
 }

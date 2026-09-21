@@ -123,6 +123,11 @@ CREATE TABLE module (
     module_sub_type         VARCHAR(100)    NOT NULL,
     attack_points           INT             NOT NULL DEFAULT 0,
     attack_to_fighter_points INT            NOT NULL DEFAULT 0,
+    fire_rate_points        INT             NOT NULL DEFAULT 0,
+    silence_points          INT             NOT NULL DEFAULT 0,
+    ammo_points             INT             NOT NULL DEFAULT 0,
+    health_points           INT             NOT NULL DEFAULT 0,
+    disrupt_points          INT             NOT NULL DEFAULT 0,
     PRIMARY KEY (id),
     CONSTRAINT fk_module_ship FOREIGN KEY (ship_id) REFERENCES ship (id),
     INDEX idx_module_ship (ship_id)
