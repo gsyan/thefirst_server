@@ -14,11 +14,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class MissileFormula {
-    private Float maxAttackBonusRatio;
+    private Float attackPerPoint;
 
     private Float maxCoolReductionRatio;
 
     private Float attackCoolFloor;
 
-    private Float maxSilenceBonusRatio;
+    private Float silenceTimePerPoint;
 }

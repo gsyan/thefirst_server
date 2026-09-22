@@ -25,25 +25,25 @@
     "maxModuleSlots": 6,
     "maxAttackReinforcePointsPerSlot": 10,
     "beam": {
-      "maxAttackBonusRatio": 0.5,
+      "attackPerPoint": 1.0,
       "maxCoolReductionRatio": 0.3,
       "attackCoolFloor": 0.5
     },
     "missile": {
-      "maxAttackBonusRatio": 0.5,
+      "attackPerPoint": 1.0,
       "maxCoolReductionRatio": 0.3,
       "attackCoolFloor": 0.5,
-      "maxSilenceBonusRatio": 0.5
+      "silenceTimePerPoint": 0.0
     },
     "hangar": {
-      "maxAttackBonusRatio": 0.5,
+      "attackPerPoint": 0.1,
       "ammoPerPoint": 1,
       "maxHealthBonusRatio": 0.5,
-      "maxDisruptBonusRatio": 0.5
+      "disruptPerPoint": 0.0
     },
     "shield": {
-      "maxGaugeBonusRatio": 0.5,
-      "maxRegenBonusRatio": 0.5
+      "gaugePerPoint": 10.0,
+      "regenRatePerPoint": 0.1
     },
     "interceptor": {
       "maxRegenTimeReductionRatio": 0.5
