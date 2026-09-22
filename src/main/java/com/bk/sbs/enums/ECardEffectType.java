@@ -17,6 +17,7 @@ public enum ECardEffectType {
     Instant_HealthHeal,
     Instant_ShieldHeal,
     Instant_InterceptorHeal,
-    Instant_ExplorationPointFlat;
+    Instant_ExplorationPointFlat,
+    Instant_TacticPowerHeal;
 
 }
