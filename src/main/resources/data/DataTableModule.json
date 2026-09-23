@@ -4234,7 +4234,7 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 100.0,
-        "shieldRegenRate": 10.0,
+        "shieldRegenRate": 5.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
@@ -4266,7 +4266,7 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 200.0,
-        "shieldRegenRate": 20.0,
+        "shieldRegenRate": 10.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
@@ -4298,7 +4298,7 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 300.0,
-        "shieldRegenRate": 30.0,
+        "shieldRegenRate": 15.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
@@ -4330,7 +4330,7 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 400.0,
-        "shieldRegenRate": 40.0,
+        "shieldRegenRate": 20.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
@@ -4362,7 +4362,7 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 500.0,
-        "shieldRegenRate": 50.0,
+        "shieldRegenRate": 25.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
@@ -4394,7 +4394,7 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 600.0,
-        "shieldRegenRate": 60.0,
+        "shieldRegenRate": 30.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
@@ -4426,7 +4426,7 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 700.0,
-        "shieldRegenRate": 70.0,
+        "shieldRegenRate": 35.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
@@ -4458,7 +4458,7 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 800.0,
-        "shieldRegenRate": 80.0,
+        "shieldRegenRate": 40.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
@@ -4490,7 +4490,7 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 900.0,
-        "shieldRegenRate": 90.0,
+        "shieldRegenRate": 45.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
@@ -4522,7 +4522,7 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 1000.0,
-        "shieldRegenRate": 100.0,
+        "shieldRegenRate": 50.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
@@ -4554,7 +4554,7 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 1100.0,
-        "shieldRegenRate": 110.0,
+        "shieldRegenRate": 55.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
@@ -4586,7 +4586,7 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 1200.0,
-        "shieldRegenRate": 120.0,
+        "shieldRegenRate": 60.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
@@ -4618,7 +4618,7 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 1300.0,
-        "shieldRegenRate": 130.0,
+        "shieldRegenRate": 65.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
@@ -4650,7 +4650,7 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 1400.0,
-        "shieldRegenRate": 140.0,
+        "shieldRegenRate": 70.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       }
