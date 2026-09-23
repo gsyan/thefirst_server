@@ -43,7 +43,7 @@
     },
     "shield": {
       "gaugePerPoint": 10.0,
-      "regenRatePerPoint": 0.1
+      "regenRatePerPoint": 1.0
     },
     "interceptor": {
       "maxRegenTimeReductionRatio": 0.5
