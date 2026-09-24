@@ -266,12 +266,8 @@ public class ExplorationService {
         return totalCellCount - excludedCellCount;
     }
 
-    // clear-cell 최소 경과시간 — enter-cell 직후 클리어 요청이 오면(전투를 생략한 것이 명백하므로) 거부. 정상 전투는 이보다 훨씬 오래 걸리므로 넉넉하게 잡음
-    private static final long CHALLENGE_TOKEN_MIN_ELAPSED_MILLIS = 2000L;
-
     // enter-cell이 발급한 1회용 토큰을 검증 — 통과 시 즉시 무효화(재사용 방지). enter-cell 없이 clear-cell만 반복 호출하는 것을 막는 것이 목적.
-    // requireMinElapsedTime=false면 최소 경과시간 검사를 건너뜀 — Event(Treasure) 등 애초에 전투가 없는 셀은 "전투를 생략했다"는 의심 자체가 성립하지 않음
-    private void validateAndConsumeChallengeToken(ZoneRun run, String requestToken, int cellRow, int cellCol, boolean requireMinElapsedTime) {
+    private void validateAndConsumeChallengeToken(ZoneRun run, String requestToken, int cellRow, int cellCol) {
         String expectedCell = cellRow + "-" + cellCol;
         boolean tokenMatches = run.getActiveChallengeToken() != null
                 && run.getActiveChallengeToken().equals(requestToken)
@@ -280,20 +276,14 @@ public class ExplorationService {
         if (tokenMatches == false)
             throw new BusinessException(ServerErrorCode.EXPLORATION_CHALLENGE_TOKEN_INVALID);
 
-        if (requireMinElapsedTime == true) {
-            long elapsedMillis = Instant.now().toEpochMilli() - run.getActiveChallengeIssuedAt().toEpochMilli();
-            if (elapsedMillis < CHALLENGE_TOKEN_MIN_ELAPSED_MILLIS)
-                throw new BusinessException(ServerErrorCode.EXPLORATION_CHALLENGE_TOKEN_INVALID);
-        }
-
         run.setActiveChallengeToken(null);
         run.setActiveChallengeCell(null);
         run.setActiveChallengeIssuedAt(null);
     }
 
-    // validateAndConsumeChallengeToken과 동일한 검증(토큰/셀 일치 + 최소 경과시간)이지만, 대상이 아직 없는 ZoneRun이 아니라
+    // validateAndConsumeChallengeToken과 동일한 검증(토큰/셀 일치)이지만, 대상이 아직 없는 ZoneRun이 아니라
     // enter-cell이 Redis에 임시 저장해둔 첫 셀 챌린지 — 통과 시 즉시 삭제(재사용 방지)
-    private void validateAndConsumePendingZoneRunChallenge(Long commanderId, String requestToken, int zoneNumber, int cellRow, int cellCol, boolean requireMinElapsedTime) {
+    private void validateAndConsumePendingZoneRunChallenge(Long commanderId, String requestToken, int zoneNumber, int cellRow, int cellCol) {
         RedisService.PendingZoneRunChallengeInfo pending = redisService.getPendingZoneRunChallenge(commanderId);
         String expectedCell = cellRow + "-" + cellCol;
         boolean matches = pending != null
@@ -302,12 +292,6 @@ public class ExplorationService {
                 && pending.token().equals(requestToken);
         if (matches == false)
             throw new BusinessException(ServerErrorCode.EXPLORATION_CHALLENGE_TOKEN_INVALID);
-
-        if (requireMinElapsedTime == true) {
-            long elapsedMillis = Instant.now().toEpochMilli() - pending.issuedAt().toEpochMilli();
-            if (elapsedMillis < CHALLENGE_TOKEN_MIN_ELAPSED_MILLIS)
-                throw new BusinessException(ServerErrorCode.EXPLORATION_CHALLENGE_TOKEN_INVALID);
-        }
 
         redisService.deletePendingZoneRunChallenge(commanderId);
     }
@@ -465,9 +449,8 @@ public class ExplorationService {
 
             validateCellChallenge(zoneConfig, startCell.getRow(), startCell.getCol(), request.getCellRow(), request.getCellCol());
 
-            boolean hasEnemiesForFirstCell = hasCombatCell(zoneConfig, request.getCellRow(), request.getCellCol());
             validateAndConsumePendingZoneRunChallenge(commanderId, request.getChallengeToken(), request.getZoneNumber(),
-                    request.getCellRow(), request.getCellCol(), hasEnemiesForFirstCell);
+                    request.getCellRow(), request.getCellCol());
 
             run = new ZoneRun(commanderId, request.getZoneNumber(), startCell.getRow(), startCell.getCol(), commander.getTacticPowerMax());
             run = zoneRunRepository.save(run);
@@ -488,12 +471,10 @@ public class ExplorationService {
 
         if (isRevisit == false) {
             // 최초 클리어(보상 지급)에만 토큰을 요구 — enter-cell 없이 clear-cell 반복 호출로 무한 획득하는 것을 막는 지점.
-            // 최소 경과시간 검사는 전투가 있는 셀에서만(hasEnemies) 적용 — Event(Treasure)는 애초에 전투가 없어 "생략" 의심이 성립하지 않고,
-            // 실제로 enter-cell 직후 곧바로 clear-cell을 호출하는 정상 흐름이라 검사를 걸면 항상 실패함.
             // 첫 셀(isFirstCellOfNewRun)은 위에서 이미 Redis 챌린지로 검증·소비했으므로 여기서 다시 검증하지 않음(run에는 애초에 토큰이 없음)
             boolean hasEnemies = hasCombatCell(zoneConfig, request.getCellRow(), request.getCellCol());
             if (isFirstCellOfNewRun == false)
-                validateAndConsumeChallengeToken(run, request.getChallengeToken(), request.getCellRow(), request.getCellCol(), hasEnemies);
+                validateAndConsumeChallengeToken(run, request.getChallengeToken(), request.getCellRow(), request.getCellCol());
 
             // 존 고정 보상값 적립 — 적 함대 성능(commandCost)과 무관, 함선이 있던 셀만 지급(빈 셀은 0)
             // Buff_ExplorationPointRate 배율은 여기서 적용하지 않음 — 적립(banked)은 항상 고정값 그대로 쌓고,
