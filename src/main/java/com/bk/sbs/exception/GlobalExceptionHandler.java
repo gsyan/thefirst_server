@@ -2,6 +2,7 @@
 package com.bk.sbs.exception;
 
 import com.bk.sbs.dto.nogenerated.ApiResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,8 @@ public class GlobalExceptionHandler {
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<ApiResponse<?>> handleBusinessException(BusinessException ex) {
+    public ResponseEntity<ApiResponse<?>> handleBusinessException(BusinessException ex, HttpServletRequest request) {
+        log.warn("[BusinessException] code={} {} {}", ex.getErrorCode(), request.getMethod(), request.getRequestURI());
         return ResponseEntity.ok(ApiResponse.error(ex.getErrorCode()));
     }
 

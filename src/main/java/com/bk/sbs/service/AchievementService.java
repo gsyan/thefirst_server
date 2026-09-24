@@ -266,8 +266,6 @@ public class AchievementService {
             case ZoneFullClear:
                 int requiredFullClearZoneNumber = Integer.parseInt(entry.conditionParam);
                 int batchResult = context.fullyClearedZoneNumbers.contains(requiredFullClearZoneNumber) ? 1 : 0;
-                log.info("[ZoneFullClearLOG] (batch) commanderId={} achievementId={} requiredZoneNumber={} fullyClearedZoneNumbers={} result={}",
-                        commander.getId(), entry.achievementId, requiredFullClearZoneNumber, context.fullyClearedZoneNumbers, batchResult);
                 return batchResult;
             case CommanderLevel:
                 return commander.getCommanderLevel();
@@ -303,8 +301,6 @@ public class AchievementService {
             case ZoneFullClear:
                 int requiredFullClearZoneNumber = Integer.parseInt(entry.conditionParam);
                 boolean directExists = commanderZoneFullClearRepository.existsByCommanderIdAndZoneNumber(commander.getId(), requiredFullClearZoneNumber);
-                log.info("[ZoneFullClearLOG] (direct) commanderId={} achievementId={} requiredZoneNumber={} exists={}",
-                        commander.getId(), entry.achievementId, requiredFullClearZoneNumber, directExists);
                 return directExists ? 1 : 0;
             case CommanderLevel:
                 return commander.getCommanderLevel();
