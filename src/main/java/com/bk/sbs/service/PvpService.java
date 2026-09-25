@@ -69,7 +69,7 @@ public class PvpService {
         DataTableConfig config = gameDataService.getDataTableConfig();
         for (PvpRecord record : records) {
             redisService.setPvpScore(record.getCommanderId(), record.getScore());
-            redisService.initPvpInfo(record.getCommanderId(), config.getPvp().getPvpListRefreshCount(), record.getScore());
+            redisService.initPvpInfo(record.getCommanderId(), config.getPvp().getPvpListRefreshCount(), record.getScore(), record.getWins(), record.getLosses());
             String name = nameMap.get(record.getCommanderId());
             if (name != null) redisService.setRankName(record.getCommanderId(), name);
 
@@ -114,7 +114,7 @@ public class PvpService {
                 PvpRecord record = existing.get();
                 redisService.setPvpScore(commanderId, record.getScore());
                 DataTableConfig config = gameDataService.getDataTableConfig();
-                redisService.initPvpInfo(commanderId, config.getPvp().getPvpListRefreshCount(), record.getScore());
+                redisService.initPvpInfo(commanderId, config.getPvp().getPvpListRefreshCount(), record.getScore(), record.getWins(), record.getLosses());
             }
             return existing.get();
         }
@@ -137,13 +137,13 @@ public class PvpService {
                     .orElseThrow(() -> new IllegalStateException("pvp_record not found after constraint violation", e));
             if (redisService.getPvpScore(commanderId) == null) {
                 redisService.setPvpScore(commanderId, created.getScore());
-                redisService.initPvpInfo(commanderId, config.getPvp().getPvpListRefreshCount(), created.getScore());
+                redisService.initPvpInfo(commanderId, config.getPvp().getPvpListRefreshCount(), created.getScore(), created.getWins(), created.getLosses());
             }
             return created;
         }
 
         redisService.setPvpScore(commanderId, initScore);
-        redisService.initPvpInfo(commanderId, config.getPvp().getPvpListRefreshCount(), initScore);
+        redisService.initPvpInfo(commanderId, config.getPvp().getPvpListRefreshCount(), initScore, 0, 0);
 
         // 신규 캐릭터 이름도 rankName에 등록
         commanderRepository.findById(commanderId)
@@ -204,8 +204,7 @@ public class PvpService {
             throw new BusinessException(ServerErrorCode.PVP_START_FAIL_ZONE_RUN_IN_PROGRESS);
         }
 
-        // TODO: 테스트 위해 레벨 제한 임시 주석처리 — 원복 필요(클라이언트 UIPanelRank.OnAttackClicked와 동일 사유)
-        /*
+        // 클라이언트 UIPanelRank.OnAttackClicked와 같은 기준(DataTableConfig pvpMinCommanderLevel)
         Integer minCommanderLevel = gameDataService.getDataTableConfig().getPvp().getPvpMinCommanderLevel();
         if (minCommanderLevel != null && minCommanderLevel > 0) {
             int myCommanderLevel = commanderRepository.findById(commanderId)
@@ -215,7 +214,6 @@ public class PvpService {
                 throw new BusinessException(ServerErrorCode.PVP_COMMANDER_LEVEL_TOO_LOW);
             }
         }
-        */
 
         FleetInfoDto opponentFleet = fleetService.getActiveFleetOrNull(opponentCommanderId);
         if (opponentFleet == null) {

@@ -34,5 +34,12 @@ public class PvpRecord {
 
     @Column(nullable = false)
     private Integer lastRewardedSeason = 0;
+
+    // 시즌 종료 시점(점수 리셋 전) 점수로 확정한 미수령 보상 — pendingRewardSeason > lastRewardedSeason 이면 수령 대기
+    @Column(nullable = false)
+    private Integer pendingRewardSeason = 0;
+
+    @Column(nullable = false)
+    private Integer pendingReward = 0;
 }
 

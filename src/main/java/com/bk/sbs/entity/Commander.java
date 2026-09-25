@@ -34,7 +34,7 @@ public class Commander {
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
     private int exp = 0;
 
-    // PvP 시즌 보상 포인트 — 만료 시 소멸
+    // PvP 시즌 보상 포인트 — 누적만 되며 만료 없음
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
     private int pvpPoint = 0;
 

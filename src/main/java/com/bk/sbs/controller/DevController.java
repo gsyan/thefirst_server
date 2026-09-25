@@ -95,7 +95,7 @@ public class DevController {
                             + "|end:" + season.getEndTime());
 
                 } else if (subCmd.equals("end")) {
-                    // 현재 시즌 즉시 종료 → 보상 지급 + 점수 리셋 + 다음 시즌 자동 시작
+                    // 현재 시즌 즉시 종료 → 보상 확정 + 점수 리셋 + 다음 시즌 자동 시작
                     return pvpSeasonService.getCurrentSeason()
                             .map(season -> {
                                 pvpSeasonService.endSeasonAndStartNext(season);
@@ -104,12 +104,12 @@ public class DevController {
                             .orElse(ApiResponse.success("진행 중인 시즌 없음"));
 
                 } else if (subCmd.equals("distribute")) {
-                    // 보상만 재지급 (테스트용, rewardDistributed 무시)
+                    // 보상만 재확정 (테스트용, rewardDistributed 무시) — 현재 점수 기준으로 pending 보상을 다시 저장
                     return pvpSeasonService.getCurrentSeason()
                             .map(season -> {
                                 season.setRewardDistributed(false);
                                 pvpSeasonService.distributeSeasonReward(season);
-                                return ApiResponse.success("시즌 " + season.getSeasonNumber() + " 보상 재지급 완료");
+                                return ApiResponse.success("시즌 " + season.getSeasonNumber() + " 보상 재확정 완료");
                             })
                             .orElse(ApiResponse.success("진행 중인 시즌 없음"));
 

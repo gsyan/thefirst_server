@@ -260,10 +260,15 @@ public class RedisService {
         return redisTemplate.opsForHash().entries(PVP_INFO_PREFIX + commanderId);
     }
 
-    public void initPvpInfo(Long commanderId, int refreshCount, int score) {
+    public void setPvpWinLoss(Long commanderId, int wins, int losses) {
         String key = PVP_INFO_PREFIX + commanderId;
-        redisTemplate.opsForHash().put(key, "wins", "0");
-        redisTemplate.opsForHash().put(key, "losses", "0");
+        redisTemplate.opsForHash().put(key, "wins", String.valueOf(wins));
+        redisTemplate.opsForHash().put(key, "losses", String.valueOf(losses));
+    }
+
+    public void initPvpInfo(Long commanderId, int refreshCount, int score, int wins, int losses) {
+        String key = PVP_INFO_PREFIX + commanderId;
+        setPvpWinLoss(commanderId, wins, losses);
         redisTemplate.opsForHash().put(key, "refreshRemain", String.valueOf(refreshCount));
         redisTemplate.opsForHash().put(key, "lastRefreshDate", LocalDate.now(ZoneOffset.UTC).toString());
         redisTemplate.opsForHash().put(key, "score", String.valueOf(score));

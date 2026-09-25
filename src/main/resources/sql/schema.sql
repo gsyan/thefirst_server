@@ -173,6 +173,8 @@ CREATE TABLE pvp_record (
     losses                  INT             NOT NULL DEFAULT 0,
     last_updated            DATETIME(6)     NOT NULL,
     last_rewarded_season    INT             NOT NULL DEFAULT 0,
+    pending_reward_season   INT             NOT NULL DEFAULT 0,
+    pending_reward          INT             NOT NULL DEFAULT 0,
     PRIMARY KEY (id),
     UNIQUE KEY uk_pvp_commander (commander_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
