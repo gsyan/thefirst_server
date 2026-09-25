@@ -14,6 +14,7 @@ DROP TABLE IF EXISTS ship;
 DROP TABLE IF EXISTS fleet;
 DROP TABLE IF EXISTS commander_unlocked_hull;
 DROP TABLE IF EXISTS commander_zone_full_clear;
+DROP TABLE IF EXISTS commander_achievement_reached;
 DROP TABLE IF EXISTS commander_achievement_claim;
 DROP TABLE IF EXISTS commander_daily_achievement_claim;
 DROP TABLE IF EXISTS zone_cell_clear_log;
@@ -283,6 +284,19 @@ CREATE TABLE commander_achievement_claim (
     claimed_at      DATETIME(6)  NOT NULL,
     PRIMARY KEY (id),
     UNIQUE KEY uk_commander_achievement_claim (commander_id, achievement_id, is_vip)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================================
+-- commander_achievement_reached — 함대 구성 기반 업적(HullTierCount/ModuleTierCount)의 달성 기록
+-- 유니크: commander_id + achievement_id (한 번 달성하면 이후 장비를 바꿔도 완료로 유지)
+-- ============================================================
+CREATE TABLE commander_achievement_reached (
+    id              BIGINT       NOT NULL AUTO_INCREMENT,
+    commander_id    BIGINT       NOT NULL,
+    achievement_id  VARCHAR(100) NOT NULL,
+    reached_at      DATETIME(6)  NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_commander_achievement_reached (commander_id, achievement_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ============================================================

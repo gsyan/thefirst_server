@@ -6,16 +6,19 @@ import com.bk.sbs.dto.ClaimAllAchievementsResponse;
 import com.bk.sbs.dto.GetAchievementListResponse;
 import com.bk.sbs.entity.Commander;
 import com.bk.sbs.entity.CommanderAchievementClaim;
+import com.bk.sbs.entity.CommanderAchievementReached;
 import com.bk.sbs.entity.CommanderUnlockedHull;
 import com.bk.sbs.entity.CommanderZoneFullClear;
 import com.bk.sbs.entity.Fleet;
 import com.bk.sbs.entity.Module;
 import com.bk.sbs.entity.Ship;
 import com.bk.sbs.entity.VipSubscription;
+import com.bk.sbs.enums.EAchievementConditionType;
 import com.bk.sbs.enums.EModuleType;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.repository.CommanderAchievementClaimRepository;
+import com.bk.sbs.repository.CommanderAchievementReachedRepository;
 import com.bk.sbs.repository.CommanderRepository;
 import com.bk.sbs.repository.CommanderUnlockedHullRepository;
 import com.bk.sbs.repository.CommanderZoneFullClearRepository;
@@ -49,6 +52,7 @@ public class AchievementService {
     private final ZoneCellClearLogRepository zoneCellClearLogRepository;
     private final FleetRepository fleetRepository;
     private final CommanderAchievementClaimRepository commanderAchievementClaimRepository;
+    private final CommanderAchievementReachedRepository commanderAchievementReachedRepository;
     private final CommanderUnlockedHullRepository commanderUnlockedHullRepository;
     private final VipSubscriptionRepository vipSubscriptionRepository;
     private final CommanderZoneFullClearRepository commanderZoneFullClearRepository;
@@ -56,6 +60,7 @@ public class AchievementService {
     public AchievementService(CommanderRepository commanderRepository, GameDataService gameDataService,
                                ZoneCellClearLogRepository zoneCellClearLogRepository, FleetRepository fleetRepository,
                                CommanderAchievementClaimRepository commanderAchievementClaimRepository,
+                               CommanderAchievementReachedRepository commanderAchievementReachedRepository,
                                CommanderUnlockedHullRepository commanderUnlockedHullRepository,
                                VipSubscriptionRepository vipSubscriptionRepository,
                                CommanderZoneFullClearRepository commanderZoneFullClearRepository) {
@@ -64,6 +69,7 @@ public class AchievementService {
         this.zoneCellClearLogRepository = zoneCellClearLogRepository;
         this.fleetRepository = fleetRepository;
         this.commanderAchievementClaimRepository = commanderAchievementClaimRepository;
+        this.commanderAchievementReachedRepository = commanderAchievementReachedRepository;
         this.commanderUnlockedHullRepository = commanderUnlockedHullRepository;
         this.vipSubscriptionRepository = vipSubscriptionRepository;
         this.commanderZoneFullClearRepository = commanderZoneFullClearRepository;
@@ -83,9 +89,10 @@ public class AchievementService {
         long eventCellClearCount;
         Set<String> claimedAchievementIds;
         Set<String> vipClaimedAchievementIds;
+        Set<String> reachedAchievementIds;
         Set<String> unlockedHullSubTypes;
-        Map<Integer, Integer> hullTierCounts;
-        Map<String, Integer> moduleTierCounts;
+        Map<Integer, Integer> hullAtOrAboveTierCounts;      // key: 티어 → 활성 함대에서 그 티어 이상인 함체 개수
+        Map<String, Integer> moduleAtOrAboveTierCounts;     // key: "{EModuleType}_{티어}" → 그 카테고리에서 그 티어 이상인 모듈 개수
         Set<Integer> fullyClearedZoneNumbers;
     }
 
@@ -104,6 +111,10 @@ public class AchievementService {
                 context.claimedAchievementIds.add(claim.getAchievementId());
         }
 
+        context.reachedAchievementIds = new HashSet<>();
+        for (CommanderAchievementReached reached : commanderAchievementReachedRepository.findByCommanderId(commanderId))
+            context.reachedAchievementIds.add(reached.getAchievementId());
+
         context.unlockedHullSubTypes = new HashSet<>();
         for (CommanderUnlockedHull unlockedHull : commanderUnlockedHullRepository.findByCommanderId(commanderId))
             context.unlockedHullSubTypes.add(unlockedHull.getHullSubType());
@@ -112,18 +123,22 @@ public class AchievementService {
         for (CommanderZoneFullClear fullClear : commanderZoneFullClearRepository.findByCommanderId(commanderId))
             context.fullyClearedZoneNumbers.add(fullClear.getZoneNumber());
 
-        context.hullTierCounts = new HashMap<>();
-        context.moduleTierCounts = new HashMap<>();
+        // 티어 이상 인정 — 함선/모듈 하나가 자기 티어 이하의 모든 티어 키에 1씩 기여함(티어6 1개 = 티어1~6 조건 각각 1개)
+        context.hullAtOrAboveTierCounts = new HashMap<>();
+        context.moduleAtOrAboveTierCounts = new HashMap<>();
         if (activeFleet != null && activeFleet.getShips() != null) {
             for (Ship ship : activeFleet.getShips()) {
                 int hullTier = GameDataService.parseTierFromHullSubType(ship.getHullSubType());
-                context.hullTierCounts.merge(hullTier, 1, Integer::sum);
+                for (int tier = 1; tier <= hullTier; tier++)
+                    context.hullAtOrAboveTierCounts.merge(tier, 1, Integer::sum);
 
                 if (ship.getModules() == null) continue;
                 for (Module module : ship.getModules()) {
                     int moduleTier = GameDataService.parseTierFromHullSubType(module.getModuleSubType());
-                    String moduleTierKey = module.getModuleType() + "_" + moduleTier;
-                    context.moduleTierCounts.merge(moduleTierKey, 1, Integer::sum);
+                    for (int tier = 1; tier <= moduleTier; tier++) {
+                        String moduleTierKey = module.getModuleType() + "_" + tier;
+                        context.moduleAtOrAboveTierCounts.merge(moduleTierKey, 1, Integer::sum);
+                    }
                 }
             }
         }
@@ -276,14 +291,22 @@ public class AchievementService {
             case ExplorationPointTotal:
                 return commander.getExplorationPointEarnedTotal();
             case HullTierCount:
-                return context.hullTierCounts.getOrDefault(Integer.parseInt(entry.conditionParam), 0);
+                int liveHullCount = context.hullAtOrAboveTierCounts.getOrDefault(Integer.parseInt(entry.conditionParam), 0);
+                return applyReachedFloor(context, entry, liveHullCount);
             case ModuleTierCount:
-                return context.moduleTierCounts.getOrDefault(entry.conditionParam, 0);
+                int liveModuleCount = context.moduleAtOrAboveTierCounts.getOrDefault(entry.conditionParam, 0);
+                return applyReachedFloor(context, entry, liveModuleCount);
             case HullUnlocked:
                 return context.unlockedHullSubTypes.contains(entry.conditionParam) ? 1 : 0;
             default:
                 return 0;
         }
+    }
+
+    // 함대 구성 기반 업적은 한번 달성하면 장비를 바꿔도 완료 유지 — 달성 기록이 있으면 라이브 개수와 무관하게 최소 threshold로 취급
+    private int applyReachedFloor(AchievementProgressContext context, GameDataService.AchievementEntry entry, int liveCount) {
+        if (context.reachedAchievementIds.contains(entry.achievementId) == false) return liveCount;
+        return Math.max(liveCount, entry.threshold);
     }
 
     // 조건 타입별 현재 진행도 계산(단일 업적 경로) — claimAchievement()는 항목 하나만 판정하므로 컨텍스트 전체를 모을 필요 없이 필요한 값만 직접 조회
@@ -311,9 +334,11 @@ public class AchievementService {
             case ExplorationPointTotal:
                 return commander.getExplorationPointEarnedTotal();
             case HullTierCount:
-                return countHullTier(activeFleet, Integer.parseInt(entry.conditionParam));
+                int liveHullCount = countHullAtOrAboveTier(activeFleet, Integer.parseInt(entry.conditionParam));
+                return applyReachedFloorDirect(commander, entry, liveHullCount);
             case ModuleTierCount:
-                return countModuleTier(activeFleet, entry.conditionParam);
+                int liveModuleCount = countModuleAtOrAboveTier(activeFleet, entry.conditionParam);
+                return applyReachedFloorDirect(commander, entry, liveModuleCount);
             case HullUnlocked:
                 return commanderUnlockedHullRepository.existsByCommanderIdAndHullSubType(commander.getId(), entry.conditionParam) ? 1 : 0;
             default:
@@ -321,18 +346,52 @@ public class AchievementService {
         }
     }
 
-    private int countHullTier(Fleet activeFleet, int tier) {
+    // applyReachedFloor의 단일 조회 버전 — 컨텍스트 없이 달성 기록 1건만 직접 조회
+    private int applyReachedFloorDirect(Commander commander, GameDataService.AchievementEntry entry, int liveCount) {
+        boolean reached = commanderAchievementReachedRepository.existsByCommanderIdAndAchievementId(commander.getId(), entry.achievementId);
+        if (reached == false) return liveCount;
+        return Math.max(liveCount, entry.threshold);
+    }
+
+    // 함대 구성이 바뀐 직후 호출 — 티어 이상 조건을 지금 충족한 함대 구성 업적을 달성 기록으로 남겨, 이후 장비를 바꿔도 완료가 유지되게 함
+    @Transactional
+    public void recordReachedTierAchievements(Commander commander, Fleet fleet) {
+        Set<String> reachedIds = new HashSet<>();
+        for (CommanderAchievementReached reached : commanderAchievementReachedRepository.findByCommanderId(commander.getId()))
+            reachedIds.add(reached.getAchievementId());
+
+        for (GameDataService.AchievementEntry entry : gameDataService.getAchievementList()) {
+            boolean isTierAchievement = entry.conditionType == EAchievementConditionType.HullTierCount
+                    || entry.conditionType == EAchievementConditionType.ModuleTierCount;
+            if (isTierAchievement == false) continue;
+            if (reachedIds.contains(entry.achievementId) == true) continue;
+
+            int liveCount = countLiveTierAchievement(fleet, entry);
+            if (liveCount < entry.threshold) continue;
+
+            commanderAchievementReachedRepository.save(new CommanderAchievementReached(commander.getId(), entry.achievementId));
+        }
+    }
+
+    // 함대 구성 기반 업적의 현재 장착 기준 개수(달성 기록 미반영) — 업적 항목 수만큼 DB 조회하지 않도록 기록 판정 전용으로 분리
+    private int countLiveTierAchievement(Fleet activeFleet, GameDataService.AchievementEntry entry) {
+        if (entry.conditionType == EAchievementConditionType.HullTierCount)
+            return countHullAtOrAboveTier(activeFleet, Integer.parseInt(entry.conditionParam));
+        return countModuleAtOrAboveTier(activeFleet, entry.conditionParam);
+    }
+
+    private int countHullAtOrAboveTier(Fleet activeFleet, int tier) {
         if (activeFleet == null || activeFleet.getShips() == null) return 0;
         int count = 0;
         for (Ship ship : activeFleet.getShips()) {
-            if (GameDataService.parseTierFromHullSubType(ship.getHullSubType()) == tier)
+            if (GameDataService.parseTierFromHullSubType(ship.getHullSubType()) >= tier)
                 count++;
         }
         return count;
     }
 
-    // conditionParam 형식: "{EModuleType 이름}_{티어}" (예: "beam_2")
-    private int countModuleTier(Fleet activeFleet, String conditionParam) {
+    // conditionParam 형식: "{EModuleType 이름}_{티어}" (예: "beam_2") — 해당 카테고리에서 그 티어 이상인 모듈을 셈
+    private int countModuleAtOrAboveTier(Fleet activeFleet, String conditionParam) {
         if (activeFleet == null || activeFleet.getShips() == null) return 0;
         int separatorIndex = conditionParam.lastIndexOf('_');
         if (separatorIndex < 0) return 0;
@@ -344,7 +403,7 @@ public class AchievementService {
             if (ship.getModules() == null) continue;
             for (Module module : ship.getModules()) {
                 if (module.getModuleType() == targetModuleType
-                        && GameDataService.parseTierFromHullSubType(module.getModuleSubType()) == targetTier)
+                        && GameDataService.parseTierFromHullSubType(module.getModuleSubType()) >= targetTier)
                     count++;
             }
         }

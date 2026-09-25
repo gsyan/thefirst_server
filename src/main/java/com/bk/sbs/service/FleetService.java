@@ -27,6 +27,7 @@ public class FleetService {
     private final GameDataService gameDataService;
     private final FleetRepository fleetRepository;
     private final CommanderUnlockedHullRepository commanderUnlockedHullRepository;
+    private final AchievementService achievementService;
 
     // 신규 커맨더에게 지급되는 기본 함대(fleetIndex=0)의 초기 함선 — 함체 hull_3_1_11100(빔1/미사일1/격납고1) + 기본 빔1 장착
     private static final String DEFAULT_FLEET_HULL_SUB_TYPE = "hull_3_1_11100";
@@ -37,11 +38,13 @@ public class FleetService {
     public FleetService(CommanderRepository commanderRepository,
                        GameDataService gameDataService,
                        FleetRepository fleetRepository,
-                       CommanderUnlockedHullRepository commanderUnlockedHullRepository) {
+                       CommanderUnlockedHullRepository commanderUnlockedHullRepository,
+                       AchievementService achievementService) {
         this.commanderRepository = commanderRepository;
         this.gameDataService = gameDataService;
         this.fleetRepository = fleetRepository;
         this.commanderUnlockedHullRepository = commanderUnlockedHullRepository;
+        this.achievementService = achievementService;
     }
 
     // 신규 커맨더 생성 시 기본 함대(fleetIndex=0) 생성
@@ -170,6 +173,7 @@ public class FleetService {
         ship.setFront(request.getIsFront());
         replaceShipModules(ship, keptModules);
         fleetRepository.save(fleet);
+        achievementService.recordReachedTierAchievements(commander, fleet);
     }
 
     // 티어4+ 함체를 업적포인트로 언락(구매) — 언락 완료 후에도 배치는 placeFleetShip을 통해 별도로 해야 함(여기선 구매만 처리)
@@ -475,6 +479,7 @@ public class FleetService {
         }
         replaceShipModules(ship, newModules);
         fleetRepository.save(fleet);
+        achievementService.recordReachedTierAchievements(commander, fleet);
 
         int remainingAfter = commander.getCommandPowerMax() - (usedByOtherShips + newShipCost);
 

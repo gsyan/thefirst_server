@@ -252,16 +252,13 @@ public class AccountService {
 
         // 6. jti 회전/재사용 검증. 유예 응답이면 새 jti를 발급하지 않고 현재 활성 jti를 그대로 재사용
         String presentedJti = jwtUtil.getJtiFromToken(refreshToken);
-        log.info("[임시로그] refreshToken 진입: accountId={} presentedJti={} 요청시각={}", accountId, presentedJti, java.time.Instant.now());
         String reusedActiveJti = resolveJtiForRotation(accountId, presentedJti);
 
         String newJti;
         if (reusedActiveJti != null) {
             newJti = reusedActiveJti;
-            log.info("[임시로그] refreshToken newJti 결정: accountId={} 분기=유예재사용(회전 안함) newJti={}", accountId, newJti);
         } else {
             newJti = UUID.randomUUID().toString();
-            log.info("[임시로그] refreshToken newJti 결정: accountId={} 분기=신규회전 oldJti={} newJti={}", accountId, presentedJti, newJti);
             rotateSession(accountId, presentedJti, newJti);
         }
 
@@ -277,10 +274,6 @@ public class AccountService {
             response.setRefreshToken(jwtUtil.createRefreshTokenWithCommanderAndJti(account.getId(), commanderId, newJti));
         }
 
-        // [임시로그] 클라에 실제로 응답이 나가는 시점의 jti — 이 로그가 있는데도 다음 접속 시 activeJti(redis)가
-        // 이 newJti가 아니라면, 응답 전송은 성공했는데 그 이후 Redis 쓰기가 유실/롤백된 것으로 확정 가능
-        log.info("[임시로그] refreshToken 응답 반환 직전: accountId={} 응답에 담긴 jti={} 반환시각={}", accountId, newJti, java.time.Instant.now());
-
         return response;
     }
 
@@ -290,44 +283,36 @@ public class AccountService {
         try {
             activeJti = redisService.getActiveJti(accountId);
         } catch (Exception e) {
-            log.error("[임시로그] 리프레시 jti 조회 실패, 검증을 건너뜀: accountId={}", accountId, e);
+            log.error("리프레시 jti 조회 실패, 검증을 건너뜀: accountId={}", accountId, e);
             return null;
         }
-        log.info("[임시로그] resolveJtiForRotation: accountId={} presentedJti={} activeJti(redis)={}", accountId, presentedJti, activeJti);
 
         // 구버전 토큰(jti 없음) 또는 아직 세션이 등록되지 않은 경우 → 검증 없이 통과 (마이그레이션 허용)
-        if (activeJti == null) {
-            log.info("[임시로그] resolveJtiForRotation 분기=activeJti가 null(마이그레이션 허용, 검증 통과): accountId={}", accountId);
+        if (activeJti == null)
             return null;
-        }
 
-        if (activeJti.equals(presentedJti)) {
-            log.info("[임시로그] resolveJtiForRotation 분기=presentedJti == activeJti(정상, 회전 진행): accountId={}", accountId);
+        if (activeJti.equals(presentedJti))
             return null;
-        }
 
         boolean inGrace;
         try {
             inGrace = redisService.isJtiInGrace(accountId, presentedJti);
         } catch (Exception e) {
-            log.error("[임시로그] 리프레시 jti 유예 조회 실패, 검증을 건너뜀: accountId={}", accountId, e);
+            log.error("리프레시 jti 유예 조회 실패, 검증을 건너뜀: accountId={}", accountId, e);
             return null;
         }
-        log.info("[임시로그] resolveJtiForRotation: accountId={} presentedJti가 activeJti와 다름, inGrace={}", accountId, inGrace);
 
         if (inGrace == true) {
             // 응답 유실로 인한 재시도로 판단 → 세션 유지, 최신 jti를 다시 내려줌
-            log.info("[임시로그] resolveJtiForRotation 분기=유예기간 내 재시도로 판단, 세션 유지: accountId={}", accountId);
             return activeJti;
         }
 
         // 유예 기간도 지난 구 jti가 옴 → 탈취 의심, 전체 세션 폐기
-        log.warn("[임시로그] 리프레시 토큰 재사용 감지, 전체 세션 폐기: accountId={} presentedJti={} activeJti={}", accountId, presentedJti, activeJti);
-        log.warn("[임시로그] 재사용 감지 시점 Redis 진단: {}", redisService.getRedisDiagnosticInfo());
+        log.warn("리프레시 토큰 재사용 감지, 전체 세션 폐기: accountId={} presentedJti={} activeJti={}", accountId, presentedJti, activeJti);
         try {
             redisService.revokeAllSessions(accountId);
         } catch (Exception e) {
-            log.error("[임시로그] 재사용 감지 후 세션 폐기 실패: accountId={}", accountId, e);
+            log.error("재사용 감지 후 세션 폐기 실패: accountId={}", accountId, e);
         }
         throw new BusinessException(ServerErrorCode.REFRESH_TOKEN_FAIL_REUSE_DETECTED);
     }
@@ -335,19 +320,11 @@ public class AccountService {
     // 구 jti를 유예 상태로 남기고 새 jti를 활성 세션으로 등록
     private void rotateSession(Long accountId, String oldJti, String newJti) {
         long ttlSeconds = jwtUtil.getRefreshTokenValidity();
-        log.info("[임시로그] rotateSession 시작: accountId={} oldJti={} newJti={} ttlSeconds={}", accountId, oldJti, newJti, ttlSeconds);
         try {
             redisService.markJtiInGrace(accountId, oldJti);
             redisService.setActiveJti(accountId, newJti, ttlSeconds);
-
-            // [임시로그] 쓰기 직후 같은 요청 안에서 즉시 읽어와 실제로 반영됐는지 확인 (2106 재현 조사용)
-            String readBack = redisService.getActiveJti(accountId);
-            boolean bMatched = newJti.equals(readBack);
-            log.info("[임시로그] rotateSession Redis 반영 확인: accountId={} newJti={} readBack={} 일치={}", accountId, newJti, readBack, bMatched);
-            if (bMatched == false)
-                log.warn("[임시로그] rotateSession 직후 read-back 불일치! Redis 진단: {}", redisService.getRedisDiagnosticInfo());
         } catch (Exception e) {
-            log.error("[임시로그] 리프레시 세션 회전 실패: accountId={} oldJti={} newJti={}", accountId, oldJti, newJti, e);
+            log.error("리프레시 세션 회전 실패: accountId={} oldJti={} newJti={}", accountId, oldJti, newJti, e);
         }
     }
 
@@ -517,15 +494,10 @@ public class AccountService {
         } else {
             account = existing.get();
             // 정상 보호된 계정 — secret 검증 필수
-            if (presentedSecret == null || presentedSecret.trim().isEmpty()) {
-                log.warn("[임시로그] guestLogin secret 없음: accountId={}", account.getId());
+            if (presentedSecret == null || presentedSecret.trim().isEmpty())
                 throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GUEST_NULL_SECRET);
-            }
-            if (passwordEncoder.matches(presentedSecret, account.getGuestSecret()) == false) {
-                log.warn("[임시로그] guestLogin secret 불일치: accountId={}", account.getId());
+            if (passwordEncoder.matches(presentedSecret, account.getGuestSecret()) == false)
                 throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GUEST_SECRET_MISMATCH);
-            }
-            log.info("[임시로그] guestLogin secret 검증 통과: accountId={}", account.getId());
         }
 
         String refreshToken = jwtUtil.createRefreshToken(account.getId());

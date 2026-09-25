@@ -296,15 +296,6 @@ public class ExplorationService {
         redisService.deletePendingZoneRunChallenge(commanderId);
     }
 
-    // 진단 로그용 진행중 런 요약 — "none" 또는 id/zone/현재 셀
-    private String describeRun(Optional<ZoneRun> runOpt) {
-        if (runOpt.isPresent() == false)
-            return "none";
-
-        ZoneRun run = runOpt.get();
-        return "id=" + run.getId() + ",zone=" + run.getZoneNumber() + ",cell=" + run.getCurrentRow() + "-" + run.getCurrentCol();
-    }
-
     // 요청 셀이 (fromRow,fromCol) 기준 4방향 인접인지 + Blocked가 아닌지 검증 — 클라가 보낸 좌표를 신뢰하지 않음
     private void validateCellChallenge(ZoneConfigData zoneConfig, int fromRow, int fromCol, int toRow, int toCol) {
         int deltaRow = Math.abs(fromRow - toRow);
@@ -328,8 +319,6 @@ public class ExplorationService {
             throw new BusinessException(ServerErrorCode.EXPLORATION_FAIL_ZONE_NOT_FOUND);
 
         Optional<ZoneRun> activeRunOpt = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS);
-        log.info("[ExploreDiagLOG] enter commanderId={} reqZone={} reqCell={}-{} activeRun={}",
-                commanderId, request.getZoneNumber(), request.getCellRow(), request.getCellCol(), describeRun(activeRunOpt));
 
         // 다른 존에 진행 중인 런이 있으면 확인 없이는 진행 불가 — ZoneRun은 이제 항상 클리어 로그 최소 1개와 함께 생성되므로
         // (첫 셀 클리어 전엔 ZoneRun 자체가 없음) "진행도 0인 런"이라는 상태가 더 이상 존재하지 않아 조용히 정리할 필요도 없어짐
@@ -383,8 +372,6 @@ public class ExplorationService {
             run.setActiveChallengeCell(request.getCellRow() + "-" + request.getCellCol());
             run.setActiveChallengeIssuedAt(Instant.now());
             zoneRunRepository.save(run);
-            log.info("[ExploreDiagLOG] enter token issued(run) commanderId={} runId={} zone={} cell={}",
-                    commanderId, run.getId(), request.getZoneNumber(), run.getActiveChallengeCell());
 
             return EnterExplorationCellResponse.builder()
                     .zoneNumber(request.getZoneNumber())
@@ -427,7 +414,6 @@ public class ExplorationService {
         String challengeToken = java.util.UUID.randomUUID().toString();
         String cell = request.getCellRow() + "-" + request.getCellCol();
         redisService.savePendingZoneRunChallenge(commanderId, request.getZoneNumber(), cell, challengeToken);
-        log.info("[ExploreDiagLOG] enter token issued(pending) commanderId={} zone={} cell={}", commanderId, request.getZoneNumber(), cell);
 
         return EnterExplorationCellResponse.builder()
                 .zoneNumber(request.getZoneNumber())
@@ -451,8 +437,6 @@ public class ExplorationService {
 
         // 첫 셀(이 존에 진행 중인 런이 아직 없음) 여부 — true면 아래에서 Redis 챌린지 검증 후 이 시점에 ZoneRun을 새로 만듦
         boolean isFirstCellOfNewRun = activeRunOpt.isPresent() == false;
-        log.info("[ExploreDiagLOG] clear commanderId={} reqZone={} reqCell={}-{} isFirstCellOfNewRun={} activeRun={}",
-                commanderId, request.getZoneNumber(), request.getCellRow(), request.getCellCol(), isFirstCellOfNewRun, describeRun(activeRunOpt));
 
         ZoneRun run;
         if (isFirstCellOfNewRun == false) {
@@ -470,7 +454,6 @@ public class ExplorationService {
 
             run = new ZoneRun(commanderId, request.getZoneNumber(), startCell.getRow(), startCell.getCol(), commander.getTacticPowerMax());
             run = zoneRunRepository.save(run);
-            log.info("[ExploreDiagLOG] clear new run created commanderId={} runId={} zone={}", commanderId, run.getId(), run.getZoneNumber());
         }
 
         // 재방문(이 런에서 이미 클리어 로그가 있는 셀)은 패스 — 포인트/경험치/보상카드 재지급 없이 위치만 갱신
@@ -550,10 +533,6 @@ public class ExplorationService {
             rerollRemain = getRewardCardRerollRemain(commander, config.getExploration().getRewardCardRerollLimit());
         }
 
-        int candidateCount = rewardCardCandidates != null ? rewardCardCandidates.size() : 0;
-        log.info("[ExploreDiagLOG] clear done commanderId={} runId={} runZone={} cell={} isRevisit={} candidateCount={}",
-                commanderId, run.getId(), run.getZoneNumber(), cell, isRevisit, candidateCount);
-
         return ClearExplorationCellResponse.builder()
                 .explorationPointGained(pointsGained)
                 .expGained(expGained)
@@ -585,11 +564,7 @@ public class ExplorationService {
 
     @Transactional
     public ConfirmRewardCardResponse confirmRewardCard(Long commanderId, ConfirmRewardCardRequest request) {
-        Optional<ZoneRun> inProgressRunOpt = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS);
-        log.info("[ExploreDiagLOG] confirm commanderId={} reqZone={} reqCell={}-{} cardId={} inProgressRun={}",
-                commanderId, request.getZoneNumber(), request.getCellRow(), request.getCellCol(), request.getSelectedCardId(), describeRun(inProgressRunOpt));
-
-        ZoneRun run = inProgressRunOpt
+        ZoneRun run = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS)
                 .filter(r -> r.getZoneNumber() == request.getZoneNumber())
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_NO_ACTIVE_RUN));
 
@@ -619,7 +594,6 @@ public class ExplorationService {
 
         clearLog.setRewardCardSelectedId(request.getSelectedCardId());
         zoneCellClearLogRepository.save(clearLog);
-        log.info("[ExploreDiagLOG] confirm ok commanderId={} runId={} cell={} cardId={}", commanderId, run.getId(), cell, request.getSelectedCardId());
 
         return ConfirmRewardCardResponse.builder()
                 .selectedCardId(request.getSelectedCardId())
@@ -735,8 +709,6 @@ public class ExplorationService {
     // payoutRatio는 isSuccess와 별개 파라미터 — isSuccess는 run 상태(ESCAPED/ABANDONED)·최고클리어존 갱신에만
     // 쓰이고, 실제 지급 비율은 호출부가 상황(탈출 실패 50% / 포기 20% / 포기+광고 100%)에 맞게 넘김
     private RunSettlement settleZoneRun(Commander commander, ZoneRun run, boolean isSuccess, float payoutRatio) {
-        log.info("[ExploreDiagLOG] settle commanderId={} runId={} zone={} isSuccess={} payoutRatio={}",
-                commander.getId(), run.getId(), run.getZoneNumber(), isSuccess, payoutRatio);
         // Buff_ExplorationPointRate 배율은 여기(최종 확정 지급 시점)에서만 한 번 적용 — payoutRatio와 무관하게
         // 이번 런에서 선택 확정된 카드 기준으로 최종 적립 총액에 곱함. 반올림 대신 올림 사용 —
         // 배율이 작을 때(예: 1% 카드 1장, 적립 30) Math.round(30*1.01f)=30으로 뭉개져 카드 효과가 사라지는 것을 방지
