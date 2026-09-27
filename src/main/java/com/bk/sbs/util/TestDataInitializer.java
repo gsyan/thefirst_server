@@ -205,12 +205,12 @@ public class TestDataInitializer {
                 " JOIN account a ON a.id = c.account_id WHERE a.email LIKE 'guest\\_test%' ORDER BY s.id",
                 Long.class);
 
-        // 9. Module — buildDefaultModules와 동일하게 beam slot0=beam1 기본 장착
+        // 9. Module — FleetService.buildInitialFleetModules와 동일하게 beam slot0=beam_1_1 기본 장착
         List<Object[]> moduleRows = new ArrayList<>(count);
         for (Long shipId : shipIds)
             moduleRows.add(new Object[]{shipId});
         jdbc.batchUpdate(
-                "INSERT INTO module (ship_id, module_type, slot_index, module_sub_type) VALUES (?, 'beam', 0, 'beam1')",
+                "INSERT INTO module (ship_id, module_type, slot_index, module_sub_type) VALUES (?, 'beam', 0, 'beam_1_1')",
                 moduleRows, BATCH_SIZE, (ps, row) -> {
                     ps.setLong(1, (Long) row[0]);
                 });
