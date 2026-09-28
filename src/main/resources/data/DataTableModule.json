@@ -6,6 +6,8 @@
         "moduleSubType": "hull_1_1_10000",
         "statPoint": 100,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
         "moduleSlots": [
           {
@@ -43,6 +45,8 @@
         "moduleSubType": "hull_2_1_11000",
         "statPoint": 200,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
         "moduleSlots": [
           {
@@ -84,6 +88,8 @@
         "moduleSubType": "hull_3_1_11100",
         "statPoint": 300,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
         "moduleSlots": [
           {
@@ -129,6 +135,8 @@
         "moduleSubType": "hull_4_1_21100",
         "statPoint": 400,
         "unlockAchievementPointCost": 500,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
         "moduleSlots": [
           {
@@ -176,8 +184,10 @@
       {
         "moduleName": "hull_5_1_22100",
         "moduleSubType": "hull_5_1_22100",
-        "statPoint": 500,
-        "unlockAchievementPointCost": 1000,
+        "statPoint": 1000,
+        "unlockAchievementPointCost": 2000,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
         "moduleSlots": [
           {
@@ -227,181 +237,12 @@
         "interceptorRegenTime": 0.0
       },
       {
-        "moduleName": "hull_6_1_22200",
-        "moduleSubType": "hull_6_1_22200",
-        "statPoint": 600,
-        "unlockAchievementPointCost": 2000,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          }
-        ],
-        "health": 600.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
-        "moduleName": "hull_6_1_22201",
-        "moduleSubType": "hull_6_1_22201",
-        "statPoint": 1200,
-        "unlockAchievementPointCost": 2500,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          }
-        ],
-        "health": 600.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
-        "moduleName": "hull_6_1_22210",
-        "moduleSubType": "hull_6_1_22210",
-        "statPoint": 1200,
-        "unlockAchievementPointCost": 2500,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          }
-        ],
-        "health": 600.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
         "moduleName": "hull_6_1_22211",
         "moduleSubType": "hull_6_1_22211",
-        "statPoint": 1800,
-        "unlockAchievementPointCost": 3000,
+        "statPoint": 2000,
+        "unlockAchievementPointCost": 4000,
+        "shieldUnlockAchievementPointCost": 500,
+        "interceptorUnlockAchievementPointCost": 500,
         "description": "",
         "moduleSlots": [
           {
@@ -430,189 +271,6 @@
           }
         ],
         "health": 600.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
-        "moduleName": "hull_7_1_32200",
-        "moduleSubType": "hull_7_1_32200",
-        "statPoint": 700,
-        "unlockAchievementPointCost": 3000,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          }
-        ],
-        "health": 700.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
-        "moduleName": "hull_7_1_32201",
-        "moduleSubType": "hull_7_1_32201",
-        "statPoint": 1400,
-        "unlockAchievementPointCost": 3500,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          }
-        ],
-        "health": 700.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
-        "moduleName": "hull_7_1_32210",
-        "moduleSubType": "hull_7_1_32210",
-        "statPoint": 1400,
-        "unlockAchievementPointCost": 3500,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          }
-        ],
-        "health": 700.0,
         "repair": 0.0,
         "speed": 1.0,
         "turnRate": 1.0,
@@ -640,8 +298,10 @@
       {
         "moduleName": "hull_7_1_32211",
         "moduleSubType": "hull_7_1_32211",
-        "statPoint": 2100,
-        "unlockAchievementPointCost": 4000,
+        "statPoint": 4000,
+        "unlockAchievementPointCost": 8000,
+        "shieldUnlockAchievementPointCost": 1000,
+        "interceptorUnlockAchievementPointCost": 1000,
         "description": "",
         "moduleSlots": [
           {
@@ -699,205 +359,12 @@
         "interceptorRegenTime": 0.0
       },
       {
-        "moduleName": "hull_8_1_33200",
-        "moduleSubType": "hull_8_1_33200",
-        "statPoint": 800,
-        "unlockAchievementPointCost": 4000,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          }
-        ],
-        "health": 800.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
-        "moduleName": "hull_8_1_33201",
-        "moduleSubType": "hull_8_1_33201",
-        "statPoint": 1600,
-        "unlockAchievementPointCost": 4500,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          }
-        ],
-        "health": 800.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
-        "moduleName": "hull_8_1_33210",
-        "moduleSubType": "hull_8_1_33210",
-        "statPoint": 1600,
-        "unlockAchievementPointCost": 4500,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          }
-        ],
-        "health": 800.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
         "moduleName": "hull_8_1_33211",
         "moduleSubType": "hull_8_1_33211",
-        "statPoint": 2400,
-        "unlockAchievementPointCost": 5000,
+        "statPoint": 8000,
+        "unlockAchievementPointCost": 16000,
+        "shieldUnlockAchievementPointCost": 2000,
+        "interceptorUnlockAchievementPointCost": 2000,
         "description": "",
         "moduleSlots": [
           {
@@ -934,213 +401,6 @@
           }
         ],
         "health": 800.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
-        "moduleName": "hull_9_1_33300",
-        "moduleSubType": "hull_9_1_33300",
-        "statPoint": 900,
-        "unlockAchievementPointCost": 5000,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 2
-          }
-        ],
-        "health": 900.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
-        "moduleName": "hull_9_1_33301",
-        "moduleSubType": "hull_9_1_33301",
-        "statPoint": 1800,
-        "unlockAchievementPointCost": 5500,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 2
-          }
-        ],
-        "health": 900.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
-        "moduleName": "hull_9_1_33310",
-        "moduleSubType": "hull_9_1_33310",
-        "statPoint": 1800,
-        "unlockAchievementPointCost": 5500,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 2
-          }
-        ],
-        "health": 900.0,
         "repair": 0.0,
         "speed": 1.0,
         "turnRate": 1.0,
@@ -1168,8 +428,10 @@
       {
         "moduleName": "hull_9_1_33311",
         "moduleSubType": "hull_9_1_33311",
-        "statPoint": 2700,
-        "unlockAchievementPointCost": 6000,
+        "statPoint": 16000,
+        "unlockAchievementPointCost": 32000,
+        "shieldUnlockAchievementPointCost": 4000,
+        "interceptorUnlockAchievementPointCost": 4000,
         "description": "",
         "moduleSlots": [
           {
@@ -1235,229 +497,12 @@
         "interceptorRegenTime": 0.0
       },
       {
-        "moduleName": "hull_10_1_43300",
-        "moduleSubType": "hull_10_1_43300",
-        "statPoint": 1500,
-        "unlockAchievementPointCost": 6000,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 2
-          }
-        ],
-        "health": 1000.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
-        "moduleName": "hull_10_1_43301",
-        "moduleSubType": "hull_10_1_43301",
-        "statPoint": 3000,
-        "unlockAchievementPointCost": 6500,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 2
-          }
-        ],
-        "health": 1000.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
-        "moduleName": "hull_10_1_43310",
-        "moduleSubType": "hull_10_1_43310",
-        "statPoint": 3000,
-        "unlockAchievementPointCost": 6500,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 2
-          }
-        ],
-        "health": 1000.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
         "moduleName": "hull_10_1_43311",
         "moduleSubType": "hull_10_1_43311",
-        "statPoint": 4500,
-        "unlockAchievementPointCost": 7000,
+        "statPoint": 32000,
+        "unlockAchievementPointCost": 64000,
+        "shieldUnlockAchievementPointCost": 8000,
+        "interceptorUnlockAchievementPointCost": 8000,
         "description": "",
         "moduleSlots": [
           {
@@ -1502,237 +547,6 @@
           }
         ],
         "health": 1000.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
-        "moduleName": "hull_11_1_44300",
-        "moduleSubType": "hull_11_1_44300",
-        "statPoint": 2000,
-        "unlockAchievementPointCost": 7000,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 2
-          }
-        ],
-        "health": 1100.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
-        "moduleName": "hull_11_1_44301",
-        "moduleSubType": "hull_11_1_44301",
-        "statPoint": 4000,
-        "unlockAchievementPointCost": 7500,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 2
-          }
-        ],
-        "health": 1100.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
-        "moduleName": "hull_11_1_44310",
-        "moduleSubType": "hull_11_1_44310",
-        "statPoint": 4000,
-        "unlockAchievementPointCost": 7500,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 2
-          }
-        ],
-        "health": 1100.0,
         "repair": 0.0,
         "speed": 1.0,
         "turnRate": 1.0,
@@ -1760,8 +574,10 @@
       {
         "moduleName": "hull_11_1_44311",
         "moduleSubType": "hull_11_1_44311",
-        "statPoint": 6000,
-        "unlockAchievementPointCost": 8000,
+        "statPoint": 64000,
+        "unlockAchievementPointCost": 128000,
+        "shieldUnlockAchievementPointCost": 16000,
+        "interceptorUnlockAchievementPointCost": 16000,
         "description": "",
         "moduleSlots": [
           {
@@ -1835,253 +651,12 @@
         "interceptorRegenTime": 0.0
       },
       {
-        "moduleName": "hull_12_1_44400",
-        "moduleSubType": "hull_12_1_44400",
-        "statPoint": 2500,
-        "unlockAchievementPointCost": 8000,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 3
-          }
-        ],
-        "health": 1200.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
-        "moduleName": "hull_12_1_44401",
-        "moduleSubType": "hull_12_1_44401",
-        "statPoint": 5000,
-        "unlockAchievementPointCost": 8500,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 3
-          }
-        ],
-        "health": 1200.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
-        "moduleName": "hull_12_1_44410",
-        "moduleSubType": "hull_12_1_44410",
-        "statPoint": 5000,
-        "unlockAchievementPointCost": 8500,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 3
-          }
-        ],
-        "health": 1200.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
         "moduleName": "hull_12_1_44411",
         "moduleSubType": "hull_12_1_44411",
-        "statPoint": 7500,
-        "unlockAchievementPointCost": 9000,
+        "statPoint": 128000,
+        "unlockAchievementPointCost": 256000,
+        "shieldUnlockAchievementPointCost": 32000,
+        "interceptorUnlockAchievementPointCost": 32000,
         "description": "",
         "moduleSlots": [
           {
@@ -2134,261 +709,6 @@
           }
         ],
         "health": 1200.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
-        "moduleName": "hull_13_1_54400",
-        "moduleSubType": "hull_13_1_54400",
-        "statPoint": 3000,
-        "unlockAchievementPointCost": 9000,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 4
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 3
-          }
-        ],
-        "health": 1300.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
-        "moduleName": "hull_13_1_54401",
-        "moduleSubType": "hull_13_1_54401",
-        "statPoint": 6000,
-        "unlockAchievementPointCost": 9500,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 4
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 3
-          }
-        ],
-        "health": 1300.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
-        "moduleName": "hull_13_1_54410",
-        "moduleSubType": "hull_13_1_54410",
-        "statPoint": 6000,
-        "unlockAchievementPointCost": 9500,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 4
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 3
-          }
-        ],
-        "health": 1300.0,
         "repair": 0.0,
         "speed": 1.0,
         "turnRate": 1.0,
@@ -2416,8 +736,10 @@
       {
         "moduleName": "hull_13_1_54411",
         "moduleSubType": "hull_13_1_54411",
-        "statPoint": 9000,
-        "unlockAchievementPointCost": 10000,
+        "statPoint": 256000,
+        "unlockAchievementPointCost": 512000,
+        "shieldUnlockAchievementPointCost": 64000,
+        "interceptorUnlockAchievementPointCost": 64000,
         "description": "",
         "moduleSlots": [
           {
@@ -2499,277 +821,12 @@
         "interceptorRegenTime": 0.0
       },
       {
-        "moduleName": "hull_14_1_55400",
-        "moduleSubType": "hull_14_1_55400",
-        "statPoint": 3500,
-        "unlockAchievementPointCost": 10000,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 4
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 4
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 3
-          }
-        ],
-        "health": 1400.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
-        "moduleName": "hull_14_1_55401",
-        "moduleSubType": "hull_14_1_55401",
-        "statPoint": 7000,
-        "unlockAchievementPointCost": 10500,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 4
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 4
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 3
-          }
-        ],
-        "health": 1400.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
-        "moduleName": "hull_14_1_55410",
-        "moduleSubType": "hull_14_1_55410",
-        "statPoint": 7000,
-        "unlockAchievementPointCost": 10500,
-        "description": "",
-        "moduleSlots": [
-          {
-            "moduleType": "beam",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "beam",
-            "slotIndex": 4
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 3
-          },
-          {
-            "moduleType": "missile",
-            "slotIndex": 4
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 0
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 1
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 2
-          },
-          {
-            "moduleType": "hangar",
-            "slotIndex": 3
-          }
-        ],
-        "health": 1400.0,
-        "repair": 0.0,
-        "speed": 1.0,
-        "turnRate": 1.0,
-        "attack": 0.0,
-        "splashRadius": 0.0,
-        "attackCool": 0.0,
-        "silenceTime": 0.0,
-        "airCount": 0,
-        "airMaintenanceTime": 0.0,
-        "airHealth": 0.0,
-        "airAttackToShip": 0.0,
-        "airAttackToFighter": 0.0,
-        "airAttackRange": 0.0,
-        "airAttackCool": 0.0,
-        "airSpeed": 0.0,
-        "airAmmo": 0,
-        "airDetectRadius": 0.0,
-        "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 0,
-        "interceptorRegenTime": 0.0
-      },
-      {
         "moduleName": "hull_14_1_55411",
         "moduleSubType": "hull_14_1_55411",
-        "statPoint": 10500,
-        "unlockAchievementPointCost": 11000,
+        "statPoint": 512000,
+        "unlockAchievementPointCost": 1024000,
+        "shieldUnlockAchievementPointCost": 128000,
+        "interceptorUnlockAchievementPointCost": 128000,
         "description": "",
         "moduleSlots": [
           {
@@ -2861,8 +918,10 @@
         "moduleSubType": "beam_1_1",
         "statPoint": 100,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 200.0,
@@ -2893,8 +952,10 @@
         "moduleSubType": "beam_2_1",
         "statPoint": 200,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 200.0,
@@ -2925,8 +986,10 @@
         "moduleSubType": "beam_3_1",
         "statPoint": 300,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 200.0,
@@ -2957,8 +1020,10 @@
         "moduleSubType": "beam_4_1",
         "statPoint": 400,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 200.0,
@@ -2989,8 +1054,10 @@
         "moduleSubType": "beam_5_1",
         "statPoint": 500,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 200.0,
@@ -3021,8 +1088,10 @@
         "moduleSubType": "beam_6_1",
         "statPoint": 600,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 200.0,
@@ -3053,8 +1122,10 @@
         "moduleSubType": "beam_7_1",
         "statPoint": 700,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 200.0,
@@ -3085,8 +1156,10 @@
         "moduleSubType": "beam_8_1",
         "statPoint": 800,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 200.0,
@@ -3117,8 +1190,10 @@
         "moduleSubType": "beam_9_1",
         "statPoint": 900,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 200.0,
@@ -3149,8 +1224,10 @@
         "moduleSubType": "beam_10_1",
         "statPoint": 1000,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 200.0,
@@ -3181,8 +1258,10 @@
         "moduleSubType": "beam_11_1",
         "statPoint": 1100,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 200.0,
@@ -3213,8 +1292,10 @@
         "moduleSubType": "beam_12_1",
         "statPoint": 1200,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 200.0,
@@ -3245,8 +1326,10 @@
         "moduleSubType": "beam_13_1",
         "statPoint": 1300,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 200.0,
@@ -3277,8 +1360,10 @@
         "moduleSubType": "beam_14_1",
         "statPoint": 1400,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 200.0,
@@ -3311,8 +1396,10 @@
         "moduleSubType": "missile_1_1",
         "statPoint": 100,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 10.0,
@@ -3343,8 +1430,10 @@
         "moduleSubType": "missile_2_1",
         "statPoint": 200,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 10.0,
@@ -3375,8 +1464,10 @@
         "moduleSubType": "missile_3_1",
         "statPoint": 300,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 10.0,
@@ -3407,8 +1498,10 @@
         "moduleSubType": "missile_4_1",
         "statPoint": 400,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 10.0,
@@ -3439,8 +1532,10 @@
         "moduleSubType": "missile_5_1",
         "statPoint": 500,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 10.0,
@@ -3471,8 +1566,10 @@
         "moduleSubType": "missile_6_1",
         "statPoint": 600,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 10.0,
@@ -3503,8 +1600,10 @@
         "moduleSubType": "missile_7_1",
         "statPoint": 700,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 10.0,
@@ -3535,8 +1634,10 @@
         "moduleSubType": "missile_8_1",
         "statPoint": 800,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 10.0,
@@ -3567,8 +1668,10 @@
         "moduleSubType": "missile_9_1",
         "statPoint": 900,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 10.0,
@@ -3599,8 +1702,10 @@
         "moduleSubType": "missile_10_1",
         "statPoint": 1000,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 10.0,
@@ -3631,8 +1736,10 @@
         "moduleSubType": "missile_11_1",
         "statPoint": 1100,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 10.0,
@@ -3663,8 +1770,10 @@
         "moduleSubType": "missile_12_1",
         "statPoint": 1200,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 10.0,
@@ -3695,8 +1804,10 @@
         "moduleSubType": "missile_13_1",
         "statPoint": 1300,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 10.0,
@@ -3727,8 +1838,10 @@
         "moduleSubType": "missile_14_1",
         "statPoint": 1400,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 10.0,
@@ -3761,8 +1874,10 @@
         "moduleSubType": "hangar_1_1",
         "statPoint": 100,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -3793,8 +1908,10 @@
         "moduleSubType": "hangar_2_1",
         "statPoint": 200,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -3825,8 +1942,10 @@
         "moduleSubType": "hangar_3_1",
         "statPoint": 300,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -3857,8 +1976,10 @@
         "moduleSubType": "hangar_4_1",
         "statPoint": 400,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -3889,8 +2010,10 @@
         "moduleSubType": "hangar_5_1",
         "statPoint": 500,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -3921,8 +2044,10 @@
         "moduleSubType": "hangar_6_1",
         "statPoint": 600,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -3953,8 +2078,10 @@
         "moduleSubType": "hangar_7_1",
         "statPoint": 700,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -3985,8 +2112,10 @@
         "moduleSubType": "hangar_8_1",
         "statPoint": 800,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4017,8 +2146,10 @@
         "moduleSubType": "hangar_9_1",
         "statPoint": 900,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4049,8 +2180,10 @@
         "moduleSubType": "hangar_10_1",
         "statPoint": 1000,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4081,8 +2214,10 @@
         "moduleSubType": "hangar_11_1",
         "statPoint": 1100,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4113,8 +2248,10 @@
         "moduleSubType": "hangar_12_1",
         "statPoint": 1200,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4145,8 +2282,10 @@
         "moduleSubType": "hangar_13_1",
         "statPoint": 1300,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4177,8 +2316,10 @@
         "moduleSubType": "hangar_14_1",
         "statPoint": 1400,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4211,8 +2352,10 @@
         "moduleSubType": "shield_1_1",
         "statPoint": 100,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4232,9 +2375,9 @@
         "airAmmo": 0,
         "airDetectRadius": 0.0,
         "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 100.0,
-        "shieldRegenRate": 5.0,
+        "airDisrupt": 100.0,
+        "shieldGauge": 5.0,
+        "shieldRegenRate": 0.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
@@ -4243,8 +2386,10 @@
         "moduleSubType": "shield_2_1",
         "statPoint": 200,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4264,19 +2409,21 @@
         "airAmmo": 0,
         "airDetectRadius": 0.0,
         "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 200.0,
-        "shieldRegenRate": 10.0,
+        "airDisrupt": 200.0,
+        "shieldGauge": 10.0,
+        "shieldRegenRate": 0.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "shield_3_1",
         "moduleSubType": "shield_3_1",
-        "statPoint": 300,
+        "statPoint": 400,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4296,19 +2443,21 @@
         "airAmmo": 0,
         "airDetectRadius": 0.0,
         "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 300.0,
-        "shieldRegenRate": 15.0,
+        "airDisrupt": 300.0,
+        "shieldGauge": 15.0,
+        "shieldRegenRate": 0.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "shield_4_1",
         "moduleSubType": "shield_4_1",
-        "statPoint": 400,
+        "statPoint": 800,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4328,19 +2477,21 @@
         "airAmmo": 0,
         "airDetectRadius": 0.0,
         "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 400.0,
-        "shieldRegenRate": 20.0,
+        "airDisrupt": 400.0,
+        "shieldGauge": 20.0,
+        "shieldRegenRate": 0.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "shield_5_1",
         "moduleSubType": "shield_5_1",
-        "statPoint": 500,
+        "statPoint": 1600,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4360,19 +2511,21 @@
         "airAmmo": 0,
         "airDetectRadius": 0.0,
         "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 500.0,
-        "shieldRegenRate": 25.0,
+        "airDisrupt": 500.0,
+        "shieldGauge": 25.0,
+        "shieldRegenRate": 0.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "shield_6_1",
         "moduleSubType": "shield_6_1",
-        "statPoint": 600,
+        "statPoint": 3200,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4392,19 +2545,21 @@
         "airAmmo": 0,
         "airDetectRadius": 0.0,
         "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 600.0,
-        "shieldRegenRate": 30.0,
+        "airDisrupt": 600.0,
+        "shieldGauge": 30.0,
+        "shieldRegenRate": 0.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "shield_7_1",
         "moduleSubType": "shield_7_1",
-        "statPoint": 700,
+        "statPoint": 6400,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4424,19 +2579,21 @@
         "airAmmo": 0,
         "airDetectRadius": 0.0,
         "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 700.0,
-        "shieldRegenRate": 35.0,
+        "airDisrupt": 700.0,
+        "shieldGauge": 35.0,
+        "shieldRegenRate": 0.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "shield_8_1",
         "moduleSubType": "shield_8_1",
-        "statPoint": 800,
+        "statPoint": 12800,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4456,19 +2613,21 @@
         "airAmmo": 0,
         "airDetectRadius": 0.0,
         "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 800.0,
-        "shieldRegenRate": 40.0,
+        "airDisrupt": 800.0,
+        "shieldGauge": 40.0,
+        "shieldRegenRate": 0.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "shield_9_1",
         "moduleSubType": "shield_9_1",
-        "statPoint": 900,
+        "statPoint": 25600,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4488,19 +2647,21 @@
         "airAmmo": 0,
         "airDetectRadius": 0.0,
         "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 900.0,
-        "shieldRegenRate": 45.0,
+        "airDisrupt": 900.0,
+        "shieldGauge": 45.0,
+        "shieldRegenRate": 0.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "shield_10_1",
         "moduleSubType": "shield_10_1",
-        "statPoint": 1000,
+        "statPoint": 51200,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4520,19 +2681,21 @@
         "airAmmo": 0,
         "airDetectRadius": 0.0,
         "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 1000.0,
-        "shieldRegenRate": 50.0,
+        "airDisrupt": 1000.0,
+        "shieldGauge": 50.0,
+        "shieldRegenRate": 0.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "shield_11_1",
         "moduleSubType": "shield_11_1",
-        "statPoint": 1100,
+        "statPoint": 102400,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4552,19 +2715,21 @@
         "airAmmo": 0,
         "airDetectRadius": 0.0,
         "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 1100.0,
-        "shieldRegenRate": 55.0,
+        "airDisrupt": 1100.0,
+        "shieldGauge": 55.0,
+        "shieldRegenRate": 0.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "shield_12_1",
         "moduleSubType": "shield_12_1",
-        "statPoint": 1200,
+        "statPoint": 204800,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4584,19 +2749,21 @@
         "airAmmo": 0,
         "airDetectRadius": 0.0,
         "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 1200.0,
-        "shieldRegenRate": 60.0,
+        "airDisrupt": 1200.0,
+        "shieldGauge": 60.0,
+        "shieldRegenRate": 0.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "shield_13_1",
         "moduleSubType": "shield_13_1",
-        "statPoint": 1300,
+        "statPoint": 409600,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4616,19 +2783,21 @@
         "airAmmo": 0,
         "airDetectRadius": 0.0,
         "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 1300.0,
-        "shieldRegenRate": 65.0,
+        "airDisrupt": 1300.0,
+        "shieldGauge": 65.0,
+        "shieldRegenRate": 0.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "shield_14_1",
         "moduleSubType": "shield_14_1",
-        "statPoint": 1400,
+        "statPoint": 819200,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4648,9 +2817,9 @@
         "airAmmo": 0,
         "airDetectRadius": 0.0,
         "airAvoidRadius": 0.0,
-        "airDisrupt": 0.0,
-        "shieldGauge": 1400.0,
-        "shieldRegenRate": 70.0,
+        "airDisrupt": 1400.0,
+        "shieldGauge": 70.0,
+        "shieldRegenRate": 0.0,
         "interceptorCount": 0,
         "interceptorRegenTime": 0.0
       }
@@ -4661,8 +2830,10 @@
         "moduleSubType": "interceptor_1_1",
         "statPoint": 100,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4684,17 +2855,19 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 1,
-        "interceptorRegenTime": 5.0
+        "shieldRegenRate": 1.0,
+        "interceptorCount": 5,
+        "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "interceptor_2_1",
         "moduleSubType": "interceptor_2_1",
         "statPoint": 200,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4716,17 +2889,19 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 1,
-        "interceptorRegenTime": 5.0
+        "shieldRegenRate": 1.0,
+        "interceptorCount": 5,
+        "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "interceptor_3_1",
         "moduleSubType": "interceptor_3_1",
-        "statPoint": 300,
+        "statPoint": 400,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4748,17 +2923,19 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 1,
-        "interceptorRegenTime": 5.0
+        "shieldRegenRate": 1.0,
+        "interceptorCount": 5,
+        "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "interceptor_4_1",
         "moduleSubType": "interceptor_4_1",
-        "statPoint": 400,
+        "statPoint": 800,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4780,17 +2957,19 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 2,
-        "interceptorRegenTime": 5.0
+        "shieldRegenRate": 2.0,
+        "interceptorCount": 5,
+        "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "interceptor_5_1",
         "moduleSubType": "interceptor_5_1",
-        "statPoint": 500,
+        "statPoint": 1600,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4812,17 +2991,19 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 2,
-        "interceptorRegenTime": 5.0
+        "shieldRegenRate": 2.0,
+        "interceptorCount": 5,
+        "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "interceptor_6_1",
         "moduleSubType": "interceptor_6_1",
-        "statPoint": 600,
+        "statPoint": 3200,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4844,17 +3025,19 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 2,
-        "interceptorRegenTime": 5.0
+        "shieldRegenRate": 2.0,
+        "interceptorCount": 5,
+        "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "interceptor_7_1",
         "moduleSubType": "interceptor_7_1",
-        "statPoint": 700,
+        "statPoint": 6400,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4876,17 +3059,19 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 2,
-        "interceptorRegenTime": 5.0
+        "shieldRegenRate": 2.0,
+        "interceptorCount": 5,
+        "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "interceptor_8_1",
         "moduleSubType": "interceptor_8_1",
-        "statPoint": 800,
+        "statPoint": 12800,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4908,17 +3093,19 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 3,
-        "interceptorRegenTime": 5.0
+        "shieldRegenRate": 3.0,
+        "interceptorCount": 5,
+        "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "interceptor_9_1",
         "moduleSubType": "interceptor_9_1",
-        "statPoint": 900,
+        "statPoint": 25600,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4940,17 +3127,19 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 3,
-        "interceptorRegenTime": 5.0
+        "shieldRegenRate": 3.0,
+        "interceptorCount": 5,
+        "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "interceptor_10_1",
         "moduleSubType": "interceptor_10_1",
-        "statPoint": 1000,
+        "statPoint": 51200,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -4972,17 +3161,19 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 3,
-        "interceptorRegenTime": 5.0
+        "shieldRegenRate": 3.0,
+        "interceptorCount": 5,
+        "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "interceptor_11_1",
         "moduleSubType": "interceptor_11_1",
-        "statPoint": 1100,
+        "statPoint": 102400,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -5004,17 +3195,19 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 3,
-        "interceptorRegenTime": 5.0
+        "shieldRegenRate": 3.0,
+        "interceptorCount": 5,
+        "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "interceptor_12_1",
         "moduleSubType": "interceptor_12_1",
-        "statPoint": 1200,
+        "statPoint": 204800,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -5036,17 +3229,19 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 4,
-        "interceptorRegenTime": 5.0
+        "shieldRegenRate": 4.0,
+        "interceptorCount": 5,
+        "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "interceptor_13_1",
         "moduleSubType": "interceptor_13_1",
-        "statPoint": 1300,
+        "statPoint": 409600,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -5068,17 +3263,19 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 4,
-        "interceptorRegenTime": 5.0
+        "shieldRegenRate": 4.0,
+        "interceptorCount": 5,
+        "interceptorRegenTime": 0.0
       },
       {
         "moduleName": "interceptor_14_1",
         "moduleSubType": "interceptor_14_1",
-        "statPoint": 1400,
+        "statPoint": 819200,
         "unlockAchievementPointCost": 0,
+        "shieldUnlockAchievementPointCost": 0,
+        "interceptorUnlockAchievementPointCost": 0,
         "description": "",
-        "moduleSlots": [],
+        "moduleSlots": null,
         "health": 0.0,
         "repair": 0.0,
         "speed": 0.0,
@@ -5100,9 +3297,9 @@
         "airAvoidRadius": 0.0,
         "airDisrupt": 0.0,
         "shieldGauge": 0.0,
-        "shieldRegenRate": 0.0,
-        "interceptorCount": 4,
-        "interceptorRegenTime": 5.0
+        "shieldRegenRate": 4.0,
+        "interceptorCount": 5,
+        "interceptorRegenTime": 0.0
       }
     ]
   }

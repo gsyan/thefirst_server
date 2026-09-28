@@ -28,6 +28,8 @@ public class CommanderInfoDto {
     private Integer explorationPoint;
     private Integer achievementPoint;
     private List<String> unlockedHulls;
+    private List<String> unlockedShieldHulls;
+    private List<String> unlockedInterceptorHulls;
     private Integer explorationZoneNumber;
     private String explorationCell;
     private Integer highestClearedZoneNumber;

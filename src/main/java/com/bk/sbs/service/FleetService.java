@@ -213,25 +213,85 @@ public class FleetService {
                 .build();
     }
 
+    // 실드 슬롯 언락(구매) — 대상 함체 자체가 이미 언락돼 있어야 함(commander_unlocked_hull row 존재 전제)
+    @Transactional
+    public UnlockShieldModuleResponse unlockShieldModule(Long commanderId, UnlockShieldModuleRequest request) {
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.UNLOCK_SHIELD_MODULE_FAIL_COMMANDER_NOT_FOUND));
+
+        CommanderUnlockedHull unlockedHull = commanderUnlockedHullRepository
+                .findByCommanderIdAndHullSubType(commanderId, request.getHullSubType())
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.UNLOCK_SHIELD_MODULE_FAIL_HULL_NOT_UNLOCKED));
+
+        if (unlockedHull.isShieldUnlocked() == true)
+            throw new BusinessException(ServerErrorCode.UNLOCK_SHIELD_MODULE_FAIL_ALREADY_UNLOCKED);
+
+        ModuleData hullData = gameDataService.getHullModuleData(request.getHullSubType());
+        int unlockCost = hullData != null && hullData.getShieldUnlockAchievementPointCost() != null
+                ? hullData.getShieldUnlockAchievementPointCost() : 0;
+        if (commander.getAchievementPoint() < unlockCost)
+            throw new BusinessException(ServerErrorCode.UNLOCK_SHIELD_MODULE_FAIL_INSUFFICIENT_ACHIEVEMENT_POINT);
+
+        commander.setAchievementPoint(commander.getAchievementPoint() - unlockCost);
+        commanderRepository.save(commander);
+        unlockedHull.setShieldUnlocked(true);
+        commanderUnlockedHullRepository.save(unlockedHull);
+
+        List<String> unlockedShieldHulls = commanderUnlockedHullRepository.findByCommanderIdAndShieldUnlockedTrue(commanderId).stream()
+                .map(CommanderUnlockedHull::getHullSubType)
+                .collect(Collectors.toList());
+
+        return UnlockShieldModuleResponse.builder()
+                .hullSubType(request.getHullSubType())
+                .achievementPointRemain(commander.getAchievementPoint())
+                .unlockedShieldHulls(unlockedShieldHulls)
+                .build();
+    }
+
+    // 요격체 슬롯 언락(구매) — unlockShieldModule과 동일 패턴
+    @Transactional
+    public UnlockInterceptorModuleResponse unlockInterceptorModule(Long commanderId, UnlockInterceptorModuleRequest request) {
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.UNLOCK_INTERCEPTOR_MODULE_FAIL_COMMANDER_NOT_FOUND));
+
+        CommanderUnlockedHull unlockedHull = commanderUnlockedHullRepository
+                .findByCommanderIdAndHullSubType(commanderId, request.getHullSubType())
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.UNLOCK_INTERCEPTOR_MODULE_FAIL_HULL_NOT_UNLOCKED));
+
+        if (unlockedHull.isInterceptorUnlocked() == true)
+            throw new BusinessException(ServerErrorCode.UNLOCK_INTERCEPTOR_MODULE_FAIL_ALREADY_UNLOCKED);
+
+        ModuleData hullData = gameDataService.getHullModuleData(request.getHullSubType());
+        int unlockCost = hullData != null && hullData.getInterceptorUnlockAchievementPointCost() != null
+                ? hullData.getInterceptorUnlockAchievementPointCost() : 0;
+        if (commander.getAchievementPoint() < unlockCost)
+            throw new BusinessException(ServerErrorCode.UNLOCK_INTERCEPTOR_MODULE_FAIL_INSUFFICIENT_ACHIEVEMENT_POINT);
+
+        commander.setAchievementPoint(commander.getAchievementPoint() - unlockCost);
+        commanderRepository.save(commander);
+        unlockedHull.setInterceptorUnlocked(true);
+        commanderUnlockedHullRepository.save(unlockedHull);
+
+        List<String> unlockedInterceptorHulls = commanderUnlockedHullRepository.findByCommanderIdAndInterceptorUnlockedTrue(commanderId).stream()
+                .map(CommanderUnlockedHull::getHullSubType)
+                .collect(Collectors.toList());
+
+        return UnlockInterceptorModuleResponse.builder()
+                .hullSubType(request.getHullSubType())
+                .achievementPointRemain(commander.getAchievementPoint())
+                .unlockedInterceptorHulls(unlockedInterceptorHulls)
+                .build();
+    }
+
     // 함체 언락 선행조건 — gen=1(기본 제공) 함체에만 적용, gen이 다른(유료/미래 추가) 함체는 체인 규칙과 무관하게 통과시킴
-    // 기본형(실드/요격체 없음)은 이전 티어 기본형이, 실드/요격체/둘다 변형은 같은 티어 기본형이 선행 언락돼 있어야 함
+    // 티어당 함체가 하나뿐이라 이전 티어 함체가 선행 언락돼 있어야 하는 단순 선형 체인
     private void validateUnlockPrerequisite(Long commanderId, String hullSubType) {
         if (GameDataService.parseGenFromHullSubType(hullSubType) != 1) return;
 
         int tier = GameDataService.parseTierFromHullSubType(hullSubType);
-        int[] slots = GameDataService.parseMaxSlotsFromHullSubType(hullSubType);
-        boolean hasShield = slots[3] > 0;
-        boolean hasInterceptor = slots[4] > 0;
-        boolean isBaseVariant = hasShield == false && hasInterceptor == false;
+        if (tier <= ACHIEVEMENT_UNLOCK_MIN_HULL_TIER) return;
 
-        String prerequisiteSubType;
-        if (isBaseVariant == true) {
-            if (tier <= ACHIEVEMENT_UNLOCK_MIN_HULL_TIER) return;
-            prerequisiteSubType = gameDataService.findHullSubTypeByTierAndVariant(tier - 1, false, false);
-        } else {
-            prerequisiteSubType = gameDataService.findHullSubTypeByTierAndVariant(tier, false, false);
-        }
-
+        String prerequisiteSubType = gameDataService.findHullSubTypeByTier(tier - 1);
         if (prerequisiteSubType == null) return;
         if (commanderUnlockedHullRepository.existsByCommanderIdAndHullSubType(commanderId, prerequisiteSubType) == false)
             throw new BusinessException(ServerErrorCode.UNLOCK_HULL_FAIL_PREREQUISITE_NOT_UNLOCKED);
@@ -434,15 +494,20 @@ public class FleetService {
         int hullTier = GameDataService.parseTierFromHullSubType(ship.getHullSubType());
         ModuleHullInfoDto requestedModules = request.getModules();
 
+        Optional<CommanderUnlockedHull> unlockedHull = commanderUnlockedHullRepository
+                .findByCommanderIdAndHullSubType(commanderId, ship.getHullSubType());
+        boolean shieldUnlocked = unlockedHull.map(CommanderUnlockedHull::isShieldUnlocked).orElse(false);
+        boolean interceptorUnlocked = unlockedHull.map(CommanderUnlockedHull::isInterceptorUnlocked).orElse(false);
+
         List<DesiredModule> desired = new ArrayList<>();
         appendDesiredModules(desired, EModuleType.beam, maxSlots[0], hullTier, requestedModules != null ? requestedModules.getBeams() : null);
         appendDesiredModules(desired, EModuleType.missile, maxSlots[1], hullTier, requestedModules != null ? requestedModules.getMissiles() : null);
         appendDesiredModules(desired, EModuleType.hangar, maxSlots[2], hullTier, requestedModules != null ? requestedModules.getHangars() : null);
-        appendDesiredShield(desired, maxSlots[3], hullTier,
+        appendDesiredShield(desired, maxSlots[3], hullTier, shieldUnlocked,
                 requestedModules != null ? requestedModules.getShieldModuleSubType() : null,
                 requestedModules != null ? requestedModules.getShieldGaugePoints() : null,
                 requestedModules != null ? requestedModules.getShieldRegenRatePoints() : null);
-        appendDesiredInterceptor(desired, maxSlots[4], hullTier,
+        appendDesiredInterceptor(desired, maxSlots[4], hullTier, interceptorUnlocked,
                 requestedModules != null ? requestedModules.getInterceptorModuleSubType() : null,
                 requestedModules != null ? requestedModules.getInterceptorRegenRatePoints() : null);
 
@@ -558,11 +623,15 @@ public class FleetService {
     // 실드는 리스트가 아니라 문자열 하나(장착 여부)뿐 — 슬롯 인덱스는 항상 0. 티어 선택 가능(datatable_module 티어1~14)
     // 강화 포인트는 Module의 두 컬럼을 재사용: attackPoints=게이지, attackToFighterPoints=회복속도 (서버가 직접 clamp)
     // maxSlotCount<=0(실드 슬롯 없는 함체)인데 장착 요청이 오면 슬롯 인덱스 검증과 동일하게 거부
+    // shieldUnlocked==false(이 함체의 실드 슬롯을 아직 언락 안 함)면 장착 요청 자체를 거부
     // 요청된 티어는 클라를 신뢰하지 않고 무기 카테고리와 동일하게 검증(존재 여부 + 함체 티어 이하) 후 사용, 아니면 기본 티어1로 폴백
-    private void appendDesiredShield(List<DesiredModule> target, int maxSlotCount, int hullTier, String requestedShieldSubType, Integer requestedGaugePoints, Integer requestedRegenRatePoints) {
+    private void appendDesiredShield(List<DesiredModule> target, int maxSlotCount, int hullTier, boolean shieldUnlocked,
+                                      String requestedShieldSubType, Integer requestedGaugePoints, Integer requestedRegenRatePoints) {
         if (requestedShieldSubType == null || requestedShieldSubType.isEmpty()) return;
         if (maxSlotCount <= 0)
             throw new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_INVALID_SLOT_INDEX);
+        if (shieldUnlocked == false)
+            throw new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_SHIELD_NOT_UNLOCKED);
 
         String subType = isValidSubTypeForCategory(EModuleType.shield, requestedShieldSubType, hullTier)
                 ? requestedShieldSubType
@@ -574,10 +643,14 @@ public class FleetService {
     }
 
     // 요격체도 실드와 동일하게 문자열 하나(장착 여부) — 슬롯 인덱스는 항상 0. 강화 포인트는 attackPoints=회복속도(attackToFighterPoints는 항상 0)
-    private void appendDesiredInterceptor(List<DesiredModule> target, int maxSlotCount, int hullTier, String requestedInterceptorSubType, Integer requestedRegenRatePoints) {
+    // interceptorUnlocked==false(이 함체의 요격체 슬롯을 아직 언락 안 함)면 장착 요청 자체를 거부
+    private void appendDesiredInterceptor(List<DesiredModule> target, int maxSlotCount, int hullTier, boolean interceptorUnlocked,
+                                           String requestedInterceptorSubType, Integer requestedRegenRatePoints) {
         if (requestedInterceptorSubType == null || requestedInterceptorSubType.isEmpty()) return;
         if (maxSlotCount <= 0)
             throw new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_INVALID_SLOT_INDEX);
+        if (interceptorUnlocked == false)
+            throw new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_INTERCEPTOR_NOT_UNLOCKED);
 
         String subType = isValidSubTypeForCategory(EModuleType.interceptor, requestedInterceptorSubType, hullTier)
                 ? requestedInterceptorSubType

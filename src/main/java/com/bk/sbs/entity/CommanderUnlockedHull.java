@@ -29,6 +29,13 @@ public class CommanderUnlockedHull {
     @Column(name = "unlocked_at", nullable = false)
     private Instant unlockedAt = Instant.now();
 
+    // 이 함체의 실드/요격체 슬롯을 실제로 사용할 수 있는지 — 함체 자체 언락과 별개로 추가 업적포인트 소모 필요
+    @Column(name = "shield_unlocked", nullable = false)
+    private boolean shieldUnlocked = false;
+
+    @Column(name = "interceptor_unlocked", nullable = false)
+    private boolean interceptorUnlocked = false;
+
     public CommanderUnlockedHull(Long commanderId, String hullSubType) {
         this.commanderId = commanderId;
         this.hullSubType = hullSubType;

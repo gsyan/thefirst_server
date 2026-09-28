@@ -147,6 +147,12 @@ public class CommanderService {
                 .unlockedHulls(commanderUnlockedHullRepository.findByCommanderId(commanderId).stream()
                         .map(com.bk.sbs.entity.CommanderUnlockedHull::getHullSubType)
                         .collect(java.util.stream.Collectors.toList()))
+                .unlockedShieldHulls(commanderUnlockedHullRepository.findByCommanderIdAndShieldUnlockedTrue(commanderId).stream()
+                        .map(com.bk.sbs.entity.CommanderUnlockedHull::getHullSubType)
+                        .collect(java.util.stream.Collectors.toList()))
+                .unlockedInterceptorHulls(commanderUnlockedHullRepository.findByCommanderIdAndInterceptorUnlockedTrue(commanderId).stream()
+                        .map(com.bk.sbs.entity.CommanderUnlockedHull::getHullSubType)
+                        .collect(java.util.stream.Collectors.toList()))
                 .hasUnclaimedAchievement(achievementService.hasUnclaimedCompletedAchievement(commanderId))
                 .build();
     }

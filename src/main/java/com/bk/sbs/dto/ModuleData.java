@@ -23,6 +23,10 @@ public class ModuleData {
 
     private Integer unlockAchievementPointCost;
 
+    private Integer shieldUnlockAchievementPointCost;
+
+    private Integer interceptorUnlockAchievementPointCost;
+
     private String description;
 
     private List<ModuleSlotInfoDto> moduleSlots;

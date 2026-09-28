@@ -62,6 +62,24 @@ public class FleetController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
+    // 함체의 실드 슬롯 언락(구매) — 대상 함체 자체가 이미 언락돼 있어야 함
+    @PostMapping("/unlock-shield-module")
+    public ResponseEntity<ApiResponse<UnlockShieldModuleResponse>> unlockShieldModule(
+            @RequestBody UnlockShieldModuleRequest request,
+            @CommanderId Long actualCommanderId) {
+        UnlockShieldModuleResponse response = fleetService.unlockShieldModule(actualCommanderId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    // 함체의 요격체 슬롯 언락(구매) — 대상 함체 자체가 이미 언락돼 있어야 함
+    @PostMapping("/unlock-interceptor-module")
+    public ResponseEntity<ApiResponse<UnlockInterceptorModuleResponse>> unlockInterceptorModule(
+            @RequestBody UnlockInterceptorModuleRequest request,
+            @CommanderId Long actualCommanderId) {
+        UnlockInterceptorModuleResponse response = fleetService.unlockInterceptorModule(actualCommanderId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
 }
 
 

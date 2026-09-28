@@ -253,10 +253,12 @@ CREATE TABLE zone_cell_clear_log (
 -- 유니크: commander_id + hull_sub_type
 -- ============================================================
 CREATE TABLE commander_unlocked_hull (
-    id             BIGINT       NOT NULL AUTO_INCREMENT,
-    commander_id   BIGINT       NOT NULL,
-    hull_sub_type  VARCHAR(100) NOT NULL,
-    unlocked_at    DATETIME(6)  NOT NULL,
+    id                   BIGINT       NOT NULL AUTO_INCREMENT,
+    commander_id         BIGINT       NOT NULL,
+    hull_sub_type        VARCHAR(100) NOT NULL,
+    unlocked_at          DATETIME(6)  NOT NULL,
+    shield_unlocked      TINYINT(1)   NOT NULL DEFAULT 0, -- 이 함체의 실드 슬롯 사용 가능 여부 — 함체 자체 언락과 별개로 추가 언락 필요
+    interceptor_unlocked TINYINT(1)   NOT NULL DEFAULT 0, -- 이 함체의 요격체 슬롯 사용 가능 여부 — 함체 자체 언락과 별개로 추가 언락 필요
     PRIMARY KEY (id),
     UNIQUE KEY uk_commander_unlocked_hull (commander_id, hull_sub_type)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

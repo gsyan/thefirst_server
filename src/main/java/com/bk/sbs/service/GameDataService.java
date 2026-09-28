@@ -394,18 +394,13 @@ public class GameDataService {
         }
     }
 
-    // gen=1(기본 제공) 함체 중 tier/실드유무/요격체유무가 일치하는 함체의 subType 조회 — 함체 언락 선행조건 체크용. 없으면 null
-    public String findHullSubTypeByTierAndVariant(int tier, boolean hasShield, boolean hasInterceptor) {
+    // gen=1(기본 제공) 함체 중 tier가 일치하는 함체의 subType 조회 — 함체 언락 선행조건 체크용. 티어당 함체가 하나뿐이라 tier로만 매치. 없으면 null
+    public String findHullSubTypeByTier(int tier) {
         for (ModuleData data : getModulesByType(EModuleType.hull)) {
             String subType = data.getModuleSubType();
             if (parseGenFromHullSubType(subType) != 1) continue;
             if (parseTierFromHullSubType(subType) != tier) continue;
-
-            int[] slots = parseMaxSlotsFromHullSubType(subType);
-            boolean matchesShield = (slots[3] > 0) == hasShield;
-            boolean matchesInterceptor = (slots[4] > 0) == hasInterceptor;
-            if (matchesShield == true && matchesInterceptor == true)
-                return subType;
+            return subType;
         }
         return null;
     }
