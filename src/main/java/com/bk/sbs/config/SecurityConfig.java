@@ -44,7 +44,7 @@ public class SecurityConfig {
                         // DELETE /api/account/delete, POST /api/account/logout 은 JWT 인증 필수 (permitAll 보다 먼저 선언)
                         .requestMatchers(HttpMethod.DELETE, "/api/account/delete").authenticated()
                         .requestMatchers(HttpMethod.POST, "/api/account/logout").authenticated()
-                        .requestMatchers("/", "/privacy", "/delete-account", "/api/account/**", "/api/status/**").permitAll();
+                        .requestMatchers("/", "/privacy", "/delete-account", "/app-ads.txt", "/api/account/**", "/api/status/**").permitAll();
                     // H2 console은 dev 프로필에서만 permitAll
                     if (isDev() == true) {
                         auth.requestMatchers("/h2-console/**").permitAll();
