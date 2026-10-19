@@ -32,9 +32,13 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneOffset;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Queue;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -421,6 +425,87 @@ public class ExplorationService {
                 .cellCol(request.getCellCol())
                 .challengeToken(challengeToken)
                 .build();
+    }
+
+    // 팝업이 필요 없는 재방문 이동(클리어됨/시작 칸) 전용 — 경유 칸마다 왕복하지 않고 목적지 하나만 받아 서버가 자체
+    // 데이터(클리어 로그)로 경로 존재 여부를 BFS 검증한 뒤 위치를 그 칸으로 한 번에 갱신. 전투/이벤트가 걸린 칸은 이 API로
+    // 이동 불가 — 그런 칸은 기존 enter-cell이 "항상 인접한 마지막 한 칸"으로만 처리함(클라가 이 API로 직전 칸까지 옮긴 뒤 호출)
+    @Transactional
+    public MoveToExplorationCellResponse moveToExplorationCell(Long commanderId, MoveToExplorationCellRequest request) {
+        commanderRepository.findByIdForUpdate(commanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
+
+        ZoneConfigData zoneConfig = gameDataService.getZoneConfigByIndex(request.getZoneNumber());
+        if (zoneConfig == null)
+            throw new BusinessException(ServerErrorCode.EXPLORATION_FAIL_ZONE_NOT_FOUND);
+
+        ZoneRun run = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS)
+                .filter(r -> r.getZoneNumber() == request.getZoneNumber())
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_NO_ACTIVE_RUN));
+
+        GridCellOverrideDto targetOverride = findCellOverride(zoneConfig, request.getCellRow(), request.getCellCol());
+        EGridCellType targetType = targetOverride != null ? targetOverride.getType() : null;
+        if (targetType == EGridCellType.Blocked || targetType == EGridCellType.Escape)
+            throw new BusinessException(ServerErrorCode.EXPLORATION_CELL_PATH_NOT_FOUND);
+
+        Set<String> clearedCells = zoneCellClearLogRepository.findDistinctClearedCellsByZoneRunId(run.getId());
+        String targetCell = request.getCellRow() + "-" + request.getCellCol();
+        boolean targetIsPassable = targetType == EGridCellType.Start || clearedCells.contains(targetCell);
+        if (targetIsPassable == false)
+            throw new BusinessException(ServerErrorCode.EXPLORATION_CELL_PATH_NOT_FOUND);
+
+        boolean reachable = isReachableByBfs(zoneConfig, clearedCells, run.getCurrentRow(), run.getCurrentCol(), request.getCellRow(), request.getCellCol());
+        if (reachable == false)
+            throw new BusinessException(ServerErrorCode.EXPLORATION_CELL_PATH_NOT_FOUND);
+
+        run.setCurrentPosition(request.getCellRow(), request.getCellCol());
+        zoneRunRepository.save(run);
+
+        return MoveToExplorationCellResponse.builder()
+                .cellRow(request.getCellRow())
+                .cellCol(request.getCellCol())
+                .build();
+    }
+
+    // 4방향 BFS — "클리어됨 또는 시작 칸이고 Blocked/Escape가 아닌" 칸만 통과 가능한 노드로 취급
+    // (클라 ExplorationGridData.FindPath와 동일 규칙 — 탈출 셀은 클리어 즉시 존이 끝나는 특수 셀이라 경유 노드에서 제외)
+    private boolean isReachableByBfs(ZoneConfigData zoneConfig, Set<String> clearedCells, int fromRow, int fromCol, int toRow, int toCol) {
+        if (fromRow == toRow && fromCol == toCol) return true;
+
+        Queue<int[]> queue = new ArrayDeque<>();
+        Set<String> visited = new HashSet<>();
+        queue.add(new int[]{fromRow, fromCol});
+        visited.add(fromRow + "-" + fromCol);
+
+        int[] deltaRow = {-1, 1, 0, 0};
+        int[] deltaCol = {0, 0, -1, 1};
+
+        while (queue.isEmpty() == false) {
+            int[] cur = queue.poll();
+            for (int i = 0; i < 4; i++) {
+                int nextRow = cur[0] + deltaRow[i];
+                int nextCol = cur[1] + deltaCol[i];
+                if (nextRow < 0 || nextRow >= zoneConfig.getGridHeight() || nextCol < 0 || nextCol >= zoneConfig.getGridWidth())
+                    continue;
+
+                String key = nextRow + "-" + nextCol;
+                if (visited.contains(key)) continue;
+
+                GridCellOverrideDto override = findCellOverride(zoneConfig, nextRow, nextCol);
+                EGridCellType type = override != null ? override.getType() : null;
+                boolean isBlocked = type == EGridCellType.Blocked;
+                boolean isEscape = type == EGridCellType.Escape;
+                boolean isPassable = isBlocked == false && isEscape == false
+                        && (type == EGridCellType.Start || clearedCells.contains(key));
+                if (isPassable == false) continue;
+
+                if (nextRow == toRow && nextCol == toCol) return true;
+
+                visited.add(key);
+                queue.add(new int[]{nextRow, nextCol});
+            }
+        }
+        return false;
     }
 
     @Transactional

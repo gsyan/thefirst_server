@@ -9,7 +9,7 @@ import lombok.Setter;
 import java.time.Instant;
 
 // 커맨더의 탐사 존 진행(런) 1개 — 전체 존을 통틀어 커맨더당 IN_PROGRESS 상태는 항상 1개뿐이어야 함(ExplorationService에서 보장)
-// status(무슨 일이 일어났는지)와 rewardClaimed(보상 지급 여부)를 분리 — ClearedZone.rewardClaimed와 동일 원칙
+// status(무슨 일이 일어났는지)와 rewardClaimed(보상 지급 여부)를 분리
 @Entity
 @Table(name = "zone_run")
 @Getter

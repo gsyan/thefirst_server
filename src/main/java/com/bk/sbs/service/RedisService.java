@@ -29,6 +29,7 @@ public class RedisService {
     private static final String LIST_PREFIX              = "pvp:list:";
     private static final String RANK_NAME_KEY            = "rank:name";
     private static final String RANK_STAT_KEY            = "rank:stat";
+    private static final String ZONE_PERFECT_CLEAR_KEY   = "zone:perfectClear";
     private static final String RANKING_UPDATED_PVP      = "ranking:pvp:updated";
     private static final String RANKING_UPDATED_ZONE     = "ranking:zone:updated";
     private static final String ZONE_WAVE_PREFIX         = "zone_wave:"; // zone_wave:{commanderId}:{zoneName}
@@ -148,7 +149,7 @@ public class RedisService {
     }
 
     // ══════════════════════════════════════════════════════════════════════
-    // Zone 랭킹 ZSET  (score = chapter * 1000 + stage)
+    // Zone 랭킹 ZSET  (score = highestClearedZoneNumber)
     // ══════════════════════════════════════════════════════════════════════
 
     public void setZoneScore(Long commanderId, long score) {
@@ -172,6 +173,32 @@ public class RedisService {
 
     public Double getZoneScore(Long commanderId) {
         return redisTemplate.opsForZSet().score(ZONE_RANKING_KEY, commanderId.toString());
+    }
+
+    // ══════════════════════════════════════════════════════════════════════
+    // Zone 완벽클리어 여부 Hash  (zone:perfectClear → commanderId → "1"/"0")
+    // ══════════════════════════════════════════════════════════════════════
+
+    public void setZonePerfectClear(Long commanderId, boolean isPerfectClear) {
+        redisTemplate.opsForHash().put(ZONE_PERFECT_CLEAR_KEY, commanderId.toString(), isPerfectClear ? "1" : "0");
+    }
+
+    /** commanderId 문자열 컬렉션 → {id → 완벽클리어 여부} 맵 반환 (없으면 false) */
+    public Map<String, Boolean> getZonePerfectClearMulti(Collection<String> commanderIdStrs) {
+        List<Object> keys = new ArrayList<>(commanderIdStrs);
+        List<Object> values = redisTemplate.opsForHash().multiGet(ZONE_PERFECT_CLEAR_KEY, keys);
+        Map<String, Boolean> result = new HashMap<>();
+        int i = 0;
+        for (Object key : keys) {
+            Object val = values.get(i++);
+            result.put((String) key, val != null && "1".equals(val.toString()));
+        }
+        return result;
+    }
+
+    public boolean getZonePerfectClear(Long commanderId) {
+        Object val = redisTemplate.opsForHash().get(ZONE_PERFECT_CLEAR_KEY, commanderId.toString());
+        return val != null && "1".equals(val.toString());
     }
 
     // ══════════════════════════════════════════════════════════════════════

@@ -23,4 +23,5 @@ public class RankingEntryDto {
     private Float statAttack;
     private Integer statAirCount;
     private Integer statAirAttack;
+    private Boolean isPerfectClear;
 }

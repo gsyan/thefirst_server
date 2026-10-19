@@ -2,7 +2,6 @@
 package com.bk.sbs.repository;
 
 import com.bk.sbs.entity.Commander;
-import com.bk.sbs.entity.ClearedZone;
 import jakarta.persistence.LockModeType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,9 +24,8 @@ public interface CommanderRepository extends JpaRepository<Commander, Long> {
     @Query("SELECT c FROM Commander c WHERE c.id = :id")
     Optional<Commander> findByIdForUpdate(@Param("id") Long id);
 
-    // Zone 랭킹 서버 시작 시 동기화 - cleared_zone 테이블에 1개 이상 존 있는 커맨더 조회
-    @Query("SELECT c FROM Commander c WHERE c.deleted = false AND c.id IN (SELECT cz.commanderId FROM ClearedZone cz)")
-    List<Commander> findAllWithClearedZone();
+    // Zone 랭킹 동기화 - 1존 이상 탈출 성공한(존 진행도가 있는) 커맨더 조회
+    List<Commander> findAllByDeletedFalseAndHighestClearedZoneNumberGreaterThan(int zoneNumber);
 
     // lastOnlineAt 갱신 — threshold보다 오래됐을 때만 업데이트 (30s 스로틀링)
     @Modifying

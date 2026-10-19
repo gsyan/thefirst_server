@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Set;
 
 public interface ZoneCellClearLogRepository extends JpaRepository<ZoneCellClearLog, Long> {
 
@@ -21,6 +22,10 @@ public interface ZoneCellClearLogRepository extends JpaRepository<ZoneCellClearL
     // 업적(ZoneFullClear) — 이 런에서 서로 다른 셀을 몇 개 클리어했는지(같은 셀 재방문 파밍은 중복 제외)
     @Query("SELECT COUNT(DISTINCT l.cell) FROM ZoneCellClearLog l WHERE l.zoneRunId = :zoneRunId")
     long countDistinctCellByZoneRunId(@Param("zoneRunId") Long zoneRunId);
+
+    // 경로 이동(BFS)용 — 이 런에서 클리어된 셀 좌표("row-col") 전체를 한 번에 Set으로 가져옴(건별 조회 N번 방지)
+    @Query("SELECT DISTINCT l.cell FROM ZoneCellClearLog l WHERE l.zoneRunId = :zoneRunId")
+    Set<String> findDistinctClearedCellsByZoneRunId(@Param("zoneRunId") Long zoneRunId);
 
     // 업적(CellClear) — 커맨더 전체 런 통틀어 일반(비이벤트) 셀 누적 클리어수. 로그는 영구 보관되므로 이 COUNT가 곧 lifetime 총합
     @Query("SELECT COUNT(l) FROM ZoneCellClearLog l WHERE l.zoneRunId IN (SELECT r.id FROM ZoneRun r WHERE r.commanderId = :commanderId) AND l.treasureRewardType IS NULL")

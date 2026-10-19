@@ -272,8 +272,10 @@ public class PvpService {
         int loserChange = changes[1];
 
         // pvp:ranking ZSET 실시간 반영 (매칭용) / snapshot은 주기 동기화 시에만 갱신
-        int attackerChange = isVictory ? winnerChange : loserChange;
-        int defenderChange = isVictory ? loserChange : winnerChange;
+        int rawAttackerChange = isVictory ? winnerChange : loserChange;
+        int rawDefenderChange = isVictory ? loserChange : winnerChange;
+        int attackerChange = clampScoreChange(attackerScore, rawAttackerChange);
+        int defenderChange = clampScoreChange(defenderScore, rawDefenderChange);
         redisService.incrementPvpScore(attackerId, attackerChange);
         redisService.incrementPvpScore(defenderId, defenderChange);
 
@@ -297,6 +299,12 @@ public class PvpService {
         response.setNewScore(newScoreVal);
         response.setNewRank(newRank != null ? newRank.intValue() : 0);
         return response;
+    }
+
+    // 변동 후 점수가 0 미만이 되지 않도록 감점폭을 현재 점수까지로 제한
+    private int clampScoreChange(int currentScore, int change) {
+        int minChange = -Math.max(currentScore, 0);
+        return Math.max(change, minChange);
     }
 
     // 점수 변동 계산

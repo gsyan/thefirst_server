@@ -17,7 +17,6 @@ import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.entity.ZoneRun;
 import com.bk.sbs.repository.AccountRepository;
 import com.bk.sbs.repository.CommanderRepository;
-import com.bk.sbs.repository.ClearedZoneRepository;
 import com.bk.sbs.repository.CommanderUnlockedHullRepository;
 import com.bk.sbs.repository.ZoneRunRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,7 +39,6 @@ public class CommanderService {
     private final CommanderRepository commanderRepository;
     private final AccountRepository accountRepository;
     private final FleetService fleetService;
-    private final ClearedZoneRepository clearedZoneRepository;
     private final ZoneRunRepository zoneRunRepository;
     private final StringRedisTemplate redisTemplate;
     private final GameDataService gameDataService;
@@ -53,11 +51,10 @@ public class CommanderService {
     @Value("${exploration.world-seed}")
     private int explorationWorldSeed;
 
-    public CommanderService(CommanderRepository commanderRepository, AccountRepository accountRepository, FleetService fleetService, ClearedZoneRepository clearedZoneRepository, ZoneRunRepository zoneRunRepository, StringRedisTemplate redisTemplate, GameDataService gameDataService, CommanderUnlockedHullRepository commanderUnlockedHullRepository, AchievementService achievementService) {
+    public CommanderService(CommanderRepository commanderRepository, AccountRepository accountRepository, FleetService fleetService, ZoneRunRepository zoneRunRepository, StringRedisTemplate redisTemplate, GameDataService gameDataService, CommanderUnlockedHullRepository commanderUnlockedHullRepository, AchievementService achievementService) {
         this.commanderRepository = commanderRepository;
         this.accountRepository = accountRepository;
         this.fleetService = fleetService;
-        this.clearedZoneRepository = clearedZoneRepository;
         this.zoneRunRepository = zoneRunRepository;
         this.redisTemplate = redisTemplate;
         this.gameDataService = gameDataService;
@@ -133,7 +130,6 @@ public class CommanderService {
                 .pvpPoint(commander.getPvpPoint())
                 .pvpPointMaxGot(commander.getPvpPointMaxGot())
                 .pvpPointExpiry(commander.getPvpPointExpiry() != null ? commander.getPvpPointExpiry().toString() : null)
-                .clearedZones(clearedZoneRepository.findZoneNamesByCommanderId(commanderId))
                 .nameChangeCount(commander.getNameChangeCount())
                 .explorationSeedBase(explorationWorldSeed)
                 .commandPowerMax(commander.getCommandPowerMax())

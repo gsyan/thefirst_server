@@ -5,7 +5,7 @@ import com.bk.sbs.entity.Commander;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.bk.sbs.repository.CommanderRepository;
-import com.bk.sbs.repository.ClearedZoneRepository;
+import com.bk.sbs.repository.CommanderZoneFullClearRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -27,16 +27,16 @@ public class RankingService {
 
     private final RedisService redisService;
     private final CommanderRepository commanderRepository;
-    private final ClearedZoneRepository clearedZoneRepository;
+    private final CommanderZoneFullClearRepository commanderZoneFullClearRepository;
     private final FleetService fleetService;
     private final ObjectMapper objectMapper;
 
     public RankingService(RedisService redisService, CommanderRepository commanderRepository,
-                          ClearedZoneRepository clearedZoneRepository, FleetService fleetService,
+                          CommanderZoneFullClearRepository commanderZoneFullClearRepository, FleetService fleetService,
                           ObjectMapper objectMapper) {
         this.redisService = redisService;
         this.commanderRepository = commanderRepository;
-        this.clearedZoneRepository = clearedZoneRepository;
+        this.commanderZoneFullClearRepository = commanderZoneFullClearRepository;
         this.fleetService = fleetService;
         this.objectMapper = objectMapper;
     }
@@ -53,12 +53,16 @@ public class RankingService {
     public void syncZoneRankingFromDb() {
         redisService.clearZoneRankingData();
 
-        List<Commander> commanders = commanderRepository.findAllWithClearedZone();
+        List<Commander> commanders = commanderRepository.findAllByDeletedFalseAndHighestClearedZoneNumberGreaterThan(0);
         for (Commander c : commanders) {
-            List<String> zoneNames = clearedZoneRepository.findZoneNamesByCommanderId(c.getId());
-            long maxScore = zoneNames.stream().mapToLong(this::computeZoneScore).max().orElse(0L);
-            if (maxScore > 0) {
-                redisService.setZoneScore(c.getId(), maxScore);
+            int highestClearedZoneNumber = c.getHighestClearedZoneNumber();
+            if (highestClearedZoneNumber > 0) {
+                // 존1~최고 클리어 존까지 전부 완벽클리어 기록이 있어야 뱃지 ON
+                long perfectClearZoneCount = commanderZoneFullClearRepository.countByCommanderIdAndZoneNumberLessThanEqual(c.getId(), highestClearedZoneNumber);
+                boolean isPerfectClear = perfectClearZoneCount == highestClearedZoneNumber;
+
+                redisService.setZoneScore(c.getId(), highestClearedZoneNumber);
+                redisService.setZonePerfectClear(c.getId(), isPerfectClear);
                 redisService.setRankName(c.getId(), c.getCommanderName());
 
                 FleetInfoDto fleet = fleetService.getActiveFleetOrNull(c.getId());
@@ -132,6 +136,7 @@ public class RankingService {
         for (Long id : page.keySet()) idStrs.add(id.toString());
         Map<String, String> nameMap = redisService.getRankNamesMulti(idStrs);
         Map<String, String> statMap = redisService.getRankStatsMulti(idStrs);
+        Map<String, Boolean> perfectClearMap = redisService.getZonePerfectClearMulti(idStrs);
 
         List<RankingEntryDto> items = new ArrayList<>();
         int idx = 0;
@@ -139,8 +144,6 @@ public class RankingService {
         int tieRank = offset + 1;
         for (Map.Entry<Long, Integer> entry : page.entrySet()) {
             int score = entry.getValue();
-            int chapter = score / 1000;
-            int stage   = score % 1000;
             if (idx == 0 || score != prevScore) {
                 tieRank = offset + idx + 1;
                 prevScore = score;
@@ -149,7 +152,8 @@ public class RankingService {
             dto.setRank(tieRank);
             dto.setCommanderId(entry.getKey());
             dto.setCommanderName(nameMap.getOrDefault(entry.getKey().toString(), "Unknown"));
-            dto.setScore(chapter + "-" + stage);
+            dto.setScore(String.valueOf(score));
+            dto.setIsPerfectClear(perfectClearMap.getOrDefault(entry.getKey().toString(), false));
             applyStatJson(dto, statMap.get(entry.getKey().toString()));
             items.add(dto);
             idx++;
@@ -192,14 +196,14 @@ public class RankingService {
                 .getOrDefault(commanderId.toString(), "Unknown");
 
         int rawScore = scoreD != null ? scoreD.intValue() : 0;
-        int chapter = (int) (rawScore / 1000);
-        int stage   = (int) (rawScore % 1000);
+        boolean isPerfectClear = redisService.getZonePerfectClear(commanderId);
 
         RankingEntryDto dto = new RankingEntryDto();
         dto.setRank(rank != null ? rank.intValue() : 0);
         dto.setCommanderId(commanderId);
         dto.setCommanderName(name);
-        dto.setScore(rawScore > 0 ? chapter + "-" + stage : "-");
+        dto.setScore(rawScore > 0 ? String.valueOf(rawScore) : "-");
+        dto.setIsPerfectClear(rawScore > 0 && isPerfectClear);
         return dto;
     }
 
@@ -222,18 +226,6 @@ public class RankingService {
         }
     }
 
-    // "3-5" → 3005
-    private long computeZoneScore(String zoneName) {
-        String[] parts = zoneName.split("-");
-        if (parts.length != 2) return 0L;
-        try {
-            int chapter = Integer.parseInt(parts[0]);
-            int stage   = Integer.parseInt(parts[1]);
-            return (long) chapter * 1000 + stage;
-        } catch (NumberFormatException e) {
-            return 0L;
-        }
-    }
 }
 
 

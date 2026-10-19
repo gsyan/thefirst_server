@@ -52,7 +52,6 @@ public class AccountService {
 
     @Autowired private VipSubscriptionRepository vipSubscriptionRepository;
     @Autowired private PvpRecordRepository pvpRecordRepository;
-    @Autowired private ClearedZoneRepository clearedZoneRepository;
     @Autowired private ProgressRepository progressRepository;
     @Autowired private RedisService redisService;
     @Autowired private LoginLogService loginLogService;
@@ -540,7 +539,6 @@ public class AccountService {
             // FK 순서 준수: 말단 테이블부터 삭제
             vipSubscriptionRepository.deleteByCommanderId(commanderId);
             pvpRecordRepository.deleteByCommanderId(commanderId);
-            clearedZoneRepository.deleteByCommanderId(commanderId);
             progressRepository.deleteByCommanderId(commanderId);
         }
         commanderRepository.deleteByAccountId(accountId);

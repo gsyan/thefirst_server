@@ -16,6 +16,8 @@ import com.bk.sbs.dto.IncreaseCommandPowerMaxRequest;
 import com.bk.sbs.dto.IncreaseCommandPowerMaxResponse;
 import com.bk.sbs.dto.IncreaseTacticPowerMaxRequest;
 import com.bk.sbs.dto.IncreaseTacticPowerMaxResponse;
+import com.bk.sbs.dto.MoveToExplorationCellRequest;
+import com.bk.sbs.dto.MoveToExplorationCellResponse;
 import com.bk.sbs.dto.RerollRewardCardRequest;
 import com.bk.sbs.dto.RerollRewardCardResponse;
 import com.bk.sbs.dto.nogenerated.ApiResponse;
@@ -39,6 +41,14 @@ public class ExplorationController {
             @RequestBody EnterExplorationCellRequest request,
             @CommanderId Long commanderId) {
         EnterExplorationCellResponse response = explorationService.enterExplorationCell(commanderId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    @PostMapping("/move-to-cell")
+    public ResponseEntity<ApiResponse<MoveToExplorationCellResponse>> moveToCell(
+            @RequestBody MoveToExplorationCellRequest request,
+            @CommanderId Long commanderId) {
+        MoveToExplorationCellResponse response = explorationService.moveToExplorationCell(commanderId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
