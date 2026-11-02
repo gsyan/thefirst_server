@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>공지사항 - 운영툴</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: #1c1e26; color: #eee; margin: 0; }
+        main { padding: 40px; max-width: 760px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+        th, td { text-align: left; padding: 8px; border-bottom: 1px solid #333; font-size: 13px; }
+        th { color: #aaa; }
+        input[type="text"], textarea { width: 100%; box-sizing: border-box; padding: 8px; border-radius: 4px; border: 1px solid #444; background: #262936; color: #eee; }
+        textarea { resize: vertical; min-height: 80px; }
+        label { display: block; margin: 16px 0 6px; color: #aaa; font-size: 13px; }
+        .toggle-row { display: flex; align-items: center; gap: 10px; margin-top: 16px; }
+        button { margin-top: 24px; padding: 10px 20px; border: none; border-radius: 4px; background: #4a7dff; color: #fff; cursor: pointer; }
+        .link-button { background: none; color: #4a7dff; padding: 0; margin: 0; text-decoration: underline; font-size: 13px; }
+        .link-button.danger { color: #ff6b6b; }
+        .status-text { margin-top: 16px; font-size: 13px; color: #8fd18f; }
+        .hint { color: #777; font-size: 12px; margin-top: 4px; }
+    </style>
+</head>
+<body>
+    <div id="adminNav"></div>
+    <main>
+        <h1>공지사항</h1>
+
+        <table>
+            <thead>
+                <tr><th>순서</th><th>제목</th><th>활성화</th><th>버전</th><th></th></tr>
+            </thead>
+            <tbody id="noticeTableBody"></tbody>
+        </table>
+
+        <h2 id="formTitle" style="margin-top:40px;">새 공지 추가</h2>
+        <input type="hidden" id="editingId">
+        <label for="titleInput">제목</label>
+        <input type="text" id="titleInput">
+        <label for="bodyInput">내용</label>
+        <textarea id="bodyInput"></textarea>
+        <label for="displayOrderInput">노출 순서 (작을수록 먼저 표시)</label>
+        <input type="text" id="displayOrderInput" value="0">
+        <div class="toggle-row">
+            <input type="checkbox" id="enabledCheckbox" style="width:18px;height:18px;">
+            <label for="enabledCheckbox" style="margin:0;">활성화(체크해야 클라에 노출됨)</label>
+        </div>
+        <div class="hint">기존 공지를 수정해서 저장하면 버전이 올라가, 이미 본 유저에게도 다시 표시됩니다.</div>
+        <button id="saveButton">저장</button>
+        <button id="cancelEditButton" class="link-button" style="display:none;margin-left:12px;">수정 취소</button>
+        <div class="status-text" id="statusText"></div>
+    </main>
+    <script src="/admin/js/admin-common.js"></script>
+    <script>
+        renderAdminNav('notice');
+
+        let noticeCache = [];
+
+        async function loadNotices() {
+            const response = await adminFetch('/admin/api/notice');
+            noticeCache = await response.json();
+            renderTable();
+        }
+
+        function renderTable() {
+            const body = document.getElementById('noticeTableBody');
+            body.innerHTML = noticeCache.map((notice) => `
+                <tr>
+                    <td>${notice.displayOrder}</td>
+                    <td>${notice.title}</td>
+                    <td>${notice.enabled ? 'O' : 'X'}</td>
+                    <td>${notice.version}</td>
+                    <td>
+                        <button class="link-button" onclick="startEdit(${notice.id})">수정</button>
+                        <button class="link-button danger" onclick="deleteNotice(${notice.id})">삭제</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function startEdit(id) {
+            const notice = noticeCache.find((n) => n.id === id);
+            if (notice === undefined) return;
+            document.getElementById('formTitle').textContent = '공지 수정';
+            document.getElementById('editingId').value = notice.id;
+            document.getElementById('titleInput').value = notice.title;
+            document.getElementById('bodyInput').value = notice.body;
+            document.getElementById('displayOrderInput').value = notice.displayOrder;
+            document.getElementById('enabledCheckbox').checked = notice.enabled;
+            document.getElementById('cancelEditButton').style.display = 'inline';
+        }
+
+        function resetForm() {
+            document.getElementById('formTitle').textContent = '새 공지 추가';
+            document.getElementById('editingId').value = '';
+            document.getElementById('titleInput').value = '';
+            document.getElementById('bodyInput').value = '';
+            document.getElementById('displayOrderInput').value = '0';
+            document.getElementById('enabledCheckbox').checked = false;
+            document.getElementById('cancelEditButton').style.display = 'none';
+        }
+
+        document.getElementById('cancelEditButton').addEventListener('click', resetForm);
+
+        document.getElementById('saveButton').addEventListener('click', async () => {
+            const idValue = document.getElementById('editingId').value;
+            const request = {
+                id: idValue === '' ? null : Number(idValue),
+                title: document.getElementById('titleInput').value.trim(),
+                body: document.getElementById('bodyInput').value,
+                displayOrder: Number(document.getElementById('displayOrderInput').value) || 0,
+                enabled: document.getElementById('enabledCheckbox').checked,
+            };
+            const response = await adminFetch('/admin/api/notice', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(request),
+            });
+            const statusText = document.getElementById('statusText');
+            if (response.ok) {
+                statusText.style.color = '#8fd18f';
+                statusText.textContent = '저장되었습니다.';
+                resetForm();
+                loadNotices();
+            } else {
+                statusText.style.color = '#ff6b6b';
+                statusText.textContent = await response.text();
+            }
+        });
+
+        async function deleteNotice(id) {
+            if (confirm('이 공지를 삭제하시겠습니까?') === false) return;
+            await adminFetch(`/admin/api/notice/${id}`, { method: 'DELETE' });
+            loadNotices();
+        }
+
+        loadNotices();
+    </script>
+</body>
+</html>

@@ -23,13 +23,17 @@ public class ModuleData {
 
     private Integer unlockAchievementPointCost;
 
-    private Integer shieldUnlockAchievementPointCost;
+    private String hullArchetype;
 
-    private Integer interceptorUnlockAchievementPointCost;
+    private String hullPrefabName;
 
-    private String description;
+    private String descriptionKey;
 
     private List<ModuleSlotInfoDto> moduleSlots;
+
+    private Boolean hasShield;
+
+    private Boolean hasInterceptor;
 
     private Float health;
 

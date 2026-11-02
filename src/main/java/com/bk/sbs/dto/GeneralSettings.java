@@ -19,4 +19,6 @@ public class GeneralSettings {
     private Float attackJitterMax;
 
     private Integer reinforceCpCostPerPoint;
+
+    private Integer maxFleetSlotCount;
 }

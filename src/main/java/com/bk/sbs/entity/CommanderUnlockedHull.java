@@ -8,7 +8,8 @@ import lombok.Setter;
 
 import java.time.Instant;
 
-// 커맨더가 업적포인트로 언락 완료한 함체(티어4+) 기록 — 티어1~3은 언락 불필요라 여기 없어도 사용 가능
+// 커맨더가 보유(언락)한 함체 기록 — 티어2+ 함체의 배치 가능 여부는 비용(ap_cost)과 무관하게 전적으로 이 기록의 존재 여부로만 판정한다.
+// 티어1(기본 지급 함체)은 이 기록 자체가 필요 없음 — FleetService가 코드에서 직접 "티어1이면 통과" 로 처리
 @Entity
 @Table(name = "commander_unlocked_hull")
 @Getter
@@ -28,13 +29,6 @@ public class CommanderUnlockedHull {
 
     @Column(name = "unlocked_at", nullable = false)
     private Instant unlockedAt = Instant.now();
-
-    // 이 함체의 실드/요격체 슬롯을 실제로 사용할 수 있는지 — 함체 자체 언락과 별개로 추가 업적포인트 소모 필요
-    @Column(name = "shield_unlocked", nullable = false)
-    private boolean shieldUnlocked = false;
-
-    @Column(name = "interceptor_unlocked", nullable = false)
-    private boolean interceptorUnlocked = false;
 
     public CommanderUnlockedHull(Long commanderId, String hullSubType) {
         this.commanderId = commanderId;

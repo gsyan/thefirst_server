@@ -2,7 +2,8 @@
   "general": {
     "commandPowerMaxInit": 400,
     "attackJitterMax": 1.0,
-    "reinforceCpCostPerPoint": 10
+    "reinforceCpCostPerPoint": 10,
+    "maxFleetSlotCount": 9
   },
   "pvp": {
     "pvpMinCommanderLevel": 2,
@@ -13,10 +14,12 @@
   },
   "tactic": {
     "tacticRepairCost": 10,
+    "tacticBeamCost": 1,
     "tacticMissileCost": 1,
     "tacticHangerCost": 1,
     "tacticShieldCost": 10,
-    "tacticInterceptorCost": 10
+    "tacticInterceptorCost": 10,
+    "mineralToResourceRatio": 10
   },
   "exploration": {
     "rewardCardRerollLimit": 10
@@ -48,5 +51,10 @@
     "interceptor": {
       "maxRegenTimeReductionRatio": 0.5
     }
+  },
+  "archetypeUpgrade": {
+    "baseAchievementPointCost": 500,
+    "achievementPointCostPerLevel": 500,
+    "maxLevel": 10
   }
 }

@@ -605,6 +605,10 @@ public class ExplorationService {
         int clampedTacticPower = Math.max(0, Math.min(reportedTacticPower, commander.getTacticPowerMax()));
         int finalTacticPower = treasureRewardType == ETreasureRewardType.TacticPowerRestore ? commander.getTacticPowerMax() : clampedTacticPower;
         run.setTacticPower(finalTacticPower);
+
+        // 광물도 전술력과 동일한 신뢰모델 — 상한 없이 0 이상만 방어(서버가 상한을 모름, 전적으로 클라 집계값을 신뢰)
+        int finalMineralAmount = Math.max(0, request.getMineralAmount());
+        run.setMineralAmount(finalMineralAmount);
         zoneRunRepository.save(run);
 
         ZoneCellClearLog clearLog = new ZoneCellClearLog(run.getId(), request.getCellRow(), request.getCellCol());
@@ -624,6 +628,7 @@ public class ExplorationService {
                 .treasureRewardType(treasureRewardType)
                 .treasureRewardRatio(treasureRewardRatio)
                 .tacticPower(finalTacticPower)
+                .mineralAmount(finalMineralAmount)
                 .rewardCardCandidates(rewardCardCandidates)
                 .rerollRemain(rerollRemain)
                 .build();
@@ -746,6 +751,7 @@ public class ExplorationService {
                     .clearedCells(new ArrayList<>())
                     .explorationPointBanked(0)
                     .commanderExpBanked(0)
+                    .mineralAmount(0)
                     .build();
         }
 
@@ -776,6 +782,7 @@ public class ExplorationService {
         return GetActiveZoneRunProgressResponse.builder()
                 .zoneNumber(run.getZoneNumber())
                 .clearedCells(clearedCells)
+                .mineralAmount(run.getMineralAmount())
                 .explorationPointBanked(run.getExplorationPointBanked())
                 .commanderExpBanked(run.getCommanderExpBanked())
                 .shipHealthRatios(deserializeHealthSnapshot(run.getFleetHealthSnapshotJson()))
@@ -891,29 +898,7 @@ public class ExplorationService {
                 .build();
     }
 
-    // 교환비 1:1 — amount는 클라이언트가 지정, 소모 탐험 포인트와 증가 지휘력 최대치가 동일
-    @Transactional
-    public IncreaseCommandPowerMaxResponse increaseCommandPowerMax(Long commanderId, int amount) {
-        if (amount <= 0)
-            throw new BusinessException(ServerErrorCode.EXPLORATION_POINT_INSUFFICIENT);
-
-        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
-
-        if (commander.getExplorationPoint() < amount)
-            throw new BusinessException(ServerErrorCode.EXPLORATION_POINT_INSUFFICIENT);
-
-        commander.setExplorationPoint(commander.getExplorationPoint() - amount);
-        commander.setCommandPowerMax(commander.getCommandPowerMax() + amount);
-        commanderRepository.save(commander);
-
-        return IncreaseCommandPowerMaxResponse.builder()
-                .commandPowerMax(commander.getCommandPowerMax())
-                .explorationPointRemain(commander.getExplorationPoint())
-                .build();
-    }
-
-    // 교환비 1:1 — increaseCommandPowerMax와 동일 패턴, 탐험 포인트를 소모해 전술력 최대치를 영구 증가
+    // 전술력 최대치는 탐험 포인트로 구매하는 기존 방식 유지(지휘력과 달리 M13 대상 아님)
     @Transactional
     public IncreaseTacticPowerMaxResponse increaseTacticPowerMax(Long commanderId, int amount) {
         if (amount <= 0)

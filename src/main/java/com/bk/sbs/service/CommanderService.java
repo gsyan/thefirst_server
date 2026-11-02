@@ -44,6 +44,8 @@ public class CommanderService {
     private final GameDataService gameDataService;
     private final CommanderUnlockedHullRepository commanderUnlockedHullRepository;
     private final AchievementService achievementService;
+    private final ArchetypeModuleUpgradeService archetypeModuleUpgradeService;
+    private final HullArchetypeProgressService hullArchetypeProgressService;
 
 @Value("${worldid}")
     private int worldId;
@@ -51,7 +53,7 @@ public class CommanderService {
     @Value("${exploration.world-seed}")
     private int explorationWorldSeed;
 
-    public CommanderService(CommanderRepository commanderRepository, AccountRepository accountRepository, FleetService fleetService, ZoneRunRepository zoneRunRepository, StringRedisTemplate redisTemplate, GameDataService gameDataService, CommanderUnlockedHullRepository commanderUnlockedHullRepository, AchievementService achievementService) {
+    public CommanderService(CommanderRepository commanderRepository, AccountRepository accountRepository, FleetService fleetService, ZoneRunRepository zoneRunRepository, StringRedisTemplate redisTemplate, GameDataService gameDataService, CommanderUnlockedHullRepository commanderUnlockedHullRepository, AchievementService achievementService, ArchetypeModuleUpgradeService archetypeModuleUpgradeService, HullArchetypeProgressService hullArchetypeProgressService) {
         this.commanderRepository = commanderRepository;
         this.accountRepository = accountRepository;
         this.fleetService = fleetService;
@@ -60,6 +62,8 @@ public class CommanderService {
         this.gameDataService = gameDataService;
         this.commanderUnlockedHullRepository = commanderUnlockedHullRepository;
         this.achievementService = achievementService;
+        this.archetypeModuleUpgradeService = archetypeModuleUpgradeService;
+        this.hullArchetypeProgressService = hullArchetypeProgressService;
     }
 
     @Transactional
@@ -79,7 +83,6 @@ public class CommanderService {
         commander.setAccountId(account.getId());
         // 자동 이름 모드: 충돌 없는 UUID 임시 이름으로 저장 → 이후 commander_+id로 교체
         commander.setCommanderName(isAutoName ? UUID.randomUUID().toString() : requestedName);
-        commander.setCommandPowerMax(gameDataService.getInitialCommandPowerMax()); // DataTableConfig.commandPowerMaxInit — 코드 재배포 없이 값 조정 가능
         Commander savedCommander = commanderRepository.save(commander);
 
         // 자동 이름: 저장 후 확정된 id로 commander_+id 설정 (유니크 보장)
@@ -121,6 +124,8 @@ public class CommanderService {
         String explorationCell = activeZoneRun != null ? activeZoneRun.getCurrentCell() : "";
         // 전술력 현재치도 동일 패턴 — 진행 중인 런이 있으면 그 런의 값을, 없으면 꽉 찬 상태(tacticPowerMax)를 내려줌
         int tacticPower = activeZoneRun != null ? activeZoneRun.getTacticPower() : commander.getTacticPowerMax();
+        // 광물은 존런 전용이라 진행 중인 런이 없으면 0(영구 보유 개념 자체가 없음)
+        int mineralAmount = activeZoneRun != null ? activeZoneRun.getMineralAmount() : 0;
 
         return CommanderInfoDto.builder()
                 .commanderId(commanderId)
@@ -132,9 +137,10 @@ public class CommanderService {
                 .pvpPointExpiry(commander.getPvpPointExpiry() != null ? commander.getPvpPointExpiry().toString() : null)
                 .nameChangeCount(commander.getNameChangeCount())
                 .explorationSeedBase(explorationWorldSeed)
-                .commandPowerMax(commander.getCommandPowerMax())
+                .commandPowerMax(gameDataService.getCommandPowerMax(commander.getCommanderLevel()))
                 .tacticPowerMax(commander.getTacticPowerMax())
                 .tacticPower(tacticPower)
+                .mineralAmount(mineralAmount)
                 .explorationZoneNumber(explorationZoneNumber)
                 .explorationCell(explorationCell)
                 .highestClearedZoneNumber(commander.getHighestClearedZoneNumber())
@@ -143,13 +149,21 @@ public class CommanderService {
                 .unlockedHulls(commanderUnlockedHullRepository.findByCommanderId(commanderId).stream()
                         .map(com.bk.sbs.entity.CommanderUnlockedHull::getHullSubType)
                         .collect(java.util.stream.Collectors.toList()))
-                .unlockedShieldHulls(commanderUnlockedHullRepository.findByCommanderIdAndShieldUnlockedTrue(commanderId).stream()
-                        .map(com.bk.sbs.entity.CommanderUnlockedHull::getHullSubType)
-                        .collect(java.util.stream.Collectors.toList()))
-                .unlockedInterceptorHulls(commanderUnlockedHullRepository.findByCommanderIdAndInterceptorUnlockedTrue(commanderId).stream()
-                        .map(com.bk.sbs.entity.CommanderUnlockedHull::getHullSubType)
-                        .collect(java.util.stream.Collectors.toList()))
                 .hasUnclaimedAchievement(achievementService.hasUnclaimedCompletedAchievement(commanderId))
+                .archetypeUpgrades(archetypeModuleUpgradeService.getUpgrades(commanderId).stream()
+                        .map(u -> com.bk.sbs.dto.ArchetypeUpgradeInfoDto.builder()
+                                .hullArchetype(u.getHullArchetype())
+                                .moduleType(u.getModuleType())
+                                .level(u.getLevel())
+                                .build())
+                        .collect(java.util.stream.Collectors.toList()))
+                .hullArchetypePassiveProgress(hullArchetypeProgressService.getProgress(commanderId).stream()
+                        .map(p -> com.bk.sbs.dto.HullArchetypeProgressInfoDto.builder()
+                                .hullArchetype(p.getHullArchetype())
+                                .counterType(p.getCounterType())
+                                .counterValue(p.getCounterValue())
+                                .build())
+                        .collect(java.util.stream.Collectors.toList()))
                 .build();
     }
 

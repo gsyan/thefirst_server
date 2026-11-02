@@ -1,5 +1,6 @@
 package com.bk.sbs.config;
 
+import com.bk.sbs.dto.ArchetypeUpgradeSettings;
 import com.bk.sbs.dto.ExplorationSettings;
 import com.bk.sbs.dto.GeneralSettings;
 import com.bk.sbs.dto.PvpSettings;
@@ -22,5 +23,7 @@ public class DataTableConfig {
     private ExplorationSettings exploration;
 
     private ShipStatFormulaSettings shipStatFormula;
+
+    private ArchetypeUpgradeSettings archetypeUpgrade;
 
 }

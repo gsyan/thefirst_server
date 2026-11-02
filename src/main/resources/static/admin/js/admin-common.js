@@ -18,6 +18,7 @@ async function adminFetch(path, options) {
 
 const ADMIN_NAV_ITEMS = [
     { key: 'maintenance', label: '점검 모드', href: '/admin/maintenance.html' },
+    { key: 'notice', label: '공지사항', href: '/admin/notice.html' },
     { key: 'users', label: '유저 통계', href: '/admin/users.html' },
     { key: 'concurrent', label: '동시접속자', href: '/admin/concurrent-users.html' },
 ];

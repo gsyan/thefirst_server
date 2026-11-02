@@ -29,11 +29,8 @@ public class FleetService {
     private final CommanderUnlockedHullRepository commanderUnlockedHullRepository;
     private final AchievementService achievementService;
 
-    // 신규 커맨더에게 지급되는 기본 함대(fleetIndex=0)의 초기 함선 — 함체 hull_3_1_11100(빔1/미사일1/격납고1) + 기본 빔1 장착
-    private static final String DEFAULT_FLEET_HULL_SUB_TYPE = "hull_3_1_11100";
-
-    // 이 티어 미만은 조건 없이 사용 가능, 이 티어 이상은 업적포인트 언락(commander_unlocked_hull) 필요
-    private static final int ACHIEVEMENT_UNLOCK_MIN_HULL_TIER = 4;
+    // 신규 커맨더에게 지급되는 기본 함대(fleetIndex=0)의 초기 함선 — 티어1 아키타입(centurion) 레벨1 함체 + 기본 빔1 장착
+    private static final String DEFAULT_FLEET_HULL_SUB_TYPE = "hull_1_centurion_1";
 
     public FleetService(CommanderRepository commanderRepository,
                        GameDataService gameDataService,
@@ -60,29 +57,70 @@ public class FleetService {
         ship.setSlotIndex(0);
         ship.setHullSubType(DEFAULT_FLEET_HULL_SUB_TYPE);
         ship.setFront(true);
-        replaceShipModules(ship, buildInitialFleetModules(ship));
+        int[] initialMaxSlots = gameDataService.getMaxSlotsForHull(DEFAULT_FLEET_HULL_SUB_TYPE);
+        replaceShipModules(ship, buildDefaultModules(ship, initialMaxSlots));
         fleet.setShips(new ArrayList<>(List.of(ship)));
 
         fleetRepository.save(fleet);
     }
 
-    // 신규 계정 최초 함선만 티어1 빔을 기본 장착 — 이후 수동 함선 배치/편집은 buildDefaultModules()(무기 없음)를 그대로 사용
-    private List<Module> buildInitialFleetModules(Ship ship) {
-        Module module = new Module();
-        module.setShip(ship);
-        module.setModuleType(EModuleType.beam);
-        module.setSlotIndex(0);
-        module.setModuleSubType("beam_1_1");
-        return new ArrayList<>(List.of(module));
-    }
-
     // 로그인 시 내려주는 "내 함대" — fleetIndex=0 함대를 FleetInfoDto로 변환, 함선별 실제 장착 모듈(hulls)까지 포함
     // Fleet.ships가 LAZY라 convertFleetToFleetInfoDto에서 컬렉션을 순회하는 동안 세션이 열려 있어야 함 — @Transactional 필수
-    @Transactional(readOnly = true)
+    // healInvalidHullSubTypes가 DB를 고칠 수도 있어 readOnly 아님(일반 @Transactional)
+    @Transactional
     public FleetInfoDto getActiveFleet(Long commanderId) {
         Fleet fleet = fleetRepository.findByCommanderIdAndFleetIndex(commanderId, 0)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.COMMANDER_CONTROLLER_FAIL_NULL_ACTIVE_FLEET));
+        healInvalidHullSubTypes(fleet);
+        healEmptyModules(fleet);
         return convertFleetToFleetInfoDto(fleet);
+    }
+
+    // 모듈은 항상 설치된 상태가 기본값이 된 이후(설치/해제 개념 폐지)에도, 그 변경 이전에 생성돼 모듈이 빈 채로 저장된 기존 함선은
+    // 조회 시점에 자가치유 — 현재 hullSubType 기준으로 빈 슬롯을 기본 레벨1 모듈로 채우고 DB에도 반영(dirty checking, @Transactional)
+    private void healEmptyModules(Fleet fleet) {
+        if (fleet.getShips() == null) return;
+
+        for (Ship ship : fleet.getShips()) {
+            if (ship.getModules() != null && ship.getModules().isEmpty() == false) continue;
+
+            int[] maxSlots = gameDataService.getMaxSlotsForHull(ship.getHullSubType());
+            List<Module> defaultModules = buildDefaultModules(ship, maxSlots);
+            if (defaultModules.isEmpty()) continue;
+
+            log.info("Ship {} (hullSubType={}) had empty modules — backfilling with default level-1 modules",
+                    ship.getId(), ship.getHullSubType());
+            replaceShipModules(ship, defaultModules);
+        }
+    }
+
+    // 콘텐츠 개편으로 datatable_module.csv에서 사라진 hullSubType을 들고 있는 함선을 조회 시점에 기본 함체로 자가치유 — 실서버 패치 후 과거 데이터 보정용
+    // hull만 처리(장착 모듈 유효성은 이번 범위 밖) — 기본 함체로 바뀌어도 기존 모듈은 그대로 유지, 슬롯 범위를 벗어나면 다음 setFleetSlotModules 때 자연히 걸러짐
+    // 무효 함선이 여러 척이면 전부 같은 기본 함체(DEFAULT_FLEET_HULL_SUB_TYPE)로 바뀌어 같은 아키타입 중복이 생기므로(M7: 함대 내 아키타입 1척 제한),
+    // 첫 번째 한 척만 교체하고 나머지는 슬롯 자체를 비움(제거). 이미 유효한 다른 슬롯이 같은 아키타입을 쓰고 있는 경우까지는 검사하지 않음 — M7 구현 시 함께 다룰 범위
+    private void healInvalidHullSubTypes(Fleet fleet) {
+        if (fleet.getShips() == null) return;
+
+        List<Ship> invalidShips = new ArrayList<>();
+        for (Ship ship : fleet.getShips()) {
+            if (gameDataService.getHullModuleData(ship.getHullSubType()) == null)
+                invalidShips.add(ship);
+        }
+        if (invalidShips.isEmpty()) return;
+
+        Ship firstInvalid = invalidShips.get(0);
+        log.warn("Ship {} had an unknown hullSubType '{}' — resetting to default {}",
+                firstInvalid.getId(), firstInvalid.getHullSubType(), DEFAULT_FLEET_HULL_SUB_TYPE);
+        firstInvalid.setHullSubType(DEFAULT_FLEET_HULL_SUB_TYPE);
+
+        for (int i = 1; i < invalidShips.size(); i++) {
+            Ship extraInvalid = invalidShips.get(i);
+            log.warn("Ship {} had an unknown hullSubType '{}' — removing this slot instead of duplicating the default hull",
+                    extraInvalid.getId(), extraInvalid.getHullSubType());
+            fleet.getShips().remove(extraInvalid);
+        }
+
+        fleetRepository.save(fleet);
     }
 
     // PvP 상대 함대 조회/랭킹 함대 능력치 계산용 — 함대가 없으면(탈퇴 등) null 반환, getActiveFleet과 달리 예외를 던지지 않음
@@ -124,13 +162,15 @@ public class FleetService {
         ModuleData hullData = gameDataService.getHullModuleData(request.getHullSubType());
         if (hullData == null)
             throw new BusinessException(ServerErrorCode.PLACE_FLEET_SHIP_FAIL_HULL_NOT_FOUND);
-        // 티어1~3은 조건 없이 사용 가능, 티어4+는 업적포인트 언락(구매)이 선행되어 있어야 배치 가능(커맨더 레벨은 이 판정에 관여하지 않음)
-        if (GameDataService.parseTierFromHullSubType(request.getHullSubType()) >= ACHIEVEMENT_UNLOCK_MIN_HULL_TIER
+        // 티어1은 기본 지급이라 DB 기록 없이 항상 사용 가능, 티어2+는 비용(ap_cost)과 무관하게 commander_unlocked_hull 기록 존재 여부로만 판정
+        int placeTier = GameDataService.parseTierFromHullSubType(request.getHullSubType());
+        if (placeTier > 1
                 && commanderUnlockedHullRepository.existsByCommanderIdAndHullSubType(commanderId, request.getHullSubType()) == false)
             throw new BusinessException(ServerErrorCode.PLACE_FLEET_SHIP_FAIL_HULL_NOT_UNLOCKED);
 
-        int openSlotCount = gameDataService.getShipCount(commander.getCommanderLevel());
-        if (request.getSlotIndex() < 0 || request.getSlotIndex() >= openSlotCount)
+        // 함대 슬롯 칸 수는 고정 상한(GeneralSettings.maxFleetSlotCount) — 지휘관 레벨과 무관, 실제 배치 가능 여부는 지휘력(캐파) 체크가 담당
+        int maxSlotCount = gameDataService.getMaxShipsPerFleet();
+        if (request.getSlotIndex() < 0 || request.getSlotIndex() >= maxSlotCount)
             throw new BusinessException(ServerErrorCode.PLACE_FLEET_SHIP_FAIL_SLOT_LOCKED);
 
         Fleet fleet = fleetRepository.findByCommanderIdAndFleetIndex(commanderId, 0)
@@ -149,24 +189,21 @@ public class FleetService {
 
         // 새 함체 반영 전에 기존 모듈을 스냅샷 — replaceShipModules가 이 컬렉션을 곧 비우므로 미리 복사해둬야 함
         List<Module> existingModules = ship.getModules() != null ? new ArrayList<>(ship.getModules()) : new ArrayList<>();
-        int[] newMaxSlots = GameDataService.parseMaxSlotsFromHullSubType(request.getHullSubType());
+        int[] newMaxSlots = gameDataService.getMaxSlotsForHull(request.getHullSubType());
         List<Module> keptModules = existingModules.isEmpty() == false
                 ? filterModulesForNewHull(existingModules, newMaxSlots, request.getHullSubType(), ship)
-                : buildDefaultModules(ship);
+                : buildDefaultModules(ship, newMaxSlots);
 
+        // 캐파(지휘력)는 함체(hull) 자신의 점유값만 반영 — 모듈 설치/해제는 캐파와 무관(M13)
         int newShipCost = hullData.getStatPoint() != null ? hullData.getStatPoint() : 0;
-        for (Module m : keptModules) {
-            int installCost = getModuleStatPoint(m.getModuleType(), m.getModuleSubType());
-            int reinforceCost = gameDataService.getReinforceCpCostPerPoint() * sumReinforcePoints(m);
-            newShipCost += installCost + reinforceCost;
-        }
 
         int usedByOtherShips = 0;
         for (Ship s : fleet.getShips()) {
             if (s.getSlotIndex() == request.getSlotIndex()) continue;
             usedByOtherShips += computeShipCommandCost(s);
         }
-        if (usedByOtherShips + newShipCost > commander.getCommandPowerMax())
+        int commandPowerMax = gameDataService.getCommandPowerMax(commander.getCommanderLevel());
+        if (usedByOtherShips + newShipCost > commandPowerMax)
             throw new BusinessException(ServerErrorCode.PLACE_FLEET_SHIP_FAIL_NOT_ENOUGH_COMMAND_POWER);
 
         ship.setHullSubType(request.getHullSubType());
@@ -176,7 +213,7 @@ public class FleetService {
         achievementService.recordReachedTierAchievements(commander, fleet);
     }
 
-    // 티어4+ 함체를 업적포인트로 언락(구매) — 언락 완료 후에도 배치는 placeFleetShip을 통해 별도로 해야 함(여기선 구매만 처리)
+    // 아직 언락 기록이 없는 함체(티어2+)를 업적포인트로 언락(구매) — 언락 완료 후에도 배치는 placeFleetShip을 통해 별도로 해야 함(여기선 구매만 처리)
     @Transactional
     public UnlockHullResponse unlockHull(Long commanderId, UnlockHullRequest request) {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
@@ -186,15 +223,10 @@ public class FleetService {
         if (hullData == null)
             throw new BusinessException(ServerErrorCode.UNLOCK_HULL_FAIL_HULL_NOT_FOUND);
 
-        if (GameDataService.parseTierFromHullSubType(request.getHullSubType()) < ACHIEVEMENT_UNLOCK_MIN_HULL_TIER)
-            throw new BusinessException(ServerErrorCode.UNLOCK_HULL_FAIL_NOT_ELIGIBLE);
+        int unlockCost = hullData.getUnlockAchievementPointCost() != null ? hullData.getUnlockAchievementPointCost() : 0;
 
         if (commanderUnlockedHullRepository.existsByCommanderIdAndHullSubType(commanderId, request.getHullSubType()) == true)
             throw new BusinessException(ServerErrorCode.UNLOCK_HULL_FAIL_ALREADY_UNLOCKED);
-
-        validateUnlockPrerequisite(commanderId, request.getHullSubType());
-
-        int unlockCost = hullData.getUnlockAchievementPointCost() != null ? hullData.getUnlockAchievementPointCost() : 0;
         if (commander.getAchievementPoint() < unlockCost)
             throw new BusinessException(ServerErrorCode.UNLOCK_HULL_FAIL_INSUFFICIENT_ACHIEVEMENT_POINT);
 
@@ -213,96 +245,13 @@ public class FleetService {
                 .build();
     }
 
-    // 실드 슬롯 언락(구매) — 대상 함체 자체가 이미 언락돼 있어야 함(commander_unlocked_hull row 존재 전제)
-    @Transactional
-    public UnlockShieldModuleResponse unlockShieldModule(Long commanderId, UnlockShieldModuleRequest request) {
-        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.UNLOCK_SHIELD_MODULE_FAIL_COMMANDER_NOT_FOUND));
-
-        CommanderUnlockedHull unlockedHull = commanderUnlockedHullRepository
-                .findByCommanderIdAndHullSubType(commanderId, request.getHullSubType())
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.UNLOCK_SHIELD_MODULE_FAIL_HULL_NOT_UNLOCKED));
-
-        if (unlockedHull.isShieldUnlocked() == true)
-            throw new BusinessException(ServerErrorCode.UNLOCK_SHIELD_MODULE_FAIL_ALREADY_UNLOCKED);
-
-        ModuleData hullData = gameDataService.getHullModuleData(request.getHullSubType());
-        int unlockCost = hullData != null && hullData.getShieldUnlockAchievementPointCost() != null
-                ? hullData.getShieldUnlockAchievementPointCost() : 0;
-        if (commander.getAchievementPoint() < unlockCost)
-            throw new BusinessException(ServerErrorCode.UNLOCK_SHIELD_MODULE_FAIL_INSUFFICIENT_ACHIEVEMENT_POINT);
-
-        commander.setAchievementPoint(commander.getAchievementPoint() - unlockCost);
-        commanderRepository.save(commander);
-        unlockedHull.setShieldUnlocked(true);
-        commanderUnlockedHullRepository.save(unlockedHull);
-
-        List<String> unlockedShieldHulls = commanderUnlockedHullRepository.findByCommanderIdAndShieldUnlockedTrue(commanderId).stream()
-                .map(CommanderUnlockedHull::getHullSubType)
-                .collect(Collectors.toList());
-
-        return UnlockShieldModuleResponse.builder()
-                .hullSubType(request.getHullSubType())
-                .achievementPointRemain(commander.getAchievementPoint())
-                .unlockedShieldHulls(unlockedShieldHulls)
-                .build();
-    }
-
-    // 요격체 슬롯 언락(구매) — unlockShieldModule과 동일 패턴
-    @Transactional
-    public UnlockInterceptorModuleResponse unlockInterceptorModule(Long commanderId, UnlockInterceptorModuleRequest request) {
-        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.UNLOCK_INTERCEPTOR_MODULE_FAIL_COMMANDER_NOT_FOUND));
-
-        CommanderUnlockedHull unlockedHull = commanderUnlockedHullRepository
-                .findByCommanderIdAndHullSubType(commanderId, request.getHullSubType())
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.UNLOCK_INTERCEPTOR_MODULE_FAIL_HULL_NOT_UNLOCKED));
-
-        if (unlockedHull.isInterceptorUnlocked() == true)
-            throw new BusinessException(ServerErrorCode.UNLOCK_INTERCEPTOR_MODULE_FAIL_ALREADY_UNLOCKED);
-
-        ModuleData hullData = gameDataService.getHullModuleData(request.getHullSubType());
-        int unlockCost = hullData != null && hullData.getInterceptorUnlockAchievementPointCost() != null
-                ? hullData.getInterceptorUnlockAchievementPointCost() : 0;
-        if (commander.getAchievementPoint() < unlockCost)
-            throw new BusinessException(ServerErrorCode.UNLOCK_INTERCEPTOR_MODULE_FAIL_INSUFFICIENT_ACHIEVEMENT_POINT);
-
-        commander.setAchievementPoint(commander.getAchievementPoint() - unlockCost);
-        commanderRepository.save(commander);
-        unlockedHull.setInterceptorUnlocked(true);
-        commanderUnlockedHullRepository.save(unlockedHull);
-
-        List<String> unlockedInterceptorHulls = commanderUnlockedHullRepository.findByCommanderIdAndInterceptorUnlockedTrue(commanderId).stream()
-                .map(CommanderUnlockedHull::getHullSubType)
-                .collect(Collectors.toList());
-
-        return UnlockInterceptorModuleResponse.builder()
-                .hullSubType(request.getHullSubType())
-                .achievementPointRemain(commander.getAchievementPoint())
-                .unlockedInterceptorHulls(unlockedInterceptorHulls)
-                .build();
-    }
-
-    // 함체 언락 선행조건 — gen=1(기본 제공) 함체에만 적용, gen이 다른(유료/미래 추가) 함체는 체인 규칙과 무관하게 통과시킴
-    // 티어당 함체가 하나뿐이라 이전 티어 함체가 선행 언락돼 있어야 하는 단순 선형 체인
-    private void validateUnlockPrerequisite(Long commanderId, String hullSubType) {
-        if (GameDataService.parseGenFromHullSubType(hullSubType) != 1) return;
-
-        int tier = GameDataService.parseTierFromHullSubType(hullSubType);
-        if (tier <= ACHIEVEMENT_UNLOCK_MIN_HULL_TIER) return;
-
-        String prerequisiteSubType = gameDataService.findHullSubTypeByTier(tier - 1);
-        if (prerequisiteSubType == null) return;
-        if (commanderUnlockedHullRepository.existsByCommanderIdAndHullSubType(commanderId, prerequisiteSubType) == false)
-            throw new BusinessException(ServerErrorCode.UNLOCK_HULL_FAIL_PREREQUISITE_NOT_UNLOCKED);
-    }
-
     // 기존 장착 모듈 중 새 함체(newMaxSlots)에도 같은 카테고리+슬롯 인덱스가 존재하는 것만 유지 — 강화 포인트는 그대로 복사
     // 확정 규칙: 무기 티어는 함체 티어와 독립적인 별도 축이지만 상한은 항상 함체 티어 — 새 함체 티어를 넘는 기존 모듈은 함체 티어로 자동 다운그레이드됨
     // (지휘력 회수는 별도 처리 불필요 — 호출부 placeFleetShip이 이 결과의 statPoint로 비용을 재계산하므로 낮아진 티어가 자동 반영됨)
     private List<Module> filterModulesForNewHull(List<Module> existingModules, int[] newMaxSlots, String newHullSubType, Ship targetShip) {
         int newHullTier = GameDataService.parseTierFromHullSubType(newHullSubType);
         List<Module> kept = new ArrayList<>();
+        java.util.Set<String> filledKeys = new java.util.HashSet<>(); // "moduleType:slotIndex" — 아래에서 빈 슬롯을 기본 모듈로 채울 때 중복 방지
         for (Module old : existingModules) {
             int maxSlotForCategory = getMaxSlotForCategory(newMaxSlots, old.getModuleType());
             if (old.getSlotIndex() >= maxSlotForCategory) continue;
@@ -312,16 +261,28 @@ public class FleetService {
             module.setModuleType(old.getModuleType());
             module.setSlotIndex(old.getSlotIndex());
             module.setModuleSubType(clampModuleTierToHull(old.getModuleType(), old.getModuleSubType(), newHullTier));
-            module.setAttackPoints(old.getAttackPoints());
-            module.setAttackToFighterPoints(old.getAttackToFighterPoints());
-            module.setFireRatePoints(old.getFireRatePoints());
-            module.setSilencePoints(old.getSilencePoints());
-            module.setAmmoPoints(old.getAmmoPoints());
-            module.setHealthPoints(old.getHealthPoints());
-            module.setDisruptPoints(old.getDisruptPoints());
             kept.add(module);
+            filledKeys.add(old.getModuleType() + ":" + old.getSlotIndex());
         }
+
+        // 새 함체로 바뀌면서 슬롯이 늘어나 비게 된 자리(실드/요격체가 원래 없었던 경우 포함)는 기본 레벨1 모듈로 채움 — 모듈은 항상 설치된 상태(설치/해제 개념 폐지)
+        appendMissingDefaultCategoryModules(kept, targetShip, EModuleType.beam, newMaxSlots[0], filledKeys);
+        appendMissingDefaultCategoryModules(kept, targetShip, EModuleType.missile, newMaxSlots[1], filledKeys);
+        appendMissingDefaultCategoryModules(kept, targetShip, EModuleType.hangar, newMaxSlots[2], filledKeys);
+        if (newMaxSlots[3] > 0 && filledKeys.contains(EModuleType.shield + ":0") == false)
+            kept.add(buildModule(targetShip, EModuleType.shield, 0, "shield_1_1"));
+        if (newMaxSlots[4] > 0 && filledKeys.contains(EModuleType.interceptor + ":0") == false)
+            kept.add(buildModule(targetShip, EModuleType.interceptor, 0, "interceptor_1_1"));
+
         return kept;
+    }
+
+    private void appendMissingDefaultCategoryModules(List<Module> target, Ship ship, EModuleType moduleType, int maxSlotCount, java.util.Set<String> filledKeys) {
+        String defaultSubType = getDefaultSubTypeForCategory(moduleType);
+        for (int i = 0; i < maxSlotCount; i++) {
+            if (filledKeys.contains(moduleType + ":" + i)) continue;
+            target.add(buildModule(ship, moduleType, i, defaultSubType));
+        }
     }
 
     // 모듈 서브타입의 티어가 함체 티어를 넘으면 {category}_{hullTier}_1로 다운그레이드 — 해당 티어 데이터가 없으면(비정상 데이터) 원본 유지
@@ -344,9 +305,31 @@ public class FleetService {
         return 0;
     }
 
-    // 빈 슬롯의 기본 로드아웃 — 무기 없이 배치. 반영(저장)은 호출부 책임
-    private List<Module> buildDefaultModules(Ship ship) {
-        return new ArrayList<>();
+    // 빈 슬롯(새로 배치되는 함선)의 기본 로드아웃 — 모든 구조 슬롯에 레벨1 모듈을 기본 장착(설치/해제 개념 폐지, 항상 설치된 상태).
+    // maxSlots = [beam, missile, hangar, shield, interceptor]. 반영(저장)은 호출부 책임
+    private List<Module> buildDefaultModules(Ship ship, int[] maxSlots) {
+        List<Module> modules = new ArrayList<>();
+        appendDefaultCategoryModules(modules, ship, EModuleType.beam, maxSlots[0]);
+        appendDefaultCategoryModules(modules, ship, EModuleType.missile, maxSlots[1]);
+        appendDefaultCategoryModules(modules, ship, EModuleType.hangar, maxSlots[2]);
+        if (maxSlots[3] > 0) modules.add(buildModule(ship, EModuleType.shield, 0, "shield_1_1"));
+        if (maxSlots[4] > 0) modules.add(buildModule(ship, EModuleType.interceptor, 0, "interceptor_1_1"));
+        return modules;
+    }
+
+    private void appendDefaultCategoryModules(List<Module> target, Ship ship, EModuleType moduleType, int maxSlotCount) {
+        String defaultSubType = getDefaultSubTypeForCategory(moduleType);
+        for (int i = 0; i < maxSlotCount; i++)
+            target.add(buildModule(ship, moduleType, i, defaultSubType));
+    }
+
+    private Module buildModule(Ship ship, EModuleType moduleType, int slotIndex, String subType) {
+        Module module = new Module();
+        module.setShip(ship);
+        module.setModuleType(moduleType);
+        module.setSlotIndex(slotIndex);
+        module.setModuleSubType(subType);
+        return module;
     }
 
     // Hibernate orphanRemoval 컬렉션은 필드 참조 자체를 새 List로 갈아끼우면 안 됨(기존에 관리되던 컬렉션이 고아가 되어
@@ -375,34 +358,14 @@ public class FleetService {
         };
     }
 
-    private int getModuleStatPoint(EModuleType moduleType, String subType) {
-        if (subType == null) return 0;
-        List<ModuleData> modules = gameDataService.getModulesByType(moduleType);
-        for (ModuleData data : modules) {
-            if (subType.equals(data.getModuleSubType()))
-                return data.getStatPoint() != null ? data.getStatPoint() : 0;
-        }
-        return 0;
-    }
-
     private int computeHullCost(String hullSubType) {
         ModuleData hullData = gameDataService.getHullModuleData(hullSubType);
         return hullData != null && hullData.getStatPoint() != null ? hullData.getStatPoint() : 0;
     }
 
-    // 함체 설치비 + 현재 장착된 모든 모듈의 설치비/강화 포인트 합 — 클라 ShipStatAllocation.GetTotalPointsUsed와 동일한 계산
+    // 함선의 캐파(지휘력) 점유값 — 함체(hull) 자신의 점유값만, 모듈은 캐파와 무관(M13)
     private int computeShipCommandCost(Ship ship) {
-        int hullCost = computeHullCost(ship.getHullSubType());
-
-        int modulesCost = 0;
-        if (ship.getModules() != null) {
-            for (Module module : ship.getModules()) {
-                int installCost = getModuleStatPoint(module.getModuleType(), module.getModuleSubType());
-                int reinforceCost = gameDataService.getReinforceCpCostPerPoint() * sumReinforcePoints(module);
-                modulesCost += installCost + reinforceCost;
-            }
-        }
-        return hullCost + modulesCost;
+        return computeHullCost(ship.getHullSubType());
     }
 
     private ModuleHullInfoDto buildModuleHullInfoDto(Ship ship) {
@@ -410,10 +373,7 @@ public class FleetService {
         List<ModuleInfoDto> missiles = new ArrayList<>();
         List<ModuleInfoDto> hangars = new ArrayList<>();
         String shieldModuleSubType = "";
-        int shieldGaugePoints = 0;
-        int shieldRegenRatePoints = 0;
         String interceptorModuleSubType = "";
-        int interceptorRegenRatePoints = 0;
 
         if (ship.getModules() != null) {
             for (Module module : ship.getModules()) {
@@ -421,27 +381,13 @@ public class FleetService {
                         .moduleType(module.getModuleType())
                         .moduleSubType(module.getModuleSubType())
                         .slotIndex(module.getSlotIndex())
-                        .attackPoints(module.getAttackPoints())
-                        .attackToFighterPoints(module.getAttackToFighterPoints())
-                        .fireRatePoints(module.getFireRatePoints())
-                        .silencePoints(module.getSilencePoints())
-                        .ammoPoints(module.getAmmoPoints())
-                        .healthPoints(module.getHealthPoints())
-                        .disruptPoints(module.getDisruptPoints())
                         .build();
                 switch (module.getModuleType()) {
                     case beam -> beams.add(dto);
                     case missile -> missiles.add(dto);
                     case hangar -> hangars.add(dto);
-                    case shield -> {
-                        shieldModuleSubType = module.getModuleSubType();
-                        shieldGaugePoints = module.getAttackPoints();
-                        shieldRegenRatePoints = module.getAttackToFighterPoints();
-                    }
-                    case interceptor -> {
-                        interceptorModuleSubType = module.getModuleSubType();
-                        interceptorRegenRatePoints = module.getAttackPoints();
-                    }
+                    case shield -> shieldModuleSubType = module.getModuleSubType();
+                    case interceptor -> interceptorModuleSubType = module.getModuleSubType();
                     default -> { }
                 }
             }
@@ -457,10 +403,7 @@ public class FleetService {
                 .missiles(missiles)
                 .hangars(hangars)
                 .shieldModuleSubType(shieldModuleSubType)
-                .shieldGaugePoints(shieldGaugePoints)
-                .shieldRegenRatePoints(shieldRegenRatePoints)
                 .interceptorModuleSubType(interceptorModuleSubType)
-                .interceptorRegenRatePoints(interceptorRegenRatePoints)
                 .currentHealth(maxHealth)
                 .build();
     }
@@ -490,40 +433,29 @@ public class FleetService {
                 .findFirst()
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_SLOT_NOT_FOUND));
 
-        int[] maxSlots = GameDataService.parseMaxSlotsFromHullSubType(ship.getHullSubType());
+        int[] maxSlots = gameDataService.getMaxSlotsForHull(ship.getHullSubType());
         int hullTier = GameDataService.parseTierFromHullSubType(ship.getHullSubType());
         ModuleHullInfoDto requestedModules = request.getModules();
-
-        Optional<CommanderUnlockedHull> unlockedHull = commanderUnlockedHullRepository
-                .findByCommanderIdAndHullSubType(commanderId, ship.getHullSubType());
-        boolean shieldUnlocked = unlockedHull.map(CommanderUnlockedHull::isShieldUnlocked).orElse(false);
-        boolean interceptorUnlocked = unlockedHull.map(CommanderUnlockedHull::isInterceptorUnlocked).orElse(false);
 
         List<DesiredModule> desired = new ArrayList<>();
         appendDesiredModules(desired, EModuleType.beam, maxSlots[0], hullTier, requestedModules != null ? requestedModules.getBeams() : null);
         appendDesiredModules(desired, EModuleType.missile, maxSlots[1], hullTier, requestedModules != null ? requestedModules.getMissiles() : null);
         appendDesiredModules(desired, EModuleType.hangar, maxSlots[2], hullTier, requestedModules != null ? requestedModules.getHangars() : null);
-        appendDesiredShield(desired, maxSlots[3], hullTier, shieldUnlocked,
-                requestedModules != null ? requestedModules.getShieldModuleSubType() : null,
-                requestedModules != null ? requestedModules.getShieldGaugePoints() : null,
-                requestedModules != null ? requestedModules.getShieldRegenRatePoints() : null);
-        appendDesiredInterceptor(desired, maxSlots[4], hullTier, interceptorUnlocked,
-                requestedModules != null ? requestedModules.getInterceptorModuleSubType() : null,
-                requestedModules != null ? requestedModules.getInterceptorRegenRatePoints() : null);
+        appendDesiredShield(desired, maxSlots[3], hullTier,
+                requestedModules != null ? requestedModules.getShieldModuleSubType() : null);
+        appendDesiredInterceptor(desired, maxSlots[4], hullTier,
+                requestedModules != null ? requestedModules.getInterceptorModuleSubType() : null);
 
+        // 캐파(지휘력)는 함체(hull) 자신의 점유값만 반영 — 모듈 설치/해제는 캐파와 무관(M13)
         int newShipCost = computeHullCost(ship.getHullSubType());
-        for (DesiredModule m : desired) {
-            int installCost = getModuleStatPoint(m.moduleType(), m.moduleSubType());
-            int reinforceCost = gameDataService.getReinforceCpCostPerPoint() * m.sumReinforcePoints();
-            newShipCost += installCost + reinforceCost;
-        }
 
         int usedByOtherShips = 0;
         for (Ship s : fleet.getShips()) {
             if (s.getSlotIndex() == ship.getSlotIndex()) continue;
             usedByOtherShips += computeShipCommandCost(s);
         }
-        if (usedByOtherShips + newShipCost > commander.getCommandPowerMax())
+        int commandPowerMax = gameDataService.getCommandPowerMax(commander.getCommanderLevel());
+        if (usedByOtherShips + newShipCost > commandPowerMax)
             throw new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_NOT_ENOUGH_COMMAND_POWER);
 
         List<Module> newModules = new ArrayList<>();
@@ -533,20 +465,13 @@ public class FleetService {
             module.setModuleType(m.moduleType());
             module.setSlotIndex(m.slotIndex());
             module.setModuleSubType(m.moduleSubType());
-            module.setAttackPoints(m.attackPoints());
-            module.setAttackToFighterPoints(m.attackToFighterPoints());
-            module.setFireRatePoints(m.fireRatePoints());
-            module.setSilencePoints(m.silencePoints());
-            module.setAmmoPoints(m.ammoPoints());
-            module.setHealthPoints(m.healthPoints());
-            module.setDisruptPoints(m.disruptPoints());
             newModules.add(module);
         }
         replaceShipModules(ship, newModules);
         fleetRepository.save(fleet);
         achievementService.recordReachedTierAchievements(commander, fleet);
 
-        int remainingAfter = commander.getCommandPowerMax() - (usedByOtherShips + newShipCost);
+        int remainingAfter = commandPowerMax - (usedByOtherShips + newShipCost);
 
         return SetModuleResponse.builder()
                 .hull(buildModuleHullInfoDto(ship))
@@ -555,29 +480,15 @@ public class FleetService {
                 .build();
     }
 
-    private record DesiredModule(EModuleType moduleType, int slotIndex, String moduleSubType, int attackPoints, int attackToFighterPoints,
-                                 int fireRatePoints, int silencePoints, int ammoPoints, int healthPoints, int disruptPoints) {
-        // 클라 FleetComposition.SumReinforcePoints와 동일 — CP 비용 = 이 합 × reinforceCpCostPerPoint
-        int sumReinforcePoints() {
-            return attackPoints + attackToFighterPoints + fireRatePoints + silencePoints + ammoPoints + healthPoints + disruptPoints;
-        }
-    }
-
-    private int sumReinforcePoints(Module module) {
-        return module.getAttackPoints() + module.getAttackToFighterPoints() + module.getFireRatePoints()
-                + module.getSilencePoints() + module.getAmmoPoints() + module.getHealthPoints() + module.getDisruptPoints();
+    private record DesiredModule(EModuleType moduleType, int slotIndex, String moduleSubType) {
     }
 
     // requested의 각 항목이 유효한 슬롯 인덱스(0 <= idx < maxSlotCount)인지, 중복 슬롯이 없는지 검증하며 desired 목록에 채워 넣음
-    // 강화 포인트는 클라 입력을 신뢰하지 않고 서버가 직접 clamp. moduleSubType(티어)도 마찬가지로 클라가 보낸 값을 그대로 믿지 않고
-    // 이 카테고리에 실제로 존재하는 데이터인지 + 함체 티어를 넘지 않는지 검증한 뒤에만 사용(티어업/다운) — 없거나 비어있거나 함체 티어 초과면 기본 1티어로 폴백
+    // moduleSubType(티어)은 클라가 보낸 값을 그대로 믿지 않고 이 카테고리에 실제로 존재하는 데이터인지 + 함체 티어를 넘지 않는지 검증한 뒤에만
+    // 사용(티어업/다운) — 없거나 비어있거나 함체 티어 초과면 기본 1티어로 폴백
     private void appendDesiredModules(List<DesiredModule> target, EModuleType moduleType, int maxSlotCount, int hullTier, List<ModuleInfoDto> requested) {
         if (requested == null) return;
         String defaultSubType = getDefaultSubTypeForCategory(moduleType);
-        int maxPerSlot = gameDataService.getMaxAttackReinforcePointsPerSlot();
-        boolean isHangar = moduleType == EModuleType.hangar;
-        boolean isWeapon = moduleType == EModuleType.beam || moduleType == EModuleType.missile;
-        boolean isMissile = moduleType == EModuleType.missile;
 
         java.util.Set<Integer> seenSlotIndexes = new java.util.HashSet<>();
         for (ModuleInfoDto item : requested) {
@@ -587,21 +498,12 @@ public class FleetService {
             if (seenSlotIndexes.add(slotIndex) == false)
                 throw new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_INVALID_SLOT_INDEX); // 같은 슬롯이 중복 요청됨
 
-            int clampedAttackPoints = clampReinforcePoints(item.getAttackPoints(), maxPerSlot);
-            int clampedFighterPoints = isHangar ? clampReinforcePoints(item.getAttackToFighterPoints(), maxPerSlot) : 0;
-            int clampedFireRatePoints = isWeapon ? clampReinforcePoints(item.getFireRatePoints(), maxPerSlot) : 0;
-            int clampedSilencePoints = isMissile ? clampReinforcePoints(item.getSilencePoints(), maxPerSlot) : 0;
-            int clampedAmmoPoints = isHangar ? clampReinforcePoints(item.getAmmoPoints(), maxPerSlot) : 0;
-            int clampedHealthPoints = isHangar ? clampReinforcePoints(item.getHealthPoints(), maxPerSlot) : 0;
-            int clampedDisruptPoints = isHangar ? clampReinforcePoints(item.getDisruptPoints(), maxPerSlot) : 0;
-
             String requestedSubType = item.getModuleSubType();
             String subType = (requestedSubType != null && isValidSubTypeForCategory(moduleType, requestedSubType, hullTier))
                     ? requestedSubType
                     : defaultSubType;
 
-            target.add(new DesiredModule(moduleType, slotIndex, subType, clampedAttackPoints, clampedFighterPoints,
-                    clampedFireRatePoints, clampedSilencePoints, clampedAmmoPoints, clampedHealthPoints, clampedDisruptPoints));
+            target.add(new DesiredModule(moduleType, slotIndex, subType));
         }
     }
 
@@ -621,50 +523,29 @@ public class FleetService {
     }
 
     // 실드는 리스트가 아니라 문자열 하나(장착 여부)뿐 — 슬롯 인덱스는 항상 0. 티어 선택 가능(datatable_module 티어1~14)
-    // 강화 포인트는 Module의 두 컬럼을 재사용: attackPoints=게이지, attackToFighterPoints=회복속도 (서버가 직접 clamp)
     // maxSlotCount<=0(실드 슬롯 없는 함체)인데 장착 요청이 오면 슬롯 인덱스 검증과 동일하게 거부
-    // shieldUnlocked==false(이 함체의 실드 슬롯을 아직 언락 안 함)면 장착 요청 자체를 거부
     // 요청된 티어는 클라를 신뢰하지 않고 무기 카테고리와 동일하게 검증(존재 여부 + 함체 티어 이하) 후 사용, 아니면 기본 티어1로 폴백
-    private void appendDesiredShield(List<DesiredModule> target, int maxSlotCount, int hullTier, boolean shieldUnlocked,
-                                      String requestedShieldSubType, Integer requestedGaugePoints, Integer requestedRegenRatePoints) {
+    private void appendDesiredShield(List<DesiredModule> target, int maxSlotCount, int hullTier, String requestedShieldSubType) {
         if (requestedShieldSubType == null || requestedShieldSubType.isEmpty()) return;
         if (maxSlotCount <= 0)
             throw new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_INVALID_SLOT_INDEX);
-        if (shieldUnlocked == false)
-            throw new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_SHIELD_NOT_UNLOCKED);
 
         String subType = isValidSubTypeForCategory(EModuleType.shield, requestedShieldSubType, hullTier)
                 ? requestedShieldSubType
                 : "shield_1_1";
-        int maxPerSlot = gameDataService.getMaxAttackReinforcePointsPerSlot();
-        int gaugePoints = clampReinforcePoints(requestedGaugePoints, maxPerSlot);
-        int regenRatePoints = clampReinforcePoints(requestedRegenRatePoints, maxPerSlot);
-        target.add(new DesiredModule(EModuleType.shield, 0, subType, gaugePoints, regenRatePoints, 0, 0, 0, 0, 0));
+        target.add(new DesiredModule(EModuleType.shield, 0, subType));
     }
 
-    // 요격체도 실드와 동일하게 문자열 하나(장착 여부) — 슬롯 인덱스는 항상 0. 강화 포인트는 attackPoints=회복속도(attackToFighterPoints는 항상 0)
-    // interceptorUnlocked==false(이 함체의 요격체 슬롯을 아직 언락 안 함)면 장착 요청 자체를 거부
-    private void appendDesiredInterceptor(List<DesiredModule> target, int maxSlotCount, int hullTier, boolean interceptorUnlocked,
-                                           String requestedInterceptorSubType, Integer requestedRegenRatePoints) {
+    // 요격체도 실드와 동일하게 문자열 하나(장착 여부) — 슬롯 인덱스는 항상 0
+    private void appendDesiredInterceptor(List<DesiredModule> target, int maxSlotCount, int hullTier, String requestedInterceptorSubType) {
         if (requestedInterceptorSubType == null || requestedInterceptorSubType.isEmpty()) return;
         if (maxSlotCount <= 0)
             throw new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_INVALID_SLOT_INDEX);
-        if (interceptorUnlocked == false)
-            throw new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_INTERCEPTOR_NOT_UNLOCKED);
 
         String subType = isValidSubTypeForCategory(EModuleType.interceptor, requestedInterceptorSubType, hullTier)
                 ? requestedInterceptorSubType
                 : "interceptor_1_1";
-        int maxPerSlot = gameDataService.getMaxAttackReinforcePointsPerSlot();
-        int regenRatePoints = clampReinforcePoints(requestedRegenRatePoints, maxPerSlot);
-        target.add(new DesiredModule(EModuleType.interceptor, 0, subType, regenRatePoints, 0, 0, 0, 0, 0, 0));
-    }
-
-    // 클라가 보낸 강화 포인트 값을 0~maxPerSlot 범위로 강제 — null/음수/상한 초과 모두 방어
-    private int clampReinforcePoints(Integer requested, int maxPerSlot) {
-        int rawValue = requested != null ? requested : 0;
-        int nonNegativeValue = Math.max(0, rawValue);
-        return Math.min(nonNegativeValue, maxPerSlot);
+        target.add(new DesiredModule(EModuleType.interceptor, 0, subType));
     }
 
     // 함대편성 슬롯 전/후방 토글 저장
@@ -677,6 +558,27 @@ public class FleetService {
                 .filter(s -> s.getSlotIndex() == request.getSlotIndex())
                 .findFirst()
                 .ifPresent(ship -> ship.setFront(request.getIsFront()));
+    }
+
+    // 함대편성 슬롯의 함선을 배치 해제 — orphanRemoval로 Ship(+그 modules)이 DB에서 완전히 삭제됨.
+    // 컬렉션 참조 자체를 새 List로 갈아끼우면 orphanRemoval이 깨지므로 removeIf로 기존 리스트를 직접 수정.
+    // 클라 FleetComposition.RemoveShip(List.RemoveAt)이 뒤 슬롯들을 한 칸씩 당겨 압축하는 것과 동일하게,
+    // 삭제된 슬롯보다 큰 slotIndex를 전부 -1 해야 "빈 슬롯은 항상 꼬리에만" 불변식이 서버-클라 양쪽에서 일치함
+    @Transactional
+    public void removeFleetShip(Long commanderId, FleetRemoveShipRequest request) {
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.REMOVE_FLEET_SHIP_FAIL_COMMANDER_NOT_FOUND));
+
+        Fleet fleet = fleetRepository.findByCommanderIdAndFleetIndex(commanderId, 0)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.COMMANDER_CONTROLLER_FAIL_NULL_ACTIVE_FLEET));
+
+        int removedSlotIndex = request.getSlotIndex();
+        fleet.getShips().removeIf(s -> s.getSlotIndex() == removedSlotIndex);
+        for (Ship ship : fleet.getShips()) {
+            if (ship.getSlotIndex() > removedSlotIndex)
+                ship.setSlotIndex(ship.getSlotIndex() - 1);
+        }
+        fleetRepository.save(fleet);
     }
 
     // fleetId는 Fleet.id(FleetInfoDto.id로 클라에 내려준 값) — 미지정(0/null)이면 활성 함대(fleetIndex=0)로 폴백

@@ -285,7 +285,7 @@ public class AchievementService {
             case CommanderLevel:
                 return commander.getCommanderLevel();
             case CommandPower:
-                return commander.getCommandPowerMax();
+                return gameDataService.getCommandPowerMax(commander.getCommanderLevel());
             case TacticPower:
                 return commander.getTacticPowerMax();
             case ExplorationPointTotal:
@@ -328,7 +328,7 @@ public class AchievementService {
             case CommanderLevel:
                 return commander.getCommanderLevel();
             case CommandPower:
-                return commander.getCommandPowerMax();
+                return gameDataService.getCommandPowerMax(commander.getCommanderLevel());
             case TacticPower:
                 return commander.getTacticPowerMax();
             case ExplorationPointTotal:

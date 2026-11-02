@@ -45,6 +45,11 @@ public class ZoneRun {
     @Column(nullable = false)
     private int tacticPower = 0;
 
+    // 존런 전용 광물 현재치 — 런 시작 시 0, 셀 클리어 확정 시점에만 클라 보고값을 그대로 저장(서버 검증 없음, tacticPower와 동일한 신뢰모델)
+    // 이 런이 끝나면(ESCAPED/ABANDONED) 함께 소멸 — Commander 영구 자산으로 전환되는 경로 없음
+    @Column(name = "mineral_amount", nullable = false)
+    private int mineralAmount = 0;
+
     // "row-col" 형식(0-indexed) 단일 문자열 — 마지막으로 클리어한 셀(승리 시에만 갱신), 인접 검증 기준점. 정수 2컬럼 대신 사람이 읽기 좋은 하나의 컬럼으로 저장
     // ZoneCellClearLog.cell과 동일하게 0-indexed — DB/네트워크/코드 전부 0-indexed로 통일(변환 지점을 아예 없앰)
     @Column(name = "current_cell", nullable = false, length = 20)

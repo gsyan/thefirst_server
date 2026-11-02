@@ -51,11 +51,6 @@ public class Commander {
     @Column(nullable = false, columnDefinition = "INT DEFAULT 2")
     private Integer nameChangeCount = 2;
 
-    // 탐험 함대 편성 지휘력 최대치 — IncreaseCommandPowerMaxRequest(은행 탐험 포인트 소모)로 영구 증가
-    // 기본값은 임시 밸런스값(함체 statPoint 100~500 기준 1~2척 배치 가능한 수준) — 기획 확정 시 조정
-    @Column(nullable = false, columnDefinition = "INT DEFAULT 120")
-    private int commandPowerMax = 120;
-
     // 전술력 최대치 — 전투 중 전술 토글(체력회복/미사일/함재기) 3종이 공유하는 소모 게이지의 상한.
     // IncreaseTacticPowerMaxRequest(은행 탐험 포인트 소모)로 영구 증가. 존 런 시작 시 이 값으로 ZoneRun.tacticPower가 초기화됨
     @Column(nullable = false, columnDefinition = "INT DEFAULT 1000")

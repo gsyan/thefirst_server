@@ -23,12 +23,11 @@ public class CommanderInfoDto {
     private Integer commandPowerMax;
     private Integer tacticPowerMax;
     private Integer tacticPower;
+    private Integer mineralAmount;
     private Integer explorationSeedBase;
     private Integer explorationPoint;
     private Integer achievementPoint;
     private List<String> unlockedHulls;
-    private List<String> unlockedShieldHulls;
-    private List<String> unlockedInterceptorHulls;
     private Integer explorationZoneNumber;
     private String explorationCell;
     private Integer highestClearedZoneNumber;
@@ -36,4 +35,6 @@ public class CommanderInfoDto {
     private Integer pvpPointMaxGot;
     private String pvpPointExpiry;
     private Boolean hasUnclaimedAchievement;
+    private List<ArchetypeUpgradeInfoDto> archetypeUpgrades;
+    private List<HullArchetypeProgressInfoDto> hullArchetypePassiveProgress;
 }

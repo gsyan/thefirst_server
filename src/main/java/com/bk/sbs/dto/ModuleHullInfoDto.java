@@ -24,9 +24,6 @@ public class ModuleHullInfoDto {
     private List<ModuleInfoDto> missiles;
     private List<ModuleInfoDto> hangars;
     private String shieldModuleSubType;
-    private Integer shieldGaugePoints;
-    private Integer shieldRegenRatePoints;
     private String interceptorModuleSubType;
-    private Integer interceptorRegenRatePoints;
     private Float currentHealth;
 }

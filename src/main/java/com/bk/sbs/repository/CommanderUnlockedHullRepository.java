@@ -10,10 +10,4 @@ public interface CommanderUnlockedHullRepository extends JpaRepository<Commander
     boolean existsByCommanderIdAndHullSubType(Long commanderId, String hullSubType);
 
     List<CommanderUnlockedHull> findByCommanderId(Long commanderId);
-
-    java.util.Optional<CommanderUnlockedHull> findByCommanderIdAndHullSubType(Long commanderId, String hullSubType);
-
-    List<CommanderUnlockedHull> findByCommanderIdAndShieldUnlockedTrue(Long commanderId);
-
-    List<CommanderUnlockedHull> findByCommanderIdAndInterceptorUnlockedTrue(Long commanderId);
 }

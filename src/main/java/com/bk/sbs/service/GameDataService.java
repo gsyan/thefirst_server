@@ -7,6 +7,7 @@ import com.bk.sbs.config.DataTablePvpSeason;
 import com.bk.sbs.config.ZoneConfig;
 import com.bk.sbs.dto.ZoneConfigData;
 import com.bk.sbs.dto.ModuleData;
+import com.bk.sbs.dto.ModuleSlotInfoDto;
 import com.bk.sbs.dto.GeneralSettings;
 import com.bk.sbs.dto.ShipStatFormulaSettings;
 import com.bk.sbs.dto.TacticSettings;
@@ -32,17 +33,16 @@ public class GameDataService {
     private DataTablePvpSeason dataTablePvpSeason = new DataTablePvpSeason();
     private DataTableDailyBonus dataTableDailyBonus = new DataTableDailyBonus();
     private ZoneConfig zoneConfig = new ZoneConfig();
-    // 커맨더 레벨 전체 데이터 (요구 exp, shipCount)
+    // 커맨더 레벨 전체 데이터 (요구 exp, commandPower) — 함선 수는 더 이상 레벨로 제한하지 않음(지휘력만으로 배치 가능 여부 결정)
     private static class CommanderData {
         int requireExp;
-        int shipCount;
-        CommanderData(int requireExp, int shipCount) {
+        int commandPowerMax;
+        CommanderData(int requireExp, int commandPowerMax) {
             this.requireExp = requireExp;
-            this.shipCount = shipCount;
+            this.commandPowerMax = commandPowerMax;
         }
     }
     private Map<Integer, CommanderData> commanderDataMap = new HashMap<>();
-    private int cachedMaxShipCount = 1;
 
     // 셀 클리어 보상카드 1종 — 클라 RewardCardData의 서버 필요 필드만(ExportToServerJson 참고). 서버는 후보 추첨(weight)과 즉시효과 적용(effectType/value1/value2)에만 씀
     public static class RewardCardEntry {
@@ -142,11 +142,10 @@ public class GameDataService {
                     if (commanderLevelNode.isMissingNode() == false && expNode.isMissingNode() == false) {
                         int commanderLevel = commanderLevelNode.asInt();
                         int requireExp     = expNode.asInt(0);
-                        int shipCount       = levelNode.path("shipCount").asInt(1);
-                        commanderDataMap.put(commanderLevel, new CommanderData(requireExp, shipCount));
+                        int commandPowerMax = levelNode.path("commandPower").asInt(0);
+                        commanderDataMap.put(commanderLevel, new CommanderData(requireExp, commandPowerMax));
                     }
                 }
-                cachedMaxShipCount = commanderDataMap.values().stream().mapToInt(d -> d.shipCount).max().orElse(1);
                 log.info("DataTableCommander.json loaded: {} entries", commanderDataMap.size());
             } else {
                 log.warn("DataTableCommander.json not found in resources/data/, using empty data");
@@ -274,28 +273,11 @@ public class GameDataService {
 
     public DataTableConfig getDataTableConfig() { return dataTableConfig != null ? dataTableConfig : new DataTableConfig(); }
 
+    // 함대 슬롯 칸 수 고정 상한 — 지휘관 레벨과 무관, 지휘력(CP)만으로 실제 배치 가능 여부가 결정됨(GeneralSettings.maxFleetSlotCount)
     public int getMaxShipsPerFleet() {
-        return cachedMaxShipCount;
-    }
-
-    public int getInitialCommandPowerMax() {
         GeneralSettings general = getDataTableConfig().getGeneral();
-        Integer val = general != null ? general.getCommandPowerMaxInit() : null;
-        return val != null ? val : 120;
-    }
-
-    public int getReinforceCpCostPerPoint() {
-        GeneralSettings general = getDataTableConfig().getGeneral();
-        Integer val = general != null ? general.getReinforceCpCostPerPoint() : null;
-        return val != null ? val : 10;
-    }
-
-    public int getMaxAttackReinforcePointsPerSlot() {
-        ShipStatFormulaSettings formula = getDataTableConfig().getShipStatFormula();
-        if (formula == null) return 10;
-        Integer maxPoints = formula.getMaxAttackReinforcePointsPerSlot();
-        if (maxPoints == null) return 10;
-        return maxPoints;
+        Integer val = general != null ? general.getMaxFleetSlotCount() : null;
+        return val != null ? val : 9;
     }
 
     public int getBattleRepairExplorationPointPerSec() {
@@ -327,10 +309,11 @@ public class GameDataService {
         return data != null ? data.requireExp : 0;
     }
 
-    // 해당 커맨더 레벨에서 허용되는 최대 함선 수 반환
-    public int getShipCount(int commanderLevel) {
+
+    // 지휘력(캐파) 최대치 — 구매 없이 커맨더 레벨만으로 결정(M13)
+    public int getCommandPowerMax(int commanderLevel) {
         CommanderData data = commanderDataMap.get(commanderLevel);
-        return data != null ? data.shipCount : 1;
+        return data != null ? data.commandPowerMax : 0;
     }
 
     public ZoneConfig getZoneConfig() {
@@ -354,20 +337,38 @@ public class GameDataService {
         return rewardCardById.get(cardId);
     }
 
-    // hullSubType(예: "hull_3_1_11100") → [beam, missile, hangar, shield, interceptor] 카테고리별 최대 슬롯 수.
-    // 이름 규칙: "hull_{tier}_{gen}_{5자리슬롯코드}" — 4번째 토큰(5자리)만 슬롯 수로 사용, 형식이 다르면 전부 0(안전하게 막힘)
-    // FleetService.setFleetSlotModules가 사용(적 함대 절차 생성은 클라 ExplorationEnemyFleetGenerator로 이전됨)
-    public static int[] parseMaxSlotsFromHullSubType(String hullSubType) {
+    // hullSubType → [beam, missile, hangar, shield, interceptor] 카테고리별 최대 슬롯 수.
+    // 아키타입 전용 프리팹에서 파싱된 ModuleData.moduleSlots를 그대로 집계 — 클라 CommonUtility.ParseHullSlotComposition과 동일한 소스/방식
+    // (구 "hull_{tier}_{gen}_{5자리슬롯코드}" 네이밍 전용이던 문자열 파싱 방식은 새 아키타입 네이밍(hull_{tier}_{archetype}_{level})엔 맞지 않아 폐기)
+    public int[] getMaxSlotsForHull(String hullSubType) {
         int[] result = new int[5];
-        if (hullSubType == null) return result;
-        String[] parts = hullSubType.split("_");
-        if (parts.length < 4 || parts[3].length() != 5) return result;
-        for (int i = 0; i < 5; i++) {
-            char c = parts[3].charAt(i);
-            if (Character.isDigit(c) == false) return new int[5];
-            result[i] = Character.getNumericValue(c);
+        ModuleData hullData = getHullModuleData(hullSubType);
+        if (hullData == null) return result;
+
+        if (hullData.getModuleSlots() != null) {
+            for (ModuleSlotInfoDto slot : hullData.getModuleSlots()) {
+                int index = getSlotCompositionIndex(slot.getModuleType());
+                if (index >= 0) result[index]++;
+            }
         }
+
+        // 실드/요격체는 3D ModuleSlot 마커가 없어 moduleSlots로는 절대 안 잡힘 — CSV의 has_shield/has_interceptor 플래그로 직접 채움
+        result[3] = Boolean.TRUE.equals(hullData.getHasShield()) ? 1 : 0;
+        result[4] = Boolean.TRUE.equals(hullData.getHasInterceptor()) ? 1 : 0;
+
         return result;
+    }
+
+    // getMaxSlotsForHull/getMaxSlotCountForArchetype 공용 — [beam, missile, hangar, shield, interceptor] 배열 인덱스 매핑
+    private int getSlotCompositionIndex(EModuleType moduleType) {
+        return switch (moduleType) {
+            case beam -> 0;
+            case missile -> 1;
+            case hangar -> 2;
+            case shield -> 3;
+            case interceptor -> 4;
+            default -> -1;
+        };
     }
 
     // hullSubType(예: "hull_3_1_11100") → tier 정수(두 번째 토큰). 형식이 다르면 0
@@ -394,22 +395,46 @@ public class GameDataService {
         }
     }
 
-    // gen=1(기본 제공) 함체 중 tier가 일치하는 함체의 subType 조회 — 함체 언락 선행조건 체크용. 티어당 함체가 하나뿐이라 tier로만 매치. 없으면 null
-    public String findHullSubTypeByTier(int tier) {
-        for (ModuleData data : getModulesByType(EModuleType.hull)) {
-            String subType = data.getModuleSubType();
-            if (parseGenFromHullSubType(subType) != 1) continue;
-            if (parseTierFromHullSubType(subType) != tier) continue;
-            return subType;
+
+    // 아키타입 단위 영구 모듈강화(M6) — 레벨업 비용을 datatable_module.csv의 레벨 행(ap_cost 컬럼, unlockAchievementPointCost 필드)에서 직접 조회
+    // targetLevel: 이번 구매로 도달하는 효과 레벨(ArchetypeModuleUpgradeService가 구매횟수+2로 계산) — 그 레벨 행에 기록된 비용을 그대로 사용, 행이 없으면 null(레벨업 불가)
+    public Integer getArchetypeLevelUpCost(String hullArchetype, EModuleType moduleType, int targetLevel) {
+        String levelKey = buildArchetypeLevelKey(hullArchetype, moduleType, targetLevel);
+        if (levelKey == null) return null;
+
+        for (ModuleData data : getModulesByType(moduleType)) {
+            if (levelKey.equals(data.getModuleSubType()))
+                return data.getUnlockAchievementPointCost();
         }
         return null;
     }
 
-    public int getModuleStatPoint(EModuleType moduleType, String subType) {
-        List<ModuleData> modules = getModulesByType(moduleType);
-        for (ModuleData data : modules) {
-            if (subType.equals(data.getModuleSubType()))
-                return data.getStatPoint() != null ? data.getStatPoint() : 0;
+    // hull: 해당 아키타입 행에서 tier 토큰을 그대로 가져와 "hull_{tier}_{archetype}_{level}" 조립
+    // hull 외: 아키타입 무관 공용 티어행 "{moduleType}_{level}_1"
+    private String buildArchetypeLevelKey(String hullArchetype, EModuleType moduleType, int level) {
+        if (moduleType == EModuleType.hull) {
+            for (ModuleData data : getModulesByType(EModuleType.hull)) {
+                if (hullArchetype.equals(data.getHullArchetype()) == false) continue;
+                int tier = parseTierFromHullSubType(data.getModuleSubType());
+                return "hull_" + tier + "_" + hullArchetype + "_" + level;
+            }
+            return null;
+        }
+        return moduleType.name() + "_" + level + "_1";
+    }
+
+    // 아키타입 단위 영구 모듈강화(M6) — beam/missile/hangar는 슬롯별로 레벨이 독립이라, 그 아키타입 함체 프리팹이 실제로 가진 슬롯 개수로 slotIndex 범위를 검증
+    // 아키타입당 전용 프리팹 1개라 레벨 무관하게 아무 레벨 행이나 moduleSlots는 동일 — 가장 먼저 찾은 행을 그대로 사용
+    public int getMaxSlotCountForArchetype(String hullArchetype, EModuleType moduleType) {
+        for (ModuleData data : getModulesByType(EModuleType.hull)) {
+            if (hullArchetype.equals(data.getHullArchetype()) == false) continue;
+            if (data.getModuleSlots() == null) return 0;
+
+            int slotCount = 0;
+            for (ModuleSlotInfoDto slot : data.getModuleSlots()) {
+                if (slot.getModuleType() == moduleType) slotCount++;
+            }
+            return slotCount;
         }
         return 0;
     }

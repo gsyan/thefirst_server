@@ -313,6 +313,7 @@ if __name__ == "__main__":
         "HangarFormula",
         "ShieldFormula",
         "InterceptorFormula",
+        "ArchetypeUpgradeSettings",
     ]
 
     for class_name in ship_stat_formula_class_names:

@@ -3,6 +3,7 @@ package com.bk.sbs.controller;
 import com.bk.sbs.dto.*;
 import com.bk.sbs.dto.nogenerated.ApiResponse;
 import com.bk.sbs.security.CommanderId;
+import com.bk.sbs.service.ArchetypeModuleUpgradeService;
 import com.bk.sbs.service.FleetService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +13,11 @@ import org.springframework.web.bind.annotation.*;
 public class FleetController {
 
     private final FleetService fleetService;
+    private final ArchetypeModuleUpgradeService archetypeModuleUpgradeService;
 
-    public FleetController(FleetService fleetService) {
+    public FleetController(FleetService fleetService, ArchetypeModuleUpgradeService archetypeModuleUpgradeService) {
         this.fleetService = fleetService;
+        this.archetypeModuleUpgradeService = archetypeModuleUpgradeService;
     }
 
     // 전술 옵션 변경
@@ -44,6 +47,15 @@ public class FleetController {
         return ResponseEntity.ok(ApiResponse.success(null));
     }
 
+    // 함대편성 슬롯의 함선 배치 해제(슬롯 비우기)
+    @PostMapping("/remove-ship")
+    public ResponseEntity<ApiResponse<Void>> removeFleetShip(
+            @RequestBody FleetRemoveShipRequest request,
+            @CommanderId Long actualCommanderId) {
+        fleetService.removeFleetShip(actualCommanderId, request);
+        return ResponseEntity.ok(ApiResponse.success(null));
+    }
+
     // 함대편성 슬롯(함선) 하나의 장착 모듈 전체를 최종 상태로 한 번에 교체(on/off) — 예산/공격모듈 0개는 이 결과 상태 기준으로 검증
     @PostMapping("/set-modules")
     public ResponseEntity<ApiResponse<SetModuleResponse>> setFleetSlotModules(
@@ -62,21 +74,12 @@ public class FleetController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
-    // 함체의 실드 슬롯 언락(구매) — 대상 함체 자체가 이미 언락돼 있어야 함
-    @PostMapping("/unlock-shield-module")
-    public ResponseEntity<ApiResponse<UnlockShieldModuleResponse>> unlockShieldModule(
-            @RequestBody UnlockShieldModuleRequest request,
+    // 아키타입 단위 영구 모듈강화(M6) — 업적포인트 소모, 1회 호출당 1레벨 상승
+    @PostMapping("/upgrade-archetype-module")
+    public ResponseEntity<ApiResponse<UpgradeArchetypeModuleResponse>> upgradeArchetypeModule(
+            @RequestBody UpgradeArchetypeModuleRequest request,
             @CommanderId Long actualCommanderId) {
-        UnlockShieldModuleResponse response = fleetService.unlockShieldModule(actualCommanderId, request);
-        return ResponseEntity.ok(ApiResponse.success(response));
-    }
-
-    // 함체의 요격체 슬롯 언락(구매) — 대상 함체 자체가 이미 언락돼 있어야 함
-    @PostMapping("/unlock-interceptor-module")
-    public ResponseEntity<ApiResponse<UnlockInterceptorModuleResponse>> unlockInterceptorModule(
-            @RequestBody UnlockInterceptorModuleRequest request,
-            @CommanderId Long actualCommanderId) {
-        UnlockInterceptorModuleResponse response = fleetService.unlockInterceptorModule(actualCommanderId, request);
+        UpgradeArchetypeModuleResponse response = archetypeModuleUpgradeService.upgrade(actualCommanderId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 

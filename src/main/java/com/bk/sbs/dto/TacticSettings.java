@@ -16,6 +16,8 @@ import lombok.NoArgsConstructor;
 public class TacticSettings {
     private Integer tacticRepairCost;
 
+    private Integer tacticBeamCost;
+
     private Integer tacticMissileCost;
 
     private Integer tacticHangerCost;
@@ -23,4 +25,6 @@ public class TacticSettings {
     private Integer tacticShieldCost;
 
     private Integer tacticInterceptorCost;
+
+    private Integer mineralToResourceRatio;
 }
