@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
 public class GetActiveZoneRunProgressResponse {
     private Integer zoneNumber;
     private List<String> clearedCells;
-    private Integer explorationPointBanked;
     private Integer commanderExpBanked;
     private List<ShipHealthRatioInfoDto> shipHealthRatios;
     private List<String> selectedRewardCards;

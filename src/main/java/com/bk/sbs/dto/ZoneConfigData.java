@@ -19,6 +19,6 @@ public class ZoneConfigData {
     private Integer gridWidth;
     private Integer gridHeight;
     private List<GridCellOverrideDto> cellOverrides;
-    private Integer explorationPointReward;
+    private Integer mineralReward;
     private Integer commanderExpReward;
 }

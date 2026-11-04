@@ -35,17 +35,14 @@ public class ZoneRun {
     private boolean rewardClaimed = false;
 
     @Column(nullable = false)
-    private int explorationPointBanked = 0; // 이 런에서 셀 클리어로 쌓인 미확정 탐험 포인트
-
-    @Column(nullable = false)
     private int commanderExpBanked = 0; // 이 런에서 셀 클리어로 쌓인 미확정 지휘관 경험치
 
-    // 전투 중 전술 토글(체력회복/미사일/함재기) 3종이 공유하는 소모 게이지 현재치 — 런 시작 시 Commander.tacticPowerMax로 초기화,
+    // 전투 중 전술 토글(체력회복/미사일/함재기) 3종이 공유하는 소모 게이지 현재치 — 런 시작 시 Commander.resourceMax로 초기화,
     // 이 런이 끝나면(ESCAPED/ABANDONED) 함께 소멸(다음 런은 새 ZoneRun이라 자동으로 다시 Max로 초기화됨)
     @Column(nullable = false)
-    private int tacticPower = 0;
+    private int resource = 0;
 
-    // 존런 전용 광물 현재치 — 런 시작 시 0, 셀 클리어 확정 시점에만 클라 보고값을 그대로 저장(서버 검증 없음, tacticPower와 동일한 신뢰모델)
+    // 존런 전용 광물 현재치 — 런 시작 시 0, 셀 클리어 확정 시점에만 클라 보고값을 그대로 저장(서버 검증 없음, resource와 동일한 신뢰모델)
     // 이 런이 끝나면(ESCAPED/ABANDONED) 함께 소멸 — Commander 영구 자산으로 전환되는 경로 없음
     @Column(name = "mineral_amount", nullable = false)
     private int mineralAmount = 0;
@@ -76,14 +73,13 @@ public class ZoneRun {
 
     private Instant endedAt; // ESCAPED/ABANDONED로 종결된 시각 — IN_PROGRESS면 null
 
-    public ZoneRun(Long commanderId, int zoneNumber, int startRow, int startCol, int tacticPowerMax) {
+    public ZoneRun(Long commanderId, int zoneNumber, int startRow, int startCol, int resourceMax) {
         this.commanderId = commanderId;
         this.zoneNumber = zoneNumber;
         this.status = EZoneRunStatus.IN_PROGRESS;
         this.rewardClaimed = false;
-        this.explorationPointBanked = 0;
         this.commanderExpBanked = 0;
-        this.tacticPower = tacticPowerMax;
+        this.resource = resourceMax;
         setCurrentPosition(startRow, startCol);
         this.startedAt = Instant.now();
     }

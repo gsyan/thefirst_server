@@ -12,8 +12,6 @@ import com.bk.sbs.dto.EscapeExplorationZoneRequest;
 import com.bk.sbs.dto.EscapeExplorationZoneResponse;
 import com.bk.sbs.dto.GetActiveZoneRunProgressRequest;
 import com.bk.sbs.dto.GetActiveZoneRunProgressResponse;
-import com.bk.sbs.dto.IncreaseTacticPowerMaxRequest;
-import com.bk.sbs.dto.IncreaseTacticPowerMaxResponse;
 import com.bk.sbs.dto.MoveToExplorationCellRequest;
 import com.bk.sbs.dto.MoveToExplorationCellResponse;
 import com.bk.sbs.dto.RerollRewardCardRequest;
@@ -95,15 +93,6 @@ public class ExplorationController {
             @RequestBody AbandonZoneRunRequest request,
             @CommanderId Long commanderId) {
         AbandonZoneRunResponse response = explorationService.abandonZoneRun(commanderId, request);
-        return ResponseEntity.ok(ApiResponse.success(response));
-    }
-
-    @PostMapping("/increase-tactic-power")
-    public ResponseEntity<ApiResponse<IncreaseTacticPowerMaxResponse>> increaseTacticPowerMax(
-            @RequestBody IncreaseTacticPowerMaxRequest request,
-            @CommanderId Long commanderId) {
-        int amount = request.getAmount() != null ? request.getAmount() : 0;
-        IncreaseTacticPowerMaxResponse response = explorationService.increaseTacticPowerMax(commanderId, amount);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 }

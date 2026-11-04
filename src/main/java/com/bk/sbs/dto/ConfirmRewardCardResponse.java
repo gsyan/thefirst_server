@@ -15,5 +15,4 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ConfirmRewardCardResponse {
     private String selectedCardId;
-    private Integer explorationPointGained;
 }

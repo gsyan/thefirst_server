@@ -234,7 +234,6 @@ public class IapService {
         DailyBonusState state = applyAttendanceAndGetState(commander, today);
 
         boolean available = false;
-        int grantedExplorationPoint = 0;
         int grantedAchievementPoint = 0;
 
         boolean dayUnlocked = day >= 1 && day <= state.attendanceDays && day <= DAILY_BONUS_CYCLE_DAYS;
@@ -247,9 +246,7 @@ public class IapService {
             DataTableDailyBonus dataTableDailyBonus = gameDataService.getDataTableDailyBonus();
             List<DataTableDailyBonus.RewardEntry> rewards = dataTableDailyBonus.getRewards(day, tier);
             for (DataTableDailyBonus.RewardEntry reward : rewards) {
-                if (reward.getRewardType() == EDailyBonusRewardType.ExplorationPoint)
-                    grantedExplorationPoint += reward.getAmount();
-                else if (reward.getRewardType() == EDailyBonusRewardType.AchievementPoint)
+                if (reward.getRewardType() == EDailyBonusRewardType.AchievementPoint)
                     grantedAchievementPoint += reward.getAmount();
             }
 
@@ -258,17 +255,13 @@ public class IapService {
             else
                 commander.setClaimedDaysMask(state.mask | dayBit);
 
-            if (grantedExplorationPoint > 0) {
-                commander.setExplorationPoint(commander.getExplorationPoint() + grantedExplorationPoint);
-                commander.setExplorationPointEarnedTotal(commander.getExplorationPointEarnedTotal() + grantedExplorationPoint);
-            }
             if (grantedAchievementPoint > 0)
                 commander.setAchievementPoint(commander.getAchievementPoint() + grantedAchievementPoint);
 
-            available = grantedExplorationPoint > 0 || grantedAchievementPoint > 0;
+            available = grantedAchievementPoint > 0;
 
-            log.info("[IAP] 일일 로그인 보상 commanderId={} day={} claimVip={} exploration={} achievement={} mask={} vipMask={}",
-                    commanderId, day, claimVip, grantedExplorationPoint, grantedAchievementPoint,
+            log.info("[IAP] 일일 로그인 보상 commanderId={} day={} claimVip={} achievement={} mask={} vipMask={}",
+                    commanderId, day, claimVip, grantedAchievementPoint,
                     commander.getClaimedDaysMask(), commander.getVipClaimedDaysMask());
         }
 
@@ -276,9 +269,7 @@ public class IapService {
 
         return DailyClaimResponse.builder()
                 .available(available)
-                .grantedExplorationPoint(grantedExplorationPoint)
                 .grantedAchievementPoint(grantedAchievementPoint)
-                .explorationPointRemain(commander.getExplorationPoint())
                 .achievementPointRemain(commander.getAchievementPoint())
                 .todayDay(state.attendanceDays)
                 .claimedDaysMask(commander.getClaimedDaysMask())

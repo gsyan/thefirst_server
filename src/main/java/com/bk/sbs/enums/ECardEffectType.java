@@ -13,11 +13,10 @@ public enum ECardEffectType {
     Buff_HangarAttackToShip,
     Buff_HangarAttackToFighter,
     Buff_ShipHealth,
-    Buff_ExplorationPointRate,
+    Buff_MineralRate,
+    Buff_MineralFlatBonus,
     Instant_HealthHeal,
     Instant_ShieldHeal,
-    Instant_InterceptorHeal,
-    Instant_ExplorationPointFlat,
-    Instant_TacticPowerHeal;
+    Instant_InterceptorHeal;
 
 }

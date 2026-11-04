@@ -15,7 +15,7 @@ public class ClearExplorationCellRequest {
     private Integer cellRow;
     private Integer cellCol;
     private List<ShipHealthRatioInfoDto> shipHealthRatios;
-    private Integer tacticPower;
+    private Integer resource;
     private Integer mineralAmount;
     private String challengeToken;
 }

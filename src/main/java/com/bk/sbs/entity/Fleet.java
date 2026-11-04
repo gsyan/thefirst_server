@@ -23,7 +23,7 @@ public class Fleet {
     @Column(nullable = false)
     private int fleetIndex;
 
-    // 전투 중 전술 토글(체력회복/미사일/함재기) 비트마스크(bit0=수리, bit1=미사일, bit2=함재기) — 이 함대 편성 자체에 귀속된 설정값
+    // 전투 중 전술 토글 비트마스크(bit0=빔, bit1=미사일, bit2=함재기, bit3=수리, bit4=실드, bit5=요격체) — 이 함대 편성 자체에 귀속된 설정값
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
     private int tacticOptions = 0;
 

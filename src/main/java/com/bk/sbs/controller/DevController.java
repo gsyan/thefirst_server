@@ -58,13 +58,13 @@ public class DevController {
                 int addPvp         = parseIntOrThrow(params.get(2), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDDEVRESOURCES_PARSE_PARAM);
                 int addAchievement = params.size() >= 4 ? parseIntOrThrow(params.get(3), ServerErrorCode.EXECUTE_COMMAND_FAIL_ADDDEVRESOURCES_PARSE_PARAM) : 0;
                 CommanderInfoDto cur = CommanderService.getCommanderInfoDto(commanderId);
-                int newExplo       = addExplo       > 0 ? CommanderService.addExplorationPoint(commanderId, addExplo)             : cur.getExplorationPoint();
+                int newMineralTotal = addExplo       > 0 ? CommanderService.addMineralEarnedTotal(commanderId, addExplo)          : cur.getMineralEarnedTotal();
                 int newPvpMax      = addPvp         > 0 ? CommanderService.addPvpPointMaxGot(commanderId, addPvp)                 : cur.getPvpPointMaxGot();
                 int newPvp         = addPvp         > 0 ? CommanderService.addPvpPoint(commanderId, addPvp)                       : cur.getPvpPoint();
                 int newAchievement = addAchievement > 0 ? CommanderService.addAchievementPoint(commanderId, addAchievement)       : cur.getAchievementPoint();
                 int newCommanderLevel = addLevel > 0 ? zoneService.addOneCommanderLevel(commanderId) : cur.getCommanderLevel();
                 int newExp    = addLevel > 0 ? CommanderService.getCommanderInfoDto(commanderId).getExp()  : cur.getExp();
-                return ApiResponse.success("Resources added|exp:" + newExp + "|explorationPoint:" + newExplo + "|pvpPointMaxGot:" + newPvpMax + "|pvpPoint:" + newPvp + "|achievementPoint:" + newAchievement + "|commanderLevel:" + newCommanderLevel);
+                return ApiResponse.success("Resources added|exp:" + newExp + "|mineralEarnedTotal:" + newMineralTotal + "|pvpPointMaxGot:" + newPvpMax + "|pvpPoint:" + newPvp + "|achievementPoint:" + newAchievement + "|commanderLevel:" + newCommanderLevel);
             }
 
             case "getstatus":
@@ -72,7 +72,7 @@ public class DevController {
                 StringBuilder result = new StringBuilder();
                 result.append("=== Commander Status ===\n");
                 result.append("Exp: ").append(status.getExp()).append("\n");
-                result.append("ExplorationPoint: ").append(status.getExplorationPoint()).append("\n");
+                result.append("MineralEarnedTotal: ").append(status.getMineralEarnedTotal()).append("\n");
                 result.append("PvpPoint: ").append(status.getPvpPoint()).append("\n");
                 return ApiResponse.success(result.toString());
 

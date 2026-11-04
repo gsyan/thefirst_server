@@ -14,11 +14,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class AbandonZoneRunResponse {
-    private Integer explorationPointGained;
-    private Integer explorationPointRemain;
     private Integer expGained;
     private Integer totalExp;
     private Integer commanderLevel;
-    private Integer tacticPower;
+    private Integer resource;
     private Boolean hasUnclaimedAchievement;
 }

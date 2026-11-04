@@ -15,9 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DailyClaimResponse {
     private Boolean available;
-    private Integer grantedExplorationPoint;
     private Integer grantedAchievementPoint;
-    private Integer explorationPointRemain;
     private Integer achievementPointRemain;
     private Integer todayDay;
     private Integer claimedDaysMask;

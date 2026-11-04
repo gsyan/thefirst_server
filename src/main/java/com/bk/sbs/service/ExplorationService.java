@@ -114,13 +114,12 @@ public class ExplorationService {
     // "명백히 큰 증가"만 막으면 되므로 넉넉하게 여유를 둠
     private static final float HEALTH_RATIO_FLOAT_EPSILON = 0.01f;
 
-    // Treasure(Event) 셀 보상 — 3종 중 1개를 매 클리어마다 진짜 랜덤(java.util.Random 새 인스턴스)으로 지급
+    // Treasure(Event) 셀 보상 — 2종 중 1개를 매 클리어마다 진짜 랜덤(java.util.Random 새 인스턴스)으로 지급
     private static final ETreasureRewardType[] TREASURE_REWARD_POOL = {
-            ETreasureRewardType.ExplorationPoint, ETreasureRewardType.ShipHealthHeal, ETreasureRewardType.TacticPowerRestore
+            ETreasureRewardType.Mineral, ETreasureRewardType.ShipHealthHeal
     };
-    private static final int TREASURE_EXPLORATION_POINT_MULTIPLIER = 3; // 그 존의 일반 전투 셀 보상의 3배
+    private static final int TREASURE_MINERAL_MULTIPLIER = 3; // 그 존의 일반 전투 셀 보상의 3배
     private static final float TREASURE_SHIP_HEALTH_HEAL_RATIO = 0.5f;
-    private static final float TREASURE_TACTIC_POWER_RESTORE_RATIO = 1.0f;
 
     private static final float ESCAPE_FAIL_PAYOUT_RATIO = 0.5f; // 탈출 실패(전투 패배 등) — 적립 보상의 50% 지급
     private static final float ABANDON_PAYOUT_RATIO = 0.2f;     // 포기(광고 시청 안 함) — 적립 보상의 20% 지급
@@ -402,7 +401,7 @@ public class ExplorationService {
             // Blocked는 위 validateCellChallenge에서 이미 항상 걸러지고 Start도 첫 이동에서는 도달 불가능해 사실상 도달하지
             // 않는 방어적 분기지만, 이 경우엔 뒤따르는 clear-cell 호출 자체가 없으므로(재방문과 동일하게 처리됨) 여기서
             // 바로 ZoneRun을 만들어 위치를 확정해야 함
-            ZoneRun run = new ZoneRun(commanderId, request.getZoneNumber(), startCell.getRow(), startCell.getCol(), commander.getTacticPowerMax());
+            ZoneRun run = new ZoneRun(commanderId, request.getZoneNumber(), startCell.getRow(), startCell.getCol(), commander.getResourceMax());
             run.setCurrentPosition(request.getCellRow(), request.getCellCol());
             zoneRunRepository.save(run);
 
@@ -537,7 +536,7 @@ public class ExplorationService {
             validateAndConsumePendingZoneRunChallenge(commanderId, request.getChallengeToken(), request.getZoneNumber(),
                     request.getCellRow(), request.getCellCol());
 
-            run = new ZoneRun(commanderId, request.getZoneNumber(), startCell.getRow(), startCell.getCol(), commander.getTacticPowerMax());
+            run = new ZoneRun(commanderId, request.getZoneNumber(), startCell.getRow(), startCell.getCol(), commander.getResourceMax());
             run = zoneRunRepository.save(run);
         }
 
@@ -548,7 +547,7 @@ public class ExplorationService {
         boolean isRevisit = isFirstCellOfNewRun == false
                 && zoneCellClearLogRepository.findTopByZoneRunIdAndCellOrderByClearedAtDesc(run.getId(), cell).isPresent();
 
-        int pointsGained = 0;
+        int mineralGained = 0;
         int expGained = 0;
         List<String> rewardCardCandidates = null;
         ETreasureRewardType treasureRewardType = ETreasureRewardType.None;
@@ -561,34 +560,38 @@ public class ExplorationService {
             if (isFirstCellOfNewRun == false)
                 validateAndConsumeChallengeToken(run, request.getChallengeToken(), request.getCellRow(), request.getCellCol());
 
-            // 존 고정 보상값 적립 — 적 함대 성능(commandCost)과 무관, 함선이 있던 셀만 지급(빈 셀은 0)
-            // Buff_ExplorationPointRate 배율은 여기서 적용하지 않음 — 적립(banked)은 항상 고정값 그대로 쌓고,
-            // 배율은 탈출/포기 확정(settleZoneRun) 시점에 최종 적립 총액에 한 번만 곱함
-            pointsGained = hasEnemies ? zoneConfig.getExplorationPointReward() : 0;
-            expGained    = hasEnemies ? zoneConfig.getCommanderExpReward()     : 0;
+            // 존 고정 보상값 지급 — 적 함대 성능(commandCost)과 무관, 함선이 있던 셀만 지급(빈 셀은 0)
+            mineralGained = hasEnemies ? zoneConfig.getMineralReward() : 0;
+            expGained     = hasEnemies ? zoneConfig.getCommanderExpReward() : 0;
 
             // 탈출 셀은 보상카드 후보 생성 스킵 — 탈출 셀은 별도의 탈출 확정 흐름을 가짐
             GridCellOverrideDto escapeCell = findCellByType(zoneConfig, EGridCellType.Escape);
             boolean isEscapeCell = escapeCell != null && escapeCell.getRow() == request.getCellRow() && escapeCell.getCol() == request.getCellCol();
             rewardCardCandidates = (hasEnemies == true && isEscapeCell == false) ? rollRewardCardCandidates() : null;
 
-            // Event(Treasure) 셀 — 표준 존 보상/보상카드와는 별개로 3종 중 1개를 진짜 랜덤(매 호출 새 Random 인스턴스)으로 지급
+            // Event(Treasure) 셀 — 표준 존 보상/보상카드와는 별개로 2종 중 1개를 진짜 랜덤(매 호출 새 Random 인스턴스)으로 지급
             GridCellOverrideDto cellOverride = findCellOverride(zoneConfig, request.getCellRow(), request.getCellCol());
             boolean isTreasureCell = cellOverride != null && cellOverride.getType() == EGridCellType.Event
                     && cellOverride.getEventType() == EGridEventType.Treasure;
             if (isTreasureCell == true) {
                 treasureRewardType = TREASURE_REWARD_POOL[new java.util.Random().nextInt(TREASURE_REWARD_POOL.length)];
-                if (treasureRewardType == ETreasureRewardType.ExplorationPoint)
-                    pointsGained = zoneConfig.getExplorationPointReward() * TREASURE_EXPLORATION_POINT_MULTIPLIER;
+                if (treasureRewardType == ETreasureRewardType.Mineral)
+                    mineralGained = zoneConfig.getMineralReward() * TREASURE_MINERAL_MULTIPLIER;
                 else if (treasureRewardType == ETreasureRewardType.ShipHealthHeal)
                     treasureRewardRatio = TREASURE_SHIP_HEALTH_HEAL_RATIO;
-                else if (treasureRewardType == ETreasureRewardType.TacticPowerRestore)
-                    treasureRewardRatio = TREASURE_TACTIC_POWER_RESTORE_RATIO;
             }
 
-            // VIP 혜택 — 적립 자체를 2배로. 정산 비율(탈출/포기)은 이후 settleZoneRun에서 이 2배 적립 총량 위에 그대로 곱해짐
+            // Buff_MineralRate 지속버프 — 이번 런에서 지금까지 선택 확정된 카드 기준으로 "앞으로" 받을 광물에 바로 적용(은행/정산 개념 없음)
+            float mineralRateMultiplier = computeMineralRateMultiplier(run.getId());
+            mineralGained = Math.round(mineralGained * mineralRateMultiplier);
+
+            // Buff_MineralFlatBonus 지속버프 — 보상이 있던 셀(일반/Treasure)에만 가산, 보상이 아예 없는 빈 셀에서 공짜로 생기지 않게 방어
+            if (mineralGained > 0)
+                mineralGained += computeMineralFlatBonus(run.getId());
+
+            // VIP 혜택 — 지급 자체를 2배로
             if (isVipActive(commanderId) == true) {
-                pointsGained *= 2;
+                mineralGained *= 2;
                 expGained *= 2;
             }
         }
@@ -596,20 +599,22 @@ public class ExplorationService {
         validateHealthSnapshot(run, request.getShipHealthRatios());
 
         run.setCurrentPosition(request.getCellRow(), request.getCellCol());
-        run.setExplorationPointBanked(run.getExplorationPointBanked() + pointsGained);
         run.setCommanderExpBanked(run.getCommanderExpBanked() + expGained);
         run.setFleetHealthSnapshotJson(serializeHealthSnapshot(request.getShipHealthRatios(), run.getFleetHealthSnapshotJson()));
-        // 전투 중엔 서버에 실시간 저장하지 않고 셀 클리어 확정 시점에만 전술력을 저장 — 0~tacticPowerMax로 클램프(체력 스냅샷과 동일하게 클라 계산값을 신뢰하되 범위만 방어).
-        // TacticPowerRestore 트레저 당첨 시에는 클라 보고값과 무관하게 전액 회복으로 덮어씀(서버 확정값)
-        int reportedTacticPower = request.getTacticPower() != null ? request.getTacticPower() : run.getTacticPower();
-        int clampedTacticPower = Math.max(0, Math.min(reportedTacticPower, commander.getTacticPowerMax()));
-        int finalTacticPower = treasureRewardType == ETreasureRewardType.TacticPowerRestore ? commander.getTacticPowerMax() : clampedTacticPower;
-        run.setTacticPower(finalTacticPower);
+        // 전투 중엔 서버에 실시간 저장하지 않고 셀 클리어 확정 시점에만 자원을 저장 — 0~resourceMax로 클램프(체력 스냅샷과 동일하게 클라 계산값을 신뢰하되 범위만 방어).
+        int reportedResource = request.getResource() != null ? request.getResource() : run.getResource();
+        int finalResource = Math.max(0, Math.min(reportedResource, commander.getResourceMax()));
+        run.setResource(finalResource);
 
-        // 광물도 전술력과 동일한 신뢰모델 — 상한 없이 0 이상만 방어(서버가 상한을 모름, 전적으로 클라 집계값을 신뢰)
-        int finalMineralAmount = Math.max(0, request.getMineralAmount());
+        // 광물 — 클라가 보고한 현재치(스캐빈징 등 포함) 위에 서버가 방금 계산한 존 고정 지급분을 더함(상한 없이 0 이상만 방어)
+        int finalMineralAmount = Math.max(0, request.getMineralAmount()) + mineralGained;
         run.setMineralAmount(finalMineralAmount);
         zoneRunRepository.save(run);
+
+        if (mineralGained > 0) {
+            commander.setMineralEarnedTotal(commander.getMineralEarnedTotal() + mineralGained);
+            commanderRepository.save(commander);
+        }
 
         ZoneCellClearLog clearLog = new ZoneCellClearLog(run.getId(), request.getCellRow(), request.getCellCol());
         clearLog.setRewardCardCandidatesJson(serializeCardIdList(rewardCardCandidates));
@@ -623,20 +628,20 @@ public class ExplorationService {
         }
 
         return ClearExplorationCellResponse.builder()
-                .explorationPointGained(pointsGained)
                 .expGained(expGained)
+                .mineralGained(mineralGained)
                 .treasureRewardType(treasureRewardType)
                 .treasureRewardRatio(treasureRewardRatio)
-                .tacticPower(finalTacticPower)
+                .resource(finalResource)
                 .mineralAmount(finalMineralAmount)
                 .rewardCardCandidates(rewardCardCandidates)
                 .rerollRemain(rerollRemain)
                 .build();
     }
 
-    // 이번 런에서 지금까지 선택 확정된 지속버프 카드 중 Buff_ExplorationPointRate만 골라 배율 합산 —
+    // 이번 런에서 지금까지 선택 확정된 지속버프 카드 중 Buff_MineralRate만 골라 배율 합산 —
     // 클라 RewardCardSessionState.ApplyCard와 동일한 규칙(같은 effectType을 여러 장 고르면 %를 합산: 1 + sum(value1))
-    private float computeExplorationPointRateMultiplier(Long zoneRunId) {
+    private float computeMineralRateMultiplier(Long zoneRunId) {
         List<ZoneCellClearLog> logs = zoneCellClearLogRepository.findByZoneRunIdOrderByClearedAtAsc(zoneRunId);
         float valueSum = 0f;
         for (ZoneCellClearLog log : logs) {
@@ -645,11 +650,28 @@ public class ExplorationService {
 
             GameDataService.RewardCardEntry card = gameDataService.getRewardCard(selectedCardId);
             if (card == null || card.isPersistent == false) continue;
-            if ("Buff_ExplorationPointRate".equals(card.effectType) == false) continue;
+            if ("Buff_MineralRate".equals(card.effectType) == false) continue;
 
             valueSum += card.value1;
         }
         return 1f + valueSum;
+    }
+
+    // 이번 런에서 지금까지 선택 확정된 지속버프 카드 중 Buff_MineralFlatBonus만 골라 합산 — 셀 클리어마다 이 값만큼 광물 보상에 가산
+    private int computeMineralFlatBonus(Long zoneRunId) {
+        List<ZoneCellClearLog> logs = zoneCellClearLogRepository.findByZoneRunIdOrderByClearedAtAsc(zoneRunId);
+        int valueSum = 0;
+        for (ZoneCellClearLog log : logs) {
+            String selectedCardId = log.getRewardCardSelectedId();
+            if (selectedCardId == null) continue;
+
+            GameDataService.RewardCardEntry card = gameDataService.getRewardCard(selectedCardId);
+            if (card == null || card.isPersistent == false) continue;
+            if ("Buff_MineralFlatBonus".equals(card.effectType) == false) continue;
+
+            valueSum += (int) card.value1;
+        }
+        return valueSum;
     }
 
     @Transactional
@@ -673,21 +695,13 @@ public class ExplorationService {
         if (card == null)
             throw new BusinessException(ServerErrorCode.EXPLORATION_REWARD_CARD_INVALID_SELECTION);
 
-        int explorationPointGained = 0;
-        if ("Instant_ExplorationPointFlat".equals(card.effectType)) {
-            explorationPointGained = (int) card.value1;
-            if (isVipActive(commanderId) == true)
-                explorationPointGained *= 2;
-            run.setExplorationPointBanked(run.getExplorationPointBanked() + explorationPointGained);
-            zoneRunRepository.save(run);
-        }
-
+        // Buff_MineralFlatBonus/Buff_MineralRate 등 지속버프는 여기서 즉시 지급하지 않음 — 선택만 기록해두고
+        // 다음 셀 클리어(clearExplorationCell)에서 computeMineralRateMultiplier/computeMineralFlatBonus가 누적 집계해 반영
         clearLog.setRewardCardSelectedId(request.getSelectedCardId());
         zoneCellClearLogRepository.save(clearLog);
 
         return ConfirmRewardCardResponse.builder()
                 .selectedCardId(request.getSelectedCardId())
-                .explorationPointGained(explorationPointGained)
                 .build();
     }
 
@@ -749,7 +763,6 @@ public class ExplorationService {
             return GetActiveZoneRunProgressResponse.builder()
                     .zoneNumber(0)
                     .clearedCells(new ArrayList<>())
-                    .explorationPointBanked(0)
                     .commanderExpBanked(0)
                     .mineralAmount(0)
                     .build();
@@ -783,7 +796,6 @@ public class ExplorationService {
                 .zoneNumber(run.getZoneNumber())
                 .clearedCells(clearedCells)
                 .mineralAmount(run.getMineralAmount())
-                .explorationPointBanked(run.getExplorationPointBanked())
                 .commanderExpBanked(run.getCommanderExpBanked())
                 .shipHealthRatios(deserializeHealthSnapshot(run.getFleetHealthSnapshotJson()))
                 .selectedRewardCards(selectedRewardCards)
@@ -792,25 +804,17 @@ public class ExplorationService {
                 .build();
     }
 
-    // 탈출 성공/실패 공통 정산 결과 — 탐험 포인트/지휘관 경험치 확정 지급분 + 런 종료로 회복된 전술력 현재치
+    // 탈출 성공/실패 공통 정산 결과 — 지휘관 경험치 확정 지급분 + 런 종료로 회복된 자원 현재치(광물은 은행/정산 없이 이미 즉시 반영된 상태라 여기서 다루지 않음)
     // 업적포인트는 더 이상 여기서 자동 지급하지 않음 — 유저가 업적 패널에서 직접 "받기"를 눌러야 지급(AchievementService.claimAchievement)
     // hasUnclaimedAchievement: 이 정산으로 완료됐을 수 있는 업적을 클라가 바로 알 수 있도록 존런이 끝나는 시점(체크포인트)에 같이 계산
-    private record RunSettlement(int pointPayout, int expPayout, int tacticPower, boolean hasUnclaimedAchievement) {}
+    private record RunSettlement(int expPayout, int resource, boolean hasUnclaimedAchievement) {}
 
     // 탈출 성공/실패, 포기 공통 정산 — escapeExplorationZone(성공/실패)과 abandonZoneRun(실패 고정)이 공유.
     // payoutRatio는 isSuccess와 별개 파라미터 — isSuccess는 run 상태(ESCAPED/ABANDONED)·최고클리어존 갱신에만
     // 쓰이고, 실제 지급 비율은 호출부가 상황(탈출 실패 50% / 포기 20% / 포기+광고 100%)에 맞게 넘김
     private RunSettlement settleZoneRun(Commander commander, ZoneRun run, boolean isSuccess, float payoutRatio) {
-        // Buff_ExplorationPointRate 배율은 여기(최종 확정 지급 시점)에서만 한 번 적용 — payoutRatio와 무관하게
-        // 이번 런에서 선택 확정된 카드 기준으로 최종 적립 총액에 곱함. 반올림 대신 올림 사용 —
-        // 배율이 작을 때(예: 1% 카드 1장, 적립 30) Math.round(30*1.01f)=30으로 뭉개져 카드 효과가 사라지는 것을 방지
-        float pointRateMultiplier = computeExplorationPointRateMultiplier(run.getId());
-        int bankedPointWithRate = (int) Math.ceil(run.getExplorationPointBanked() * pointRateMultiplier);
-        int pointPayout = (int) (bankedPointWithRate * payoutRatio);
-        int expPayout   = (int) (run.getCommanderExpBanked() * payoutRatio);
+        int expPayout = (int) (run.getCommanderExpBanked() * payoutRatio);
 
-        commander.setExplorationPoint(commander.getExplorationPoint() + pointPayout);
-        commander.setExplorationPointEarnedTotal(commander.getExplorationPointEarnedTotal() + pointPayout);
         commander.setExp(commander.getExp() + expPayout);
         CommanderLevelUtil.autoLevelUpIfNeeded(commander, gameDataService);
         if (isSuccess && run.getZoneNumber() > commander.getHighestClearedZoneNumber())
@@ -825,8 +829,8 @@ public class ExplorationService {
 
         boolean hasUnclaimedAchievement = achievementService.hasUnclaimedCompletedAchievement(commander.getId());
 
-        // 런이 끝나면 전술력은 다음 런 시작 전이라도 즉시 완전 회복된 것으로 취급(다음 ZoneRun 생성 시 이 값으로 초기화되는 것과 동일한 결과)
-        return new RunSettlement(pointPayout, expPayout, commander.getTacticPowerMax(), hasUnclaimedAchievement);
+        // 런이 끝나면 자원은 다음 런 시작 전이라도 즉시 완전 회복된 것으로 취급(다음 ZoneRun 생성 시 이 값으로 초기화되는 것과 동일한 결과)
+        return new RunSettlement(expPayout, commander.getResourceMax(), hasUnclaimedAchievement);
     }
 
     @Transactional
@@ -863,13 +867,11 @@ public class ExplorationService {
         RunSettlement settlement = settleZoneRun(commander, run, isSuccess, payoutRatio);
 
         return EscapeExplorationZoneResponse.builder()
-                .explorationPointGained(settlement.pointPayout())
-                .explorationPointRemain(commander.getExplorationPoint())
                 .expGained(settlement.expPayout())
                 .totalExp(commander.getExp())
                 .commanderLevel(commander.getCommanderLevel())
                 .highestClearedZoneNumber(commander.getHighestClearedZoneNumber())
-                .tacticPower(settlement.tacticPower())
+                .resource(settlement.resource())
                 .hasUnclaimedAchievement(settlement.hasUnclaimedAchievement())
                 .build();
     }
@@ -888,47 +890,11 @@ public class ExplorationService {
         RunSettlement settlement = settleZoneRun(commander, run, false, payoutRatio);
 
         return AbandonZoneRunResponse.builder()
-                .explorationPointGained(settlement.pointPayout())
-                .explorationPointRemain(commander.getExplorationPoint())
                 .expGained(settlement.expPayout())
                 .totalExp(commander.getExp())
                 .commanderLevel(commander.getCommanderLevel())
-                .tacticPower(settlement.tacticPower())
+                .resource(settlement.resource())
                 .hasUnclaimedAchievement(settlement.hasUnclaimedAchievement())
-                .build();
-    }
-
-    // 전술력 최대치는 탐험 포인트로 구매하는 기존 방식 유지(지휘력과 달리 M13 대상 아님)
-    @Transactional
-    public IncreaseTacticPowerMaxResponse increaseTacticPowerMax(Long commanderId, int amount) {
-        if (amount <= 0)
-            throw new BusinessException(ServerErrorCode.EXPLORATION_POINT_INSUFFICIENT);
-
-        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
-
-        if (commander.getExplorationPoint() < amount)
-            throw new BusinessException(ServerErrorCode.EXPLORATION_POINT_INSUFFICIENT);
-
-        commander.setExplorationPoint(commander.getExplorationPoint() - amount);
-        commander.setTacticPowerMax(commander.getTacticPowerMax() + amount);
-        commanderRepository.save(commander);
-
-        // 진행 중인 런이 있으면 그 런의 전술력 현재치도 증가분만큼 동일하게 올려줌 — 없으면 다음 런 시작 시 새 tacticPowerMax로 초기화되므로 별도 처리 불필요
-        ZoneRun activeRun = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS).orElse(null);
-        int tacticPower;
-        if (activeRun != null) {
-            activeRun.setTacticPower(activeRun.getTacticPower() + amount);
-            zoneRunRepository.save(activeRun);
-            tacticPower = activeRun.getTacticPower();
-        } else {
-            tacticPower = commander.getTacticPowerMax();
-        }
-
-        return IncreaseTacticPowerMaxResponse.builder()
-                .tacticPowerMax(commander.getTacticPowerMax())
-                .tacticPower(tacticPower)
-                .explorationPointRemain(commander.getExplorationPoint())
                 .build();
     }
 

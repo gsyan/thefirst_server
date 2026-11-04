@@ -286,10 +286,8 @@ public class AchievementService {
                 return commander.getCommanderLevel();
             case CommandPower:
                 return gameDataService.getCommandPowerMax(commander.getCommanderLevel());
-            case TacticPower:
-                return commander.getTacticPowerMax();
-            case ExplorationPointTotal:
-                return commander.getExplorationPointEarnedTotal();
+            case MineralTotal:
+                return commander.getMineralEarnedTotal();
             case HullTierCount:
                 int liveHullCount = context.hullAtOrAboveTierCounts.getOrDefault(Integer.parseInt(entry.conditionParam), 0);
                 return applyReachedFloor(context, entry, liveHullCount);
@@ -329,10 +327,8 @@ public class AchievementService {
                 return commander.getCommanderLevel();
             case CommandPower:
                 return gameDataService.getCommandPowerMax(commander.getCommanderLevel());
-            case TacticPower:
-                return commander.getTacticPowerMax();
-            case ExplorationPointTotal:
-                return commander.getExplorationPointEarnedTotal();
+            case MineralTotal:
+                return commander.getMineralEarnedTotal();
             case HullTierCount:
                 int liveHullCount = countHullAtOrAboveTier(activeFleet, Integer.parseInt(entry.conditionParam));
                 return applyReachedFloorDirect(commander, entry, liveHullCount);

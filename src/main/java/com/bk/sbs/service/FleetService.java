@@ -72,6 +72,7 @@ public class FleetService {
         Fleet fleet = fleetRepository.findByCommanderIdAndFleetIndex(commanderId, 0)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.COMMANDER_CONTROLLER_FAIL_NULL_ACTIVE_FLEET));
         healInvalidHullSubTypes(fleet);
+        healDuplicateArchetypes(fleet);
         healEmptyModules(fleet);
         return convertFleetToFleetInfoDto(fleet);
     }
@@ -96,8 +97,8 @@ public class FleetService {
 
     // 콘텐츠 개편으로 datatable_module.csv에서 사라진 hullSubType을 들고 있는 함선을 조회 시점에 기본 함체로 자가치유 — 실서버 패치 후 과거 데이터 보정용
     // hull만 처리(장착 모듈 유효성은 이번 범위 밖) — 기본 함체로 바뀌어도 기존 모듈은 그대로 유지, 슬롯 범위를 벗어나면 다음 setFleetSlotModules 때 자연히 걸러짐
-    // 무효 함선이 여러 척이면 전부 같은 기본 함체(DEFAULT_FLEET_HULL_SUB_TYPE)로 바뀌어 같은 아키타입 중복이 생기므로(M7: 함대 내 아키타입 1척 제한),
-    // 첫 번째 한 척만 교체하고 나머지는 슬롯 자체를 비움(제거). 이미 유효한 다른 슬롯이 같은 아키타입을 쓰고 있는 경우까지는 검사하지 않음 — M7 구현 시 함께 다룰 범위
+    // 무효 함선이 여러 척이면 전부 같은 기본 함체(DEFAULT_FLEET_HULL_SUB_TYPE)로 바뀌어 아키타입이 중복되므로,
+    // 첫 번째 한 척만 교체하고 나머지는 슬롯 자체를 비움(제거). 이미 유효한 다른 슬롯과의 중복까지는 여기서 다루지 않음 — healDuplicateArchetypes가 바로 이어서 처리
     private void healInvalidHullSubTypes(Fleet fleet) {
         if (fleet.getShips() == null) return;
 
@@ -118,6 +119,35 @@ public class FleetService {
             log.warn("Ship {} had an unknown hullSubType '{}' — removing this slot instead of duplicating the default hull",
                     extraInvalid.getId(), extraInvalid.getHullSubType());
             fleet.getShips().remove(extraInvalid);
+        }
+
+        fleetRepository.save(fleet);
+    }
+
+    // M7: 같은 아키타입 함선은 함대 내 1척만 — 이 제한이 생기기 전에 중복 배치해둔 기존 함대를 조회 시점에 자가치유.
+    // 슬롯 인덱스가 가장 낮은(= 가장 먼저 배치한) 한 척만 남기고 나머지는 슬롯 자체를 비움(함선 삭제, 재배치는 유저 몫)
+    private void healDuplicateArchetypes(Fleet fleet) {
+        if (fleet.getShips() == null) return;
+
+        List<Ship> sortedShips = new ArrayList<>(fleet.getShips());
+        sortedShips.sort((a, b) -> Integer.compare(a.getSlotIndex(), b.getSlotIndex()));
+
+        java.util.Set<String> seenArchetypes = new java.util.HashSet<>();
+        List<Ship> duplicateShips = new ArrayList<>();
+        for (Ship ship : sortedShips) {
+            ModuleData hullData = gameDataService.getHullModuleData(ship.getHullSubType());
+            String archetype = hullData != null ? hullData.getHullArchetype() : null;
+            if (archetype == null || archetype.isEmpty() == true) continue; // legacy 포맷은 M7 대상 아님
+
+            if (seenArchetypes.add(archetype) == false)
+                duplicateShips.add(ship);
+        }
+        if (duplicateShips.isEmpty()) return;
+
+        for (Ship duplicate : duplicateShips) {
+            log.warn("Ship {} (hullSubType={}) duplicated an archetype already used by an earlier slot — clearing this slot",
+                    duplicate.getId(), duplicate.getHullSubType());
+            fleet.getShips().remove(duplicate);
         }
 
         fleetRepository.save(fleet);
@@ -176,6 +206,19 @@ public class FleetService {
         Fleet fleet = fleetRepository.findByCommanderIdAndFleetIndex(commanderId, 0)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.COMMANDER_CONTROLLER_FAIL_NULL_ACTIVE_FLEET));
 
+        // M7: 같은 아키타입 함선은 함대 내 1척만 — legacy 포맷(hullArchetype 없음) 함체는 이 제한 대상 아님
+        String placeArchetype = hullData.getHullArchetype();
+        if (placeArchetype != null && placeArchetype.isEmpty() == false) {
+            boolean archetypeUsedElsewhere = fleet.getShips().stream()
+                    .filter(s -> s.getSlotIndex() != request.getSlotIndex())
+                    .anyMatch(s -> {
+                        ModuleData otherHullData = gameDataService.getHullModuleData(s.getHullSubType());
+                        return otherHullData != null && placeArchetype.equals(otherHullData.getHullArchetype());
+                    });
+            if (archetypeUsedElsewhere == true)
+                throw new BusinessException(ServerErrorCode.PLACE_FLEET_SHIP_FAIL_DUPLICATE_ARCHETYPE);
+        }
+
         Ship ship = fleet.getShips().stream()
                 .filter(s -> s.getSlotIndex() == request.getSlotIndex())
                 .findFirst()
@@ -187,12 +230,10 @@ public class FleetService {
                     return newShip;
                 });
 
-        // 새 함체 반영 전에 기존 모듈을 스냅샷 — replaceShipModules가 이 컬렉션을 곧 비우므로 미리 복사해둬야 함
-        List<Module> existingModules = ship.getModules() != null ? new ArrayList<>(ship.getModules()) : new ArrayList<>();
+        // 함체를 바꾸면 이전에 장착돼 있던 모듈은 이어받지 않고 항상 새 함체의 기본 로드아웃으로 리셋됨 —
+        // 각 함체(아키타입)는 정해진 모듈 세팅(슬롯 구성)을 가지므로 다른 함체의 모듈 개수/구성을 유지할 이유가 없음
         int[] newMaxSlots = gameDataService.getMaxSlotsForHull(request.getHullSubType());
-        List<Module> keptModules = existingModules.isEmpty() == false
-                ? filterModulesForNewHull(existingModules, newMaxSlots, request.getHullSubType(), ship)
-                : buildDefaultModules(ship, newMaxSlots);
+        List<Module> keptModules = buildDefaultModules(ship, newMaxSlots);
 
         // 캐파(지휘력)는 함체(hull) 자신의 점유값만 반영 — 모듈 설치/해제는 캐파와 무관(M13)
         int newShipCost = hullData.getStatPoint() != null ? hullData.getStatPoint() : 0;
@@ -245,67 +286,7 @@ public class FleetService {
                 .build();
     }
 
-    // 기존 장착 모듈 중 새 함체(newMaxSlots)에도 같은 카테고리+슬롯 인덱스가 존재하는 것만 유지 — 강화 포인트는 그대로 복사
-    // 확정 규칙: 무기 티어는 함체 티어와 독립적인 별도 축이지만 상한은 항상 함체 티어 — 새 함체 티어를 넘는 기존 모듈은 함체 티어로 자동 다운그레이드됨
-    // (지휘력 회수는 별도 처리 불필요 — 호출부 placeFleetShip이 이 결과의 statPoint로 비용을 재계산하므로 낮아진 티어가 자동 반영됨)
-    private List<Module> filterModulesForNewHull(List<Module> existingModules, int[] newMaxSlots, String newHullSubType, Ship targetShip) {
-        int newHullTier = GameDataService.parseTierFromHullSubType(newHullSubType);
-        List<Module> kept = new ArrayList<>();
-        java.util.Set<String> filledKeys = new java.util.HashSet<>(); // "moduleType:slotIndex" — 아래에서 빈 슬롯을 기본 모듈로 채울 때 중복 방지
-        for (Module old : existingModules) {
-            int maxSlotForCategory = getMaxSlotForCategory(newMaxSlots, old.getModuleType());
-            if (old.getSlotIndex() >= maxSlotForCategory) continue;
-
-            Module module = new Module();
-            module.setShip(targetShip);
-            module.setModuleType(old.getModuleType());
-            module.setSlotIndex(old.getSlotIndex());
-            module.setModuleSubType(clampModuleTierToHull(old.getModuleType(), old.getModuleSubType(), newHullTier));
-            kept.add(module);
-            filledKeys.add(old.getModuleType() + ":" + old.getSlotIndex());
-        }
-
-        // 새 함체로 바뀌면서 슬롯이 늘어나 비게 된 자리(실드/요격체가 원래 없었던 경우 포함)는 기본 레벨1 모듈로 채움 — 모듈은 항상 설치된 상태(설치/해제 개념 폐지)
-        appendMissingDefaultCategoryModules(kept, targetShip, EModuleType.beam, newMaxSlots[0], filledKeys);
-        appendMissingDefaultCategoryModules(kept, targetShip, EModuleType.missile, newMaxSlots[1], filledKeys);
-        appendMissingDefaultCategoryModules(kept, targetShip, EModuleType.hangar, newMaxSlots[2], filledKeys);
-        if (newMaxSlots[3] > 0 && filledKeys.contains(EModuleType.shield + ":0") == false)
-            kept.add(buildModule(targetShip, EModuleType.shield, 0, "shield_1_1"));
-        if (newMaxSlots[4] > 0 && filledKeys.contains(EModuleType.interceptor + ":0") == false)
-            kept.add(buildModule(targetShip, EModuleType.interceptor, 0, "interceptor_1_1"));
-
-        return kept;
-    }
-
-    private void appendMissingDefaultCategoryModules(List<Module> target, Ship ship, EModuleType moduleType, int maxSlotCount, java.util.Set<String> filledKeys) {
-        String defaultSubType = getDefaultSubTypeForCategory(moduleType);
-        for (int i = 0; i < maxSlotCount; i++) {
-            if (filledKeys.contains(moduleType + ":" + i)) continue;
-            target.add(buildModule(ship, moduleType, i, defaultSubType));
-        }
-    }
-
-    // 모듈 서브타입의 티어가 함체 티어를 넘으면 {category}_{hullTier}_1로 다운그레이드 — 해당 티어 데이터가 없으면(비정상 데이터) 원본 유지
-    private String clampModuleTierToHull(EModuleType moduleType, String subType, int hullTier) {
-        if (GameDataService.parseTierFromHullSubType(subType) <= hullTier) return subType;
-
-        String downgradedSubType = moduleType + "_" + hullTier + "_1";
-        if (isValidSubTypeForCategory(moduleType, downgradedSubType) == false) return subType;
-
-        return downgradedSubType;
-    }
-
-    // newMaxSlots = [beam, missile, hangar, shield, interceptor] — moduleType과 배열 인덱스 매핑
-    private int getMaxSlotForCategory(int[] maxSlots, EModuleType moduleType) {
-        if (moduleType == EModuleType.beam) return maxSlots[0];
-        if (moduleType == EModuleType.missile) return maxSlots[1];
-        if (moduleType == EModuleType.hangar) return maxSlots[2];
-        if (moduleType == EModuleType.shield) return maxSlots[3];
-        if (moduleType == EModuleType.interceptor) return maxSlots[4];
-        return 0;
-    }
-
-    // 빈 슬롯(새로 배치되는 함선)의 기본 로드아웃 — 모든 구조 슬롯에 레벨1 모듈을 기본 장착(설치/해제 개념 폐지, 항상 설치된 상태).
+    // 함체(아키타입)를 바꾸면 항상 새 함체의 기본 로드아웃으로 리셋됨(설치/해제·이전 모듈 이어받기 개념 없음) — 모든 구조 슬롯에 레벨1 모듈을 기본 장착.
     // maxSlots = [beam, missile, hangar, shield, interceptor]. 반영(저장)은 호출부 책임
     private List<Module> buildDefaultModules(Ship ship, int[] maxSlots) {
         List<Module> modules = new ArrayList<>();
@@ -562,8 +543,7 @@ public class FleetService {
 
     // 함대편성 슬롯의 함선을 배치 해제 — orphanRemoval로 Ship(+그 modules)이 DB에서 완전히 삭제됨.
     // 컬렉션 참조 자체를 새 List로 갈아끼우면 orphanRemoval이 깨지므로 removeIf로 기존 리스트를 직접 수정.
-    // 클라 FleetComposition.RemoveShip(List.RemoveAt)이 뒤 슬롯들을 한 칸씩 당겨 압축하는 것과 동일하게,
-    // 삭제된 슬롯보다 큰 slotIndex를 전부 -1 해야 "빈 슬롯은 항상 꼬리에만" 불변식이 서버-클라 양쪽에서 일치함
+    // 다른 슬롯의 slotIndex는 건드리지 않음 — 빈 슬롯은 자리를 그대로 유지(압축/재번호 없음)
     @Transactional
     public void removeFleetShip(Long commanderId, FleetRemoveShipRequest request) {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
@@ -574,10 +554,6 @@ public class FleetService {
 
         int removedSlotIndex = request.getSlotIndex();
         fleet.getShips().removeIf(s -> s.getSlotIndex() == removedSlotIndex);
-        for (Ship ship : fleet.getShips()) {
-            if (ship.getSlotIndex() > removedSlotIndex)
-                ship.setSlotIndex(ship.getSlotIndex() - 1);
-        }
         fleetRepository.save(fleet);
     }
 

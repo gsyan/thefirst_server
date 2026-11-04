@@ -21,11 +21,11 @@ public class CommanderInfoDto {
     private Integer commanderLevel;
     private Integer exp;
     private Integer commandPowerMax;
-    private Integer tacticPowerMax;
-    private Integer tacticPower;
+    private Integer resourceMax;
+    private Integer resource;
     private Integer mineralAmount;
     private Integer explorationSeedBase;
-    private Integer explorationPoint;
+    private Integer mineralEarnedTotal;
     private Integer achievementPoint;
     private List<String> unlockedHulls;
     private Integer explorationZoneNumber;

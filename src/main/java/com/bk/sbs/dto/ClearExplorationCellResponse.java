@@ -16,12 +16,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class ClearExplorationCellResponse {
-    private Integer explorationPointGained;
     private Integer expGained;
+    private Integer mineralGained;
     private List<String> rewardCardCandidates;
     private ETreasureRewardType treasureRewardType;
     private Float treasureRewardRatio;
-    private Integer tacticPower;
+    private Integer resource;
     private Integer mineralAmount;
     private Integer rerollRemain;
 }

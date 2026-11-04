@@ -2770,278 +2770,8 @@
     "descKey": "UIAchievement_Desc_command_power"
   },
   {
-    "achievementId": "tactic_power_2000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 2000,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_3000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 3000,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_4000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 4000,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_5000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 5000,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_6000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 6000,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_7000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 7000,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_8000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 8000,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_9000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 9000,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_10000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 10000,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_20000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 20000,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_30000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 30000,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_40000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 40000,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_50000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 50000,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_60000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 60000,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_70000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 70000,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_80000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 80000,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_90000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 90000,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_100000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 100000,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_200000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 200000,
-    "achievementPointReward": 200,
-    "achievementPointRewardVip": 200,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_300000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 300000,
-    "achievementPointReward": 200,
-    "achievementPointRewardVip": 200,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_400000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 400000,
-    "achievementPointReward": 200,
-    "achievementPointRewardVip": 200,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_500000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 500000,
-    "achievementPointReward": 200,
-    "achievementPointRewardVip": 200,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_600000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 600000,
-    "achievementPointReward": 200,
-    "achievementPointRewardVip": 200,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_700000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 700000,
-    "achievementPointReward": 200,
-    "achievementPointRewardVip": 200,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_800000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 800000,
-    "achievementPointReward": 200,
-    "achievementPointRewardVip": 200,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_900000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 900000,
-    "achievementPointReward": 200,
-    "achievementPointRewardVip": 200,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
-    "achievementId": "tactic_power_1000000",
-    "conditionType": "TacticPower",
-    "conditionParam": "",
-    "threshold": 1000000,
-    "achievementPointReward": 200,
-    "achievementPointRewardVip": 200,
-    "nameKey": "UIAchievement_Name_tactic_power",
-    "descKey": "UIAchievement_Desc_tactic_power"
-  },
-  {
     "achievementId": "exploration_point_total_1000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 1000,
     "achievementPointReward": 50,
@@ -3051,7 +2781,7 @@
   },
   {
     "achievementId": "exploration_point_total_2000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 2000,
     "achievementPointReward": 50,
@@ -3061,7 +2791,7 @@
   },
   {
     "achievementId": "exploration_point_total_3000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 3000,
     "achievementPointReward": 50,
@@ -3071,7 +2801,7 @@
   },
   {
     "achievementId": "exploration_point_total_4000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 4000,
     "achievementPointReward": 50,
@@ -3081,7 +2811,7 @@
   },
   {
     "achievementId": "exploration_point_total_5000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 5000,
     "achievementPointReward": 50,
@@ -3091,7 +2821,7 @@
   },
   {
     "achievementId": "exploration_point_total_6000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 6000,
     "achievementPointReward": 50,
@@ -3101,7 +2831,7 @@
   },
   {
     "achievementId": "exploration_point_total_7000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 7000,
     "achievementPointReward": 50,
@@ -3111,7 +2841,7 @@
   },
   {
     "achievementId": "exploration_point_total_8000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 8000,
     "achievementPointReward": 50,
@@ -3121,7 +2851,7 @@
   },
   {
     "achievementId": "exploration_point_total_9000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 9000,
     "achievementPointReward": 50,
@@ -3131,7 +2861,7 @@
   },
   {
     "achievementId": "exploration_point_total_10000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 10000,
     "achievementPointReward": 50,
@@ -3141,7 +2871,7 @@
   },
   {
     "achievementId": "exploration_point_total_20000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 20000,
     "achievementPointReward": 100,
@@ -3151,7 +2881,7 @@
   },
   {
     "achievementId": "exploration_point_total_30000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 30000,
     "achievementPointReward": 100,
@@ -3161,7 +2891,7 @@
   },
   {
     "achievementId": "exploration_point_total_40000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 40000,
     "achievementPointReward": 100,
@@ -3171,7 +2901,7 @@
   },
   {
     "achievementId": "exploration_point_total_50000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 50000,
     "achievementPointReward": 100,
@@ -3181,7 +2911,7 @@
   },
   {
     "achievementId": "exploration_point_total_60000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 60000,
     "achievementPointReward": 100,
@@ -3191,7 +2921,7 @@
   },
   {
     "achievementId": "exploration_point_total_70000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 70000,
     "achievementPointReward": 100,
@@ -3201,7 +2931,7 @@
   },
   {
     "achievementId": "exploration_point_total_80000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 80000,
     "achievementPointReward": 100,
@@ -3211,7 +2941,7 @@
   },
   {
     "achievementId": "exploration_point_total_90000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 90000,
     "achievementPointReward": 100,
@@ -3221,7 +2951,7 @@
   },
   {
     "achievementId": "exploration_point_total_100000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 100000,
     "achievementPointReward": 200,
@@ -3231,7 +2961,7 @@
   },
   {
     "achievementId": "exploration_point_total_200000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 200000,
     "achievementPointReward": 200,
@@ -3241,7 +2971,7 @@
   },
   {
     "achievementId": "exploration_point_total_300000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 300000,
     "achievementPointReward": 200,
@@ -3251,7 +2981,7 @@
   },
   {
     "achievementId": "exploration_point_total_400000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 400000,
     "achievementPointReward": 200,
@@ -3261,7 +2991,7 @@
   },
   {
     "achievementId": "exploration_point_total_500000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 500000,
     "achievementPointReward": 200,
@@ -3271,7 +3001,7 @@
   },
   {
     "achievementId": "exploration_point_total_600000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 600000,
     "achievementPointReward": 200,
@@ -3281,7 +3011,7 @@
   },
   {
     "achievementId": "exploration_point_total_700000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 700000,
     "achievementPointReward": 200,
@@ -3291,7 +3021,7 @@
   },
   {
     "achievementId": "exploration_point_total_800000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 800000,
     "achievementPointReward": 200,
@@ -3301,7 +3031,7 @@
   },
   {
     "achievementId": "exploration_point_total_900000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 900000,
     "achievementPointReward": 200,
@@ -3311,7 +3041,7 @@
   },
   {
     "achievementId": "exploration_point_total_1000000",
-    "conditionType": "ExplorationPointTotal",
+    "conditionType": "MineralTotal",
     "conditionParam": "",
     "threshold": 1000000,
     "achievementPointReward": 200,

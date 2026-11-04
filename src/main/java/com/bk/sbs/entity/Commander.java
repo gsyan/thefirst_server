@@ -51,19 +51,15 @@ public class Commander {
     @Column(nullable = false, columnDefinition = "INT DEFAULT 2")
     private Integer nameChangeCount = 2;
 
-    // 전술력 최대치 — 전투 중 전술 토글(체력회복/미사일/함재기) 3종이 공유하는 소모 게이지의 상한.
-    // IncreaseTacticPowerMaxRequest(은행 탐험 포인트 소모)로 영구 증가. 존 런 시작 시 이 값으로 ZoneRun.tacticPower가 초기화됨
+    // 자원 최대치 — 전투 중 전술 토글(체력회복/미사일/함재기) 3종이 공유하는 소모 게이지의 상한.
+    // 커맨더 생성 시 고정값, 성장 수단 없음. 존 런 시작 시 이 값으로 ZoneRun.resource가 초기화됨
     @Column(nullable = false, columnDefinition = "INT DEFAULT 1000")
-    private int tacticPowerMax = 1000;
+    private int resourceMax = 1000;
 
-    // 탐험 포인트 은행 잔액 — ZoneRun 탈출/포기 시 확정 지급되어 여기 누적, IncreaseCommandPowerMax로 소모
+    // 역대 누적 획득 광물 — 존런 중 실제로 보유 중인 광물(ZoneRun.mineralAmount, 런 종료 시 소멸)과 달리 절대 줄어들지 않음. 업적(MineralTotal 조건) 판정 전용.
+    // 정식 지급 지점(존 셀 클리어, 보상카드 Instant_MineralFlat)에서만 증가
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int explorationPoint = 0;
-
-    // 역대 누적 획득 탐사포인트 — explorationPoint(잔액, 소모하면 줄어듦)와 달리 절대 줄어들지 않음. 업적(ExplorationPointTotal 조건) 판정 전용.
-    // 정식 지급 지점(존 클리어 정산, 일일 로그인 보상)에서만 같이 증가 — DevController 디버그 자원추가는 제외
-    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int explorationPointEarnedTotal = 0;
+    private int mineralEarnedTotal = 0;
 
     // 업적포인트 — 업적 패널에서 유저가 완료된 업적을 직접 수령(AchievementService.claimAchievement)해야만 지급됨(자동 지급 없음), 티어4+ 함체 언락(FleetService.unlockHull)에 소모
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")

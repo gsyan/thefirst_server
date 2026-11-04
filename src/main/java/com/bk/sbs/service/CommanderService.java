@@ -122,8 +122,8 @@ public class CommanderService {
         ZoneRun activeZoneRun = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS).orElse(null);
         int explorationZoneNumber = activeZoneRun != null ? activeZoneRun.getZoneNumber() : 0;
         String explorationCell = activeZoneRun != null ? activeZoneRun.getCurrentCell() : "";
-        // 전술력 현재치도 동일 패턴 — 진행 중인 런이 있으면 그 런의 값을, 없으면 꽉 찬 상태(tacticPowerMax)를 내려줌
-        int tacticPower = activeZoneRun != null ? activeZoneRun.getTacticPower() : commander.getTacticPowerMax();
+        // 자원 현재치도 동일 패턴 — 진행 중인 런이 있으면 그 런의 값을, 없으면 꽉 찬 상태(resourceMax)를 내려줌
+        int resource = activeZoneRun != null ? activeZoneRun.getResource() : commander.getResourceMax();
         // 광물은 존런 전용이라 진행 중인 런이 없으면 0(영구 보유 개념 자체가 없음)
         int mineralAmount = activeZoneRun != null ? activeZoneRun.getMineralAmount() : 0;
 
@@ -138,13 +138,13 @@ public class CommanderService {
                 .nameChangeCount(commander.getNameChangeCount())
                 .explorationSeedBase(explorationWorldSeed)
                 .commandPowerMax(gameDataService.getCommandPowerMax(commander.getCommanderLevel()))
-                .tacticPowerMax(commander.getTacticPowerMax())
-                .tacticPower(tacticPower)
+                .resourceMax(commander.getResourceMax())
+                .resource(resource)
                 .mineralAmount(mineralAmount)
                 .explorationZoneNumber(explorationZoneNumber)
                 .explorationCell(explorationCell)
                 .highestClearedZoneNumber(commander.getHighestClearedZoneNumber())
-                .explorationPoint(commander.getExplorationPoint())
+                .mineralEarnedTotal(commander.getMineralEarnedTotal())
                 .achievementPoint(commander.getAchievementPoint())
                 .unlockedHulls(commanderUnlockedHullRepository.findByCommanderId(commanderId).stream()
                         .map(com.bk.sbs.entity.CommanderUnlockedHull::getHullSubType)
@@ -217,11 +217,11 @@ public class CommanderService {
     }
 
     @Transactional
-    public int addExplorationPoint(Long commanderId, int amount) {
+    public int addMineralEarnedTotal(Long commanderId, int amount) {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId).orElseThrow(() -> new BusinessException(ServerErrorCode.DEV_ADD_RESOURCE_FAIL_COMMANDER_NOT_FOUND));
-        commander.setExplorationPoint(commander.getExplorationPoint() + amount);
+        commander.setMineralEarnedTotal(commander.getMineralEarnedTotal() + amount);
         commander = commanderRepository.save(commander);
-        return commander.getExplorationPoint();
+        return commander.getMineralEarnedTotal();
     }
 
     @Transactional
