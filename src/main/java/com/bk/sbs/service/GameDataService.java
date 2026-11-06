@@ -286,6 +286,13 @@ public class GameDataService {
         return val != null ? val : 1;
     }
 
+    // 광물 1개당 환산되는 자원 포인트 — 자원 충전(ExplorationService.chargeResource)에서 사용
+    public int getMineralToResourceRatio() {
+        TacticSettings tactic = getDataTableConfig().getTactic();
+        Integer val = tactic != null ? tactic.getMineralToResourceRatio() : null;
+        return val != null ? val : 1;
+    }
+
     public List<ModuleData> getModulesByType(EModuleType moduleType) {
         return switch (moduleType) {
             case hull -> dataTableModule.getHullModules();

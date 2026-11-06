@@ -2,20 +2,28 @@ package com.bk.sbs.controller;
 
 import com.bk.sbs.dto.AbandonZoneRunRequest;
 import com.bk.sbs.dto.AbandonZoneRunResponse;
+import com.bk.sbs.dto.ChargeResourceRequest;
+import com.bk.sbs.dto.ChargeResourceResponse;
 import com.bk.sbs.dto.ClearExplorationCellRequest;
 import com.bk.sbs.dto.ClearExplorationCellResponse;
-import com.bk.sbs.dto.ConfirmRewardCardRequest;
-import com.bk.sbs.dto.ConfirmRewardCardResponse;
+import com.bk.sbs.dto.CloseRewardCardPopupRequest;
+import com.bk.sbs.dto.CloseRewardCardPopupResponse;
 import com.bk.sbs.dto.EnterExplorationCellRequest;
 import com.bk.sbs.dto.EnterExplorationCellResponse;
 import com.bk.sbs.dto.EscapeExplorationZoneRequest;
 import com.bk.sbs.dto.EscapeExplorationZoneResponse;
 import com.bk.sbs.dto.GetActiveZoneRunProgressRequest;
 import com.bk.sbs.dto.GetActiveZoneRunProgressResponse;
+import com.bk.sbs.dto.GetRewardCardShopRequest;
+import com.bk.sbs.dto.GetRewardCardShopResponse;
 import com.bk.sbs.dto.MoveToExplorationCellRequest;
 import com.bk.sbs.dto.MoveToExplorationCellResponse;
+import com.bk.sbs.dto.PurchaseRewardCardRequest;
+import com.bk.sbs.dto.PurchaseRewardCardResponse;
 import com.bk.sbs.dto.RerollRewardCardRequest;
 import com.bk.sbs.dto.RerollRewardCardResponse;
+import com.bk.sbs.dto.WatchAdForRewardCardRerollChargeRequest;
+import com.bk.sbs.dto.WatchAdForRewardCardRerollChargeResponse;
 import com.bk.sbs.dto.nogenerated.ApiResponse;
 import com.bk.sbs.security.CommanderId;
 import com.bk.sbs.service.ExplorationService;
@@ -56,11 +64,35 @@ public class ExplorationController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
-    @PostMapping("/confirm-reward-card")
-    public ResponseEntity<ApiResponse<ConfirmRewardCardResponse>> confirmRewardCard(
-            @RequestBody ConfirmRewardCardRequest request,
+    @PostMapping("/reward-card-shop")
+    public ResponseEntity<ApiResponse<GetRewardCardShopResponse>> getRewardCardShop(
+            @RequestBody GetRewardCardShopRequest request,
             @CommanderId Long commanderId) {
-        ConfirmRewardCardResponse response = explorationService.confirmRewardCard(commanderId, request);
+        GetRewardCardShopResponse response = explorationService.getRewardCardShop(commanderId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    @PostMapping("/purchase-reward-card")
+    public ResponseEntity<ApiResponse<PurchaseRewardCardResponse>> purchaseRewardCard(
+            @RequestBody PurchaseRewardCardRequest request,
+            @CommanderId Long commanderId) {
+        PurchaseRewardCardResponse response = explorationService.purchaseRewardCard(commanderId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    @PostMapping("/close-reward-card-popup")
+    public ResponseEntity<ApiResponse<CloseRewardCardPopupResponse>> closeRewardCardPopup(
+            @RequestBody CloseRewardCardPopupRequest request,
+            @CommanderId Long commanderId) {
+        CloseRewardCardPopupResponse response = explorationService.closeRewardCardPopup(commanderId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    @PostMapping("/watch-ad-reward-card-reroll-charge")
+    public ResponseEntity<ApiResponse<WatchAdForRewardCardRerollChargeResponse>> watchAdForRewardCardRerollCharge(
+            @RequestBody WatchAdForRewardCardRerollChargeRequest request,
+            @CommanderId Long commanderId) {
+        WatchAdForRewardCardRerollChargeResponse response = explorationService.watchAdForRewardCardRerollCharge(commanderId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
@@ -93,6 +125,14 @@ public class ExplorationController {
             @RequestBody AbandonZoneRunRequest request,
             @CommanderId Long commanderId) {
         AbandonZoneRunResponse response = explorationService.abandonZoneRun(commanderId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    @PostMapping("/charge-resource")
+    public ResponseEntity<ApiResponse<ChargeResourceResponse>> chargeResource(
+            @RequestBody ChargeResourceRequest request,
+            @CommanderId Long commanderId) {
+        ChargeResourceResponse response = explorationService.chargeResource(commanderId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 }

@@ -93,12 +93,13 @@ public class Commander {
     // attendanceDayCount 중복 증가 방지용 — 마지막으로 출석 카운트한 UTC 날짜
     private LocalDate lastAttendanceDate;
 
-    // 보상카드 리롤(광고 시청) 오늘 사용 횟수 — 남은 횟수는 DataTableConfig.exploration.rewardCardRerollLimit에서 이 값을 뺀 값(한도 설정이 바뀌어도 항상 최신 기준으로 계산됨)
-    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
-    private int rewardCardRerollCountToday = 0;
+    // 보상카드 리롤 가능 횟수 — 존런/접속 여부와 무관하게 계정 전체가 공유, 시간 경과로 자연 충전(ExplorationService.syncRewardCardRerollCharge)
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 10")
+    private int rewardCardRerollCharge = 10;
 
-    // rewardCardRerollCountToday 리셋 판단용 — 마지막으로 리셋된 UTC 날짜(attendanceDayCount/lastAttendanceDate와 동일한 지연 리셋 패턴)
-    private LocalDate rewardCardRerollResetDate;
+    // rewardCardRerollCharge를 마지막으로 동기화(충전 반영)한 시각 — 다음 조회 시 이 시각 기준 경과시간만큼만 충전하고,
+    // 충전 단위(설정된 분)에 못 미치는 나머지 경과시간은 버리지 않도록 이 시각 자체를 충전된 만큼만 전진시켜 저장
+    private Instant rewardCardRerollChargeSyncedAt;
 
     @Column(nullable = false)
     private boolean deleted = false;

@@ -4,14 +4,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * ConfirmRewardCardRequest
- * Auto-generated from Unity C# ConfirmRewardCardRequest class
+ * CloseRewardCardPopupRequest
+ * Auto-generated from Unity C# CloseRewardCardPopupRequest class
  */
 @Data
 @NoArgsConstructor
-public class ConfirmRewardCardRequest {
+public class CloseRewardCardPopupRequest {
     private Integer zoneNumber;
     private Integer cellRow;
     private Integer cellCol;
-    private String selectedCardId;
 }

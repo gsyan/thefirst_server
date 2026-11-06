@@ -31,6 +31,8 @@ public class FleetService {
 
     // 신규 커맨더에게 지급되는 기본 함대(fleetIndex=0)의 초기 함선 — 티어1 아키타입(centurion) 레벨1 함체 + 기본 빔1 장착
     private static final String DEFAULT_FLEET_HULL_SUB_TYPE = "hull_1_centurion_1";
+    // 전술 토글 기본값 — 전부 ON(bit0=빔,bit1=미사일,bit2=함재기,bit3=수리,bit4=실드,bit5=요격체). 끄는 것은 사용자의 의도적 선택만 허용
+    private static final int DEFAULT_TACTIC_OPTIONS = 0b111111;
 
     public FleetService(CommanderRepository commanderRepository,
                        GameDataService gameDataService,
@@ -50,6 +52,7 @@ public class FleetService {
         Fleet fleet = new Fleet();
         fleet.setCommanderId(commanderId);
         fleet.setFleetIndex(0);
+        fleet.setTacticOptions(DEFAULT_TACTIC_OPTIONS);
         fleet = fleetRepository.save(fleet);
 
         Ship ship = new Ship();

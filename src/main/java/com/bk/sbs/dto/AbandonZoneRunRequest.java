@@ -10,5 +10,4 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class AbandonZoneRunRequest {
-    private Boolean watchedAd;
 }

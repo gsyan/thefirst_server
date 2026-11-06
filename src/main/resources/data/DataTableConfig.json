@@ -19,10 +19,13 @@
     "tacticHangerCost": 1,
     "tacticShieldCost": 10,
     "tacticInterceptorCost": 10,
-    "mineralToResourceRatio": 10
+    "mineralToResourceRatio": 1
   },
   "exploration": {
-    "rewardCardRerollLimit": 10
+    "rewardCardRerollChargeMax": 10,
+    "rewardCardRerollChargeRegenMinutes": 5,
+    "rewardCardRerollChargeAdBonus": 10,
+    "mineralRewardBonusPerClear": 10
   },
   "shipStatFormula": {
     "maxModuleSlots": 6,

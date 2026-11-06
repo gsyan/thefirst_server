@@ -6,13 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * ConfirmRewardCardResponse
- * Auto-generated from Unity C# ConfirmRewardCardResponse class
+ * ChargeResourceResponse
+ * Auto-generated from Unity C# ChargeResourceResponse class
  */
 @Data
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class ConfirmRewardCardResponse {
-    private String selectedCardId;
+public class ChargeResourceResponse {
+    private Integer resource;
+    private Integer mineralAmount;
 }

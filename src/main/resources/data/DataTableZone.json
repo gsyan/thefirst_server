@@ -4,8 +4,8 @@
       "zoneIndex": 1,
       "gridWidth": 3,
       "gridHeight": 3,
-      "mineralReward": 10,
-      "commanderExpReward": 10,
+      "mineralReward": 50,
+      "commanderExpReward": 50,
       "cellOverrides": [
         {
           "row": 0,
@@ -31,8 +31,8 @@
       "zoneIndex": 2,
       "gridWidth": 3,
       "gridHeight": 3,
-      "mineralReward": 11,
-      "commanderExpReward": 11,
+      "mineralReward": 60,
+      "commanderExpReward": 60,
       "cellOverrides": [
         {
           "row": 1,
@@ -58,8 +58,8 @@
       "zoneIndex": 3,
       "gridWidth": 3,
       "gridHeight": 3,
-      "mineralReward": 12,
-      "commanderExpReward": 12,
+      "mineralReward": 70,
+      "commanderExpReward": 70,
       "cellOverrides": [
         {
           "row": 0,
@@ -85,8 +85,8 @@
       "zoneIndex": 4,
       "gridWidth": 3,
       "gridHeight": 3,
-      "mineralReward": 13,
-      "commanderExpReward": 13,
+      "mineralReward": 80,
+      "commanderExpReward": 80,
       "cellOverrides": [
         {
           "row": 0,
@@ -112,8 +112,8 @@
       "zoneIndex": 5,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 14,
-      "commanderExpReward": 14,
+      "mineralReward": 90,
+      "commanderExpReward": 90,
       "cellOverrides": [
         {
           "row": 4,
@@ -151,8 +151,8 @@
       "zoneIndex": 6,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 15,
-      "commanderExpReward": 15,
+      "mineralReward": 100,
+      "commanderExpReward": 100,
       "cellOverrides": [
         {
           "row": 0,
@@ -190,8 +190,8 @@
       "zoneIndex": 7,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 16,
-      "commanderExpReward": 16,
+      "mineralReward": 110,
+      "commanderExpReward": 110,
       "cellOverrides": [
         {
           "row": 4,
@@ -229,8 +229,8 @@
       "zoneIndex": 8,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 17,
-      "commanderExpReward": 17,
+      "mineralReward": 120,
+      "commanderExpReward": 120,
       "cellOverrides": [
         {
           "row": 1,
@@ -268,8 +268,8 @@
       "zoneIndex": 9,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 18,
-      "commanderExpReward": 18,
+      "mineralReward": 130,
+      "commanderExpReward": 130,
       "cellOverrides": [
         {
           "row": 1,
@@ -307,8 +307,8 @@
       "zoneIndex": 10,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 19,
-      "commanderExpReward": 19,
+      "mineralReward": 140,
+      "commanderExpReward": 140,
       "cellOverrides": [
         {
           "row": 0,
@@ -346,8 +346,8 @@
       "zoneIndex": 11,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 20,
-      "commanderExpReward": 20,
+      "mineralReward": 150,
+      "commanderExpReward": 150,
       "cellOverrides": [
         {
           "row": 2,
@@ -385,8 +385,8 @@
       "zoneIndex": 12,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 21,
-      "commanderExpReward": 21,
+      "mineralReward": 160,
+      "commanderExpReward": 160,
       "cellOverrides": [
         {
           "row": 4,
@@ -424,8 +424,8 @@
       "zoneIndex": 13,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 22,
-      "commanderExpReward": 22,
+      "mineralReward": 170,
+      "commanderExpReward": 170,
       "cellOverrides": [
         {
           "row": 4,
@@ -463,8 +463,8 @@
       "zoneIndex": 14,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 23,
-      "commanderExpReward": 23,
+      "mineralReward": 180,
+      "commanderExpReward": 180,
       "cellOverrides": [
         {
           "row": 3,
@@ -502,8 +502,8 @@
       "zoneIndex": 15,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 24,
-      "commanderExpReward": 24,
+      "mineralReward": 190,
+      "commanderExpReward": 190,
       "cellOverrides": [
         {
           "row": 1,
@@ -541,8 +541,8 @@
       "zoneIndex": 16,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 25,
-      "commanderExpReward": 25,
+      "mineralReward": 200,
+      "commanderExpReward": 200,
       "cellOverrides": [
         {
           "row": 1,
@@ -580,8 +580,8 @@
       "zoneIndex": 17,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 26,
-      "commanderExpReward": 26,
+      "mineralReward": 210,
+      "commanderExpReward": 210,
       "cellOverrides": [
         {
           "row": 0,
@@ -619,8 +619,8 @@
       "zoneIndex": 18,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 27,
-      "commanderExpReward": 27,
+      "mineralReward": 220,
+      "commanderExpReward": 220,
       "cellOverrides": [
         {
           "row": 4,
@@ -658,8 +658,8 @@
       "zoneIndex": 19,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 28,
-      "commanderExpReward": 28,
+      "mineralReward": 230,
+      "commanderExpReward": 230,
       "cellOverrides": [
         {
           "row": 0,
@@ -697,8 +697,8 @@
       "zoneIndex": 20,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 29,
-      "commanderExpReward": 29,
+      "mineralReward": 240,
+      "commanderExpReward": 240,
       "cellOverrides": [
         {
           "row": 4,
@@ -736,8 +736,8 @@
       "zoneIndex": 21,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 30,
-      "commanderExpReward": 30,
+      "mineralReward": 250,
+      "commanderExpReward": 250,
       "cellOverrides": [
         {
           "row": 0,
@@ -775,8 +775,8 @@
       "zoneIndex": 22,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 31,
-      "commanderExpReward": 31,
+      "mineralReward": 260,
+      "commanderExpReward": 260,
       "cellOverrides": [
         {
           "row": 2,
@@ -814,8 +814,8 @@
       "zoneIndex": 23,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 32,
-      "commanderExpReward": 32,
+      "mineralReward": 270,
+      "commanderExpReward": 270,
       "cellOverrides": [
         {
           "row": 1,
@@ -853,8 +853,8 @@
       "zoneIndex": 24,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 33,
-      "commanderExpReward": 33,
+      "mineralReward": 280,
+      "commanderExpReward": 280,
       "cellOverrides": [
         {
           "row": 1,
@@ -892,8 +892,8 @@
       "zoneIndex": 25,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 34,
-      "commanderExpReward": 34,
+      "mineralReward": 290,
+      "commanderExpReward": 290,
       "cellOverrides": [
         {
           "row": 1,
@@ -931,8 +931,8 @@
       "zoneIndex": 26,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 35,
-      "commanderExpReward": 35,
+      "mineralReward": 300,
+      "commanderExpReward": 300,
       "cellOverrides": [
         {
           "row": 1,
@@ -970,8 +970,8 @@
       "zoneIndex": 27,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 36,
-      "commanderExpReward": 36,
+      "mineralReward": 310,
+      "commanderExpReward": 310,
       "cellOverrides": [
         {
           "row": 1,
@@ -1009,8 +1009,8 @@
       "zoneIndex": 28,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 37,
-      "commanderExpReward": 37,
+      "mineralReward": 320,
+      "commanderExpReward": 320,
       "cellOverrides": [
         {
           "row": 4,
@@ -1048,8 +1048,8 @@
       "zoneIndex": 29,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 38,
-      "commanderExpReward": 38,
+      "mineralReward": 330,
+      "commanderExpReward": 330,
       "cellOverrides": [
         {
           "row": 1,
@@ -1087,8 +1087,8 @@
       "zoneIndex": 30,
       "gridWidth": 5,
       "gridHeight": 5,
-      "mineralReward": 39,
-      "commanderExpReward": 39,
+      "mineralReward": 340,
+      "commanderExpReward": 340,
       "cellOverrides": [
         {
           "row": 0,
@@ -1126,8 +1126,8 @@
       "zoneIndex": 31,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 40,
-      "commanderExpReward": 40,
+      "mineralReward": 350,
+      "commanderExpReward": 350,
       "cellOverrides": [
         {
           "row": 6,
@@ -1189,8 +1189,8 @@
       "zoneIndex": 32,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 41,
-      "commanderExpReward": 41,
+      "mineralReward": 360,
+      "commanderExpReward": 360,
       "cellOverrides": [
         {
           "row": 6,
@@ -1252,8 +1252,8 @@
       "zoneIndex": 33,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 42,
-      "commanderExpReward": 42,
+      "mineralReward": 370,
+      "commanderExpReward": 370,
       "cellOverrides": [
         {
           "row": 2,
@@ -1315,8 +1315,8 @@
       "zoneIndex": 34,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 43,
-      "commanderExpReward": 43,
+      "mineralReward": 380,
+      "commanderExpReward": 380,
       "cellOverrides": [
         {
           "row": 0,
@@ -1378,8 +1378,8 @@
       "zoneIndex": 35,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 44,
-      "commanderExpReward": 44,
+      "mineralReward": 390,
+      "commanderExpReward": 390,
       "cellOverrides": [
         {
           "row": 2,
@@ -1441,8 +1441,8 @@
       "zoneIndex": 36,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 45,
-      "commanderExpReward": 45,
+      "mineralReward": 400,
+      "commanderExpReward": 400,
       "cellOverrides": [
         {
           "row": 0,
@@ -1504,8 +1504,8 @@
       "zoneIndex": 37,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 46,
-      "commanderExpReward": 46,
+      "mineralReward": 410,
+      "commanderExpReward": 410,
       "cellOverrides": [
         {
           "row": 6,
@@ -1567,8 +1567,8 @@
       "zoneIndex": 38,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 47,
-      "commanderExpReward": 47,
+      "mineralReward": 420,
+      "commanderExpReward": 420,
       "cellOverrides": [
         {
           "row": 2,
@@ -1630,8 +1630,8 @@
       "zoneIndex": 39,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 48,
-      "commanderExpReward": 48,
+      "mineralReward": 430,
+      "commanderExpReward": 430,
       "cellOverrides": [
         {
           "row": 3,
@@ -1693,8 +1693,8 @@
       "zoneIndex": 40,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 49,
-      "commanderExpReward": 49,
+      "mineralReward": 440,
+      "commanderExpReward": 440,
       "cellOverrides": [
         {
           "row": 4,
@@ -1756,8 +1756,8 @@
       "zoneIndex": 41,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 50,
-      "commanderExpReward": 50,
+      "mineralReward": 450,
+      "commanderExpReward": 450,
       "cellOverrides": [
         {
           "row": 3,
@@ -1819,8 +1819,8 @@
       "zoneIndex": 42,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 51,
-      "commanderExpReward": 51,
+      "mineralReward": 460,
+      "commanderExpReward": 460,
       "cellOverrides": [
         {
           "row": 5,
@@ -1882,8 +1882,8 @@
       "zoneIndex": 43,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 52,
-      "commanderExpReward": 52,
+      "mineralReward": 470,
+      "commanderExpReward": 470,
       "cellOverrides": [
         {
           "row": 4,
@@ -1945,8 +1945,8 @@
       "zoneIndex": 44,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 53,
-      "commanderExpReward": 53,
+      "mineralReward": 480,
+      "commanderExpReward": 480,
       "cellOverrides": [
         {
           "row": 6,
@@ -2008,8 +2008,8 @@
       "zoneIndex": 45,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 54,
-      "commanderExpReward": 54,
+      "mineralReward": 490,
+      "commanderExpReward": 490,
       "cellOverrides": [
         {
           "row": 5,
@@ -2071,8 +2071,8 @@
       "zoneIndex": 46,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 55,
-      "commanderExpReward": 55,
+      "mineralReward": 500,
+      "commanderExpReward": 500,
       "cellOverrides": [
         {
           "row": 4,
@@ -2134,8 +2134,8 @@
       "zoneIndex": 47,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 56,
-      "commanderExpReward": 56,
+      "mineralReward": 510,
+      "commanderExpReward": 510,
       "cellOverrides": [
         {
           "row": 1,
@@ -2197,8 +2197,8 @@
       "zoneIndex": 48,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 57,
-      "commanderExpReward": 57,
+      "mineralReward": 520,
+      "commanderExpReward": 520,
       "cellOverrides": [
         {
           "row": 2,
@@ -2260,8 +2260,8 @@
       "zoneIndex": 49,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 58,
-      "commanderExpReward": 58,
+      "mineralReward": 530,
+      "commanderExpReward": 530,
       "cellOverrides": [
         {
           "row": 2,
@@ -2323,8 +2323,8 @@
       "zoneIndex": 50,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 59,
-      "commanderExpReward": 59,
+      "mineralReward": 540,
+      "commanderExpReward": 540,
       "cellOverrides": [
         {
           "row": 5,
@@ -2386,8 +2386,8 @@
       "zoneIndex": 51,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 60,
-      "commanderExpReward": 60,
+      "mineralReward": 550,
+      "commanderExpReward": 550,
       "cellOverrides": [
         {
           "row": 6,
@@ -2449,8 +2449,8 @@
       "zoneIndex": 52,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 61,
-      "commanderExpReward": 61,
+      "mineralReward": 560,
+      "commanderExpReward": 560,
       "cellOverrides": [
         {
           "row": 0,
@@ -2512,8 +2512,8 @@
       "zoneIndex": 53,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 62,
-      "commanderExpReward": 62,
+      "mineralReward": 570,
+      "commanderExpReward": 570,
       "cellOverrides": [
         {
           "row": 0,
@@ -2575,8 +2575,8 @@
       "zoneIndex": 54,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 63,
-      "commanderExpReward": 63,
+      "mineralReward": 580,
+      "commanderExpReward": 580,
       "cellOverrides": [
         {
           "row": 2,
@@ -2638,8 +2638,8 @@
       "zoneIndex": 55,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 64,
-      "commanderExpReward": 64,
+      "mineralReward": 590,
+      "commanderExpReward": 590,
       "cellOverrides": [
         {
           "row": 2,
@@ -2701,8 +2701,8 @@
       "zoneIndex": 56,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 65,
-      "commanderExpReward": 65,
+      "mineralReward": 600,
+      "commanderExpReward": 600,
       "cellOverrides": [
         {
           "row": 5,
@@ -2764,8 +2764,8 @@
       "zoneIndex": 57,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 66,
-      "commanderExpReward": 66,
+      "mineralReward": 610,
+      "commanderExpReward": 610,
       "cellOverrides": [
         {
           "row": 6,
@@ -2827,8 +2827,8 @@
       "zoneIndex": 58,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 67,
-      "commanderExpReward": 67,
+      "mineralReward": 620,
+      "commanderExpReward": 620,
       "cellOverrides": [
         {
           "row": 5,
@@ -2890,8 +2890,8 @@
       "zoneIndex": 59,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 68,
-      "commanderExpReward": 68,
+      "mineralReward": 630,
+      "commanderExpReward": 630,
       "cellOverrides": [
         {
           "row": 3,
@@ -2953,8 +2953,8 @@
       "zoneIndex": 60,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 69,
-      "commanderExpReward": 69,
+      "mineralReward": 640,
+      "commanderExpReward": 640,
       "cellOverrides": [
         {
           "row": 0,
@@ -3016,8 +3016,8 @@
       "zoneIndex": 61,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 70,
-      "commanderExpReward": 70,
+      "mineralReward": 650,
+      "commanderExpReward": 650,
       "cellOverrides": [
         {
           "row": 6,
@@ -3079,8 +3079,8 @@
       "zoneIndex": 62,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 71,
-      "commanderExpReward": 71,
+      "mineralReward": 660,
+      "commanderExpReward": 660,
       "cellOverrides": [
         {
           "row": 4,
@@ -3142,8 +3142,8 @@
       "zoneIndex": 63,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 72,
-      "commanderExpReward": 72,
+      "mineralReward": 670,
+      "commanderExpReward": 670,
       "cellOverrides": [
         {
           "row": 4,
@@ -3205,8 +3205,8 @@
       "zoneIndex": 64,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 73,
-      "commanderExpReward": 73,
+      "mineralReward": 680,
+      "commanderExpReward": 680,
       "cellOverrides": [
         {
           "row": 3,
@@ -3268,8 +3268,8 @@
       "zoneIndex": 65,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 74,
-      "commanderExpReward": 74,
+      "mineralReward": 690,
+      "commanderExpReward": 690,
       "cellOverrides": [
         {
           "row": 5,
@@ -3331,8 +3331,8 @@
       "zoneIndex": 66,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 75,
-      "commanderExpReward": 75,
+      "mineralReward": 700,
+      "commanderExpReward": 700,
       "cellOverrides": [
         {
           "row": 0,
@@ -3394,8 +3394,8 @@
       "zoneIndex": 67,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 76,
-      "commanderExpReward": 76,
+      "mineralReward": 710,
+      "commanderExpReward": 710,
       "cellOverrides": [
         {
           "row": 4,
@@ -3457,8 +3457,8 @@
       "zoneIndex": 68,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 77,
-      "commanderExpReward": 77,
+      "mineralReward": 720,
+      "commanderExpReward": 720,
       "cellOverrides": [
         {
           "row": 6,
@@ -3520,8 +3520,8 @@
       "zoneIndex": 69,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 78,
-      "commanderExpReward": 78,
+      "mineralReward": 730,
+      "commanderExpReward": 730,
       "cellOverrides": [
         {
           "row": 2,
@@ -3583,8 +3583,8 @@
       "zoneIndex": 70,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 79,
-      "commanderExpReward": 79,
+      "mineralReward": 740,
+      "commanderExpReward": 740,
       "cellOverrides": [
         {
           "row": 1,
@@ -3646,8 +3646,8 @@
       "zoneIndex": 71,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 80,
-      "commanderExpReward": 80,
+      "mineralReward": 750,
+      "commanderExpReward": 750,
       "cellOverrides": [
         {
           "row": 5,
@@ -3709,8 +3709,8 @@
       "zoneIndex": 72,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 81,
-      "commanderExpReward": 81,
+      "mineralReward": 760,
+      "commanderExpReward": 760,
       "cellOverrides": [
         {
           "row": 0,
@@ -3772,8 +3772,8 @@
       "zoneIndex": 73,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 82,
-      "commanderExpReward": 82,
+      "mineralReward": 770,
+      "commanderExpReward": 770,
       "cellOverrides": [
         {
           "row": 4,
@@ -3835,8 +3835,8 @@
       "zoneIndex": 74,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 83,
-      "commanderExpReward": 83,
+      "mineralReward": 780,
+      "commanderExpReward": 780,
       "cellOverrides": [
         {
           "row": 1,
@@ -3898,8 +3898,8 @@
       "zoneIndex": 75,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 84,
-      "commanderExpReward": 84,
+      "mineralReward": 790,
+      "commanderExpReward": 790,
       "cellOverrides": [
         {
           "row": 2,
@@ -3961,8 +3961,8 @@
       "zoneIndex": 76,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 85,
-      "commanderExpReward": 85,
+      "mineralReward": 800,
+      "commanderExpReward": 800,
       "cellOverrides": [
         {
           "row": 1,
@@ -4024,8 +4024,8 @@
       "zoneIndex": 77,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 86,
-      "commanderExpReward": 86,
+      "mineralReward": 810,
+      "commanderExpReward": 810,
       "cellOverrides": [
         {
           "row": 1,
@@ -4087,8 +4087,8 @@
       "zoneIndex": 78,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 87,
-      "commanderExpReward": 87,
+      "mineralReward": 820,
+      "commanderExpReward": 820,
       "cellOverrides": [
         {
           "row": 5,
@@ -4150,8 +4150,8 @@
       "zoneIndex": 79,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 88,
-      "commanderExpReward": 88,
+      "mineralReward": 830,
+      "commanderExpReward": 830,
       "cellOverrides": [
         {
           "row": 3,
@@ -4213,8 +4213,8 @@
       "zoneIndex": 80,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 89,
-      "commanderExpReward": 89,
+      "mineralReward": 840,
+      "commanderExpReward": 840,
       "cellOverrides": [
         {
           "row": 4,
@@ -4276,8 +4276,8 @@
       "zoneIndex": 81,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 90,
-      "commanderExpReward": 90,
+      "mineralReward": 850,
+      "commanderExpReward": 850,
       "cellOverrides": [
         {
           "row": 6,
@@ -4339,8 +4339,8 @@
       "zoneIndex": 82,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 91,
-      "commanderExpReward": 91,
+      "mineralReward": 860,
+      "commanderExpReward": 860,
       "cellOverrides": [
         {
           "row": 4,
@@ -4402,8 +4402,8 @@
       "zoneIndex": 83,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 92,
-      "commanderExpReward": 92,
+      "mineralReward": 870,
+      "commanderExpReward": 870,
       "cellOverrides": [
         {
           "row": 5,
@@ -4465,8 +4465,8 @@
       "zoneIndex": 84,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 93,
-      "commanderExpReward": 93,
+      "mineralReward": 880,
+      "commanderExpReward": 880,
       "cellOverrides": [
         {
           "row": 5,
@@ -4528,8 +4528,8 @@
       "zoneIndex": 85,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 94,
-      "commanderExpReward": 94,
+      "mineralReward": 890,
+      "commanderExpReward": 890,
       "cellOverrides": [
         {
           "row": 5,
@@ -4591,8 +4591,8 @@
       "zoneIndex": 86,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 95,
-      "commanderExpReward": 95,
+      "mineralReward": 900,
+      "commanderExpReward": 900,
       "cellOverrides": [
         {
           "row": 6,
@@ -4654,8 +4654,8 @@
       "zoneIndex": 87,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 96,
-      "commanderExpReward": 96,
+      "mineralReward": 910,
+      "commanderExpReward": 910,
       "cellOverrides": [
         {
           "row": 3,
@@ -4717,8 +4717,8 @@
       "zoneIndex": 88,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 97,
-      "commanderExpReward": 97,
+      "mineralReward": 920,
+      "commanderExpReward": 920,
       "cellOverrides": [
         {
           "row": 6,
@@ -4780,8 +4780,8 @@
       "zoneIndex": 89,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 98,
-      "commanderExpReward": 98,
+      "mineralReward": 930,
+      "commanderExpReward": 930,
       "cellOverrides": [
         {
           "row": 2,
@@ -4843,8 +4843,8 @@
       "zoneIndex": 90,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 99,
-      "commanderExpReward": 99,
+      "mineralReward": 940,
+      "commanderExpReward": 940,
       "cellOverrides": [
         {
           "row": 0,
@@ -4906,8 +4906,8 @@
       "zoneIndex": 91,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 100,
-      "commanderExpReward": 100,
+      "mineralReward": 950,
+      "commanderExpReward": 950,
       "cellOverrides": [
         {
           "row": 0,
@@ -4969,8 +4969,8 @@
       "zoneIndex": 92,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 101,
-      "commanderExpReward": 101,
+      "mineralReward": 960,
+      "commanderExpReward": 960,
       "cellOverrides": [
         {
           "row": 5,
@@ -5032,8 +5032,8 @@
       "zoneIndex": 93,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 102,
-      "commanderExpReward": 102,
+      "mineralReward": 970,
+      "commanderExpReward": 970,
       "cellOverrides": [
         {
           "row": 0,
@@ -5095,8 +5095,8 @@
       "zoneIndex": 94,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 103,
-      "commanderExpReward": 103,
+      "mineralReward": 980,
+      "commanderExpReward": 980,
       "cellOverrides": [
         {
           "row": 0,
@@ -5158,8 +5158,8 @@
       "zoneIndex": 95,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 104,
-      "commanderExpReward": 104,
+      "mineralReward": 990,
+      "commanderExpReward": 990,
       "cellOverrides": [
         {
           "row": 4,
@@ -5221,8 +5221,8 @@
       "zoneIndex": 96,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 105,
-      "commanderExpReward": 105,
+      "mineralReward": 1000,
+      "commanderExpReward": 1000,
       "cellOverrides": [
         {
           "row": 4,
@@ -5284,8 +5284,8 @@
       "zoneIndex": 97,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 106,
-      "commanderExpReward": 106,
+      "mineralReward": 1010,
+      "commanderExpReward": 1010,
       "cellOverrides": [
         {
           "row": 3,
@@ -5347,8 +5347,8 @@
       "zoneIndex": 98,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 107,
-      "commanderExpReward": 107,
+      "mineralReward": 1020,
+      "commanderExpReward": 1020,
       "cellOverrides": [
         {
           "row": 2,
@@ -5410,8 +5410,8 @@
       "zoneIndex": 99,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 108,
-      "commanderExpReward": 108,
+      "mineralReward": 1030,
+      "commanderExpReward": 1030,
       "cellOverrides": [
         {
           "row": 5,
@@ -5473,8 +5473,8 @@
       "zoneIndex": 100,
       "gridWidth": 7,
       "gridHeight": 7,
-      "mineralReward": 109,
-      "commanderExpReward": 109,
+      "mineralReward": 1040,
+      "commanderExpReward": 1040,
       "cellOverrides": [
         {
           "row": 6,

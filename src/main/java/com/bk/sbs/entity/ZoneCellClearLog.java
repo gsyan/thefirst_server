@@ -30,14 +30,6 @@ public class ZoneCellClearLog {
     @Column(nullable = false)
     private Instant clearedAt = Instant.now();
 
-    // 이 셀 클리어 시 추첨된 보상카드 후보 3개(cardId) JSON — 후보 없는 셀(탈출/빈 셀)은 null
-    @Column(name = "reward_card_candidates_json", columnDefinition = "TEXT")
-    private String rewardCardCandidatesJson;
-
-    // 확정 선택한 cardId — 아직 선택 전이면 null(재접속 시 이 상태로 카드 선택 팝업 복구)
-    @Column(name = "reward_card_selected_id", length = 64)
-    private String rewardCardSelectedId;
-
     // Treasure(Event) 셀 클리어 시 당첨된 보상 종류 — Treasure 셀이 아니면 null. getPendingHealthHealBonus()가 ShipHealthHeal 당첨 여부 확인에 사용
     @Enumerated(EnumType.STRING)
     @Column(name = "treasure_reward_type", length = 32)

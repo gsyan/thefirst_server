@@ -1,4 +1,4 @@
-// 탐사 그리드 존 진행(ZoneRun) 서비스 — 셀 입장/클리어/탈출/포기, 탐험 포인트 정산, 지휘력 최대치 구매
+// 탐사 그리드 존 진행(ZoneRun) 서비스 — 셀 입장/클리어/탈출/포기, 지휘관 경험치 정산, 지휘력 최대치 구매
 package com.bk.sbs.service;
 
 import com.bk.sbs.config.DataTableConfig;
@@ -30,8 +30,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneOffset;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -122,8 +120,6 @@ public class ExplorationService {
     private static final float TREASURE_SHIP_HEALTH_HEAL_RATIO = 0.5f;
 
     private static final float ESCAPE_FAIL_PAYOUT_RATIO = 0.5f; // 탈출 실패(전투 패배 등) — 적립 보상의 50% 지급
-    private static final float ABANDON_PAYOUT_RATIO = 0.2f;     // 포기(광고 시청 안 함) — 적립 보상의 20% 지급
-    private static final float ABANDON_AD_PAYOUT_RATIO = 1.0f;  // 포기 + 광고 시청 — 적립 보상 전액 지급
 
     // 체력 비율 범위(0~1), 함선 구성 일치, 직전 스냅샷 대비 증가폭(허용치: 회복 카드 효과 + 시간 여유값) 검증
     private void validateHealthSnapshot(ZoneRun run, List<ShipHealthRatioInfoDto> reported) {
@@ -160,30 +156,12 @@ public class ExplorationService {
         }
     }
 
-    // 직전 클리어 로그에서 선택 확정된 보상카드 또는 Treasure 당첨이 체력을 늘리는 계열(즉시회복 또는 최대체력 지속버프)이면
-    // 그 증가량을 허용 증가치로 반환 — Buff_ShipHealth는 카드 선택 즉시 최대체력이 늘어난 만큼 현재체력도 같이 늘어나므로
-    // (ModuleHull.RefreshRewardCardBuff) card.value1(체력 x(1+value1))을 그대로 상한으로 허용(실제 증가폭은 항상 이보다 작거나 같음)
+    // 직전 검증 이후 쌓인 즉시회복/체력버프 보너스(보상카드 구매 + Treasure 체력회복 당첨) 총합을 읽고 즉시 리셋 —
+    // BuyCardButton으로 클리어와 무관한 시점에 구매해도 누락 없이 잡히도록 run에 적립해뒀다가 소비하는 1회용 값
     private float getPendingHealthHealBonus(ZoneRun run) {
-        List<ZoneCellClearLog> clearLogs = zoneCellClearLogRepository.findByZoneRunIdOrderByClearedAtAsc(run.getId());
-        if (clearLogs.isEmpty()) return 0f;
-
-        ZoneCellClearLog lastLog = clearLogs.get(clearLogs.size() - 1);
-
-        if (lastLog.getTreasureRewardType() == ETreasureRewardType.ShipHealthHeal)
-            return TREASURE_SHIP_HEALTH_HEAL_RATIO;
-
-        String selectedCardId = lastLog.getRewardCardSelectedId();
-        if (selectedCardId == null) return 0f;
-
-        GameDataService.RewardCardEntry card = gameDataService.getRewardCard(selectedCardId);
-        if (card == null) return 0f;
-
-        if ("Instant_HealthHeal".equals(card.effectType))
-            return card.value1;
-        if ("Buff_ShipHealth".equals(card.effectType))
-            return card.value1;
-
-        return 0f;
+        float bonus = run.getPendingHealthHealBonus();
+        run.setPendingHealthHealBonus(0f);
+        return bonus;
     }
 
     // cardId 리스트 JSON 직렬화/역직렬화 — 셀 클리어 로그의 후보 3개, 재구성된 선택 이력 등 공용으로 사용
@@ -207,12 +185,13 @@ public class ExplorationService {
         }
     }
 
-    // 가중치 랜덤으로 후보 3개 추첨 — 결과는 ZoneCellClearLog.rewardCardCandidatesJson에 그대로 저장되므로 재계산할 필요 없음(confirmRewardCard 검증도 저장값 기준)
-    private List<String> rollRewardCardCandidates() {
+    // 가중치 랜덤으로 후보 3개 추첨 — 결과는 ZoneRun.rewardCardCandidatesJson에 그대로 저장되므로 재계산할 필요 없음(구매/리롤 검증도 저장값 기준)
+    // excludeCardIds: 지금 보여주고 있던 카드ID들 — 같은 효과 종류는 다시 나올 수 있지만 정확히 같은 등급(카드)은 이번엔 배제
+    private List<String> rollRewardCardCandidates(List<String> excludeCardIds) {
         List<GameDataService.RewardCardEntry> pool = gameDataService.getRewardCardList();
         if (pool.isEmpty()) return null;
 
-        List<GameDataService.RewardCardEntry> picked = RewardCardSelector.selectCandidates(pool, 3, new java.util.Random());
+        List<GameDataService.RewardCardEntry> picked = RewardCardSelector.selectCandidates(pool, 3, new java.util.Random(), excludeCardIds);
 
         List<String> cardIds = new ArrayList<>();
         for (GameDataService.RewardCardEntry entry : picked) cardIds.add(entry.cardId);
@@ -548,7 +527,6 @@ public class ExplorationService {
                 && zoneCellClearLogRepository.findTopByZoneRunIdAndCellOrderByClearedAtDesc(run.getId(), cell).isPresent();
 
         int mineralGained = 0;
-        int expGained = 0;
         List<String> rewardCardCandidates = null;
         ETreasureRewardType treasureRewardType = ETreasureRewardType.None;
         float treasureRewardRatio = 0f;
@@ -561,13 +539,28 @@ public class ExplorationService {
                 validateAndConsumeChallengeToken(run, request.getChallengeToken(), request.getCellRow(), request.getCellCol());
 
             // 존 고정 보상값 지급 — 적 함대 성능(commandCost)과 무관, 함선이 있던 셀만 지급(빈 셀은 0)
-            mineralGained = hasEnemies ? zoneConfig.getMineralReward() : 0;
-            expGained     = hasEnemies ? zoneConfig.getCommanderExpReward() : 0;
+            // 광물은 존 기본값에 "이번 런에서 지금까지 보상받은 클리어 횟수 × mineralRewardBonusPerClear"를 더해 클리어를 거듭할수록 늘어남(재방문 등 보상 없는 클리어는 미포함)
+            if (hasEnemies == true) {
+                int mineralRewardBonusPerClear = gameDataService.getDataTableConfig().getExploration().getMineralRewardBonusPerClear();
+                mineralGained = zoneConfig.getMineralReward() + mineralRewardBonusPerClear * run.getRewardedClearCount();
+                run.setRewardedClearCount(run.getRewardedClearCount() + 1);
+            } else {
+                mineralGained = 0;
+            }
+            // 지휘관 경험치는 셀 클리어로는 지급하지 않음 — 존의 commander_exp_reward는 탈출 확정(escapeExplorationZone)에서 1회만 지급됨
 
             // 탈출 셀은 보상카드 후보 생성 스킵 — 탈출 셀은 별도의 탈출 확정 흐름을 가짐
+            // 후보는 이번 런에서 처음 필요해질 때 1회만 추첨해서 run에 고정 — 이후 셀을 클리어해도 재추첨하지 않고 그대로 재사용(리롤/구매 시에만 갱신)
             GridCellOverrideDto escapeCell = findCellByType(zoneConfig, EGridCellType.Escape);
             boolean isEscapeCell = escapeCell != null && escapeCell.getRow() == request.getCellRow() && escapeCell.getCol() == request.getCellCol();
-            rewardCardCandidates = (hasEnemies == true && isEscapeCell == false) ? rollRewardCardCandidates() : null;
+            if (hasEnemies == true && isEscapeCell == false) {
+                rewardCardCandidates = deserializeCardIdList(run.getRewardCardCandidatesJson());
+                if (rewardCardCandidates == null) {
+                    rewardCardCandidates = rollRewardCardCandidates(null);
+                    run.setRewardCardCandidatesJson(serializeCardIdList(rewardCardCandidates));
+                }
+                run.setRewardCardPopupClosed(false);
+            }
 
             // Event(Treasure) 셀 — 표준 존 보상/보상카드와는 별개로 2종 중 1개를 진짜 랜덤(매 호출 새 Random 인스턴스)으로 지급
             GridCellOverrideDto cellOverride = findCellOverride(zoneConfig, request.getCellRow(), request.getCellCol());
@@ -582,24 +575,25 @@ public class ExplorationService {
             }
 
             // Buff_MineralRate 지속버프 — 이번 런에서 지금까지 선택 확정된 카드 기준으로 "앞으로" 받을 광물에 바로 적용(은행/정산 개념 없음)
-            float mineralRateMultiplier = computeMineralRateMultiplier(run.getId());
+            float mineralRateMultiplier = computeMineralRateMultiplier(run);
             mineralGained = Math.round(mineralGained * mineralRateMultiplier);
 
             // Buff_MineralFlatBonus 지속버프 — 보상이 있던 셀(일반/Treasure)에만 가산, 보상이 아예 없는 빈 셀에서 공짜로 생기지 않게 방어
             if (mineralGained > 0)
-                mineralGained += computeMineralFlatBonus(run.getId());
+                mineralGained += run.getMineralFlatBonusTotal();
 
-            // VIP 혜택 — 지급 자체를 2배로
-            if (isVipActive(commanderId) == true) {
+            // VIP 혜택 — 지급 자체를 2배로(경험치는 셀 클리어가 아니라 탈출 확정에서 지급되므로 여기선 광물만 해당)
+            if (isVipActive(commanderId) == true)
                 mineralGained *= 2;
-                expGained *= 2;
-            }
         }
 
         validateHealthSnapshot(run, request.getShipHealthRatios());
 
+        // 이번 클리어의 Treasure 체력회복 당첨은 지금 검증한 스냅샷에는 아직 반영되지 않았으므로, 다음 검증 때 쓸 적립값에 더해둠
+        if (treasureRewardType == ETreasureRewardType.ShipHealthHeal)
+            run.setPendingHealthHealBonus(run.getPendingHealthHealBonus() + TREASURE_SHIP_HEALTH_HEAL_RATIO);
+
         run.setCurrentPosition(request.getCellRow(), request.getCellCol());
-        run.setCommanderExpBanked(run.getCommanderExpBanked() + expGained);
         run.setFleetHealthSnapshotJson(serializeHealthSnapshot(request.getShipHealthRatios(), run.getFleetHealthSnapshotJson()));
         // 전투 중엔 서버에 실시간 저장하지 않고 셀 클리어 확정 시점에만 자원을 저장 — 0~resourceMax로 클램프(체력 스냅샷과 동일하게 클라 계산값을 신뢰하되 범위만 방어).
         int reportedResource = request.getResource() != null ? request.getResource() : run.getResource();
@@ -617,18 +611,16 @@ public class ExplorationService {
         }
 
         ZoneCellClearLog clearLog = new ZoneCellClearLog(run.getId(), request.getCellRow(), request.getCellCol());
-        clearLog.setRewardCardCandidatesJson(serializeCardIdList(rewardCardCandidates));
         clearLog.setTreasureRewardType(treasureRewardType == ETreasureRewardType.None ? null : treasureRewardType);
         zoneCellClearLogRepository.save(clearLog);
 
         int rerollRemain = 0;
         if (rewardCardCandidates != null) {
-            DataTableConfig config = gameDataService.getDataTableConfig();
-            rerollRemain = getRewardCardRerollRemain(commander, config.getExploration().getRewardCardRerollLimit());
+            syncRewardCardRerollCharge(commander);
+            rerollRemain = commander.getRewardCardRerollCharge();
         }
 
         return ClearExplorationCellResponse.builder()
-                .expGained(expGained)
                 .mineralGained(mineralGained)
                 .treasureRewardType(treasureRewardType)
                 .treasureRewardRatio(treasureRewardRatio)
@@ -639,16 +631,15 @@ public class ExplorationService {
                 .build();
     }
 
-    // 이번 런에서 지금까지 선택 확정된 지속버프 카드 중 Buff_MineralRate만 골라 배율 합산 —
+    // 이번 런에서 지금까지 구매 확정한 지속버프 카드 중 Buff_MineralRate만 골라 배율 합산 —
     // 클라 RewardCardSessionState.ApplyCard와 동일한 규칙(같은 effectType을 여러 장 고르면 %를 합산: 1 + sum(value1))
-    private float computeMineralRateMultiplier(Long zoneRunId) {
-        List<ZoneCellClearLog> logs = zoneCellClearLogRepository.findByZoneRunIdOrderByClearedAtAsc(zoneRunId);
-        float valueSum = 0f;
-        for (ZoneCellClearLog log : logs) {
-            String selectedCardId = log.getRewardCardSelectedId();
-            if (selectedCardId == null) continue;
+    private float computeMineralRateMultiplier(ZoneRun run) {
+        List<String> purchasedCardIds = deserializeCardIdList(run.getRewardCardPurchasedIdsJson());
+        if (purchasedCardIds == null) return 1f;
 
-            GameDataService.RewardCardEntry card = gameDataService.getRewardCard(selectedCardId);
+        float valueSum = 0f;
+        for (String cardId : purchasedCardIds) {
+            GameDataService.RewardCardEntry card = gameDataService.getRewardCard(cardId);
             if (card == null || card.isPersistent == false) continue;
             if ("Buff_MineralRate".equals(card.effectType) == false) continue;
 
@@ -657,102 +648,169 @@ public class ExplorationService {
         return 1f + valueSum;
     }
 
-    // 이번 런에서 지금까지 선택 확정된 지속버프 카드 중 Buff_MineralFlatBonus만 골라 합산 — 셀 클리어마다 이 값만큼 광물 보상에 가산
-    private int computeMineralFlatBonus(Long zoneRunId) {
-        List<ZoneCellClearLog> logs = zoneCellClearLogRepository.findByZoneRunIdOrderByClearedAtAsc(zoneRunId);
-        int valueSum = 0;
-        for (ZoneCellClearLog log : logs) {
-            String selectedCardId = log.getRewardCardSelectedId();
-            if (selectedCardId == null) continue;
+    // 셀 클리어와 무관하게 언제든 보상카드 구매 UI를 열기 위한 조회(UIPanelExplorationGrid의 BuyCardButton) — 후보는 run에 고정되어 있으므로
+    // 이미 뽑혀있던 후보가 있으면 그걸 그대로 돌려주고(구매 이어서 가능), 없으면(존런 시작 후 처음 여는 경우) 새로 추첨해서 run에 저장
+    @Transactional
+    public GetRewardCardShopResponse getRewardCardShop(Long commanderId, GetRewardCardShopRequest request) {
+        ZoneRun run = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_NO_ACTIVE_RUN));
 
-            GameDataService.RewardCardEntry card = gameDataService.getRewardCard(selectedCardId);
-            if (card == null || card.isPersistent == false) continue;
-            if ("Buff_MineralFlatBonus".equals(card.effectType) == false) continue;
-
-            valueSum += (int) card.value1;
+        List<String> candidates = deserializeCardIdList(run.getRewardCardCandidatesJson());
+        if (candidates == null) {
+            candidates = rollRewardCardCandidates(null);
+            run.setRewardCardCandidatesJson(serializeCardIdList(candidates));
         }
-        return valueSum;
+        run.setRewardCardPopupClosed(false);
+        zoneRunRepository.save(run);
+
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
+        syncRewardCardRerollCharge(commander);
+
+        return GetRewardCardShopResponse.builder()
+                .rewardCardCandidates(candidates)
+                .rerollRemain(commander.getRewardCardRerollCharge())
+                .build();
     }
 
+    // 보상카드 구매 — 비용(광물) 검증/차감은 클라가 전담, 여기서는 후보 검증 후 구매 이력만 기록하고 후보를 재추첨해서 돌려줌(같은 팝업에서 계속 구매 가능)
     @Transactional
-    public ConfirmRewardCardResponse confirmRewardCard(Long commanderId, ConfirmRewardCardRequest request) {
+    public PurchaseRewardCardResponse purchaseRewardCard(Long commanderId, PurchaseRewardCardRequest request) {
         ZoneRun run = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS)
                 .filter(r -> r.getZoneNumber() == request.getZoneNumber())
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_NO_ACTIVE_RUN));
 
-        String cell = request.getCellRow() + "-" + request.getCellCol();
-        ZoneCellClearLog clearLog = zoneCellClearLogRepository.findTopByZoneRunIdAndCellOrderByClearedAtDesc(run.getId(), cell)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_REWARD_CARD_INVALID_SELECTION));
-
-        if (clearLog.getRewardCardSelectedId() != null)
-            throw new BusinessException(ServerErrorCode.EXPLORATION_REWARD_CARD_INVALID_SELECTION); // 이미 선택 확정된 클리어 로그 — 중복 확정 방지
-
-        List<String> candidates = deserializeCardIdList(clearLog.getRewardCardCandidatesJson());
-        if (candidates == null || candidates.contains(request.getSelectedCardId()) == false)
+        List<String> candidates = deserializeCardIdList(run.getRewardCardCandidatesJson());
+        if (candidates == null || candidates.contains(request.getCardId()) == false)
             throw new BusinessException(ServerErrorCode.EXPLORATION_REWARD_CARD_INVALID_SELECTION);
 
-        GameDataService.RewardCardEntry card = gameDataService.getRewardCard(request.getSelectedCardId());
+        GameDataService.RewardCardEntry card = gameDataService.getRewardCard(request.getCardId());
         if (card == null)
             throw new BusinessException(ServerErrorCode.EXPLORATION_REWARD_CARD_INVALID_SELECTION);
 
-        // Buff_MineralFlatBonus/Buff_MineralRate 등 지속버프는 여기서 즉시 지급하지 않음 — 선택만 기록해두고
-        // 다음 셀 클리어(clearExplorationCell)에서 computeMineralRateMultiplier/computeMineralFlatBonus가 누적 집계해 반영
-        clearLog.setRewardCardSelectedId(request.getSelectedCardId());
-        zoneCellClearLogRepository.save(clearLog);
+        // Buff_MineralRate 등 지속버프는 여기서 즉시 지급하지 않음 — 구매 이력만 run에 누적해두고
+        // 다음 셀 클리어(clearExplorationCell)에서 computeMineralRateMultiplier가 이번 런 전체 누적분을 집계해 반영
+        List<String> purchasedCardIds = deserializeCardIdList(run.getRewardCardPurchasedIdsJson());
+        if (purchasedCardIds == null) purchasedCardIds = new ArrayList<>();
+        purchasedCardIds.add(request.getCardId());
+        run.setRewardCardPurchasedIdsJson(serializeCardIdList(purchasedCardIds));
 
-        return ConfirmRewardCardResponse.builder()
-                .selectedCardId(request.getSelectedCardId())
+        int mineralSpent = Math.max(0, request.getMineralSpent());
+        int finalMineralAmount = Math.max(0, run.getMineralAmount() - mineralSpent);
+        run.setMineralAmount(finalMineralAmount);
+
+        // Buff_MineralFlatBonus는 card.value1이 아니라 "이번에 지불한 비용 그대로"를 앞으로의 클리어마다 가산할 고정값으로 씀 —
+        // 재구매할 때마다 더 비싼 단계로 갈아타는 개념이라 누적(+=)이 아니라 대체(=)
+        if ("Buff_MineralFlatBonus".equals(card.effectType))
+            run.setMineralFlatBonusTotal(mineralSpent);
+
+        // 즉시회복/최대체력버프 카드는 다음 체력 스냅샷 검증의 허용 증가치 적립값에 더해둠(validateHealthSnapshot이 소비)
+        if ("Instant_HealthHeal".equals(card.effectType) || "Buff_ShipHealth".equals(card.effectType))
+            run.setPendingHealthHealBonus(run.getPendingHealthHealBonus() + card.value1);
+
+        // 지금 보여주고 있던 3장(candidates)과 정확히 같은 카드는 재추첨에서 배제 — 같은 효과 종류는 다시 나올 수 있음
+        List<String> newCandidates = rollRewardCardCandidates(candidates);
+        run.setRewardCardCandidatesJson(serializeCardIdList(newCandidates));
+        zoneRunRepository.save(run);
+
+        return PurchaseRewardCardResponse.builder()
+                .rewardCardCandidates(newCandidates)
+                .mineralAmount(finalMineralAmount)
                 .build();
     }
 
-    // 보상카드 다시 뽑기(광고 시청 리롤) — 1일 제한 횟수는 Commander.rewardCardRerollCountToday/rewardCardRerollResetDate에 영구 저장(attendanceDayCount와 동일한 지연 리셋 패턴)
+    // 보상카드 팝업을 닫음 — 재접속 시 이 플래그로 "이미 봤고 더 안 살 것"을 구분해 팝업을 다시 띄우지 않음
+    @Transactional
+    public CloseRewardCardPopupResponse closeRewardCardPopup(Long commanderId, CloseRewardCardPopupRequest request) {
+        ZoneRun run = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS)
+                .filter(r -> r.getZoneNumber() == request.getZoneNumber())
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_NO_ACTIVE_RUN));
+
+        run.setRewardCardPopupClosed(true);
+        zoneRunRepository.save(run);
+
+        return new CloseRewardCardPopupResponse();
+    }
+
+    // 보상카드 다시 뽑기 — 리롤 가능 횟수는 Commander.rewardCardRerollCharge에 영구 저장, 계정 전체 공유(존런 무관), 시간 경과로 자연 충전
     @Transactional
     public RerollRewardCardResponse rerollRewardCard(Long commanderId, RerollRewardCardRequest request) {
         ZoneRun run = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS)
                 .filter(r -> r.getZoneNumber() == request.getZoneNumber())
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_NO_ACTIVE_RUN));
 
-        String cell = request.getCellRow() + "-" + request.getCellCol();
-        ZoneCellClearLog clearLog = zoneCellClearLogRepository.findTopByZoneRunIdAndCellOrderByClearedAtDesc(run.getId(), cell)
-                .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_REWARD_CARD_INVALID_SELECTION));
-
-        // 이미 선택 확정됐거나 애초에 카드 후보가 없던 셀(탈출/빈 셀 등)은 리롤 대상이 아님
-        if (clearLog.getRewardCardSelectedId() != null || clearLog.getRewardCardCandidatesJson() == null)
-            throw new BusinessException(ServerErrorCode.EXPLORATION_REWARD_CARD_INVALID_SELECTION);
+        List<String> currentCandidates = deserializeCardIdList(run.getRewardCardCandidatesJson());
+        if (currentCandidates == null)
+            throw new BusinessException(ServerErrorCode.EXPLORATION_REWARD_CARD_INVALID_SELECTION); // 아직 후보가 한 번도 추첨되지 않은 런은 리롤 대상이 아님
 
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
 
-        DataTableConfig config = gameDataService.getDataTableConfig();
-        int rerollRemain = getRewardCardRerollRemain(commander, config.getExploration().getRewardCardRerollLimit());
-        if (rerollRemain <= 0)
-            throw new BusinessException(ServerErrorCode.EXPLORATION_REWARD_CARD_REROLL_LIMIT_EXCEEDED);
+        syncRewardCardRerollCharge(commander);
 
-        incrementRewardCardRerollCount(commander);
+        // VIP는 충전 횟수 제한 자체가 없음 — 소모하지 않고 그대로 둠(시간 경과 충전은 계속 진행되므로 VIP가 끝나면 그 시점의 충전량이 그대로 보임)
+        boolean isVip = isVipActive(commanderId);
+        if (isVip == false) {
+            if (commander.getRewardCardRerollCharge() <= 0)
+                throw new BusinessException(ServerErrorCode.EXPLORATION_REWARD_CARD_REROLL_LIMIT_EXCEEDED);
 
-        List<String> newCandidates = rollRewardCardCandidates();
-        clearLog.setRewardCardCandidatesJson(serializeCardIdList(newCandidates));
-        zoneCellClearLogRepository.save(clearLog);
+            commander.setRewardCardRerollCharge(commander.getRewardCardRerollCharge() - 1);
+        }
+
+        // 지금 보여주고 있던 3장(currentCandidates)과 정확히 같은 카드는 재추첨에서 배제 — 같은 효과 종류는 다시 나올 수 있음
+        List<String> newCandidates = rollRewardCardCandidates(currentCandidates);
+        run.setRewardCardCandidatesJson(serializeCardIdList(newCandidates));
+        zoneRunRepository.save(run);
 
         return RerollRewardCardResponse.builder()
                 .rewardCardCandidates(newCandidates)
-                .rerollRemain(rerollRemain - 1)
+                .rerollRemain(commander.getRewardCardRerollCharge())
                 .build();
     }
 
-    // 오늘 남은 보상카드 리롤 횟수 조회 — 저장된 리셋 날짜가 오늘(UTC)이 아니면 이 자리에서 카운트를 0으로 리셋(attendanceDayCount와 동일한 지연 리셋).
-    // commander는 @Transactional 내에서 findByIdForUpdate로 조회된 관리 상태 엔티티여야 함 — 리셋 시 변경분이 트랜잭션 커밋 시 더티체킹으로 저장됨
-    private int getRewardCardRerollRemain(Commander commander, int maxReroll) {
-        LocalDate today = LocalDate.now(ZoneOffset.UTC);
-        if (commander.getRewardCardRerollResetDate() == null || commander.getRewardCardRerollResetDate().equals(today) == false) {
-            commander.setRewardCardRerollCountToday(0);
-            commander.setRewardCardRerollResetDate(today);
-        }
-        return Math.max(0, maxReroll - commander.getRewardCardRerollCountToday());
+    // 리롤 횟수가 0일 때 광고 시청으로 충전 — VIP는 광고 없이 바로 충전(클라에서 광고 재생을 건너뛰고 이 엔드포인트만 호출)
+    @Transactional
+    public WatchAdForRewardCardRerollChargeResponse watchAdForRewardCardRerollCharge(Long commanderId, WatchAdForRewardCardRerollChargeRequest request) {
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
+
+        syncRewardCardRerollCharge(commander);
+
+        DataTableConfig config = gameDataService.getDataTableConfig();
+        int maxCharge = config.getExploration().getRewardCardRerollChargeMax();
+        int bonus = config.getExploration().getRewardCardRerollChargeAdBonus();
+        commander.setRewardCardRerollCharge(Math.min(maxCharge, commander.getRewardCardRerollCharge() + bonus));
+
+        return WatchAdForRewardCardRerollChargeResponse.builder()
+                .rewardCardRerollCharge(commander.getRewardCardRerollCharge())
+                .build();
     }
 
-    private void incrementRewardCardRerollCount(Commander commander) {
-        commander.setRewardCardRerollCountToday(commander.getRewardCardRerollCountToday() + 1);
+    // commander.rewardCardRerollCharge를 현재 시각 기준으로 충전 — 충전 단위(설정된 분)에 못 미치는 나머지 경과시간은
+    // syncedAt을 충전된 만큼만 전진시켜서 보존(다음 호출에서 이어서 누적). commander는 findByIdForUpdate로 조회된 관리 상태 엔티티여야 함
+    private void syncRewardCardRerollCharge(Commander commander) {
+        DataTableConfig config = gameDataService.getDataTableConfig();
+        int maxCharge = config.getExploration().getRewardCardRerollChargeMax();
+        int regenMinutes = config.getExploration().getRewardCardRerollChargeRegenMinutes();
+
+        if (commander.getRewardCardRerollCharge() >= maxCharge) {
+            commander.setRewardCardRerollChargeSyncedAt(Instant.now());
+            return;
+        }
+
+        Instant lastSyncedAt = commander.getRewardCardRerollChargeSyncedAt();
+        if (lastSyncedAt == null) {
+            commander.setRewardCardRerollChargeSyncedAt(Instant.now());
+            return;
+        }
+
+        long elapsedMinutes = Duration.between(lastSyncedAt, Instant.now()).toMinutes();
+        int regenCount = (int) (elapsedMinutes / regenMinutes);
+        if (regenCount <= 0) return;
+
+        int newCharge = Math.min(maxCharge, commander.getRewardCardRerollCharge() + regenCount);
+        commander.setRewardCardRerollCharge(newCharge);
+        commander.setRewardCardRerollChargeSyncedAt(lastSyncedAt.plus(Duration.ofMinutes((long) regenCount * regenMinutes)));
     }
 
     // 재접속/SpaceScene 재로드로 클라 그리드가 초기화됐을 때, 진행 중인 런의 클리어 셀 목록을 다시 내려줘 방문 표시를 복구시킴
@@ -763,7 +821,6 @@ public class ExplorationService {
             return GetActiveZoneRunProgressResponse.builder()
                     .zoneNumber(0)
                     .clearedCells(new ArrayList<>())
-                    .commanderExpBanked(0)
                     .mineralAmount(0)
                     .build();
         }
@@ -772,33 +829,27 @@ public class ExplorationService {
         List<ZoneCellClearLog> clearLogs = zoneCellClearLogRepository.findByZoneRunIdOrderByClearedAtAsc(run.getId());
         List<String> clearedCells = clearLogs.stream().map(ZoneCellClearLog::getCell).toList();
 
-        // 이번 런에서 선택 확정한 카드 전체 — 별도 저장 없이 로그에서 재구성(정규화, ZoneRun에 중복 저장하지 않음)
-        List<String> selectedRewardCards = clearLogs.stream()
-                .map(ZoneCellClearLog::getRewardCardSelectedId)
-                .filter(java.util.Objects::nonNull)
-                .toList();
+        // 이번 런에서 구매 확정한 카드 전체 — run에 셀 구분 없이 플랫 누적되어 있음
+        List<String> purchasedRewardCards = deserializeCardIdList(run.getRewardCardPurchasedIdsJson());
+        if (purchasedRewardCards == null) purchasedRewardCards = new ArrayList<>();
 
-        // 마지막 클리어 로그가 카드 후보는 있는데 아직 선택 확정 전이면 — 팝업이 뜨기 전에 앱이 꺼진 경우, 재접속 시 다시 띄워야 함
+        // 보상카드 후보는 있는데 아직 팝업을 닫지 않았으면 — 앱이 꺼지기 전에 안 닫은 경우, 재접속 시 다시 띄워야 함
         List<String> pendingRewardCardCandidates = null;
         int rerollRemain = 0;
-        if (clearLogs.isEmpty() == false) {
-            ZoneCellClearLog lastLog = clearLogs.get(clearLogs.size() - 1);
-            if (lastLog.getRewardCardSelectedId() == null) {
-                pendingRewardCardCandidates = deserializeCardIdList(lastLog.getRewardCardCandidatesJson());
-                Commander commander = commanderRepository.findByIdForUpdate(commanderId)
-                        .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
-                DataTableConfig config = gameDataService.getDataTableConfig();
-                rerollRemain = getRewardCardRerollRemain(commander, config.getExploration().getRewardCardRerollLimit());
-            }
+        if (run.isRewardCardPopupClosed() == false && run.getRewardCardCandidatesJson() != null) {
+            pendingRewardCardCandidates = deserializeCardIdList(run.getRewardCardCandidatesJson());
+            Commander commander = commanderRepository.findByIdForUpdate(commanderId)
+                    .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
+            syncRewardCardRerollCharge(commander);
+            rerollRemain = commander.getRewardCardRerollCharge();
         }
 
         return GetActiveZoneRunProgressResponse.builder()
                 .zoneNumber(run.getZoneNumber())
                 .clearedCells(clearedCells)
                 .mineralAmount(run.getMineralAmount())
-                .commanderExpBanked(run.getCommanderExpBanked())
                 .shipHealthRatios(deserializeHealthSnapshot(run.getFleetHealthSnapshotJson()))
-                .selectedRewardCards(selectedRewardCards)
+                .purchasedRewardCards(purchasedRewardCards)
                 .pendingRewardCardCandidates(pendingRewardCardCandidates)
                 .rerollRemain(rerollRemain)
                 .build();
@@ -812,8 +863,13 @@ public class ExplorationService {
     // 탈출 성공/실패, 포기 공통 정산 — escapeExplorationZone(성공/실패)과 abandonZoneRun(실패 고정)이 공유.
     // payoutRatio는 isSuccess와 별개 파라미터 — isSuccess는 run 상태(ESCAPED/ABANDONED)·최고클리어존 갱신에만
     // 쓰이고, 실제 지급 비율은 호출부가 상황(탈출 실패 50% / 포기 20% / 포기+광고 100%)에 맞게 넘김
+    // 지휘관 경험치는 셀 클리어마다 쌓이지 않고, 이 존의 commander_exp_reward 값을 이 정산 1회에서만 지급(존을 몇 번 재방문하든 같은 값)
     private RunSettlement settleZoneRun(Commander commander, ZoneRun run, boolean isSuccess, float payoutRatio) {
-        int expPayout = (int) (run.getCommanderExpBanked() * payoutRatio);
+        ZoneConfigData zoneConfig = gameDataService.getZoneConfigByIndex(run.getZoneNumber());
+        int zoneExpReward = zoneConfig != null ? zoneConfig.getCommanderExpReward() : 0;
+        int expPayout = (int) (zoneExpReward * payoutRatio);
+        if (isVipActive(commander.getId()) == true)
+            expPayout *= 2;
 
         commander.setExp(commander.getExp() + expPayout);
         CommanderLevelUtil.autoLevelUpIfNeeded(commander, gameDataService);
@@ -876,6 +932,7 @@ public class ExplorationService {
                 .build();
     }
 
+    // 포기는 보상(경험치) 없음 — 지휘관 경험치는 존런을 성공적으로 클리어(탈출)했을 때만 지급(escapeExplorationZone)
     @Transactional
     public AbandonZoneRunResponse abandonZoneRun(Long commanderId, AbandonZoneRunRequest request) {
         ZoneRun run = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS)
@@ -884,10 +941,7 @@ public class ExplorationService {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
 
-        boolean watchedAd = request.getWatchedAd() != null && request.getWatchedAd();
-        boolean isVip = isVipActive(commanderId);
-        float payoutRatio = (watchedAd == true || isVip == true) ? ABANDON_AD_PAYOUT_RATIO : ABANDON_PAYOUT_RATIO;
-        RunSettlement settlement = settleZoneRun(commander, run, false, payoutRatio);
+        RunSettlement settlement = settleZoneRun(commander, run, false, 0f);
 
         return AbandonZoneRunResponse.builder()
                 .expGained(settlement.expPayout())
@@ -895,6 +949,34 @@ public class ExplorationService {
                 .commanderLevel(commander.getCommanderLevel())
                 .resource(settlement.resource())
                 .hasUnclaimedAchievement(settlement.hasUnclaimedAchievement())
+                .build();
+    }
+
+    // 진행 중인 런의 광물을 소모해 자원 게이지를 즉시 채움 — 환산량은 서버가 권위적으로 계산(클라 로컬 미리보기와 동일 공식)
+    // 채울 게 없으면(만피이거나 광물이 없으면) 아무것도 바꾸지 않고 현재 값을 그대로 반환(에러 아님)
+    @Transactional
+    public ChargeResourceResponse chargeResource(Long commanderId, ChargeResourceRequest request) {
+        ZoneRun run = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_NO_ACTIVE_RUN));
+
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
+
+        int neededPoints = commander.getResourceMax() - run.getResource();
+        int ratio = gameDataService.getMineralToResourceRatio();
+        if (neededPoints > 0 && run.getMineralAmount() > 0 && ratio > 0) {
+            int affordableMineral = (neededPoints + ratio - 1) / ratio; // 필요 포인트를 다 채우는 데 드는 광물 수(올림)
+            int mineralToSpend = Math.min(affordableMineral, run.getMineralAmount());
+            int gainedPoints = Math.min(neededPoints, mineralToSpend * ratio);
+
+            run.setMineralAmount(run.getMineralAmount() - mineralToSpend);
+            run.setResource(run.getResource() + gainedPoints);
+            zoneRunRepository.save(run);
+        }
+
+        return ChargeResourceResponse.builder()
+                .resource(run.getResource())
+                .mineralAmount(run.getMineralAmount())
                 .build();
     }
 

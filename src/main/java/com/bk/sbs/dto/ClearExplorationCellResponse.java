@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class ClearExplorationCellResponse {
-    private Integer expGained;
     private Integer mineralGained;
     private List<String> rewardCardCandidates;
     private ETreasureRewardType treasureRewardType;

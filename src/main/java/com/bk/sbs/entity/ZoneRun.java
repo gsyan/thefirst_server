@@ -34,9 +34,6 @@ public class ZoneRun {
     @Column(nullable = false)
     private boolean rewardClaimed = false;
 
-    @Column(nullable = false)
-    private int commanderExpBanked = 0; // 이 런에서 셀 클리어로 쌓인 미확정 지휘관 경험치
-
     // 전투 중 전술 토글(체력회복/미사일/함재기) 3종이 공유하는 소모 게이지 현재치 — 런 시작 시 Commander.resourceMax로 초기화,
     // 이 런이 끝나면(ESCAPED/ABANDONED) 함께 소멸(다음 런은 새 ZoneRun이라 자동으로 다시 Max로 초기화됨)
     @Column(nullable = false)
@@ -46,6 +43,32 @@ public class ZoneRun {
     // 이 런이 끝나면(ESCAPED/ABANDONED) 함께 소멸 — Commander 영구 자산으로 전환되는 경로 없음
     @Column(name = "mineral_amount", nullable = false)
     private int mineralAmount = 0;
+
+    // 이번 런에서 지금까지 광물 보상을 지급받은 클리어 횟수(재방문/보상 없는 셀은 제외) — 클리어할수록 광물 보상이 누적 증가하는 공식의 입력값
+    @Column(name = "rewarded_clear_count", nullable = false)
+    private int rewardedClearCount = 0;
+
+    // Buff_MineralFlatBonus 보상카드를 구매할 때마다 앞으로 셀 클리어마다 광물에 가산할 고정값 — 그 카드를 구매할 때 지불한 비용 그대로 대체됨(누적 아님, 재구매하면 이전 값을 덮어씀)
+    @Column(name = "mineral_flat_bonus_total", nullable = false)
+    private int mineralFlatBonusTotal = 0;
+
+    // 보상카드 후보 3개(cardId) JSON — 이번 런에서 처음 필요해질 때 1회만 추첨되어 고정, 이후 셀을 클리어해도 바뀌지 않고
+    // 명시적 리롤 또는 구매(즉시 재추첨) 시에만 갱신됨. 후보가 아직 한 번도 추첨되지 않았으면 null
+    @Column(name = "reward_card_candidates_json", columnDefinition = "TEXT")
+    private String rewardCardCandidatesJson;
+
+    // 이번 런에서 지금까지 구매 확정한 모든 cardId를 셀 구분 없이 누적한 플랫 리스트(JSON) — Buff_MineralRate 재계산과 재접속 복구에 사용
+    @Column(name = "reward_card_purchased_ids_json", columnDefinition = "TEXT")
+    private String rewardCardPurchasedIdsJson;
+
+    // 재접속 시 다시 띄워야 할 보상카드 팝업이 있는지 — false면 현재 후보를 아직 안 닫고 떠 있어야 함, true면 닫혔거나 보여준 적 없음(기본값 true)
+    @Column(name = "reward_card_popup_closed", nullable = false)
+    private boolean rewardCardPopupClosed = true;
+
+    // 직전 체력 스냅샷 검증 이후 쌓인 즉시회복/체력버프 보너스(Instant_HealthHeal/Buff_ShipHealth 카드 구매 + Treasure 체력회복 당첨) 총합 —
+    // validateHealthSnapshot이 읽는 즉시 0으로 리셋되는 1회용 적립값(다음 셀 클리어까지의 허용 증가폭 상한)
+    @Column(name = "pending_health_heal_bonus", nullable = false)
+    private float pendingHealthHealBonus = 0f;
 
     // "row-col" 형식(0-indexed) 단일 문자열 — 마지막으로 클리어한 셀(승리 시에만 갱신), 인접 검증 기준점. 정수 2컬럼 대신 사람이 읽기 좋은 하나의 컬럼으로 저장
     // ZoneCellClearLog.cell과 동일하게 0-indexed — DB/네트워크/코드 전부 0-indexed로 통일(변환 지점을 아예 없앰)
@@ -78,7 +101,6 @@ public class ZoneRun {
         this.zoneNumber = zoneNumber;
         this.status = EZoneRunStatus.IN_PROGRESS;
         this.rewardClaimed = false;
-        this.commanderExpBanked = 0;
         this.resource = resourceMax;
         setCurrentPosition(startRow, startCol);
         this.startedAt = Instant.now();

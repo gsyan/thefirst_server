@@ -14,5 +14,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class ExplorationSettings {
-    private Integer rewardCardRerollLimit;
+    private Integer rewardCardRerollChargeMax;
+
+    private Integer rewardCardRerollChargeRegenMinutes;
+
+    private Integer rewardCardRerollChargeAdBonus;
+
+    private Integer mineralRewardBonusPerClear;
 }
