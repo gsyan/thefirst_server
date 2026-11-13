@@ -17,10 +17,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ClearExplorationCellResponse {
     private Integer mineralGained;
+    private Integer scavengedMineral;
+    private Integer scoutedMineral;
     private List<String> rewardCardCandidates;
     private ETreasureRewardType treasureRewardType;
     private Float treasureRewardRatio;
     private Integer resource;
     private Integer mineralAmount;
     private Integer rerollRemain;
+    private List<HullArchetypeProgressInfoDto> hullArchetypePassiveProgress;
+    private FleetInfoDto fleetInfo;
 }

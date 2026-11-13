@@ -25,5 +25,4 @@ public class ModuleHullInfoDto {
     private List<ModuleInfoDto> hangars;
     private String shieldModuleSubType;
     private String interceptorModuleSubType;
-    private Float currentHealth;
 }

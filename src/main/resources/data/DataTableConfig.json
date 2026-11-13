@@ -13,13 +13,19 @@
     "pvpRankScorePenalty": 1
   },
   "tactic": {
-    "tacticRepairCost": 10,
-    "tacticBeamCost": 1,
-    "tacticMissileCost": 1,
-    "tacticHangerCost": 1,
-    "tacticShieldCost": 10,
-    "tacticInterceptorCost": 10,
-    "mineralToResourceRatio": 1
+    "tacticRepairCost": 100,
+    "tacticBeamCost": 10,
+    "tacticMissileCost": 10,
+    "tacticHangerCost": 10,
+    "tacticShieldCost": 100,
+    "tacticInterceptorCost": 100,
+    "mineralToResourceRatio": 10,
+    "berserkerThreshold1Percent": 50.0,
+    "berserkerThreshold2Percent": 30.0,
+    "berserkerThreshold3Percent": 10.0,
+    "berserkerAttackMultiplier1": 2.0,
+    "berserkerAttackMultiplier2": 3.0,
+    "berserkerAttackMultiplier3": 4.0
   },
   "exploration": {
     "rewardCardRerollChargeMax": 10,
@@ -59,5 +65,29 @@
     "baseAchievementPointCost": 500,
     "achievementPointCostPerLevel": 500,
     "maxLevel": 10
+  },
+  "dailyQuest": {
+    "streakPercentPerDay": 5,
+    "streakMaxDays": 10
+  },
+  "scavenge": {
+    "baseChancePercent": 10,
+    "mineralMin": 10,
+    "mineralMax": 50,
+    "mineralStep": 10
+  },
+  "scout": {
+    "intervalSeconds": 3.0,
+    "mineralMin": 10,
+    "mineralMax": 50,
+    "mineralStep": 10
+  },
+  "supportAbility": {
+    "tickSeconds": 1,
+    "repairCostPerTick": 10,
+    "repairReleaseRatioPercent": 80,
+    "shieldChargeBonusPercent": 100,
+    "shieldChargeCostPerTick": 10,
+    "shieldChargeReleaseRatioPercent": 80
   }
 }

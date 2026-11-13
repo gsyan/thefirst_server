@@ -16,4 +16,9 @@ public interface ZoneRunRepository extends JpaRepository<ZoneRun, Long> {
     // 일일 업적(ZoneClearTotal) — 지정 구간(오늘 UTC) 안에서 탈출(ESCAPED)로 종료한 런 개수(최고기록 갱신 여부 무관, 재방문 파밍도 포함)
     @Query("SELECT COUNT(r) FROM ZoneRun r WHERE r.commanderId = :commanderId AND r.status = com.bk.sbs.enums.EZoneRunStatus.ESCAPED AND r.endedAt >= :dayStart AND r.endedAt < :dayEnd")
     long countEscapedByCommanderIdAndEndedAtBetween(@Param("commanderId") Long commanderId, @Param("dayStart") Instant dayStart, @Param("dayEnd") Instant dayEnd);
+
+    // 일일 업적(ZoneClearSpecific) — 지정 구간(오늘 UTC) 안에서 특정 존을 탈출(ESCAPED)로 종료한 런 개수
+    @Query("SELECT COUNT(r) FROM ZoneRun r WHERE r.commanderId = :commanderId AND r.zoneNumber = :zoneNumber AND r.status = com.bk.sbs.enums.EZoneRunStatus.ESCAPED AND r.endedAt >= :dayStart AND r.endedAt < :dayEnd")
+    long countEscapedByCommanderIdAndZoneNumberAndEndedAtBetween(@Param("commanderId") Long commanderId, @Param("zoneNumber") int zoneNumber,
+                                                                 @Param("dayStart") Instant dayStart, @Param("dayEnd") Instant dayEnd);
 }

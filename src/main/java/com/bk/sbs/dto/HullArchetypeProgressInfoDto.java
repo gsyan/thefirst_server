@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class HullArchetypeProgressInfoDto {
     private String hullArchetype;
+    private Integer stage;
     private String counterType;
     private Long counterValue;
+    private Boolean completed;
 }

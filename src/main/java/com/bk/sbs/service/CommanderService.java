@@ -150,20 +150,8 @@ public class CommanderService {
                         .map(com.bk.sbs.entity.CommanderUnlockedHull::getHullSubType)
                         .collect(java.util.stream.Collectors.toList()))
                 .hasUnclaimedAchievement(achievementService.hasUnclaimedCompletedAchievement(commanderId))
-                .archetypeUpgrades(archetypeModuleUpgradeService.getUpgrades(commanderId).stream()
-                        .map(u -> com.bk.sbs.dto.ArchetypeUpgradeInfoDto.builder()
-                                .hullArchetype(u.getHullArchetype())
-                                .moduleType(u.getModuleType())
-                                .level(u.getLevel())
-                                .build())
-                        .collect(java.util.stream.Collectors.toList()))
-                .hullArchetypePassiveProgress(hullArchetypeProgressService.getProgress(commanderId).stream()
-                        .map(p -> com.bk.sbs.dto.HullArchetypeProgressInfoDto.builder()
-                                .hullArchetype(p.getHullArchetype())
-                                .counterType(p.getCounterType())
-                                .counterValue(p.getCounterValue())
-                                .build())
-                        .collect(java.util.stream.Collectors.toList()))
+                .archetypeUpgrades(archetypeModuleUpgradeService.getUpgradeDtoList(commanderId))
+                .hullArchetypePassiveProgress(hullArchetypeProgressService.getProgressDtoList(commanderId))
                 .build();
     }
 

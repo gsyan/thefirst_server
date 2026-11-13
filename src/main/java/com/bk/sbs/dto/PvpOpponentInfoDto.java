@@ -1,5 +1,6 @@
 package com.bk.sbs.dto;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,4 +20,6 @@ public class PvpOpponentInfoDto {
     private Integer pvpScore;
     private Integer rank;
     private FleetInfoDto fleetInfo;
+    private List<HullArchetypeProgressInfoDto> passiveProgress;
+    private List<ArchetypeUpgradeInfoDto> archetypeUpgrades;
 }

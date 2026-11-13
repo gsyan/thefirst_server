@@ -227,25 +227,8 @@ public class RedisService {
     }
 
     // ══════════════════════════════════════════════════════════════════════
-    // 캐릭터 능력치 요약 Hash  (rank:stat → commanderId → JSON)
+    // 캐릭터 능력치 요약 Hash  (rank:stat) — 더 이상 쓰지 않음(상대 상세 조회로 대체). 이전 서버가 남긴 키만 서버 시작 시 지움
     // ══════════════════════════════════════════════════════════════════════
-
-    public void setRankStat(Long commanderId, String statsJson) {
-        redisTemplate.opsForHash().put(RANK_STAT_KEY, commanderId.toString(), statsJson != null ? statsJson : "{}");
-    }
-
-    /** commanderId 문자열 컬렉션 → {id → statsJson} 맵 반환 (없으면 null) */
-    public Map<String, String> getRankStatsMulti(Collection<String> commanderIdStrs) {
-        List<Object> keys = new ArrayList<>(commanderIdStrs);
-        List<Object> values = redisTemplate.opsForHash().multiGet(RANK_STAT_KEY, keys);
-        Map<String, String> result = new HashMap<>();
-        int i = 0;
-        for (Object key : keys) {
-            Object val = values.get(i++);
-            result.put((String) key, val != null ? val.toString() : null);
-        }
-        return result;
-    }
 
     public void clearRankStatData() {
         redisTemplate.delete(RANK_STAT_KEY);

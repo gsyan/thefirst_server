@@ -15,8 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +32,8 @@ public class FleetService {
     private final FleetRepository fleetRepository;
     private final CommanderUnlockedHullRepository commanderUnlockedHullRepository;
     private final AchievementService achievementService;
+    private final ZoneRunRepository zoneRunRepository;
+    private final HullArchetypeProgressService hullArchetypeProgressService;
 
     // 신규 커맨더에게 지급되는 기본 함대(fleetIndex=0)의 초기 함선 — 티어1 아키타입(centurion) 레벨1 함체 + 기본 빔1 장착
     private static final String DEFAULT_FLEET_HULL_SUB_TYPE = "hull_1_centurion_1";
@@ -38,12 +44,66 @@ public class FleetService {
                        GameDataService gameDataService,
                        FleetRepository fleetRepository,
                        CommanderUnlockedHullRepository commanderUnlockedHullRepository,
-                       AchievementService achievementService) {
+                       AchievementService achievementService,
+                       ZoneRunRepository zoneRunRepository,
+                       HullArchetypeProgressService hullArchetypeProgressService) {
         this.commanderRepository = commanderRepository;
         this.gameDataService = gameDataService;
         this.fleetRepository = fleetRepository;
         this.commanderUnlockedHullRepository = commanderUnlockedHullRepository;
         this.achievementService = achievementService;
+        this.zoneRunRepository = zoneRunRepository;
+        this.hullArchetypeProgressService = hullArchetypeProgressService;
+    }
+
+    // 활성 함대(fleetIndex=0)에 배치된 함선들의 아키타입 집합 — 같은 아키타입은 중복 배치 불가라 집합이 곧 함선 목록과 일치
+    @Transactional(readOnly = true)
+    public Set<String> getActiveFleetArchetypes(Long commanderId) {
+        Set<String> archetypes = new TreeSet<>();
+        Optional<Fleet> fleetOpt = fleetRepository.findByCommanderIdAndFleetIndex(commanderId, 0);
+        if (fleetOpt.isPresent() == false) return archetypes;
+
+        for (Ship ship : fleetOpt.get().getShips()) {
+            ModuleData hullData = gameDataService.getHullModuleData(ship.getHullSubType());
+            String archetype = hullData != null ? hullData.getHullArchetype() : null;
+            if (archetype != null && archetype.isEmpty() == false)
+                archetypes.add(archetype);
+        }
+        return archetypes;
+    }
+
+    // 활성 함대(fleetIndex=0)의 슬롯 번호 → 아키타입 — 체력 스냅샷(positionIndex 기준)과 대조할 때 사용
+    public Map<Integer, String> getActiveFleetArchetypeBySlot(Long commanderId) {
+        Map<Integer, String> archetypeBySlot = new HashMap<>();
+        Optional<Fleet> fleetOpt = fleetRepository.findByCommanderIdAndFleetIndex(commanderId, 0);
+        if (fleetOpt.isPresent() == false) return archetypeBySlot;
+
+        for (Ship ship : fleetOpt.get().getShips()) {
+            ModuleData hullData = gameDataService.getHullModuleData(ship.getHullSubType());
+            String archetype = hullData != null ? hullData.getHullArchetype() : null;
+            if (archetype != null && archetype.isEmpty() == false)
+                archetypeBySlot.put(ship.getSlotIndex(), archetype);
+        }
+        return archetypeBySlot;
+    }
+
+    // 진행 중인 존런의 "처음부터 계속 함대에 있던 아키타입" 목록을 현재 함대와의 교집합으로 줄임(늘리지 않음) — 함선 배치/해제 직후 호출
+    private void narrowRunContinuousArchetypes(Long commanderId) {
+        Optional<ZoneRun> runOpt = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS);
+        if (runOpt.isPresent() == false) return;
+
+        ZoneRun run = runOpt.get();
+        String stored = run.getContinuousArchetypes();
+        if (stored == null || stored.isEmpty() == true) return;
+
+        Set<String> current = getActiveFleetArchetypes(commanderId);
+        List<String> kept = new ArrayList<>();
+        for (String archetype : stored.split(",")) {
+            if (current.contains(archetype) == true)
+                kept.add(archetype);
+        }
+        run.setContinuousArchetypes(String.join(",", kept));
+        zoneRunRepository.save(run);
     }
 
     // 신규 커맨더 생성 시 기본 함대(fleetIndex=0) 생성
@@ -165,6 +225,7 @@ public class FleetService {
     }
 
     private FleetInfoDto convertFleetToFleetInfoDto(Fleet fleet) {
+        Map<String, Set<String>> completedEffects = hullArchetypeProgressService.getCompletedEffectTypesByArchetype(fleet.getCommanderId());
         List<ShipInfoDto> ships = fleet.getShips().stream()
                 .sorted((a, b) -> Integer.compare(a.getSlotIndex(), b.getSlotIndex()))
                 .map(ship -> ShipInfoDto.builder()
@@ -172,7 +233,7 @@ public class FleetService {
                         .positionIndex(ship.getSlotIndex())
                         .hullSubType(ship.getHullSubType())
                         .isFront(ship.isFront())
-                        .hulls(List.of(buildModuleHullInfoDto(ship)))
+                        .hulls(List.of(buildModuleHullInfoDto(ship, completedEffects)))
                         .build())
                 .collect(Collectors.toList());
 
@@ -255,6 +316,7 @@ public class FleetService {
         replaceShipModules(ship, keptModules);
         fleetRepository.save(fleet);
         achievementService.recordReachedTierAchievements(commander, fleet);
+        narrowRunContinuousArchetypes(commanderId);
     }
 
     // 아직 언락 기록이 없는 함체(티어2+)를 업적포인트로 언락(구매) — 언락 완료 후에도 배치는 placeFleetShip을 통해 별도로 해야 함(여기선 구매만 처리)
@@ -352,7 +414,9 @@ public class FleetService {
         return computeHullCost(ship.getHullSubType());
     }
 
-    private ModuleHullInfoDto buildModuleHullInfoDto(Ship ship) {
+    // 실드/요격체는 DB에 함체 구조대로 항상 설치돼 있고, 클라에는 패시브로 해금된 경우에만 내려줌(미해금이면 빈 값 = 미장착)
+    // 내 함대(로그인/셀 클리어), PvP 상대, 랭킹 능력치가 모두 이 함수를 거침
+    private ModuleHullInfoDto buildModuleHullInfoDto(Ship ship, Map<String, Set<String>> completedEffects) {
         List<ModuleInfoDto> beams = new ArrayList<>();
         List<ModuleInfoDto> missiles = new ArrayList<>();
         List<ModuleInfoDto> hangars = new ArrayList<>();
@@ -378,7 +442,13 @@ public class FleetService {
         }
 
         String hullSubType = ship.getHullSubType();
-        Float maxHealth = getModuleMaxHealth(hullSubType);
+
+        ModuleData hullData = gameDataService.getHullModuleData(hullSubType);
+        String hullArchetype = hullData != null && hullData.getHullArchetype() != null ? hullData.getHullArchetype() : "";
+        boolean shieldUnlocked = HullArchetypeProgressService.isModuleUnlocked(completedEffects, hullArchetype, EModuleType.shield);
+        boolean interceptorUnlocked = HullArchetypeProgressService.isModuleUnlocked(completedEffects, hullArchetype, EModuleType.interceptor);
+        if (shieldUnlocked == false) shieldModuleSubType = "";
+        if (interceptorUnlocked == false) interceptorModuleSubType = "";
 
         return ModuleHullInfoDto.builder()
                 .moduleType(EModuleType.hull)
@@ -388,18 +458,7 @@ public class FleetService {
                 .hangars(hangars)
                 .shieldModuleSubType(shieldModuleSubType)
                 .interceptorModuleSubType(interceptorModuleSubType)
-                .currentHealth(maxHealth)
                 .build();
-    }
-
-    private Float getModuleMaxHealth(String hullSubType) {
-        if (hullSubType == null) return null;
-        List<ModuleData> hullDataList = gameDataService.getModulesByType(EModuleType.hull);
-        return hullDataList.stream()
-                .filter(d -> hullSubType.equals(d.getModuleSubType()))
-                .findFirst()
-                .map(d -> d.getHealth() != null ? d.getHealth() : 0f)
-                .orElse(null);
     }
 
     // 함선 하나의 장착 모듈 "전체"를 최종 상태로 한 번에 교체 — 낱개 토글을 순서대로 여러 번 보내면 중간 상태에서
@@ -425,10 +484,8 @@ public class FleetService {
         appendDesiredModules(desired, EModuleType.beam, maxSlots[0], hullTier, requestedModules != null ? requestedModules.getBeams() : null);
         appendDesiredModules(desired, EModuleType.missile, maxSlots[1], hullTier, requestedModules != null ? requestedModules.getMissiles() : null);
         appendDesiredModules(desired, EModuleType.hangar, maxSlots[2], hullTier, requestedModules != null ? requestedModules.getHangars() : null);
-        appendDesiredShield(desired, maxSlots[3], hullTier,
-                requestedModules != null ? requestedModules.getShieldModuleSubType() : null);
-        appendDesiredInterceptor(desired, maxSlots[4], hullTier,
-                requestedModules != null ? requestedModules.getInterceptorModuleSubType() : null);
+        appendDesiredShield(desired, maxSlots[3]);
+        appendDesiredInterceptor(desired, maxSlots[4]);
 
         // 캐파(지휘력)는 함체(hull) 자신의 점유값만 반영 — 모듈 설치/해제는 캐파와 무관(M13)
         int newShipCost = computeHullCost(ship.getHullSubType());
@@ -458,7 +515,7 @@ public class FleetService {
         int remainingAfter = commandPowerMax - (usedByOtherShips + newShipCost);
 
         return SetModuleResponse.builder()
-                .hull(buildModuleHullInfoDto(ship))
+                .hull(buildModuleHullInfoDto(ship, hullArchetypeProgressService.getCompletedEffectTypesByArchetype(commanderId)))
                 .commandCost(newShipCost)
                 .remainingCommandPower(remainingAfter)
                 .build();
@@ -506,30 +563,18 @@ public class FleetService {
         return GameDataService.parseTierFromHullSubType(requestedSubType) <= hullTier;
     }
 
-    // 실드는 리스트가 아니라 문자열 하나(장착 여부)뿐 — 슬롯 인덱스는 항상 0. 티어 선택 가능(datatable_module 티어1~14)
-    // maxSlotCount<=0(실드 슬롯 없는 함체)인데 장착 요청이 오면 슬롯 인덱스 검증과 동일하게 거부
-    // 요청된 티어는 클라를 신뢰하지 않고 무기 카테고리와 동일하게 검증(존재 여부 + 함체 티어 이하) 후 사용, 아니면 기본 티어1로 폴백
-    private void appendDesiredShield(List<DesiredModule> target, int maxSlotCount, int hullTier, String requestedShieldSubType) {
-        if (requestedShieldSubType == null || requestedShieldSubType.isEmpty()) return;
-        if (maxSlotCount <= 0)
-            throw new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_INVALID_SLOT_INDEX);
-
-        String subType = isValidSubTypeForCategory(EModuleType.shield, requestedShieldSubType, hullTier)
-                ? requestedShieldSubType
-                : "shield_1_1";
-        target.add(new DesiredModule(EModuleType.shield, 0, subType));
+    // 실드는 리스트가 아니라 문자열 하나뿐 — 슬롯 인덱스는 항상 0
+    // 설치/해제 선택이 없고 레벨은 아키타입 강화 테이블에서 읽으므로, 요청값은 보지 않고 함체에 슬롯이 있으면 항상 기본 모듈 설치
+    // 사용 가능 여부(패시브 해금)는 저장이 아니라 출력(buildModuleHullInfoDto)에서 판정
+    private void appendDesiredShield(List<DesiredModule> target, int maxSlotCount) {
+        if (maxSlotCount <= 0) return;
+        target.add(new DesiredModule(EModuleType.shield, 0, "shield_1_1"));
     }
 
-    // 요격체도 실드와 동일하게 문자열 하나(장착 여부) — 슬롯 인덱스는 항상 0
-    private void appendDesiredInterceptor(List<DesiredModule> target, int maxSlotCount, int hullTier, String requestedInterceptorSubType) {
-        if (requestedInterceptorSubType == null || requestedInterceptorSubType.isEmpty()) return;
-        if (maxSlotCount <= 0)
-            throw new BusinessException(ServerErrorCode.SET_FLEET_MODULE_FAIL_INVALID_SLOT_INDEX);
-
-        String subType = isValidSubTypeForCategory(EModuleType.interceptor, requestedInterceptorSubType, hullTier)
-                ? requestedInterceptorSubType
-                : "interceptor_1_1";
-        target.add(new DesiredModule(EModuleType.interceptor, 0, subType));
+    // 요격체도 실드와 동일 — 슬롯 인덱스는 항상 0, 함체에 슬롯이 있으면 항상 기본 모듈 설치
+    private void appendDesiredInterceptor(List<DesiredModule> target, int maxSlotCount) {
+        if (maxSlotCount <= 0) return;
+        target.add(new DesiredModule(EModuleType.interceptor, 0, "interceptor_1_1"));
     }
 
     // 함대편성 슬롯 전/후방 토글 저장
@@ -558,6 +603,7 @@ public class FleetService {
         int removedSlotIndex = request.getSlotIndex();
         fleet.getShips().removeIf(s -> s.getSlotIndex() == removedSlotIndex);
         fleetRepository.save(fleet);
+        narrowRunContinuousArchetypes(commanderId);
     }
 
     // fleetId는 Fleet.id(FleetInfoDto.id로 클라에 내려준 값) — 미지정(0/null)이면 활성 함대(fleetIndex=0)로 폴백
@@ -580,62 +626,5 @@ public class FleetService {
         return ChangeTacticOptionsResponse.builder()
                 .tacticOptions(request.getTacticOptions())
                 .build();
-    }
-
-    // ── 함대 능력치 요약 (Redis 저장용) ─────────────────────────────────────
-
-    /** FleetInfoDto → Redis 저장용 능력치 요약 JSON (클라의 GetFleetCapabilityProfile에 대응) */
-    public String computeFleetRankStatJson(FleetInfoDto fleetInfo) {
-        if (fleetInfo == null || fleetInfo.getShips() == null) return null;
-
-        int shipCount = fleetInfo.getShips().size();
-        float statHealth = 0f, statAttack = 0f, statAirAttack = 0f;
-        int statAirCount = 0;
-
-        for (ShipInfoDto ship : fleetInfo.getShips()) {
-            if (ship.getHulls() == null) continue;
-            for (ModuleHullInfoDto hull : ship.getHulls()) {
-                ModuleData hullData = findModuleData(EModuleType.hull, hull.getModuleSubType());
-                if (hullData != null) statHealth += hullData.getHealth() != null ? hullData.getHealth() : 0f;
-
-                if (hull.getBeams() != null) {
-                    for (ModuleInfoDto beam : hull.getBeams()) {
-                        ModuleData data = findModuleData(EModuleType.beam, beam.getModuleSubType());
-                        if (data != null) {
-                            statAttack += data.getAttack() != null ? data.getAttack() : 0f;
-                        }
-                    }
-                }
-                if (hull.getMissiles() != null) {
-                    for (ModuleInfoDto missile : hull.getMissiles()) {
-                        ModuleData data = findModuleData(EModuleType.missile, missile.getModuleSubType());
-                        if (data != null) {
-                            statAttack += data.getAttack() != null ? data.getAttack() : 0f;
-                        }
-                    }
-                }
-                if (hull.getHangars() != null) {
-                    for (ModuleInfoDto hangar : hull.getHangars()) {
-                        ModuleData data = findModuleData(EModuleType.hangar, hangar.getModuleSubType());
-                        if (data != null) {
-                            statAirCount  += data.getAirCount() != null ? data.getAirCount() : 0;
-                            statAirAttack += data.getAirAttackToShip() != null ? data.getAirAttackToShip() : 0f;
-                        }
-                    }
-                }
-            }
-        }
-
-        return String.format("{\"shipCount\":%d,\"statHealth\":%.4f,\"statAttack\":%.4f,\"statAirCount\":%d,\"statAirAttack\":%.4f}",
-                shipCount, statHealth, statAttack, statAirCount, statAirAttack);
-    }
-
-    private ModuleData findModuleData(EModuleType type, String subType) {
-        if (subType == null) return null;
-        List<ModuleData> list = gameDataService.getModulesByType(type);
-        for (ModuleData data : list) {
-            if (subType.equals(data.getModuleSubType())) return data;
-        }
-        return null;
     }
 }

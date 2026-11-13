@@ -314,6 +314,10 @@ if __name__ == "__main__":
         "ShieldFormula",
         "InterceptorFormula",
         "ArchetypeUpgradeSettings",
+        "DailyQuestSettings",
+        "ScavengeSettings",
+        "ScoutSettings",
+        "SupportAbilitySettings",
     ]
 
     for class_name in ship_stat_formula_class_names:

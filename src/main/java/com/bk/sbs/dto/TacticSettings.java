@@ -27,4 +27,16 @@ public class TacticSettings {
     private Integer tacticInterceptorCost;
 
     private Integer mineralToResourceRatio;
+
+    private Float berserkerThreshold1Percent;
+
+    private Float berserkerThreshold2Percent;
+
+    private Float berserkerThreshold3Percent;
+
+    private Float berserkerAttackMultiplier1;
+
+    private Float berserkerAttackMultiplier2;
+
+    private Float berserkerAttackMultiplier3;
 }

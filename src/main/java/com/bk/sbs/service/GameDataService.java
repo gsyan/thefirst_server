@@ -94,18 +94,51 @@ public class GameDataService {
         public int threshold;
         public int achievementPointReward;
         public int achievementPointRewardVip;
+        public String difficulty; // "easy"/"normal"/"hard" — 오늘의 일일업적을 난이도별 풀에서 1개씩 뽑는 기준
         public DailyAchievementEntry(String achievementId, com.bk.sbs.enums.EAchievementConditionType conditionType,
-                                      String conditionParam, int threshold, int achievementPointReward, int achievementPointRewardVip) {
+                                      String conditionParam, int threshold, int achievementPointReward, int achievementPointRewardVip,
+                                      String difficulty) {
             this.achievementId = achievementId;
             this.conditionType = conditionType;
             this.conditionParam = conditionParam;
             this.threshold = threshold;
             this.achievementPointReward = achievementPointReward;
             this.achievementPointRewardVip = achievementPointRewardVip;
+            this.difficulty = difficulty;
         }
     }
 
     private java.util.List<DailyAchievementEntry> dailyAchievementList = new java.util.ArrayList<>();
+
+    // 아키타입 패시브 1단계 정의 — 클라 HullArchetypePassiveData(CSV 정적 정의)와 1:1. threshold는 앞 단계 해금 이후 이 단계 안에서만 센 값
+    public static class HullArchetypePassiveEntry {
+        public String hullArchetype;
+        public int stage;
+        public String counterType;
+        public int threshold;
+        public String effectType = "";  // 이 단계 효과 종류(scavenge_chance, unlock_shield 등) — 비어 있으면 서버가 쓰는 효과 없음
+        public float effectValue;
+        public String effectScope = ""; // self 또는 fleet
+        public HullArchetypePassiveEntry(String hullArchetype, int stage, String counterType, int threshold) {
+            this.hullArchetype = hullArchetype;
+            this.stage = stage;
+            this.counterType = counterType;
+            this.threshold = threshold;
+        }
+    }
+
+    private java.util.Map<String, java.util.List<HullArchetypePassiveEntry>> hullArchetypePassives = new java.util.HashMap<>();
+
+    // 아키타입의 패시브 단계 목록(stage 오름차순) — 데이터가 없으면 빈 리스트
+    public java.util.List<HullArchetypePassiveEntry> getHullArchetypePassives(String hullArchetype) {
+        java.util.List<HullArchetypePassiveEntry> list = hullArchetypePassives.get(hullArchetype);
+        return list != null ? list : java.util.Collections.emptyList();
+    }
+
+    // 패시브 데이터가 있는 모든 아키타입 이름
+    public java.util.Set<String> getHullArchetypesWithPassives() {
+        return hullArchetypePassives.keySet();
+    }
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -243,11 +276,34 @@ public class GameDataService {
                             node.path("conditionParam").asText(""),
                             node.path("threshold").asInt(0),
                             node.path("achievementPointReward").asInt(0),
-                            node.path("achievementPointRewardVip").asInt(0)));
+                            node.path("achievementPointRewardVip").asInt(0),
+                            node.path("difficulty").asText("")));
                 }
                 log.info("DataTableDailyAchievement.json loaded: {} entries", dailyAchievementList.size());
             } else {
                 log.warn("DataTableDailyAchievement.json not found in resources/data/, using empty data");
+            }
+
+            ClassPathResource passiveResource = new ClassPathResource("data/DataTableHullArchetypePassive.json");
+            if (passiveResource.exists()) {
+                String json = new String(passiveResource.getInputStream().readAllBytes());
+                com.fasterxml.jackson.databind.JsonNode arrayNode = objectMapper.readTree(json);
+                hullArchetypePassives.clear();
+                for (com.fasterxml.jackson.databind.JsonNode node : arrayNode) {
+                    String hullArchetype = node.path("hullArchetype").asText(null);
+                    if (hullArchetype == null || hullArchetype.isEmpty()) continue;
+                    HullArchetypePassiveEntry entry = new HullArchetypePassiveEntry(hullArchetype, node.path("stage").asInt(0),
+                            node.path("counterType").asText(""), node.path("threshold").asInt(0));
+                    entry.effectType = node.path("effectType").asText("");
+                    entry.effectValue = (float) node.path("effectValue").asDouble(0);
+                    entry.effectScope = node.path("effectScope").asText("");
+                    hullArchetypePassives.computeIfAbsent(hullArchetype, k -> new java.util.ArrayList<>()).add(entry);
+                }
+                for (java.util.List<HullArchetypePassiveEntry> list : hullArchetypePassives.values())
+                    list.sort(java.util.Comparator.comparingInt(e -> e.stage));
+                log.info("DataTableHullArchetypePassive.json loaded: {} archetypes", hullArchetypePassives.size());
+            } else {
+                log.warn("DataTableHullArchetypePassive.json not found in resources/data/ — 아키타입 패시브 카운터가 집계되지 않음(Unity에서 서버용 JSON Export 필요)");
             }
 
         } catch (Exception e) {

@@ -30,7 +30,7 @@ public class ZoneCellClearLog {
     @Column(nullable = false)
     private Instant clearedAt = Instant.now();
 
-    // Treasure(Event) 셀 클리어 시 당첨된 보상 종류 — Treasure 셀이 아니면 null. getPendingHealthHealBonus()가 ShipHealthHeal 당첨 여부 확인에 사용
+    // Treasure(Event) 셀 클리어 시 당첨된 보상 종류 — Treasure 셀이 아니면 null
     @Enumerated(EnumType.STRING)
     @Column(name = "treasure_reward_type", length = 32)
     private ETreasureRewardType treasureRewardType;

@@ -4,6 +4,7 @@ import com.bk.sbs.config.DataTableConfig;
 import com.bk.sbs.dto.*;
 import com.bk.sbs.entity.Commander;
 import com.bk.sbs.entity.PvpRecord;
+import com.bk.sbs.enums.EAchievementConditionType;
 import com.bk.sbs.enums.EZoneRunStatus;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
@@ -35,16 +36,25 @@ public class PvpService {
     private final CommanderRepository commanderRepository;
     private final GameDataService gameDataService;
     private final ZoneRunRepository zoneRunRepository;
+    private final DailyCounterService dailyCounterService;
+    private final HullArchetypeProgressService hullArchetypeProgressService;
+    private final ArchetypeModuleUpgradeService archetypeModuleUpgradeService;
 
     public PvpService(RedisService redisService, PvpRecordRepository pvpRecordRepository,
                       FleetService fleetService, CommanderRepository commanderRepository,
-                      GameDataService gameDataService, ZoneRunRepository zoneRunRepository) {
+                      GameDataService gameDataService, ZoneRunRepository zoneRunRepository,
+                      DailyCounterService dailyCounterService,
+                      HullArchetypeProgressService hullArchetypeProgressService,
+                      ArchetypeModuleUpgradeService archetypeModuleUpgradeService) {
         this.redisService = redisService;
         this.pvpRecordRepository = pvpRecordRepository;
         this.fleetService = fleetService;
         this.commanderRepository = commanderRepository;
         this.gameDataService = gameDataService;
         this.zoneRunRepository = zoneRunRepository;
+        this.dailyCounterService = dailyCounterService;
+        this.hullArchetypeProgressService = hullArchetypeProgressService;
+        this.archetypeModuleUpgradeService = archetypeModuleUpgradeService;
     }
 
     // 서버 시작 시 Redis를 DB 상태로 동기화 (고아 키 제거) - TestDataInitializer(@Order(1)) 이후 실행
@@ -72,10 +82,6 @@ public class PvpService {
             redisService.initPvpInfo(record.getCommanderId(), config.getPvp().getPvpListRefreshCount(), record.getScore(), record.getWins(), record.getLosses());
             String name = nameMap.get(record.getCommanderId());
             if (name != null) redisService.setRankName(record.getCommanderId(), name);
-
-            FleetInfoDto fleet = fleetService.getActiveFleetOrNull(record.getCommanderId());
-            String statJson = fleetService.computeFleetRankStatJson(fleet);
-            if (statJson != null) redisService.setRankStat(record.getCommanderId(), statJson);
         }
 
         redisService.snapshotPvpRanking();
@@ -84,7 +90,8 @@ public class PvpService {
         log.info("PVP Redis 동기화 완료: {}건", records.size());
     }
 
-    // PVP 랭킹 주기 재동기화 - DB → pvp:ranking 재구축 후 snapshot + stat 갱신
+    // PVP 랭킹 주기 재동기화 - DB → pvp:ranking 재구축 후 snapshot 갱신
+    // 함대 능력치는 여기서 미리 계산해두지 않음 — 상대 상세 조회(getOpponentDetail)가 실시간 함대/빌드 데이터를 내려주고 클라가 전투와 같은 규칙으로 계산
     @org.springframework.scheduling.annotation.Scheduled(fixedRateString = "#{${ranking.pvp.sync.rate-minutes:60} * 60000}")
     public void syncPvpRankingFromDb() {
         redisService.clearPvpRankingZset();
@@ -92,10 +99,6 @@ public class PvpService {
         List<PvpRecord> records = pvpRecordRepository.findAll();
         for (PvpRecord record : records) {
             redisService.setPvpScore(record.getCommanderId(), record.getScore());
-
-            FleetInfoDto fleet = fleetService.getActiveFleetOrNull(record.getCommanderId());
-            String statJson = fleetService.computeFleetRankStatJson(fleet);
-            if (statJson != null) redisService.setRankStat(record.getCommanderId(), statJson);
         }
 
         redisService.snapshotPvpRanking();
@@ -225,6 +228,10 @@ public class PvpService {
 
         PvpBattleStartResponse response = new PvpBattleStartResponse();
         response.setOpponentFleetInfo(opponentFleet);
+        // 상대 함대에도 상대 지휘관의 패시브 능력치 효과를 적용하도록 진행도를 같이 내려줌(클라가 상대 진행도를 알 방법이 이것뿐)
+        response.setOpponentPassiveProgress(hullArchetypeProgressService.getProgressDtoList(opponentCommanderId));
+        // 상대의 아키타입 모듈강화 레벨도 같이 내려줌 — 상대 함선이 내 강화 레벨이 아니라 상대 자신의 레벨로 만들어지게 함
+        response.setOpponentArchetypeUpgrades(archetypeModuleUpgradeService.getUpgradeDtoList(opponentCommanderId));
         response.setBattleToken(battleToken);
         return response;
     }
@@ -289,6 +296,11 @@ public class PvpService {
 
         updatePvpRecordDb(attackerId, attackerChange, isVictory);
         updatePvpRecordDb(defenderId, defenderChange, isVictory == false);
+
+        // 일일퀘스트 카운터 — 공격자 기준만 집계(방어는 본인 행동이 아님)
+        dailyCounterService.increment(attackerId, EAchievementConditionType.PvpBattle, 1);
+        if (isVictory == true)
+            dailyCounterService.increment(attackerId, EAchievementConditionType.PvpVictory, 1);
 
         Double newScoreD = redisService.getPvpScore(attackerId);
         int newScoreVal = newScoreD != null ? newScoreD.intValue() : 0;
@@ -405,9 +417,36 @@ public class PvpService {
             info.setPvpScore(score != null ? score.intValue() : 1000);
             info.setRank(rank != null ? rank.intValue() : 0);
             info.setFleetInfo(fleet);
+            // 선택 카드가 전투와 같은 최종 스탯을 보여주도록 빌드 데이터(패시브 진행도/강화 레벨)도 같이 — 클라는 계산에만 쓰고 단계/레벨 자체는 표시하지 않음
+            info.setPassiveProgress(hullArchetypeProgressService.getProgressDtoList(opponentId));
+            info.setArchetypeUpgrades(archetypeModuleUpgradeService.getUpgradeDtoList(opponentId));
             opponents.add(info);
         }
         return opponents;
+    }
+
+    // 상대 상세 정보(PVP 카드 "상세"/랭킹 항목 클릭) — 항상 실시간 값. PVP 기록을 새로 만들지 않음(기록이 없으면 점수/순위/전적 0)
+    @Transactional(readOnly = true)
+    public PvpOpponentDetailResponse getOpponentDetail(Long targetCommanderId) {
+        Commander commander = commanderRepository.findById(targetCommanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.PVP_OPPONENT_FLEET_NOT_FOUND));
+
+        Double score = redisService.getPvpScore(targetCommanderId);
+        Long rank = redisService.getPvpRank(targetCommanderId);
+        Optional<PvpRecord> record = pvpRecordRepository.findByCommanderId(targetCommanderId);
+
+        PvpOpponentDetailResponse response = new PvpOpponentDetailResponse();
+        response.setCommanderId(targetCommanderId);
+        response.setCommanderName(commander.getCommanderName());
+        response.setCommanderLevel(commander.getCommanderLevel());
+        response.setPvpScore(score != null ? score.intValue() : 0);
+        response.setRank(rank != null ? rank.intValue() : 0);
+        response.setWins(record.map(PvpRecord::getWins).orElse(0));
+        response.setLosses(record.map(PvpRecord::getLosses).orElse(0));
+        response.setFleetInfo(fleetService.getActiveFleetOrNull(targetCommanderId));
+        response.setPassiveProgress(hullArchetypeProgressService.getProgressDtoList(targetCommanderId));
+        response.setArchetypeUpgrades(archetypeModuleUpgradeService.getUpgradeDtoList(targetCommanderId));
+        return response;
     }
 
     private void updatePvpRecordDb(Long commanderId, int scoreChange, boolean isWin) {

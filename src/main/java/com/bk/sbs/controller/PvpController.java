@@ -57,6 +57,15 @@ public class PvpController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
+    // 상대 상세 정보(최종 전투 스탯 계산용 함대/빌드 데이터 + 지휘관 레벨/PVP 전적)
+    @PostMapping("/opponent-detail")
+    public ResponseEntity<ApiResponse<PvpOpponentDetailResponse>> getOpponentDetail(
+            @RequestBody PvpOpponentDetailRequest request,
+            @CommanderId Long commanderId) {
+        PvpOpponentDetailResponse response = pvpService.getOpponentDetail(request.getTargetCommanderId());
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
     // 시즌 보상 수령
     @PostMapping("/pvp-season/claim-reward")
     public ResponseEntity<ApiResponse<PvpClaimSeasonRewardResponse>> claimSeasonReward(@CommanderId Long commanderId) {

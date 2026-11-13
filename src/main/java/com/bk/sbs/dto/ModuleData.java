@@ -35,6 +35,10 @@ public class ModuleData {
 
     private Boolean hasInterceptor;
 
+    private Boolean isEnemyOnly;
+
+    private String modulePrefabName;
+
     private Float health;
 
     private Float repair;
@@ -50,6 +54,10 @@ public class ModuleData {
     private Float attackCool;
 
     private Float silenceTime;
+
+    private Float critChance;
+
+    private Float critDamage;
 
     private Integer airCount;
 

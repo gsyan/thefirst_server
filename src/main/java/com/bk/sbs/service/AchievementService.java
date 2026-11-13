@@ -56,6 +56,7 @@ public class AchievementService {
     private final CommanderUnlockedHullRepository commanderUnlockedHullRepository;
     private final VipSubscriptionRepository vipSubscriptionRepository;
     private final CommanderZoneFullClearRepository commanderZoneFullClearRepository;
+    private final DailyAchievementService dailyAchievementService;
 
     public AchievementService(CommanderRepository commanderRepository, GameDataService gameDataService,
                                ZoneCellClearLogRepository zoneCellClearLogRepository, FleetRepository fleetRepository,
@@ -63,7 +64,8 @@ public class AchievementService {
                                CommanderAchievementReachedRepository commanderAchievementReachedRepository,
                                CommanderUnlockedHullRepository commanderUnlockedHullRepository,
                                VipSubscriptionRepository vipSubscriptionRepository,
-                               CommanderZoneFullClearRepository commanderZoneFullClearRepository) {
+                               CommanderZoneFullClearRepository commanderZoneFullClearRepository,
+                               DailyAchievementService dailyAchievementService) {
         this.commanderRepository = commanderRepository;
         this.gameDataService = gameDataService;
         this.zoneCellClearLogRepository = zoneCellClearLogRepository;
@@ -73,6 +75,7 @@ public class AchievementService {
         this.commanderUnlockedHullRepository = commanderUnlockedHullRepository;
         this.vipSubscriptionRepository = vipSubscriptionRepository;
         this.commanderZoneFullClearRepository = commanderZoneFullClearRepository;
+        this.dailyAchievementService = dailyAchievementService;
     }
 
     // 활성 VIP 여부 — IapService.isVipActive()와 동일 기준(서비스 간 커플링 없이 각자 보유)
@@ -184,7 +187,9 @@ public class AchievementService {
             int currentValue = computeCurrentValue(commander, context, entry);
             if (currentValue >= entry.threshold) return true;
         }
-        return false;
+
+        // 클라 레드닷(UIPanelAchievement.RefreshUnclaimedIndicators)이 일일퀘스트 미수령까지 합산하므로 서버 값도 같은 기준으로 맞춤
+        return dailyAchievementService.hasUnclaimedCompletedDailyAchievement(commanderId);
     }
 
     @Transactional

@@ -1,5 +1,6 @@
 package com.bk.sbs.dto;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,4 +21,6 @@ public class EscapeExplorationZoneResponse {
     private Integer highestClearedZoneNumber;
     private Integer resource;
     private Boolean hasUnclaimedAchievement;
+    private List<HullArchetypeProgressInfoDto> hullArchetypePassiveProgress;
+    private FleetInfoDto fleetInfo;
 }

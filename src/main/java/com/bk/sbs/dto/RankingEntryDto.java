@@ -18,10 +18,5 @@ public class RankingEntryDto {
     private Long commanderId;
     private String commanderName;
     private String score;
-    private Integer shipCount;
-    private Float statHealth;
-    private Float statAttack;
-    private Integer statAirCount;
-    private Integer statAirAttack;
     private Boolean isPerfectClear;
 }

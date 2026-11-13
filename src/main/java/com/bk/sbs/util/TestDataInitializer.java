@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -98,7 +98,7 @@ public class TestDataInitializer {
                 Long.class);
         log.info("TestDataInitializer: 기본 더미 데이터 {}개 생성 시작 — account AUTO_INCREMENT={}, commander AUTO_INCREMENT={}",
                 count, accAutoInc, charAutoInc);
-        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
+        Timestamp now = Timestamp.from(Instant.now());
         String encodedPw = passwordEncoder.encode("testpassword1");
 
         // 1. Account
@@ -203,7 +203,7 @@ public class TestDataInitializer {
         }
 
         int total = charIds.size();
-        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
+        Timestamp now = Timestamp.from(Instant.now());
         List<Object[]> pvpRows = new ArrayList<>(total);
         for (int i = 0; i < total; i++)
             pvpRows.add(new Object[]{charIds.get(i), calcPvpScore(i), now});

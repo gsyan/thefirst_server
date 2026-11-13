@@ -8,6 +8,7 @@ import com.bk.sbs.entity.CommanderZoneFullClear;
 import com.bk.sbs.entity.VipSubscription;
 import com.bk.sbs.entity.ZoneCellClearLog;
 import com.bk.sbs.entity.ZoneRun;
+import com.bk.sbs.enums.EAchievementConditionType;
 import com.bk.sbs.enums.EGridCellType;
 import com.bk.sbs.enums.EGridEventType;
 import com.bk.sbs.enums.ETreasureRewardType;
@@ -34,6 +35,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Queue;
 import java.util.Set;
@@ -51,6 +53,23 @@ public class ExplorationService {
     private final VipSubscriptionRepository vipSubscriptionRepository;
     private final RedisService redisService; // 첫 셀(ZoneRun 생성 전) 클리어 챌린지 임시 저장용
     private final CommanderZoneFullClearRepository commanderZoneFullClearRepository;
+    private final DailyCounterService dailyCounterService;
+    private final FleetService fleetService;
+    private final HullArchetypeProgressService hullArchetypeProgressService;
+
+    // 아키타입 패시브 해금 카운터 이름 — DataTableHullArchetypePassive.counter_type과 동일해야 함
+    private static final String k_counterDestroyEnemyShip = "destroy_enemy_ship";
+    private static final String k_counterScavengeMineral = "scavenge_mineral";
+    private static final String k_counterFleetResourceSaved = "fleet_resource_saved";
+    // 클라가 아키타입별로 보고하는 카운터 — 이 목록에 없는 종류는 무시. 함선 자신이 겪은 값(받은 데미지 등) +
+    // 함대 범위 값(적 격침/약탈 광물/절감 자원: 이벤트 순간 살아있던 함선의 아키타입에만 적립)
+    private static final Set<String> k_reportableArchetypeCounters = Set.of("damage_taken_cumulative", "shield_absorb_amount", "intercept_count", "scout_success", "ally_repair_amount", "ally_shield_charge_amount",
+            k_counterDestroyEnemyShip, k_counterScavengeMineral, k_counterFleetResourceSaved);
+    private static final String k_counterZoneRunClear = "zone_run_clear";
+
+    // 클라가 셀 클리어 때 보고하는 전투 통계의 셀 1회당 상한(비정상 값 보정)
+    private static final int k_maxReportedKillsPerCell = 100;
+    private static final int k_maxReportedLaunchesPerCell = 500;
 
     // false면 highestClearedZoneNumber 검사를 건너뜀 — 웨이브 밸런스 테스트용(application.properties)
     @Value("${zone.require-previous-stage-cleared:true}")
@@ -62,7 +81,12 @@ public class ExplorationService {
                                AchievementService achievementService,
                                VipSubscriptionRepository vipSubscriptionRepository,
                                RedisService redisService,
-                               CommanderZoneFullClearRepository commanderZoneFullClearRepository) {
+                               CommanderZoneFullClearRepository commanderZoneFullClearRepository,
+                               DailyCounterService dailyCounterService,
+                               FleetService fleetService,
+                               HullArchetypeProgressService hullArchetypeProgressService) {
+        this.fleetService = fleetService;
+        this.hullArchetypeProgressService = hullArchetypeProgressService;
         this.commanderRepository = commanderRepository;
         this.zoneRunRepository = zoneRunRepository;
         this.zoneCellClearLogRepository = zoneCellClearLogRepository;
@@ -72,6 +96,13 @@ public class ExplorationService {
         this.vipSubscriptionRepository = vipSubscriptionRepository;
         this.redisService = redisService;
         this.commanderZoneFullClearRepository = commanderZoneFullClearRepository;
+        this.dailyCounterService = dailyCounterService;
+    }
+
+    // 런 시작 시점의 활성 함대 아키타입을 "처음부터 계속 함대에 있던 아키타입"으로 기록 — 이후 함대가 바뀌면 FleetService가 교집합으로 줄임
+    private void recordRunStartArchetypes(ZoneRun run, Long commanderId) {
+        Set<String> archetypes = fleetService.getActiveFleetArchetypes(commanderId);
+        run.setContinuousArchetypes(String.join(",", archetypes));
     }
 
     // 활성 VIP 여부 — IapService.isVipActive()와 동일 기준(서비스 간 커플링 없이 각자 보유)
@@ -104,13 +135,6 @@ public class ExplorationService {
 
     private static final float HEALTH_RATIO_MIN = 0f;
     private static final float HEALTH_RATIO_MAX = 1f;
-    // 모듈 repair(시간당 회복)를 정밀 계산하지 않고 넉넉한 고정 여유값으로 흡수 — 전투 지속시간이 길수록 허용치도 커짐.
-    // 오탐(정상 유저 차단)이 치트 차단 실패보다 훨씬 나쁘므로 넉넉하게 잡음. 정밀 계산은 알려진 한계로 남겨둠.
-    private static final float HEALTH_RATIO_TIME_MARGIN_PER_SEC = 0.01f;
-    // healthRatio(health/healthMax)와 카드 value1은 서로 다른 계산 경로를 거치는 float라 수학적으로 같은 증가량도
-    // 미세하게 어긋날 수 있음(예: 0.2 카드 효과가 increase=0.20000005로 계산됨) — 안티치트 목적상 정밀할 필요 없이
-    // "명백히 큰 증가"만 막으면 되므로 넉넉하게 여유를 둠
-    private static final float HEALTH_RATIO_FLOAT_EPSILON = 0.01f;
 
     // Treasure(Event) 셀 보상 — 2종 중 1개를 매 클리어마다 진짜 랜덤(java.util.Random 새 인스턴스)으로 지급
     private static final ETreasureRewardType[] TREASURE_REWARD_POOL = {
@@ -121,8 +145,8 @@ public class ExplorationService {
 
     private static final float ESCAPE_FAIL_PAYOUT_RATIO = 0.5f; // 탈출 실패(전투 패배 등) — 적립 보상의 50% 지급
 
-    // 체력 비율 범위(0~1), 함선 구성 일치, 직전 스냅샷 대비 증가폭(허용치: 회복 카드 효과 + 시간 여유값) 검증
-    private void validateHealthSnapshot(ZoneRun run, List<ShipHealthRatioInfoDto> reported) {
+    // 체력 비율 범위(0~1)만 검증 — 피닉스 아군 수리 등 전투 중 회복량이 커서 직전 스냅샷 대비 증가폭은 검사하지 않음
+    private void validateHealthSnapshot(List<ShipHealthRatioInfoDto> reported) {
         if (reported == null || reported.isEmpty()) return;
 
         for (ShipHealthRatioInfoDto info : reported) {
@@ -130,38 +154,6 @@ public class ExplorationService {
             if (info.getHealthRatio() < HEALTH_RATIO_MIN || info.getHealthRatio() > HEALTH_RATIO_MAX)
                 throw new BusinessException(ServerErrorCode.EXPLORATION_FLEET_HEALTH_INVALID);
         }
-
-        List<ShipHealthRatioInfoDto> previous = deserializeHealthSnapshot(run.getFleetHealthSnapshotJson());
-        if (previous == null || previous.isEmpty()) return;
-
-        float healBonus = getPendingHealthHealBonus(run);
-        // 정수초로 자르면(getEpochSecond 차이) 두 요청이 같은 초 안에 들어올 때 elapsedSeconds가 무조건 0이 되어
-        // allowedIncrease도 0이 됨 — 수리 전술/보상카드 체력버프 등으로 생기는 미세한 정상 증가치조차 막아버리므로
-        // 밀리초 단위(소수점 초)로 계산해 그 찰나의 경과시간도 반영되게 함
-        float elapsedSeconds = 0f;
-        if (run.getActiveChallengeIssuedAt() != null)
-            elapsedSeconds = Math.max(0f, Duration.between(run.getActiveChallengeIssuedAt(), Instant.now()).toMillis() / 1000f);
-        float allowedIncrease = healBonus + (elapsedSeconds * HEALTH_RATIO_TIME_MARGIN_PER_SEC);
-
-        for (ShipHealthRatioInfoDto info : reported) {
-            if (info.getHealthRatio() == null || info.getPositionIndex() == null) continue;
-            Optional<ShipHealthRatioInfoDto> prevOpt = previous.stream()
-                    .filter(p -> p.getPositionIndex() != null && p.getPositionIndex().equals(info.getPositionIndex()))
-                    .findFirst();
-            if (prevOpt.isEmpty()) continue;
-
-            float increase = info.getHealthRatio() - prevOpt.get().getHealthRatio();
-            if (increase > allowedIncrease + HEALTH_RATIO_FLOAT_EPSILON)
-                throw new BusinessException(ServerErrorCode.EXPLORATION_FLEET_HEALTH_INVALID);
-        }
-    }
-
-    // 직전 검증 이후 쌓인 즉시회복/체력버프 보너스(보상카드 구매 + Treasure 체력회복 당첨) 총합을 읽고 즉시 리셋 —
-    // BuyCardButton으로 클리어와 무관한 시점에 구매해도 누락 없이 잡히도록 run에 적립해뒀다가 소비하는 1회용 값
-    private float getPendingHealthHealBonus(ZoneRun run) {
-        float bonus = run.getPendingHealthHealBonus();
-        run.setPendingHealthHealBonus(0f);
-        return bonus;
     }
 
     // cardId 리스트 JSON 직렬화/역직렬화 — 셀 클리어 로그의 후보 3개, 재구성된 선택 이력 등 공용으로 사용
@@ -382,6 +374,7 @@ public class ExplorationService {
             // 바로 ZoneRun을 만들어 위치를 확정해야 함
             ZoneRun run = new ZoneRun(commanderId, request.getZoneNumber(), startCell.getRow(), startCell.getCol(), commander.getResourceMax());
             run.setCurrentPosition(request.getCellRow(), request.getCellCol());
+            recordRunStartArchetypes(run, commanderId);
             zoneRunRepository.save(run);
 
             return EnterExplorationCellResponse.builder()
@@ -516,6 +509,7 @@ public class ExplorationService {
                     request.getCellRow(), request.getCellCol());
 
             run = new ZoneRun(commanderId, request.getZoneNumber(), startCell.getRow(), startCell.getCol(), commander.getResourceMax());
+            recordRunStartArchetypes(run, commanderId);
             run = zoneRunRepository.save(run);
         }
 
@@ -587,20 +581,26 @@ public class ExplorationService {
                 mineralGained *= 2;
         }
 
-        validateHealthSnapshot(run, request.getShipHealthRatios());
+        // 함재기 약탈 광물 — 클라 보고 합계를 그대로 지급(상한 없음), 존 보상용 광물 배율/VIP 2배는 적용하지 않음
+        int scavengedMineral = request.getScavengedMineral() != null ? Math.max(0, request.getScavengedMineral()) : 0;
+        mineralGained += scavengedMineral;
 
-        // 이번 클리어의 Treasure 체력회복 당첨은 지금 검증한 스냅샷에는 아직 반영되지 않았으므로, 다음 검증 때 쓸 적립값에 더해둠
-        if (treasureRewardType == ETreasureRewardType.ShipHealthHeal)
-            run.setPendingHealthHealBonus(run.getPendingHealthHealBonus() + TREASURE_SHIP_HEALTH_HEAL_RATIO);
+        // 탐사(argus) 성공 광물 — 약탈과 마찬가지로 클라 보고 합계를 그대로 지급(상한 없음, 존 보상 배율/VIP 2배 미적용). corsair scavenge_mineral 카운터에는 포함하지 않음
+        int scoutedMineral = request.getScoutedMineral() != null ? Math.max(0, request.getScoutedMineral()) : 0;
+        mineralGained += scoutedMineral;
+
+        validateHealthSnapshot(request.getShipHealthRatios());
 
         run.setCurrentPosition(request.getCellRow(), request.getCellCol());
         run.setFleetHealthSnapshotJson(serializeHealthSnapshot(request.getShipHealthRatios(), run.getFleetHealthSnapshotJson()));
         // 전투 중엔 서버에 실시간 저장하지 않고 셀 클리어 확정 시점에만 자원을 저장 — 0~resourceMax로 클램프(체력 스냅샷과 동일하게 클라 계산값을 신뢰하되 범위만 방어).
-        int reportedResource = request.getResource() != null ? request.getResource() : run.getResource();
+        int previousResource = run.getResource();
+        int reportedResource = request.getResource() != null ? request.getResource() : previousResource;
         int finalResource = Math.max(0, Math.min(reportedResource, commander.getResourceMax()));
+        int spentResource = Math.max(0, previousResource - finalResource);
         run.setResource(finalResource);
 
-        // 광물 — 클라가 보고한 현재치(스캐빈징 등 포함) 위에 서버가 방금 계산한 존 고정 지급분을 더함(상한 없이 0 이상만 방어)
+        // 광물 — 클라가 보고한 현재치 위에 서버가 방금 계산한 지급분(존 고정 지급 + 함재기 약탈)을 더함(상한 없이 0 이상만 방어)
         int finalMineralAmount = Math.max(0, request.getMineralAmount()) + mineralGained;
         run.setMineralAmount(finalMineralAmount);
         zoneRunRepository.save(run);
@@ -608,6 +608,50 @@ public class ExplorationService {
         if (mineralGained > 0) {
             commander.setMineralEarnedTotal(commander.getMineralEarnedTotal() + mineralGained);
             commanderRepository.save(commander);
+            dailyCounterService.increment(commanderId, EAchievementConditionType.MineralEarned, mineralGained);
+        }
+
+        // 일일퀘스트 전투 통계 — 클라 보고값을 신뢰하되 셀 1회 상한으로 보정
+        int reportedKills = request.getEnemyShipKills() != null ? request.getEnemyShipKills() : 0;
+        int reportedLaunches = request.getAircraftLaunches() != null ? request.getAircraftLaunches() : 0;
+        int cappedKills = Math.min(Math.max(0, reportedKills), k_maxReportedKillsPerCell);
+        int cappedLaunches = Math.min(Math.max(0, reportedLaunches), k_maxReportedLaunchesPerCell);
+        dailyCounterService.increment(commanderId, EAchievementConditionType.EnemyShipKill, cappedKills);
+        dailyCounterService.increment(commanderId, EAchievementConditionType.AircraftLaunch, cappedLaunches);
+        dailyCounterService.increment(commanderId, EAchievementConditionType.ScavengedMineral, scavengedMineral);
+
+        // 무기 사용 방식/방어/수리 통계 — 클라 보고값을 그대로 신뢰(0 이상만 방어)
+        if (Boolean.TRUE.equals(request.getIsMissileOnlyClear()) == true)
+            dailyCounterService.increment(commanderId, EAchievementConditionType.MissileOnlyCellClear, 1);
+        if (Boolean.TRUE.equals(request.getIsAircraftOnlyClear()) == true)
+            dailyCounterService.increment(commanderId, EAchievementConditionType.AircraftOnlyCellClear, 1);
+        if (Boolean.TRUE.equals(request.getIsNoShieldClear()) == true)
+            dailyCounterService.increment(commanderId, EAchievementConditionType.NoShieldCellClear, 1);
+        int shieldAbsorbAmount = request.getShieldAbsorbAmount() != null ? Math.max(0, request.getShieldAbsorbAmount()) : 0;
+        int interceptCount = request.getInterceptCount() != null ? Math.max(0, request.getInterceptCount()) : 0;
+        int fleetRepairAmount = request.getFleetRepairAmount() != null ? Math.max(0, request.getFleetRepairAmount()) : 0;
+        dailyCounterService.increment(commanderId, EAchievementConditionType.ShieldAbsorb, shieldAbsorbAmount);
+        dailyCounterService.increment(commanderId, EAchievementConditionType.InterceptCount, interceptCount);
+        dailyCounterService.increment(commanderId, EAchievementConditionType.FleetRepairAmount, fleetRepairAmount);
+
+        // 실드/요격체 해금 단계가 이번 클리어로 완료됐는지 — 완료됐으면 응답에 갱신된 함대를 실어 다음 셀 전투부터 반영
+        boolean unlockStageCompleted = false;
+
+        // 아키타입 패시브 카운터 — 클라가 (아키타입, 종류)별로 보고한 값을 그 아키타입에만 누적. 살아있는 동안에만 쌓이는 규칙은 클라가 적립 시점에 보장
+        // 이 셀 전투 시점에 함대에 있던 아키타입만 인정하고, 허용된 종류가 아니면 무시.
+        // 적 격침/약탈 광물은 아키타입 1개당 이 셀의 총 격침 수/총 약탈 광물을 넘을 수 없음(조작 방어), 나머지는 상한 없음
+        if (request.getArchetypeCounters() != null) {
+            Set<String> fleetArchetypes = fleetService.getActiveFleetArchetypes(commanderId);
+            for (ArchetypeCounterReportDto report : request.getArchetypeCounters()) {
+                if (report == null || report.getHullArchetype() == null || report.getCounterType() == null) continue;
+                if (k_reportableArchetypeCounters.contains(report.getCounterType()) == false) continue;
+                if (fleetArchetypes.contains(report.getHullArchetype()) == false) continue;
+
+                long reportedValue = report.getValue() != null ? report.getValue() : 0L;
+                long cappedValue = capFleetScopeCounter(report.getCounterType(), reportedValue, cappedKills, scavengedMineral, spentResource);
+                if (hullArchetypeProgressService.onCounterEvent(commanderId, report.getHullArchetype(), report.getCounterType(), cappedValue) == true)
+                    unlockStageCompleted = true;
+            }
         }
 
         ZoneCellClearLog clearLog = new ZoneCellClearLog(run.getId(), request.getCellRow(), request.getCellCol());
@@ -622,12 +666,16 @@ public class ExplorationService {
 
         return ClearExplorationCellResponse.builder()
                 .mineralGained(mineralGained)
+                .scavengedMineral(scavengedMineral)
+                .scoutedMineral(scoutedMineral)
                 .treasureRewardType(treasureRewardType)
                 .treasureRewardRatio(treasureRewardRatio)
                 .resource(finalResource)
                 .mineralAmount(finalMineralAmount)
                 .rewardCardCandidates(rewardCardCandidates)
                 .rerollRemain(rerollRemain)
+                .hullArchetypePassiveProgress(hullArchetypeProgressService.getProgressDtoList(commanderId))
+                .fleetInfo(unlockStageCompleted == true ? fleetService.getActiveFleetOrNull(commanderId) : null)
                 .build();
     }
 
@@ -696,17 +744,19 @@ public class ExplorationService {
         run.setRewardCardPurchasedIdsJson(serializeCardIdList(purchasedCardIds));
 
         int mineralSpent = Math.max(0, request.getMineralSpent());
-        int finalMineralAmount = Math.max(0, run.getMineralAmount() - mineralSpent);
+        int mineralBefore = run.getMineralAmount();
+        int finalMineralAmount = Math.max(0, mineralBefore - mineralSpent);
         run.setMineralAmount(finalMineralAmount);
+
+        // 일일퀘스트 카운터 — 광물 사용량은 보유량을 넘는 보고값을 제외한 실제 차감분
+        int actualMineralSpent = mineralBefore - finalMineralAmount;
+        dailyCounterService.increment(commanderId, EAchievementConditionType.RewardCardPurchase, 1);
+        dailyCounterService.increment(commanderId, EAchievementConditionType.MineralSpent, actualMineralSpent);
 
         // Buff_MineralFlatBonus는 card.value1이 아니라 "이번에 지불한 비용 그대로"를 앞으로의 클리어마다 가산할 고정값으로 씀 —
         // 재구매할 때마다 더 비싼 단계로 갈아타는 개념이라 누적(+=)이 아니라 대체(=)
         if ("Buff_MineralFlatBonus".equals(card.effectType))
             run.setMineralFlatBonusTotal(mineralSpent);
-
-        // 즉시회복/최대체력버프 카드는 다음 체력 스냅샷 검증의 허용 증가치 적립값에 더해둠(validateHealthSnapshot이 소비)
-        if ("Instant_HealthHeal".equals(card.effectType) || "Buff_ShipHealth".equals(card.effectType))
-            run.setPendingHealthHealBonus(run.getPendingHealthHealBonus() + card.value1);
 
         // 지금 보여주고 있던 3장(candidates)과 정확히 같은 카드는 재추첨에서 배제 — 같은 효과 종류는 다시 나올 수 있음
         List<String> newCandidates = rollRewardCardCandidates(candidates);
@@ -780,6 +830,7 @@ public class ExplorationService {
         int maxCharge = config.getExploration().getRewardCardRerollChargeMax();
         int bonus = config.getExploration().getRewardCardRerollChargeAdBonus();
         commander.setRewardCardRerollCharge(Math.min(maxCharge, commander.getRewardCardRerollCharge() + bonus));
+        dailyCounterService.increment(commanderId, EAchievementConditionType.AdRewardClaim, 1);
 
         return WatchAdForRewardCardRerollChargeResponse.builder()
                 .rewardCardRerollCharge(commander.getRewardCardRerollCharge())
@@ -858,7 +909,51 @@ public class ExplorationService {
     // 탈출 성공/실패 공통 정산 결과 — 지휘관 경험치 확정 지급분 + 런 종료로 회복된 자원 현재치(광물은 은행/정산 없이 이미 즉시 반영된 상태라 여기서 다루지 않음)
     // 업적포인트는 더 이상 여기서 자동 지급하지 않음 — 유저가 업적 패널에서 직접 "받기"를 눌러야 지급(AchievementService.claimAchievement)
     // hasUnclaimedAchievement: 이 정산으로 완료됐을 수 있는 업적을 클라가 바로 알 수 있도록 존런이 끝나는 시점(체크포인트)에 같이 계산
-    private record RunSettlement(int expPayout, int resource, boolean hasUnclaimedAchievement) {}
+    // unlockStageCompleted: 이 정산으로 실드/요격체 해금 단계가 완료됐는지 — 응답에 갱신된 함대를 실을지 판단
+    private record RunSettlement(int expPayout, int resource, boolean hasUnclaimedAchievement, boolean unlockStageCompleted) {}
+
+    // 함대 범위 카운터(적 격침/약탈 광물/절감 자원)의 아키타입 1개당 상한 — 이 셀 서버 집계 총량을 넘지 못함. 그 외 종류는 보고값 그대로
+    // 절감 자원은 이번 셀에서 실제로 줄어든 자원량이 상한(절감률 50% 이하에서는 절감량이 실제 지불량을 넘지 않음)
+    private static long capFleetScopeCounter(String counterType, long reportedValue, int cappedKills, int scavengedMineral, int spentResource) {
+        if (k_counterDestroyEnemyShip.equals(counterType) == true) return Math.min(reportedValue, (long) cappedKills);
+        if (k_counterScavengeMineral.equals(counterType) == true) return Math.min(reportedValue, (long) scavengedMineral);
+        if (k_counterFleetResourceSaved.equals(counterType) == true) return Math.min(reportedValue, (long) spentResource);
+        return reportedValue;
+    }
+
+    // 마지막 체력 스냅샷에서 체력 0인(이번 런에서 파괴된) 함선의 아키타입 — 파괴된 함선은 런이 끝날 때까지 되살아나지 않음
+    private Set<String> collectDestroyedArchetypes(Long commanderId, ZoneRun run) {
+        Set<String> destroyed = new HashSet<>();
+        List<ShipHealthRatioInfoDto> snapshot = deserializeHealthSnapshot(run.getFleetHealthSnapshotJson());
+        if (snapshot == null || snapshot.isEmpty() == true) return destroyed; // 스냅샷 없음 = 전투 없이 끝난 런, 파괴된 함선 없음
+
+        Map<Integer, String> archetypeBySlot = fleetService.getActiveFleetArchetypeBySlot(commanderId);
+        for (ShipHealthRatioInfoDto info : snapshot) {
+            if (info == null || info.getPositionIndex() == null) continue;
+            boolean isDestroyed = info.getHealthRatio() == null || info.getHealthRatio() <= 0f;
+            if (isDestroyed == false) continue;
+
+            String archetype = archetypeBySlot.get(info.getPositionIndex());
+            if (archetype != null) destroyed.add(archetype);
+        }
+        return destroyed;
+    }
+
+    // 반환: 해금 효과(unlock_*)가 있는 단계가 이번에 완료됐으면 true
+    // 런 시작부터 계속 함대에 있었고, 런이 끝날 때 살아있는 아키타입만 +1
+    private boolean addZoneRunClearCounter(Long commanderId, ZoneRun run) {
+        String continuous = run.getContinuousArchetypes();
+        if (continuous == null || continuous.isEmpty() == true) return false;
+
+        Set<String> destroyedArchetypes = collectDestroyedArchetypes(commanderId, run);
+        boolean unlockStageCompleted = false;
+        for (String archetype : continuous.split(",")) {
+            if (destroyedArchetypes.contains(archetype) == true) continue;
+            if (hullArchetypeProgressService.onCounterEvent(commanderId, archetype, k_counterZoneRunClear, 1) == true)
+                unlockStageCompleted = true;
+        }
+        return unlockStageCompleted;
+    }
 
     // 탈출 성공/실패, 포기 공통 정산 — escapeExplorationZone(성공/실패)과 abandonZoneRun(실패 고정)이 공유.
     // payoutRatio는 isSuccess와 별개 파라미터 — isSuccess는 run 상태(ESCAPED/ABANDONED)·최고클리어존 갱신에만
@@ -883,10 +978,15 @@ public class ExplorationService {
         commanderRepository.save(commander);
         zoneRunRepository.save(run);
 
+        // 아키타입 패시브 zone_run_clear — 탈출 성공 정산에서만, 런 시작부터 끝까지 계속 함대에 있었고 파괴되지 않은 아키타입에 +1
+        boolean unlockStageCompleted = false;
+        if (isSuccess == true)
+            unlockStageCompleted = addZoneRunClearCounter(commander.getId(), run);
+
         boolean hasUnclaimedAchievement = achievementService.hasUnclaimedCompletedAchievement(commander.getId());
 
         // 런이 끝나면 자원은 다음 런 시작 전이라도 즉시 완전 회복된 것으로 취급(다음 ZoneRun 생성 시 이 값으로 초기화되는 것과 동일한 결과)
-        return new RunSettlement(expPayout, commander.getResourceMax(), hasUnclaimedAchievement);
+        return new RunSettlement(expPayout, commander.getResourceMax(), hasUnclaimedAchievement, unlockStageCompleted);
     }
 
     @Transactional
@@ -929,6 +1029,8 @@ public class ExplorationService {
                 .highestClearedZoneNumber(commander.getHighestClearedZoneNumber())
                 .resource(settlement.resource())
                 .hasUnclaimedAchievement(settlement.hasUnclaimedAchievement())
+                .hullArchetypePassiveProgress(hullArchetypeProgressService.getProgressDtoList(commanderId))
+                .fleetInfo(settlement.unlockStageCompleted() == true ? fleetService.getActiveFleetOrNull(commanderId) : null)
                 .build();
     }
 
@@ -952,8 +1054,8 @@ public class ExplorationService {
                 .build();
     }
 
-    // 진행 중인 런의 광물을 소모해 자원 게이지를 즉시 채움 — 환산량은 서버가 권위적으로 계산(클라 로컬 미리보기와 동일 공식)
-    // 채울 게 없으면(만피이거나 광물이 없으면) 아무것도 바꾸지 않고 현재 값을 그대로 반환(에러 아님)
+    // 진행 중인 런의 광물을 소모해 자원 게이지를 목표치까지 채움 — 환산량은 서버가 권위적으로 계산(클라 로컬 미리보기와 동일 공식)
+    // 목표치는 [현재치, resourceMax]로 제한. 채울 게 없으면(목표치 이하이거나 광물이 없으면) 아무것도 바꾸지 않고 현재 값을 그대로 반환(에러 아님)
     @Transactional
     public ChargeResourceResponse chargeResource(Long commanderId, ChargeResourceRequest request) {
         ZoneRun run = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS)
@@ -962,7 +1064,9 @@ public class ExplorationService {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
 
-        int neededPoints = commander.getResourceMax() - run.getResource();
+        int requestedTarget = request.getTargetResource() != null ? request.getTargetResource() : 0;
+        int targetResource = Math.max(run.getResource(), Math.min(requestedTarget, commander.getResourceMax()));
+        int neededPoints = targetResource - run.getResource();
         int ratio = gameDataService.getMineralToResourceRatio();
         if (neededPoints > 0 && run.getMineralAmount() > 0 && ratio > 0) {
             int affordableMineral = (neededPoints + ratio - 1) / ratio; // 필요 포인트를 다 채우는 데 드는 광물 수(올림)
@@ -972,6 +1076,7 @@ public class ExplorationService {
             run.setMineralAmount(run.getMineralAmount() - mineralToSpend);
             run.setResource(run.getResource() + gainedPoints);
             zoneRunRepository.save(run);
+            dailyCounterService.increment(commanderId, EAchievementConditionType.MineralSpent, mineralToSpend);
         }
 
         return ChargeResourceResponse.builder()

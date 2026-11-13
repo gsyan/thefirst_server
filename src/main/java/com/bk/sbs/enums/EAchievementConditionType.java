@@ -15,6 +15,21 @@ public enum EAchievementConditionType {
     HullTierCount,
     ModuleTierCount,
     HullUnlocked,
-    ZoneFullClear;
+    ZoneFullClear,
+    RewardCardPurchase,
+    MineralEarned,
+    MineralSpent,
+    PvpBattle,
+    PvpVictory,
+    AdRewardClaim,
+    EnemyShipKill,
+    AircraftLaunch,
+    MissileOnlyCellClear,
+    AircraftOnlyCellClear,
+    NoShieldCellClear,
+    ShieldAbsorb,
+    InterceptCount,
+    FleetRepairAmount,
+    ScavengedMineral;
 
 }

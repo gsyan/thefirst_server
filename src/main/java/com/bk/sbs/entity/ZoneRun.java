@@ -61,14 +61,13 @@ public class ZoneRun {
     @Column(name = "reward_card_purchased_ids_json", columnDefinition = "TEXT")
     private String rewardCardPurchasedIdsJson;
 
+    // 런 시작부터 지금까지 계속 함대에 있었던 아키타입(쉼표 구분) — 시작 시 활성 함대로 채우고, 함대가 바뀔 때마다 현재 함대와의 교집합으로만 줄어듦(늘지 않음)
+    @Column(name = "continuous_archetypes", columnDefinition = "TEXT")
+    private String continuousArchetypes;
+
     // 재접속 시 다시 띄워야 할 보상카드 팝업이 있는지 — false면 현재 후보를 아직 안 닫고 떠 있어야 함, true면 닫혔거나 보여준 적 없음(기본값 true)
     @Column(name = "reward_card_popup_closed", nullable = false)
     private boolean rewardCardPopupClosed = true;
-
-    // 직전 체력 스냅샷 검증 이후 쌓인 즉시회복/체력버프 보너스(Instant_HealthHeal/Buff_ShipHealth 카드 구매 + Treasure 체력회복 당첨) 총합 —
-    // validateHealthSnapshot이 읽는 즉시 0으로 리셋되는 1회용 적립값(다음 셀 클리어까지의 허용 증가폭 상한)
-    @Column(name = "pending_health_heal_bonus", nullable = false)
-    private float pendingHealthHealBonus = 0f;
 
     // "row-col" 형식(0-indexed) 단일 문자열 — 마지막으로 클리어한 셀(승리 시에만 갱신), 인접 검증 기준점. 정수 2컬럼 대신 사람이 읽기 좋은 하나의 컬럼으로 저장
     // ZoneCellClearLog.cell과 동일하게 0-indexed — DB/네트워크/코드 전부 0-indexed로 통일(변환 지점을 아예 없앰)

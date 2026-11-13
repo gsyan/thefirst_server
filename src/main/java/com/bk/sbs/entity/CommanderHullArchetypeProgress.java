@@ -6,11 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-// 커맨더-아키타입-카운터종류별 영구 누적치 — 아키타입 패시브(1~5성, 4단계) 언락 조건 판정용
-// counterType은 아키타입별로 의미가 다른 자유 문자열(예: "destroyed_ship", "zone_run_cleared", "mineral_scavenged")
+// 커맨더-아키타입-패시브 단계별 해금 진행도 — (지휘관, 아키타입, 단계)마다 1행
+// counterType은 그 단계가 세는 카운터 이름(DataTableHullArchetypePassive.counter_type), counterValue는 이 단계 안에서의 진행도,
+// completed는 해금 여부(한 번 true가 되면 영구)
 @Entity
 @Table(name = "commander_hull_archetype_progress",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"commander_id", "hull_archetype", "counter_type"}))
+        uniqueConstraints = @UniqueConstraint(columnNames = {"commander_id", "hull_archetype", "stage"}))
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,16 +27,24 @@ public class CommanderHullArchetypeProgress {
     @Column(name = "hull_archetype", nullable = false, length = 50)
     private String hullArchetype;
 
+    @Column(name = "stage", nullable = false)
+    private int stage;
+
     @Column(name = "counter_type", nullable = false, length = 50)
     private String counterType;
 
     @Column(name = "counter_value", nullable = false)
     private long counterValue;
 
-    public CommanderHullArchetypeProgress(Long commanderId, String hullArchetype, String counterType, long counterValue) {
+    @Column(name = "completed", nullable = false)
+    private boolean completed;
+
+    public CommanderHullArchetypeProgress(Long commanderId, String hullArchetype, int stage, String counterType) {
         this.commanderId = commanderId;
         this.hullArchetype = hullArchetype;
+        this.stage = stage;
         this.counterType = counterType;
-        this.counterValue = counterValue;
+        this.counterValue = 0L;
+        this.completed = false;
     }
 }

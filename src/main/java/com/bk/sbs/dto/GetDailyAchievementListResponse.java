@@ -16,4 +16,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class GetDailyAchievementListResponse {
     private List<DailyAchievementStatusDto> achievements;
+    private Integer streakDays;
 }

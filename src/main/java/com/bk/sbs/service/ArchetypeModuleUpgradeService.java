@@ -1,5 +1,6 @@
 package com.bk.sbs.service;
 
+import com.bk.sbs.dto.ArchetypeUpgradeInfoDto;
 import com.bk.sbs.dto.ModuleData;
 import com.bk.sbs.dto.UpgradeArchetypeModuleRequest;
 import com.bk.sbs.dto.UpgradeArchetypeModuleResponse;
@@ -14,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 // 아키타입 단위 영구 모듈강화(M6) — 업적포인트 소모, 함선 슬롯이 아니라 (커맨더,아키타입,moduleType) 단위로 레벨 귀속
 // level 컬럼은 "구매 횟수"(0부터 시작) — 클라에서 쓰는 효과 레벨(datatable_module.csv 티어 행 조회용)은 이 값+1
@@ -24,18 +27,34 @@ public class ArchetypeModuleUpgradeService {
     private final CommanderRepository commanderRepository;
     private final CommanderArchetypeModuleUpgradeRepository upgradeRepository;
     private final GameDataService gameDataService;
+    private final HullArchetypeProgressService hullArchetypeProgressService;
 
     public ArchetypeModuleUpgradeService(CommanderRepository commanderRepository,
                                           CommanderArchetypeModuleUpgradeRepository upgradeRepository,
-                                          GameDataService gameDataService) {
+                                          GameDataService gameDataService,
+                                          HullArchetypeProgressService hullArchetypeProgressService) {
         this.commanderRepository = commanderRepository;
         this.upgradeRepository = upgradeRepository;
         this.gameDataService = gameDataService;
+        this.hullArchetypeProgressService = hullArchetypeProgressService;
     }
 
     @Transactional(readOnly = true)
     public List<CommanderArchetypeModuleUpgrade> getUpgrades(Long commanderId) {
         return upgradeRepository.findByCommanderId(commanderId);
+    }
+
+    // 클라 응답용 — 이 지휘관의 아키타입 모듈강화 레벨 전체(구매 횟수, slotIndex 포함). 로그인 응답과 PVP 상대 정보가 같은 변환을 씀
+    @Transactional(readOnly = true)
+    public List<ArchetypeUpgradeInfoDto> getUpgradeDtoList(Long commanderId) {
+        return upgradeRepository.findByCommanderId(commanderId).stream()
+                .map(u -> ArchetypeUpgradeInfoDto.builder()
+                        .hullArchetype(u.getHullArchetype())
+                        .moduleType(u.getModuleType())
+                        .slotIndex(u.getSlotIndex())
+                        .level(u.getLevel())
+                        .build())
+                .collect(java.util.stream.Collectors.toList());
     }
 
     @Transactional
@@ -49,6 +68,14 @@ public class ArchetypeModuleUpgradeService {
 
         EModuleType moduleType = request.getModuleType();
         int slotIndex = resolveSlotIndex(hullArchetype, moduleType, request.getSlotIndex());
+
+        // 실드/요격체는 패시브로 해금되기 전에는 강화 불가 — 쓰지 못하는 모듈에 업적포인트가 소모되지 않게 막음
+        if (moduleType == EModuleType.shield || moduleType == EModuleType.interceptor) {
+            Map<String, Set<String>> completedEffects = hullArchetypeProgressService.getCompletedEffectTypesByArchetype(commanderId);
+            boolean unlocked = HullArchetypeProgressService.isModuleUnlocked(completedEffects, hullArchetype, moduleType);
+            if (unlocked == false)
+                throw new BusinessException(ServerErrorCode.UPGRADE_ARCHETYPE_MODULE_FAIL_LOCKED);
+        }
 
         Optional<CommanderArchetypeModuleUpgrade> existing = upgradeRepository
                 .findByCommanderIdAndHullArchetypeAndModuleTypeAndSlotIndex(commanderId, hullArchetype, moduleType, slotIndex);

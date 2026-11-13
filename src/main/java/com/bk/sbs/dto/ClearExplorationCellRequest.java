@@ -18,4 +18,15 @@ public class ClearExplorationCellRequest {
     private Integer resource;
     private Integer mineralAmount;
     private String challengeToken;
+    private Integer enemyShipKills;
+    private Integer aircraftLaunches;
+    private Integer scavengedMineral;
+    private Integer scoutedMineral;
+    private List<ArchetypeCounterReportDto> archetypeCounters;
+    private Boolean isMissileOnlyClear;
+    private Boolean isAircraftOnlyClear;
+    private Boolean isNoShieldClear;
+    private Integer shieldAbsorbAmount;
+    private Integer interceptCount;
+    private Integer fleetRepairAmount;
 }
