@@ -1,6 +1,65 @@
 -- V3(테스트/실서버 배포본) 이후의 모든 스키마 변경 — 배포 전까지 이 파일 하나에 모아서 수정한다. 배포하는 순간 동결하고 다음 변경은 V5로 올린다.
 
 -- ============================================================
+-- V4__legacy_hull_refund_and_cleanup
+-- ============================================================
+-- 옛 형식 함체 ID(hull_{tier}_1_{slots})는 현재 데이터테이블에 없어 그 언락 기록은 효력이 없음 — 언락에 쓴 업적포인트(함체 + 실드/요격체)를
+-- 옛 데이터테이블 비용 그대로 환급한 뒤 기록을 삭제. 실드/요격체 언락 컬럼을 지우는 M1보다 반드시 먼저 실행해야 함
+UPDATE commander c
+JOIN (
+    SELECT commander_id,
+        SUM(
+            CASE hull_sub_type
+                WHEN 'hull_4_1_21100'  THEN 500
+                WHEN 'hull_5_1_22100'  THEN 2000
+                WHEN 'hull_6_1_22211'  THEN 4000
+                WHEN 'hull_7_1_32211'  THEN 8000
+                WHEN 'hull_8_1_33211'  THEN 16000
+                WHEN 'hull_9_1_33311'  THEN 32000
+                WHEN 'hull_10_1_43311' THEN 64000
+                WHEN 'hull_11_1_44311' THEN 128000
+                WHEN 'hull_12_1_44411' THEN 256000
+                WHEN 'hull_13_1_54411' THEN 512000
+                WHEN 'hull_14_1_55411' THEN 1024000
+                ELSE 0
+            END
+            + (shield_unlocked + interceptor_unlocked) *
+            CASE hull_sub_type
+                WHEN 'hull_6_1_22211'  THEN 500
+                WHEN 'hull_7_1_32211'  THEN 1000
+                WHEN 'hull_8_1_33211'  THEN 2000
+                WHEN 'hull_9_1_33311'  THEN 4000
+                WHEN 'hull_10_1_43311' THEN 8000
+                WHEN 'hull_11_1_44311' THEN 16000
+                WHEN 'hull_12_1_44411' THEN 32000
+                WHEN 'hull_13_1_54411' THEN 64000
+                WHEN 'hull_14_1_55411' THEN 128000
+                ELSE 0
+            END
+        ) AS refund_point
+    FROM commander_unlocked_hull
+    WHERE hull_sub_type REGEXP '^hull_[0-9]+_1_[0-9]+$'
+    GROUP BY commander_id
+) refund ON refund.commander_id = c.id
+SET c.achievement_point = c.achievement_point + refund.refund_point;
+
+DELETE FROM commander_unlocked_hull
+WHERE hull_sub_type REGEXP '^hull_[0-9]+_1_[0-9]+$';
+
+-- 옛 형식 함체 함선의 모듈 행 삭제 — 함선 자체는 서버가 함대 조회 시 기본 함체로 교체하고 빈 모듈을 기본 레벨1로 채움(FleetService.heal*)
+DELETE m FROM module m
+JOIN ship s ON s.id = m.ship_id
+WHERE s.hull_sub_type REGEXP '^hull_[0-9]+_1_[0-9]+$';
+
+-- 진행 중 존런 삭제 — 자원/광물/보상카드 상태를 이어갈 수 없음. 끝난 존런(ESCAPED/ABANDONED)은 일일퀘스트 집계에 쓰이므로 유지
+DELETE l FROM zone_cell_clear_log l
+JOIN zone_run r ON r.id = l.zone_run_id
+WHERE r.status = 'IN_PROGRESS';
+
+DELETE FROM zone_run
+WHERE status = 'IN_PROGRESS';
+
+-- ============================================================
 -- V4__create_notice
 -- ============================================================
 CREATE TABLE notice (

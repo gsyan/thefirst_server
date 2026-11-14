@@ -52,3 +52,6 @@ tools/sqlQuery
 
 ### IntelliJ Run Configurations — 환경변수(비밀키) 포함 가능성
 .run/*.xml
+
+### 실서버 DB 백업 덤프 — 유저 데이터 포함, 커밋 금지
+/db_backup/

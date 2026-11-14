@@ -65,6 +65,11 @@ public class AccountService {
     @Value("${test.guest-keep-data-on-logout:false}")
     private boolean guestKeepDataOnLogout;
 
+    // 로컬 검증 전용 — 0보다 크면 로그인 검증을 통과한 뒤 토큰을 이 커맨더 소유 계정으로 발급(실서버 데이터 복원본을 그 유저로 확인할 때만 사용)
+    // application-dev.properties에서 환경변수 DEV_IMPERSONATE_COMMANDER_ID로만 켜짐, 미설정 시 0(꺼짐)
+    @Value("${dev.impersonate-commander-id:0}")
+    private long devImpersonateCommanderId;
+
     public AccountService(PasswordEncoder passwordEncoder, JwtUtil jwtUtil, AccountRepository accountRepository, CommanderRepository commanderRepository, CommanderService commanderService) {
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
@@ -199,6 +204,7 @@ public class AccountService {
             throw new BusinessException(ServerErrorCode.LOGIN_FAIL_MATCH_PASSWORD);
         }
 
+        account = resolveDevImpersonation(account);
         String refreshToken = jwtUtil.createRefreshToken(account.getId());
         registerSession(account.getId(), refreshToken);
         loginLogService.record(account.getId(), resolveCommanderId(account.getId()), "EMAIL");
@@ -207,6 +213,26 @@ public class AccountService {
                 .accessToken(jwtUtil.createAccessToken(account.getId()))
                 .refreshToken(refreshToken)
                 .build();
+    }
+
+    // devImpersonateCommanderId가 켜져 있으면 그 커맨더의 계정을, 아니면 받은 계정을 그대로 반환 — 대상이 없으면 원래 계정 유지
+    private Account resolveDevImpersonation(Account account) {
+        if (devImpersonateCommanderId <= 0) return account;
+
+        Commander targetCommander = commanderRepository.findById(devImpersonateCommanderId).orElse(null);
+        if (targetCommander == null) {
+            log.warn("[DEV] impersonate-commander-id={} not found — logging in as account {}", devImpersonateCommanderId, account.getId());
+            return account;
+        }
+
+        Account targetAccount = accountRepository.findById(targetCommander.getAccountId()).orElse(null);
+        if (targetAccount == null) {
+            log.warn("[DEV] account {} of commander {} not found — logging in as account {}", targetCommander.getAccountId(), devImpersonateCommanderId, account.getId());
+            return account;
+        }
+
+        log.warn("[DEV] impersonation ON: login account {} -> commander {} (account {})", account.getId(), devImpersonateCommanderId, targetAccount.getId());
+        return targetAccount;
     }
 
     // 로그인 기록용 — 계정당 첫 번째 커맨더의 id (없으면 null)
@@ -379,6 +405,7 @@ public class AccountService {
             accountRepository.save(account);
         }
 
+        account = resolveDevImpersonation(account);
         String refreshToken = jwtUtil.createRefreshToken(account.getId());
         registerSession(account.getId(), refreshToken);
         loginLogService.record(account.getId(), resolveCommanderId(account.getId()), "GOOGLE");
@@ -499,6 +526,7 @@ public class AccountService {
                 throw new BusinessException(ServerErrorCode.LOGIN_FAIL_GUEST_SECRET_MISMATCH);
         }
 
+        account = resolveDevImpersonation(account);
         String refreshToken = jwtUtil.createRefreshToken(account.getId());
         registerSession(account.getId(), refreshToken);
         loginLogService.record(account.getId(), resolveCommanderId(account.getId()), "GUEST");
