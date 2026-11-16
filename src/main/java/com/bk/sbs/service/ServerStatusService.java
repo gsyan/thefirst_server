@@ -40,6 +40,11 @@ public class ServerStatusService {
                 .build();
     }
 
+    // 최소 허용 versionCode — AppVersionCheckFilter가 요청마다 비교(필터 쪽에서 캐시)
+    public int getMinVersionCode() {
+        return getIntConfig(KEY_MIN_VERSION_CODE, 1);
+    }
+
     public MaintenanceStatusDto getMaintenanceStatus() {
         boolean working = getBooleanConfig(KEY_WORKING, true);
         String endTime = getStringConfig(KEY_END_TIME, "");

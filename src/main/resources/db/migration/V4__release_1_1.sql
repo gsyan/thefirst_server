@@ -64,14 +64,23 @@ WHERE status = 'IN_PROGRESS';
 -- ============================================================
 CREATE TABLE notice (
     id            BIGINT       NOT NULL AUTO_INCREMENT,
-    title         VARCHAR(200) NOT NULL DEFAULT '',
-    body          TEXT         NOT NULL,
     enabled       TINYINT(1)   NOT NULL DEFAULT 0,
     display_order INT          NOT NULL DEFAULT 0,
     version       INT          NOT NULL DEFAULT 1,
     created_at    DATETIME(6)  NOT NULL,
     updated_at    DATETIME(6)  NOT NULL,
     PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 공지 언어별 제목/본문 — 클라가 현재 언어(locale)로 골라 표시
+CREATE TABLE notice_text (
+    id            BIGINT       NOT NULL AUTO_INCREMENT,
+    notice_id     BIGINT       NOT NULL,
+    locale        VARCHAR(10)  NOT NULL,
+    title         VARCHAR(200) NOT NULL DEFAULT '',
+    body          TEXT         NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY uk_notice_locale (notice_id, locale)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE commander_notice_seen (
@@ -83,6 +92,42 @@ CREATE TABLE commander_notice_seen (
     PRIMARY KEY (id),
     UNIQUE KEY uk_commander_notice (commander_id, notice_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 함선 시스템 대개편 안내 공지 — id=1 고정(이후 마이그레이션에서 WHERE id = 1로 수정할 수 있게). SQL로 문구를 고칠 땐 version도 +1
+INSERT INTO notice (id, enabled, display_order, version, created_at, updated_at)
+VALUES (1, 1, 0, 1, UTC_TIMESTAMP(6), UTC_TIMESTAMP(6));
+
+INSERT INTO notice_text (notice_id, locale, title, body) VALUES
+(1, 'ko', '함선 시스템 대개편 안내',
+'함선/모듈 시스템이 전면 개편되었습니다.
+
+■ 주요 변경
+- 함체가 13종 아키타입으로 개편되었고, 아키타입마다 4단계 패시브가 추가되었습니다.
+- 기존 함대는 켄투리온함 1척(기본 모듈)으로 재편성됩니다.
+- 진행 중이던 탐사는 종료되었습니다.
+
+■ 보상
+- 기존 함체 해금에 사용한 AP는 전액 환급되었습니다.
+- 지휘관 레벨은 그대로 유지됩니다.
+
+■ 삭제된 시스템
+- 탐험포인트, 구매지휘력 시스템은 삭제되었으며 관련 보상은 없습니다.
+- 지휘력으로 진행한 모듈 강화는 보상되지 않습니다.'),
+(1, 'en', 'Major Ship System Overhaul',
+'The ship and module systems have been completely overhauled.
+
+■ Key Changes
+- Hulls have been reorganized into 13 archetypes, and each archetype now has a 4-stage passive.
+- Your existing fleet has been reorganized into one Centurion with default modules.
+- Any exploration in progress has ended.
+
+■ Compensation
+- All AP spent on unlocking hulls under the old system has been refunded in full.
+- Your commander level stays the same.
+
+■ Removed Systems
+- Exploration Points and purchased Command Power have been removed. There is no compensation for them.
+- Module upgrades made with Command Power are not compensated.');
 
 -- ============================================================
 -- V5__ship_module_combat_overhaul

@@ -19,12 +19,7 @@ public class Notice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 200)
-    private String title;
-
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String body;
-
+    // 제목/본문은 언어별로 notice_text에 저장
     @Column(nullable = false)
     private boolean enabled;
 

@@ -34,10 +34,8 @@
 
         <h2 id="formTitle" style="margin-top:40px;">새 공지 추가</h2>
         <input type="hidden" id="editingId">
-        <label for="titleInput">제목</label>
-        <input type="text" id="titleInput">
-        <label for="bodyInput">내용</label>
-        <textarea id="bodyInput"></textarea>
+        <div id="localeInputs"></div>
+        <div class="hint">제목을 입력한 언어만 저장됩니다. 유저 언어의 공지가 없으면 English, 그것도 없으면 첫 번째 언어로 표시됩니다.</div>
         <label for="displayOrderInput">노출 순서 (작을수록 먼저 표시)</label>
         <input type="text" id="displayOrderInput" value="0">
         <div class="toggle-row">
@@ -53,7 +51,56 @@
     <script>
         renderAdminNav('notice');
 
+        // 클라 로케일 코드와 일치해야 함(LocalizationManager.GetCurrentLocaleCode)
+        const NOTICE_LOCALES = [
+            { code: 'ko', label: '한국어' },
+            { code: 'en', label: 'English' },
+        ];
+
         let noticeCache = [];
+
+        function renderLocaleInputs() {
+            const container = document.getElementById('localeInputs');
+            container.innerHTML = NOTICE_LOCALES.map((locale) => `
+                <h3 style="margin:24px 0 0;">${locale.label} (${locale.code})</h3>
+                <label for="titleInput_${locale.code}">제목</label>
+                <input type="text" id="titleInput_${locale.code}">
+                <label for="bodyInput_${locale.code}">내용</label>
+                <textarea id="bodyInput_${locale.code}"></textarea>
+            `).join('');
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // 목록 표시용 제목 — 입력 순서(NOTICE_LOCALES)상 첫 번째로 있는 언어
+        function getDisplayTitle(notice) {
+            const texts = notice.texts || [];
+            for (const locale of NOTICE_LOCALES) {
+                const text = texts.find((t) => t.locale === locale.code);
+                if (text !== undefined) return text.title;
+            }
+            return texts.length > 0 ? texts[0].title : '';
+        }
+
+        function setLocaleInputs(texts) {
+            for (const locale of NOTICE_LOCALES) {
+                const text = (texts || []).find((t) => t.locale === locale.code);
+                document.getElementById(`titleInput_${locale.code}`).value = text !== undefined ? text.title : '';
+                document.getElementById(`bodyInput_${locale.code}`).value = text !== undefined ? text.body : '';
+            }
+        }
+
+        function collectLocaleInputs() {
+            return NOTICE_LOCALES.map((locale) => ({
+                locale: locale.code,
+                title: document.getElementById(`titleInput_${locale.code}`).value.trim(),
+                body: document.getElementById(`bodyInput_${locale.code}`).value,
+            }));
+        }
 
         async function loadNotices() {
             const response = await adminFetch('/admin/api/notice');
@@ -66,7 +113,7 @@
             body.innerHTML = noticeCache.map((notice) => `
                 <tr>
                     <td>${notice.displayOrder}</td>
-                    <td>${notice.title}</td>
+                    <td>${escapeHtml(getDisplayTitle(notice))}</td>
                     <td>${notice.enabled ? 'O' : 'X'}</td>
                     <td>${notice.version}</td>
                     <td>
@@ -82,8 +129,7 @@
             if (notice === undefined) return;
             document.getElementById('formTitle').textContent = '공지 수정';
             document.getElementById('editingId').value = notice.id;
-            document.getElementById('titleInput').value = notice.title;
-            document.getElementById('bodyInput').value = notice.body;
+            setLocaleInputs(notice.texts);
             document.getElementById('displayOrderInput').value = notice.displayOrder;
             document.getElementById('enabledCheckbox').checked = notice.enabled;
             document.getElementById('cancelEditButton').style.display = 'inline';
@@ -92,8 +138,7 @@
         function resetForm() {
             document.getElementById('formTitle').textContent = '새 공지 추가';
             document.getElementById('editingId').value = '';
-            document.getElementById('titleInput').value = '';
-            document.getElementById('bodyInput').value = '';
+            setLocaleInputs([]);
             document.getElementById('displayOrderInput').value = '0';
             document.getElementById('enabledCheckbox').checked = false;
             document.getElementById('cancelEditButton').style.display = 'none';
@@ -105,8 +150,7 @@
             const idValue = document.getElementById('editingId').value;
             const request = {
                 id: idValue === '' ? null : Number(idValue),
-                title: document.getElementById('titleInput').value.trim(),
-                body: document.getElementById('bodyInput').value,
+                texts: collectLocaleInputs(),
                 displayOrder: Number(document.getElementById('displayOrderInput').value) || 0,
                 enabled: document.getElementById('enabledCheckbox').checked,
             };
@@ -133,6 +177,7 @@
             loadNotices();
         }
 
+        renderLocaleInputs();
         loadNotices();
     </script>
 </body>

@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class SupportAbilitySettings {
     private Integer tickSeconds;
 
-    private Integer repairCostPerTick;
+    private Integer repairShipCostPercent;
 
     private Integer repairReleaseRatioPercent;
 

@@ -14,7 +14,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 public class TacticSettings {
-    private Integer tacticRepairCost;
+    private Integer tacticRepairHealthUnit;
+
+    private Integer tacticRepairCostPerUnit;
 
     private Integer tacticBeamCost;
 

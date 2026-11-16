@@ -1,5 +1,6 @@
 package com.bk.sbs.dto;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +17,6 @@ import lombok.NoArgsConstructor;
 public class NoticeItemDto {
     private Long noticeId;
     private Integer version;
-    private String title;
-    private String body;
+    private List<NoticeTextDto> texts;
+    private Boolean isRead;
 }
