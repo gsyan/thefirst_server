@@ -71,6 +71,12 @@ public class Commander {
 
     private java.time.LocalDate dailyQuestStreakDate;
 
+    // 일일퀘스트 목록 고정 — dailyQuestDate(UTC)에 처음 뽑은 업적 ID들(쉼표 구분, 난이도 순). 날짜가 오늘이 아니면 새로 추첨
+    private java.time.LocalDate dailyQuestDate;
+
+    @Column(length = 255)
+    private String dailyQuestIds;
+
     // 존 탈출(ESCAPED)로 확정된 존 번호 중 최댓값 — 다음 존 입장 가능 여부 판정용(ZoneRun 조회 없이 O(1))
     @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
     private int highestClearedZoneNumber = 0;

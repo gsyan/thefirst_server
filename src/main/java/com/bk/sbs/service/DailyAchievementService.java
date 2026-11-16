@@ -118,7 +118,7 @@ public class DailyAchievementService {
     private void updateStreakIfAllClaimed(Commander commander, LocalDate today) {
         if (today.equals(commander.getDailyQuestStreakDate()) == true) return;
 
-        List<GameDataService.DailyAchievementEntry> todayEntries = getTodayDailyAchievements(commander.getId(), today);
+        List<GameDataService.DailyAchievementEntry> todayEntries = getTodayDailyAchievements(commander, today, true);
         if (todayEntries.isEmpty() == true) return;
 
         Set<String> claimedIds = new HashSet<>();
@@ -145,19 +145,61 @@ public class DailyAchievementService {
         return z ^ (z >>> 31);
     }
 
-    // 오늘(UTC)의 일일 업적 — 난이도별 풀에서 날짜+커맨더 시드로 1개씩 결정(저장 없이 항상 같은 결과). 풀이 비어 있는 난이도는 건너뜀
-    // 레벨·보유 함선 등 하루 중 바뀔 수 있는 값은 추첨에 쓰지 않음 — 당장 수행할 수 없는 퀘스트가 뽑히는 것도 허용
-    private List<GameDataService.DailyAchievementEntry> getTodayDailyAchievements(Long commanderId, LocalDate today) {
+    // 오늘(UTC)의 일일 업적 — commander에 저장된 오늘 목록이 있으면 그대로 사용(하루 동안 레벨 변화·데이터 배포와 무관하게 고정)
+    // 없으면 새로 추첨하고, shouldStore=true면 commander 필드에 기록(호출자가 잠근 commander를 트랜잭션 안에서 저장해야 반영). 레드닷처럼 읽기 전용 경로는 false
+    private List<GameDataService.DailyAchievementEntry> getTodayDailyAchievements(Commander commander, LocalDate today, boolean shouldStore) {
+        if (today.equals(commander.getDailyQuestDate()) == true && commander.getDailyQuestIds() != null)
+            return resolveStoredDailyAchievements(commander.getDailyQuestIds());
+
+        List<GameDataService.DailyAchievementEntry> drawn = drawDailyAchievements(commander, today);
+        if (shouldStore == true) {
+            String joinedIds = drawn.stream().map(e -> e.achievementId).collect(Collectors.joining(","));
+            commander.setDailyQuestDate(today);
+            commander.setDailyQuestIds(joinedIds);
+        }
+        return drawn;
+    }
+
+    // 저장된 ID 순서대로 데이터 항목을 찾음 — 데이터에서 삭제된 ID는 건너뜀
+    private List<GameDataService.DailyAchievementEntry> resolveStoredDailyAchievements(String storedIds) {
+        List<GameDataService.DailyAchievementEntry> result = new ArrayList<>();
+        if (storedIds.isEmpty() == true) return result;
+
+        Map<String, GameDataService.DailyAchievementEntry> entryById = gameDataService.getDailyAchievementList().stream()
+                .collect(Collectors.toMap(e -> e.achievementId, e -> e, (a, b) -> a));
+        for (String id : storedIds.split(",")) {
+            GameDataService.DailyAchievementEntry entry = entryById.get(id);
+            if (entry != null)
+                result.add(entry);
+        }
+        return result;
+    }
+
+    // PVP 퀘스트는 PVP 입장 가능 레벨(DataTableConfig pvpMinCommanderLevel, PvpService와 같은 기준)일 때만 추첨 대상
+    private boolean isPvpQuestAvailable(Commander commander) {
+        Integer minCommanderLevel = gameDataService.getDataTableConfig().getPvp().getPvpMinCommanderLevel();
+        if (minCommanderLevel == null || minCommanderLevel <= 0) return true;
+        return commander.getCommanderLevel() >= minCommanderLevel;
+    }
+
+    private boolean isPvpQuest(GameDataService.DailyAchievementEntry entry) {
+        return entry.conditionType == EAchievementConditionType.PvpBattle || entry.conditionType == EAchievementConditionType.PvpVictory;
+    }
+
+    // 난이도별 풀에서 날짜+커맨더 시드로 1개씩 추첨. 풀이 비어 있는 난이도는 건너뜀
+    private List<GameDataService.DailyAchievementEntry> drawDailyAchievements(Commander commander, LocalDate today) {
+        boolean isPvpAvailable = isPvpQuestAvailable(commander);
         List<GameDataService.DailyAchievementEntry> result = new ArrayList<>();
         for (String difficulty : k_difficulties) {
             List<GameDataService.DailyAchievementEntry> pool = gameDataService.getDailyAchievementList().stream()
                     .filter(e -> difficulty.equals(e.difficulty))
+                    .filter(e -> isPvpAvailable == true || isPvpQuest(e) == false)
                     .sorted(Comparator.comparing(e -> e.achievementId))
                     .collect(Collectors.toList());
             if (pool.isEmpty() == true) continue;
 
             long daySeed = today.toEpochDay() * 1_000_003L;
-            long commanderSeed = commanderId * 31L;
+            long commanderSeed = commander.getId() * 31L;
             long rawSeed = daySeed + commanderSeed + difficulty.hashCode();
             long seed = mixSeed(rawSeed);
             int pickedIndex = new Random(seed).nextInt(pool.size());
@@ -203,9 +245,10 @@ public class DailyAchievementService {
         return context;
     }
 
-    @Transactional(readOnly = true)
+    // 오늘 목록이 아직 저장 전이면 이 조회에서 확정·저장하므로 쓰기 트랜잭션 + commander 잠금
+    @Transactional
     public GetDailyAchievementListResponse getDailyAchievementStatusList(Long commanderId) {
-        Commander commander = commanderRepository.findById(commanderId)
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.DAILY_ACHIEVEMENT_CLAIM_FAIL_COMMANDER_NOT_FOUND));
 
         LocalDate today = LocalDate.now(ZoneOffset.UTC);
@@ -213,7 +256,7 @@ public class DailyAchievementService {
         Instant dayEnd = today.plusDays(1).atStartOfDay(ZoneOffset.UTC).toInstant();
         DailyAchievementProgressContext context = buildDailyProgressContext(commanderId, today, dayStart, dayEnd);
 
-        List<DailyAchievementStatusDto> statusList = getTodayDailyAchievements(commanderId, today).stream()
+        List<DailyAchievementStatusDto> statusList = getTodayDailyAchievements(commander, today, true).stream()
                 .map(entry -> DailyAchievementStatusDto.builder()
                         .achievementId(entry.achievementId)
                         .currentValue(computeDailyCurrentValue(context, entry))
@@ -238,7 +281,7 @@ public class DailyAchievementService {
         DailyAchievementProgressContext context = buildDailyProgressContext(commanderId, today, dayStart, dayEnd);
         boolean isVip = isVipActive(commanderId);
 
-        for (GameDataService.DailyAchievementEntry entry : getTodayDailyAchievements(commanderId, today)) {
+        for (GameDataService.DailyAchievementEntry entry : getTodayDailyAchievements(commander, today, false)) {
             boolean isClaimed = context.claimedAchievementIds.contains(entry.achievementId);
             boolean isVipClaimed = isVip == true && context.vipClaimedAchievementIds.contains(entry.achievementId);
             if (isClaimed == true && (isVip == false || isVipClaimed == true)) continue;
@@ -255,7 +298,7 @@ public class DailyAchievementService {
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.DAILY_ACHIEVEMENT_CLAIM_FAIL_COMMANDER_NOT_FOUND));
 
         LocalDate today = LocalDate.now(ZoneOffset.UTC);
-        GameDataService.DailyAchievementEntry entry = getTodayDailyAchievements(commanderId, today).stream()
+        GameDataService.DailyAchievementEntry entry = getTodayDailyAchievements(commander, today, true).stream()
                 .filter(e -> e.achievementId.equals(achievementId))
                 .findFirst()
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.DAILY_ACHIEVEMENT_CLAIM_FAIL_NOT_FOUND));
@@ -303,7 +346,7 @@ public class DailyAchievementService {
         List<String> claimedIds = new ArrayList<>();
         int totalGranted = 0;
 
-        for (GameDataService.DailyAchievementEntry entry : getTodayDailyAchievements(commanderId, today)) {
+        for (GameDataService.DailyAchievementEntry entry : getTodayDailyAchievements(commander, today, true)) {
             int currentValue = computeDailyCurrentValue(context, entry);
             if (currentValue < entry.threshold)
                 continue;

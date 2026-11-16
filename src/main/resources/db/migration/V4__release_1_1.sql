@@ -286,6 +286,11 @@ ALTER TABLE commander
     ADD COLUMN daily_quest_streak INT NOT NULL DEFAULT 0,
     ADD COLUMN daily_quest_streak_date DATE NULL;
 
+-- 일일퀘스트 목록 고정: 그날(UTC) 처음 뽑은 업적 ID 목록(쉼표 구분)을 저장해 하루 동안 바뀌지 않게 함
+ALTER TABLE commander
+    ADD COLUMN daily_quest_date DATE NULL,
+    ADD COLUMN daily_quest_ids VARCHAR(255) NULL;
+
 -- ============================================================
 -- V15__zone_run_continuous_archetypes
 -- ============================================================
