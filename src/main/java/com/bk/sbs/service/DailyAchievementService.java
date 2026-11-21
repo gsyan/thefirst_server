@@ -6,13 +6,17 @@ import com.bk.sbs.dto.DailyAchievementStatusDto;
 import com.bk.sbs.dto.DailyQuestSettings;
 import com.bk.sbs.dto.GetDailyAchievementListResponse;
 import com.bk.sbs.enums.EAchievementConditionType;
+import com.bk.sbs.enums.EModuleType;
 import com.bk.sbs.entity.Commander;
 import com.bk.sbs.entity.CommanderDailyAchievementClaim;
 import com.bk.sbs.entity.VipSubscription;
 import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
+import com.bk.sbs.dto.ModuleData;
+import com.bk.sbs.entity.CommanderUnlockedHull;
 import com.bk.sbs.repository.CommanderDailyAchievementClaimRepository;
 import com.bk.sbs.repository.CommanderRepository;
+import com.bk.sbs.repository.CommanderUnlockedHullRepository;
 import com.bk.sbs.repository.VipSubscriptionRepository;
 import com.bk.sbs.repository.ZoneCellClearLogRepository;
 import com.bk.sbs.repository.ZoneRunRepository;
@@ -44,12 +48,14 @@ public class DailyAchievementService {
     private final CommanderDailyAchievementClaimRepository commanderDailyAchievementClaimRepository;
     private final VipSubscriptionRepository vipSubscriptionRepository;
     private final DailyCounterService dailyCounterService;
+    private final CommanderUnlockedHullRepository commanderUnlockedHullRepository;
 
     public DailyAchievementService(CommanderRepository commanderRepository, GameDataService gameDataService,
                                     ZoneCellClearLogRepository zoneCellClearLogRepository, ZoneRunRepository zoneRunRepository,
                                     CommanderDailyAchievementClaimRepository commanderDailyAchievementClaimRepository,
                                     VipSubscriptionRepository vipSubscriptionRepository,
-                                    DailyCounterService dailyCounterService) {
+                                    DailyCounterService dailyCounterService,
+                                    CommanderUnlockedHullRepository commanderUnlockedHullRepository) {
         this.commanderRepository = commanderRepository;
         this.gameDataService = gameDataService;
         this.zoneCellClearLogRepository = zoneCellClearLogRepository;
@@ -57,6 +63,7 @@ public class DailyAchievementService {
         this.commanderDailyAchievementClaimRepository = commanderDailyAchievementClaimRepository;
         this.vipSubscriptionRepository = vipSubscriptionRepository;
         this.dailyCounterService = dailyCounterService;
+        this.commanderUnlockedHullRepository = commanderUnlockedHullRepository;
     }
 
     // 활성 VIP 여부 — IapService.isVipActive()와 동일 기준(서비스 간 커플링 없이 각자 보유)
@@ -186,14 +193,40 @@ public class DailyAchievementService {
         return entry.conditionType == EAchievementConditionType.PvpBattle || entry.conditionType == EAchievementConditionType.PvpVictory;
     }
 
+    // 보유 함체 = 티어1 전부(기본 지급) + 해금 기록이 있는 티어2+ 함체(FleetService.placeFleetShip과 같은 기준)
+    private List<ModuleData> getOwnedHulls(Long commanderId) {
+        Set<String> unlockedSubTypes = new HashSet<>();
+        for (CommanderUnlockedHull unlocked : commanderUnlockedHullRepository.findByCommanderId(commanderId))
+            unlockedSubTypes.add(unlocked.getHullSubType());
+
+        List<ModuleData> owned = new ArrayList<>();
+        for (ModuleData hull : gameDataService.getModulesByType(EModuleType.hull)) {
+            boolean isBaseTier = GameDataService.parseTierFromHullSubType(hull.getModuleSubType()) <= 1;
+            if (isBaseTier == true || unlockedSubTypes.contains(hull.getModuleSubType()) == true)
+                owned.add(hull);
+        }
+        return owned;
+    }
+
+    // 실드로 막기/요격으로 막기 퀘스트는 실드/요격체 슬롯이 있는 함체를 보유했을 때만 추첨 대상
+    private boolean isQuestAvailableByHull(GameDataService.DailyAchievementEntry entry, boolean ownsShieldHull, boolean ownsInterceptorHull) {
+        if (entry.conditionType == EAchievementConditionType.ShieldAbsorb) return ownsShieldHull;
+        if (entry.conditionType == EAchievementConditionType.InterceptCount) return ownsInterceptorHull;
+        return true;
+    }
+
     // 난이도별 풀에서 날짜+커맨더 시드로 1개씩 추첨. 풀이 비어 있는 난이도는 건너뜀
     private List<GameDataService.DailyAchievementEntry> drawDailyAchievements(Commander commander, LocalDate today) {
         boolean isPvpAvailable = isPvpQuestAvailable(commander);
+        List<ModuleData> ownedHulls = getOwnedHulls(commander.getId());
+        boolean ownsShieldHull = ownedHulls.stream().anyMatch(h -> Boolean.TRUE.equals(h.getHasShield()));
+        boolean ownsInterceptorHull = ownedHulls.stream().anyMatch(h -> Boolean.TRUE.equals(h.getHasInterceptor()));
         List<GameDataService.DailyAchievementEntry> result = new ArrayList<>();
         for (String difficulty : k_difficulties) {
             List<GameDataService.DailyAchievementEntry> pool = gameDataService.getDailyAchievementList().stream()
                     .filter(e -> difficulty.equals(e.difficulty))
                     .filter(e -> isPvpAvailable == true || isPvpQuest(e) == false)
+                    .filter(e -> isQuestAvailableByHull(e, ownsShieldHull, ownsInterceptorHull) == true)
                     .sorted(Comparator.comparing(e -> e.achievementId))
                     .collect(Collectors.toList());
             if (pool.isEmpty() == true) continue;

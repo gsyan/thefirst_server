@@ -87,6 +87,10 @@ public class FleetService {
         return archetypeBySlot;
     }
 
+    private boolean isZoneRunInProgress(Long commanderId) {
+        return zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS).isPresent();
+    }
+
     // 진행 중인 존런의 "처음부터 계속 함대에 있던 아키타입" 목록을 현재 함대와의 교집합으로 줄임(늘리지 않음) — 함선 배치/해제 직후 호출
     private void narrowRunContinuousArchetypes(Long commanderId) {
         Optional<ZoneRun> runOpt = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS);
@@ -283,9 +287,14 @@ public class FleetService {
                 throw new BusinessException(ServerErrorCode.PLACE_FLEET_SHIP_FAIL_DUPLICATE_ARCHETYPE);
         }
 
-        Ship ship = fleet.getShips().stream()
+        Optional<Ship> existingShip = fleet.getShips().stream()
                 .filter(s -> s.getSlotIndex() == request.getSlotIndex())
-                .findFirst()
+                .findFirst();
+        // 존런 중엔 빈 슬롯 배치만 허용 — 교체를 허용하면 손상된 함선을 빼고 만피 함선으로 갈아끼우는 회복 우회가 생김
+        if (existingShip.isPresent() == true && isZoneRunInProgress(commanderId) == true)
+            throw new BusinessException(ServerErrorCode.PLACE_FLEET_SHIP_FAIL_REPLACE_DURING_ZONE_RUN);
+
+        Ship ship = existingShip
                 .orElseGet(() -> {
                     Ship newShip = new Ship();
                     newShip.setFleet(fleet);
@@ -599,6 +608,10 @@ public class FleetService {
 
         Fleet fleet = fleetRepository.findByCommanderIdAndFleetIndex(commanderId, 0)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.COMMANDER_CONTROLLER_FAIL_NULL_ACTIVE_FLEET));
+
+        // 존런 중 배치 해제 금지 — 해제 후 재배치로 손상/파괴된 함선이 만피로 되살아나는 것을 막음
+        if (isZoneRunInProgress(commanderId) == true)
+            throw new BusinessException(ServerErrorCode.REMOVE_FLEET_SHIP_FAIL_DURING_ZONE_RUN);
 
         int removedSlotIndex = request.getSlotIndex();
         fleet.getShips().removeIf(s -> s.getSlotIndex() == removedSlotIndex);
