@@ -143,7 +143,6 @@ public class ExplorationService {
     private static final int TREASURE_MINERAL_MULTIPLIER = 3; // 그 존의 일반 전투 셀 보상의 3배
     private static final float TREASURE_SHIP_HEALTH_HEAL_RATIO = 0.5f;
 
-    private static final float ESCAPE_FAIL_PAYOUT_RATIO = 0.5f; // 탈출 실패(전투 패배 등) — 적립 보상의 50% 지급
 
     // 체력 비율 범위(0~1)만 검증 — 피닉스 아군 수리 등 전투 중 회복량이 커서 직전 스냅샷 대비 증가폭은 검사하지 않음
     private void validateHealthSnapshot(List<ShipHealthRatioInfoDto> reported) {
@@ -521,6 +520,7 @@ public class ExplorationService {
                 && zoneCellClearLogRepository.findTopByZoneRunIdAndCellOrderByClearedAtDesc(run.getId(), cell).isPresent();
 
         int mineralGained = 0;
+        int expGained = 0;
         List<String> rewardCardCandidates = null;
         ETreasureRewardType treasureRewardType = ETreasureRewardType.None;
         float treasureRewardRatio = 0f;
@@ -538,10 +538,12 @@ public class ExplorationService {
                 int mineralRewardBonusPerClear = gameDataService.getDataTableConfig().getExploration().getMineralRewardBonusPerClear();
                 mineralGained = zoneConfig.getMineralReward() + mineralRewardBonusPerClear * run.getRewardedClearCount();
                 run.setRewardedClearCount(run.getRewardedClearCount() + 1);
+                // 지휘관 경험치 — 보상받는 전투 셀(탈출 셀 포함)을 처음 클리어할 때마다 존의 셀당 경험치 지급(재방문/빈 셀은 0)
+                Integer expRewardPerCell = zoneConfig.getCommanderExpRewardPerCell();
+                expGained = expRewardPerCell != null ? expRewardPerCell : 0;
             } else {
                 mineralGained = 0;
             }
-            // 지휘관 경험치는 셀 클리어로는 지급하지 않음 — 존의 commander_exp_reward는 탈출 확정(escapeExplorationZone)에서 1회만 지급됨
 
             // 탈출 셀은 보상카드 후보 생성 스킵 — 탈출 셀은 별도의 탈출 확정 흐름을 가짐
             // 후보는 이번 런에서 처음 필요해질 때 1회만 추첨해서 run에 고정 — 이후 셀을 클리어해도 재추첨하지 않고 그대로 재사용(리롤/구매 시에만 갱신)
@@ -576,9 +578,17 @@ public class ExplorationService {
             if (mineralGained > 0)
                 mineralGained += run.getMineralFlatBonusTotal();
 
-            // VIP 혜택 — 지급 자체를 2배로(경험치는 셀 클리어가 아니라 탈출 확정에서 지급되므로 여기선 광물만 해당)
-            if (isVipActive(commanderId) == true)
+            // VIP 혜택 — 광물/경험치 지급 자체를 2배로
+            if (isVipActive(commanderId) == true) {
                 mineralGained *= 2;
+                expGained *= 2;
+            }
+        }
+
+        // 경험치는 셀 클리어 즉시 확정 — 이후 존런을 포기/실패해도 잃지 않음
+        if (expGained > 0) {
+            commander.setExp(commander.getExp() + expGained);
+            CommanderLevelUtil.autoLevelUpIfNeeded(commander, gameDataService);
         }
 
         // 함재기 약탈 광물 — 클라 보고 합계를 그대로 지급(상한 없음), 존 보상용 광물 배율/VIP 2배는 적용하지 않음
@@ -668,6 +678,9 @@ public class ExplorationService {
                 .mineralGained(mineralGained)
                 .scavengedMineral(scavengedMineral)
                 .scoutedMineral(scoutedMineral)
+                .expGained(expGained)
+                .totalExp(commander.getExp())
+                .commanderLevel(commander.getCommanderLevel())
                 .treasureRewardType(treasureRewardType)
                 .treasureRewardRatio(treasureRewardRatio)
                 .resource(finalResource)
@@ -910,7 +923,7 @@ public class ExplorationService {
     // 업적포인트는 더 이상 여기서 자동 지급하지 않음 — 유저가 업적 패널에서 직접 "받기"를 눌러야 지급(AchievementService.claimAchievement)
     // hasUnclaimedAchievement: 이 정산으로 완료됐을 수 있는 업적을 클라가 바로 알 수 있도록 존런이 끝나는 시점(체크포인트)에 같이 계산
     // unlockStageCompleted: 이 정산으로 실드/요격체 해금 단계가 완료됐는지 — 응답에 갱신된 함대를 실을지 판단
-    private record RunSettlement(int expPayout, int resource, boolean hasUnclaimedAchievement, boolean unlockStageCompleted) {}
+    private record RunSettlement(int resource, boolean hasUnclaimedAchievement, boolean unlockStageCompleted) {}
 
     // 함대 범위 카운터(적 격침/약탈 광물/절감 자원)의 아키타입 1개당 상한 — 이 셀 서버 집계 총량을 넘지 못함. 그 외 종류는 보고값 그대로
     // 절감 자원은 이번 셀에서 실제로 줄어든 자원량이 상한(절감률 50% 이하에서는 절감량이 실제 지불량을 넘지 않음)
@@ -956,18 +969,8 @@ public class ExplorationService {
     }
 
     // 탈출 성공/실패, 포기 공통 정산 — escapeExplorationZone(성공/실패)과 abandonZoneRun(실패 고정)이 공유.
-    // payoutRatio는 isSuccess와 별개 파라미터 — isSuccess는 run 상태(ESCAPED/ABANDONED)·최고클리어존 갱신에만
-    // 쓰이고, 실제 지급 비율은 호출부가 상황(탈출 실패 50% / 포기 20% / 포기+광고 100%)에 맞게 넘김
-    // 지휘관 경험치는 셀 클리어마다 쌓이지 않고, 이 존의 commander_exp_reward 값을 이 정산 1회에서만 지급(존을 몇 번 재방문하든 같은 값)
-    private RunSettlement settleZoneRun(Commander commander, ZoneRun run, boolean isSuccess, float payoutRatio) {
-        ZoneConfigData zoneConfig = gameDataService.getZoneConfigByIndex(run.getZoneNumber());
-        int zoneExpReward = zoneConfig != null ? zoneConfig.getCommanderExpReward() : 0;
-        int expPayout = (int) (zoneExpReward * payoutRatio);
-        if (isVipActive(commander.getId()) == true)
-            expPayout *= 2;
-
-        commander.setExp(commander.getExp() + expPayout);
-        CommanderLevelUtil.autoLevelUpIfNeeded(commander, gameDataService);
+    // isSuccess는 run 상태(ESCAPED/ABANDONED)·최고클리어존 갱신에만 쓰임. 지휘관 경험치는 셀 클리어마다 이미 지급되므로 정산에서는 지급하지 않음
+    private RunSettlement settleZoneRun(Commander commander, ZoneRun run, boolean isSuccess) {
         if (isSuccess && run.getZoneNumber() > commander.getHighestClearedZoneNumber())
             commander.setHighestClearedZoneNumber(run.getZoneNumber());
 
@@ -986,7 +989,7 @@ public class ExplorationService {
         boolean hasUnclaimedAchievement = achievementService.hasUnclaimedCompletedAchievement(commander.getId());
 
         // 런이 끝나면 자원은 다음 런 시작 전이라도 즉시 완전 회복된 것으로 취급(다음 ZoneRun 생성 시 이 값으로 초기화되는 것과 동일한 결과)
-        return new RunSettlement(expPayout, commander.getResourceMax(), hasUnclaimedAchievement, unlockStageCompleted);
+        return new RunSettlement(commander.getResourceMax(), hasUnclaimedAchievement, unlockStageCompleted);
     }
 
     @Transactional
@@ -1019,11 +1022,10 @@ public class ExplorationService {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
 
-        float payoutRatio = isSuccess ? 1.0f : ESCAPE_FAIL_PAYOUT_RATIO;
-        RunSettlement settlement = settleZoneRun(commander, run, isSuccess, payoutRatio);
+        RunSettlement settlement = settleZoneRun(commander, run, isSuccess);
 
         return EscapeExplorationZoneResponse.builder()
-                .expGained(settlement.expPayout())
+                .expGained(0) // 경험치는 셀 클리어 시점에 이미 지급됨
                 .totalExp(commander.getExp())
                 .commanderLevel(commander.getCommanderLevel())
                 .highestClearedZoneNumber(commander.getHighestClearedZoneNumber())
@@ -1034,7 +1036,7 @@ public class ExplorationService {
                 .build();
     }
 
-    // 포기는 보상(경험치) 없음 — 지휘관 경험치는 존런을 성공적으로 클리어(탈출)했을 때만 지급(escapeExplorationZone)
+    // 포기 정산 — 셀 클리어로 이미 받은 경험치는 그대로 유지되고, 정산 자체로 추가 지급하는 보상은 없음
     @Transactional
     public AbandonZoneRunResponse abandonZoneRun(Long commanderId, AbandonZoneRunRequest request) {
         ZoneRun run = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS)
@@ -1043,10 +1045,10 @@ public class ExplorationService {
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
 
-        RunSettlement settlement = settleZoneRun(commander, run, false, 0f);
+        RunSettlement settlement = settleZoneRun(commander, run, false);
 
         return AbandonZoneRunResponse.builder()
-                .expGained(settlement.expPayout())
+                .expGained(0) // 경험치는 셀 클리어 시점에 이미 지급됨
                 .totalExp(commander.getExp())
                 .commanderLevel(commander.getCommanderLevel())
                 .resource(settlement.resource())

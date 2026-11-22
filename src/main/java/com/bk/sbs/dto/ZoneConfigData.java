@@ -20,5 +20,5 @@ public class ZoneConfigData {
     private Integer gridHeight;
     private List<GridCellOverrideDto> cellOverrides;
     private Integer mineralReward;
-    private Integer commanderExpReward;
+    private Integer commanderExpRewardPerCell;
 }

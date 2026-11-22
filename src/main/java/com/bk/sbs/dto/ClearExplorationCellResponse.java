@@ -19,6 +19,9 @@ public class ClearExplorationCellResponse {
     private Integer mineralGained;
     private Integer scavengedMineral;
     private Integer scoutedMineral;
+    private Integer expGained;
+    private Integer totalExp;
+    private Integer commanderLevel;
     private List<String> rewardCardCandidates;
     private ETreasureRewardType treasureRewardType;
     private Float treasureRewardRatio;
