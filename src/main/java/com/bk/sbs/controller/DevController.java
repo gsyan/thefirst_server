@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/dev")
-@Profile({"dev"})
+@Profile({"dev", "devtools"}) // devtools: 테스트 서버 전용(prod,devtools), 실서버에는 넣지 말 것
 public class DevController {
 
     private final CommanderService CommanderService;
