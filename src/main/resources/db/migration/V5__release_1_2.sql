@@ -36,3 +36,6 @@ SET c.exp = cur.new_exp + GREATEST(0, c.exp - cur.old_exp)
 WHERE c.commander_level = (SELECT max_level FROM (SELECT MAX(commander_level) AS max_level FROM commander_exp_rebase) m);
 
 DROP TABLE commander_exp_rebase;
+
+-- 함체/모듈 티어 보유 업적 제거로 달성 기록 테이블 미사용
+DROP TABLE commander_achievement_reached;

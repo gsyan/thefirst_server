@@ -31,7 +31,6 @@ public class FleetService {
     private final GameDataService gameDataService;
     private final FleetRepository fleetRepository;
     private final CommanderUnlockedHullRepository commanderUnlockedHullRepository;
-    private final AchievementService achievementService;
     private final ZoneRunRepository zoneRunRepository;
     private final HullArchetypeProgressService hullArchetypeProgressService;
 
@@ -44,14 +43,12 @@ public class FleetService {
                        GameDataService gameDataService,
                        FleetRepository fleetRepository,
                        CommanderUnlockedHullRepository commanderUnlockedHullRepository,
-                       AchievementService achievementService,
                        ZoneRunRepository zoneRunRepository,
                        HullArchetypeProgressService hullArchetypeProgressService) {
         this.commanderRepository = commanderRepository;
         this.gameDataService = gameDataService;
         this.fleetRepository = fleetRepository;
         this.commanderUnlockedHullRepository = commanderUnlockedHullRepository;
-        this.achievementService = achievementService;
         this.zoneRunRepository = zoneRunRepository;
         this.hullArchetypeProgressService = hullArchetypeProgressService;
     }
@@ -324,7 +321,6 @@ public class FleetService {
         ship.setFront(request.getIsFront());
         replaceShipModules(ship, keptModules);
         fleetRepository.save(fleet);
-        achievementService.recordReachedTierAchievements(commander, fleet);
         narrowRunContinuousArchetypes(commanderId);
     }
 
@@ -519,7 +515,6 @@ public class FleetService {
         }
         replaceShipModules(ship, newModules);
         fleetRepository.save(fleet);
-        achievementService.recordReachedTierAchievements(commander, fleet);
 
         int remainingAfter = commandPowerMax - (usedByOtherShips + newShipCost);
 

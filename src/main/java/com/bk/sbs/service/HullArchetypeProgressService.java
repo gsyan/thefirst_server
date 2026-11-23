@@ -74,6 +74,29 @@ public class HullArchetypeProgressService {
         return result;
     }
 
+    // 지휘관의 아키타입별 완료한 패시브 단계 — 1단계부터 이어서 완료된 마지막 단계 번호(없으면 0)
+    @Transactional(readOnly = true)
+    public Map<String, Integer> getCompletedStageByArchetype(Long commanderId) {
+        Map<String, Set<Integer>> completedStagesByArchetype = new HashMap<>();
+        for (CommanderHullArchetypeProgress row : repository.findByCommanderId(commanderId)) {
+            if (row.isCompleted() == false) continue;
+            completedStagesByArchetype.computeIfAbsent(row.getHullArchetype(), k -> new HashSet<>()).add(row.getStage());
+        }
+
+        Map<String, Integer> result = new HashMap<>();
+        for (String hullArchetype : gameDataService.getHullArchetypesWithPassives()) {
+            Set<Integer> completedStages = completedStagesByArchetype.getOrDefault(hullArchetype, Set.of());
+            int completedStage = 0;
+            for (GameDataService.HullArchetypePassiveEntry entry : gameDataService.getHullArchetypePassives(hullArchetype)) {
+                boolean completed = completedStages.contains(entry.stage) == true || entry.threshold <= 0;
+                if (completed == false) break;
+                completedStage = entry.stage;
+            }
+            result.put(hullArchetype, completedStage);
+        }
+        return result;
+    }
+
     // 실드/요격체 사용 가능 여부 — 완료된 단계 효과에 해당 해금 효과가 있어야 함(슬롯이 있는 함체인지는 호출 측이 판단)
     public static boolean isModuleUnlocked(Map<String, Set<String>> completedEffectsByArchetype, String hullArchetype, EModuleType moduleType) {
         Set<String> effects = completedEffectsByArchetype.getOrDefault(hullArchetype, Set.of());

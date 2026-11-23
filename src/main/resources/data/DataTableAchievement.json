@@ -8,7 +8,7 @@
     "achievementPointRewardVip": 5,
     "nameKey": "UIAchievement_Name_cell_clear",
     "descKey": "UIAchievement_Desc_cell_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "cell_clear_50",
@@ -19,7 +19,7 @@
     "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_cell_clear",
     "descKey": "UIAchievement_Desc_cell_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "cell_clear_100",
@@ -30,7 +30,7 @@
     "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_cell_clear",
     "descKey": "UIAchievement_Desc_cell_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "cell_clear_300",
@@ -41,7 +41,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_cell_clear",
     "descKey": "UIAchievement_Desc_cell_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "cell_clear_500",
@@ -52,7 +52,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_cell_clear",
     "descKey": "UIAchievement_Desc_cell_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "cell_clear_1000",
@@ -63,7 +63,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_cell_clear",
     "descKey": "UIAchievement_Desc_cell_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "cell_clear_5000",
@@ -74,7 +74,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_cell_clear",
     "descKey": "UIAchievement_Desc_cell_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "cell_clear_10000",
@@ -85,7 +85,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_cell_clear",
     "descKey": "UIAchievement_Desc_cell_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "cell_clear_20000",
@@ -96,7 +96,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_cell_clear",
     "descKey": "UIAchievement_Desc_cell_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "cell_clear_30000",
@@ -107,7 +107,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_cell_clear",
     "descKey": "UIAchievement_Desc_cell_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "cell_clear_40000",
@@ -118,7 +118,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_cell_clear",
     "descKey": "UIAchievement_Desc_cell_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "cell_clear_50000",
@@ -129,7 +129,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_cell_clear",
     "descKey": "UIAchievement_Desc_cell_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "event_cell_5",
@@ -140,7 +140,7 @@
     "achievementPointRewardVip": 10,
     "nameKey": "UIAchievement_Name_event_cell",
     "descKey": "UIAchievement_Desc_event_cell",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "event_cell_10",
@@ -151,7 +151,7 @@
     "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_event_cell",
     "descKey": "UIAchievement_Desc_event_cell",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "event_cell_20",
@@ -162,7 +162,7 @@
     "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_event_cell",
     "descKey": "UIAchievement_Desc_event_cell",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "event_cell_50",
@@ -173,7 +173,7 @@
     "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_event_cell",
     "descKey": "UIAchievement_Desc_event_cell",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "event_cell_100",
@@ -184,7 +184,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_event_cell",
     "descKey": "UIAchievement_Desc_event_cell",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "event_cell_200",
@@ -195,7 +195,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_event_cell",
     "descKey": "UIAchievement_Desc_event_cell",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "event_cell_500",
@@ -206,7 +206,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_event_cell",
     "descKey": "UIAchievement_Desc_event_cell",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "event_cell_1000",
@@ -217,7 +217,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_event_cell",
     "descKey": "UIAchievement_Desc_event_cell",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "event_cell_2000",
@@ -228,7 +228,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_event_cell",
     "descKey": "UIAchievement_Desc_event_cell",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "event_cell_5000",
@@ -239,7 +239,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_event_cell",
     "descKey": "UIAchievement_Desc_event_cell",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "event_cell_10000",
@@ -250,7 +250,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_event_cell",
     "descKey": "UIAchievement_Desc_event_cell",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_total_10",
@@ -261,7 +261,7 @@
     "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_zone_clear_total",
     "descKey": "UIAchievement_Desc_zone_clear_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_total_25",
@@ -272,7 +272,7 @@
     "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_clear_total",
     "descKey": "UIAchievement_Desc_zone_clear_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_total_50",
@@ -283,7 +283,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_clear_total",
     "descKey": "UIAchievement_Desc_zone_clear_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_total_75",
@@ -294,7 +294,7 @@
     "achievementPointRewardVip": 150,
     "nameKey": "UIAchievement_Name_zone_clear_total",
     "descKey": "UIAchievement_Desc_zone_clear_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_total_100",
@@ -305,7 +305,7 @@
     "achievementPointRewardVip": 200,
     "nameKey": "UIAchievement_Name_zone_clear_total",
     "descKey": "UIAchievement_Desc_zone_clear_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_1",
@@ -316,7 +316,7 @@
     "achievementPointRewardVip": 10,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_2",
@@ -327,7 +327,7 @@
     "achievementPointRewardVip": 10,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_3",
@@ -338,7 +338,7 @@
     "achievementPointRewardVip": 10,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_4",
@@ -349,7 +349,7 @@
     "achievementPointRewardVip": 10,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_5",
@@ -360,7 +360,7 @@
     "achievementPointRewardVip": 10,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_6",
@@ -371,7 +371,7 @@
     "achievementPointRewardVip": 10,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_7",
@@ -382,7 +382,7 @@
     "achievementPointRewardVip": 10,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_8",
@@ -393,7 +393,7 @@
     "achievementPointRewardVip": 10,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_9",
@@ -404,7 +404,7 @@
     "achievementPointRewardVip": 10,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_10",
@@ -415,7 +415,7 @@
     "achievementPointRewardVip": 10,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_11",
@@ -426,7 +426,7 @@
     "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_12",
@@ -437,7 +437,7 @@
     "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_13",
@@ -448,7 +448,7 @@
     "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_14",
@@ -459,7 +459,7 @@
     "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_15",
@@ -470,7 +470,7 @@
     "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_16",
@@ -481,7 +481,7 @@
     "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_17",
@@ -492,7 +492,7 @@
     "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_18",
@@ -503,7 +503,7 @@
     "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_19",
@@ -514,7 +514,7 @@
     "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_20",
@@ -525,7 +525,7 @@
     "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_21",
@@ -536,7 +536,7 @@
     "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_22",
@@ -547,7 +547,7 @@
     "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_23",
@@ -558,7 +558,7 @@
     "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_24",
@@ -569,7 +569,7 @@
     "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_25",
@@ -580,7 +580,7 @@
     "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_26",
@@ -591,7 +591,7 @@
     "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_27",
@@ -602,7 +602,7 @@
     "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_28",
@@ -613,7 +613,7 @@
     "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_29",
@@ -624,7 +624,7 @@
     "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_30",
@@ -635,7 +635,7 @@
     "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_31",
@@ -646,7 +646,7 @@
     "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_32",
@@ -657,7 +657,7 @@
     "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_33",
@@ -668,7 +668,7 @@
     "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_34",
@@ -679,7 +679,7 @@
     "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_35",
@@ -690,7 +690,7 @@
     "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_36",
@@ -701,7 +701,7 @@
     "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_37",
@@ -712,7 +712,7 @@
     "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_38",
@@ -723,7 +723,7 @@
     "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_39",
@@ -734,7 +734,7 @@
     "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_40",
@@ -745,7 +745,7 @@
     "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_41",
@@ -756,7 +756,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_42",
@@ -767,7 +767,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_43",
@@ -778,7 +778,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_44",
@@ -789,7 +789,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_45",
@@ -800,7 +800,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_46",
@@ -811,7 +811,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_47",
@@ -822,7 +822,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_48",
@@ -833,7 +833,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_49",
@@ -844,7 +844,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_50",
@@ -855,7 +855,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_51",
@@ -866,7 +866,7 @@
     "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_52",
@@ -877,7 +877,7 @@
     "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_53",
@@ -888,7 +888,7 @@
     "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_54",
@@ -899,7 +899,7 @@
     "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_55",
@@ -910,7 +910,7 @@
     "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_56",
@@ -921,7 +921,7 @@
     "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_57",
@@ -932,7 +932,7 @@
     "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_58",
@@ -943,7 +943,7 @@
     "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_59",
@@ -954,7 +954,7 @@
     "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_60",
@@ -965,7 +965,7 @@
     "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_61",
@@ -976,7 +976,7 @@
     "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_62",
@@ -987,7 +987,7 @@
     "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_63",
@@ -998,7 +998,7 @@
     "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_64",
@@ -1009,7 +1009,7 @@
     "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_65",
@@ -1020,7 +1020,7 @@
     "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_66",
@@ -1031,7 +1031,7 @@
     "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_67",
@@ -1042,7 +1042,7 @@
     "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_68",
@@ -1053,7 +1053,7 @@
     "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_69",
@@ -1064,7 +1064,7 @@
     "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_70",
@@ -1075,7 +1075,7 @@
     "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_71",
@@ -1086,7 +1086,7 @@
     "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_72",
@@ -1097,7 +1097,7 @@
     "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_73",
@@ -1108,7 +1108,7 @@
     "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_74",
@@ -1119,7 +1119,7 @@
     "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_75",
@@ -1130,7 +1130,7 @@
     "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_76",
@@ -1141,7 +1141,7 @@
     "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_77",
@@ -1152,7 +1152,7 @@
     "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_78",
@@ -1163,7 +1163,7 @@
     "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_79",
@@ -1174,7 +1174,7 @@
     "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_80",
@@ -1185,7 +1185,7 @@
     "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_81",
@@ -1196,7 +1196,7 @@
     "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_82",
@@ -1207,7 +1207,7 @@
     "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_83",
@@ -1218,7 +1218,7 @@
     "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_84",
@@ -1229,7 +1229,7 @@
     "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_85",
@@ -1240,7 +1240,7 @@
     "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_86",
@@ -1251,7 +1251,7 @@
     "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_87",
@@ -1262,7 +1262,7 @@
     "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_88",
@@ -1273,7 +1273,7 @@
     "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_89",
@@ -1284,7 +1284,7 @@
     "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_90",
@@ -1295,7 +1295,7 @@
     "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_91",
@@ -1306,7 +1306,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_92",
@@ -1317,7 +1317,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_93",
@@ -1328,7 +1328,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_94",
@@ -1339,7 +1339,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_95",
@@ -1350,7 +1350,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_96",
@@ -1361,7 +1361,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_97",
@@ -1372,7 +1372,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_98",
@@ -1383,7 +1383,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_99",
@@ -1394,7 +1394,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_clear_100",
@@ -1405,7 +1405,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_clear",
     "descKey": "UIAchievement_Desc_zone_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_1",
@@ -1416,7 +1416,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_2",
@@ -1427,7 +1427,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_3",
@@ -1438,7 +1438,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_4",
@@ -1449,7 +1449,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_5",
@@ -1460,7 +1460,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_6",
@@ -1471,7 +1471,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_7",
@@ -1482,7 +1482,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_8",
@@ -1493,7 +1493,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_9",
@@ -1504,7 +1504,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_10",
@@ -1515,7 +1515,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_11",
@@ -1526,7 +1526,7 @@
     "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_12",
@@ -1537,7 +1537,7 @@
     "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_13",
@@ -1548,7 +1548,7 @@
     "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_14",
@@ -1559,7 +1559,7 @@
     "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_15",
@@ -1570,7 +1570,7 @@
     "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_16",
@@ -1581,7 +1581,7 @@
     "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_17",
@@ -1592,7 +1592,7 @@
     "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_18",
@@ -1603,7 +1603,7 @@
     "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_19",
@@ -1614,7 +1614,7 @@
     "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_20",
@@ -1625,7 +1625,7 @@
     "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_21",
@@ -1636,7 +1636,7 @@
     "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_22",
@@ -1647,7 +1647,7 @@
     "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_23",
@@ -1658,7 +1658,7 @@
     "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_24",
@@ -1669,7 +1669,7 @@
     "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_25",
@@ -1680,7 +1680,7 @@
     "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_26",
@@ -1691,7 +1691,7 @@
     "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_27",
@@ -1702,7 +1702,7 @@
     "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_28",
@@ -1713,7 +1713,7 @@
     "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_29",
@@ -1724,7 +1724,7 @@
     "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_30",
@@ -1735,7 +1735,7 @@
     "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_31",
@@ -1746,7 +1746,7 @@
     "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_32",
@@ -1757,7 +1757,7 @@
     "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_33",
@@ -1768,7 +1768,7 @@
     "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_34",
@@ -1779,7 +1779,7 @@
     "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_35",
@@ -1790,7 +1790,7 @@
     "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_36",
@@ -1801,7 +1801,7 @@
     "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_37",
@@ -1812,7 +1812,7 @@
     "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_38",
@@ -1823,7 +1823,7 @@
     "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_39",
@@ -1834,7 +1834,7 @@
     "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_40",
@@ -1845,7 +1845,7 @@
     "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_41",
@@ -1856,7 +1856,7 @@
     "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_42",
@@ -1867,7 +1867,7 @@
     "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_43",
@@ -1878,7 +1878,7 @@
     "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_44",
@@ -1889,7 +1889,7 @@
     "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_45",
@@ -1900,7 +1900,7 @@
     "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_46",
@@ -1911,7 +1911,7 @@
     "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_47",
@@ -1922,7 +1922,7 @@
     "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_48",
@@ -1933,7 +1933,7 @@
     "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_49",
@@ -1944,7 +1944,7 @@
     "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_50",
@@ -1955,7 +1955,7 @@
     "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_51",
@@ -1966,7 +1966,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_52",
@@ -1977,7 +1977,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_53",
@@ -1988,7 +1988,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_54",
@@ -1999,7 +1999,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_55",
@@ -2010,7 +2010,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_56",
@@ -2021,7 +2021,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_57",
@@ -2032,7 +2032,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_58",
@@ -2043,7 +2043,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_59",
@@ -2054,7 +2054,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_60",
@@ -2065,7 +2065,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_61",
@@ -2076,7 +2076,7 @@
     "achievementPointRewardVip": 110,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_62",
@@ -2087,7 +2087,7 @@
     "achievementPointRewardVip": 110,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_63",
@@ -2098,7 +2098,7 @@
     "achievementPointRewardVip": 110,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_64",
@@ -2109,7 +2109,7 @@
     "achievementPointRewardVip": 110,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_65",
@@ -2120,7 +2120,7 @@
     "achievementPointRewardVip": 110,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_66",
@@ -2131,7 +2131,7 @@
     "achievementPointRewardVip": 110,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_67",
@@ -2142,7 +2142,7 @@
     "achievementPointRewardVip": 110,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_68",
@@ -2153,7 +2153,7 @@
     "achievementPointRewardVip": 110,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_69",
@@ -2164,7 +2164,7 @@
     "achievementPointRewardVip": 110,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_70",
@@ -2175,7 +2175,7 @@
     "achievementPointRewardVip": 110,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_71",
@@ -2186,7 +2186,7 @@
     "achievementPointRewardVip": 120,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_72",
@@ -2197,7 +2197,7 @@
     "achievementPointRewardVip": 120,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_73",
@@ -2208,7 +2208,7 @@
     "achievementPointRewardVip": 120,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_74",
@@ -2219,7 +2219,7 @@
     "achievementPointRewardVip": 120,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_75",
@@ -2230,7 +2230,7 @@
     "achievementPointRewardVip": 120,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_76",
@@ -2241,7 +2241,7 @@
     "achievementPointRewardVip": 120,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_77",
@@ -2252,7 +2252,7 @@
     "achievementPointRewardVip": 120,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_78",
@@ -2263,7 +2263,7 @@
     "achievementPointRewardVip": 120,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_79",
@@ -2274,7 +2274,7 @@
     "achievementPointRewardVip": 120,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_80",
@@ -2285,7 +2285,7 @@
     "achievementPointRewardVip": 120,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_81",
@@ -2296,7 +2296,7 @@
     "achievementPointRewardVip": 130,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_82",
@@ -2307,7 +2307,7 @@
     "achievementPointRewardVip": 130,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_83",
@@ -2318,7 +2318,7 @@
     "achievementPointRewardVip": 130,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_84",
@@ -2329,7 +2329,7 @@
     "achievementPointRewardVip": 130,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_85",
@@ -2340,7 +2340,7 @@
     "achievementPointRewardVip": 130,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_86",
@@ -2351,7 +2351,7 @@
     "achievementPointRewardVip": 130,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_87",
@@ -2362,7 +2362,7 @@
     "achievementPointRewardVip": 130,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_88",
@@ -2373,7 +2373,7 @@
     "achievementPointRewardVip": 130,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_89",
@@ -2384,7 +2384,7 @@
     "achievementPointRewardVip": 130,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_90",
@@ -2395,7 +2395,7 @@
     "achievementPointRewardVip": 130,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_91",
@@ -2406,7 +2406,7 @@
     "achievementPointRewardVip": 140,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_92",
@@ -2417,7 +2417,7 @@
     "achievementPointRewardVip": 140,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_93",
@@ -2428,7 +2428,7 @@
     "achievementPointRewardVip": 140,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_94",
@@ -2439,7 +2439,7 @@
     "achievementPointRewardVip": 140,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_95",
@@ -2450,7 +2450,7 @@
     "achievementPointRewardVip": 140,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_96",
@@ -2461,7 +2461,7 @@
     "achievementPointRewardVip": 140,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_97",
@@ -2472,7 +2472,7 @@
     "achievementPointRewardVip": 140,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_98",
@@ -2483,7 +2483,7 @@
     "achievementPointRewardVip": 140,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_99",
@@ -2494,7 +2494,7 @@
     "achievementPointRewardVip": 140,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "zone_full_clear_100",
@@ -2505,7 +2505,7 @@
     "achievementPointRewardVip": 140,
     "nameKey": "UIAchievement_Name_zone_full_clear",
     "descKey": "UIAchievement_Desc_zone_full_clear",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "commander_level_5",
@@ -2516,7 +2516,7 @@
     "achievementPointRewardVip": 20,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "commander_level_10",
@@ -2527,7 +2527,7 @@
     "achievementPointRewardVip": 30,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "commander_level_15",
@@ -2538,7 +2538,7 @@
     "achievementPointRewardVip": 40,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "commander_level_20",
@@ -2549,7 +2549,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "commander_level_25",
@@ -2560,7 +2560,7 @@
     "achievementPointRewardVip": 60,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "commander_level_30",
@@ -2571,7 +2571,7 @@
     "achievementPointRewardVip": 70,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "commander_level_35",
@@ -2582,7 +2582,7 @@
     "achievementPointRewardVip": 80,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "commander_level_40",
@@ -2593,7 +2593,7 @@
     "achievementPointRewardVip": 90,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "commander_level_45",
@@ -2604,7 +2604,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "commander_level_50",
@@ -2615,7 +2615,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "commander_level_55",
@@ -2626,7 +2626,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "commander_level_60",
@@ -2637,7 +2637,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "commander_level_65",
@@ -2648,7 +2648,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "commander_level_70",
@@ -2659,7 +2659,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "commander_level_75",
@@ -2670,7 +2670,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "commander_level_80",
@@ -2681,7 +2681,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "commander_level_85",
@@ -2692,7 +2692,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "commander_level_90",
@@ -2703,7 +2703,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "commander_level_95",
@@ -2714,7 +2714,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "commander_level_100",
@@ -2725,7 +2725,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_commander_level",
     "descKey": "UIAchievement_Desc_commander_level",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_500",
@@ -2736,7 +2736,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_1000",
@@ -2747,7 +2747,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_2000",
@@ -2758,7 +2758,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_3000",
@@ -2769,7 +2769,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_4000",
@@ -2780,7 +2780,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_5000",
@@ -2791,7 +2791,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_6000",
@@ -2802,7 +2802,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_7000",
@@ -2813,7 +2813,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_8000",
@@ -2824,7 +2824,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_9000",
@@ -2835,7 +2835,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_10000",
@@ -2846,7 +2846,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_20000",
@@ -2857,7 +2857,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_30000",
@@ -2868,7 +2868,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_40000",
@@ -2879,7 +2879,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_50000",
@@ -2890,7 +2890,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_60000",
@@ -2901,7 +2901,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_70000",
@@ -2912,7 +2912,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_80000",
@@ -2923,7 +2923,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_90000",
@@ -2934,7 +2934,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_100000",
@@ -2945,7 +2945,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_200000",
@@ -2956,7 +2956,7 @@
     "achievementPointRewardVip": 200,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_300000",
@@ -2967,7 +2967,7 @@
     "achievementPointRewardVip": 200,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_400000",
@@ -2978,7 +2978,7 @@
     "achievementPointRewardVip": 200,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_500000",
@@ -2989,7 +2989,7 @@
     "achievementPointRewardVip": 200,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_600000",
@@ -3000,7 +3000,7 @@
     "achievementPointRewardVip": 200,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_700000",
@@ -3011,7 +3011,7 @@
     "achievementPointRewardVip": 200,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_800000",
@@ -3022,7 +3022,7 @@
     "achievementPointRewardVip": 200,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_900000",
@@ -3033,7 +3033,7 @@
     "achievementPointRewardVip": 200,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "command_power_1000000",
@@ -3044,7 +3044,7 @@
     "achievementPointRewardVip": 200,
     "nameKey": "UIAchievement_Name_command_power",
     "descKey": "UIAchievement_Desc_command_power",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_1000",
@@ -3055,7 +3055,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_2000",
@@ -3066,7 +3066,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_3000",
@@ -3077,7 +3077,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_4000",
@@ -3088,7 +3088,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_5000",
@@ -3099,7 +3099,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_6000",
@@ -3110,7 +3110,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_7000",
@@ -3121,7 +3121,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_8000",
@@ -3132,7 +3132,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_9000",
@@ -3143,7 +3143,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_10000",
@@ -3154,7 +3154,7 @@
     "achievementPointRewardVip": 50,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_20000",
@@ -3165,7 +3165,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_30000",
@@ -3176,7 +3176,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_40000",
@@ -3187,7 +3187,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_50000",
@@ -3198,7 +3198,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_60000",
@@ -3209,7 +3209,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_70000",
@@ -3220,7 +3220,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_80000",
@@ -3231,7 +3231,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_90000",
@@ -3242,7 +3242,7 @@
     "achievementPointRewardVip": 100,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_100000",
@@ -3253,7 +3253,7 @@
     "achievementPointRewardVip": 200,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_200000",
@@ -3264,7 +3264,7 @@
     "achievementPointRewardVip": 200,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_300000",
@@ -3275,7 +3275,7 @@
     "achievementPointRewardVip": 200,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_400000",
@@ -3286,7 +3286,7 @@
     "achievementPointRewardVip": 200,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_500000",
@@ -3297,7 +3297,7 @@
     "achievementPointRewardVip": 200,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_600000",
@@ -3308,7 +3308,7 @@
     "achievementPointRewardVip": 200,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_700000",
@@ -3319,7 +3319,7 @@
     "achievementPointRewardVip": 200,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_800000",
@@ -3330,7 +3330,7 @@
     "achievementPointRewardVip": 200,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_900000",
@@ -3341,7 +3341,7 @@
     "achievementPointRewardVip": 200,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
     "achievementId": "exploration_point_total_1000000",
@@ -3352,2635 +3352,996 @@
     "achievementPointRewardVip": 200,
     "nameKey": "UIAchievement_Name_exploration_point_total",
     "descKey": "UIAchievement_Desc_exploration_point_total",
-    "difficulty": ""
+    "difficulty": null
   },
   {
-    "achievementId": "hull_tier4_count_1",
-    "conditionType": "HullTierCount",
-    "conditionParam": "4",
-    "threshold": 1,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier4_count_2",
-    "conditionType": "HullTierCount",
-    "conditionParam": "4",
+    "achievementId": "hull_passive_centurion_2",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "centurion",
     "threshold": 2,
     "achievementPointReward": 10,
     "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
   },
   {
-    "achievementId": "hull_tier4_count_3",
-    "conditionType": "HullTierCount",
-    "conditionParam": "4",
-    "threshold": 3,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier5_count_1",
-    "conditionType": "HullTierCount",
-    "conditionParam": "5",
-    "threshold": 1,
-    "achievementPointReward": 20,
-    "achievementPointRewardVip": 20,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier5_count_2",
-    "conditionType": "HullTierCount",
-    "conditionParam": "5",
-    "threshold": 2,
-    "achievementPointReward": 20,
-    "achievementPointRewardVip": 20,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier5_count_3",
-    "conditionType": "HullTierCount",
-    "conditionParam": "5",
+    "achievementId": "hull_passive_centurion_3",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "centurion",
     "threshold": 3,
     "achievementPointReward": 20,
     "achievementPointRewardVip": 20,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
   },
   {
-    "achievementId": "hull_tier6_count_1",
-    "conditionType": "HullTierCount",
-    "conditionParam": "6",
-    "threshold": 1,
-    "achievementPointReward": 30,
-    "achievementPointRewardVip": 30,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier6_count_2",
-    "conditionType": "HullTierCount",
-    "conditionParam": "6",
-    "threshold": 2,
-    "achievementPointReward": 30,
-    "achievementPointRewardVip": 30,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier6_count_3",
-    "conditionType": "HullTierCount",
-    "conditionParam": "6",
-    "threshold": 3,
-    "achievementPointReward": 30,
-    "achievementPointRewardVip": 30,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier7_count_1",
-    "conditionType": "HullTierCount",
-    "conditionParam": "7",
-    "threshold": 1,
+    "achievementId": "hull_passive_centurion_4",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "centurion",
+    "threshold": 4,
     "achievementPointReward": 40,
     "achievementPointRewardVip": 40,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
   },
   {
-    "achievementId": "hull_tier7_count_2",
-    "conditionType": "HullTierCount",
-    "conditionParam": "7",
-    "threshold": 2,
-    "achievementPointReward": 40,
-    "achievementPointRewardVip": 40,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier7_count_3",
-    "conditionType": "HullTierCount",
-    "conditionParam": "7",
-    "threshold": 3,
-    "achievementPointReward": 40,
-    "achievementPointRewardVip": 40,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier8_count_1",
-    "conditionType": "HullTierCount",
-    "conditionParam": "8",
-    "threshold": 1,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier8_count_2",
-    "conditionType": "HullTierCount",
-    "conditionParam": "8",
-    "threshold": 2,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier8_count_3",
-    "conditionType": "HullTierCount",
-    "conditionParam": "8",
-    "threshold": 3,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier9_count_1",
-    "conditionType": "HullTierCount",
-    "conditionParam": "9",
-    "threshold": 1,
-    "achievementPointReward": 60,
-    "achievementPointRewardVip": 60,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier9_count_2",
-    "conditionType": "HullTierCount",
-    "conditionParam": "9",
-    "threshold": 2,
-    "achievementPointReward": 60,
-    "achievementPointRewardVip": 60,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier9_count_3",
-    "conditionType": "HullTierCount",
-    "conditionParam": "9",
-    "threshold": 3,
-    "achievementPointReward": 60,
-    "achievementPointRewardVip": 60,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier10_count_1",
-    "conditionType": "HullTierCount",
-    "conditionParam": "10",
-    "threshold": 1,
-    "achievementPointReward": 70,
-    "achievementPointRewardVip": 70,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier10_count_2",
-    "conditionType": "HullTierCount",
-    "conditionParam": "10",
-    "threshold": 2,
-    "achievementPointReward": 70,
-    "achievementPointRewardVip": 70,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier10_count_3",
-    "conditionType": "HullTierCount",
-    "conditionParam": "10",
-    "threshold": 3,
-    "achievementPointReward": 70,
-    "achievementPointRewardVip": 70,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier11_count_1",
-    "conditionType": "HullTierCount",
-    "conditionParam": "11",
-    "threshold": 1,
-    "achievementPointReward": 80,
-    "achievementPointRewardVip": 80,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier11_count_2",
-    "conditionType": "HullTierCount",
-    "conditionParam": "11",
-    "threshold": 2,
-    "achievementPointReward": 80,
-    "achievementPointRewardVip": 80,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier11_count_3",
-    "conditionType": "HullTierCount",
-    "conditionParam": "11",
-    "threshold": 3,
-    "achievementPointReward": 80,
-    "achievementPointRewardVip": 80,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier12_count_1",
-    "conditionType": "HullTierCount",
-    "conditionParam": "12",
-    "threshold": 1,
-    "achievementPointReward": 90,
-    "achievementPointRewardVip": 90,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier12_count_2",
-    "conditionType": "HullTierCount",
-    "conditionParam": "12",
-    "threshold": 2,
-    "achievementPointReward": 90,
-    "achievementPointRewardVip": 90,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier12_count_3",
-    "conditionType": "HullTierCount",
-    "conditionParam": "12",
-    "threshold": 3,
-    "achievementPointReward": 90,
-    "achievementPointRewardVip": 90,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier13_count_1",
-    "conditionType": "HullTierCount",
-    "conditionParam": "13",
-    "threshold": 1,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier13_count_2",
-    "conditionType": "HullTierCount",
-    "conditionParam": "13",
-    "threshold": 2,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier13_count_3",
-    "conditionType": "HullTierCount",
-    "conditionParam": "13",
-    "threshold": 3,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier14_count_1",
-    "conditionType": "HullTierCount",
-    "conditionParam": "14",
-    "threshold": 1,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier14_count_2",
-    "conditionType": "HullTierCount",
-    "conditionParam": "14",
-    "threshold": 2,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_tier14_count_3",
-    "conditionType": "HullTierCount",
-    "conditionParam": "14",
-    "threshold": 3,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_hull_tier_count",
-    "descKey": "UIAchievement_Desc_hull_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier2_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_2",
-    "threshold": 1,
+    "achievementId": "hull_reinforce_centurion_5",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "centurion",
+    "threshold": 5,
     "achievementPointReward": 10,
     "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
   },
   {
-    "achievementId": "module_beam_tier2_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_2",
-    "threshold": 2,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier2_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_2",
-    "threshold": 3,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier3_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_3",
-    "threshold": 1,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier3_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_3",
-    "threshold": 2,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier3_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_3",
-    "threshold": 3,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier4_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_4",
-    "threshold": 1,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier4_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_4",
-    "threshold": 2,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier4_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_4",
-    "threshold": 3,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier5_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_5",
-    "threshold": 1,
+    "achievementId": "hull_reinforce_centurion_10",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "centurion",
+    "threshold": 10,
     "achievementPointReward": 20,
     "achievementPointRewardVip": 20,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
   },
   {
-    "achievementId": "module_beam_tier5_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_5",
-    "threshold": 2,
-    "achievementPointReward": 20,
-    "achievementPointRewardVip": 20,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier5_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_5",
-    "threshold": 3,
-    "achievementPointReward": 20,
-    "achievementPointRewardVip": 20,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier6_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_6",
-    "threshold": 1,
-    "achievementPointReward": 30,
-    "achievementPointRewardVip": 30,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier6_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_6",
-    "threshold": 2,
-    "achievementPointReward": 30,
-    "achievementPointRewardVip": 30,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier6_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_6",
-    "threshold": 3,
-    "achievementPointReward": 30,
-    "achievementPointRewardVip": 30,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier7_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_7",
-    "threshold": 1,
+    "achievementId": "hull_reinforce_centurion_20",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "centurion",
+    "threshold": 20,
     "achievementPointReward": 40,
     "achievementPointRewardVip": 40,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
   },
   {
-    "achievementId": "module_beam_tier7_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_7",
-    "threshold": 2,
-    "achievementPointReward": 40,
-    "achievementPointRewardVip": 40,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier7_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_7",
-    "threshold": 3,
-    "achievementPointReward": 40,
-    "achievementPointRewardVip": 40,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier8_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_8",
-    "threshold": 1,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier8_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_8",
-    "threshold": 2,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier8_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_8",
-    "threshold": 3,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier9_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_9",
-    "threshold": 1,
-    "achievementPointReward": 60,
-    "achievementPointRewardVip": 60,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier9_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_9",
-    "threshold": 2,
-    "achievementPointReward": 60,
-    "achievementPointRewardVip": 60,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier9_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_9",
-    "threshold": 3,
-    "achievementPointReward": 60,
-    "achievementPointRewardVip": 60,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier10_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_10",
-    "threshold": 1,
-    "achievementPointReward": 70,
-    "achievementPointRewardVip": 70,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier10_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_10",
-    "threshold": 2,
-    "achievementPointReward": 70,
-    "achievementPointRewardVip": 70,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier10_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_10",
-    "threshold": 3,
-    "achievementPointReward": 70,
-    "achievementPointRewardVip": 70,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier11_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_11",
-    "threshold": 1,
-    "achievementPointReward": 80,
-    "achievementPointRewardVip": 80,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier11_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_11",
-    "threshold": 2,
-    "achievementPointReward": 80,
-    "achievementPointRewardVip": 80,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier11_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_11",
-    "threshold": 3,
-    "achievementPointReward": 80,
-    "achievementPointRewardVip": 80,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier12_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_12",
-    "threshold": 1,
-    "achievementPointReward": 90,
-    "achievementPointRewardVip": 90,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier12_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_12",
-    "threshold": 2,
-    "achievementPointReward": 90,
-    "achievementPointRewardVip": 90,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier12_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_12",
-    "threshold": 3,
-    "achievementPointReward": 90,
-    "achievementPointRewardVip": 90,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier13_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_13",
-    "threshold": 1,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier13_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_13",
-    "threshold": 2,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier13_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_13",
-    "threshold": 3,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier14_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_14",
-    "threshold": 1,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier14_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_14",
-    "threshold": 2,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_beam_tier14_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "beam_14",
-    "threshold": 3,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier2_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_2",
-    "threshold": 1,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier2_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_2",
-    "threshold": 2,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier2_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_2",
-    "threshold": 3,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier3_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_3",
-    "threshold": 1,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier3_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_3",
-    "threshold": 2,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier3_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_3",
-    "threshold": 3,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier4_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_4",
-    "threshold": 1,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier4_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_4",
-    "threshold": 2,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier4_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_4",
-    "threshold": 3,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier5_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_5",
-    "threshold": 1,
-    "achievementPointReward": 20,
-    "achievementPointRewardVip": 20,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier5_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_5",
-    "threshold": 2,
-    "achievementPointReward": 20,
-    "achievementPointRewardVip": 20,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier5_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_5",
-    "threshold": 3,
-    "achievementPointReward": 20,
-    "achievementPointRewardVip": 20,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier6_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_6",
-    "threshold": 1,
-    "achievementPointReward": 30,
-    "achievementPointRewardVip": 30,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier6_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_6",
-    "threshold": 2,
-    "achievementPointReward": 30,
-    "achievementPointRewardVip": 30,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier6_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_6",
-    "threshold": 3,
-    "achievementPointReward": 30,
-    "achievementPointRewardVip": 30,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier7_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_7",
-    "threshold": 1,
-    "achievementPointReward": 40,
-    "achievementPointRewardVip": 40,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier7_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_7",
-    "threshold": 2,
-    "achievementPointReward": 40,
-    "achievementPointRewardVip": 40,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier7_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_7",
-    "threshold": 3,
-    "achievementPointReward": 40,
-    "achievementPointRewardVip": 40,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier8_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_8",
-    "threshold": 1,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier8_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_8",
-    "threshold": 2,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier8_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_8",
-    "threshold": 3,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier9_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_9",
-    "threshold": 1,
-    "achievementPointReward": 60,
-    "achievementPointRewardVip": 60,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier9_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_9",
-    "threshold": 2,
-    "achievementPointReward": 60,
-    "achievementPointRewardVip": 60,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier9_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_9",
-    "threshold": 3,
-    "achievementPointReward": 60,
-    "achievementPointRewardVip": 60,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier10_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_10",
-    "threshold": 1,
-    "achievementPointReward": 70,
-    "achievementPointRewardVip": 70,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier10_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_10",
-    "threshold": 2,
-    "achievementPointReward": 70,
-    "achievementPointRewardVip": 70,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier10_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_10",
-    "threshold": 3,
-    "achievementPointReward": 70,
-    "achievementPointRewardVip": 70,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier11_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_11",
-    "threshold": 1,
-    "achievementPointReward": 80,
-    "achievementPointRewardVip": 80,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier11_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_11",
-    "threshold": 2,
-    "achievementPointReward": 80,
-    "achievementPointRewardVip": 80,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier11_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_11",
-    "threshold": 3,
-    "achievementPointReward": 80,
-    "achievementPointRewardVip": 80,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier12_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_12",
-    "threshold": 1,
-    "achievementPointReward": 90,
-    "achievementPointRewardVip": 90,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier12_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_12",
-    "threshold": 2,
-    "achievementPointReward": 90,
-    "achievementPointRewardVip": 90,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier12_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_12",
-    "threshold": 3,
-    "achievementPointReward": 90,
-    "achievementPointRewardVip": 90,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier13_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_13",
-    "threshold": 1,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier13_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_13",
-    "threshold": 2,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier13_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_13",
-    "threshold": 3,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier14_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_14",
-    "threshold": 1,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier14_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_14",
-    "threshold": 2,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_missile_tier14_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "missile_14",
-    "threshold": 3,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier2_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_2",
-    "threshold": 1,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier2_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_2",
-    "threshold": 2,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier2_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_2",
-    "threshold": 3,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier3_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_3",
-    "threshold": 1,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier3_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_3",
-    "threshold": 2,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier3_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_3",
-    "threshold": 3,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier4_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_4",
-    "threshold": 1,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier4_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_4",
-    "threshold": 2,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier4_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_4",
-    "threshold": 3,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier5_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_5",
-    "threshold": 1,
-    "achievementPointReward": 20,
-    "achievementPointRewardVip": 20,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier5_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_5",
-    "threshold": 2,
-    "achievementPointReward": 20,
-    "achievementPointRewardVip": 20,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier5_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_5",
-    "threshold": 3,
-    "achievementPointReward": 20,
-    "achievementPointRewardVip": 20,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier6_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_6",
-    "threshold": 1,
-    "achievementPointReward": 30,
-    "achievementPointRewardVip": 30,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier6_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_6",
-    "threshold": 2,
-    "achievementPointReward": 30,
-    "achievementPointRewardVip": 30,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier6_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_6",
-    "threshold": 3,
-    "achievementPointReward": 30,
-    "achievementPointRewardVip": 30,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier7_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_7",
-    "threshold": 1,
-    "achievementPointReward": 40,
-    "achievementPointRewardVip": 40,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier7_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_7",
-    "threshold": 2,
-    "achievementPointReward": 40,
-    "achievementPointRewardVip": 40,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier7_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_7",
-    "threshold": 3,
-    "achievementPointReward": 40,
-    "achievementPointRewardVip": 40,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier8_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_8",
-    "threshold": 1,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier8_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_8",
-    "threshold": 2,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier8_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_8",
-    "threshold": 3,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier9_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_9",
-    "threshold": 1,
-    "achievementPointReward": 60,
-    "achievementPointRewardVip": 60,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier9_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_9",
-    "threshold": 2,
-    "achievementPointReward": 60,
-    "achievementPointRewardVip": 60,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier9_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_9",
-    "threshold": 3,
-    "achievementPointReward": 60,
-    "achievementPointRewardVip": 60,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier10_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_10",
-    "threshold": 1,
-    "achievementPointReward": 70,
-    "achievementPointRewardVip": 70,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier10_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_10",
-    "threshold": 2,
-    "achievementPointReward": 70,
-    "achievementPointRewardVip": 70,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier10_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_10",
-    "threshold": 3,
-    "achievementPointReward": 70,
-    "achievementPointRewardVip": 70,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier11_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_11",
-    "threshold": 1,
-    "achievementPointReward": 80,
-    "achievementPointRewardVip": 80,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier11_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_11",
-    "threshold": 2,
-    "achievementPointReward": 80,
-    "achievementPointRewardVip": 80,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier11_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_11",
-    "threshold": 3,
-    "achievementPointReward": 80,
-    "achievementPointRewardVip": 80,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier12_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_12",
-    "threshold": 1,
-    "achievementPointReward": 90,
-    "achievementPointRewardVip": 90,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier12_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_12",
-    "threshold": 2,
-    "achievementPointReward": 90,
-    "achievementPointRewardVip": 90,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier12_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_12",
-    "threshold": 3,
-    "achievementPointReward": 90,
-    "achievementPointRewardVip": 90,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier13_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_13",
-    "threshold": 1,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier13_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_13",
-    "threshold": 2,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier13_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_13",
-    "threshold": 3,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier14_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_14",
-    "threshold": 1,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier14_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_14",
-    "threshold": 2,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_hangar_tier14_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "hangar_14",
-    "threshold": 3,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier2_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_2",
-    "threshold": 1,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier2_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_2",
-    "threshold": 2,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier2_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_2",
-    "threshold": 3,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier3_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_3",
-    "threshold": 1,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier3_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_3",
-    "threshold": 2,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier3_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_3",
-    "threshold": 3,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier4_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_4",
-    "threshold": 1,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier4_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_4",
-    "threshold": 2,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier4_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_4",
-    "threshold": 3,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier5_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_5",
-    "threshold": 1,
-    "achievementPointReward": 20,
-    "achievementPointRewardVip": 20,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier5_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_5",
-    "threshold": 2,
-    "achievementPointReward": 20,
-    "achievementPointRewardVip": 20,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier5_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_5",
-    "threshold": 3,
-    "achievementPointReward": 20,
-    "achievementPointRewardVip": 20,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier6_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_6",
-    "threshold": 1,
-    "achievementPointReward": 30,
-    "achievementPointRewardVip": 30,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier6_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_6",
-    "threshold": 2,
-    "achievementPointReward": 30,
-    "achievementPointRewardVip": 30,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier6_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_6",
-    "threshold": 3,
-    "achievementPointReward": 30,
-    "achievementPointRewardVip": 30,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier7_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_7",
-    "threshold": 1,
-    "achievementPointReward": 40,
-    "achievementPointRewardVip": 40,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier7_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_7",
-    "threshold": 2,
-    "achievementPointReward": 40,
-    "achievementPointRewardVip": 40,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier7_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_7",
-    "threshold": 3,
-    "achievementPointReward": 40,
-    "achievementPointRewardVip": 40,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier8_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_8",
-    "threshold": 1,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier8_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_8",
-    "threshold": 2,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier8_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_8",
-    "threshold": 3,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier9_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_9",
-    "threshold": 1,
-    "achievementPointReward": 60,
-    "achievementPointRewardVip": 60,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier9_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_9",
-    "threshold": 2,
-    "achievementPointReward": 60,
-    "achievementPointRewardVip": 60,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier9_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_9",
-    "threshold": 3,
-    "achievementPointReward": 60,
-    "achievementPointRewardVip": 60,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier10_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_10",
-    "threshold": 1,
-    "achievementPointReward": 70,
-    "achievementPointRewardVip": 70,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier10_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_10",
-    "threshold": 2,
-    "achievementPointReward": 70,
-    "achievementPointRewardVip": 70,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier10_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_10",
-    "threshold": 3,
-    "achievementPointReward": 70,
-    "achievementPointRewardVip": 70,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier11_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_11",
-    "threshold": 1,
-    "achievementPointReward": 80,
-    "achievementPointRewardVip": 80,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier11_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_11",
-    "threshold": 2,
-    "achievementPointReward": 80,
-    "achievementPointRewardVip": 80,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier11_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_11",
-    "threshold": 3,
-    "achievementPointReward": 80,
-    "achievementPointRewardVip": 80,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier12_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_12",
-    "threshold": 1,
-    "achievementPointReward": 90,
-    "achievementPointRewardVip": 90,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier12_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_12",
-    "threshold": 2,
-    "achievementPointReward": 90,
-    "achievementPointRewardVip": 90,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier12_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_12",
-    "threshold": 3,
-    "achievementPointReward": 90,
-    "achievementPointRewardVip": 90,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier13_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_13",
-    "threshold": 1,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier13_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_13",
-    "threshold": 2,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier13_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_13",
-    "threshold": 3,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier14_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_14",
-    "threshold": 1,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier14_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_14",
-    "threshold": 2,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_shield_tier14_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "shield_14",
-    "threshold": 3,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier2_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_2",
-    "threshold": 1,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier2_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_2",
-    "threshold": 2,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier2_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_2",
-    "threshold": 3,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier3_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_3",
-    "threshold": 1,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier3_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_3",
-    "threshold": 2,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier3_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_3",
-    "threshold": 3,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier4_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_4",
-    "threshold": 1,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier4_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_4",
-    "threshold": 2,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier4_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_4",
-    "threshold": 3,
-    "achievementPointReward": 10,
-    "achievementPointRewardVip": 10,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier5_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_5",
-    "threshold": 1,
-    "achievementPointReward": 20,
-    "achievementPointRewardVip": 20,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier5_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_5",
-    "threshold": 2,
-    "achievementPointReward": 20,
-    "achievementPointRewardVip": 20,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier5_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_5",
-    "threshold": 3,
-    "achievementPointReward": 20,
-    "achievementPointRewardVip": 20,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier6_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_6",
-    "threshold": 1,
-    "achievementPointReward": 30,
-    "achievementPointRewardVip": 30,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier6_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_6",
-    "threshold": 2,
-    "achievementPointReward": 30,
-    "achievementPointRewardVip": 30,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier6_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_6",
-    "threshold": 3,
-    "achievementPointReward": 30,
-    "achievementPointRewardVip": 30,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier7_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_7",
-    "threshold": 1,
-    "achievementPointReward": 40,
-    "achievementPointRewardVip": 40,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier7_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_7",
-    "threshold": 2,
-    "achievementPointReward": 40,
-    "achievementPointRewardVip": 40,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier7_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_7",
-    "threshold": 3,
-    "achievementPointReward": 40,
-    "achievementPointRewardVip": 40,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier8_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_8",
-    "threshold": 1,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier8_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_8",
-    "threshold": 2,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier8_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_8",
-    "threshold": 3,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier9_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_9",
-    "threshold": 1,
-    "achievementPointReward": 60,
-    "achievementPointRewardVip": 60,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier9_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_9",
-    "threshold": 2,
-    "achievementPointReward": 60,
-    "achievementPointRewardVip": 60,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier9_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_9",
-    "threshold": 3,
-    "achievementPointReward": 60,
-    "achievementPointRewardVip": 60,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier10_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_10",
-    "threshold": 1,
-    "achievementPointReward": 70,
-    "achievementPointRewardVip": 70,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier10_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_10",
-    "threshold": 2,
-    "achievementPointReward": 70,
-    "achievementPointRewardVip": 70,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier10_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_10",
-    "threshold": 3,
-    "achievementPointReward": 70,
-    "achievementPointRewardVip": 70,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier11_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_11",
-    "threshold": 1,
-    "achievementPointReward": 80,
-    "achievementPointRewardVip": 80,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier11_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_11",
-    "threshold": 2,
-    "achievementPointReward": 80,
-    "achievementPointRewardVip": 80,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier11_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_11",
-    "threshold": 3,
-    "achievementPointReward": 80,
-    "achievementPointRewardVip": 80,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier12_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_12",
-    "threshold": 1,
-    "achievementPointReward": 90,
-    "achievementPointRewardVip": 90,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier12_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_12",
-    "threshold": 2,
-    "achievementPointReward": 90,
-    "achievementPointRewardVip": 90,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier12_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_12",
-    "threshold": 3,
-    "achievementPointReward": 90,
-    "achievementPointRewardVip": 90,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier13_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_13",
-    "threshold": 1,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier13_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_13",
-    "threshold": 2,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier13_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_13",
-    "threshold": 3,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier14_count_1",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_14",
-    "threshold": 1,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier14_count_2",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_14",
-    "threshold": 2,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "module_interceptor_tier14_count_3",
-    "conditionType": "ModuleTierCount",
-    "conditionParam": "interceptor_14",
-    "threshold": 3,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_module_tier_count",
-    "descKey": "UIAchievement_Desc_module_tier_count",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_unlock_hull_4_1_21100",
+    "achievementId": "hull_unlock_argus",
     "conditionType": "HullUnlocked",
-    "conditionParam": "hull_4_1_21100",
+    "conditionParam": "argus",
     "threshold": 1,
-    "achievementPointReward": 40,
-    "achievementPointRewardVip": 40,
+    "achievementPointReward": 200,
+    "achievementPointRewardVip": 200,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock",
-    "difficulty": ""
+    "difficulty": null
   },
   {
-    "achievementId": "hull_unlock_hull_5_1_22100",
-    "conditionType": "HullUnlocked",
-    "conditionParam": "hull_5_1_22100",
-    "threshold": 1,
-    "achievementPointReward": 50,
-    "achievementPointRewardVip": 50,
-    "nameKey": "UIAchievement_Name_hull_unlock",
-    "descKey": "UIAchievement_Desc_hull_unlock",
-    "difficulty": ""
+    "achievementId": "hull_passive_argus_2",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "argus",
+    "threshold": 2,
+    "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
   },
   {
-    "achievementId": "hull_unlock_hull_6_1_22211",
-    "conditionType": "HullUnlocked",
-    "conditionParam": "hull_6_1_22211",
-    "threshold": 1,
-    "achievementPointReward": 60,
-    "achievementPointRewardVip": 60,
-    "nameKey": "UIAchievement_Name_hull_unlock",
-    "descKey": "UIAchievement_Desc_hull_unlock",
-    "difficulty": ""
+    "achievementId": "hull_passive_argus_3",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "argus",
+    "threshold": 3,
+    "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
   },
   {
-    "achievementId": "hull_unlock_hull_7_1_32211",
-    "conditionType": "HullUnlocked",
-    "conditionParam": "hull_7_1_32211",
-    "threshold": 1,
-    "achievementPointReward": 70,
-    "achievementPointRewardVip": 70,
-    "nameKey": "UIAchievement_Name_hull_unlock",
-    "descKey": "UIAchievement_Desc_hull_unlock",
-    "difficulty": ""
-  },
-  {
-    "achievementId": "hull_unlock_hull_8_1_33211",
-    "conditionType": "HullUnlocked",
-    "conditionParam": "hull_8_1_33211",
-    "threshold": 1,
+    "achievementId": "hull_passive_argus_4",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "argus",
+    "threshold": 4,
     "achievementPointReward": 80,
     "achievementPointRewardVip": 80,
-    "nameKey": "UIAchievement_Name_hull_unlock",
-    "descKey": "UIAchievement_Desc_hull_unlock",
-    "difficulty": ""
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
   },
   {
-    "achievementId": "hull_unlock_hull_9_1_33311",
-    "conditionType": "HullUnlocked",
-    "conditionParam": "hull_9_1_33311",
-    "threshold": 1,
-    "achievementPointReward": 90,
-    "achievementPointRewardVip": 90,
-    "nameKey": "UIAchievement_Name_hull_unlock",
-    "descKey": "UIAchievement_Desc_hull_unlock",
-    "difficulty": ""
+    "achievementId": "hull_reinforce_argus_5",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "argus",
+    "threshold": 5,
+    "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
   },
   {
-    "achievementId": "hull_unlock_hull_10_1_43311",
-    "conditionType": "HullUnlocked",
-    "conditionParam": "hull_10_1_43311",
-    "threshold": 1,
-    "achievementPointReward": 100,
-    "achievementPointRewardVip": 100,
-    "nameKey": "UIAchievement_Name_hull_unlock",
-    "descKey": "UIAchievement_Desc_hull_unlock",
-    "difficulty": ""
+    "achievementId": "hull_reinforce_argus_10",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "argus",
+    "threshold": 10,
+    "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
   },
   {
-    "achievementId": "hull_unlock_hull_11_1_44311",
-    "conditionType": "HullUnlocked",
-    "conditionParam": "hull_11_1_44311",
-    "threshold": 1,
-    "achievementPointReward": 110,
-    "achievementPointRewardVip": 110,
-    "nameKey": "UIAchievement_Name_hull_unlock",
-    "descKey": "UIAchievement_Desc_hull_unlock",
-    "difficulty": ""
+    "achievementId": "hull_reinforce_argus_20",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "argus",
+    "threshold": 20,
+    "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
   },
   {
-    "achievementId": "hull_unlock_hull_12_1_44411",
+    "achievementId": "hull_unlock_prism",
     "conditionType": "HullUnlocked",
-    "conditionParam": "hull_12_1_44411",
+    "conditionParam": "prism",
     "threshold": 1,
+    "achievementPointReward": 200,
+    "achievementPointRewardVip": 200,
+    "nameKey": "UIAchievement_Name_hull_unlock",
+    "descKey": "UIAchievement_Desc_hull_unlock",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_prism_2",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "prism",
+    "threshold": 2,
+    "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_prism_3",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "prism",
+    "threshold": 3,
+    "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_prism_4",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "prism",
+    "threshold": 4,
+    "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_prism_5",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "prism",
+    "threshold": 5,
+    "achievementPointReward": 20,
+    "achievementPointRewardVip": 20,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_prism_10",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "prism",
+    "threshold": 10,
+    "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_prism_20",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "prism",
+    "threshold": 20,
+    "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_unlock_colossus",
+    "conditionType": "HullUnlocked",
+    "conditionParam": "colossus",
+    "threshold": 1,
+    "achievementPointReward": 300,
+    "achievementPointRewardVip": 300,
+    "nameKey": "UIAchievement_Name_hull_unlock",
+    "descKey": "UIAchievement_Desc_hull_unlock",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_colossus_2",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "colossus",
+    "threshold": 2,
+    "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_colossus_3",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "colossus",
+    "threshold": 3,
+    "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_colossus_4",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "colossus",
+    "threshold": 4,
     "achievementPointReward": 120,
     "achievementPointRewardVip": 120,
-    "nameKey": "UIAchievement_Name_hull_unlock",
-    "descKey": "UIAchievement_Desc_hull_unlock",
-    "difficulty": ""
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
   },
   {
-    "achievementId": "hull_unlock_hull_13_1_54411",
-    "conditionType": "HullUnlocked",
-    "conditionParam": "hull_13_1_54411",
-    "threshold": 1,
-    "achievementPointReward": 130,
-    "achievementPointRewardVip": 130,
-    "nameKey": "UIAchievement_Name_hull_unlock",
-    "descKey": "UIAchievement_Desc_hull_unlock",
-    "difficulty": ""
+    "achievementId": "hull_reinforce_colossus_5",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "colossus",
+    "threshold": 5,
+    "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
   },
   {
-    "achievementId": "hull_unlock_hull_14_1_55411",
+    "achievementId": "hull_reinforce_colossus_10",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "colossus",
+    "threshold": 10,
+    "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_colossus_20",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "colossus",
+    "threshold": 20,
+    "achievementPointReward": 120,
+    "achievementPointRewardVip": 120,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_unlock_leviathan",
     "conditionType": "HullUnlocked",
-    "conditionParam": "hull_14_1_55411",
+    "conditionParam": "leviathan",
     "threshold": 1,
-    "achievementPointReward": 140,
-    "achievementPointRewardVip": 140,
+    "achievementPointReward": 300,
+    "achievementPointRewardVip": 300,
     "nameKey": "UIAchievement_Name_hull_unlock",
     "descKey": "UIAchievement_Desc_hull_unlock",
-    "difficulty": ""
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_leviathan_2",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "leviathan",
+    "threshold": 2,
+    "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_leviathan_3",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "leviathan",
+    "threshold": 3,
+    "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_leviathan_4",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "leviathan",
+    "threshold": 4,
+    "achievementPointReward": 120,
+    "achievementPointRewardVip": 120,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_leviathan_5",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "leviathan",
+    "threshold": 5,
+    "achievementPointReward": 30,
+    "achievementPointRewardVip": 30,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_leviathan_10",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "leviathan",
+    "threshold": 10,
+    "achievementPointReward": 60,
+    "achievementPointRewardVip": 60,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_leviathan_20",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "leviathan",
+    "threshold": 20,
+    "achievementPointReward": 120,
+    "achievementPointRewardVip": 120,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_unlock_corsair",
+    "conditionType": "HullUnlocked",
+    "conditionParam": "corsair",
+    "threshold": 1,
+    "achievementPointReward": 400,
+    "achievementPointRewardVip": 400,
+    "nameKey": "UIAchievement_Name_hull_unlock",
+    "descKey": "UIAchievement_Desc_hull_unlock",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_corsair_2",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "corsair",
+    "threshold": 2,
+    "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_corsair_3",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "corsair",
+    "threshold": 3,
+    "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_corsair_4",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "corsair",
+    "threshold": 4,
+    "achievementPointReward": 160,
+    "achievementPointRewardVip": 160,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_corsair_5",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "corsair",
+    "threshold": 5,
+    "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_corsair_10",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "corsair",
+    "threshold": 10,
+    "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_corsair_20",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "corsair",
+    "threshold": 20,
+    "achievementPointReward": 160,
+    "achievementPointRewardVip": 160,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_unlock_talon",
+    "conditionType": "HullUnlocked",
+    "conditionParam": "talon",
+    "threshold": 1,
+    "achievementPointReward": 400,
+    "achievementPointRewardVip": 400,
+    "nameKey": "UIAchievement_Name_hull_unlock",
+    "descKey": "UIAchievement_Desc_hull_unlock",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_talon_2",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "talon",
+    "threshold": 2,
+    "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_talon_3",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "talon",
+    "threshold": 3,
+    "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_talon_4",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "talon",
+    "threshold": 4,
+    "achievementPointReward": 160,
+    "achievementPointRewardVip": 160,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_talon_5",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "talon",
+    "threshold": 5,
+    "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_talon_10",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "talon",
+    "threshold": 10,
+    "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_talon_20",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "talon",
+    "threshold": 20,
+    "achievementPointReward": 160,
+    "achievementPointRewardVip": 160,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_unlock_vulcan",
+    "conditionType": "HullUnlocked",
+    "conditionParam": "vulcan",
+    "threshold": 1,
+    "achievementPointReward": 400,
+    "achievementPointRewardVip": 400,
+    "nameKey": "UIAchievement_Name_hull_unlock",
+    "descKey": "UIAchievement_Desc_hull_unlock",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_vulcan_2",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "vulcan",
+    "threshold": 2,
+    "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_vulcan_3",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "vulcan",
+    "threshold": 3,
+    "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_vulcan_4",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "vulcan",
+    "threshold": 4,
+    "achievementPointReward": 160,
+    "achievementPointRewardVip": 160,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_vulcan_5",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "vulcan",
+    "threshold": 5,
+    "achievementPointReward": 40,
+    "achievementPointRewardVip": 40,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_vulcan_10",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "vulcan",
+    "threshold": 10,
+    "achievementPointReward": 80,
+    "achievementPointRewardVip": 80,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_vulcan_20",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "vulcan",
+    "threshold": 20,
+    "achievementPointReward": 160,
+    "achievementPointRewardVip": 160,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_unlock_aegis",
+    "conditionType": "HullUnlocked",
+    "conditionParam": "aegis",
+    "threshold": 1,
+    "achievementPointReward": 500,
+    "achievementPointRewardVip": 500,
+    "nameKey": "UIAchievement_Name_hull_unlock",
+    "descKey": "UIAchievement_Desc_hull_unlock",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_aegis_2",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "aegis",
+    "threshold": 2,
+    "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_aegis_3",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "aegis",
+    "threshold": 3,
+    "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_aegis_4",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "aegis",
+    "threshold": 4,
+    "achievementPointReward": 200,
+    "achievementPointRewardVip": 200,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_aegis_5",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "aegis",
+    "threshold": 5,
+    "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_aegis_10",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "aegis",
+    "threshold": 10,
+    "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_aegis_20",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "aegis",
+    "threshold": 20,
+    "achievementPointReward": 200,
+    "achievementPointRewardVip": 200,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_unlock_halcyon",
+    "conditionType": "HullUnlocked",
+    "conditionParam": "halcyon",
+    "threshold": 1,
+    "achievementPointReward": 500,
+    "achievementPointRewardVip": 500,
+    "nameKey": "UIAchievement_Name_hull_unlock",
+    "descKey": "UIAchievement_Desc_hull_unlock",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_halcyon_2",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "halcyon",
+    "threshold": 2,
+    "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_halcyon_3",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "halcyon",
+    "threshold": 3,
+    "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_halcyon_4",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "halcyon",
+    "threshold": 4,
+    "achievementPointReward": 200,
+    "achievementPointRewardVip": 200,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_halcyon_5",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "halcyon",
+    "threshold": 5,
+    "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_halcyon_10",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "halcyon",
+    "threshold": 10,
+    "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_halcyon_20",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "halcyon",
+    "threshold": 20,
+    "achievementPointReward": 200,
+    "achievementPointRewardVip": 200,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_unlock_nemesis",
+    "conditionType": "HullUnlocked",
+    "conditionParam": "nemesis",
+    "threshold": 1,
+    "achievementPointReward": 500,
+    "achievementPointRewardVip": 500,
+    "nameKey": "UIAchievement_Name_hull_unlock",
+    "descKey": "UIAchievement_Desc_hull_unlock",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_nemesis_2",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "nemesis",
+    "threshold": 2,
+    "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_nemesis_3",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "nemesis",
+    "threshold": 3,
+    "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_nemesis_4",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "nemesis",
+    "threshold": 4,
+    "achievementPointReward": 200,
+    "achievementPointRewardVip": 200,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_nemesis_5",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "nemesis",
+    "threshold": 5,
+    "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_nemesis_10",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "nemesis",
+    "threshold": 10,
+    "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_nemesis_20",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "nemesis",
+    "threshold": 20,
+    "achievementPointReward": 200,
+    "achievementPointRewardVip": 200,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_unlock_phoenix",
+    "conditionType": "HullUnlocked",
+    "conditionParam": "phoenix",
+    "threshold": 1,
+    "achievementPointReward": 500,
+    "achievementPointRewardVip": 500,
+    "nameKey": "UIAchievement_Name_hull_unlock",
+    "descKey": "UIAchievement_Desc_hull_unlock",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_phoenix_2",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "phoenix",
+    "threshold": 2,
+    "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_phoenix_3",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "phoenix",
+    "threshold": 3,
+    "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_phoenix_4",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "phoenix",
+    "threshold": 4,
+    "achievementPointReward": 200,
+    "achievementPointRewardVip": 200,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_phoenix_5",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "phoenix",
+    "threshold": 5,
+    "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_phoenix_10",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "phoenix",
+    "threshold": 10,
+    "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_phoenix_20",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "phoenix",
+    "threshold": 20,
+    "achievementPointReward": 200,
+    "achievementPointRewardVip": 200,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_unlock_sentinel",
+    "conditionType": "HullUnlocked",
+    "conditionParam": "sentinel",
+    "threshold": 1,
+    "achievementPointReward": 500,
+    "achievementPointRewardVip": 500,
+    "nameKey": "UIAchievement_Name_hull_unlock",
+    "descKey": "UIAchievement_Desc_hull_unlock",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_sentinel_2",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "sentinel",
+    "threshold": 2,
+    "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_sentinel_3",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "sentinel",
+    "threshold": 3,
+    "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_passive_sentinel_4",
+    "conditionType": "HullPassiveStage",
+    "conditionParam": "sentinel",
+    "threshold": 4,
+    "achievementPointReward": 200,
+    "achievementPointRewardVip": 200,
+    "nameKey": "UIAchievement_Name_hull_passive",
+    "descKey": "UIAchievement_Desc_hull_passive",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_sentinel_5",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "sentinel",
+    "threshold": 5,
+    "achievementPointReward": 50,
+    "achievementPointRewardVip": 50,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_sentinel_10",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "sentinel",
+    "threshold": 10,
+    "achievementPointReward": 100,
+    "achievementPointRewardVip": 100,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
+  },
+  {
+    "achievementId": "hull_reinforce_sentinel_20",
+    "conditionType": "HullReinforceTotal",
+    "conditionParam": "sentinel",
+    "threshold": 20,
+    "achievementPointReward": 200,
+    "achievementPointRewardVip": 200,
+    "nameKey": "UIAchievement_Name_hull_reinforce",
+    "descKey": "UIAchievement_Desc_hull_reinforce",
+    "difficulty": null
   }
 ]
