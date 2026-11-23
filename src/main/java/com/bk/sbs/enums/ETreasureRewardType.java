@@ -7,6 +7,7 @@ package com.bk.sbs.enums;
 public enum ETreasureRewardType {
     None,
     Mineral,
-    ShipHealthHeal;
+    ShipHealthHeal,
+    ResourceCharge;
 
 }

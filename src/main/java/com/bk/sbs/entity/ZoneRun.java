@@ -69,6 +69,14 @@ public class ZoneRun {
     @Column(name = "reward_card_popup_closed", nullable = false)
     private boolean rewardCardPopupClosed = true;
 
+    // Treasure 셀 무료 보상을 아직 고르지 않은 셀("row-col") — null이면 선택 대기 없음
+    @Column(name = "pending_treasure_cell", length = 20)
+    private String pendingTreasureCell;
+
+    // 선택 대기 중인 Treasure 보상에서 광물을 고르면 지급할 액수(배율/VIP 반영 완료)
+    @Column(name = "pending_treasure_mineral", nullable = false)
+    private int pendingTreasureMineral = 0;
+
     // "row-col" 형식(0-indexed) 단일 문자열 — 마지막으로 클리어한 셀(승리 시에만 갱신), 인접 검증 기준점. 정수 2컬럼 대신 사람이 읽기 좋은 하나의 컬럼으로 저장
     // ZoneCellClearLog.cell과 동일하게 0-indexed — DB/네트워크/코드 전부 0-indexed로 통일(변환 지점을 아예 없앰)
     @Column(name = "current_cell", nullable = false, length = 20)

@@ -1,6 +1,5 @@
 package com.bk.sbs.dto;
 
-import com.bk.sbs.enums.ETreasureRewardType;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,8 +22,7 @@ public class ClearExplorationCellResponse {
     private Integer totalExp;
     private Integer commanderLevel;
     private List<String> rewardCardCandidates;
-    private ETreasureRewardType treasureRewardType;
-    private Float treasureRewardRatio;
+    private List<TreasureChoiceInfoDto> treasureChoices;
     private Integer resource;
     private Integer mineralAmount;
     private Integer rerollRemain;

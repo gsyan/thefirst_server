@@ -22,6 +22,8 @@ import com.bk.sbs.dto.PurchaseRewardCardRequest;
 import com.bk.sbs.dto.PurchaseRewardCardResponse;
 import com.bk.sbs.dto.RerollRewardCardRequest;
 import com.bk.sbs.dto.RerollRewardCardResponse;
+import com.bk.sbs.dto.SelectTreasureRewardRequest;
+import com.bk.sbs.dto.SelectTreasureRewardResponse;
 import com.bk.sbs.dto.WatchAdForRewardCardRerollChargeRequest;
 import com.bk.sbs.dto.WatchAdForRewardCardRerollChargeResponse;
 import com.bk.sbs.dto.nogenerated.ApiResponse;
@@ -125,6 +127,14 @@ public class ExplorationController {
             @RequestBody AbandonZoneRunRequest request,
             @CommanderId Long commanderId) {
         AbandonZoneRunResponse response = explorationService.abandonZoneRun(commanderId, request);
+        return ResponseEntity.ok(ApiResponse.success(response));
+    }
+
+    @PostMapping("/select-treasure-reward")
+    public ResponseEntity<ApiResponse<SelectTreasureRewardResponse>> selectTreasureReward(
+            @RequestBody SelectTreasureRewardRequest request,
+            @CommanderId Long commanderId) {
+        SelectTreasureRewardResponse response = explorationService.selectTreasureReward(commanderId, request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 

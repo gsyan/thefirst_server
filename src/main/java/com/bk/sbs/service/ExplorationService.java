@@ -136,12 +136,10 @@ public class ExplorationService {
     private static final float HEALTH_RATIO_MIN = 0f;
     private static final float HEALTH_RATIO_MAX = 1f;
 
-    // Treasure(Event) 셀 보상 — 2종 중 1개를 매 클리어마다 진짜 랜덤(java.util.Random 새 인스턴스)으로 지급
-    private static final ETreasureRewardType[] TREASURE_REWARD_POOL = {
-            ETreasureRewardType.Mineral, ETreasureRewardType.ShipHealthHeal
-    };
+    // Treasure(Event) 셀 무료 보상 — 3종을 모두 선택지로 보여주고 유저가 1개 선택
     private static final int TREASURE_MINERAL_MULTIPLIER = 3; // 그 존의 일반 전투 셀 보상의 3배
     private static final float TREASURE_SHIP_HEALTH_HEAL_RATIO = 0.5f;
+    private static final float TREASURE_RESOURCE_CHARGE_RATIO = 0.2f;
 
 
     // 체력 비율 범위(0~1)만 검증 — 피닉스 아군 수리 등 전투 중 회복량이 커서 직전 스냅샷 대비 증가폭은 검사하지 않음
@@ -522,8 +520,8 @@ public class ExplorationService {
         int mineralGained = 0;
         int expGained = 0;
         List<String> rewardCardCandidates = null;
-        ETreasureRewardType treasureRewardType = ETreasureRewardType.None;
-        float treasureRewardRatio = 0f;
+        boolean isTreasureCell = false;
+        int treasureMineral = 0;
 
         if (isRevisit == false) {
             // 최초 클리어(보상 지급)에만 토큰을 요구 — enter-cell 없이 clear-cell 반복 호출로 무한 획득하는 것을 막는 지점.
@@ -558,30 +556,34 @@ public class ExplorationService {
                 run.setRewardCardPopupClosed(false);
             }
 
-            // Event(Treasure) 셀 — 표준 존 보상/보상카드와는 별개로 2종 중 1개를 진짜 랜덤(매 호출 새 Random 인스턴스)으로 지급
+            // Event(Treasure) 셀 — 여기서 지급하지 않고 선택 대기만 걸어둠(select-treasure-reward에서 지급). 광물 선택지 액수는 일반 광물과 같은 배율 규칙으로 미리 계산
             GridCellOverrideDto cellOverride = findCellOverride(zoneConfig, request.getCellRow(), request.getCellCol());
-            boolean isTreasureCell = cellOverride != null && cellOverride.getType() == EGridCellType.Event
+            isTreasureCell = cellOverride != null && cellOverride.getType() == EGridCellType.Event
                     && cellOverride.getEventType() == EGridEventType.Treasure;
-            if (isTreasureCell == true) {
-                treasureRewardType = TREASURE_REWARD_POOL[new java.util.Random().nextInt(TREASURE_REWARD_POOL.length)];
-                if (treasureRewardType == ETreasureRewardType.Mineral)
-                    mineralGained = zoneConfig.getMineralReward() * TREASURE_MINERAL_MULTIPLIER;
-                else if (treasureRewardType == ETreasureRewardType.ShipHealthHeal)
-                    treasureRewardRatio = TREASURE_SHIP_HEALTH_HEAL_RATIO;
-            }
+            if (isTreasureCell == true)
+                treasureMineral = zoneConfig.getMineralReward() * TREASURE_MINERAL_MULTIPLIER;
 
             // Buff_MineralRate 지속버프 — 이번 런에서 지금까지 선택 확정된 카드 기준으로 "앞으로" 받을 광물에 바로 적용(은행/정산 개념 없음)
             float mineralRateMultiplier = computeMineralRateMultiplier(run);
             mineralGained = Math.round(mineralGained * mineralRateMultiplier);
+            treasureMineral = Math.round(treasureMineral * mineralRateMultiplier);
 
             // Buff_MineralFlatBonus 지속버프 — 보상이 있던 셀(일반/Treasure)에만 가산, 보상이 아예 없는 빈 셀에서 공짜로 생기지 않게 방어
             if (mineralGained > 0)
                 mineralGained += run.getMineralFlatBonusTotal();
+            if (treasureMineral > 0)
+                treasureMineral += run.getMineralFlatBonusTotal();
 
             // VIP 혜택 — 광물/경험치 지급 자체를 2배로
             if (isVipActive(commanderId) == true) {
                 mineralGained *= 2;
                 expGained *= 2;
+                treasureMineral *= 2;
+            }
+
+            if (isTreasureCell == true) {
+                run.setPendingTreasureCell(cell);
+                run.setPendingTreasureMineral(treasureMineral);
             }
         }
 
@@ -664,8 +666,9 @@ public class ExplorationService {
             }
         }
 
+        // Treasure 셀은 선택 전까지 None으로 기록(이벤트 셀 클리어로 집계), 선택 시 실제 종류로 갱신
         ZoneCellClearLog clearLog = new ZoneCellClearLog(run.getId(), request.getCellRow(), request.getCellCol());
-        clearLog.setTreasureRewardType(treasureRewardType == ETreasureRewardType.None ? null : treasureRewardType);
+        clearLog.setTreasureRewardType(isTreasureCell == true ? ETreasureRewardType.None : null);
         zoneCellClearLogRepository.save(clearLog);
 
         int rerollRemain = 0;
@@ -681,8 +684,7 @@ public class ExplorationService {
                 .expGained(expGained)
                 .totalExp(commander.getExp())
                 .commanderLevel(commander.getCommanderLevel())
-                .treasureRewardType(treasureRewardType)
-                .treasureRewardRatio(treasureRewardRatio)
+                .treasureChoices(isTreasureCell == true ? buildTreasureChoices(treasureMineral) : null)
                 .resource(finalResource)
                 .mineralAmount(finalMineralAmount)
                 .rewardCardCandidates(rewardCardCandidates)
@@ -908,6 +910,8 @@ public class ExplorationService {
             rerollRemain = commander.getRewardCardRerollCharge();
         }
 
+        List<TreasureChoiceInfoDto> pendingTreasureChoices = run.getPendingTreasureCell() != null ? buildTreasureChoices(run.getPendingTreasureMineral()) : null;
+
         return GetActiveZoneRunProgressResponse.builder()
                 .zoneNumber(run.getZoneNumber())
                 .clearedCells(clearedCells)
@@ -916,6 +920,7 @@ public class ExplorationService {
                 .purchasedRewardCards(purchasedRewardCards)
                 .pendingRewardCardCandidates(pendingRewardCardCandidates)
                 .rerollRemain(rerollRemain)
+                .pendingTreasureChoices(pendingTreasureChoices)
                 .build();
     }
 
@@ -1085,6 +1090,86 @@ public class ExplorationService {
                 .resource(run.getResource())
                 .mineralAmount(run.getMineralAmount())
                 .build();
+    }
+
+
+    // Treasure 셀 무료 보상 선택지 3개 — 광물/체력회복/전투자원충전 순서 고정
+    private List<TreasureChoiceInfoDto> buildTreasureChoices(int treasureMineral) {
+        List<TreasureChoiceInfoDto> choices = new ArrayList<>();
+        choices.add(TreasureChoiceInfoDto.builder().rewardType(ETreasureRewardType.Mineral).mineralAmount(treasureMineral).ratio(0f).build());
+        choices.add(TreasureChoiceInfoDto.builder().rewardType(ETreasureRewardType.ShipHealthHeal).mineralAmount(0).ratio(TREASURE_SHIP_HEALTH_HEAL_RATIO).build());
+        choices.add(TreasureChoiceInfoDto.builder().rewardType(ETreasureRewardType.ResourceCharge).mineralAmount(0).ratio(TREASURE_RESOURCE_CHARGE_RATIO).build());
+        return choices;
+    }
+
+    // Treasure 셀 무료 보상 지급 — 광물/전투자원은 런에 바로 반영, 체력은 저장된 함대 스냅샷에 반영하고 실제 함선 회복은 클라가 같은 비율로 적용
+    @Transactional
+    public SelectTreasureRewardResponse selectTreasureReward(Long commanderId, SelectTreasureRewardRequest request) {
+        ZoneRun run = zoneRunRepository.findByCommanderIdAndStatus(commanderId, EZoneRunStatus.IN_PROGRESS)
+                .filter(r -> r.getZoneNumber() == request.getZoneNumber())
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_NO_ACTIVE_RUN));
+
+        String pendingCell = run.getPendingTreasureCell();
+        ETreasureRewardType rewardType = request.getRewardType();
+        boolean isValidType = rewardType == ETreasureRewardType.Mineral || rewardType == ETreasureRewardType.ShipHealthHeal
+                || rewardType == ETreasureRewardType.ResourceCharge;
+        if (pendingCell == null || isValidType == false)
+            throw new BusinessException(ServerErrorCode.EXPLORATION_TREASURE_INVALID_SELECTION);
+
+        Commander commander = commanderRepository.findByIdForUpdate(commanderId)
+                .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
+
+        int mineralGained = 0;
+        float ratio = 0f;
+        if (rewardType == ETreasureRewardType.Mineral) {
+            mineralGained = run.getPendingTreasureMineral();
+            run.setMineralAmount(run.getMineralAmount() + mineralGained);
+        } else if (rewardType == ETreasureRewardType.ShipHealthHeal) {
+            ratio = TREASURE_SHIP_HEALTH_HEAL_RATIO;
+            run.setFleetHealthSnapshotJson(healHealthSnapshot(run.getFleetHealthSnapshotJson(), ratio));
+        } else {
+            ratio = TREASURE_RESOURCE_CHARGE_RATIO;
+            int chargeAmount = Math.round(commander.getResourceMax() * ratio);
+            int chargedResource = Math.min(commander.getResourceMax(), run.getResource() + chargeAmount);
+            run.setResource(chargedResource);
+        }
+
+        run.setPendingTreasureCell(null);
+        run.setPendingTreasureMineral(0);
+        zoneRunRepository.save(run);
+
+        zoneCellClearLogRepository.findTopByZoneRunIdAndCellOrderByClearedAtDesc(run.getId(), pendingCell)
+                .ifPresent(clearLog -> {
+                    clearLog.setTreasureRewardType(rewardType);
+                    zoneCellClearLogRepository.save(clearLog);
+                });
+
+        if (mineralGained > 0) {
+            commander.setMineralEarnedTotal(commander.getMineralEarnedTotal() + mineralGained);
+            commanderRepository.save(commander);
+            dailyCounterService.increment(commanderId, EAchievementConditionType.MineralEarned, mineralGained);
+        }
+
+        return SelectTreasureRewardResponse.builder()
+                .rewardType(rewardType)
+                .ratio(ratio)
+                .mineralGained(mineralGained)
+                .mineralAmount(run.getMineralAmount())
+                .resource(run.getResource())
+                .build();
+    }
+
+    // 저장된 함대 체력 스냅샷에 회복 비율을 더함 — 파괴된 함선(0)은 클라 HealAllShipsByRatio와 같이 회복하지 않음, 스냅샷이 없으면(만피) 그대로
+    private String healHealthSnapshot(String snapshotJson, float healRatio) {
+        List<ShipHealthRatioInfoDto> snapshot = deserializeHealthSnapshot(snapshotJson);
+        if (snapshot == null) return snapshotJson;
+
+        for (ShipHealthRatioInfoDto info : snapshot) {
+            if (info.getHealthRatio() == null || info.getHealthRatio() <= 0f) continue;
+            float healedRatio = Math.min(HEALTH_RATIO_MAX, info.getHealthRatio() + healRatio);
+            info.setHealthRatio(healedRatio);
+        }
+        return serializeHealthSnapshot(snapshot, snapshotJson);
     }
 
 }

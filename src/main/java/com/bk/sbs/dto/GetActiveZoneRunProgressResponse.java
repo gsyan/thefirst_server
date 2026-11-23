@@ -21,5 +21,6 @@ public class GetActiveZoneRunProgressResponse {
     private List<String> purchasedRewardCards;
     private List<String> pendingRewardCardCandidates;
     private Integer rerollRemain;
+    private List<TreasureChoiceInfoDto> pendingTreasureChoices;
     private Integer mineralAmount;
 }

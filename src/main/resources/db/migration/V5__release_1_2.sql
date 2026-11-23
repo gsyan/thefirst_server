@@ -39,3 +39,8 @@ DROP TABLE commander_exp_rebase;
 
 -- 함체/모듈 티어 보유 업적 제거로 달성 기록 테이블 미사용
 DROP TABLE commander_achievement_reached;
+
+-- Treasure 셀 무료 보상 선택 대기 상태(재접속 시 선택 팝업 복구용)
+ALTER TABLE zone_run
+    ADD COLUMN pending_treasure_cell VARCHAR(20) NULL,
+    ADD COLUMN pending_treasure_mineral INT NOT NULL DEFAULT 0;
