@@ -15,4 +15,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class WatchAdForRewardCardRerollChargeResponse {
     private Integer rewardCardRerollCharge;
+    private Integer rerollNextChargeSec;
 }

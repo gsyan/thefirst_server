@@ -17,4 +17,5 @@ import lombok.NoArgsConstructor;
 public class GetRewardCardShopResponse {
     private List<String> rewardCardCandidates;
     private Integer rerollRemain;
+    private Integer rerollNextChargeSec;
 }

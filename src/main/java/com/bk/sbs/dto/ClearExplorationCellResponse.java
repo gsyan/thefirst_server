@@ -26,6 +26,7 @@ public class ClearExplorationCellResponse {
     private Integer resource;
     private Integer mineralAmount;
     private Integer rerollRemain;
+    private Integer rerollNextChargeSec;
     private List<HullArchetypeProgressInfoDto> hullArchetypePassiveProgress;
     private FleetInfoDto fleetInfo;
 }

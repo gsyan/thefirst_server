@@ -672,9 +672,11 @@ public class ExplorationService {
         zoneCellClearLogRepository.save(clearLog);
 
         int rerollRemain = 0;
+        int rerollNextChargeSec = 0;
         if (rewardCardCandidates != null) {
             syncRewardCardRerollCharge(commander);
             rerollRemain = commander.getRewardCardRerollCharge();
+            rerollNextChargeSec = computeRerollNextChargeSec(commander);
         }
 
         return ClearExplorationCellResponse.builder()
@@ -689,6 +691,7 @@ public class ExplorationService {
                 .mineralAmount(finalMineralAmount)
                 .rewardCardCandidates(rewardCardCandidates)
                 .rerollRemain(rerollRemain)
+                .rerollNextChargeSec(rerollNextChargeSec)
                 .hullArchetypePassiveProgress(hullArchetypeProgressService.getProgressDtoList(commanderId))
                 .fleetInfo(unlockStageCompleted == true ? fleetService.getActiveFleetOrNull(commanderId) : null)
                 .build();
@@ -733,6 +736,7 @@ public class ExplorationService {
         return GetRewardCardShopResponse.builder()
                 .rewardCardCandidates(candidates)
                 .rerollRemain(commander.getRewardCardRerollCharge())
+                .rerollNextChargeSec(computeRerollNextChargeSec(commander))
                 .build();
     }
 
@@ -830,6 +834,7 @@ public class ExplorationService {
         return RerollRewardCardResponse.builder()
                 .rewardCardCandidates(newCandidates)
                 .rerollRemain(commander.getRewardCardRerollCharge())
+                .rerollNextChargeSec(computeRerollNextChargeSec(commander))
                 .build();
     }
 
@@ -849,7 +854,24 @@ public class ExplorationService {
 
         return WatchAdForRewardCardRerollChargeResponse.builder()
                 .rewardCardRerollCharge(commander.getRewardCardRerollCharge())
+                .rerollNextChargeSec(computeRerollNextChargeSec(commander))
                 .build();
+    }
+
+    // 다음 리롤 1회 충전까지 남은 초 — syncRewardCardRerollCharge 직후 호출 기준. 최대치면 0(충전 대기 없음)
+    // 기기 시계와 무관하게 표시하도록 시각이 아닌 남은 초로 내려줌
+    private int computeRerollNextChargeSec(Commander commander) {
+        DataTableConfig config = gameDataService.getDataTableConfig();
+        int maxCharge = config.getExploration().getRewardCardRerollChargeMax();
+        int regenSec = config.getExploration().getRewardCardRerollChargeRegenMinutes() * 60;
+        if (commander.getRewardCardRerollCharge() >= maxCharge) return 0;
+
+        Instant lastSyncedAt = commander.getRewardCardRerollChargeSyncedAt();
+        if (lastSyncedAt == null) return regenSec;
+
+        long elapsedSec = Duration.between(lastSyncedAt, Instant.now()).getSeconds();
+        long remainSec = regenSec - elapsedSec;
+        return (int) Math.max(0, Math.min(regenSec, remainSec));
     }
 
     // commander.rewardCardRerollCharge를 현재 시각 기준으로 충전 — 충전 단위(설정된 분)에 못 미치는 나머지 경과시간은
