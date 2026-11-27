@@ -22,5 +22,7 @@ public class EscapeExplorationZoneResponse {
     private Integer resource;
     private Boolean hasUnclaimedAchievement;
     private List<HullArchetypeProgressInfoDto> hullArchetypePassiveProgress;
+    private Integer achievementPointGained;
+    private Integer achievementPoint;
     private FleetInfoDto fleetInfo;
 }

@@ -10,6 +10,9 @@ import com.bk.sbs.exception.BusinessException;
 import com.bk.sbs.exception.ServerErrorCode;
 import com.bk.sbs.repository.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -139,6 +142,21 @@ public class FleetService {
         healDuplicateArchetypes(fleet);
         healEmptyModules(fleet);
         return convertFleetToFleetInfoDto(fleet);
+    }
+
+    // 서버 시작 시 전체 함대를 로그인 때와 같은 규칙으로 정리 — 접속하지 않은 계정의 옛 함체/빈 모듈이 PVP·랭킹에 그대로 노출되지 않게 함
+    // PvpService 시작 처리(@Order(2))가 상대 함대를 읽으므로 그보다 먼저 실행. 정리할 함선이 없으면 DB 변경 없음
+    @EventListener(ApplicationReadyEvent.class)
+    @Order(0)
+    @Transactional
+    public void healAllFleetsOnStartup() {
+        List<Fleet> fleets = fleetRepository.findAll();
+        for (Fleet fleet : fleets) {
+            healInvalidHullSubTypes(fleet);
+            healDuplicateArchetypes(fleet);
+            healEmptyModules(fleet);
+        }
+        log.info("[FleetHeal] startup heal checked {} fleets", fleets.size());
     }
 
     // 모듈은 항상 설치된 상태가 기본값이 된 이후(설치/해제 개념 폐지)에도, 그 변경 이전에 생성돼 모듈이 빈 채로 저장된 기존 함선은

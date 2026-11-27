@@ -17,6 +17,7 @@ public enum ECardEffectType {
     Buff_MineralFlatBonus,
     Instant_HealthHeal,
     Instant_ShieldHeal,
-    Instant_InterceptorHeal;
+    Instant_InterceptorHeal,
+    Buff_ScoutChance;
 
 }

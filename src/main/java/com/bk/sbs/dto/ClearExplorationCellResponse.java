@@ -23,6 +23,7 @@ public class ClearExplorationCellResponse {
     private Integer commanderLevel;
     private List<String> rewardCardCandidates;
     private List<TreasureChoiceInfoDto> treasureChoices;
+    private Integer escapeAchievementPointReward;
     private Integer resource;
     private Integer mineralAmount;
     private Integer rerollRemain;

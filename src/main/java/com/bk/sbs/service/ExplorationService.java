@@ -671,6 +671,15 @@ public class ExplorationService {
         clearLog.setTreasureRewardType(isTreasureCell == true ? ETreasureRewardType.None : null);
         zoneCellClearLogRepository.save(clearLog);
 
+        // 탈출 셀이면 탈출 확정 시 받을 업적포인트를 미리 계산해 팝업에 표시 — 방금 저장한 이 셀까지 포함한 클리어 셀 수 기준
+        GridCellOverrideDto clearedEscapeCell = findCellByType(zoneConfig, EGridCellType.Escape);
+        boolean isClearedCellEscape = clearedEscapeCell != null && clearedEscapeCell.getRow() == request.getCellRow() && clearedEscapeCell.getCol() == request.getCellCol();
+        int escapeAchievementPointReward = 0;
+        if (isClearedCellEscape == true) {
+            long clearedCellCount = zoneCellClearLogRepository.countDistinctCellByZoneRunId(run.getId());
+            escapeAchievementPointReward = computeEscapeAchievementPointReward(zoneConfig, clearedCellCount);
+        }
+
         int rerollRemain = 0;
         int rerollNextChargeSec = 0;
         if (rewardCardCandidates != null) {
@@ -687,6 +696,7 @@ public class ExplorationService {
                 .totalExp(commander.getExp())
                 .commanderLevel(commander.getCommanderLevel())
                 .treasureChoices(isTreasureCell == true ? buildTreasureChoices(treasureMineral) : null)
+                .escapeAchievementPointReward(escapeAchievementPointReward)
                 .resource(finalResource)
                 .mineralAmount(finalMineralAmount)
                 .rewardCardCandidates(rewardCardCandidates)
@@ -1026,6 +1036,7 @@ public class ExplorationService {
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_NO_ACTIVE_RUN));
 
         boolean isSuccess = request.getIsSuccess() != null && request.getIsSuccess();
+        int achievementPointGained = 0;
 
         if (isSuccess == true) {
             ZoneConfigData zoneConfig = gameDataService.getZoneConfigByIndex(request.getZoneNumber());
@@ -1044,10 +1055,15 @@ public class ExplorationService {
             if (isAllCellsCleared == true && alreadyRecorded == false) {
                 commanderZoneFullClearRepository.save(new CommanderZoneFullClear(commanderId, request.getZoneNumber()));
             }
+
+            // 탈출 보상 업적포인트 — 클리어한 셀 수(이벤트/탈출 셀 포함) × 존 셀당 값, VIP 특전 없음, 재도전도 지급
+            achievementPointGained = computeEscapeAchievementPointReward(zoneConfig, distinctClearedCellCount);
         }
 
         Commander commander = commanderRepository.findByIdForUpdate(commanderId)
                 .orElseThrow(() -> new BusinessException(ServerErrorCode.EXPLORATION_FAIL_COMMANDER_NOT_FOUND));
+        if (achievementPointGained > 0)
+            commander.setAchievementPoint(commander.getAchievementPoint() + achievementPointGained);
 
         RunSettlement settlement = settleZoneRun(commander, run, isSuccess);
 
@@ -1058,9 +1074,20 @@ public class ExplorationService {
                 .highestClearedZoneNumber(commander.getHighestClearedZoneNumber())
                 .resource(settlement.resource())
                 .hasUnclaimedAchievement(settlement.hasUnclaimedAchievement())
+                .achievementPointGained(achievementPointGained)
+                .achievementPoint(commander.getAchievementPoint())
                 .hullArchetypePassiveProgress(hullArchetypeProgressService.getProgressDtoList(commanderId))
                 .fleetInfo(settlement.unlockStageCompleted() == true ? fleetService.getActiveFleetOrNull(commanderId) : null)
                 .build();
+    }
+
+    // 탈출 보상 업적포인트 = 클리어한 셀 수 × 존 셀당 값 — 탈출 셀 클리어 시 미리보기와 탈출 확정 지급이 같은 식을 씀
+    private int computeEscapeAchievementPointReward(ZoneConfigData zoneConfig, long clearedCellCount) {
+        if (zoneConfig == null) return 0;
+        Integer rewardPerCellValue = zoneConfig.getAchievementPointRewardPerCell();
+        int rewardPerCell = rewardPerCellValue != null ? rewardPerCellValue : 0;
+        long reward = clearedCellCount * rewardPerCell;
+        return (int) Math.max(0, reward);
     }
 
     // 포기 정산 — 셀 클리어로 이미 받은 경험치는 그대로 유지되고, 정산 자체로 추가 지급하는 보상은 없음

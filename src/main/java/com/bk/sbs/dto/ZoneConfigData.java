@@ -21,4 +21,5 @@ public class ZoneConfigData {
     private List<GridCellOverrideDto> cellOverrides;
     private Integer mineralReward;
     private Integer commanderExpRewardPerCell;
+    private Integer achievementPointRewardPerCell;
 }
